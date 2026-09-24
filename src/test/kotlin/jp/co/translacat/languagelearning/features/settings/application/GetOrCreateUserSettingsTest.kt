@@ -1,25 +1,19 @@
 package jp.co.translacat.languagelearning.features.settings.application
 
+import jp.co.translacat.languagelearning.features.learner.domain.exception.LearnerUnavailableException
 import jp.co.translacat.languagelearning.features.learner.domain.model.Learner
 import jp.co.translacat.languagelearning.features.learner.domain.repository.LearnerRepository
-import jp.co.translacat.languagelearning.features.learner.domain.exception.LearnerUnavailableException
+import jp.co.translacat.languagelearning.features.settings.domain.exception.SettingsPolicyNotInitializedException
 import jp.co.translacat.languagelearning.features.settings.domain.model.GoalPolicy
 import jp.co.translacat.languagelearning.features.settings.domain.model.InitialSettingsPolicy
 import jp.co.translacat.languagelearning.features.settings.domain.model.NewUserSettings
-import jp.co.translacat.languagelearning.features.settings.domain.exception.SettingsPolicyNotInitializedException
-import jp.co.translacat.languagelearning.features.settings.domain.repository.SettingsPolicyRepository
 import jp.co.translacat.languagelearning.features.settings.domain.model.UserSettings
+import jp.co.translacat.languagelearning.features.settings.domain.repository.SettingsPolicyRepository
 import jp.co.translacat.languagelearning.features.settings.domain.repository.UserSettingsRepository
 import kotlinx.coroutines.runBlocking
 import java.time.LocalDate
 import java.time.LocalDateTime
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertFailsWith
-import kotlin.test.assertFalse
-import kotlin.test.assertNull
-import kotlin.test.assertSame
-import kotlin.test.assertTrue
+import kotlin.test.*
 
 class GetOrCreateUserSettingsTest {
     @Test
@@ -138,24 +132,37 @@ class GetOrCreateUserSettingsTest {
                     calls += "find"
                     return existing
                 }
+
                 override fun create(settings: NewUserSettings): UserSettings {
                     calls += "create"
                     return UserSettings(
-                        id = 1, userId = settings.userId, originLanguage = null, learningLanguage = null,
-                        timezone = settings.timezone, dailySentenceCount = settings.dailySentenceCount,
+                        id = 1,
+                        userId = settings.userId,
+                        originLanguage = null,
+                        learningLanguage = null,
+                        timezone = settings.timezone,
+                        dailySentenceCount = settings.dailySentenceCount,
                         dailySpeakingGoalMinutes = settings.dailySpeakingGoalMinutes,
                         dailyListeningGoalCount = settings.dailyListeningGoalCount,
                         defaultListeningTaskTypesJson = settings.defaultListeningTaskTypesJson,
-                        speakingVoiceId = settings.speakingVoiceId, speakingPlaybackSpeed = settings.speakingPlaybackSpeed,
-                        pendingOriginLanguage = null, pendingLearningLanguage = null, pendingTimezone = null,
-                        pendingDailySentenceCount = null, pendingDailySpeakingGoalMinutes = null,
-                        pendingDailyListeningGoalCount = null, pendingEffectiveDate = null,
-                        createdBy = settings.userId.toString(), createdAt = settings.nowUtc,
-                        updatedBy = settings.userId.toString(), updatedAt = settings.nowUtc,
+                        speakingVoiceId = settings.speakingVoiceId,
+                        speakingPlaybackSpeed = settings.speakingPlaybackSpeed,
+                        pendingOriginLanguage = null,
+                        pendingLearningLanguage = null,
+                        pendingTimezone = null,
+                        pendingDailySentenceCount = null,
+                        pendingDailySpeakingGoalMinutes = null,
+                        pendingDailyListeningGoalCount = null,
+                        pendingEffectiveDate = null,
+                        createdBy = settings.userId.toString(),
+                        createdAt = settings.nowUtc,
+                        updatedBy = settings.userId.toString(),
+                        updatedAt = settings.nowUtc,
                     ).also { existing = it }
                 }
             }
         }
+
         override suspend fun <T> execute(block: SettingsTransaction.() -> T): T {
             calls += "transaction"
             return block(scope)

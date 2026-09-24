@@ -16,10 +16,8 @@ class DatabaseSettingsTest {
     @Test
     fun `valid default LL connection settings are accepted`() {
         valid().validateForConnection()
-        valid().copy(minimumIdle = 0, maximumPoolSize = 1, connectionTimeoutMs = 250)
-            .validateForConnection()
-        valid().copy(jdbcUrl = "jdbc:mysql://127.0.0.1:3306/translacat_ll?serverTimezone=UTC")
-            .validateForConnection()
+        valid().copy(minimumIdle = 0, maximumPoolSize = 1, connectionTimeoutMs = 250).validateForConnection()
+        valid().copy(jdbcUrl = "jdbc:mysql://127.0.0.1:3306/translacat_ll?serverTimezone=UTC").validateForConnection()
     }
 
     @Test

@@ -1,34 +1,24 @@
 package jp.co.translacat.languagelearning.shared.persistence
 
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonNull
-import kotlinx.serialization.json.boolean
-import kotlinx.serialization.json.jsonArray
-import kotlinx.serialization.json.jsonObject
-import kotlinx.serialization.json.jsonPrimitive
+import kotlinx.serialization.json.*
 import java.math.BigDecimal
 import java.net.URI
 import java.sql.Connection
 import java.sql.DatabaseMetaData
 import java.sql.DriverManager
 import java.sql.SQLException
-import java.util.UUID
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertFails
-import kotlin.test.assertFailsWith
-import kotlin.test.assertNull
-import kotlin.test.assertTrue
+import java.util.*
+import kotlin.test.*
 
 /** Runs ONLY via databaseIntegrationTest, never as part of test/check. No Docker required. */
 class DatabaseMigrationIntegrationTest {
     @Test
     fun `fresh database has all source columns exact seeds and no learners`() = withScratchDatabase { db ->
         DatabaseFactory(db.settings()).use { factory ->
-            assertEquals(3, factory.migrationReport.migrationsExecuted)
-            assertEquals(3, factory.migrationReport.schemaVersion.toInt())
+            assertEquals(4, factory.migrationReport.migrationsExecuted)
+            assertEquals(4, factory.migrationReport.schemaVersion.toInt())
             db.connect().use { connection ->
-                assertEquals(6L, countTables(connection))
+                assertEquals(7L, countTables(connection))
                 assertEquals(0L, count(connection, "language_learning_learner"))
                 assertEquals(0L, count(connection, "language_learning_user_setting"))
                 assertEquals(1L, count(connection, "language_learning_admin_setting"))
@@ -43,11 +33,13 @@ class DatabaseMigrationIntegrationTest {
         DatabaseFactory(db.settings()).use { }
         db.connect().use { connection ->
             connection.createStatement().use { statement ->
-                statement.executeUpdate("""
+                statement.executeUpdate(
+                    """
                     UPDATE language_learning_admin_setting
                     SET default_daily_sentence_count = 6, updated_by = 'LOCAL_ADMIN'
                     WHERE id = 'DEFAULT'
-                """.trimIndent())
+                """.trimIndent()
+                )
             }
         }
         DatabaseFactory(db.settings()).use { second ->
@@ -58,9 +50,13 @@ class DatabaseMigrationIntegrationTest {
             assertEquals(0, validated.migrationReport.migrationsExecuted)
         }
         db.connect().use { connection ->
-            assertEquals(6L, scalar(connection,
-                "SELECT default_daily_sentence_count FROM language_learning_admin_setting WHERE id='DEFAULT'"))
-            assertEquals(3L, scalar(connection, "SELECT COUNT(*) FROM flyway_schema_history WHERE success=1"))
+            assertEquals(
+                6L, scalar(
+                    connection,
+                    "SELECT default_daily_sentence_count FROM language_learning_admin_setting WHERE id='DEFAULT'"
+                )
+            )
+            assertEquals(4L, scalar(connection, "SELECT COUNT(*) FROM flyway_schema_history WHERE success=1"))
         }
     }
 
@@ -71,16 +67,19 @@ class DatabaseMigrationIntegrationTest {
             val missingLearner = assertFailsWith<SQLException> { insertUserSetting(connection, 123L) }
             assertTrue(missingLearner.sqlState.orEmpty().startsWith("23"))
             connection.createStatement().use {
-                it.executeUpdate("""
+                it.executeUpdate(
+                    """
                     INSERT INTO language_learning_learner (user_id, created_at, updated_at)
                     VALUES (123, UTC_TIMESTAMP(6), UTC_TIMESTAMP(6))
-                """.trimIndent())
+                """.trimIndent()
+                )
             }
             insertUserSetting(connection, 123L)
             val duplicate = assertFailsWith<SQLException> { insertUserSetting(connection, 123L) }
             assertTrue(duplicate.sqlState.orEmpty().startsWith("23"))
             val deleteParent = assertFailsWith<SQLException> {
-                connection.createStatement().use { it.executeUpdate("DELETE FROM language_learning_learner WHERE user_id=123") }
+                connection.createStatement()
+                    .use { it.executeUpdate("DELETE FROM language_learning_learner WHERE user_id=123") }
             }
             assertTrue(deleteParent.sqlState.orEmpty().startsWith("23"))
             connection.createStatement().use { statement ->
@@ -113,8 +112,12 @@ class DatabaseMigrationIntegrationTest {
         assertFails { DatabaseFactory(db.settings()).use { } }
         db.connect().use { connection ->
             assertEquals(42L, scalar(connection, "SELECT id FROM preserved_marker"))
-            assertEquals(0L, scalar(connection,
-                "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema=DATABASE() AND table_name='language_learning_admin_setting'"))
+            assertEquals(
+                0L, scalar(
+                    connection,
+                    "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema=DATABASE() AND table_name='language_learning_admin_setting'"
+                )
+            )
         }
     }
 
@@ -155,14 +158,19 @@ class DatabaseMigrationIntegrationTest {
         }
         assertFails { DatabaseFactory(db.settings()).use { } }
         db.connect().use { connection ->
-            assertEquals(0L, scalar(connection, "SELECT checksum FROM flyway_schema_history WHERE script='V001__create_learner_and_settings.sql'"))
+            assertEquals(
+                0L, scalar(
+                    connection,
+                    "SELECT checksum FROM flyway_schema_history WHERE script='V001__create_learner_and_settings.sql'"
+                )
+            )
             assertEquals(1L, count(connection, "language_learning_admin_setting"))
         }
     }
 
     private fun assertSourceColumnsAndSeeds(connection: Connection, catalog: String) {
-        val json = checkNotNull(javaClass.getResourceAsStream("/db/be-settings-baseline.json"))
-            .bufferedReader().use { Json.parseToJsonElement(it.readText()).jsonObject }
+        val json = checkNotNull(javaClass.getResourceAsStream("/db/be-settings-baseline.json")).bufferedReader()
+            .use { Json.parseToJsonElement(it.readText()).jsonObject }
         json.forEach { (table, entry) ->
             val columns = mutableMapOf<String, Pair<Boolean, Int>>()
             connection.metaData.getColumns(catalog, null, table, null).use { metadata ->
@@ -178,7 +186,9 @@ class DatabaseMigrationIntegrationTest {
                 assertEquals(field.getValue("nullable").jsonPrimitive.boolean, actual.first, "$table.$name nullability")
                 val type = field.getValue("type").jsonPrimitive.content
                 if (type.startsWith("VARCHAR(")) {
-                    assertEquals(type.substringAfter('(').substringBefore(')').toInt(), actual.second, "$table.$name length")
+                    assertEquals(
+                        type.substringAfter('(').substringBefore(')').toInt(), actual.second, "$table.$name length"
+                    )
                 }
             }
             listOf("created_by", "created_at", "updated_by", "updated_at").forEach { assertTrue(it in columns) }
@@ -193,11 +203,19 @@ class DatabaseMigrationIntegrationTest {
                             } else {
                                 val primitive = value.jsonPrimitive
                                 when {
-                                    primitive.isString -> assertEquals(primitive.content, row.getString(column), "$table.$column")
-                                    primitive.content in setOf("true", "false") ->
-                                        assertEquals(primitive.boolean, row.getBoolean(column), "$table.$column")
-                                    else -> assertEquals(0,
-                                        BigDecimal(primitive.content).compareTo(BigDecimal(row.getString(column))), "$table.$column")
+                                    primitive.isString -> assertEquals(
+                                        primitive.content, row.getString(column), "$table.$column"
+                                    )
+
+                                    primitive.content in setOf("true", "false") -> assertEquals(
+                                        primitive.boolean, row.getBoolean(column), "$table.$column"
+                                    )
+
+                                    else -> assertEquals(
+                                        0,
+                                        BigDecimal(primitive.content).compareTo(BigDecimal(row.getString(column))),
+                                        "$table.$column"
+                                    )
                                 }
                             }
                         }
@@ -210,21 +228,25 @@ class DatabaseMigrationIntegrationTest {
     }
 
     private fun insertUserSetting(connection: Connection, userId: Long) {
-        connection.prepareStatement("""
+        connection.prepareStatement(
+            """
             INSERT INTO language_learning_user_setting (
                 user_id, timezone, daily_sentence_count, daily_speaking_goal_minutes,
                 daily_listening_goal_count, default_listening_task_types,
                 speaking_voice_id, speaking_playback_speed, created_at, updated_at
             ) VALUES (?, 'Asia/Tokyo', 5, 5, 5, '["DICTATION"]', 'marin', 'NORMAL', UTC_TIMESTAMP(6), UTC_TIMESTAMP(6))
-        """.trimIndent()).use {
+        """.trimIndent()
+        ).use {
             it.setLong(1, userId)
             it.executeUpdate()
         }
     }
 
     private fun count(connection: Connection, table: String): Long = scalar(connection, "SELECT COUNT(*) FROM $table")
-    private fun countTables(connection: Connection): Long = scalar(connection,
-        "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema=DATABASE()")
+    private fun countTables(connection: Connection): Long = scalar(
+        connection, "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema=DATABASE()"
+    )
+
     private fun scalar(connection: Connection, sql: String): Long = connection.createStatement().use { statement ->
         statement.executeQuery(sql).use { rows -> check(rows.next()); rows.getLong(1) }
     }
@@ -238,7 +260,8 @@ class DatabaseMigrationIntegrationTest {
     }
 
     private fun withScratchDatabase(action: (ScratchDatabase) -> Unit) {
-        val serverUrl = requireNotNull(System.getenv("LL_TEST_MYSQL_URL")) { "Run databaseIntegrationTest with LL_TEST_MYSQL_* variables." }
+        val serverUrl =
+            requireNotNull(System.getenv("LL_TEST_MYSQL_URL")) { "Run databaseIntegrationTest with LL_TEST_MYSQL_* variables." }
         val username = requireNotNull(System.getenv("LL_TEST_MYSQL_USERNAME"))
         val password = requireNotNull(System.getenv("LL_TEST_MYSQL_PASSWORD"))
         require(serverUrl.startsWith("jdbc:mysql://")) { "Integration tests require a loopback MySQL URL." }
@@ -251,8 +274,7 @@ class DatabaseMigrationIntegrationTest {
         }
         val name = "translacat_ll_it_" + UUID.randomUUID().toString().replace("-", "")
         check(Regex("translacat_ll_it_[0-9a-f]{32}").matches(name))
-        val url = serverUrl.substringBefore('?').trimEnd('/') + "/" + name +
-            (uri.rawQuery?.let { "?$it" } ?: "")
+        val url = serverUrl.substringBefore('?').trimEnd('/') + "/" + name + (uri.rawQuery?.let { "?$it" } ?: "")
         DatabaseTargetGuard.requireMatchingUrl(url, name)
         val db = ScratchDatabase(name, url, username, password)
         DriverManager.getConnection(serverUrl, username, password).use { admin ->

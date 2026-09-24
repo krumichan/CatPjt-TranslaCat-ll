@@ -11,7 +11,11 @@ internal class UpdateUserSettings(private val unitOfWork: SettingsUnitOfWork) {
             val current = loadCurrentUserSettings(userId)
             val changed = UserSettingsPolicy.change(current.settings, change, current.policy, nowUtc)
             // 요청 검증에 실패하면 앞서 수행한 조회 승격/보정도 같은 트랜잭션에서 롤백한다.
-            UserSettingsResult(saveIfChanged(current.settings, changed), current.policy)
+            // 같은 Task 재선택도 오래된 세션 이벤트보다 새로운 사용자 의사다.
+            val guarded = if (change.defaultListeningTaskTypes != null) changed.copy(
+                updatedAt = maxOf(nowUtc, current.settings.updatedAt.plusNanos(1000)),
+            ) else changed
+            UserSettingsResult(saveIfChanged(current.settings, guarded), current.policy)
         }
     }
 }

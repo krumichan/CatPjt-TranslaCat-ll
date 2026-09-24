@@ -5,7 +5,7 @@ import jp.co.translacat.languagelearning.shared.persistence.DatabaseTargetGuard
 import java.net.URI
 import java.sql.Connection
 import java.sql.DriverManager
-import java.util.UUID
+import java.util.*
 
 internal data class LocalScratchMysql(
     val name: String,

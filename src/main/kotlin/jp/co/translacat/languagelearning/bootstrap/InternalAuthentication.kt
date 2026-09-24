@@ -52,5 +52,42 @@ internal fun Application.configureInternalAuthentication(
                 )
             }
         }
+        // 서비스 조회 토큰은 사용자용 토큰과 용도가 다르며 관리자 PATCH에는 사용할 수 없다.
+        jwt(SETTINGS_SERVICE_AUTH) {
+            realm = "translacat-ll-settings-service"
+            verifier(
+                JWT.require(Algorithm.HMAC256(settings.verificationKey()))
+                    .withIssuer(settings.issuer)
+                    .withAudience(settings.audience)
+                    .withSubject(settings.callerService)
+                    .withClaim("service", settings.callerService)
+                    .withClaim("tokenUse", "ll-settings-service")
+                    .acceptLeeway(settings.clockSkewSeconds)
+                    .build(),
+            )
+            validate { credential ->
+                try {
+                    val payload = credential.payload
+                    InternalServiceClaimsPolicy.validate(
+                        InternalServiceClaims(
+                            payload.subject,
+                            payload.getClaim("scopes").asList(String::class.java),
+                            payload.getClaim("roles").asList(String::class.java),
+                            payload.issuedAt?.toInstant(),
+                            payload.expiresAt?.toInstant(),
+                        ), settings, clock.instant(),
+                    )
+                } catch (_: Exception) {
+                    null
+                }
+            }
+            challenge { _, _ ->
+                call.response.headers.append(HttpHeaders.WWWAuthenticate, "Bearer realm=\"translacat-ll-settings-service\"")
+                call.respond(
+                    HttpStatusCode.Unauthorized,
+                    InternalApiError("INTERNAL_SERVICE_AUTH_REQUIRED", "유효한 서비스 조회 인증이 필요합니다."),
+                )
+            }
+        }
     }
 }

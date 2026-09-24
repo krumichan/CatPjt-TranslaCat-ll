@@ -3,34 +3,16 @@ package jp.co.translacat.languagelearning.features.settings.infrastructure.persi
 import jp.co.translacat.languagelearning.features.learner.domain.exception.LearnerUnavailableException
 import jp.co.translacat.languagelearning.features.settings.application.GetOrCreateUserSettings
 import jp.co.translacat.languagelearning.features.settings.application.SettingsTransaction
-import jp.co.translacat.languagelearning.features.settings.domain.model.NewUserSettings
 import jp.co.translacat.languagelearning.features.settings.domain.exception.SettingsPolicyNotInitializedException
+import jp.co.translacat.languagelearning.features.settings.domain.model.NewUserSettings
 import jp.co.translacat.languagelearning.shared.persistence.DatabaseFactory
 import jp.co.translacat.languagelearning.shared.persistence.transaction.JdbcTransactionRunner
 import jp.co.translacat.languagelearning.support.LocalScratchMysql
-import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.CompletableDeferred
-import kotlinx.coroutines.CoroutineStart
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.currentCoroutineContext
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withTimeout
+import kotlinx.coroutines.*
 import java.sql.SQLException
-import java.time.Clock
-import java.time.Instant
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.ZoneOffset
+import java.time.*
 import java.util.concurrent.atomic.AtomicInteger
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertFailsWith
-import kotlin.test.assertFalse
-import kotlin.test.assertNotNull
-import kotlin.test.assertNull
-import kotlin.test.assertTrue
+import kotlin.test.*
 
 /** 일반 test에서는 제외한다. databaseIntegrationTest가 만든 loopback 임시 DB만 사용한다. */
 class SettingsPersistenceIntegrationTest {
@@ -67,8 +49,8 @@ class SettingsPersistenceIntegrationTest {
         }
         assertEquals(1L, scalar(db, "SELECT COUNT(*) FROM language_learning_learner"))
         assertEquals(1L, scalar(db, "SELECT COUNT(*) FROM language_learning_user_setting"))
-        assertEquals(6L, scalar(db, "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema=DATABASE()"))
-        assertEquals(3L, scalar(db, "SELECT COUNT(*) FROM flyway_schema_history WHERE success=1"))
+        assertEquals(7L, scalar(db, "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema=DATABASE()"))
+        assertEquals(4L, scalar(db, "SELECT COUNT(*) FROM flyway_schema_history WHERE success=1"))
     }
 
     @Test
@@ -94,7 +76,8 @@ class SettingsPersistenceIntegrationTest {
     fun `저장된 사용자 값과 pending은 초기화 조회에서 변경하지 않는다`() = withDatabase { db, _, work ->
         runBlocking {
             GetOrCreateUserSettings(work).execute(123)
-            execute(db, """
+            execute(
+                db, """
                 UPDATE language_learning_user_setting SET
                     origin_language='ko', learning_language='ja', timezone='Europe/Paris',
                     daily_sentence_count=40, daily_speaking_goal_minutes=30, daily_listening_goal_count=35,
@@ -104,7 +87,8 @@ class SettingsPersistenceIntegrationTest {
                     pending_daily_listening_goal_count=50, pending_effective_date='2000-01-01',
                     updated_by='LOCAL_ADMIN', updated_at='2026-09-25 01:02:03.123456'
                 WHERE user_id=123
-            """.trimIndent())
+            """.trimIndent()
+            )
             val value = GetOrCreateUserSettings(work).execute(123)
             assertTrue(value.configured)
             assertEquals("ko", value.originLanguage)
@@ -134,7 +118,10 @@ class SettingsPersistenceIntegrationTest {
         runBlocking {
             val service = GetOrCreateUserSettings(work)
             val before = service.execute(1)
-            execute(db, "UPDATE language_learning_admin_setting SET default_daily_sentence_count=7, default_daily_speaking_goal_minutes=8 WHERE id='DEFAULT'")
+            execute(
+                db,
+                "UPDATE language_learning_admin_setting SET default_daily_sentence_count=7, default_daily_speaking_goal_minutes=8 WHERE id='DEFAULT'"
+            )
             execute(db, "UPDATE language_learning_listening_policy_setting SET default_item_count=9 WHERE id='DEFAULT'")
             assertEquals(before, service.execute(1))
             val after = service.execute(2)
@@ -185,12 +172,16 @@ class SettingsPersistenceIntegrationTest {
             for ((index, status) in listOf("SUSPENDED", "DELETION_PENDING", "DELETED", "UNKNOWN").withIndex()) {
                 val id = index + 1L
                 // 상태값은 이 테스트 내부의 고정 목록이다.
-                execute(db, """
+                execute(
+                    db, """
                     INSERT INTO language_learning_learner (user_id, status, identity_version, created_at, updated_at)
                     VALUES ($id, '$status', 23, '2020-01-01', '2020-01-01')
-                """.trimIndent())
+                """.trimIndent()
+                )
                 assertFailsWith<LearnerUnavailableException> { GetOrCreateUserSettings(work).execute(id) }
-                assertEquals(23L, scalar(db, "SELECT identity_version FROM language_learning_learner WHERE user_id=$id"))
+                assertEquals(
+                    23L, scalar(db, "SELECT identity_version FROM language_learning_learner WHERE user_id=$id")
+                )
                 assertEquals(status, stringScalar(db, "SELECT status FROM language_learning_learner WHERE user_id=$id"))
             }
         }
@@ -250,7 +241,10 @@ class SettingsPersistenceIntegrationTest {
     fun `다른 DB가 나중에 등록되어도 지정한 DB만 사용한다`() = withDatabase { first, _, firstWork ->
         LocalScratchMysql.use { second ->
             DatabaseFactory(second.settings()).use { secondFactory ->
-                execute(second, "UPDATE language_learning_admin_setting SET default_daily_sentence_count=9 WHERE id='DEFAULT'")
+                execute(
+                    second,
+                    "UPDATE language_learning_admin_setting SET default_daily_sentence_count=9 WHERE id='DEFAULT'"
+                )
                 val secondWork = ExposedSettingsUnitOfWork(JdbcTransactionRunner(secondFactory.database, 4), clock)
                 runBlocking {
                     assertEquals(5, GetOrCreateUserSettings(firstWork).execute(123).dailySentenceCount)
@@ -385,10 +379,12 @@ class SettingsPersistenceIntegrationTest {
     }
 
     private fun scalar(db: LocalScratchMysql, sql: String): Long = db.connect().use {
-        it.createStatement().use { statement -> statement.executeQuery(sql).use { row -> check(row.next()); row.getLong(1) } }
+        it.createStatement()
+            .use { statement -> statement.executeQuery(sql).use { row -> check(row.next()); row.getLong(1) } }
     }
 
     private fun stringScalar(db: LocalScratchMysql, sql: String): String = db.connect().use {
-        it.createStatement().use { statement -> statement.executeQuery(sql).use { row -> check(row.next()); row.getString(1) } }
+        it.createStatement()
+            .use { statement -> statement.executeQuery(sql).use { row -> check(row.next()); row.getString(1) } }
     }
 }

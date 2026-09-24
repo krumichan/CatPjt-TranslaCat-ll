@@ -26,6 +26,23 @@ internal class JdbcTransactionRunner(
     // 공유 IO 풀의 실행 동시성만 제한한다. 별도 executor의 종료 관리는 필요 없다.
     private val dispatcher = Dispatchers.IO.limitedParallelism(maximumConcurrency)
 
+    /** 수동 조회도 명시적인 DB/실행 컨텍스트를 사용하며, 기존 트랜잭션에 중첩하지 않는다. */
+    suspend fun <T> read(block: () -> T): T {
+        check(TransactionManager.currentOrNull() == null) { "실행 중인 트랜잭션에 읽기 작업을 중첩할 수 없습니다." }
+        return withContext(dispatcher) {
+            val context = currentCoroutineContext()
+            check(TransactionManager.currentOrNull() == null) { "JDBC 실행 스레드에 트랜잭션이 남아 있습니다." }
+            transaction(db = database, readOnly = true) {
+                maxAttempts = 1
+                queryTimeout = queryTimeoutSeconds
+                context.ensureActive()
+                val result = block()
+                context.ensureActive()
+                result
+            }
+        }
+    }
+
     suspend fun <T> write(block: () -> T): T {
         check(TransactionManager.currentOrNull() == null) {
             "이미 실행 중인 JDBC 트랜잭션 안에서 새 UnitOfWork를 열 수 없습니다."

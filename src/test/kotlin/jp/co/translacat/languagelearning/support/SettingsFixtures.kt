@@ -18,6 +18,7 @@ internal object SettingsFixtures {
         pendingEffectiveDate = null, createdBy = userId.toString(), createdAt = now,
         updatedBy = userId.toString(), updatedAt = now,
     )
+
     fun configured(userId: Long = 123) = user(userId).copy(originLanguage = "ko", learningLanguage = "ja")
     fun admin() = AdminSettings(
         defaultDailySentenceCount = 5,

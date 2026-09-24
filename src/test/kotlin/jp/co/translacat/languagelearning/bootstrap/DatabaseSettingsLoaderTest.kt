@@ -1,12 +1,8 @@
 package jp.co.translacat.languagelearning.bootstrap
 
-import io.ktor.server.config.MapApplicationConfig
+import io.ktor.server.config.*
 import jp.co.translacat.languagelearning.shared.persistence.MigrationMode
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertFailsWith
-import kotlin.test.assertFalse
-import kotlin.test.assertTrue
+import kotlin.test.*
 
 class DatabaseSettingsLoaderTest {
     private fun configured() = MapApplicationConfig(
@@ -25,11 +21,13 @@ class DatabaseSettingsLoaderTest {
 
     @Test
     fun `disabled mode ignores even invalid irrelevant DB options`() {
-        val settings = loadDatabaseSettings(MapApplicationConfig(
-            "database.enabled" to "false",
-            "database.maximumPoolSize" to "broken",
-            "database.migrations.mode" to "broken",
-        ))
+        val settings = loadDatabaseSettings(
+            MapApplicationConfig(
+                "database.enabled" to "false",
+                "database.maximumPoolSize" to "broken",
+                "database.migrations.mode" to "broken",
+            )
+        )
         assertFalse(settings.enabled)
     }
 

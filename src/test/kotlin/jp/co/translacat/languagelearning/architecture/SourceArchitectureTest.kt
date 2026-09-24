@@ -68,9 +68,11 @@ class SourceArchitectureTest {
     }
 
     @Test
-    fun `다른 기능의 영속성 구현 참조는 의도한 두 연결만 허용한다`() {
+    fun `다른 기능의 영속성 구현 참조는 의도한 연결만 허용한다`() {
         // learner와 settings는 같은 서비스/DB 내부이다. 기존 FK 매핑과 UoW 조립만 예외로 둔다.
         val allowed = setOf(
+            "$ROOT.features.settings.infrastructure.persistence.table.SettingsSelectionDeliveriesTable" to
+                "$ROOT.features.learner.infrastructure.persistence.table.LearnersTable",
             "$ROOT.features.settings.infrastructure.persistence.table.UserSettingsTable" to
                 "$ROOT.features.learner.infrastructure.persistence.table.LearnersTable",
             "$ROOT.features.settings.infrastructure.persistence.ExposedSettingsUnitOfWork" to
@@ -97,8 +99,13 @@ class SourceArchitectureTest {
             when {
                 name.endsWith("Table") || name.endsWith("Tables") ->
                     assertTrue(source.packageName.endsWith(".infrastructure.persistence.table"), source.primaryName)
+
                 name.startsWith("Exposed") && name.endsWith("Repository") ->
-                    assertTrue(source.packageName.endsWith(".infrastructure.persistence.repository"), source.primaryName)
+                    assertTrue(
+                        source.packageName.endsWith(".infrastructure.persistence.repository"),
+                        source.primaryName
+                    )
+
                 name.endsWith("Repository") ->
                     assertTrue(source.packageName.endsWith(".domain.repository"), source.primaryName)
             }

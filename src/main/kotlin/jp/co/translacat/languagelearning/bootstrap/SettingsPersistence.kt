@@ -4,6 +4,8 @@ import io.ktor.server.application.*
 import io.ktor.server.plugins.di.*
 import jp.co.translacat.languagelearning.features.settings.application.*
 import jp.co.translacat.languagelearning.features.settings.infrastructure.persistence.ExposedAdminSettingsUnitOfWork
+import jp.co.translacat.languagelearning.features.settings.infrastructure.persistence.ExposedSelectionSettingsUnitOfWork
+import jp.co.translacat.languagelearning.features.settings.infrastructure.persistence.ExposedSettingsReadQueries
 import jp.co.translacat.languagelearning.features.settings.infrastructure.persistence.ExposedSettingsUnitOfWork
 import jp.co.translacat.languagelearning.shared.persistence.DatabaseFactory
 import jp.co.translacat.languagelearning.shared.persistence.DatabaseSettings
@@ -19,10 +21,15 @@ internal fun Application.configureSettingsPersistence(factory: DatabaseFactory, 
         GetUserSettings(unitOfWork), UpdateUserSettings(unitOfWork),
         GetAdminSettings(adminWork), UpdateAdminSettings(adminWork),
     )
+    val serviceOperations = DefaultSettingsServiceOperations(
+        unitOfWork, ExposedSettingsReadQueries(transactions), GetAdminSettings(adminWork),
+    )
     dependencies {
         provide<JdbcTransactionRunner> { transactions }
         provide<SettingsUnitOfWork> { unitOfWork }
         provide<GetOrCreateUserSettings> { service }
         provide<SettingsOperations> { operations }
+        provide<SettingsServiceOperations> { serviceOperations }
+        provide<RememberListeningSelection> { RememberListeningSelection(ExposedSelectionSettingsUnitOfWork(unitOfWork)) }
     }
 }

@@ -4,7 +4,11 @@ import io.ktor.server.application.*
 import io.ktor.server.plugins.di.*
 import io.ktor.server.routing.*
 import jp.co.translacat.languagelearning.features.settings.api.settingsRoutes
+import jp.co.translacat.languagelearning.features.settings.api.settingsServiceRoutes
+import jp.co.translacat.languagelearning.features.settings.api.settingsSelectionRoute
+import jp.co.translacat.languagelearning.features.settings.application.RememberListeningSelection
 import jp.co.translacat.languagelearning.features.settings.application.SettingsOperations
+import jp.co.translacat.languagelearning.features.settings.application.SettingsServiceOperations
 import jp.co.translacat.languagelearning.shared.persistence.DatabaseSettings
 
 internal suspend fun Application.configureSettingsHttp() {
@@ -18,5 +22,11 @@ internal suspend fun Application.configureSettingsHttp() {
     }
     val operations = dependencies.resolve<SettingsOperations>()
     configureInternalAuthentication(internalApi)
-    routing { settingsRoutes(operations) }
+    val serviceOperations = dependencies.resolve<SettingsServiceOperations>()
+    val selection = dependencies.resolve<RememberListeningSelection>()
+    routing {
+        settingsRoutes(operations)
+        settingsServiceRoutes(serviceOperations)
+        settingsSelectionRoute(selection)
+    }
 }
