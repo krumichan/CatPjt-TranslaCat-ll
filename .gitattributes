@@ -1,0 +1,2 @@
+# Keep versioned SQL identical across Windows and Linux working trees.
+*.sql text eol=lf

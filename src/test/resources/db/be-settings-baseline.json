@@ -1,0 +1,632 @@
+{
+  "language_learning_admin_setting": {
+    "source": "src/main/java/jp/co/translacat/domain/languagelearning/setting/entity/LanguageLearningAdminSetting.java",
+    "sha256": "b70d447f667312d8e39459f480481759ecadd8a80924c11847d050e31754e83f",
+    "columns": [
+      {
+        "field": "id",
+        "column": "id",
+        "type": "VARCHAR(30)",
+        "nullable": false,
+        "primary_key": true,
+        "auto_increment": false
+      },
+      {
+        "field": "defaultDailySentenceCount",
+        "column": "default_daily_sentence_count",
+        "type": "INT",
+        "nullable": false,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "minDailySentenceCount",
+        "column": "min_daily_sentence_count",
+        "type": "INT",
+        "nullable": false,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "maxDailySentenceCount",
+        "column": "max_daily_sentence_count",
+        "type": "INT",
+        "nullable": false,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "dailyKeywordMaxCount",
+        "column": "daily_keyword_max_count",
+        "type": "INT",
+        "nullable": false,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "reviewAvailableDays",
+        "column": "review_available_days",
+        "type": "INT",
+        "nullable": false,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "levelRecheckRecommendationDays",
+        "column": "level_recheck_recommendation_days",
+        "type": "INT",
+        "nullable": false,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "adaptiveWritingEnabled",
+        "column": "adaptive_writing_enabled",
+        "type": "BOOLEAN",
+        "nullable": false,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "aiEvaluationEnabled",
+        "column": "ai_evaluation_enabled",
+        "type": "BOOLEAN",
+        "nullable": false,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "speakingEnabled",
+        "column": "speaking_enabled",
+        "type": "BOOLEAN",
+        "nullable": false,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "speakingEvaluationEnabled",
+        "column": "speaking_evaluation_enabled",
+        "type": "BOOLEAN",
+        "nullable": false,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "defaultDailySpeakingGoalMinutes",
+        "column": "default_daily_speaking_goal_minutes",
+        "type": "INT",
+        "nullable": false,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "minDailySpeakingGoalMinutes",
+        "column": "min_daily_speaking_goal_minutes",
+        "type": "INT",
+        "nullable": false,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "maxDailySpeakingGoalMinutes",
+        "column": "max_daily_speaking_goal_minutes",
+        "type": "INT",
+        "nullable": false,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "dailySpeakingHardLimitMinutes",
+        "column": "daily_speaking_hard_limit_minutes",
+        "type": "INT",
+        "nullable": false,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "dailySpeakingSessionLimit",
+        "column": "daily_speaking_session_limit",
+        "type": "INT",
+        "nullable": false,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "maxSessionMinutes",
+        "column": "max_session_minutes",
+        "type": "INT",
+        "nullable": false,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "maxTurnsPerSession",
+        "column": "max_turns_per_session",
+        "type": "INT",
+        "nullable": false,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "minValidAudioSeconds",
+        "column": "min_valid_audio_seconds",
+        "type": "DOUBLE",
+        "nullable": false,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "maxTurnAudioSeconds",
+        "column": "max_turn_audio_seconds",
+        "type": "INT",
+        "nullable": false,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "maxAudioFileBytes",
+        "column": "max_audio_file_bytes",
+        "type": "BIGINT",
+        "nullable": false,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "rawAudioRetentionDays",
+        "column": "raw_audio_retention_days",
+        "type": "INT",
+        "nullable": false,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "reportedAudioRetentionDays",
+        "column": "reported_audio_retention_days",
+        "type": "INT",
+        "nullable": false,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "activeSessionResumeHours",
+        "column": "active_session_resume_hours",
+        "type": "INT",
+        "nullable": false,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "automaticRetryLimitPerStage",
+        "column": "automatic_retry_limit_per_stage",
+        "type": "INT",
+        "nullable": false,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "manualRetryLimitPerStage",
+        "column": "manual_retry_limit_per_stage",
+        "type": "INT",
+        "nullable": false,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "sttTimeoutSeconds",
+        "column": "stt_timeout_seconds",
+        "type": "INT",
+        "nullable": false,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "ttsTimeoutSeconds",
+        "column": "tts_timeout_seconds",
+        "type": "INT",
+        "nullable": false,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "evaluationTimeoutSeconds",
+        "column": "evaluation_timeout_seconds",
+        "type": "INT",
+        "nullable": false,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "levelTestQuestionPoolTargetSize",
+        "column": "level_test_question_pool_target_size",
+        "type": "INT",
+        "nullable": true,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "levelTestQuestionPoolReplenishmentEnabled",
+        "column": "level_test_question_pool_replenishment_enabled",
+        "type": "BOOLEAN",
+        "nullable": true,
+        "primary_key": false,
+        "auto_increment": false
+      }
+    ],
+    "seed": {
+      "id": "DEFAULT",
+      "default_daily_sentence_count": 5,
+      "min_daily_sentence_count": 1,
+      "max_daily_sentence_count": 20,
+      "daily_keyword_max_count": 5,
+      "review_available_days": 7,
+      "level_recheck_recommendation_days": 30,
+      "adaptive_writing_enabled": true,
+      "ai_evaluation_enabled": true,
+      "speaking_enabled": true,
+      "speaking_evaluation_enabled": true,
+      "default_daily_speaking_goal_minutes": 5,
+      "min_daily_speaking_goal_minutes": 3,
+      "max_daily_speaking_goal_minutes": 20,
+      "daily_speaking_hard_limit_minutes": 30,
+      "daily_speaking_session_limit": 5,
+      "max_session_minutes": 10,
+      "max_turns_per_session": 20,
+      "min_valid_audio_seconds": 1.0,
+      "max_turn_audio_seconds": 60,
+      "max_audio_file_bytes": 10485760,
+      "raw_audio_retention_days": 7,
+      "reported_audio_retention_days": 30,
+      "active_session_resume_hours": 2,
+      "automatic_retry_limit_per_stage": 2,
+      "manual_retry_limit_per_stage": 1,
+      "stt_timeout_seconds": 30,
+      "tts_timeout_seconds": 30,
+      "evaluation_timeout_seconds": 60,
+      "level_test_question_pool_target_size": 1000,
+      "level_test_question_pool_replenishment_enabled": false
+    },
+    "normalized_sha256": "b70d447f667312d8e39459f480481759ecadd8a80924c11847d050e31754e83f"
+  },
+  "language_learning_user_setting": {
+    "source": "src/main/java/jp/co/translacat/domain/languagelearning/setting/entity/LanguageLearningUserSetting.java",
+    "sha256": "6e3bf7bc93e4cef34a6bdfb24be5e86e1bec5770053c3ba362f1291eece21d45",
+    "columns": [
+      {
+        "field": "id",
+        "column": "id",
+        "type": "BIGINT",
+        "nullable": false,
+        "primary_key": true,
+        "auto_increment": true
+      },
+      {
+        "field": "user",
+        "column": "user_id",
+        "type": "BIGINT",
+        "nullable": false,
+        "auto_increment": false,
+        "primary_key": false,
+        "reference": "language_learning_learner.user_id"
+      },
+      {
+        "field": "originLanguage",
+        "column": "origin_language",
+        "type": "VARCHAR(20)",
+        "nullable": true,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "learningLanguage",
+        "column": "learning_language",
+        "type": "VARCHAR(20)",
+        "nullable": true,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "timezone",
+        "column": "timezone",
+        "type": "VARCHAR(60)",
+        "nullable": false,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "dailySentenceCount",
+        "column": "daily_sentence_count",
+        "type": "INT",
+        "nullable": false,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "dailySpeakingGoalMinutes",
+        "column": "daily_speaking_goal_minutes",
+        "type": "INT",
+        "nullable": false,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "dailyListeningGoalCount",
+        "column": "daily_listening_goal_count",
+        "type": "INT",
+        "nullable": false,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "defaultListeningTaskTypesJson",
+        "column": "default_listening_task_types",
+        "type": "VARCHAR(200)",
+        "nullable": false,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "speakingVoiceId",
+        "column": "speaking_voice_id",
+        "type": "VARCHAR(100)",
+        "nullable": false,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "speakingPlaybackSpeed",
+        "column": "speaking_playback_speed",
+        "type": "VARCHAR(20)",
+        "nullable": false,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "pendingOriginLanguage",
+        "column": "pending_origin_language",
+        "type": "VARCHAR(20)",
+        "nullable": true,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "pendingLearningLanguage",
+        "column": "pending_learning_language",
+        "type": "VARCHAR(20)",
+        "nullable": true,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "pendingTimezone",
+        "column": "pending_timezone",
+        "type": "VARCHAR(60)",
+        "nullable": true,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "pendingDailySentenceCount",
+        "column": "pending_daily_sentence_count",
+        "type": "INT",
+        "nullable": true,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "pendingDailySpeakingGoalMinutes",
+        "column": "pending_daily_speaking_goal_minutes",
+        "type": "INT",
+        "nullable": true,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "pendingDailyListeningGoalCount",
+        "column": "pending_daily_listening_goal_count",
+        "type": "INT",
+        "nullable": true,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "pendingEffectiveDate",
+        "column": "pending_effective_date",
+        "type": "DATE",
+        "nullable": true,
+        "primary_key": false,
+        "auto_increment": false
+      }
+    ],
+    "seed": {},
+    "normalized_sha256": "6e3bf7bc93e4cef34a6bdfb24be5e86e1bec5770053c3ba362f1291eece21d45"
+  },
+  "language_learning_listening_policy_setting": {
+    "source": "src/main/java/jp/co/translacat/domain/languagelearning/listening/setting/entity/ListeningPolicySetting.java",
+    "sha256": "45f51c8fafe83b0e7707698cf39d84746d7467fdeb445f80074b5daea697b3d7",
+    "columns": [
+      {
+        "field": "id",
+        "column": "id",
+        "type": "VARCHAR(30)",
+        "nullable": false,
+        "primary_key": true,
+        "auto_increment": false
+      },
+      {
+        "field": "enabled",
+        "column": "enabled",
+        "type": "BOOLEAN",
+        "nullable": false,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "defaultItemCount",
+        "column": "default_item_count",
+        "type": "INT",
+        "nullable": false,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "minItemCount",
+        "column": "min_item_count",
+        "type": "INT",
+        "nullable": false,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "maxItemCount",
+        "column": "max_item_count",
+        "type": "INT",
+        "nullable": false,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "hardItemLimit",
+        "column": "hard_item_limit",
+        "type": "INT",
+        "nullable": false,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "referenceAudioMaxSeconds",
+        "column": "reference_audio_max_seconds",
+        "type": "INT",
+        "nullable": false,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "repeatAudioMaxSeconds",
+        "column": "repeat_audio_max_seconds",
+        "type": "INT",
+        "nullable": false,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "maxAudioFileBytes",
+        "column": "max_audio_file_bytes",
+        "type": "BIGINT",
+        "nullable": false,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "maxRerecordCount",
+        "column": "max_rerecord_count",
+        "type": "INT",
+        "nullable": false,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "resumeHours",
+        "column": "resume_hours",
+        "type": "INT",
+        "nullable": false,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "referenceAudioRetentionDays",
+        "column": "reference_audio_retention_days",
+        "type": "INT",
+        "nullable": false,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "userAudioRetentionDays",
+        "column": "user_audio_retention_days",
+        "type": "INT",
+        "nullable": false,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "reportedAudioRetentionDays",
+        "column": "reported_audio_retention_days",
+        "type": "INT",
+        "nullable": false,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "automaticRetryLimit",
+        "column": "automatic_retry_limit",
+        "type": "INT",
+        "nullable": false,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "manualRetryLimit",
+        "column": "manual_retry_limit",
+        "type": "INT",
+        "nullable": false,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "practiceAttemptLimit",
+        "column": "practice_attempt_limit",
+        "type": "INT",
+        "nullable": false,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "profilePolicyVersion",
+        "column": "profile_policy_version",
+        "type": "VARCHAR(100)",
+        "nullable": false,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "modelConfigVersion",
+        "column": "model_config_version",
+        "type": "VARCHAR(100)",
+        "nullable": false,
+        "primary_key": false,
+        "auto_increment": false
+      },
+      {
+        "field": "referenceTtsRegenerationEnabled",
+        "column": "reference_tts_regeneration_enabled",
+        "type": "BOOLEAN",
+        "nullable": false,
+        "primary_key": false,
+        "auto_increment": false
+      }
+    ],
+    "seed": {
+      "id": "DEFAULT",
+      "enabled": true,
+      "default_item_count": 5,
+      "min_item_count": 1,
+      "max_item_count": 20,
+      "hard_item_limit": 30,
+      "reference_audio_max_seconds": 30,
+      "repeat_audio_max_seconds": 60,
+      "max_audio_file_bytes": 10485760,
+      "max_rerecord_count": 2,
+      "resume_hours": 2,
+      "reference_audio_retention_days": 7,
+      "user_audio_retention_days": 7,
+      "reported_audio_retention_days": 30,
+      "automatic_retry_limit": 2,
+      "manual_retry_limit": 1,
+      "practice_attempt_limit": 1,
+      "profile_policy_version": "listening-profile",
+      "model_config_version": "listening-model-config",
+      "reference_tts_regeneration_enabled": false
+    },
+    "normalized_sha256": "45f51c8fafe83b0e7707698cf39d84746d7467fdeb445f80074b5daea697b3d7"
+  }
+}

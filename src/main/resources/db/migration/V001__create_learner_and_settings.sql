@@ -1,0 +1,108 @@
+-- Fresh LL database only. Sources and intentional changes: docs/database-foundation.md.
+-- No Core tables, cross-database FK, automatic database creation, or cascaded deletion.
+-- In MySQL, the multi-statement file is NOT an all-or-nothing DDL transaction.
+
+CREATE TABLE language_learning_learner (
+    user_id BIGINT NOT NULL,
+    status VARCHAR(20) NOT NULL DEFAULT 'ACTIVE',
+    identity_version BIGINT NOT NULL DEFAULT 0,
+    created_at DATETIME(6) NOT NULL,
+    updated_at DATETIME(6) NOT NULL,
+    PRIMARY KEY (user_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE language_learning_admin_setting (
+    id VARCHAR(30) NOT NULL,
+    default_daily_sentence_count INT NOT NULL,
+    min_daily_sentence_count INT NOT NULL,
+    max_daily_sentence_count INT NOT NULL,
+    daily_keyword_max_count INT NOT NULL,
+    review_available_days INT NOT NULL,
+    level_recheck_recommendation_days INT NOT NULL,
+    adaptive_writing_enabled BOOLEAN NOT NULL,
+    ai_evaluation_enabled BOOLEAN NOT NULL,
+    speaking_enabled BOOLEAN NOT NULL,
+    speaking_evaluation_enabled BOOLEAN NOT NULL,
+    default_daily_speaking_goal_minutes INT NOT NULL,
+    min_daily_speaking_goal_minutes INT NOT NULL,
+    max_daily_speaking_goal_minutes INT NOT NULL,
+    daily_speaking_hard_limit_minutes INT NOT NULL,
+    daily_speaking_session_limit INT NOT NULL,
+    max_session_minutes INT NOT NULL,
+    max_turns_per_session INT NOT NULL,
+    min_valid_audio_seconds DOUBLE NOT NULL,
+    max_turn_audio_seconds INT NOT NULL,
+    max_audio_file_bytes BIGINT NOT NULL,
+    raw_audio_retention_days INT NOT NULL,
+    reported_audio_retention_days INT NOT NULL,
+    active_session_resume_hours INT NOT NULL,
+    automatic_retry_limit_per_stage INT NOT NULL,
+    manual_retry_limit_per_stage INT NOT NULL,
+    stt_timeout_seconds INT NOT NULL,
+    tts_timeout_seconds INT NOT NULL,
+    evaluation_timeout_seconds INT NOT NULL,
+    level_test_question_pool_target_size INT NULL,
+    level_test_question_pool_replenishment_enabled BOOLEAN NULL,
+    created_by VARCHAR(50) NULL,
+    created_at DATETIME(6) NOT NULL,
+    updated_by VARCHAR(50) NULL,
+    updated_at DATETIME(6) NOT NULL,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE language_learning_listening_policy_setting (
+    id VARCHAR(30) NOT NULL,
+    enabled BOOLEAN NOT NULL,
+    default_item_count INT NOT NULL,
+    min_item_count INT NOT NULL,
+    max_item_count INT NOT NULL,
+    hard_item_limit INT NOT NULL,
+    reference_audio_max_seconds INT NOT NULL,
+    repeat_audio_max_seconds INT NOT NULL,
+    max_audio_file_bytes BIGINT NOT NULL,
+    max_rerecord_count INT NOT NULL,
+    resume_hours INT NOT NULL,
+    reference_audio_retention_days INT NOT NULL,
+    user_audio_retention_days INT NOT NULL,
+    reported_audio_retention_days INT NOT NULL,
+    automatic_retry_limit INT NOT NULL,
+    manual_retry_limit INT NOT NULL,
+    practice_attempt_limit INT NOT NULL,
+    profile_policy_version VARCHAR(100) NOT NULL,
+    model_config_version VARCHAR(100) NOT NULL,
+    reference_tts_regeneration_enabled BOOLEAN NOT NULL,
+    created_by VARCHAR(50) NULL,
+    created_at DATETIME(6) NOT NULL,
+    updated_by VARCHAR(50) NULL,
+    updated_at DATETIME(6) NOT NULL,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE language_learning_user_setting (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    user_id BIGINT NOT NULL,
+    origin_language VARCHAR(20) NULL,
+    learning_language VARCHAR(20) NULL,
+    timezone VARCHAR(60) NOT NULL,
+    daily_sentence_count INT NOT NULL,
+    daily_speaking_goal_minutes INT NOT NULL,
+    daily_listening_goal_count INT NOT NULL,
+    default_listening_task_types VARCHAR(200) NOT NULL,
+    speaking_voice_id VARCHAR(100) NOT NULL,
+    speaking_playback_speed VARCHAR(20) NOT NULL,
+    pending_origin_language VARCHAR(20) NULL,
+    pending_learning_language VARCHAR(20) NULL,
+    pending_timezone VARCHAR(60) NULL,
+    pending_daily_sentence_count INT NULL,
+    pending_daily_speaking_goal_minutes INT NULL,
+    pending_daily_listening_goal_count INT NULL,
+    pending_effective_date DATE NULL,
+    created_by VARCHAR(50) NULL,
+    created_at DATETIME(6) NOT NULL,
+    updated_by VARCHAR(50) NULL,
+    updated_at DATETIME(6) NOT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT uk_language_learning_user_setting_user UNIQUE (user_id),
+    CONSTRAINT fk_ll_user_setting_learner FOREIGN KEY (user_id)
+        REFERENCES language_learning_learner (user_id) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

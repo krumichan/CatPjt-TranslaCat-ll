@@ -1,44 +1,30 @@
 package jp.co.translacat.languagelearning.bootstrap
 
-import io.ktor.server.application.Application
-import io.ktor.server.application.ApplicationStopped
-import io.ktor.server.plugins.di.dependencies
+import io.ktor.server.application.*
+import io.ktor.server.plugins.di.*
 import jp.co.translacat.languagelearning.shared.persistence.DatabaseFactory
 import jp.co.translacat.languagelearning.shared.persistence.DatabaseSettings
 
 suspend fun Application.configurePersistence() {
     val settings = dependencies.resolve<DatabaseSettings>()
-
     if (!settings.enabled) {
-        environment.log.info("Database persistence is disabled.")
+        environment.log.info("Database persistence is disabled; pool and migrations were not started.")
         return
     }
 
-    check(settings.username != "not-configured") {
-        "DB_USERNAME must be configured when database.enalbed=true."
-    }
-
-    check(settings.password != "not-configured") {
-        "DB_PASSWORD must be configured when database.enalbed=true."
-    }
-
-    check(settings.maximumPoolSize > 0) {
-        "DB_MAX_POOL_SIZE must be greater than 0."
-    }
-
-    check(settings.minimumIdle >= 0) {
-        "DB_MIN_IDEL must not exceed DB_MAX_POOL_SIZE."
-    }
-
-    val databaseFactory = DatabaseFactory(settings)
-
     dependencies {
-        provide<DatabaseFactory> { databaseFactory }
+        // Ktor DI owns the AutoCloseable. No second ApplicationStopped close handler is needed.
+        provide<DatabaseFactory> { DatabaseFactory(settings) }
     }
+    // Eager resolution is intentional: never serve requests with a failed/pending migration.
+    // JDBC bootstrap runs once at startup, not inside an HTTP handler or an application transaction.
+    val factory = dependencies.resolve<DatabaseFactory>()
 
-    monitor.subscribe(ApplicationStopped) {
-        databaseFactory.close()
-    }
-
-    environment.log.info("Database persistence initialized.")
+    environment.log.info(
+        "Database persistence initialized. catalog={} mode={} schemaVersion={} migrationsExecuted={}",
+        settings.expectedCatalog,
+        factory.migrationReport.mode,
+        factory.migrationReport.schemaVersion,
+        factory.migrationReport.migrationsExecuted,
+    )
 }

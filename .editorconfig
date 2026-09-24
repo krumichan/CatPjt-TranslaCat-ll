@@ -1,0 +1,24 @@
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+
+[*.{kt,kts}]
+indent_style = space
+indent_size = 4
+
+ij_kotlin_code_style_defaults = KOTLIN_OFFICIAL
+
+# 기존 줄바꿈 유지
+ij_kotlin_keep_line_breaks = true
+
+# 체인 호출은 한 호출씩 줄바꿈
+ij_kotlin_method_call_chain_wrap = on_every_item
+
+# Flyway.configure()까지는 첫 줄에 유지
+ij_kotlin_wrap_first_method_in_call_chain = false
+
+# 체인 호출 추가 들여쓰기 방지
+ij_kotlin_continuation_indent_for_chained_calls = false
