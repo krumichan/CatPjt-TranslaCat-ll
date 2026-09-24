@@ -1,5 +1,5 @@
 database:
-  enabled: ${DB_ENABLED:true}
+  enabled: true
 
   jdbcUrl: ${DB_JDBC_URL}
   username: ${DB_USERNAME}
