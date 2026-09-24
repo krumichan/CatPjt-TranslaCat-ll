@@ -10,6 +10,15 @@ database:
   minimumIdle: ${DB_MIN_IDLE:2}
   connectionTimeoutMs: ${DB_CONNECTION_TIMEOUT_MS:5000}
 
-  # For a separate deployment migration job, set DB_MIGRATION_MODE=validate afterwards.
+  # 별도 배포 migration 작업을 두는 경우, 적용 후 DB_MIGRATION_MODE=validate로 운용한다.
   migrations:
     mode: ${DB_MIGRATION_MODE:migrate}
+
+internalApi:
+  enabled: ${LL_INTERNAL_API_ENABLED:true}
+  issuer: ${LL_INTERNAL_JWT_ISSUER:translacat-be}
+  audience: ${LL_INTERNAL_JWT_AUDIENCE:translacat-ll}
+  callerService: ${LL_INTERNAL_CALLER_SERVICE:translacat-be}
+  secretBase64: ${LL_INTERNAL_JWT_SECRET_BASE64}
+  maxTtlSeconds: ${LL_INTERNAL_JWT_MAX_TTL_SECONDS:120}
+  clockSkewSeconds: ${LL_INTERNAL_JWT_CLOCK_SKEW_SECONDS:5}

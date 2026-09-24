@@ -1,23 +1,606 @@
-openapi: "3.0.3"
+openapi: 3.0.3
 info:
-  title: "Application API"
-  description: "Application API"
-  version: "1.0.0"
-servers:
-  - url: "http://0.0.0.0:8080"
+  title: TranslaCat LL 내부 Settings API
+  version: settings-port-v1
+  description: internalApi.enabled=true일 때만 Settings 경로가 등록된다. ADMIN API는 서명된 roles에
+    ADMIN이 필요하다. FE 로그인 토큰을 재사용하지 않는다.
 paths:
-  /:
+  /internal/v1/language-learning/settings:
     get:
-      description: "Hello World!"
+      operationId: getUserSettings
+      tags:
+      - Settings
+      summary: 개인 설정 조회
+      security:
+      - InternalBearer: []
       responses:
-        "200":
-          description: "OK"
+        '200':
+          description: 성공. 기존 BE의 body DTO이며 외부 응답 봉투는 BE에서 처리한다.
           content:
-            text/plain:
+            application/json:
               schema:
-                type: "string"
-              examples:
-                Example#1:
-                  value: "Hello World!"
+                $ref: '#/components/schemas/UserSettingResponseDto'
+        '400':
+          description: 입력 또는 업무 정책 오류
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalApiError'
+        '401':
+          description: 내부 JWT 검증 실패
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalApiError'
+        '403':
+          description: 권한 또는 learner 상태 오류
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalApiError'
+        '503':
+          description: 필수 설정 없음
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalApiError'
+        '500':
+          description: 내부 오류
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalApiError'
+    patch:
+      operationId: patchUserSettings
+      tags:
+      - Settings
+      summary: 개인 설정 변경
+      security:
+      - InternalBearer: []
+      responses:
+        '200':
+          description: 성공. 기존 BE의 body DTO이며 외부 응답 봉투는 BE에서 처리한다.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserSettingResponseDto'
+        '400':
+          description: 입력 또는 업무 정책 오류
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalApiError'
+        '401':
+          description: 내부 JWT 검증 실패
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalApiError'
+        '403':
+          description: 권한 또는 learner 상태 오류
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalApiError'
+        '503':
+          description: 필수 설정 없음
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalApiError'
+        '500':
+          description: 내부 오류
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalApiError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserSettingUpdateRequestDto'
+  /internal/v1/admin/language-learning/settings:
+    get:
+      operationId: getAdminSettings
+      tags:
+      - Settings
+      summary: 관리자 설정 조회
+      security:
+      - InternalBearer: []
+      responses:
+        '200':
+          description: 성공. 기존 BE의 body DTO이며 외부 응답 봉투는 BE에서 처리한다.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminSettingResponseDto'
+        '400':
+          description: 입력 또는 업무 정책 오류
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalApiError'
+        '401':
+          description: 내부 JWT 검증 실패
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalApiError'
+        '403':
+          description: 권한 또는 learner 상태 오류
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalApiError'
+        '503':
+          description: 필수 설정 없음
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalApiError'
+        '500':
+          description: 내부 오류
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalApiError'
+    patch:
+      operationId: patchAdminSettings
+      tags:
+      - Settings
+      summary: 관리자 설정 변경
+      security:
+      - InternalBearer: []
+      responses:
+        '200':
+          description: 성공. 기존 BE의 body DTO이며 외부 응답 봉투는 BE에서 처리한다.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminSettingResponseDto'
+        '400':
+          description: 입력 또는 업무 정책 오류
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalApiError'
+        '401':
+          description: 내부 JWT 검증 실패
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalApiError'
+        '403':
+          description: 권한 또는 learner 상태 오류
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalApiError'
+        '503':
+          description: 필수 설정 없음
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalApiError'
+        '500':
+          description: 내부 오류
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalApiError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminSettingUpdateRequestDto'
+  /health:
+    get:
+      summary: 프로세스 생존 확인; DB 준비 상태는 아님
+      responses:
+        '200':
+          description: 생존
 components:
-  schemas: { }
+  securitySchemes:
+    InternalBearer:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: HS256 전용 내부 키. iss/aud/service/tokenUse/sub/roles/iat/exp 검증.
+  schemas:
+    UserSettingResponseDto:
+      type: object
+      additionalProperties: false
+      properties:
+        originLanguage:
+          type: string
+          nullable: true
+        learningLanguage:
+          type: string
+          nullable: true
+        timezone:
+          type: string
+        dailySentenceCount:
+          type: integer
+          format: int32
+        dailySpeakingGoalMinutes:
+          type: integer
+          format: int32
+        speakingVoiceId:
+          type: string
+        speakingPlaybackSpeed:
+          type: string
+        dailyListeningGoalCount:
+          type: integer
+          format: int32
+        defaultListeningTaskTypes:
+          type: array
+          items:
+            type: string
+            enum:
+            - DICTATION
+            - INTERPRETATION
+            - REPEAT_AFTER_AUDIO
+            - COMPREHENSION
+            - SUMMARY
+        pendingOriginLanguage:
+          type: string
+          nullable: true
+        pendingLearningLanguage:
+          type: string
+          nullable: true
+        pendingTimezone:
+          type: string
+          nullable: true
+        pendingDailySentenceCount:
+          type: integer
+          format: int32
+          nullable: true
+        pendingDailySpeakingGoalMinutes:
+          type: integer
+          format: int32
+          nullable: true
+        pendingDailyListeningGoalCount:
+          type: integer
+          format: int32
+          nullable: true
+        pendingEffectiveDate:
+          type: string
+          nullable: true
+          format: date
+        minDailySentenceCount:
+          type: integer
+          format: int32
+        maxDailySentenceCount:
+          type: integer
+          format: int32
+        minDailySpeakingGoalMinutes:
+          type: integer
+          format: int32
+        maxDailySpeakingGoalMinutes:
+          type: integer
+          format: int32
+        minDailyListeningGoalCount:
+          type: integer
+          format: int32
+        maxDailyListeningGoalCount:
+          type: integer
+          format: int32
+        configured:
+          type: boolean
+      required:
+      - originLanguage
+      - learningLanguage
+      - timezone
+      - dailySentenceCount
+      - dailySpeakingGoalMinutes
+      - speakingVoiceId
+      - speakingPlaybackSpeed
+      - dailyListeningGoalCount
+      - defaultListeningTaskTypes
+      - pendingOriginLanguage
+      - pendingLearningLanguage
+      - pendingTimezone
+      - pendingDailySentenceCount
+      - pendingDailySpeakingGoalMinutes
+      - pendingDailyListeningGoalCount
+      - pendingEffectiveDate
+      - minDailySentenceCount
+      - maxDailySentenceCount
+      - minDailySpeakingGoalMinutes
+      - maxDailySpeakingGoalMinutes
+      - minDailyListeningGoalCount
+      - maxDailyListeningGoalCount
+      - configured
+    UserSettingUpdateRequestDto:
+      type: object
+      additionalProperties: false
+      properties:
+        originLanguage:
+          type: string
+          nullable: true
+        learningLanguage:
+          type: string
+          nullable: true
+        timezone:
+          type: string
+          nullable: true
+        dailySentenceCount:
+          type: integer
+          format: int32
+          nullable: true
+        dailySpeakingGoalMinutes:
+          type: integer
+          format: int32
+          nullable: true
+        speakingVoiceId:
+          type: string
+          nullable: true
+        speakingPlaybackSpeed:
+          type: string
+          nullable: true
+        dailyListeningGoalCount:
+          type: integer
+          format: int32
+          nullable: true
+        defaultListeningTaskTypes:
+          type: array
+          items:
+            type: string
+            enum:
+            - DICTATION
+            - INTERPRETATION
+            - REPEAT_AFTER_AUDIO
+            - COMPREHENSION
+            - SUMMARY
+          nullable: true
+    AdminSettingResponseDto:
+      type: object
+      additionalProperties: false
+      properties:
+        defaultDailySentenceCount:
+          type: integer
+          format: int32
+        minDailySentenceCount:
+          type: integer
+          format: int32
+        maxDailySentenceCount:
+          type: integer
+          format: int32
+        dailyKeywordMaxCount:
+          type: integer
+          format: int32
+        reviewAvailableDays:
+          type: integer
+          format: int32
+        levelRecheckRecommendationDays:
+          type: integer
+          format: int32
+        adaptiveWritingEnabled:
+          type: boolean
+        aiEvaluationEnabled:
+          type: boolean
+        speakingEnabled:
+          type: boolean
+        speakingEvaluationEnabled:
+          type: boolean
+        defaultDailySpeakingGoalMinutes:
+          type: integer
+          format: int32
+        minDailySpeakingGoalMinutes:
+          type: integer
+          format: int32
+        maxDailySpeakingGoalMinutes:
+          type: integer
+          format: int32
+        dailySpeakingHardLimitMinutes:
+          type: integer
+          format: int32
+        dailySpeakingSessionLimit:
+          type: integer
+          format: int32
+        maxSessionMinutes:
+          type: integer
+          format: int32
+        maxTurnsPerSession:
+          type: integer
+          format: int32
+        minValidAudioSeconds:
+          type: number
+          format: double
+        maxTurnAudioSeconds:
+          type: integer
+          format: int32
+        maxAudioFileBytes:
+          type: integer
+          format: int64
+        rawAudioRetentionDays:
+          type: integer
+          format: int32
+        reportedAudioRetentionDays:
+          type: integer
+          format: int32
+        activeSessionResumeHours:
+          type: integer
+          format: int32
+        automaticRetryLimitPerStage:
+          type: integer
+          format: int32
+        manualRetryLimitPerStage:
+          type: integer
+          format: int32
+        sttTimeoutSeconds:
+          type: integer
+          format: int32
+        ttsTimeoutSeconds:
+          type: integer
+          format: int32
+        evaluationTimeoutSeconds:
+          type: integer
+          format: int32
+        levelTestQuestionPoolTargetSize:
+          type: integer
+          format: int32
+        levelTestQuestionPoolReplenishmentEnabled:
+          type: boolean
+      required:
+      - defaultDailySentenceCount
+      - minDailySentenceCount
+      - maxDailySentenceCount
+      - dailyKeywordMaxCount
+      - reviewAvailableDays
+      - levelRecheckRecommendationDays
+      - adaptiveWritingEnabled
+      - aiEvaluationEnabled
+      - speakingEnabled
+      - speakingEvaluationEnabled
+      - defaultDailySpeakingGoalMinutes
+      - minDailySpeakingGoalMinutes
+      - maxDailySpeakingGoalMinutes
+      - dailySpeakingHardLimitMinutes
+      - dailySpeakingSessionLimit
+      - maxSessionMinutes
+      - maxTurnsPerSession
+      - minValidAudioSeconds
+      - maxTurnAudioSeconds
+      - maxAudioFileBytes
+      - rawAudioRetentionDays
+      - reportedAudioRetentionDays
+      - activeSessionResumeHours
+      - automaticRetryLimitPerStage
+      - manualRetryLimitPerStage
+      - sttTimeoutSeconds
+      - ttsTimeoutSeconds
+      - evaluationTimeoutSeconds
+      - levelTestQuestionPoolTargetSize
+      - levelTestQuestionPoolReplenishmentEnabled
+    AdminSettingUpdateRequestDto:
+      type: object
+      additionalProperties: false
+      properties:
+        defaultDailySentenceCount:
+          type: integer
+          format: int32
+          nullable: true
+        minDailySentenceCount:
+          type: integer
+          format: int32
+          nullable: true
+        maxDailySentenceCount:
+          type: integer
+          format: int32
+          nullable: true
+        dailyKeywordMaxCount:
+          type: integer
+          format: int32
+          nullable: true
+        reviewAvailableDays:
+          type: integer
+          format: int32
+          nullable: true
+        levelRecheckRecommendationDays:
+          type: integer
+          format: int32
+          nullable: true
+        adaptiveWritingEnabled:
+          type: boolean
+          nullable: true
+        aiEvaluationEnabled:
+          type: boolean
+          nullable: true
+        speakingEnabled:
+          type: boolean
+          nullable: true
+        speakingEvaluationEnabled:
+          type: boolean
+          nullable: true
+        defaultDailySpeakingGoalMinutes:
+          type: integer
+          format: int32
+          nullable: true
+        minDailySpeakingGoalMinutes:
+          type: integer
+          format: int32
+          nullable: true
+        maxDailySpeakingGoalMinutes:
+          type: integer
+          format: int32
+          nullable: true
+        dailySpeakingHardLimitMinutes:
+          type: integer
+          format: int32
+          nullable: true
+        dailySpeakingSessionLimit:
+          type: integer
+          format: int32
+          nullable: true
+        maxSessionMinutes:
+          type: integer
+          format: int32
+          nullable: true
+        maxTurnsPerSession:
+          type: integer
+          format: int32
+          nullable: true
+        minValidAudioSeconds:
+          type: number
+          format: double
+          nullable: true
+        maxTurnAudioSeconds:
+          type: integer
+          format: int32
+          nullable: true
+        maxAudioFileBytes:
+          type: integer
+          format: int64
+          nullable: true
+        rawAudioRetentionDays:
+          type: integer
+          format: int32
+          nullable: true
+        reportedAudioRetentionDays:
+          type: integer
+          format: int32
+          nullable: true
+        activeSessionResumeHours:
+          type: integer
+          format: int32
+          nullable: true
+        automaticRetryLimitPerStage:
+          type: integer
+          format: int32
+          nullable: true
+        manualRetryLimitPerStage:
+          type: integer
+          format: int32
+          nullable: true
+        sttTimeoutSeconds:
+          type: integer
+          format: int32
+          nullable: true
+        ttsTimeoutSeconds:
+          type: integer
+          format: int32
+          nullable: true
+        evaluationTimeoutSeconds:
+          type: integer
+          format: int32
+          nullable: true
+        levelTestQuestionPoolTargetSize:
+          type: integer
+          format: int32
+          nullable: true
+        levelTestQuestionPoolReplenishmentEnabled:
+          type: boolean
+          nullable: true
+    InternalApiError:
+      type: object
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: string
+        message:
+          type: string

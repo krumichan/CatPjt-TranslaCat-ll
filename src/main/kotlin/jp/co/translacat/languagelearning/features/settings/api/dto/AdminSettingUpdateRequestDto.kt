@@ -1,0 +1,37 @@
+package jp.co.translacat.languagelearning.features.settings.api.dto
+
+import kotlinx.serialization.Serializable
+
+@Serializable
+internal data class AdminSettingUpdateRequestDto(
+    val defaultDailySentenceCount: Int? = null,
+    val minDailySentenceCount: Int? = null,
+    val maxDailySentenceCount: Int? = null,
+    val dailyKeywordMaxCount: Int? = null,
+    val reviewAvailableDays: Int? = null,
+    val levelRecheckRecommendationDays: Int? = null,
+    val adaptiveWritingEnabled: Boolean? = null,
+    val aiEvaluationEnabled: Boolean? = null,
+    val speakingEnabled: Boolean? = null,
+    val speakingEvaluationEnabled: Boolean? = null,
+    val defaultDailySpeakingGoalMinutes: Int? = null,
+    val minDailySpeakingGoalMinutes: Int? = null,
+    val maxDailySpeakingGoalMinutes: Int? = null,
+    val dailySpeakingHardLimitMinutes: Int? = null,
+    val dailySpeakingSessionLimit: Int? = null,
+    val maxSessionMinutes: Int? = null,
+    val maxTurnsPerSession: Int? = null,
+    val minValidAudioSeconds: Double? = null,
+    val maxTurnAudioSeconds: Int? = null,
+    val maxAudioFileBytes: Long? = null,
+    val rawAudioRetentionDays: Int? = null,
+    val reportedAudioRetentionDays: Int? = null,
+    val activeSessionResumeHours: Int? = null,
+    val automaticRetryLimitPerStage: Int? = null,
+    val manualRetryLimitPerStage: Int? = null,
+    val sttTimeoutSeconds: Int? = null,
+    val ttsTimeoutSeconds: Int? = null,
+    val evaluationTimeoutSeconds: Int? = null,
+    val levelTestQuestionPoolTargetSize: Int? = null,
+    val levelTestQuestionPoolReplenishmentEnabled: Boolean? = null,
+)

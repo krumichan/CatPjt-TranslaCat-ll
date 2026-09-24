@@ -33,3 +33,6 @@ logs/
 Thumbs.db
 
 *.zip
+
+# 내부 API 비밀키가 들어갈 수 있는 환경별 설정
+/config/application-settings-local.yaml

@@ -6,14 +6,7 @@ import io.ktor.server.routing.*
 
 fun Application.configureHttp() {
     routing {
-        swaggerUI(path = "openapi") {
-            /*
-             Documentation source configuration goes here.
-    
-             This can be from file (documentation.yaml), or it can be served dynamically from your sources using the
-             `describe {}` API on routes.  When `openApi` enabled in Gradle, these calls will be automatically injected
-             based on your code and comments.
-             */
-        }
+        // 문서는 공개되지만 실제 Settings 경로는 internalApi와 JWT 검증으로 별도 보호된다.
+        swaggerUI(path = "openapi", swaggerFile = "documentation.yaml")
     }
 }

@@ -18,6 +18,14 @@ class MigrationResourcesTest {
         .lineSequence().filterNot { it.trimStart().startsWith("--") }.joinToString("\n")
 
     @Test
+    fun `V003은 감사 테이블만 추가하고 기존 스키마나 데이터를 변경하지 않는다`() {
+        val sql = sqlWithoutComments("/db/migration/V003__create_admin_settings_audit.sql")
+        assertEquals(listOf("language_learning_admin_setting_audit"), Regex("CREATE TABLE (\\w+)").findAll(sql).map { it.groupValues[1] }.toList())
+        assertFalse(Regex("\\b(DROP|DELETE|ALTER|TRUNCATE|INSERT|UPDATE)\\b", RegexOption.IGNORE_CASE).containsMatchIn(sql))
+        assertFalse(sql.contains("REFERENCES")); assertTrue(sql.contains("admin_user_id BIGINT NULL"))
+    }
+
+    @Test
     fun `the schema creates exactly the four approved LL tables`() {
         val sql = sqlWithoutComments("/db/migration/V001__create_learner_and_settings.sql")
         val tables = Regex("CREATE TABLE (\\w+)").findAll(sql).map { it.groupValues[1] }.toSet()

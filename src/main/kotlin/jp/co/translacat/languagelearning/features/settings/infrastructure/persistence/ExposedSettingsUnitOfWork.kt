@@ -30,9 +30,9 @@ internal class ExposedSettingsUnitOfWork(
             override val userSettings = ExposedUserSettingsRepository(requireTransaction)
             override val policies = ExposedSettingsPolicyRepository(requireTransaction)
 
-            // 감사 시각은 UTC DATETIME(6)이다. 학습 날짜는 추후 사용자 timezone으로 별도 계산한다.
-            override val nowUtc = LocalDateTime.ofInstant(clock.instant(), ZoneOffset.UTC)
-                .truncatedTo(ChronoUnit.MICROS)
+            // 잠금 대기 후에도 실제 시각을 읽는다. 학습 날짜는 별도로 사용자 timezone에서 계산한다.
+            override val nowUtc: LocalDateTime
+                get() = LocalDateTime.ofInstant(clock.instant(), ZoneOffset.UTC).truncatedTo(ChronoUnit.MICROS)
         }
         try {
             block(scope)

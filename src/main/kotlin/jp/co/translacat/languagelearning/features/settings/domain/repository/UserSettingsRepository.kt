@@ -6,4 +6,5 @@ import jp.co.translacat.languagelearning.features.settings.domain.model.UserSett
 internal interface UserSettingsRepository {
     fun findForUser(userId: Long): UserSettings?
     fun create(settings: NewUserSettings): UserSettings
+    fun save(settings: UserSettings): UserSettings
 }

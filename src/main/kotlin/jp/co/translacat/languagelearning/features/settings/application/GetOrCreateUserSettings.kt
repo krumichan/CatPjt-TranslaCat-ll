@@ -8,6 +8,7 @@ import jp.co.translacat.languagelearning.features.settings.domain.model.UserSett
  * HTTP 어댑터는 추후 구현하며, 연결 시 반드시 검증된 사용자 식별자만 전달해야 한다.
  * 기존 BE의 pending 승격·범위 보정·설정 변경 정책은 이 기능의 범위가 아니다.
  */
+/** 초기 저장 기반의 원시 조회 계약이다. HTTP 조회·변경은 승격/보정이 포함된 GetUserSettings를 사용한다. */
 internal class GetOrCreateUserSettings(private val unitOfWork: SettingsUnitOfWork) {
     suspend fun execute(userId: Long): UserSettings {
         require(userId > 0) { "userId는 양수여야 합니다." }

@@ -21,6 +21,11 @@ dependencies {
     implementation(ktorLibs.server.config.yaml)
     implementation(ktorLibs.server.contentNegotiation)
     implementation(ktorLibs.server.core)
+    // 기존 Ktor catalog와 정확히 같은 버전으로 JWT 어댑터를 추가한다.
+    val ktorVersion = ktorLibs.server.core.get().versionConstraint.requiredVersion
+    require(ktorVersion.isNotBlank()) { "Ktor catalog의 버전을 확인해 주세요." }
+    implementation("io.ktor:ktor-server-auth:$ktorVersion")
+    implementation("io.ktor:ktor-server-auth-jwt:$ktorVersion")
     implementation(ktorLibs.server.di)
     implementation(ktorLibs.server.netty)
     implementation(ktorLibs.server.requestValidation)
@@ -51,7 +56,7 @@ tasks.withType<Test>().configureEach {
 }
 
 tasks.test {
-    exclude("**/DatabaseMigrationIntegrationTest*", "**/SettingsPersistenceIntegrationTest*")
+    exclude("**/DatabaseMigrationIntegrationTest*", "**/SettingsPersistenceIntegrationTest*", "**/SettingsFeatureIntegrationTest*")
 }
 
 // 명시적으로 실행할 때만 MySQL을 사용한다. 일반 test/check에는 포함하지 않는다.
@@ -61,7 +66,7 @@ tasks.register<Test>("databaseIntegrationTest") {
     description = "로컬 임시 DB에서 migration과 Settings 저장·동시성을 검증합니다."
     testClassesDirs = sourceSets["test"].output.classesDirs
     classpath = sourceSets["test"].runtimeClasspath
-    include("**/DatabaseMigrationIntegrationTest*", "**/SettingsPersistenceIntegrationTest*")
+    include("**/DatabaseMigrationIntegrationTest*", "**/SettingsPersistenceIntegrationTest*", "**/SettingsFeatureIntegrationTest*")
     shouldRunAfter(tasks.test)
     outputs.upToDateWhen { false }
     doFirst {

@@ -67,8 +67,8 @@ class SettingsPersistenceIntegrationTest {
         }
         assertEquals(1L, scalar(db, "SELECT COUNT(*) FROM language_learning_learner"))
         assertEquals(1L, scalar(db, "SELECT COUNT(*) FROM language_learning_user_setting"))
-        assertEquals(5L, scalar(db, "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema=DATABASE()"))
-        assertEquals(2L, scalar(db, "SELECT COUNT(*) FROM flyway_schema_history WHERE success=1"))
+        assertEquals(6L, scalar(db, "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema=DATABASE()"))
+        assertEquals(3L, scalar(db, "SELECT COUNT(*) FROM flyway_schema_history WHERE success=1"))
     }
 
     @Test

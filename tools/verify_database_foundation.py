@@ -140,10 +140,10 @@ def main() -> None:
     baseline = json.loads((root / "src/test/resources/db/be-settings-baseline.json").read_text(encoding="utf-8"))
     migration_root = root / "src/main/resources/db/migration"
     paths = sorted(migration_root.glob("*.sql"))
-    check([p.name for p in paths] == ["V001__create_learner_and_settings.sql", "V002__seed_default_settings.sql"],
-          "Expected exactly the two initial versioned migrations")
+    check([p.name for p in paths] == ["V001__create_learner_and_settings.sql", "V002__seed_default_settings.sql", "V003__create_admin_settings_audit.sql"],
+          "Expected V001/V002 foundation and additive V003 audit")
     strip_comments = lambda s: "\n".join(line for line in s.splitlines() if not line.lstrip().startswith("--"))
-    schema, seed = (strip_comments(p.read_text(encoding="utf-8")) for p in paths)
+    schema, seed = (strip_comments(p.read_text(encoding="utf-8")) for p in paths[:2])
     check(not re.search(r"\b(DROP|TRUNCATE|REPLACE|USE)\b|DELETE\s+FROM|CREATE\s+DATABASE", schema + seed, re.I),
           "Unexpected destructive or database-selection statement in migrations")
     check("IF NOT EXISTS" not in schema, "Do not hide existing incompatible tables")

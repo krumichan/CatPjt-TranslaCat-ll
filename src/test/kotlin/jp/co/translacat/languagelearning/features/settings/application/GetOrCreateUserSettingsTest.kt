@@ -133,6 +133,7 @@ class GetOrCreateUserSettingsTest {
                 }
             }
             override val userSettings = object : UserSettingsRepository {
+                override fun save(settings: UserSettings): UserSettings = settings.also { existing = it }
                 override fun findForUser(userId: Long): UserSettings? {
                     calls += "find"
                     return existing
