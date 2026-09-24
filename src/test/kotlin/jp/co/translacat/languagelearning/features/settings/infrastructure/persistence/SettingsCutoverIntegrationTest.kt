@@ -216,8 +216,8 @@ class SettingsCutoverIntegrationTest {
             "INSERT INTO language_learning_admin_setting_audit(admin_user_id,before_json,after_json,created_at) VALUES(900,'{}','{}',UTC_TIMESTAMP(6))"
         )
         DatabaseFactory(settings).use { factory ->
-            assertEquals(2, factory.migrationReport.migrationsExecuted); assertEquals(
-            5, factory.migrationReport.schemaVersion.toInt()
+            assertEquals(3, factory.migrationReport.migrationsExecuted); assertEquals(
+            6, factory.migrationReport.schemaVersion.toInt()
         )
             assertEquals(
                 6L, scalar(db, "SELECT daily_keyword_max_count FROM language_learning_admin_setting WHERE id='DEFAULT'")

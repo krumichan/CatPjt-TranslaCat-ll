@@ -15,10 +15,10 @@ class DatabaseMigrationIntegrationTest {
     @Test
     fun `fresh database has all source columns exact seeds and no learners`() = withScratchDatabase { db ->
         DatabaseFactory(db.settings()).use { factory ->
-            assertEquals(5, factory.migrationReport.migrationsExecuted)
-            assertEquals(5, factory.migrationReport.schemaVersion.toInt())
+            assertEquals(6, factory.migrationReport.migrationsExecuted)
+            assertEquals(6, factory.migrationReport.schemaVersion.toInt())
             db.connect().use { connection ->
-                assertEquals(12L, countTables(connection))
+                assertEquals(14L, countTables(connection))
                 assertEquals(0L, count(connection, "language_learning_learner"))
                 assertEquals(0L, count(connection, "language_learning_user_setting"))
                 assertEquals(1L, count(connection, "language_learning_admin_setting"))
@@ -56,7 +56,7 @@ class DatabaseMigrationIntegrationTest {
                     "SELECT default_daily_sentence_count FROM language_learning_admin_setting WHERE id='DEFAULT'"
                 )
             )
-            assertEquals(5L, scalar(connection, "SELECT COUNT(*) FROM flyway_schema_history WHERE success=1"))
+            assertEquals(6L, scalar(connection, "SELECT COUNT(*) FROM flyway_schema_history WHERE success=1"))
         }
     }
 
