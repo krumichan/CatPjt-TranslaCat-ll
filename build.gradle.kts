@@ -56,17 +56,17 @@ tasks.withType<Test>().configureEach {
 }
 
 tasks.test {
-    exclude("**/DatabaseMigrationIntegrationTest*", "**/SettingsPersistenceIntegrationTest*", "**/SettingsFeatureIntegrationTest*", "**/SettingsCutoverIntegrationTest*")
+    exclude("**/DatabaseMigrationIntegrationTest*", "**/SettingsPersistenceIntegrationTest*", "**/SettingsFeatureIntegrationTest*", "**/SettingsCutoverIntegrationTest*", "**/KeywordCatalogIntegrationTest*")
 }
 
 // 명시적으로 실행할 때만 MySQL을 사용한다. 일반 test/check에는 포함하지 않는다.
 // loopback MySQL의 무작위 translacat_ll_it_<hex> DB만 생성/정리한다.
 tasks.register<Test>("databaseIntegrationTest") {
     group = "verification"
-    description = "로컬 임시 DB에서 migration과 Settings 저장·동시성을 검증합니다."
+    description = "로컬 임시 DB에서 migration, Settings와 Keyword 저장·동시성을 검증합니다."
     testClassesDirs = sourceSets["test"].output.classesDirs
     classpath = sourceSets["test"].runtimeClasspath
-    include("**/DatabaseMigrationIntegrationTest*", "**/SettingsPersistenceIntegrationTest*", "**/SettingsFeatureIntegrationTest*", "**/SettingsCutoverIntegrationTest*")
+    include("**/DatabaseMigrationIntegrationTest*", "**/SettingsPersistenceIntegrationTest*", "**/SettingsFeatureIntegrationTest*", "**/SettingsCutoverIntegrationTest*", "**/KeywordCatalogIntegrationTest*")
     shouldRunAfter(tasks.test)
     outputs.upToDateWhen { false }
     doFirst {

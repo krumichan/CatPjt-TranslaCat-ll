@@ -16,4 +16,5 @@ suspend fun Application.module() {
 
     configureRouting()
     configureSettingsHttp()
+    configureKeywordHttp()
 }

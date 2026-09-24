@@ -197,7 +197,7 @@ class SettingsCutoverIntegrationTest {
     }
 
     @Test
-    fun `V003에서 V004로 올려도 관리자 변경값과 감사 데이터가 보존된다`() = LocalScratchMysql.use { db ->
+    fun `V003에서 최신 버전으로 올려도 관리자 변경값과 감사 데이터가 보존된다`() = LocalScratchMysql.use { db ->
         val settings = db.settings()
         Flyway.configure()
             .dataSource(settings.jdbcUrl, settings.username, settings.password)
@@ -216,8 +216,8 @@ class SettingsCutoverIntegrationTest {
             "INSERT INTO language_learning_admin_setting_audit(admin_user_id,before_json,after_json,created_at) VALUES(900,'{}','{}',UTC_TIMESTAMP(6))"
         )
         DatabaseFactory(settings).use { factory ->
-            assertEquals(1, factory.migrationReport.migrationsExecuted); assertEquals(
-            4, factory.migrationReport.schemaVersion.toInt()
+            assertEquals(2, factory.migrationReport.migrationsExecuted); assertEquals(
+            5, factory.migrationReport.schemaVersion.toInt()
         )
             assertEquals(
                 6L, scalar(db, "SELECT daily_keyword_max_count FROM language_learning_admin_setting WHERE id='DEFAULT'")

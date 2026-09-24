@@ -40,7 +40,7 @@ def verify(be_root: Path | None) -> None:
         print(f"PASS: {name}: {count} fields")
     migration = ROOT / "src/main/resources/db/migration"
     names = sorted(p.name for p in migration.glob("*.sql"))
-    require(names == ["V001__create_learner_and_settings.sql", "V002__seed_default_settings.sql", "V003__create_admin_settings_audit.sql", "V004__create_settings_selection_delivery.sql"], "migration 목록 불일치")
+    require(names == ["V001__create_learner_and_settings.sql", "V002__seed_default_settings.sql", "V003__create_admin_settings_audit.sql", "V004__create_settings_selection_delivery.sql", "V005__create_keyword_catalog.sql"], "migration 목록 불일치")
     audit = (migration / names[2]).read_text(encoding="utf-8")
     sql = "\n".join(line for line in audit.splitlines() if not line.strip().startswith("--"))
     require(re.findall(r"CREATE TABLE (\w+)", sql) == ["language_learning_admin_setting_audit"], "V003 범위 불일치")

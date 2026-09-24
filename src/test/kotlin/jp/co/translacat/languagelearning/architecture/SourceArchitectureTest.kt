@@ -69,8 +69,14 @@ class SourceArchitectureTest {
 
     @Test
     fun `다른 기능의 영속성 구현 참조는 의도한 연결만 허용한다`() {
-        // learner와 settings는 같은 서비스/DB 내부이다. 기존 FK 매핑과 UoW 조립만 예외로 둔다.
+        // 같은 LL DB 안의 learner FK와 UnitOfWork 조립만 명시적으로 허용한다.
         val allowed = setOf(
+            "$ROOT.features.keyword.infrastructure.persistence.table.CustomKeywordsTable" to
+                "$ROOT.features.learner.infrastructure.persistence.table.LearnersTable",
+            "$ROOT.features.keyword.infrastructure.persistence.table.SystemKeywordSelectionsTable" to
+                "$ROOT.features.learner.infrastructure.persistence.table.LearnersTable",
+            "$ROOT.features.keyword.infrastructure.persistence.ExposedKeywordUnitOfWork" to
+                "$ROOT.features.learner.infrastructure.persistence.repository.ExposedLearnerRepository",
             "$ROOT.features.settings.infrastructure.persistence.table.SettingsSelectionDeliveriesTable" to
                 "$ROOT.features.learner.infrastructure.persistence.table.LearnersTable",
             "$ROOT.features.settings.infrastructure.persistence.table.UserSettingsTable" to

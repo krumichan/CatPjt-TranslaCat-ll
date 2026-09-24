@@ -22,6 +22,7 @@ suspend fun Application.configurePersistence() {
     val factory = dependencies.resolve<DatabaseFactory>()
 
     configureSettingsPersistence(factory, settings)
+    configureKeywordPersistence()
 
     environment.log.info(
         "Database persistence initialized. catalog={} mode={} schemaVersion={} migrationsExecuted={}",

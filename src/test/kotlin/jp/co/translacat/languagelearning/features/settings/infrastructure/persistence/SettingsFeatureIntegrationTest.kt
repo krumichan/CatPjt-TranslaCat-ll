@@ -315,8 +315,8 @@ class SettingsFeatureIntegrationTest {
             "INSERT INTO language_learning_learner(user_id,created_at,updated_at) VALUES(123,UTC_TIMESTAMP(6),UTC_TIMESTAMP(6))"
         )
         DatabaseFactory(settings).use { factory ->
-            assertEquals(2, factory.migrationReport.migrationsExecuted); assertEquals(
-            4, factory.migrationReport.schemaVersion.toInt()
+            assertEquals(3, factory.migrationReport.migrationsExecuted); assertEquals(
+            5, factory.migrationReport.schemaVersion.toInt()
         )
             assertEquals(1L, scalar(db, "SELECT COUNT(*) FROM language_learning_learner"))
             assertEquals(

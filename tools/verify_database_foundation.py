@@ -140,8 +140,8 @@ def main() -> None:
     baseline = json.loads((root / "src/test/resources/db/be-settings-baseline.json").read_text(encoding="utf-8"))
     migration_root = root / "src/main/resources/db/migration"
     paths = sorted(migration_root.glob("*.sql"))
-    check([p.name for p in paths] == ["V001__create_learner_and_settings.sql", "V002__seed_default_settings.sql", "V003__create_admin_settings_audit.sql", "V004__create_settings_selection_delivery.sql"],
-          "Expected V001/V002 foundation, V003 audit and V004 selection delivery")
+    check([p.name for p in paths] == ["V001__create_learner_and_settings.sql", "V002__seed_default_settings.sql", "V003__create_admin_settings_audit.sql", "V004__create_settings_selection_delivery.sql", "V005__create_keyword_catalog.sql"],
+          "Expected V001/V002 foundation, V003 audit V004 selection delivery and V005 keyword catalog")
     strip_comments = lambda s: "\n".join(line for line in s.splitlines() if not line.lstrip().startswith("--"))
     schema, seed = (strip_comments(p.read_text(encoding="utf-8")) for p in paths[:2])
     check(not re.search(r"\b(DROP|TRUNCATE|REPLACE|USE)\b|DELETE\s+FROM|CREATE\s+DATABASE", schema + seed, re.I),

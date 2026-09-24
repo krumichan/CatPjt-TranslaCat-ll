@@ -17,6 +17,7 @@ internal fun Application.configureInternalAuthentication(
 ) {
     check(settings.enabled)
     install(Authentication) {
+        configureKeywordAuthentication(settings, clock)
         jwt(INTERNAL_AUTH) {
             realm = "translacat-ll-internal"
             verifier(
@@ -75,14 +76,17 @@ internal fun Application.configureInternalAuthentication(
                             payload.getClaim("roles").asList(String::class.java),
                             payload.issuedAt?.toInstant(),
                             payload.expiresAt?.toInstant(),
-                        ), settings, clock.instant(),
+                        ),
+                        settings, clock.instant(),
                     )
                 } catch (_: Exception) {
                     null
                 }
             }
             challenge { _, _ ->
-                call.response.headers.append(HttpHeaders.WWWAuthenticate, "Bearer realm=\"translacat-ll-settings-service\"")
+                call.response.headers.append(
+                    HttpHeaders.WWWAuthenticate, "Bearer realm=\"translacat-ll-settings-service\""
+                )
                 call.respond(
                     HttpStatusCode.Unauthorized,
                     InternalApiError("INTERNAL_SERVICE_AUTH_REQUIRED", "유효한 서비스 조회 인증이 필요합니다."),
