@@ -1,16 +1,18 @@
-package jp.co.translacat.languagelearning.shared.persistence
+package jp.co.translacat.languagelearning.bootstrap
 
 import io.ktor.server.application.*
 import io.ktor.server.config.*
+import jp.co.translacat.languagelearning.shared.persistence.DatabaseSettings
+import jp.co.translacat.languagelearning.shared.persistence.MigrationMode
 
 fun Application.loadDatabaseSettings(): DatabaseSettings = loadDatabaseSettings(environment.config)
 
-/** Kept separate from Application so configuration can be tested without starting a server. */
+/** 서버를 시작하지 않고 설정을 검사할 수 있도록 Application과 설정 변환을 분리한다. */
 internal fun loadDatabaseSettings(config: ApplicationConfig): DatabaseSettings {
     val enabled = config.requiredValue("database.enabled").toBooleanStrictOrNull()
         ?: throw IllegalArgumentException("database.enabled must be 'true' or 'false'.")
 
-    // Route/unit tests only need this switch. Do not even parse unrelated DB properties.
+    // DB를 사용하지 않는 테스트에서는 다른 DB 속성까지 파싱하거나 연결하지 않는다.
     if (!enabled) {
         return DatabaseSettings(enabled = false, jdbcUrl = "", username = "", password = "")
     }

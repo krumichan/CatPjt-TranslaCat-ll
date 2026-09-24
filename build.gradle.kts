@@ -33,6 +33,8 @@ dependencies {
 
     implementation(libs.exposed.core)
     implementation(libs.exposed.jdbc)
+    implementation(libs.exposed.java.time)
+    implementation(libs.kotlinx.coroutines.core)
     implementation(libs.hikari)
     implementation(libs.mysql.connector)
 
@@ -43,23 +45,23 @@ dependencies {
 }
 
 
-// The existing tests and the explicit database suite both use kotlin.test + JUnit 4.
+// 일반 테스트와 명시적 DB 테스트 모두 kotlin.test + JUnit 4를 사용한다.
 tasks.withType<Test>().configureEach {
     useJUnit()
 }
 
 tasks.test {
-    exclude("**/DatabaseMigrationIntegrationTest*")
+    exclude("**/DatabaseMigrationIntegrationTest*", "**/SettingsPersistenceIntegrationTest*")
 }
 
-// Explicit opt-in. Regular clean test/check never contacts MySQL.
-// Creates/drops only random translacat_ll_it_<hex> databases on loopback MySQL.
+// 명시적으로 실행할 때만 MySQL을 사용한다. 일반 test/check에는 포함하지 않는다.
+// loopback MySQL의 무작위 translacat_ll_it_<hex> DB만 생성/정리한다.
 tasks.register<Test>("databaseIntegrationTest") {
     group = "verification"
-    description = "Verify Flyway/schema/seeds on disposable databases in local MySQL."
+    description = "로컬 임시 DB에서 migration과 Settings 저장·동시성을 검증합니다."
     testClassesDirs = sourceSets["test"].output.classesDirs
     classpath = sourceSets["test"].runtimeClasspath
-    include("**/DatabaseMigrationIntegrationTest*")
+    include("**/DatabaseMigrationIntegrationTest*", "**/SettingsPersistenceIntegrationTest*")
     shouldRunAfter(tasks.test)
     outputs.upToDateWhen { false }
     doFirst {

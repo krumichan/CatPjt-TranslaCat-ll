@@ -1,6 +1,7 @@
-package jp.co.translacat.languagelearning.shared.persistence
+package jp.co.translacat.languagelearning.bootstrap
 
 import io.ktor.server.config.MapApplicationConfig
+import jp.co.translacat.languagelearning.shared.persistence.MigrationMode
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith

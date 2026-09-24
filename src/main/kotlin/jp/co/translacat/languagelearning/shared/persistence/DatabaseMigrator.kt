@@ -3,13 +3,7 @@ package jp.co.translacat.languagelearning.shared.persistence
 import org.flywaydb.core.Flyway
 import javax.sql.DataSource
 
-data class DatabaseMigrationReport(
-    val mode: MigrationMode,
-    val schemaVersion: String,
-    val migrationsExecuted: Int,
-)
-
-/** Only versioned SQL in this application's resources may change the LL schema. */
+/** 버전이 있는 SQL migration만 LL 스키마를 변경할 수 있다. */
 internal object DatabaseMigrator {
     fun run(dataSource: DataSource, settings: DatabaseSettings): DatabaseMigrationReport {
         settings.validateForConnection()
@@ -30,7 +24,7 @@ internal object DatabaseMigrator {
             MigrationMode.MIGRATE -> flyway.migrate().migrationsExecuted
             MigrationMode.VALIDATE -> 0
         }
-        // VALIDATE must also reject pending versions; Flyway validate alone is not a deployment gate.
+        // VALIDATE에서도 미적용 버전은 거부한다. Flyway validate 호출만으로 기동을 허용하지 않는다.
         flyway.validate()
         val info = flyway.info()
         check(info.pending().isEmpty()) {
@@ -56,8 +50,7 @@ internal object DatabaseMigrator {
             .validateMigrationNaming(true)
             .failOnMissingLocations(true)
             .outOfOrder(false)
-            // Keep Flyway's default validation strict so a schema newer than
-            // this application is not silently accepted.
+            // 현재 코드보다 앞선 DB 버전도 검사에서 무시하지 않도록 기본 ignore 패턴을 비운다.
             .ignoreMigrationPatterns(*emptyArray<String>())
             .placeholderReplacement(false)
             .connectRetries(0)
