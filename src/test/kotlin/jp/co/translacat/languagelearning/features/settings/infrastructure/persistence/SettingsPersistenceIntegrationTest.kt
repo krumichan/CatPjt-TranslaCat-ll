@@ -7,6 +7,7 @@ import jp.co.translacat.languagelearning.features.settings.domain.exception.Sett
 import jp.co.translacat.languagelearning.features.settings.domain.model.NewUserSettings
 import jp.co.translacat.languagelearning.shared.persistence.DatabaseFactory
 import jp.co.translacat.languagelearning.shared.persistence.transaction.JdbcTransactionRunner
+import jp.co.translacat.languagelearning.support.CurrentSchema
 import jp.co.translacat.languagelearning.support.LocalScratchMysql
 import kotlinx.coroutines.*
 import java.sql.SQLException
@@ -49,8 +50,13 @@ class SettingsPersistenceIntegrationTest {
         }
         assertEquals(1L, scalar(db, "SELECT COUNT(*) FROM language_learning_learner"))
         assertEquals(1L, scalar(db, "SELECT COUNT(*) FROM language_learning_user_setting"))
-        assertEquals(23L, scalar(db, "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema=DATABASE()"))
-        assertEquals(7L, scalar(db, "SELECT COUNT(*) FROM flyway_schema_history WHERE success=1"))
+        assertEquals(
+            CurrentSchema.TABLE_COUNT,
+            scalar(db, "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema=DATABASE()"),
+        )
+        assertEquals(
+            CurrentSchema.VERSION.toLong(), scalar(db, "SELECT COUNT(*) FROM flyway_schema_history WHERE success=1"),
+        )
     }
 
     @Test

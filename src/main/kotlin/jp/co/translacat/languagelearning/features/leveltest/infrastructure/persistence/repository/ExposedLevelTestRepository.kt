@@ -1,5 +1,7 @@
 package jp.co.translacat.languagelearning.features.leveltest.infrastructure.persistence.repository
 
+import jp.co.translacat.languagelearning.features.growth.application.ApplyLevelBaseline
+import jp.co.translacat.languagelearning.features.growth.infrastructure.persistence.repository.ExposedGrowthRepository
 import jp.co.translacat.languagelearning.features.leveltest.domain.model.*
 import jp.co.translacat.languagelearning.features.leveltest.domain.policy.LevelTestRules
 import jp.co.translacat.languagelearning.features.leveltest.domain.repository.LevelTestRepository
@@ -296,7 +298,15 @@ internal class ExposedLevelTestRepository(private val requireTransaction: () -> 
     }
 
     override fun saveBaseline(value: LevelBaseline) {
-        requireTransaction(); LevelBaselinesTable.upsert { writeBaseline(it, value) }
+        requireTransaction()
+        LevelBaselinesTable.upsert { writeBaseline(it, value) }
+        // V008 이후에는 완료 기준점·Profile·완료 Activity를 동일 LL 트랜잭션으로 확정한다.
+        ApplyLevelBaseline(
+            ExposedGrowthRepository(requireTransaction),
+        ).execute(
+            value.userId, value.completionId, value.score.toDouble(), value.completedDate, value.startedAt,
+            value.completedAt,
+        )
     }
 
     override fun items(sessionId: Long): List<LevelItem> {
@@ -468,8 +478,7 @@ internal class ExposedLevelTestRepository(private val requireTransaction: () -> 
     override fun expiredAudio(now: LocalDateTime, limit: Int): List<LevelAudio> {
         requireTransaction()
         return LevelAudioTable.selectAll().where {
-            (LevelAudioTable.status neq "DELETED") and
-                ((LevelAudioTable.retentionUntil lessEq now) or ((LevelAudioTable.status eq "RESERVED") and (LevelAudioTable.uploadUntil lessEq now)))
+            (LevelAudioTable.status neq "DELETED") and ((LevelAudioTable.retentionUntil lessEq now) or ((LevelAudioTable.status eq "RESERVED") and (LevelAudioTable.uploadUntil lessEq now)))
         }.limit(limit).map(::audio)
     }
 }

@@ -68,6 +68,13 @@ class SourceArchitectureTest {
     fun `다른 기능의 영속성 구현 참조는 의도한 연결만 허용한다`() {
         // 같은 LL DB 안의 learner FK와 UnitOfWork 조립만 명시적으로 허용한다.
         val allowed = setOf(
+            "$ROOT.features.growth.infrastructure.persistence.table.GrowthActivitiesTable" to "$ROOT.features.learner.infrastructure.persistence.table.LearnersTable",
+            "$ROOT.features.growth.infrastructure.persistence.table.GrowthEvidenceTable" to "$ROOT.features.learner.infrastructure.persistence.table.LearnersTable",
+            "$ROOT.features.growth.infrastructure.persistence.table.GrowthProfilesTable" to "$ROOT.features.learner.infrastructure.persistence.table.LearnersTable",
+            "$ROOT.features.growth.infrastructure.persistence.table.GrowthSignalsTable" to "$ROOT.features.learner.infrastructure.persistence.table.LearnersTable",
+            "$ROOT.features.growth.infrastructure.persistence.table.KeywordMasteriesTable" to "$ROOT.features.learner.infrastructure.persistence.table.LearnersTable",
+            "$ROOT.features.growth.infrastructure.persistence.ExposedGrowthUnitOfWork" to "$ROOT.features.learner.infrastructure.persistence.repository.ExposedLearnerRepository",
+            "$ROOT.features.leveltest.infrastructure.persistence.repository.ExposedLevelTestRepository" to "$ROOT.features.growth.infrastructure.persistence.repository.ExposedGrowthRepository",
             "$ROOT.features.leveltest.infrastructure.persistence.table.LevelSessionsTable" to "$ROOT.features.learner.infrastructure.persistence.table.LearnersTable",
             "$ROOT.features.leveltest.infrastructure.persistence.table.LevelBaselinesTable" to "$ROOT.features.learner.infrastructure.persistence.table.LearnersTable",
             "$ROOT.features.leveltest.infrastructure.persistence.ExposedLevelTestUnitOfWork" to "$ROOT.features.learner.infrastructure.persistence.repository.ExposedLearnerRepository",
@@ -122,16 +129,18 @@ class SourceArchitectureTest {
 
     private fun projectRoot(): Path = generateSequence(
         Paths.get("").toAbsolutePath().normalize(),
-    ) { it.parent }.firstOrNull { Files.isDirectory(it.resolve("src/main/kotlin")) }
-        ?: error("프로젝트 루트(src/main/kotlin)를 찾을 수 없습니다. 작업 디렉토리를 확인해 주세요.")
+    ) { it.parent }.firstOrNull { Files.isDirectory(it.resolve("src/main/kotlin")) } ?: error(
+        "프로젝트 루트(src/main/kotlin)를 찾을 수 없습니다. 작업 디렉토리를 확인해 주세요.",
+    )
 
     private fun readSources(root: Path): List<SourceFile> {
         check(Files.isDirectory(root)) { "소스 디렉토리가 없습니다: $root" }
         return Files.walk(root).use { paths ->
             paths.filter { Files.isRegularFile(it) && it.fileName.toString().endsWith(".kt") }.sorted().map { path ->
                 val text = Files.readString(path).replace("\r\n", "\n")
-                val packageName = Regex("(?m)^package\\s+([\\w.]+)\\s*$").find(text)?.groupValues?.get(1)
-                    ?: error("package 선언이 없습니다: $path")
+                val packageName = Regex("(?m)^package\\s+([\\w.]+)\\s*$").find(text)?.groupValues?.get(1) ?: error(
+                    "package 선언이 없습니다: $path",
+                )
                 val imports = Regex("(?m)^import\\s+([\\w.*]+)(?:\\s+as\\s+\\w+)?\\s*$").findAll(text)
                     .map { it.groupValues[1] }
                     .toList()

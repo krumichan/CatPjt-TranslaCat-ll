@@ -20,6 +20,7 @@ import jp.co.translacat.languagelearning.shared.error.LearningBusinessException
 import jp.co.translacat.languagelearning.shared.persistence.DatabaseFactory
 import jp.co.translacat.languagelearning.shared.persistence.transaction.JdbcTransactionRunner
 import jp.co.translacat.languagelearning.shared.security.InternalApiSettings
+import jp.co.translacat.languagelearning.support.CurrentSchema
 import jp.co.translacat.languagelearning.support.LocalScratchMysql
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -319,8 +320,8 @@ class SettingsFeatureIntegrationTest {
             "INSERT INTO language_learning_learner(user_id,created_at,updated_at) VALUES(123,UTC_TIMESTAMP(6),UTC_TIMESTAMP(6))",
         )
         DatabaseFactory(settings).use { factory ->
-            assertEquals(5, factory.migrationReport.migrationsExecuted); assertEquals(
-            7, factory.migrationReport.schemaVersion.toInt(),
+            assertEquals(CurrentSchema.VERSION - 2, factory.migrationReport.migrationsExecuted); assertEquals(
+            CurrentSchema.VERSION, factory.migrationReport.schemaVersion.toInt(),
         )
             assertEquals(1L, scalar(db, "SELECT COUNT(*) FROM language_learning_learner"))
             assertEquals(

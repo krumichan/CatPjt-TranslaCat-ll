@@ -5,6 +5,7 @@ import jp.co.translacat.languagelearning.features.resultjournal.domain.exception
 import jp.co.translacat.languagelearning.features.resultjournal.domain.model.ReceiptOutcome
 import jp.co.translacat.languagelearning.shared.persistence.DatabaseFactory
 import jp.co.translacat.languagelearning.shared.persistence.transaction.JdbcTransactionRunner
+import jp.co.translacat.languagelearning.support.CurrentSchema
 import jp.co.translacat.languagelearning.support.LocalScratchMysql
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -38,7 +39,7 @@ class ResultJournalIntegrationTest {
                         0L,
                         scalar(
                             db,
-                            "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema=DATABASE() AND table_name='language_learning_profile'",
+                            "SELECT COUNT(*) FROM language_learning_profile",
                         ),
                     )
                 }
@@ -137,16 +138,17 @@ class ResultJournalIntegrationTest {
                 .migrate()
             sql(db, "UPDATE language_learning_admin_setting SET daily_keyword_max_count=9 WHERE id='DEFAULT'")
             DatabaseFactory(s).use { f ->
-                assertEquals(2, f.migrationReport.migrationsExecuted)
-                assertEquals(7, f.migrationReport.schemaVersion.toInt())
+                assertEquals(CurrentSchema.VERSION - 5, f.migrationReport.migrationsExecuted)
+                assertEquals(CurrentSchema.VERSION, f.migrationReport.schemaVersion.toInt())
                 assertEquals(
                     9L,
                     scalar(
-                        db, "SELECT daily_keyword_max_count FROM language_learning_admin_setting WHERE id='DEFAULT'"
+                        db, "SELECT daily_keyword_max_count FROM language_learning_admin_setting WHERE id='DEFAULT'",
                     ),
                 )
                 assertEquals(
-                    23L, scalar(db, "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema=DATABASE()"),
+                    CurrentSchema.TABLE_COUNT,
+                    scalar(db, "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema=DATABASE()"),
                 )
             }
             DatabaseFactory(s).use { assertEquals(0, it.migrationReport.migrationsExecuted) }

@@ -18,5 +18,6 @@ suspend fun Application.module() {
     configureSettingsHttp()
     configureKeywordHttp()
     configureResultJournal()
+    configureGrowth()
     configureLevelTest()
 }

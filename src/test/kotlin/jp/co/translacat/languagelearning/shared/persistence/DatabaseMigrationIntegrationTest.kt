@@ -1,5 +1,6 @@
 package jp.co.translacat.languagelearning.shared.persistence
 
+import jp.co.translacat.languagelearning.support.CurrentSchema
 import kotlinx.serialization.json.*
 import java.math.BigDecimal
 import java.net.URI
@@ -15,10 +16,10 @@ class DatabaseMigrationIntegrationTest {
     @Test
     fun `fresh database has all source columns exact seeds and no learners`() = withScratchDatabase { db ->
         DatabaseFactory(db.settings()).use { factory ->
-            assertEquals(7, factory.migrationReport.migrationsExecuted)
-            assertEquals(7, factory.migrationReport.schemaVersion.toInt())
+            assertEquals(CurrentSchema.VERSION, factory.migrationReport.migrationsExecuted)
+            assertEquals(CurrentSchema.VERSION, factory.migrationReport.schemaVersion.toInt())
             db.connect().use { connection ->
-                assertEquals(23L, countTables(connection))
+                assertEquals(CurrentSchema.TABLE_COUNT, countTables(connection))
                 assertEquals(0L, count(connection, "language_learning_learner"))
                 assertEquals(0L, count(connection, "language_learning_user_setting"))
                 assertEquals(1L, count(connection, "language_learning_admin_setting"))
@@ -57,7 +58,10 @@ class DatabaseMigrationIntegrationTest {
                     "SELECT default_daily_sentence_count FROM language_learning_admin_setting WHERE id='DEFAULT'",
                 ),
             )
-            assertEquals(7L, scalar(connection, "SELECT COUNT(*) FROM flyway_schema_history WHERE success=1"))
+            assertEquals(
+                CurrentSchema.VERSION.toLong(),
+                scalar(connection, "SELECT COUNT(*) FROM flyway_schema_history WHERE success=1"),
+            )
         }
     }
 
@@ -267,10 +271,9 @@ class DatabaseMigrationIntegrationTest {
     }
 
     private fun withScratchDatabase(action: (ScratchDatabase) -> Unit) {
-        val serverUrl =
-            requireNotNull(
-                System.getenv("LL_TEST_MYSQL_URL"),
-            ) { "Run databaseIntegrationTest with LL_TEST_MYSQL_* variables." }
+        val serverUrl = requireNotNull(
+            System.getenv("LL_TEST_MYSQL_URL"),
+        ) { "Run databaseIntegrationTest with LL_TEST_MYSQL_* variables." }
         val username = requireNotNull(System.getenv("LL_TEST_MYSQL_USERNAME"))
         val password = requireNotNull(System.getenv("LL_TEST_MYSQL_PASSWORD"))
         require(serverUrl.startsWith("jdbc:mysql://")) { "Integration tests require a loopback MySQL URL." }

@@ -22,6 +22,7 @@ import jp.co.translacat.languagelearning.features.settings.domain.model.UserSett
 import jp.co.translacat.languagelearning.shared.persistence.DatabaseFactory
 import jp.co.translacat.languagelearning.shared.persistence.transaction.JdbcTransactionRunner
 import jp.co.translacat.languagelearning.shared.security.InternalApiSettings
+import jp.co.translacat.languagelearning.support.CurrentSchema
 import jp.co.translacat.languagelearning.support.LocalScratchMysql
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -218,8 +219,8 @@ class SettingsCutoverIntegrationTest {
             "INSERT INTO language_learning_admin_setting_audit(admin_user_id,before_json,after_json,created_at) VALUES(900,'{}','{}',UTC_TIMESTAMP(6))",
         )
         DatabaseFactory(settings).use { factory ->
-            assertEquals(4, factory.migrationReport.migrationsExecuted); assertEquals(
-            7, factory.migrationReport.schemaVersion.toInt(),
+            assertEquals(CurrentSchema.VERSION - 3, factory.migrationReport.migrationsExecuted); assertEquals(
+            CurrentSchema.VERSION, factory.migrationReport.schemaVersion.toInt(),
         )
             assertEquals(
                 6L,

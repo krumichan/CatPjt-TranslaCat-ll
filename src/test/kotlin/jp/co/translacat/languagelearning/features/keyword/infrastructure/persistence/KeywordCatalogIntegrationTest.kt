@@ -8,6 +8,7 @@ import jp.co.translacat.languagelearning.features.learner.domain.exception.Learn
 import jp.co.translacat.languagelearning.shared.error.LearningBusinessException
 import jp.co.translacat.languagelearning.shared.persistence.DatabaseFactory
 import jp.co.translacat.languagelearning.shared.persistence.transaction.JdbcTransactionRunner
+import jp.co.translacat.languagelearning.support.CurrentSchema
 import jp.co.translacat.languagelearning.support.LocalScratchMysql
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -74,8 +75,8 @@ class KeywordCatalogIntegrationTest {
                 "INSERT INTO language_learning_settings_selection_delivery(user_id,last_event_id,base_revision,applied_revision) VALUES(123,99,UTC_TIMESTAMP(6),NULL)",
             )
             DatabaseFactory(settings).use { factory ->
-                assertEquals(3, factory.migrationReport.migrationsExecuted)
-                assertEquals(7, factory.migrationReport.schemaVersion.toInt())
+                assertEquals(CurrentSchema.VERSION - 4, factory.migrationReport.migrationsExecuted)
+                assertEquals(CurrentSchema.VERSION, factory.migrationReport.schemaVersion.toInt())
             }
             assertEquals(
                 6L,
@@ -86,7 +87,8 @@ class KeywordCatalogIntegrationTest {
                 number(db, "SELECT last_event_id FROM language_learning_settings_selection_delivery WHERE user_id=123"),
             )
             assertEquals(
-                23L, number(db, "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema=DATABASE()"),
+                CurrentSchema.TABLE_COUNT,
+                number(db, "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema=DATABASE()"),
             )
             DatabaseFactory(settings).use { assertEquals(0, it.migrationReport.migrationsExecuted) }
         }

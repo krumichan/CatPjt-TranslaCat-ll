@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "sourceInstanceId": "1ae93ac7-179b-4700-9edb-eb001461f033",
+  "eventId": "5ab909cb-f6ce-4b83-83c8-b172102164eb",
+  "userId": 123,
+  "sequence": 1,
+  "occurredAt": "2026-09-25T10:01:00Z",
+  "payloadJson": "{\"operations\":[{\"key\":\"PREPARE:2026-09-25\",\"kind\":\"LEARNING_PREPARED\",\"payload\":{\"learningDate\":\"2026-09-25\"}},{\"key\":\"WRITING_EVALUATION:41\",\"kind\":\"WRITING_SCORED\",\"payload\":{\"learningDate\":\"2026-09-25\",\"difficulty\":\"NORMAL\",\"scores\":[80.0,80.0,80.0,80.0,80.0],\"signals\":{\"STRENGTH\":[\"정확한 표현\"]},\"canonicalKeys\":[\"여행\"]}},{\"key\":\"SIGNALS:1\",\"kind\":\"SIGNALS_TOUCHED\",\"payload\":{\"type\":\"WEAKNESS\",\"values\":[\"조사\"]}},{\"key\":\"KEYWORDS:1\",\"kind\":\"KEYWORDS_SELECTED\",\"payload\":{\"learningDate\":\"2026-09-25\",\"canonicalKeys\":[\"여행\"]}},{\"key\":\"ACTIVITY:1\",\"kind\":\"ACTIVITY_RECORDED\",\"payload\":{\"activity\":{\"source\":\"READING\",\"referenceId\":\"51\",\"learningDate\":\"2026-09-25\",\"title\":\"성장 경계 검증\",\"durationSeconds\":60,\"status\":\"EVALUATED\",\"overallScore\":80.0,\"evaluationConfidence\":0.9,\"startedAt\":\"2026-09-25T10:00:00\",\"completedAt\":\"2026-09-25T10:01:00\",\"metadataJson\":\"{}\"},\"metrics\":null}},{\"key\":\"SPEAKING_EVALUATION:1\",\"kind\":\"SPEAKING_SCORED\",\"payload\":{\"resultKind\":\"SCORED_EVALUATION\",\"activity\":{\"source\":\"SPEAKING\",\"referenceId\":\"51\",\"learningDate\":\"2026-09-25\",\"title\":\"성장 경계 검증\",\"durationSeconds\":60,\"status\":\"EVALUATED\",\"overallScore\":80.0,\"evaluationConfidence\":0.9,\"startedAt\":\"2026-09-25T10:00:00\",\"completedAt\":\"2026-09-25T10:01:00\",\"metadataJson\":\"{}\"},\"metrics\":[{\"metricType\":\"EXPRESSIVENESS\",\"state\":\"EVALUATED\",\"score\":80.0,\"confidence\":0.9,\"notEvaluableReason\":null}],\"formal\":true,\"activityWeight\":0.9,\"evidence\":[{\"metricType\":\"FLUENCY\",\"patternKey\":\"긴 쉼\",\"direction\":\"WEAKNESS\",\"confidence\":0.8,\"recommendedFocus\":\"연결 연습\"}]}}]}",
+  "payloadSha256": "ee0a25791b6f970ba9f1087c65de3807a6234df1b36559849377c24ecc392993"
+}

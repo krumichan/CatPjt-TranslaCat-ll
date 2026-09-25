@@ -1,5 +1,6 @@
 package jp.co.translacat.languagelearning.features.leveltest.infrastructure.persistence
 
+import jp.co.translacat.languagelearning.support.CurrentSchema
 import jp.co.translacat.languagelearning.features.leveltest.application.LevelAnswerService
 import jp.co.translacat.languagelearning.features.leveltest.application.LevelAudioService
 import jp.co.translacat.languagelearning.features.leveltest.application.LevelSessionService
@@ -53,11 +54,10 @@ class LevelTestPersistenceIntegrationTest {
                         }
                 }
             DatabaseFactory(s).use { f ->
-                assertEquals(1, f.migrationReport.migrationsExecuted); assertEquals(
-                7, f.migrationReport.schemaVersion.toInt(),
+                assertEquals(CurrentSchema.VERSION - 6, f.migrationReport.migrationsExecuted); assertEquals(CurrentSchema.VERSION, f.migrationReport.schemaVersion.toInt(),
             )
                 assertEquals(
-                    23L, scalar(db, "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema=DATABASE()"),
+                    CurrentSchema.TABLE_COUNT, scalar(db, "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema=DATABASE()"),
                 )
                 assertEquals(
                     6L,
@@ -130,6 +130,8 @@ class LevelTestPersistenceIntegrationTest {
                 )
                     assertEquals(20, sessions.detail(123, s.id).items.size)
                     assertEquals(20L, scalar(db, "SELECT COUNT(*) FROM language_learning_level_test_evaluation"))
+                    assertEquals(1L, scalar(db, "SELECT COUNT(*) FROM language_learning_profile WHERE base_level_score=90"))
+                    assertEquals(1L, scalar(db, "SELECT COUNT(*) FROM language_learning_activity WHERE source='LEVEL_TEST'"))
                     val again = LevelSessionService(work(f), ctx)
                     assertEquals(s.uid, again.baseline(123)?.completionId)
                 }
@@ -158,6 +160,8 @@ class LevelTestPersistenceIntegrationTest {
                     assertEquals(
                         0L, scalar(db, "SELECT COUNT(*) FROM language_learning_level_test_session"),
                     ); assertEquals(0L, scalar(db, "SELECT COUNT(*) FROM language_learning_level_test_baseline"))
+                    assertEquals(0L, scalar(db, "SELECT COUNT(*) FROM language_learning_profile"))
+                    assertEquals(0L, scalar(db, "SELECT COUNT(*) FROM language_learning_activity"))
                 }
             }
         }
