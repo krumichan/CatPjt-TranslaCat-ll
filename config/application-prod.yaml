@@ -22,3 +22,15 @@ internalApi:
   secretBase64: ${LL_INTERNAL_JWT_SECRET_BASE64}
   maxTtlSeconds: ${LL_INTERNAL_JWT_MAX_TTL_SECONDS:120}
   clockSkewSeconds: ${LL_INTERNAL_JWT_CLOCK_SKEW_SECONDS:5}
+
+aiServer:
+  url: ${AI_SERVER_URL}
+  apiKey: ${AI_SERVER_API_KEY}
+
+levelTest:
+  enabled: ${LL_LEVEL_TEST_ENABLED:true}
+  audioUploadBaseUrl: ${LL_LEVEL_TEST_AUDIO_UPLOAD_BASE_URL}
+  audioRoot: ${LL_LEVEL_TEST_AUDIO_ROOT:data/level-test-audio}
+  aiTimeoutSeconds: ${LL_LEVEL_TEST_AI_TIMEOUT_SECONDS:180}
+  aiConcurrency: ${LL_LEVEL_TEST_AI_CONCURRENCY:2}
+  prefetchEnabled: ${LL_LEVEL_TEST_PREFETCH_ENABLED:true}
