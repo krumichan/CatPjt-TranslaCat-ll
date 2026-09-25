@@ -4,11 +4,9 @@ import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
-import io.ktor.http.ContentType
-import io.ktor.http.HttpStatusCode
-import io.ktor.http.contentType
+import io.ktor.http.*
 import io.ktor.server.config.*
-import io.ktor.server.routing.routing
+import io.ktor.server.routing.*
 import io.ktor.server.testing.*
 import jp.co.translacat.languagelearning.bootstrap.configureInternalAuthentication
 import jp.co.translacat.languagelearning.bootstrap.configureSerialization
@@ -64,7 +62,7 @@ class KeywordRoutesTest {
             for (t in listOf(
                 token(use = "ll-internal"),
                 token(use = "ll-settings-service"),
-                token(signingKey = ByteArray(32) { 99 })
+                token(signingKey = ByteArray(32) { 99 }),
             )) {
                 assertEquals(HttpStatusCode.Unauthorized, client.get(path) { bearerAuth(t) }.status)
             }
@@ -107,9 +105,14 @@ class KeywordRoutesTest {
             environment { config = MapApplicationConfig() }
             val db = MemoryKeywordUnitOfWork()
             application { configureTestApplication(this, db) }
-            assertEquals(HttpStatusCode.Forbidden, client.post(adminPath) {
-                bearerAuth(token()); contentType(ContentType.Application.Json); setBody("""{"text":"IT","type":"TOPIC"}""")
-            }.status)
+            assertEquals(
+                HttpStatusCode.Forbidden,
+                client.post(adminPath) {
+                    bearerAuth(token()); contentType(ContentType.Application.Json); setBody(
+                    """{"text":"IT","type":"TOPIC"}""",
+                )
+                }.status,
+            )
             assertTrue(db.systemRows.isEmpty())
         }
     }
@@ -121,19 +124,24 @@ class KeywordRoutesTest {
             val db = MemoryKeywordUnitOfWork()
             application { configureTestApplication(this, db) }
             val created = client.post("$path/custom") {
-                bearerAuth(token()); contentType(ContentType.Application.Json); setBody("""{"text":"IT","type":"TOPIC"}""")
+                bearerAuth(token()); contentType(ContentType.Application.Json); setBody(
+                """{"text":"IT","type":"TOPIC"}""",
+            )
             }
             assertEquals(HttpStatusCode.Created, created.status)
             val json = Json.parseToJsonElement(created.bodyAsText()).jsonObject
             assertEquals(13, json.size); assertEquals(JsonNull, json["pendingEffectiveDate"])
             val id = json.getValue("id").jsonPrimitive.long
-            assertEquals(HttpStatusCode.OK, client.patch("$path/custom/$id") {
-                bearerAuth(token()); contentType(ContentType.Application.Json); setBody("""{"text":"Business"}""")
-            }.status)
+            assertEquals(
+                HttpStatusCode.OK,
+                client.patch("$path/custom/$id") {
+                    bearerAuth(token()); contentType(ContentType.Application.Json); setBody("""{"text":"Business"}""")
+                }.status,
+            )
             val list = Json.parseToJsonElement(client.get(path) { bearerAuth(token()) }.bodyAsText()).jsonObject
             assertEquals(
                 "Business",
-                list.getValue("customKeywords").jsonArray.single().jsonObject.getValue("text").jsonPrimitive.content
+                list.getValue("customKeywords").jsonArray.single().jsonObject.getValue("text").jsonPrimitive.content,
             )
             assertEquals(HttpStatusCode.OK, client.delete("$path/custom/$id") { bearerAuth(token()) }.status)
             assertEquals(false, db.customRows.getValue(id).active)
@@ -151,11 +159,14 @@ class KeywordRoutesTest {
                 "[]",
                 """{"text":"IT"}""",
                 """{"text":"IT","type":"OTHER"}""",
-                """{"text":"IT","type":"TOPIC","userId":999}"""
+                """{"text":"IT","type":"TOPIC","userId":999}""",
             )) {
-                assertEquals(HttpStatusCode.BadRequest, client.post("$path/custom") {
-                    bearerAuth(token()); contentType(ContentType.Application.Json); setBody(body)
-                }.status)
+                assertEquals(
+                    HttpStatusCode.BadRequest,
+                    client.post("$path/custom") {
+                        bearerAuth(token()); contentType(ContentType.Application.Json); setBody(body)
+                    }.status,
+                )
             }
             assertTrue(db.customRows.isEmpty())
         }
@@ -169,15 +180,17 @@ class KeywordRoutesTest {
             application { configureTestApplication(this, db) }
             client.post("$path/custom") {
                 bearerAuth(token(started = true)); contentType(ContentType.Application.Json); setBody(
-                """{"text":"IT","type":"TOPIC"}"""
+                """{"text":"IT","type":"TOPIC"}""",
             )
             }
             assertEquals(
                 HttpStatusCode.BadRequest,
-                client.get("$path/candidates") { bearerAuth(token(started = true)) }.status
+                client.get("$path/candidates") { bearerAuth(token(started = true)) }.status,
             )
             val current = client.get("$path/candidates?learningDate=2026-09-24") { bearerAuth(token(started = true)) }
-            assertTrue(Json.parseToJsonElement(current.bodyAsText()).jsonObject.getValue("candidates").jsonArray.isEmpty())
+            assertTrue(
+                Json.parseToJsonElement(current.bodyAsText()).jsonObject.getValue("candidates").jsonArray.isEmpty(),
+            )
             val next = client.get("$path/candidates?learningDate=2026-09-25") { bearerAuth(token(started = true)) }
             assertEquals(1, Json.parseToJsonElement(next.bodyAsText()).jsonObject.getValue("candidates").jsonArray.size)
         }
@@ -193,19 +206,22 @@ class KeywordRoutesTest {
                 bearerAuth(
                     token(
                         user = 900,
-                        admin = true
-                    )
+                        admin = true,
+                    ),
                 ); contentType(ContentType.Application.Json); setBody("""{"text":"IT","type":"TOPIC"}""")
             }
             assertEquals(HttpStatusCode.Created, created.status)
             val id = Json.parseToJsonElement(created.bodyAsText()).jsonObject.getValue("id").jsonPrimitive.long
-            assertEquals(HttpStatusCode.OK, client.put("$path/system/$id/selection") {
-                bearerAuth(token()); contentType(ContentType.Application.Json); setBody("""{"selected":true}""")
-            }.status)
+            assertEquals(
+                HttpStatusCode.OK,
+                client.put("$path/system/$id/selection") {
+                    bearerAuth(token()); contentType(ContentType.Application.Json); setBody("""{"selected":true}""")
+                }.status,
+            )
             assertEquals(id, db.selectionRows.values.single().systemKeywordId)
             assertEquals(
                 HttpStatusCode.BadRequest,
-                client.delete("$path/custom/not-a-number") { bearerAuth(token()) }.status
+                client.delete("$path/custom/not-a-number") { bearerAuth(token()) }.status,
             )
         }
     }

@@ -36,3 +36,6 @@ Thumbs.db
 
 # 내부 API 비밀키가 들어갈 수 있는 환경별 설정
 /config/application-settings-local.yaml
+
+# 레벨 테스트 오디오 영속 볼륨은 Git에 포함하지 않는다.
+/data/level-test-audio/

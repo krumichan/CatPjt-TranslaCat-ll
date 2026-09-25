@@ -15,7 +15,7 @@ class AdminSettingsPolicyTest {
     @Test
     fun `부분 업데이트는 누락된 필드를 보존한다`() {
         val result = AdminSettingsPolicy.change(
-            F.admin(), AdminSettingsChange(defaultDailySentenceCount = 7, aiEvaluationEnabled = false)
+            F.admin(), AdminSettingsChange(defaultDailySentenceCount = 7, aiEvaluationEnabled = false),
         )
         assertEquals(7, result.defaultDailySentenceCount); assertFalse(result.aiEvaluationEnabled)
         assertEquals(F.admin().maxDailySentenceCount, result.maxDailySentenceCount)
@@ -25,11 +25,11 @@ class AdminSettingsPolicyTest {
     fun `범위와 기본값은 최종 조합으로 검증한다`() {
         assertFailsWith<LearningBusinessException> {
             AdminSettingsPolicy.change(
-                F.admin(), AdminSettingsChange(minDailySentenceCount = 10)
+                F.admin(), AdminSettingsChange(minDailySentenceCount = 10),
             )
         }
         val result = AdminSettingsPolicy.change(
-            F.admin(), AdminSettingsChange(minDailySentenceCount = 10, defaultDailySentenceCount = 10)
+            F.admin(), AdminSettingsChange(minDailySentenceCount = 10, defaultDailySentenceCount = 10),
         )
         assertEquals(10, result.defaultDailySentenceCount)
     }
@@ -81,9 +81,12 @@ class AdminSettingsPolicyTest {
             AdminSettingsChange(levelTestQuestionPoolTargetSize = 100001),
         )
         cases.forEach {
-            assertEquals(UserSettingsPolicy.INVALID, assertFailsWith<LearningBusinessException> {
-                AdminSettingsPolicy.change(F.admin(), it)
-            }.code)
+            assertEquals(
+                UserSettingsPolicy.INVALID,
+                assertFailsWith<LearningBusinessException> {
+                    AdminSettingsPolicy.change(F.admin(), it)
+                }.code,
+            )
         }
     }
 
@@ -94,7 +97,7 @@ class AdminSettingsPolicyTest {
         assertEquals(1000, legacy.resolvedQuestionPoolTarget()); assertFalse(legacy.resolvedQuestionPoolReplenishment())
         val changed = AdminSettingsPolicy.change(legacy, AdminSettingsChange())
         assertEquals(
-            1000, changed.levelTestQuestionPoolTargetSize
+            1000, changed.levelTestQuestionPoolTargetSize,
         ); assertNull(changed.levelTestQuestionPoolReplenishmentEnabled)
     }
 
@@ -102,7 +105,7 @@ class AdminSettingsPolicyTest {
     fun `원본에 상한이 없는 timeout에 임의 상한을 추가하지 않는다`() {
         val updated = AdminSettingsPolicy.change(
             F.admin(),
-            AdminSettingsChange(sttTimeoutSeconds = Int.MAX_VALUE, ttsTimeoutSeconds = 1, evaluationTimeoutSeconds = 1)
+            AdminSettingsChange(sttTimeoutSeconds = Int.MAX_VALUE, ttsTimeoutSeconds = 1, evaluationTimeoutSeconds = 1),
         )
         assertEquals(Int.MAX_VALUE, updated.sttTimeoutSeconds)
     }
@@ -111,12 +114,12 @@ class AdminSettingsPolicyTest {
     fun `보관 기간과 오디오 길이 관계도 검증한다`() {
         assertFailsWith<LearningBusinessException> {
             AdminSettingsPolicy.change(
-                F.admin(), AdminSettingsChange(rawAudioRetentionDays = 100, reportedAudioRetentionDays = 99)
+                F.admin(), AdminSettingsChange(rawAudioRetentionDays = 100, reportedAudioRetentionDays = 99),
             )
         }
         assertFailsWith<LearningBusinessException> {
             AdminSettingsPolicy.change(
-                F.admin(), AdminSettingsChange(minValidAudioSeconds = 10.0, maxTurnAudioSeconds = 9)
+                F.admin(), AdminSettingsChange(minValidAudioSeconds = 10.0, maxTurnAudioSeconds = 9),
             )
         }
     }

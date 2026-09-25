@@ -16,17 +16,19 @@ internal class MemorySelectionSettingsUnitOfWork(val settings: MemorySettingsUni
         try {
             return settings.execute {
                 val owner = this
-                block(object : SelectionSettingsTransaction, SettingsTransaction by owner {
-                    override val deliveries = object : SettingsSelectionDeliveryRepository {
-                        override fun findForUser(userId: Long) =
-                            this@MemorySelectionSettingsUnitOfWork.deliveries[userId]
+                block(
+                    object : SelectionSettingsTransaction, SettingsTransaction by owner {
+                        override val deliveries = object : SettingsSelectionDeliveryRepository {
+                            override fun findForUser(userId: Long) =
+                                this@MemorySelectionSettingsUnitOfWork.deliveries[userId]
 
-                        override fun save(delivery: SettingsSelectionDelivery) {
-                            if (failDelivery) error("테스트 수신 이력 저장 실패")
-                            this@MemorySelectionSettingsUnitOfWork.deliveries[delivery.userId] = delivery
+                            override fun save(delivery: SettingsSelectionDelivery) {
+                                if (failDelivery) error("테스트 수신 이력 저장 실패")
+                                this@MemorySelectionSettingsUnitOfWork.deliveries[delivery.userId] = delivery
+                            }
                         }
-                    }
-                })
+                    },
+                )
             }
         } catch (failure: Throwable) {
             deliveries.clear(); deliveries.putAll(before); throw failure

@@ -24,7 +24,7 @@ internal data class KeywordResponseDto(
 
 @Serializable
 internal data class KeywordListResponseDto(
-    val systemKeywords: List<KeywordResponseDto>, val customKeywords: List<KeywordResponseDto>
+    val systemKeywords: List<KeywordResponseDto>, val customKeywords: List<KeywordResponseDto>,
 )
 
 @Serializable

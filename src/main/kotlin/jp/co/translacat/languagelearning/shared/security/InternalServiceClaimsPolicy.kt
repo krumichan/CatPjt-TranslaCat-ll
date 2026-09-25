@@ -12,7 +12,9 @@ internal data class InternalServiceClaims(
 
 /** 서명/issuer/audience/service/tokenUse를 검증한 뒤 추가 적용한다. */
 internal object InternalServiceClaimsPolicy {
-    fun validate(claims: InternalServiceClaims, settings: InternalApiSettings, now: Instant): InternalServicePrincipal? {
+    fun validate(
+        claims: InternalServiceClaims, settings: InternalApiSettings, now: Instant,
+    ): InternalServicePrincipal? {
         if (!settings.enabled || claims.subject != settings.callerService) return null
         if (claims.scopes != listOf("settings:read") || !claims.roles.isNullOrEmpty()) return null
         val issued = claims.issuedAt ?: return null

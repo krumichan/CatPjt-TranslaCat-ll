@@ -7,12 +7,14 @@ import kotlinx.serialization.json.Json
 
 fun Application.configureSerialization() {
     install(ContentNegotiation) {
-        json(Json {
-            encodeDefaults = true
-            explicitNulls = true
-            ignoreUnknownKeys = false
-            isLenient = false
-            allowSpecialFloatingPointValues = false
-        })
+        json(
+            Json {
+                encodeDefaults = true
+                explicitNulls = true
+                ignoreUnknownKeys = false
+                isLenient = false
+                allowSpecialFloatingPointValues = false
+            },
+        )
     }
 }

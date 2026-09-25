@@ -28,7 +28,7 @@ class InternalApiSettingsLoaderTest {
                 "internalApi.issuer" to "core-local",
                 "internalApi.audience" to "ll-local",
                 "internalApi.maxTtlSeconds" to "60",
-                "internalApi.secretBase64" to Base64.getEncoder().encodeToString(ByteArray(32) { it.toByte() })
+                "internalApi.secretBase64" to Base64.getEncoder().encodeToString(ByteArray(32) { it.toByte() }),
             )
         }
         application {

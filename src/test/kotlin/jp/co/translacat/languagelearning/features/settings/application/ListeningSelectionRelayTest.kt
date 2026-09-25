@@ -38,7 +38,7 @@ class ListeningSelectionRelayTest {
         val work = work().apply { failDelivery = true }
         assertFailsWith<IllegalStateException> {
             RememberListeningSelection(work).execute(
-                123, 10, F.now, listOf(SUMMARY)
+                123, 10, F.now, listOf(SUMMARY),
             )
         }
         assertEquals(F.configured(), work.settings.rows.getValue(123)); assertTrue(work.deliveries.isEmpty())
@@ -48,7 +48,7 @@ class ListeningSelectionRelayTest {
     fun `직접 같은 Task를 다시 PATCH해도 이전 세션 전달은 무효다`() = runBlocking {
         val work = work()
         UpdateUserSettings(work.settings).execute(
-            123, UserSettingsChange(defaultListeningTaskTypes = listOf(DICTATION))
+            123, UserSettingsChange(defaultListeningTaskTypes = listOf(DICTATION)),
         )
         assertEquals(SUPERSEDED, RememberListeningSelection(work).execute(123, 10, F.now, listOf(SUMMARY)))
         assertEquals("[\"DICTATION\"]", work.settings.rows.getValue(123).defaultListeningTaskTypesJson)
@@ -78,7 +78,7 @@ class ListeningSelectionRelayTest {
         val work = work()
         assertFailsWith<IllegalArgumentException> {
             RememberListeningSelection(work).execute(
-                123, 10, F.now.plusNanos(1), listOf(SUMMARY)
+                123, 10, F.now.plusNanos(1), listOf(SUMMARY),
             )
         }
         assertTrue(work.deliveries.isEmpty())

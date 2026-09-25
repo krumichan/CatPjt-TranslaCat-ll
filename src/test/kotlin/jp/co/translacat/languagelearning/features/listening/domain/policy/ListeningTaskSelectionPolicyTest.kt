@@ -18,15 +18,18 @@ class ListeningTaskSelectionPolicyTest {
             setOf(INTERPRETATION, REPEAT_AFTER_AUDIO),
             setOf(DICTATION, INTERPRETATION, REPEAT_AFTER_AUDIO),
             setOf(COMPREHENSION),
-            setOf(SUMMARY)
+            setOf(SUMMARY),
         )
         val values = ListeningTaskType.values()
         for (mask in 0 until (1 shl values.size)) {
             val selected = values.filterIndexed { index, _ -> mask and (1 shl index) != 0 }
             if (selected.toSet() in expected) assertEquals(selected, ListeningTaskSelectionPolicy.validate(selected))
-            else assertEquals("LISTENING_INVALID_TASK_COMBINATION", assertFailsWith<LearningBusinessException> {
-                ListeningTaskSelectionPolicy.validate(selected)
-            }.code)
+            else assertEquals(
+                "LISTENING_INVALID_TASK_COMBINATION",
+                assertFailsWith<LearningBusinessException> {
+                    ListeningTaskSelectionPolicy.validate(selected)
+                }.code,
+            )
         }
     }
 
@@ -41,7 +44,7 @@ class ListeningTaskSelectionPolicyTest {
     fun `정상 입력은 enum 순서의 공백 없는 JSON으로 저장한다`() {
         assertEquals(
             "[\"DICTATION\",\"INTERPRETATION\",\"REPEAT_AFTER_AUDIO\"]",
-            ListeningTaskSelectionPolicy.toCanonicalJson(listOf(REPEAT_AFTER_AUDIO, DICTATION, INTERPRETATION))
+            ListeningTaskSelectionPolicy.toCanonicalJson(listOf(REPEAT_AFTER_AUDIO, DICTATION, INTERPRETATION)),
         )
     }
 }

@@ -2,7 +2,7 @@ package jp.co.translacat.languagelearning.features.resultjournal.domain.model
 
 import java.security.MessageDigest
 import java.time.Instant
-import java.util.UUID
+import java.util.*
 
 /** 검증된 결과의 불변 전달본이다. 이것을 Profile/Activity 최신 상태로 반환하지 않는다. */
 internal data class IncomingLearningResult(
@@ -29,7 +29,9 @@ internal data class IncomingLearningResult(
         require(payloadSha256.matches(Regex("[0-9a-f]{64}"))) { "본문 해시 형식을 확인해 주세요." }
         require(payloadSha256 == hash(payloadJson)) { "본문과 해시가 일치하지 않습니다." }
     }
+
     override fun toString(): String = "IncomingLearningResult(eventId=$eventId, sequence=$sequence, payload=<redacted>)"
+
     companion object {
         const val MAX_PAYLOAD_BYTES = 262_144
         fun hash(payload: String): String {
@@ -37,6 +39,7 @@ internal data class IncomingLearningResult(
             require(bytes.isNotEmpty() && bytes.size <= MAX_PAYLOAD_BYTES) { "결과 본문의 크기를 확인해 주세요." }
             return MessageDigest.getInstance("SHA-256").digest(bytes).joinToString("") { "%02x".format(it) }
         }
+
         fun requireUuid(value: String) {
             require(value.matches(Regex("[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"))) {
                 "source 또는 event UUID 형식을 확인해 주세요."

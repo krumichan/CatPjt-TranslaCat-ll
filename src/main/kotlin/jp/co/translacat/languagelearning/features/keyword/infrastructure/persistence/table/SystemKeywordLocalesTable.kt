@@ -10,7 +10,7 @@ internal object SystemKeywordLocalesTable : Table("language_learning_system_keyw
         SystemKeywordsTable.id,
         onDelete = ReferenceOption.RESTRICT,
         onUpdate = ReferenceOption.RESTRICT,
-        fkName = "fk_ll_keyword_locale_system"
+        fkName = "fk_ll_keyword_locale_system",
     )
     val locale = varchar("locale", 20)
     val displayName = varchar("display_name", 200)

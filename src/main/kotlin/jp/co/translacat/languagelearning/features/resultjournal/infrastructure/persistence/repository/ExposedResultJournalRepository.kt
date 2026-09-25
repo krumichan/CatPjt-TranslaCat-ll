@@ -3,8 +3,6 @@ package jp.co.translacat.languagelearning.features.resultjournal.infrastructure.
 import jp.co.translacat.languagelearning.features.resultjournal.domain.model.IncomingLearningResult
 import jp.co.translacat.languagelearning.features.resultjournal.domain.model.ResultKind
 import jp.co.translacat.languagelearning.features.resultjournal.domain.repository.ResultJournalRepository
-import jp.co.translacat.languagelearning.features.resultjournal.infrastructure.persistence.table.ResultEventsTable as Events
-import jp.co.translacat.languagelearning.features.resultjournal.infrastructure.persistence.table.ResultStreamsTable as Streams
 import org.jetbrains.exposed.v1.core.and
 import org.jetbrains.exposed.v1.core.eq
 import org.jetbrains.exposed.v1.jdbc.insert
@@ -12,6 +10,8 @@ import org.jetbrains.exposed.v1.jdbc.selectAll
 import org.jetbrains.exposed.v1.jdbc.update
 import org.jetbrains.exposed.v1.jdbc.upsert
 import java.time.LocalDateTime
+import jp.co.translacat.languagelearning.features.resultjournal.infrastructure.persistence.table.ResultEventsTable as Events
+import jp.co.translacat.languagelearning.features.resultjournal.infrastructure.persistence.table.ResultStreamsTable as Streams
 
 internal class ExposedResultJournalRepository(private val requireTransaction: () -> Unit) : ResultJournalRepository {
     override fun lastSequence(sourceInstanceId: String, userId: Long): Long {
@@ -21,17 +21,23 @@ internal class ExposedResultJournalRepository(private val requireTransaction: ()
             it[Streams.userId] = userId
             it[Streams.lastSequence] = 0
         }
-        return Streams.selectAll().where { (Streams.sourceInstanceId eq sourceInstanceId) and (Streams.userId eq userId) }
-            .forUpdate().single()[Streams.lastSequence]
+        return Streams.selectAll()
+            .where { (Streams.sourceInstanceId eq sourceInstanceId) and (Streams.userId eq userId) }
+            .forUpdate()
+            .single()[Streams.lastSequence]
     }
+
     override fun findByEventId(eventId: String): IncomingLearningResult? {
         requireTransaction()
         return Events.selectAll().where { Events.eventId eq eventId }.forUpdate().singleOrNull()?.let { row ->
-            IncomingLearningResult(row[Events.schemaVersion], row[Events.sourceInstanceId], row[Events.eventId],
+            IncomingLearningResult(
+                row[Events.schemaVersion], row[Events.sourceInstanceId], row[Events.eventId],
                 row[Events.userId], row[Events.sequence], ResultKind.valueOf(row[Events.kind]), row[Events.referenceId],
-                row[Events.occurredAt], row[Events.payloadJson], row[Events.payloadSha256])
+                row[Events.occurredAt], row[Events.payloadJson], row[Events.payloadSha256],
+            )
         }
     }
+
     override fun append(event: IncomingLearningResult, receivedAt: LocalDateTime) {
         requireTransaction()
         Events.insert {
@@ -49,10 +55,13 @@ internal class ExposedResultJournalRepository(private val requireTransaction: ()
             it[Events.receivedAt] = receivedAt
         }
     }
+
     override fun advance(sourceInstanceId: String, userId: Long, sequence: Long) {
         requireTransaction()
-        check(Streams.update({ (Streams.sourceInstanceId eq sourceInstanceId) and (Streams.userId eq userId) }) {
-            it[lastSequence] = sequence
-        } == 1) { "결과 원장 stream이 없습니다." }
+        check(
+            Streams.update({ (Streams.sourceInstanceId eq sourceInstanceId) and (Streams.userId eq userId) }) {
+                it[lastSequence] = sequence
+            } == 1,
+        ) { "결과 원장 stream이 없습니다." }
     }
 }

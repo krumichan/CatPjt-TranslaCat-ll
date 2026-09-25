@@ -28,7 +28,9 @@ internal class ExposedSettingsReadQueries(private val transactions: JdbcTransact
             .mapNotNull { row ->
                 val origin = row[UserSettingsTable.originLanguage]
                 val learning = row[UserSettingsTable.learningLanguage]
-                if (origin.isNullOrBlank() || learning.isNullOrBlank()) null else ConfiguredLanguagePair(origin, learning)
+                if (origin.isNullOrBlank() || learning.isNullOrBlank()) null else ConfiguredLanguagePair(
+                    origin, learning,
+                )
             }
             .distinct()
             .sortedWith(compareBy({ it.originLanguage }, { it.learningLanguage }))

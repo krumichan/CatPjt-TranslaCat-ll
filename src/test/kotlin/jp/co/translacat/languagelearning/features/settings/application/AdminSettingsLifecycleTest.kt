@@ -26,7 +26,7 @@ class AdminSettingsLifecycleTest {
         val work = FakeAdminWork()
         assertFailsWith<LearningBusinessException> {
             UpdateAdminSettings(work).execute(
-                987, AdminSettingsChange(dailyKeywordMaxCount = 21)
+                987, AdminSettingsChange(dailyKeywordMaxCount = 21),
             )
         }
         assertEquals(F.admin(), work.current); assertTrue(work.audit.isEmpty())
@@ -37,7 +37,7 @@ class AdminSettingsLifecycleTest {
         val work = FakeAdminWork().apply { failAudit = true }
         assertFailsWith<IllegalStateException> {
             UpdateAdminSettings(work).execute(
-                987, AdminSettingsChange(dailyKeywordMaxCount = 8)
+                987, AdminSettingsChange(dailyKeywordMaxCount = 8),
             )
         }
         assertEquals(F.admin(), work.current)
@@ -64,21 +64,23 @@ class AdminSettingsLifecycleTest {
             val before = current;
             val size = audit.size
             try {
-                return block(object : AdminSettingsTransaction {
-                    override val nowUtc = F.now
-                    override val settings = object : AdminSettingsRepository {
-                        override fun loadForUpdate() = current
-                        override fun save(settings: AdminSettings, adminUserId: Long, nowUtc: LocalDateTime) =
-                            settings.also { current = it }
+                return block(
+                    object : AdminSettingsTransaction {
+                        override val nowUtc = F.now
+                        override val settings = object : AdminSettingsRepository {
+                            override fun loadForUpdate() = current
+                            override fun save(settings: AdminSettings, adminUserId: Long, nowUtc: LocalDateTime) =
+                                settings.also { current = it }
 
-                        override fun appendAudit(
-                            adminUserId: Long, before: AdminSettings, after: AdminSettings, nowUtc: LocalDateTime
-                        ) {
-                            if (failAudit) error("감사 실패")
-                            audit += Triple(adminUserId, before, after)
+                            override fun appendAudit(
+                                adminUserId: Long, before: AdminSettings, after: AdminSettings, nowUtc: LocalDateTime,
+                            ) {
+                                if (failAudit) error("감사 실패")
+                                audit += Triple(adminUserId, before, after)
+                            }
                         }
-                    }
-                })
+                    },
+                )
             } catch (failure: Throwable) {
                 current = before; while (audit.size > size) audit.removeAt(audit.lastIndex); throw failure
             }

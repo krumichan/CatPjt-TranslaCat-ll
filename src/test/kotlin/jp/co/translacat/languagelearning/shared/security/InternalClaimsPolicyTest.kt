@@ -6,7 +6,7 @@ import kotlin.test.*
 
 class InternalClaimsPolicyTest {
     private val settings = InternalApiSettings(
-        enabled = true, secretBase64 = Base64.getEncoder().encodeToString(ByteArray(32) { it.toByte() })
+        enabled = true, secretBase64 = Base64.getEncoder().encodeToString(ByteArray(32) { it.toByte() }),
     )
     private val now = Instant.parse("2026-09-24T03:30:00Z")
     private val valid = InternalClaims("123", listOf("USER"), now, now.plusSeconds(60))
@@ -26,8 +26,8 @@ class InternalClaimsPolicyTest {
     fun `ADMIN은 명시된 경우에만 관리자다`() {
         assertTrue(
             InternalClaimsPolicy.validate(
-                valid.copy(roles = listOf("USER", "ADMIN")), settings, now
-            )!!.administrator
+                valid.copy(roles = listOf("USER", "ADMIN")), settings, now,
+            )!!.administrator,
         )
     }
 
@@ -42,7 +42,7 @@ class InternalClaimsPolicyTest {
     fun `Long 최대 식별자는 정확하게 유지한다`() {
         assertEquals(
             Long.MAX_VALUE,
-            InternalClaimsPolicy.validate(valid.copy(subject = Long.MAX_VALUE.toString()), settings, now)?.userId
+            InternalClaimsPolicy.validate(valid.copy(subject = Long.MAX_VALUE.toString()), settings, now)?.userId,
         )
     }
 
@@ -60,9 +60,10 @@ class InternalClaimsPolicyTest {
         assertNull(
             InternalClaimsPolicy.validate(
                 valid.copy(
-                    issuedAt = now.minusSeconds(70), expiresAt = now.minusSeconds(10)
-                ), settings, now
-            )
+                    issuedAt = now.minusSeconds(70), expiresAt = now.minusSeconds(10),
+                ),
+                settings, now,
+            ),
         )
     }
 
@@ -79,9 +80,10 @@ class InternalClaimsPolicyTest {
         assertNotNull(
             InternalClaimsPolicy.validate(
                 valid.copy(
-                    issuedAt = now.minusSeconds(60), expiresAt = now.minusSeconds(4)
-                ), settings, now
-            )
+                    issuedAt = now.minusSeconds(60), expiresAt = now.minusSeconds(4),
+                ),
+                settings, now,
+            ),
         )
     }
 
@@ -93,7 +95,7 @@ class InternalClaimsPolicyTest {
         }
         assertFailsWith<IllegalArgumentException> {
             InternalApiSettings(
-                enabled = true, maxTtlSeconds = 301, secretBase64 = Base64.getEncoder().encodeToString(ByteArray(32))
+                enabled = true, maxTtlSeconds = 301, secretBase64 = Base64.getEncoder().encodeToString(ByteArray(32)),
             )
         }
     }

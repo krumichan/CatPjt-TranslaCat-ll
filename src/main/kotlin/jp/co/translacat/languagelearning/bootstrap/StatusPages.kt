@@ -6,6 +6,7 @@ import io.ktor.server.plugins.*
 import io.ktor.server.plugins.statuspages.*
 import io.ktor.server.response.*
 import jp.co.translacat.languagelearning.features.learner.domain.exception.LearnerUnavailableException
+import jp.co.translacat.languagelearning.features.leveltest.domain.exception.LevelTestException
 import jp.co.translacat.languagelearning.features.settings.domain.exception.SettingsPolicyNotInitializedException
 import jp.co.translacat.languagelearning.shared.error.LearningBusinessException
 import jp.co.translacat.languagelearning.shared.http.InternalApiError
@@ -16,6 +17,13 @@ fun Application.configureStatusPages() {
     val logger = environment.log
 
     install(StatusPages) {
+        exception<LevelTestException> { call, cause ->
+            call.respond(
+                HttpStatusCode.fromValue(cause.httpStatus),
+                InternalApiError(cause.code, cause.message ?: "레벨 테스트 요청을 확인해 주세요."),
+            )
+        }
+
         exception<LearningBusinessException> { call, cause ->
             call.respond(
                 HttpStatusCode.BadRequest,

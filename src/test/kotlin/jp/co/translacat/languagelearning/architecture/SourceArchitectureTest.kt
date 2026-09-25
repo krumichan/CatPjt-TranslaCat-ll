@@ -32,8 +32,10 @@ class SourceArchitectureTest {
         val sources = productionSources().filter { ".domain." in "${it.packageName}." }
         assertTrue(sources.isNotEmpty(), "도메인 소스가 없어 검사를 수행할 수 없습니다.")
         assertNoImports(sources) { target ->
-            isFrameworkOrJdbc(target) || (target.startsWith("$ROOT.") && ".domain." !in target && !target.startsWith("$ROOT.shared.error.") && !target.startsWith(
-                "$ROOT.shared.time."
+            isFrameworkOrJdbc(target) || (target.startsWith("$ROOT.") && ".domain." !in target && !target.startsWith(
+                "$ROOT.shared.error.",
+            ) && !target.startsWith(
+                "$ROOT.shared.time.",
             ))
         }
     }
@@ -43,8 +45,10 @@ class SourceArchitectureTest {
         val sources = productionSources().filter { ".application." in "${it.packageName}." }
         assertTrue(sources.isNotEmpty(), "애플리케이션 소스가 없어 검사를 수행할 수 없습니다.")
         assertNoImports(sources) { target ->
-            isFrameworkOrJdbc(target) || (target.startsWith("$ROOT.") && (".infrastructure." in target || ".api." in target || target.startsWith(
-                "$ROOT.bootstrap."
+            isFrameworkOrJdbc(target) || (target.startsWith(
+                "$ROOT.",
+            ) && (".infrastructure." in target || ".api." in target || target.startsWith(
+                "$ROOT.bootstrap.",
             ) || target.startsWith("$ROOT.shared.persistence.") || target.startsWith("$ROOT.shared.http.")))
         }
     }
@@ -54,7 +58,9 @@ class SourceArchitectureTest {
         val sources = productionSources().filter { it.packageName.startsWith("$ROOT.shared.persistence") }
         assertTrue(sources.isNotEmpty(), "공통 영속성 소스가 없어 검사를 수행할 수 없습니다.")
         assertNoImports(sources) { target ->
-            target.startsWith("io.ktor.") || target.startsWith("$ROOT.features.") || target.startsWith("$ROOT.bootstrap.")
+            target.startsWith("io.ktor.") || target.startsWith("$ROOT.features.") || target.startsWith(
+                "$ROOT.bootstrap.",
+            )
         }
     }
 
@@ -62,6 +68,9 @@ class SourceArchitectureTest {
     fun `다른 기능의 영속성 구현 참조는 의도한 연결만 허용한다`() {
         // 같은 LL DB 안의 learner FK와 UnitOfWork 조립만 명시적으로 허용한다.
         val allowed = setOf(
+            "$ROOT.features.leveltest.infrastructure.persistence.table.LevelSessionsTable" to "$ROOT.features.learner.infrastructure.persistence.table.LearnersTable",
+            "$ROOT.features.leveltest.infrastructure.persistence.table.LevelBaselinesTable" to "$ROOT.features.learner.infrastructure.persistence.table.LearnersTable",
+            "$ROOT.features.leveltest.infrastructure.persistence.ExposedLevelTestUnitOfWork" to "$ROOT.features.learner.infrastructure.persistence.repository.ExposedLearnerRepository",
             "$ROOT.features.resultjournal.infrastructure.persistence.table.ResultStreamsTable" to "$ROOT.features.learner.infrastructure.persistence.table.LearnersTable",
             "$ROOT.features.resultjournal.infrastructure.persistence.ExposedResultJournalUnitOfWork" to "$ROOT.features.learner.infrastructure.persistence.repository.ExposedLearnerRepository",
             "$ROOT.features.keyword.infrastructure.persistence.table.CustomKeywordsTable" to "$ROOT.features.learner.infrastructure.persistence.table.LearnersTable",
@@ -91,15 +100,15 @@ class SourceArchitectureTest {
             val name = source.path.fileName.toString().removeSuffix(".kt")
             when {
                 name.endsWith("Table") || name.endsWith("Tables") -> assertTrue(
-                    source.packageName.endsWith(".infrastructure.persistence.table"), source.primaryName
+                    source.packageName.endsWith(".infrastructure.persistence.table"), source.primaryName,
                 )
 
                 name.startsWith("Exposed") && name.endsWith("Repository") -> assertTrue(
-                    source.packageName.endsWith(".infrastructure.persistence.repository"), source.primaryName
+                    source.packageName.endsWith(".infrastructure.persistence.repository"), source.primaryName,
                 )
 
                 name.endsWith("Repository") -> assertTrue(
-                    source.packageName.endsWith(".domain.repository"), source.primaryName
+                    source.packageName.endsWith(".domain.repository"), source.primaryName,
                 )
             }
         }
@@ -112,7 +121,7 @@ class SourceArchitectureTest {
     }
 
     private fun projectRoot(): Path = generateSequence(
-        Paths.get("").toAbsolutePath().normalize()
+        Paths.get("").toAbsolutePath().normalize(),
     ) { it.parent }.firstOrNull { Files.isDirectory(it.resolve("src/main/kotlin")) }
         ?: error("프로젝트 루트(src/main/kotlin)를 찾을 수 없습니다. 작업 디렉토리를 확인해 주세요.")
 

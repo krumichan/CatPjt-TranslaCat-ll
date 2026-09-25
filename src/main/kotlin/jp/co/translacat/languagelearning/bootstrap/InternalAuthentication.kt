@@ -11,9 +11,8 @@ import jp.co.translacat.languagelearning.shared.http.InternalApiError
 import jp.co.translacat.languagelearning.shared.security.*
 import java.time.Clock
 
-
 internal fun Application.configureInternalAuthentication(
-    settings: InternalApiSettings, clock: Clock = Clock.systemUTC()
+    settings: InternalApiSettings, clock: Clock = Clock.systemUTC(),
 ) {
     check(settings.enabled)
     install(Authentication) {
@@ -39,7 +38,7 @@ internal fun Application.configureInternalAuthentication(
                             payload.subject,
                             payload.getClaim("roles").asList(String::class.java),
                             payload.issuedAt?.toInstant(),
-                            payload.expiresAt?.toInstant()
+                            payload.expiresAt?.toInstant(),
                         ),
                         settings, clock.instant(),
                     )?.let(::InternalUserPrincipal)
@@ -50,7 +49,7 @@ internal fun Application.configureInternalAuthentication(
             challenge { _, _ ->
                 call.response.headers.append(HttpHeaders.WWWAuthenticate, "Bearer realm=\"translacat-ll-internal\"")
                 call.respond(
-                    HttpStatusCode.Unauthorized, InternalApiError("INTERNAL_AUTH_REQUIRED", "유효한 내부 호출 인증이 필요합니다.")
+                    HttpStatusCode.Unauthorized, InternalApiError("INTERNAL_AUTH_REQUIRED", "유효한 내부 호출 인증이 필요합니다."),
                 )
             }
         }
@@ -86,7 +85,7 @@ internal fun Application.configureInternalAuthentication(
             }
             challenge { _, _ ->
                 call.response.headers.append(
-                    HttpHeaders.WWWAuthenticate, "Bearer realm=\"translacat-ll-settings-service\""
+                    HttpHeaders.WWWAuthenticate, "Bearer realm=\"translacat-ll-settings-service\"",
                 )
                 call.respond(
                     HttpStatusCode.Unauthorized,

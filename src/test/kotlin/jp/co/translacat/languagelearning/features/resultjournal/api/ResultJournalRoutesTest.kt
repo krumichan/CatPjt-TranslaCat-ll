@@ -28,7 +28,7 @@ class ResultJournalRoutesTest {
     private val settings = InternalApiSettings(enabled = true, secretBase64 = Base64.getEncoder().encodeToString(key))
     private val path = "/internal/v1/learning-results"
     private fun token(
-        use: String = "ll-learning-results-v1", scope: String = "learning-results:write", admin: Boolean = false
+        use: String = "ll-learning-results-v1", scope: String = "learning-results:write", admin: Boolean = false,
     ): String {
         val now = Instant.now()
         val builder = JWT.create()
@@ -56,7 +56,7 @@ class ResultJournalRoutesTest {
             e.referenceId,
             e.occurredAt,
             e.payloadJson,
-            e.payloadSha256
+            e.payloadSha256,
         )
     }
 
@@ -71,10 +71,13 @@ class ResultJournalRoutesTest {
             }
             assertEquals(HttpStatusCode.Unauthorized, client.post(path).status)
             for (t in listOf(token("ll-internal"), token(scope = "settings:read"), token(admin = true))) {
-                assertEquals(HttpStatusCode.Unauthorized, client.post(path) {
-                    bearerAuth(t); contentType(ContentType.Application.Json)
-                    setBody(Json.encodeToString(envelope()))
-                }.status)
+                assertEquals(
+                    HttpStatusCode.Unauthorized,
+                    client.post(path) {
+                        bearerAuth(t); contentType(ContentType.Application.Json)
+                        setBody(Json.encodeToString(envelope()))
+                    }.status,
+                )
             }
             assertTrue(db.events.isEmpty())
         }
@@ -97,10 +100,13 @@ class ResultJournalRoutesTest {
             val duplicate =
                 client.post(path) { bearerAuth(token()); contentType(ContentType.Application.Json); setBody(json) }
             assertTrue(duplicate.bodyAsText().contains("DUPLICATE"))
-            assertEquals(HttpStatusCode.Conflict, client.post(path) {
-                bearerAuth(token()); contentType(ContentType.Application.Json)
-                setBody(Json.encodeToString(envelope().copy(sequence = 3)))
-            }.status)
+            assertEquals(
+                HttpStatusCode.Conflict,
+                client.post(path) {
+                    bearerAuth(token()); contentType(ContentType.Application.Json)
+                    setBody(Json.encodeToString(envelope().copy(sequence = 3)))
+                }.status,
+            )
             assertEquals(1, db.events.size)
         }
     }
@@ -116,12 +122,15 @@ class ResultJournalRoutesTest {
             }
             for (e in listOf(
                 envelope(F.PAYLOAD.replace("SCORED_EVALUATION", "SESSION_COACHING")),
-                envelope().copy(payloadSha256 = "0".repeat(64))
+                envelope().copy(payloadSha256 = "0".repeat(64)),
             )) {
-                assertEquals(HttpStatusCode.BadRequest, client.post(path) {
-                    bearerAuth(token()); contentType(ContentType.Application.Json)
-                    setBody(Json.encodeToString(e))
-                }.status)
+                assertEquals(
+                    HttpStatusCode.BadRequest,
+                    client.post(path) {
+                        bearerAuth(token()); contentType(ContentType.Application.Json)
+                        setBody(Json.encodeToString(e))
+                    }.status,
+                )
             }
             assertEquals(0, db.transactions)
         }
@@ -139,7 +148,11 @@ class ResultJournalRoutesTest {
             for (body in listOf("{broken", Json.encodeToString(envelope()).dropLast(1) + ",\"admin\":true}")) {
                 assertEquals(
                     HttpStatusCode.BadRequest,
-                    client.post(path) { bearerAuth(token()); contentType(ContentType.Application.Json); setBody(body) }.status
+                    client.post(path) {
+                        bearerAuth(token()); contentType(ContentType.Application.Json); setBody(
+                        body,
+                    )
+                    }.status,
                 )
             }
             assertTrue(db.events.isEmpty())
@@ -155,10 +168,13 @@ class ResultJournalRoutesTest {
                 configureSerialization(); configureStatusPages(); configureInternalAuthentication(settings)
                 routing { resultJournalRoutes(AcceptLearningResult(db, F.SOURCE)) }
             }
-            assertEquals(HttpStatusCode.PayloadTooLarge, client.post(path) {
-                bearerAuth(token()); contentType(ContentType.Application.Json)
-                setBody(" ".repeat(2_097_153))
-            }.status)
+            assertEquals(
+                HttpStatusCode.PayloadTooLarge,
+                client.post(path) {
+                    bearerAuth(token()); contentType(ContentType.Application.Json)
+                    setBody(" ".repeat(2_097_153))
+                }.status,
+            )
             assertEquals(0, db.transactions)
         }
     }
@@ -172,10 +188,15 @@ class ResultJournalRoutesTest {
                 configureSerialization(); configureStatusPages(); configureInternalAuthentication(settings)
                 routing { resultJournalRoutes(AcceptLearningResult(db, F.SOURCE)) }
             }
-            assertEquals(HttpStatusCode.Conflict, client.post(path) {
-                bearerAuth(token()); contentType(ContentType.Application.Json)
-                setBody(Json.encodeToString(envelope().copy(sourceInstanceId = "7a8abfea-a0d1-4458-95e8-66cb5e68d9a0")))
-            }.status)
+            assertEquals(
+                HttpStatusCode.Conflict,
+                client.post(path) {
+                    bearerAuth(token()); contentType(ContentType.Application.Json)
+                    setBody(
+                        Json.encodeToString(envelope().copy(sourceInstanceId = "7a8abfea-a0d1-4458-95e8-66cb5e68d9a0")),
+                    )
+                }.status,
+            )
             assertEquals(0, db.transactions)
         }
     }

@@ -8,7 +8,7 @@ import kotlin.test.assertNull
 
 class InternalServiceClaimsPolicyTest {
     private val settings = InternalApiSettings(
-        enabled = true, secretBase64 = Base64.getEncoder().encodeToString(ByteArray(32) { it.toByte() })
+        enabled = true, secretBase64 = Base64.getEncoder().encodeToString(ByteArray(32) { it.toByte() }),
     )
     private val now = Instant.parse("2026-09-24T01:00:00Z")
     private val valid = InternalServiceClaims("translacat-be", listOf("settings:read"), null, now, now.plusSeconds(60))
@@ -36,16 +36,18 @@ class InternalServiceClaimsPolicyTest {
         assertNull(
             InternalServiceClaimsPolicy.validate(
                 valid.copy(
-                    issuedAt = now.minusSeconds(200), expiresAt = now.minusSeconds(140)
-                ), settings, now
-            )
+                    issuedAt = now.minusSeconds(200), expiresAt = now.minusSeconds(140),
+                ),
+                settings, now,
+            ),
         )
         assertNull(
             InternalServiceClaimsPolicy.validate(
                 valid.copy(
-                    issuedAt = now.plusSeconds(6), expiresAt = now.plusSeconds(66)
-                ), settings, now
-            )
+                    issuedAt = now.plusSeconds(6), expiresAt = now.plusSeconds(66),
+                ),
+                settings, now,
+            ),
         )
         assertNull(InternalServiceClaimsPolicy.validate(valid.copy(expiresAt = now.plusSeconds(121)), settings, now))
     }
@@ -62,16 +64,18 @@ class InternalServiceClaimsPolicyTest {
         assertNotNull(
             InternalServiceClaimsPolicy.validate(
                 valid.copy(
-                    issuedAt = now.minusSeconds(60), expiresAt = now.minusSeconds(4)
-                ), settings, now
-            )
+                    issuedAt = now.minusSeconds(60), expiresAt = now.minusSeconds(4),
+                ),
+                settings, now,
+            ),
         )
         assertNull(
             InternalServiceClaimsPolicy.validate(
                 valid.copy(
-                    issuedAt = now.minusSeconds(60), expiresAt = now.minusSeconds(6)
-                ), settings, now
-            )
+                    issuedAt = now.minusSeconds(60), expiresAt = now.minusSeconds(6),
+                ),
+                settings, now,
+            ),
         )
     }
 }

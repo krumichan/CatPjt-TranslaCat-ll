@@ -24,7 +24,8 @@ class KeywordMigrationResourcesTest {
                 "language_learning_system_keyword", "language_learning_system_keyword_locale",
                 "language_learning_custom_keyword", "language_learning_user_system_keyword",
                 "language_learning_keyword_catalog_lock",
-            ), names
+            ),
+            names,
         )
         assertFalse(sql().contains("keyword_mastery"))
         assertFalse(sql().contains("learning_profile"))
@@ -45,8 +46,8 @@ class KeywordMigrationResourcesTest {
         assertFalse(
             Regex(
                 "\\b(DROP|ALTER|TRUNCATE|REPLACE)\\b|\\bDELETE\\s+FROM\\b|\\bUPDATE\\s+\\w+\\s+SET\\b",
-                RegexOption.IGNORE_CASE
-            ).containsMatchIn(sql)
+                RegexOption.IGNORE_CASE,
+            ).containsMatchIn(sql),
         )
         assertFalse(sql.contains("translacat."))
         assertFalse(sql.contains("REFERENCES user"))

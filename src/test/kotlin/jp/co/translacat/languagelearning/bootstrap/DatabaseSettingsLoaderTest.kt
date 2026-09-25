@@ -26,7 +26,7 @@ class DatabaseSettingsLoaderTest {
                 "database.enabled" to "false",
                 "database.maximumPoolSize" to "broken",
                 "database.migrations.mode" to "broken",
-            )
+            ),
         )
         assertFalse(settings.enabled)
     }

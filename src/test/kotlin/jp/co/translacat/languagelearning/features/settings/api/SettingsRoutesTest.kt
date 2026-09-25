@@ -49,7 +49,7 @@ class SettingsRoutesTest {
     @Test
     fun `발급자 audience 서비스 용도가 다르면 거부한다`() = app { ops ->
         for (t in listOf(
-            token(issuer = "other"), token(audience = "web"), token(service = "other"), token(use = "login")
+            token(issuer = "other"), token(audience = "web"), token(service = "other"), token(use = "login"),
         )) {
             assertEquals(HttpStatusCode.Unauthorized, client.get(userPath) { bearerAuth(t) }.status)
         }
@@ -72,7 +72,7 @@ class SettingsRoutesTest {
             token(subject = "0"),
             token(subject = "abc"),
             token(roles = emptyList()),
-            token(roles = listOf("ROOT"))
+            token(roles = listOf("ROOT")),
         )) {
             assertEquals(HttpStatusCode.Unauthorized, client.get(userPath) { bearerAuth(t) }.status)
         }
@@ -83,7 +83,7 @@ class SettingsRoutesTest {
     fun `사용자 ID 헤더와 query는 JWT 주체를 바꾸지 못한다`() = app { ops ->
         val response = client.get("$userPath?userId=999") {
             bearerAuth(token(subject = "123")); header("X-User-Id", "999"); header(
-            "X-User-Role", "ADMIN"
+            "X-User-Role", "ADMIN",
         )
         }
         assertEquals(HttpStatusCode.OK, response.status); assertEquals(listOf("get:123"), ops.calls)
@@ -96,7 +96,7 @@ class SettingsRoutesTest {
         val body = Json.parseToJsonElement(response.bodyAsText()).jsonObject
         assertEquals(23, body.size); assertEquals(JsonNull, body["pendingEffectiveDate"])
         assertEquals(JsonNull, body["originLanguage"]); assertEquals(
-        false, body.getValue("configured").jsonPrimitive.boolean
+        false, body.getValue("configured").jsonPrimitive.boolean,
     )
         assertEquals(5, body.getValue("dailySentenceCount").jsonPrimitive.int)
         assertFalse("userId" in body); assertFalse("resultCode" in body)
@@ -115,7 +115,11 @@ class SettingsRoutesTest {
     @Test
     fun `명시적 null과 누락은 미변경 요청으로 전달한다`() = app { ops ->
         val response =
-            client.patch(userPath) { bearerAuth(token()); contentType(ContentType.Application.Json); setBody("""{"dailySentenceCount":null}""") }
+            client.patch(userPath) {
+                bearerAuth(token()); contentType(ContentType.Application.Json); setBody(
+                """{"dailySentenceCount":null}""",
+            )
+            }
         assertEquals(HttpStatusCode.OK, response.status); assertEquals(UserSettingsChange(), ops.lastChange)
     }
 
@@ -126,7 +130,7 @@ class SettingsRoutesTest {
             """{"dailySentenceCount":"bad"}""",
             """{"dailySentenceCount":999999999999}""",
             "{",
-            "[]"
+            "[]",
         )) {
             val response =
                 client.patch(userPath) { bearerAuth(token()); contentType(ContentType.Application.Json); setBody(body) }
@@ -138,12 +142,20 @@ class SettingsRoutesTest {
     @Test
     fun `Task null 원소는 정책으로 전달하고 알 수 없는 enum은 400이다`() = app { ops ->
         val bad =
-            client.patch(userPath) { bearerAuth(token()); contentType(ContentType.Application.Json); setBody("""{"defaultListeningTaskTypes":["UNKNOWN"]}""") }
+            client.patch(userPath) {
+                bearerAuth(token()); contentType(ContentType.Application.Json); setBody(
+                """{"defaultListeningTaskTypes":["UNKNOWN"]}""",
+            )
+            }
         assertEquals(HttpStatusCode.BadRequest, bad.status); assertTrue(ops.calls.isEmpty())
         val input =
-            client.patch(userPath) { bearerAuth(token()); contentType(ContentType.Application.Json); setBody("""{"defaultListeningTaskTypes":[null]}""") }
+            client.patch(userPath) {
+                bearerAuth(token()); contentType(ContentType.Application.Json); setBody(
+                """{"defaultListeningTaskTypes":[null]}""",
+            )
+            }
         assertEquals(HttpStatusCode.OK, input.status); assertEquals(
-        listOf(null), ops.lastChange?.defaultListeningTaskTypes
+        listOf(null), ops.lastChange?.defaultListeningTaskTypes,
     )
     }
 
@@ -152,7 +164,11 @@ class SettingsRoutesTest {
         assertEquals(HttpStatusCode.Forbidden, client.get(adminPath) { bearerAuth(token()) }.status)
         assertEquals(
             HttpStatusCode.Forbidden,
-            client.patch(adminPath) { bearerAuth(token()); contentType(ContentType.Application.Json); setBody("{") }.status
+            client.patch(adminPath) {
+                bearerAuth(token()); contentType(ContentType.Application.Json); setBody(
+                "{",
+            )
+            }.status,
         )
         assertTrue(ops.calls.isEmpty())
     }
@@ -169,8 +185,8 @@ class SettingsRoutesTest {
         val response = client.patch(adminPath) {
             bearerAuth(
                 token(
-                    subject = "987", roles = listOf("ADMIN")
-                )
+                    subject = "987", roles = listOf("ADMIN"),
+                ),
             ); contentType(ContentType.Application.Json); setBody("""{"dailyKeywordMaxCount":8}""")
         }
         assertEquals(HttpStatusCode.OK, response.status); assertEquals(listOf("admin-update:987"), ops.calls)
@@ -183,7 +199,7 @@ class SettingsRoutesTest {
         assertEquals(HttpStatusCode.BadRequest, response.status)
         assertEquals(
             "LANGUAGE_LEARNING_SETTING_INVALID",
-            Json.parseToJsonElement(response.bodyAsText()).jsonObject.getValue("code").jsonPrimitive.content
+            Json.parseToJsonElement(response.bodyAsText()).jsonObject.getValue("code").jsonPrimitive.content,
         )
     }
 
@@ -220,7 +236,7 @@ class SettingsRoutesTest {
         issued: Long = 0,
         ttl: Long = 60,
         includeIssued: Boolean = true,
-        includeExpires: Boolean = true
+        includeExpires: Boolean = true,
     ): String {
         val now = Instant.now().plusSeconds(issued)
         val builder = JWT.create()
@@ -241,7 +257,7 @@ class SettingsRoutesTest {
         application {
             configureSerialization(); configureStatusPages(); configureInternalAuthentication(settings); routing {
             settingsRoutes(
-                ops
+                ops,
             )
         }
         }

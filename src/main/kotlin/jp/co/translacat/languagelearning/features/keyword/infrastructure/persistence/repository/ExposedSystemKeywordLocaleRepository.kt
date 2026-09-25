@@ -14,7 +14,7 @@ internal class ExposedSystemKeywordLocaleRepository(private val requireTransacti
             SystemKeywordLocale(
                 row[SystemKeywordLocalesTable.systemKeywordId],
                 row[SystemKeywordLocalesTable.locale],
-                row[SystemKeywordLocalesTable.displayName]
+                row[SystemKeywordLocalesTable.displayName],
             )
         }
     }

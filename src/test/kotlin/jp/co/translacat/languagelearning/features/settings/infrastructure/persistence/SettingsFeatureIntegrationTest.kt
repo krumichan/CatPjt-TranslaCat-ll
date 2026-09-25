@@ -46,7 +46,7 @@ class SettingsFeatureIntegrationTest {
         val work = ExposedSettingsUnitOfWork(runner, clock);
         val admin = ExposedAdminSettingsUnitOfWork(runner, clock)
         return DefaultSettingsOperations(
-            GetUserSettings(work), UpdateUserSettings(work), GetAdminSettings(admin), UpdateAdminSettings(admin)
+            GetUserSettings(work), UpdateUserSettings(work), GetAdminSettings(admin), UpdateAdminSettings(admin),
         )
     }
 
@@ -56,22 +56,23 @@ class SettingsFeatureIntegrationTest {
             val ops = operations(factory)
             assertFalse(ops.getUser(123).settings.configured)
             val first = ops.updateUser(
-                123, UserSettingsChange(originLanguage = "ko", learningLanguage = "ja", dailySentenceCount = 7)
+                123, UserSettingsChange(originLanguage = "ko", learningLanguage = "ja", dailySentenceCount = 7),
             ).settings
             assertTrue(first.configured); assertEquals(
-            7, first.dailySentenceCount
+            7, first.dailySentenceCount,
         ); assertNull(first.pendingEffectiveDate)
             val pending = ops.updateUser(
-                123, UserSettingsChange(learningLanguage = "en", dailySentenceCount = 9, speakingPlaybackSpeed = "slow")
+                123,
+                UserSettingsChange(learningLanguage = "en", dailySentenceCount = 9, speakingPlaybackSpeed = "slow"),
             ).settings
             assertEquals("ja", pending.learningLanguage); assertEquals("en", pending.pendingLearningLanguage)
             assertEquals("SLOW", pending.speakingPlaybackSpeed); assertEquals(
-            LocalDate.of(2026, 9, 25), pending.pendingEffectiveDate
+            LocalDate.of(2026, 9, 25), pending.pendingEffectiveDate,
         )
             assertEquals(pending, ops.getUser(123).settings)
             val after = operations(factory, Instant.parse("2026-09-24T15:00:00Z")).getUser(123).settings
             assertEquals("en", after.learningLanguage); assertEquals(
-            9, after.dailySentenceCount
+            9, after.dailySentenceCount,
         ); assertNull(after.pendingEffectiveDate)
             assertEquals(1L, scalar(db, "SELECT COUNT(*) FROM language_learning_user_setting"))
         }
@@ -82,7 +83,7 @@ class SettingsFeatureIntegrationTest {
         runBlocking {
             assertFailsWith<LearningBusinessException> {
                 operations(factory).updateUser(
-                    123, UserSettingsChange(originLanguage = "ko")
+                    123, UserSettingsChange(originLanguage = "ko"),
                 )
             }
             assertEquals(0L, scalar(db, "SELECT COUNT(*) FROM language_learning_learner"))
@@ -94,27 +95,27 @@ class SettingsFeatureIntegrationTest {
     fun `잘못된 PATCH는 앞에서 수행한 승격과 감사 시각 변경을 롤백한다`() = db { db, factory ->
         runBlocking {
             val ops = operations(factory); ops.updateUser(
-            123, UserSettingsChange(originLanguage = "ko", learningLanguage = "ja")
+            123, UserSettingsChange(originLanguage = "ko", learningLanguage = "ja"),
         )
             sql(
                 db,
-                "UPDATE language_learning_user_setting SET pending_daily_sentence_count=8,pending_effective_date='2000-01-01' WHERE user_id=123"
+                "UPDATE language_learning_user_setting SET pending_daily_sentence_count=8,pending_effective_date='2000-01-01' WHERE user_id=123",
             )
             assertFailsWith<LearningBusinessException> {
                 ops.updateUser(
-                    123, UserSettingsChange(dailySentenceCount = 999)
+                    123, UserSettingsChange(dailySentenceCount = 999),
                 )
             }
             assertEquals(
                 8L,
-                scalar(db, "SELECT pending_daily_sentence_count FROM language_learning_user_setting WHERE user_id=123")
+                scalar(db, "SELECT pending_daily_sentence_count FROM language_learning_user_setting WHERE user_id=123"),
             )
             assertEquals(
                 "2000-01-01",
-                string(db, "SELECT pending_effective_date FROM language_learning_user_setting WHERE user_id=123")
+                string(db, "SELECT pending_effective_date FROM language_learning_user_setting WHERE user_id=123"),
             )
             assertEquals(
-                5L, scalar(db, "SELECT daily_sentence_count FROM language_learning_user_setting WHERE user_id=123")
+                5L, scalar(db, "SELECT daily_sentence_count FROM language_learning_user_setting WHERE user_id=123"),
             )
         }
     }
@@ -126,15 +127,15 @@ class SettingsFeatureIntegrationTest {
             ops.updateUser(123, UserSettingsChange(originLanguage = "ko", learningLanguage = "ja"))
             sql(
                 db,
-                "UPDATE language_learning_user_setting SET default_listening_task_types='not-json', pending_daily_sentence_count=8, pending_effective_date='2000-01-01' WHERE user_id=123"
+                "UPDATE language_learning_user_setting SET default_listening_task_types='not-json', pending_daily_sentence_count=8, pending_effective_date='2000-01-01' WHERE user_id=123",
             )
             assertFails { ops.getUser(123) }
             assertEquals(
-                5L, scalar(db, "SELECT daily_sentence_count FROM language_learning_user_setting WHERE user_id=123")
+                5L, scalar(db, "SELECT daily_sentence_count FROM language_learning_user_setting WHERE user_id=123"),
             )
             assertEquals(
                 8L,
-                scalar(db, "SELECT pending_daily_sentence_count FROM language_learning_user_setting WHERE user_id=123")
+                scalar(db, "SELECT pending_daily_sentence_count FROM language_learning_user_setting WHERE user_id=123"),
             )
         }
     }
@@ -143,17 +144,17 @@ class SettingsFeatureIntegrationTest {
     fun `관리자 범위 변경은 조회 시 활성과 pending 모두 보정한다`() = db { db, factory ->
         runBlocking {
             val ops = operations(factory); ops.updateUser(
-            123, UserSettingsChange(originLanguage = "ko", learningLanguage = "ja", dailySentenceCount = 18)
+            123, UserSettingsChange(originLanguage = "ko", learningLanguage = "ja", dailySentenceCount = 18),
         )
             ops.updateUser(123, UserSettingsChange(dailySentenceCount = 20))
             ops.updateAdmin(900, AdminSettingsChange(maxDailySentenceCount = 10))
             val result = ops.getUser(123)
             assertEquals(10, result.settings.dailySentenceCount); assertEquals(
-            10, result.settings.pendingDailySentenceCount
+            10, result.settings.pendingDailySentenceCount,
         )
             assertEquals(10, result.policy.writing.maximum)
             assertEquals(
-                10L, scalar(db, "SELECT daily_sentence_count FROM language_learning_user_setting WHERE user_id=123")
+                10L, scalar(db, "SELECT daily_sentence_count FROM language_learning_user_setting WHERE user_id=123"),
             )
         }
     }
@@ -162,10 +163,10 @@ class SettingsFeatureIntegrationTest {
     fun `관리자 기본값 변경은 새 사용자에게만 적용한다`() = db { _, factory ->
         runBlocking {
             val ops = operations(factory); ops.getUser(123); ops.updateAdmin(
-            900, AdminSettingsChange(defaultDailySentenceCount = 7)
+            900, AdminSettingsChange(defaultDailySentenceCount = 7),
         )
             assertEquals(5, ops.getUser(123).settings.dailySentenceCount); assertEquals(
-            7, ops.getUser(456).settings.dailySentenceCount
+            7, ops.getUser(456).settings.dailySentenceCount,
         )
         }
     }
@@ -178,13 +179,13 @@ class SettingsFeatureIntegrationTest {
             assertEquals(900L, scalar(db, "SELECT admin_user_id FROM language_learning_admin_setting_audit"))
             val before = Json.parseToJsonElement(
                 string(
-                    db, "SELECT before_json FROM language_learning_admin_setting_audit"
-                )
+                    db, "SELECT before_json FROM language_learning_admin_setting_audit",
+                ),
             ).jsonObject
             val after = Json.parseToJsonElement(
                 string(
-                    db, "SELECT after_json FROM language_learning_admin_setting_audit"
-                )
+                    db, "SELECT after_json FROM language_learning_admin_setting_audit",
+                ),
             ).jsonObject
             assertEquals(30, before.size); assertEquals(30, after.size)
             assertEquals(5, before.getValue("dailyKeywordMaxCount").jsonPrimitive.int)
@@ -200,7 +201,7 @@ class SettingsFeatureIntegrationTest {
             assertEquals(1L, scalar(db, "SELECT COUNT(*) FROM language_learning_admin_setting_audit"))
             assertEquals(
                 string(db, "SELECT before_json FROM language_learning_admin_setting_audit"),
-                string(db, "SELECT after_json FROM language_learning_admin_setting_audit")
+                string(db, "SELECT after_json FROM language_learning_admin_setting_audit"),
             )
         }
     }
@@ -212,7 +213,8 @@ class SettingsFeatureIntegrationTest {
             sql(db, "DROP TABLE language_learning_admin_setting_audit")
             assertFails { operations(factory).updateAdmin(900, AdminSettingsChange(dailyKeywordMaxCount = 8)) }
             assertEquals(
-                5L, scalar(db, "SELECT daily_keyword_max_count FROM language_learning_admin_setting WHERE id='DEFAULT'")
+                5L,
+                scalar(db, "SELECT daily_keyword_max_count FROM language_learning_admin_setting WHERE id='DEFAULT'"),
             )
         }
     }
@@ -226,17 +228,18 @@ class SettingsFeatureIntegrationTest {
                     val b = operations(secondFactory)
                     listOf(
                         async { a.updateAdmin(900, AdminSettingsChange(dailyKeywordMaxCount = 8)) },
-                        async { b.updateAdmin(901, AdminSettingsChange(reviewAvailableDays = 10)) }).awaitAll()
+                        async { b.updateAdmin(901, AdminSettingsChange(reviewAvailableDays = 10)) },
+                    ).awaitAll()
                     val value = a.getAdmin(); assertEquals(8, value.dailyKeywordMaxCount); assertEquals(
-                    10, value.reviewAvailableDays
+                    10, value.reviewAvailableDays,
                 )
                     assertEquals(2L, scalar(db, "SELECT COUNT(*) FROM language_learning_admin_setting_audit"))
                     assertEquals(
                         string(db, "SELECT after_json FROM language_learning_admin_setting_audit ORDER BY id LIMIT 1"),
                         string(
                             db,
-                            "SELECT before_json FROM language_learning_admin_setting_audit ORDER BY id LIMIT 1 OFFSET 1"
-                        )
+                            "SELECT before_json FROM language_learning_admin_setting_audit ORDER BY id LIMIT 1 OFFSET 1",
+                        ),
                     )
                 }
             }
@@ -253,10 +256,11 @@ class SettingsFeatureIntegrationTest {
                     a.updateUser(123, UserSettingsChange(originLanguage = "ko", learningLanguage = "ja"))
                     listOf(
                         async { a.updateUser(123, UserSettingsChange(dailySentenceCount = 8)) },
-                        async { b.updateUser(123, UserSettingsChange(dailyListeningGoalCount = 9)) }).awaitAll()
+                        async { b.updateUser(123, UserSettingsChange(dailyListeningGoalCount = 9)) },
+                    ).awaitAll()
                     val value = a.getUser(123).settings
                     assertEquals(8, value.pendingDailySentenceCount); assertEquals(
-                    9, value.pendingDailyListeningGoalCount
+                    9, value.pendingDailyListeningGoalCount,
                 )
                 }
             }
@@ -271,7 +275,7 @@ class SettingsFeatureIntegrationTest {
             assertFailsWith<LearnerUnavailableException> { ops.getUser(123) }
             assertFailsWith<LearnerUnavailableException> {
                 ops.updateUser(
-                    123, UserSettingsChange(originLanguage = "ko", learningLanguage = "ja")
+                    123, UserSettingsChange(originLanguage = "ko", learningLanguage = "ja"),
                 )
             }
             assertEquals("SUSPENDED", string(db, "SELECT status FROM language_learning_learner WHERE user_id=123"))
@@ -285,11 +289,11 @@ class SettingsFeatureIntegrationTest {
             val before = ops.getAdmin()
             assertFailsWith<LearningBusinessException> {
                 ops.updateAdmin(
-                    900, AdminSettingsChange(maxDailySentenceCount = 2)
+                    900, AdminSettingsChange(maxDailySentenceCount = 2),
                 )
             }
             assertEquals(before, ops.getAdmin()); assertEquals(
-            0L, scalar(db, "SELECT COUNT(*) FROM language_learning_admin_setting_audit")
+            0L, scalar(db, "SELECT COUNT(*) FROM language_learning_admin_setting_audit"),
         )
         }
     }
@@ -312,17 +316,18 @@ class SettingsFeatureIntegrationTest {
         sql(db, "UPDATE language_learning_admin_setting SET default_daily_sentence_count=7 WHERE id='DEFAULT'")
         sql(
             db,
-            "INSERT INTO language_learning_learner(user_id,created_at,updated_at) VALUES(123,UTC_TIMESTAMP(6),UTC_TIMESTAMP(6))"
+            "INSERT INTO language_learning_learner(user_id,created_at,updated_at) VALUES(123,UTC_TIMESTAMP(6),UTC_TIMESTAMP(6))",
         )
         DatabaseFactory(settings).use { factory ->
-            assertEquals(4, factory.migrationReport.migrationsExecuted); assertEquals(
-            6, factory.migrationReport.schemaVersion.toInt()
+            assertEquals(5, factory.migrationReport.migrationsExecuted); assertEquals(
+            7, factory.migrationReport.schemaVersion.toInt(),
         )
             assertEquals(1L, scalar(db, "SELECT COUNT(*) FROM language_learning_learner"))
             assertEquals(
-                7L, scalar(
-                    db, "SELECT default_daily_sentence_count FROM language_learning_admin_setting WHERE id='DEFAULT'"
-                )
+                7L,
+                scalar(
+                    db, "SELECT default_daily_sentence_count FROM language_learning_admin_setting WHERE id='DEFAULT'",
+                ),
             )
         }
         DatabaseFactory(settings).use { assertEquals(0, it.migrationReport.migrationsExecuted) }
@@ -334,12 +339,12 @@ class SettingsFeatureIntegrationTest {
             environment { config = MapApplicationConfig() }
             val secret = ByteArray(32) { (it + 1).toByte() }
             val auth = InternalApiSettings(
-                enabled = true, secretBase64 = Base64.getEncoder().encodeToString(secret)
+                enabled = true, secretBase64 = Base64.getEncoder().encodeToString(secret),
             )
             application {
                 configureSerialization(); configureStatusPages(); configureInternalAuthentication(auth); routing {
                 settingsRoutes(
-                    operations(factory)
+                    operations(factory),
                 )
             }
             }
@@ -348,10 +353,13 @@ class SettingsFeatureIntegrationTest {
             assertEquals(0L, scalar(db, "SELECT COUNT(*) FROM language_learning_learner"))
             val token = internalToken(secret, 123, false)
             assertEquals(HttpStatusCode.OK, client.get(path) { bearerAuth(token) }.status)
-            assertEquals(HttpStatusCode.OK, client.patch(path) {
-                bearerAuth(token); contentType(ContentType.Application.Json)
-                setBody("""{"originLanguage":"ko","learningLanguage":"ja"}""")
-            }.status)
+            assertEquals(
+                HttpStatusCode.OK,
+                client.patch(path) {
+                    bearerAuth(token); contentType(ContentType.Application.Json)
+                    setBody("""{"originLanguage":"ko","learningLanguage":"ja"}""")
+                }.status,
+            )
             val result = client.patch(path) {
                 bearerAuth(token); contentType(ContentType.Application.Json)
                 setBody("""{"dailySentenceCount":9,"speakingPlaybackSpeed":"slow"}""")
@@ -361,16 +369,19 @@ class SettingsFeatureIntegrationTest {
             assertEquals("2026-09-25", body.getValue("pendingEffectiveDate").jsonPrimitive.content)
             assertEquals(
                 9L,
-                scalar(db, "SELECT pending_daily_sentence_count FROM language_learning_user_setting WHERE user_id=123")
+                scalar(db, "SELECT pending_daily_sentence_count FROM language_learning_user_setting WHERE user_id=123"),
             )
             assertEquals(
                 "SLOW",
-                string(db, "SELECT speaking_playback_speed FROM language_learning_user_setting WHERE user_id=123")
+                string(db, "SELECT speaking_playback_speed FROM language_learning_user_setting WHERE user_id=123"),
             )
-            assertEquals(HttpStatusCode.BadRequest, client.patch(path) {
-                bearerAuth(token); contentType(ContentType.Application.Json)
-                setBody("""{"defaultListeningTaskTypes":["INTERPRETATION"]}""")
-            }.status)
+            assertEquals(
+                HttpStatusCode.BadRequest,
+                client.patch(path) {
+                    bearerAuth(token); contentType(ContentType.Application.Json)
+                    setBody("""{"defaultListeningTaskTypes":["INTERPRETATION"]}""")
+                }.status,
+            )
         }
     }
 
@@ -380,25 +391,31 @@ class SettingsFeatureIntegrationTest {
             environment { config = MapApplicationConfig() }
             val secret = ByteArray(32) { (it + 1).toByte() }
             val auth = InternalApiSettings(
-                enabled = true, secretBase64 = Base64.getEncoder().encodeToString(secret)
+                enabled = true, secretBase64 = Base64.getEncoder().encodeToString(secret),
             )
             application {
                 configureSerialization(); configureStatusPages(); configureInternalAuthentication(auth); routing {
                 settingsRoutes(
-                    operations(factory)
+                    operations(factory),
                 )
             }
             }
             val path = "/internal/v1/admin/language-learning/settings"
-            assertEquals(HttpStatusCode.Forbidden, client.patch(path) {
-                bearerAuth(internalToken(secret, 900, false)); contentType(ContentType.Application.Json)
-                setBody("""{"dailyKeywordMaxCount":8}""")
-            }.status)
+            assertEquals(
+                HttpStatusCode.Forbidden,
+                client.patch(path) {
+                    bearerAuth(internalToken(secret, 900, false)); contentType(ContentType.Application.Json)
+                    setBody("""{"dailyKeywordMaxCount":8}""")
+                }.status,
+            )
             assertEquals(0L, scalar(db, "SELECT COUNT(*) FROM language_learning_admin_setting_audit"))
-            assertEquals(HttpStatusCode.OK, client.patch(path) {
-                bearerAuth(internalToken(secret, 900, true)); contentType(ContentType.Application.Json)
-                setBody("""{"dailyKeywordMaxCount":8}""")
-            }.status)
+            assertEquals(
+                HttpStatusCode.OK,
+                client.patch(path) {
+                    bearerAuth(internalToken(secret, 900, true)); contentType(ContentType.Application.Json)
+                    setBody("""{"dailyKeywordMaxCount":8}""")
+                }.status,
+            )
             assertEquals(900L, scalar(db, "SELECT admin_user_id FROM language_learning_admin_setting_audit"))
         }
     }

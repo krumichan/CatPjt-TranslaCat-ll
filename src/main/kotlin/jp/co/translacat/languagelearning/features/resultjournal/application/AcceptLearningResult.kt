@@ -14,12 +14,14 @@ internal class AcceptLearningResult(
     private val sourceInstanceId: String,
     private val clock: Clock = Clock.systemUTC(),
 ) {
-    init { IncomingLearningResult.requireUuid(sourceInstanceId) }
+    init {
+        IncomingLearningResult.requireUuid(sourceInstanceId)
+    }
 
     suspend fun execute(event: IncomingLearningResult): ResultReceipt {
         event.validate()
         if (event.sourceInstanceId != sourceInstanceId) throw ResultJournalConflict("RESULT_SOURCE_MISMATCH")
-        return unitOfWork.execute(event.userId) journal@ {
+        return unitOfWork.execute(event.userId) journal@{
             val last = lastSequence(event.sourceInstanceId, event.userId)
             val previous = findByEventId(event.eventId)
             if (previous != null) {

@@ -1,15 +1,10 @@
 package jp.co.translacat.languagelearning.features.settings.api
 
-import io.ktor.server.application.ApplicationCall
-import io.ktor.server.auth.authenticate
-import io.ktor.server.response.respond
-import io.ktor.server.routing.Route
-import io.ktor.server.routing.get
-import jp.co.translacat.languagelearning.features.settings.api.dto.ConfiguredLanguagePairDto
-import jp.co.translacat.languagelearning.features.settings.api.dto.ConfiguredLanguagePairsDto
-import jp.co.translacat.languagelearning.features.settings.api.dto.LearningDateResponseDto
-import jp.co.translacat.languagelearning.features.settings.api.dto.ListeningPolicyResponseDto
-import jp.co.translacat.languagelearning.features.settings.api.dto.UserSettingsSnapshotDto
+import io.ktor.server.application.*
+import io.ktor.server.auth.*
+import io.ktor.server.response.*
+import io.ktor.server.routing.*
+import jp.co.translacat.languagelearning.features.settings.api.dto.*
 import jp.co.translacat.languagelearning.features.settings.application.SettingsServiceOperations
 import jp.co.translacat.languagelearning.shared.error.LearningBusinessException
 import jp.co.translacat.languagelearning.shared.security.SETTINGS_SERVICE_AUTH
@@ -19,7 +14,12 @@ internal fun Route.settingsServiceRoutes(operations: SettingsServiceOperations) 
     authenticate(SETTINGS_SERVICE_AUTH) {
         get("/internal/v1/service/language-learning/settings/users/{userId}") {
             val value = operations.userSnapshot(call.settingsUserId())
-            call.respond(UserSettingsSnapshotDto(value.userId, value.learningDate.toString(), value.result.settings.updatedAt.toString(), value.result.toResponse()))
+            call.respond(
+                UserSettingsSnapshotDto(
+                    value.userId, value.learningDate.toString(), value.result.settings.updatedAt.toString(),
+                    value.result.toResponse(),
+                ),
+            )
         }
         get("/internal/v1/service/language-learning/settings/users/{userId}/learning-date") {
             call.respond(LearningDateResponseDto(operations.learningDate(call.settingsUserId()).toString()))
@@ -29,32 +29,38 @@ internal fun Route.settingsServiceRoutes(operations: SettingsServiceOperations) 
         }
         get("/internal/v1/service/language-learning/settings/listening-policy") {
             val policy = operations.listeningPolicy()
-            call.respond(ListeningPolicyResponseDto(
-                enabled = policy.enabled,
-                defaultItemCount = policy.defaultItemCount,
-                minItemCount = policy.minItemCount,
-                maxItemCount = policy.maxItemCount,
-                hardItemLimit = policy.hardItemLimit,
-                referenceAudioMaxSeconds = policy.referenceAudioMaxSeconds,
-                repeatAudioMaxSeconds = policy.repeatAudioMaxSeconds,
-                maxAudioFileBytes = policy.maxAudioFileBytes,
-                maxRerecordCount = policy.maxRerecordCount,
-                resumeHours = policy.resumeHours,
-                referenceAudioRetentionDays = policy.referenceAudioRetentionDays,
-                userAudioRetentionDays = policy.userAudioRetentionDays,
-                reportedAudioRetentionDays = policy.reportedAudioRetentionDays,
-                automaticRetryLimit = policy.automaticRetryLimit,
-                manualRetryLimit = policy.manualRetryLimit,
-                practiceAttemptLimit = policy.practiceAttemptLimit,
-                profilePolicyVersion = policy.profilePolicyVersion,
-                modelConfigVersion = policy.modelConfigVersion,
-                referenceTtsRegenerationEnabled = policy.referenceTtsRegenerationEnabled,
-            ))
+            call.respond(
+                ListeningPolicyResponseDto(
+                    enabled = policy.enabled,
+                    defaultItemCount = policy.defaultItemCount,
+                    minItemCount = policy.minItemCount,
+                    maxItemCount = policy.maxItemCount,
+                    hardItemLimit = policy.hardItemLimit,
+                    referenceAudioMaxSeconds = policy.referenceAudioMaxSeconds,
+                    repeatAudioMaxSeconds = policy.repeatAudioMaxSeconds,
+                    maxAudioFileBytes = policy.maxAudioFileBytes,
+                    maxRerecordCount = policy.maxRerecordCount,
+                    resumeHours = policy.resumeHours,
+                    referenceAudioRetentionDays = policy.referenceAudioRetentionDays,
+                    userAudioRetentionDays = policy.userAudioRetentionDays,
+                    reportedAudioRetentionDays = policy.reportedAudioRetentionDays,
+                    automaticRetryLimit = policy.automaticRetryLimit,
+                    manualRetryLimit = policy.manualRetryLimit,
+                    practiceAttemptLimit = policy.practiceAttemptLimit,
+                    profilePolicyVersion = policy.profilePolicyVersion,
+                    modelConfigVersion = policy.modelConfigVersion,
+                    referenceTtsRegenerationEnabled = policy.referenceTtsRegenerationEnabled,
+                ),
+            )
         }
         get("/internal/v1/service/language-learning/settings/language-pairs") {
-            call.respond(ConfiguredLanguagePairsDto(operations.configuredLanguagePairs().map {
-                ConfiguredLanguagePairDto(it.originLanguage, it.learningLanguage)
-            }))
+            call.respond(
+                ConfiguredLanguagePairsDto(
+                    operations.configuredLanguagePairs().map {
+                        ConfiguredLanguagePairDto(it.originLanguage, it.learningLanguage)
+                    },
+                ),
+            )
         }
     }
 }

@@ -23,7 +23,7 @@ internal fun AuthenticationConfig.configureResultJournalAuthentication(settings:
                 .withClaim("service", settings.callerService)
                 .withClaim("tokenUse", "ll-learning-results-v1")
                 .acceptLeeway(settings.clockSkewSeconds)
-                .build()
+                .build(),
         )
         validate { credential ->
             try {
@@ -35,7 +35,7 @@ internal fun AuthenticationConfig.configureResultJournalAuthentication(settings:
                     payload.issuedAt?.toInstant(),
                     payload.expiresAt?.toInstant(),
                     settings,
-                    clock.instant()
+                    clock.instant(),
                 )
             } catch (_: Exception) {
                 null

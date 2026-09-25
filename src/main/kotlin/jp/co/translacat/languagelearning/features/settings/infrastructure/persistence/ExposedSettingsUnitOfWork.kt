@@ -21,7 +21,9 @@ internal class ExposedSettingsUnitOfWork(
         val ownerThread = Thread.currentThread()
         var active = true
         val requireTransaction = {
-            check(active && Thread.currentThread() === ownerThread && TransactionManager.currentOrNull() === transaction) {
+            check(
+                active && Thread.currentThread() === ownerThread && TransactionManager.currentOrNull() === transaction,
+            ) {
                 "Repository는 생성된 트랜잭션 내부에서만 사용할 수 있습니다."
             }
         }

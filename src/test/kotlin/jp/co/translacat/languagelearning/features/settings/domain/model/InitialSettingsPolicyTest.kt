@@ -16,7 +16,7 @@ class InitialSettingsPolicyTest {
     @Test
     fun `잘못된 정책 범위는 값을 보정하지 않고 실패한다`() {
         for ((default, minimum, maximum) in listOf(
-            Triple(0, 0, 20), Triple(5, 10, 3), Triple(21, 1, 20), Triple(1, 3, 20)
+            Triple(0, 0, 20), Triple(5, 10, 3), Triple(21, 1, 20), Triple(1, 3, 20),
         )) {
             assertFailsWith<IllegalArgumentException> { GoalPolicy(default, minimum, maximum) }
         }

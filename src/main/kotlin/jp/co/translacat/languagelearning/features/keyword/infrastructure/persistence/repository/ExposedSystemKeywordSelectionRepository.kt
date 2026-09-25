@@ -41,7 +41,9 @@ internal class ExposedSystemKeywordSelectionRepository(private val requireTransa
             }[SystemKeywordSelectionsTable.id]
         } else {
             val count =
-                SystemKeywordSelectionsTable.update({ (SystemKeywordSelectionsTable.id eq value.id) and (SystemKeywordSelectionsTable.userId eq value.userId) }) {
+                SystemKeywordSelectionsTable.update(
+                    { (SystemKeywordSelectionsTable.id eq value.id) and (SystemKeywordSelectionsTable.userId eq value.userId) },
+                ) {
                     it[SystemKeywordSelectionsTable.systemKeywordId] = value.systemKeywordId
                     it[SystemKeywordSelectionsTable.active] = value.active
                     it[SystemKeywordSelectionsTable.availableFrom] = value.availableFrom

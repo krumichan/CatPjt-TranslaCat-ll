@@ -17,7 +17,10 @@ internal data class ResultEnvelopeDto(
     val payloadJson: String,
     val payloadSha256: String,
 ) {
-    fun toDomain() = IncomingLearningResult(schemaVersion, sourceInstanceId, eventId, userId, sequence,
-        ResultKind.valueOf(kind), referenceId, occurredAt, payloadJson, payloadSha256)
+    fun toDomain() = IncomingLearningResult(
+        schemaVersion, sourceInstanceId, eventId, userId, sequence,
+        ResultKind.valueOf(kind), referenceId, occurredAt, payloadJson, payloadSha256,
+    )
+
     override fun toString(): String = "ResultEnvelopeDto(eventId=$eventId, payload=<redacted>)"
 }

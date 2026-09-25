@@ -14,11 +14,13 @@ class UserSettingsPolicyTest {
     @Test
     fun `최초 설정의 모든 필드는 즉시 반영된다`() {
         val result = UserSettingsPolicy.change(
-            F.user(), UserSettingsChange(
+            F.user(),
+            UserSettingsChange(
                 originLanguage = " ko ", learningLanguage = " JA ", timezone = " Europe/Paris ", dailySentenceCount = 9,
                 dailySpeakingGoalMinutes = 12, dailyListeningGoalCount = 8, speakingVoiceId = " cedar ",
                 speakingPlaybackSpeed = " slow ", defaultListeningTaskTypes = listOf(REPEAT_AFTER_AUDIO, DICTATION),
-            ), F.policy(), F.now
+            ),
+            F.policy(), F.now,
         )
         assertEquals("ko", result.originLanguage); assertEquals("JA", result.learningLanguage)
         assertEquals("Europe/Paris", result.timezone); assertEquals(9, result.dailySentenceCount)
@@ -31,11 +33,15 @@ class UserSettingsPolicyTest {
     @Test
     fun `첫 설정은 두 언어가 모두 필요하다`() {
         for (request in listOf(
-            UserSettingsChange(), UserSettingsChange(originLanguage = "ko"), UserSettingsChange(learningLanguage = "ja")
+            UserSettingsChange(), UserSettingsChange(originLanguage = "ko"),
+            UserSettingsChange(learningLanguage = "ja"),
         )) {
-            assertEquals(UserSettingsPolicy.NOT_CONFIGURED, assertFailsWith<LearningBusinessException> {
-                UserSettingsPolicy.change(F.user(), request, F.policy(), F.now)
-            }.code)
+            assertEquals(
+                UserSettingsPolicy.NOT_CONFIGURED,
+                assertFailsWith<LearningBusinessException> {
+                    UserSettingsPolicy.change(F.user(), request, F.policy(), F.now)
+                }.code,
+            )
         }
     }
 
@@ -43,11 +49,13 @@ class UserSettingsPolicyTest {
     fun `기존 사용자 목표와 언어는 내일로 예약하고 음성 속도 Task는 즉시 반영한다`() {
         val current = F.configured()
         val next = UserSettingsPolicy.change(
-            current, UserSettingsChange(
+            current,
+            UserSettingsChange(
                 originLanguage = "ja", learningLanguage = "en", timezone = "UTC", dailySentenceCount = 8,
                 dailySpeakingGoalMinutes = 9, dailyListeningGoalCount = 10, speakingVoiceId = "cedar",
                 speakingPlaybackSpeed = "slow", defaultListeningTaskTypes = listOf(SUMMARY),
-            ), F.policy(), F.now
+            ),
+            F.policy(), F.now,
         )
         assertEquals("ko", next.originLanguage); assertEquals("ja", next.learningLanguage)
         assertEquals("Asia/Tokyo", next.timezone); assertEquals(5, next.dailySentenceCount)
@@ -68,7 +76,7 @@ class UserSettingsPolicyTest {
             pendingDailySpeakingGoalMinutes = 9,
             pendingDailyListeningGoalCount = 7,
             pendingTimezone = "UTC",
-            pendingEffectiveDate = LocalDate.of(2026, 9, 25)
+            pendingEffectiveDate = LocalDate.of(2026, 9, 25),
         )
         assertEquals(pending, UserSettingsPolicy.synchronize(pending, F.policy(), F.now))
         val midnight = LocalDateTime.parse("2026-09-24T15:00:00")
@@ -76,7 +84,9 @@ class UserSettingsPolicyTest {
         assertEquals("en", result.learningLanguage); assertEquals(8, result.dailySentenceCount)
         assertEquals(9, result.dailySpeakingGoalMinutes); assertEquals(7, result.dailyListeningGoalCount)
         assertEquals("UTC", result.timezone)
-        assertNull(result.pendingOriginLanguage); assertNull(result.pendingLearningLanguage); assertNull(result.pendingTimezone)
+        assertNull(result.pendingOriginLanguage); assertNull(result.pendingLearningLanguage); assertNull(
+            result.pendingTimezone,
+        )
         assertNull(result.pendingDailySentenceCount); assertNull(result.pendingDailySpeakingGoalMinutes)
         assertNull(result.pendingDailyListeningGoalCount); assertNull(result.pendingEffectiveDate)
         assertEquals(result, UserSettingsPolicy.synchronize(result, F.policy(), midnight))
@@ -89,7 +99,7 @@ class UserSettingsPolicyTest {
             timezone = "America/Los_Angeles",
             pendingTimezone = "Pacific/Kiritimati",
             pendingDailySentenceCount = 8,
-            pendingEffectiveDate = LocalDate.of(2026, 9, 25)
+            pendingEffectiveDate = LocalDate.of(2026, 9, 25),
         )
         val now = LocalDateTime.parse("2026-09-25T00:30:00")
         assertEquals(pending, UserSettingsPolicy.synchronize(pending, F.policy(), now))
@@ -101,7 +111,7 @@ class UserSettingsPolicyTest {
         val value = F.configured().copy(timezone = "bad-zone")
         assertEquals(
             LocalDate.of(2026, 9, 25),
-            UserSettingsPolicy.today(value.timezone, LocalDateTime.parse("2026-09-24T15:00:00"))
+            UserSettingsPolicy.today(value.timezone, LocalDateTime.parse("2026-09-24T15:00:00")),
         )
         assertEquals("bad-zone", UserSettingsPolicy.synchronize(value, F.policy(), F.now).timezone)
         assertEquals(UserSettingsPolicy.today(null, F.now), UserSettingsPolicy.today("", F.now))
@@ -111,7 +121,7 @@ class UserSettingsPolicyTest {
     fun `UTC 자정이 아니라 활성 timezone 날짜에서 적용한다`() {
         val current = F.configured().copy(timezone = "America/Los_Angeles")
         val result = UserSettingsPolicy.change(
-            current, UserSettingsChange(dailySentenceCount = 7), F.policy(), LocalDateTime.parse("2026-09-24T01:00:00")
+            current, UserSettingsChange(dailySentenceCount = 7), F.policy(), LocalDateTime.parse("2026-09-24T01:00:00"),
         )
         assertEquals(LocalDate.of(2026, 9, 24), result.pendingEffectiveDate)
     }
@@ -119,10 +129,10 @@ class UserSettingsPolicyTest {
     @Test
     fun `여러 PATCH는 누락된 예약값을 유지한다`() {
         val first = UserSettingsPolicy.change(
-            F.configured(), UserSettingsChange(learningLanguage = "en", dailySentenceCount = 8), F.policy(), F.now
+            F.configured(), UserSettingsChange(learningLanguage = "en", dailySentenceCount = 8), F.policy(), F.now,
         )
         val second = UserSettingsPolicy.change(
-            first, UserSettingsChange(dailyListeningGoalCount = 9), F.policy(), F.now.plusMinutes(1)
+            first, UserSettingsChange(dailyListeningGoalCount = 9), F.policy(), F.now.plusMinutes(1),
         )
         assertEquals("en", second.pendingLearningLanguage); assertEquals(8, second.pendingDailySentenceCount)
         assertEquals(9, second.pendingDailyListeningGoalCount)
@@ -152,7 +162,7 @@ class UserSettingsPolicyTest {
         for (value in listOf("ja", "JA", " ja ")) {
             assertFailsWith<LearningBusinessException> {
                 UserSettingsPolicy.change(
-                    F.configured(), UserSettingsChange(originLanguage = value), F.policy(), F.now
+                    F.configured(), UserSettingsChange(originLanguage = value), F.policy(), F.now,
                 )
             }
         }
@@ -160,13 +170,14 @@ class UserSettingsPolicyTest {
             F.configured().copy(pendingLearningLanguage = "en", pendingEffectiveDate = LocalDate.of(2026, 9, 25))
         assertFailsWith<LearningBusinessException> {
             UserSettingsPolicy.change(
-                pending, UserSettingsChange(originLanguage = "EN"), F.policy(), F.now
+                pending, UserSettingsChange(originLanguage = "EN"), F.policy(), F.now,
             )
         }
         assertEquals(
-            "ja", UserSettingsPolicy.change(
-                pending, UserSettingsChange(originLanguage = "ja"), F.policy(), F.now
-            ).pendingOriginLanguage
+            "ja",
+            UserSettingsPolicy.change(
+                pending, UserSettingsChange(originLanguage = "ja"), F.policy(), F.now,
+            ).pendingOriginLanguage,
         )
     }
 
@@ -175,7 +186,7 @@ class UserSettingsPolicyTest {
         val current = F.user().copy(originLanguage = "ko")
         val result = UserSettingsPolicy.change(current, UserSettingsChange(learningLanguage = "ja"), F.policy(), F.now)
         assertNull(result.learningLanguage); assertEquals(
-            "ja", result.pendingLearningLanguage
+            "ja", result.pendingLearningLanguage,
         ); assertFalse(result.configured)
     }
 
@@ -188,14 +199,14 @@ class UserSettingsPolicyTest {
             pendingDailySentenceCount = 0,
             pendingDailySpeakingGoalMinutes = 100,
             pendingDailyListeningGoalCount = 0,
-            pendingEffectiveDate = LocalDate.of(2027, 1, 1)
+            pendingEffectiveDate = LocalDate.of(2027, 1, 1),
         )
         val next = UserSettingsPolicy.synchronize(current, F.policy(), F.now)
         assertEquals(20, next.dailySentenceCount); assertEquals(3, next.dailySpeakingGoalMinutes); assertEquals(
-            20, next.dailyListeningGoalCount
+            20, next.dailyListeningGoalCount,
         )
         assertEquals(1, next.pendingDailySentenceCount); assertEquals(
-            20, next.pendingDailySpeakingGoalMinutes
+            20, next.pendingDailySpeakingGoalMinutes,
         ); assertEquals(1, next.pendingDailyListeningGoalCount)
     }
 
@@ -223,12 +234,15 @@ class UserSettingsPolicyTest {
             UserSettingsChange(dailySpeakingGoalMinutes = 2),
             UserSettingsChange(dailySpeakingGoalMinutes = 21),
             UserSettingsChange(dailyListeningGoalCount = 0),
-            UserSettingsChange(dailyListeningGoalCount = 21)
+            UserSettingsChange(dailyListeningGoalCount = 21),
         )
         cases.forEach {
-            assertEquals(UserSettingsPolicy.INVALID, assertFailsWith<LearningBusinessException> {
-                UserSettingsPolicy.change(F.configured(), it, F.policy(), F.now)
-            }.code)
+            assertEquals(
+                UserSettingsPolicy.INVALID,
+                assertFailsWith<LearningBusinessException> {
+                    UserSettingsPolicy.change(F.configured(), it, F.policy(), F.now)
+                }.code,
+            )
         }
         // Java String.isBlank와 Kotlin isBlank의 NBSP 차이까지 원본 규칙에 맞춘다.
         val nbsp =
@@ -243,10 +257,10 @@ class UserSettingsPolicyTest {
                 F.configured(),
                 UserSettingsChange(dailySentenceCount = w, dailySpeakingGoalMinutes = s, dailyListeningGoalCount = l),
                 F.policy(),
-                F.now
+                F.now,
             )
             assertEquals(w, next.pendingDailySentenceCount); assertEquals(
-                s, next.pendingDailySpeakingGoalMinutes
+                s, next.pendingDailySpeakingGoalMinutes,
             ); assertEquals(l, next.pendingDailyListeningGoalCount)
         }
     }
@@ -256,7 +270,7 @@ class UserSettingsPolicyTest {
         assertFailsWith<LearningBusinessException> { UserSettingsPolicy.requireConfigured(F.user()) }
         assertFailsWith<LearningBusinessException> {
             UserSettingsPolicy.requireConfigured(
-                F.user().copy(originLanguage = "ko")
+                F.user().copy(originLanguage = "ko"),
             )
         }
         UserSettingsPolicy.requireConfigured(F.configured())
@@ -266,11 +280,11 @@ class UserSettingsPolicyTest {
     fun `뉴욕 DST 시작과 종료일도 LocalDate 규칙을 유지한다`() {
         assertEquals(
             LocalDate.of(2026, 3, 8),
-            UserSettingsPolicy.today("America/New_York", LocalDateTime.parse("2026-03-08T07:30:00"))
+            UserSettingsPolicy.today("America/New_York", LocalDateTime.parse("2026-03-08T07:30:00")),
         )
         assertEquals(
             LocalDate.of(2026, 11, 1),
-            UserSettingsPolicy.today("America/New_York", LocalDateTime.parse("2026-11-01T06:30:00"))
+            UserSettingsPolicy.today("America/New_York", LocalDateTime.parse("2026-11-01T06:30:00")),
         )
     }
 }

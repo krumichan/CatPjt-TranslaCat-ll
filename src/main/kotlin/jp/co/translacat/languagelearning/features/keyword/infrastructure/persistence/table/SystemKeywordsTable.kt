@@ -15,7 +15,7 @@ internal object SystemKeywordsTable : Table("language_learning_system_keyword") 
         SystemKeywordsTable.id,
         onDelete = ReferenceOption.RESTRICT,
         onUpdate = ReferenceOption.RESTRICT,
-        fkName = "fk_ll_system_keyword_parent"
+        fkName = "fk_ll_system_keyword_parent",
     ).nullable()
     val sortOrder = integer("sort_order")
     val active = bool("active")

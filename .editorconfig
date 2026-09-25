@@ -4,21 +4,76 @@ root = true
 charset = utf-8
 end_of_line = lf
 insert_final_newline = true
+trim_trailing_whitespace = true
+max_line_length = 120
 
 [*.{kt,kts}]
 indent_style = space
 indent_size = 4
 
+# Kotlin 공식 스타일을 기본값으로 사용
 ij_kotlin_code_style_defaults = KOTLIN_OFFICIAL
 
-# 기존 줄바꿈 유지
+# =========================================================
+# 줄바꿈 / 들여쓰기
+# =========================================================
+
+# 사람이 의도적으로 만든 줄바꿈 유지
 ij_kotlin_keep_line_breaks = true
+
+# continuation indent는 과하게 깊어지지 않도록 4칸
+ij_kotlin_continuation_indent_size = 4
 
 # 체인 호출은 한 호출씩 줄바꿈
 ij_kotlin_method_call_chain_wrap = on_every_item
 
-# Flyway.configure()까지는 첫 줄에 유지
+# receiver / 첫 호출은 첫 줄에 유지
 ij_kotlin_wrap_first_method_in_call_chain = false
 
-# 체인 호출 추가 들여쓰기 방지
+# 체인 호출에 추가 continuation indent를 넣지 않음
 ij_kotlin_continuation_indent_for_chained_calls = false
+
+# =========================================================
+# 긴 함수 호출 / 파라미터
+# =========================================================
+
+# 긴 호출 인자는 필요할 때 각 줄로 분리
+ij_kotlin_call_parameters_wrap = normal
+
+# 긴 함수 선언 파라미터도 필요할 때 분리
+ij_kotlin_method_parameters_wrap = normal
+
+# 여러 줄이 되었을 때 억지로 열 맞추기 하지 않음
+ij_kotlin_align_multiline_parameters = false
+ij_kotlin_align_multiline_parameters_in_calls = false
+
+# =========================================================
+# 긴 if 조건
+# =========================================================
+
+# 여러 줄 if에서 ')'를 별도 줄로
+ij_kotlin_if_rparen_on_new_line = true
+
+# if 조건에 과도한 continuation indent 방지
+ij_kotlin_continuation_indent_in_if_conditions = false
+
+# =========================================================
+# 빈 줄
+# =========================================================
+
+# 의미상 넣은 빈 줄은 최대 1줄 유지
+ij_kotlin_keep_blank_lines_in_code = 1
+ij_kotlin_keep_blank_lines_in_declarations = 1
+
+# } 직전에는 불필요한 빈 줄 제거
+ij_kotlin_keep_blank_lines_before_right_brace = 0
+
+# =========================================================
+# Trailing comma
+# =========================================================
+
+# 함수 선언 / data class / constructor 등
+ij_kotlin_allow_trailing_comma = true
+
+# 함수 호출에서도 trailing comma 허용
+ij_kotlin_allow_trailing_comma_on_call_site = true

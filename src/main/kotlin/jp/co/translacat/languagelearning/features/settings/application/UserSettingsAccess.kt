@@ -18,5 +18,7 @@ internal fun SettingsTransaction.loadCurrentUserSettings(userId: Long): UserSett
 
 internal fun SettingsTransaction.saveIfChanged(before: UserSettings, after: UserSettings): UserSettings {
     if (before == after) return before
-    return userSettings.save(after.copy(updatedBy = after.userId.toString(), updatedAt = maxOf(nowUtc, before.updatedAt.plusNanos(1000))))
+    return userSettings.save(
+        after.copy(updatedBy = after.userId.toString(), updatedAt = maxOf(nowUtc, before.updatedAt.plusNanos(1000))),
+    )
 }

@@ -22,8 +22,8 @@ internal fun Route.keywordRoutes(operations: KeywordOperations) {
                 val caller = call.caller()
                 call.respond(
                     operations.list(
-                        caller.user.userId, caller.hasStartedLearning, call.request.header("X-TranslaCat-Locale")
-                    ).toResponse()
+                        caller.user.userId, caller.hasStartedLearning, call.request.header("X-TranslaCat-Locale"),
+                    ).toResponse(),
                 )
             }
             post("/custom") {
@@ -32,7 +32,7 @@ internal fun Route.keywordRoutes(operations: KeywordOperations) {
                 call.respond(
                     HttpStatusCode.Created,
                     operations.createCustom(caller.user.userId, caller.hasStartedLearning, request.toChange())
-                        .toResponse()
+                        .toResponse(),
                 )
             }
             patch("/custom/{keywordId}") {
@@ -41,8 +41,8 @@ internal fun Route.keywordRoutes(operations: KeywordOperations) {
                 val request = call.receive<KeywordUpdateRequestDto>()
                 call.respond(
                     operations.updateCustom(
-                        caller.user.userId, caller.hasStartedLearning, id, request.toChange()
-                    ).toResponse()
+                        caller.user.userId, caller.hasStartedLearning, id, request.toChange(),
+                    ).toResponse(),
                 )
             }
             delete("/custom/{keywordId}") {
@@ -56,8 +56,8 @@ internal fun Route.keywordRoutes(operations: KeywordOperations) {
                 val request = call.receive<SystemKeywordSelectionRequestDto>()
                 call.respond(
                     operations.selectSystem(
-                        caller.user.userId, caller.hasStartedLearning, id, request.selected
-                    ).toResponse()
+                        caller.user.userId, caller.hasStartedLearning, id, request.selected,
+                    ).toResponse(),
                 )
             }
             get("/candidates") {
@@ -70,8 +70,9 @@ internal fun Route.keywordRoutes(operations: KeywordOperations) {
                 call.respond(
                     KeywordCandidatesDto(
                         operations.candidates(
-                            caller.user.userId, caller.hasStartedLearning, date
-                        ).map { it.toResponse() })
+                            caller.user.userId, caller.hasStartedLearning, date,
+                        ).map { it.toResponse() },
+                    ),
                 )
             }
         }
@@ -84,7 +85,8 @@ internal fun Route.keywordRoutes(operations: KeywordOperations) {
                 val caller = call.administrator()
                 val request = call.receive<KeywordCreateRequestDto>()
                 call.respond(
-                    HttpStatusCode.Created, operations.createSystem(caller.user.userId, request.toChange()).toResponse()
+                    HttpStatusCode.Created,
+                    operations.createSystem(caller.user.userId, request.toChange()).toResponse(),
                 )
             }
             patch("/{keywordId}") {
@@ -103,5 +105,5 @@ private fun ApplicationCall.administrator() =
 
 private fun ApplicationCall.keywordId(): Long =
     parameters["keywordId"]?.toLongOrNull()?.takeIf { it > 0 } ?: throw LearningBusinessException(
-        "KEYWORD_NOT_FOUND", "Keyword를 찾을 수 없습니다."
+        "KEYWORD_NOT_FOUND", "Keyword를 찾을 수 없습니다.",
     )

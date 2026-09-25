@@ -1,15 +1,12 @@
 package jp.co.translacat.languagelearning.features.resultjournal.api
 
-import io.ktor.http.ContentType
-import io.ktor.http.HttpStatusCode
-import io.ktor.server.application.ApplicationCall
-import io.ktor.server.auth.authenticate
-import io.ktor.server.request.contentType
-import io.ktor.server.request.receiveChannel
-import io.ktor.server.response.respond
-import io.ktor.server.routing.Route
-import io.ktor.server.routing.post
-import io.ktor.utils.io.readAvailable
+import io.ktor.http.*
+import io.ktor.server.application.*
+import io.ktor.server.auth.*
+import io.ktor.server.request.*
+import io.ktor.server.response.*
+import io.ktor.server.routing.*
+import io.ktor.utils.io.*
 import jp.co.translacat.languagelearning.features.resultjournal.api.dto.ResultEnvelopeDto
 import jp.co.translacat.languagelearning.features.resultjournal.api.dto.ResultReceiptDto
 import jp.co.translacat.languagelearning.features.resultjournal.application.AcceptLearningResult
@@ -20,7 +17,6 @@ import kotlinx.serialization.json.Json
 import java.io.ByteArrayOutputStream
 import java.nio.ByteBuffer
 import java.nio.charset.CodingErrorAction
-import java.nio.charset.CharacterCodingException
 import java.sql.SQLException
 import java.time.format.DateTimeParseException
 
@@ -28,7 +24,9 @@ internal fun Route.resultJournalRoutes(accept: AcceptLearningResult) {
     authenticate(RESULT_JOURNAL_AUTH) {
         post("/internal/v1/learning-results") {
             if (!call.request.contentType().match(ContentType.Application.Json)) {
-                call.respond(HttpStatusCode.UnsupportedMediaType, InternalApiError("RESULT_JSON_REQUIRED", "JSON 요청이 필요합니다."))
+                call.respond(
+                    HttpStatusCode.UnsupportedMediaType, InternalApiError("RESULT_JSON_REQUIRED", "JSON 요청이 필요합니다."),
+                )
                 return@post
             }
             try {
@@ -36,10 +34,16 @@ internal fun Route.resultJournalRoutes(accept: AcceptLearningResult) {
                 val event = dto.toDomain()
                 ResultPayloadValidator.validate(event)
                 val receipt = accept.execute(event)
-                call.respond(ResultReceiptDto(receipt.sourceInstanceId, receipt.eventId, receipt.userId, receipt.sequence,
-                    receipt.payloadSha256, receipt.outcome.name))
+                call.respond(
+                    ResultReceiptDto(
+                        receipt.sourceInstanceId, receipt.eventId, receipt.userId, receipt.sequence,
+                        receipt.payloadSha256, receipt.outcome.name,
+                    ),
+                )
             } catch (_: ResultBodyTooLarge) {
-                call.respond(HttpStatusCode.PayloadTooLarge, InternalApiError("RESULT_BODY_TOO_LARGE", "결과 본문이 너무 큽니다."))
+                call.respond(
+                    HttpStatusCode.PayloadTooLarge, InternalApiError("RESULT_BODY_TOO_LARGE", "결과 본문이 너무 큽니다."),
+                )
             } catch (failure: ResultJournalConflict) {
                 call.respond(HttpStatusCode.Conflict, InternalApiError(failure.code, "결과 순서 또는 식별자가 일치하지 않습니다."))
             } catch (_: IllegalArgumentException) {
@@ -59,6 +63,7 @@ internal fun Route.resultJournalRoutes(accept: AcceptLearningResult) {
 }
 
 private class ResultBodyTooLarge : RuntimeException()
+
 private suspend fun ApplicationCall.boundedResultBody(): String {
     val channel = receiveChannel()
     val output = ByteArrayOutputStream()

@@ -48,7 +48,9 @@ internal class ExposedCustomKeywordRepository(private val requireTransaction: ()
             }[CustomKeywordsTable.id]
         } else {
             val count =
-                CustomKeywordsTable.update({ (CustomKeywordsTable.id eq value.id) and (CustomKeywordsTable.userId eq value.userId) }) {
+                CustomKeywordsTable.update(
+                    { (CustomKeywordsTable.id eq value.id) and (CustomKeywordsTable.userId eq value.userId) },
+                ) {
                     it[CustomKeywordsTable.text] = value.text
                     it[CustomKeywordsTable.normalizedText] = value.normalizedText
                     it[CustomKeywordsTable.type] = value.type.name

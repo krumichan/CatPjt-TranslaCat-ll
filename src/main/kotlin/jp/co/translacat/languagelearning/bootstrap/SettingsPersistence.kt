@@ -30,6 +30,10 @@ internal fun Application.configureSettingsPersistence(factory: DatabaseFactory, 
         provide<GetOrCreateUserSettings> { service }
         provide<SettingsOperations> { operations }
         provide<SettingsServiceOperations> { serviceOperations }
-        provide<RememberListeningSelection> { RememberListeningSelection(ExposedSelectionSettingsUnitOfWork(unitOfWork)) }
+        provide<RememberListeningSelection> {
+            RememberListeningSelection(
+                ExposedSelectionSettingsUnitOfWork(unitOfWork),
+            )
+        }
     }
 }

@@ -57,12 +57,12 @@ internal object UserSettingsPolicy {
             pendingDailySentenceCount = promoted.pendingDailySentenceCount?.let { clamp(it, policy.writing) },
             pendingDailySpeakingGoalMinutes = promoted.pendingDailySpeakingGoalMinutes?.let {
                 clamp(
-                    it, policy.speaking
+                    it, policy.speaking,
                 )
             },
             pendingDailyListeningGoalCount = promoted.pendingDailyListeningGoalCount?.let {
                 clamp(
-                    it, policy.listening
+                    it, policy.listening,
                 )
             },
         )
@@ -70,7 +70,7 @@ internal object UserSettingsPolicy {
 
     /** synchronize를 같은 트랜잭션에서 먼저 실행한 상태를 받는다. */
     fun change(
-        setting: UserSettings, request: UserSettingsChange, policy: InitialSettingsPolicy, nowUtc: LocalDateTime
+        setting: UserSettings, request: UserSettingsChange, policy: InitialSettingsPolicy, nowUtc: LocalDateTime,
     ): UserSettings {
         val origin = cleanLanguage(request.originLanguage)
         val learning = cleanLanguage(request.learningLanguage)
@@ -119,7 +119,7 @@ internal object UserSettingsPolicy {
                 ?: setting.pendingDailySpeakingGoalMinutes,
             pendingDailyListeningGoalCount = request.dailyListeningGoalCount ?: setting.pendingDailyListeningGoalCount,
             pendingEffectiveDate = if (schedules) today(
-                setting.timezone, nowUtc
+                setting.timezone, nowUtc,
             ).plusDays(1) else setting.pendingEffectiveDate,
         )
     }
@@ -147,7 +147,9 @@ internal object UserSettingsPolicy {
     }
 
     private fun cleanVoice(value: String?): String? = value?.beTrim()?.also {
-        if (it.all { character -> Character.isWhitespace(character) } || it.length > 100) invalid("Speaking Voice가 유효하지 않습니다.")
+        if (it.all { character -> Character.isWhitespace(character) } || it.length > 100) invalid(
+            "Speaking Voice가 유효하지 않습니다.",
+        )
     }
 
     private fun cleanSpeed(value: String?): String? = value?.beTrim()?.uppercase(Locale.ROOT)?.also {

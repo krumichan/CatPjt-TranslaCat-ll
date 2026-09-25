@@ -19,7 +19,7 @@ class SettingsSelectionDeliveryPolicyTest {
     fun `이미 처리한 이벤트와 역순 이벤트를 다시 적용하지 않는다`() {
         val last = SettingsSelectionDelivery(123, 10, base, base.plusNanos(1000))
         for (id in listOf(9L, 10L)) assertEquals(
-            DUPLICATE, SettingsSelectionDeliveryPolicy.decide(id, base, base.plusNanos(1000), last)
+            DUPLICATE, SettingsSelectionDeliveryPolicy.decide(id, base, base.plusNanos(1000), last),
         )
     }
 

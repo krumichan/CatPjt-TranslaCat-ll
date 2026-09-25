@@ -26,7 +26,7 @@ class UserSettingsLifecycleTest {
         val result =
             UpdateUserSettings(work).execute(123, UserSettingsChange(originLanguage = "ko", learningLanguage = "ja"))
         assertTrue(result.settings.configured); assertEquals(setOf(123L), work.learners); assertEquals(
-        1, work.rows.size
+        1, work.rows.size,
     )
     }
 
@@ -35,7 +35,7 @@ class UserSettingsLifecycleTest {
         val work = MemorySettingsUnitOfWork()
         assertFailsWith<LearningBusinessException> {
             UpdateUserSettings(work).execute(
-                123, UserSettingsChange(originLanguage = "ko")
+                123, UserSettingsChange(originLanguage = "ko"),
             )
         }
         assertTrue(work.rows.isEmpty()); assertTrue(work.learners.isEmpty())
@@ -48,7 +48,7 @@ class UserSettingsLifecycleTest {
         work.rows[123] = before
         assertFailsWith<LearningBusinessException> {
             UpdateUserSettings(work).execute(
-                123, UserSettingsChange(dailySentenceCount = 999)
+                123, UserSettingsChange(dailySentenceCount = 999),
             )
         }
         assertEquals(before, work.rows[123])
@@ -87,7 +87,7 @@ class UserSettingsLifecycleTest {
         val work = MemorySettingsUnitOfWork(); work.rows[123] = F.configured(); work.failSave = true
         assertFailsWith<IllegalStateException> {
             UpdateUserSettings(work).execute(
-                123, UserSettingsChange(dailySentenceCount = 8)
+                123, UserSettingsChange(dailySentenceCount = 8),
             )
         }
         assertEquals(F.configured(), work.rows[123])

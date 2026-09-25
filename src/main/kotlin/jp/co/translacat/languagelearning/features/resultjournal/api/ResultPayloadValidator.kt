@@ -36,5 +36,6 @@ internal object ResultPayloadValidator {
             }
         }
     }
+
     private fun errorInput(): Nothing = throw IllegalArgumentException("결과 본문의 필수 필드를 확인해 주세요.")
 }

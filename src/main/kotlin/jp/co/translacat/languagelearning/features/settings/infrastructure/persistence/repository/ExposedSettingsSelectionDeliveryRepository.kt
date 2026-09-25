@@ -9,14 +9,18 @@ import org.jetbrains.exposed.v1.jdbc.selectAll
 import org.jetbrains.exposed.v1.jdbc.update
 
 /** caller의 learner 잠금 안에서만 조회/저장한다. */
-internal class ExposedSettingsSelectionDeliveryRepository(private val requireTransaction: () -> Unit) : SettingsSelectionDeliveryRepository {
+internal class ExposedSettingsSelectionDeliveryRepository(private val requireTransaction: () -> Unit) :
+    SettingsSelectionDeliveryRepository {
     override fun findForUser(userId: Long): SettingsSelectionDelivery? {
         requireTransaction()
         return SettingsSelectionDeliveriesTable.selectAll()
             .where { SettingsSelectionDeliveriesTable.userId eq userId }
             .forUpdate().singleOrNull()?.let {
-                SettingsSelectionDelivery(it[SettingsSelectionDeliveriesTable.userId], it[SettingsSelectionDeliveriesTable.lastEventId],
-                    it[SettingsSelectionDeliveriesTable.baseRevision], it[SettingsSelectionDeliveriesTable.appliedRevision])
+                SettingsSelectionDelivery(
+                    it[SettingsSelectionDeliveriesTable.userId], it[SettingsSelectionDeliveriesTable.lastEventId],
+                    it[SettingsSelectionDeliveriesTable.baseRevision],
+                    it[SettingsSelectionDeliveriesTable.appliedRevision],
+                )
             }
     }
 

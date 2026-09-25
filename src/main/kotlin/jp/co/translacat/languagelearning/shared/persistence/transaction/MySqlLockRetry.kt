@@ -4,8 +4,6 @@ import java.sql.SQLException
 import java.util.Collections
 import java.util.IdentityHashMap
 import kotlin.collections.ArrayDeque
-import kotlin.collections.isNotEmpty
-import kotlin.collections.setOf
 
 /** 데드락/잠금 대기 실패만 재시도한다. 통신 실패와 불명확한 commit 결과는 재시도하지 않는다. */
 internal object MySqlLockRetry {

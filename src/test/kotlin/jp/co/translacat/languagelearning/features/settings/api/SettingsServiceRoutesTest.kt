@@ -28,7 +28,7 @@ class SettingsServiceRoutesTest {
     private val auth = InternalApiSettings(enabled = true, secretBase64 = Base64.getEncoder().encodeToString(key))
     private val path = "/internal/v1/service/language-learning/settings"
     private fun token(
-        use: String = "ll-settings-service", scopes: List<String> = listOf("settings:read"), expired: Boolean = false
+        use: String = "ll-settings-service", scopes: List<String> = listOf("settings:read"), expired: Boolean = false,
     ): String {
         val now = Instant.now().minusSeconds(if (expired) 500 else 0)
         val builder = JWT.create()
@@ -48,7 +48,7 @@ class SettingsServiceRoutesTest {
         var calls = 0
         override suspend fun userSnapshot(userId: Long): UserSettingsSnapshot {
             calls++; return UserSettingsSnapshot(
-                userId, F.now.toLocalDate(), UserSettingsResult(F.configured(userId), F.policy())
+                userId, F.now.toLocalDate(), UserSettingsResult(F.configured(userId), F.policy()),
             )
         }
 
@@ -83,10 +83,10 @@ class SettingsServiceRoutesTest {
     fun `read scope만 수락하고 write scope와 만료 토큰은 거부한다`() = app { service ->
         assertEquals(
             HttpStatusCode.Unauthorized,
-            client.get("$path/admin") { bearerAuth(token(scopes = listOf("settings:write"))) }.status
+            client.get("$path/admin") { bearerAuth(token(scopes = listOf("settings:write"))) }.status,
         )
         assertEquals(
-            HttpStatusCode.Unauthorized, client.get("$path/admin") { bearerAuth(token(expired = true)) }.status
+            HttpStatusCode.Unauthorized, client.get("$path/admin") { bearerAuth(token(expired = true)) }.status,
         )
         assertEquals(0, service.calls)
     }
@@ -97,7 +97,7 @@ class SettingsServiceRoutesTest {
         assertEquals(HttpStatusCode.OK, response.status)
         val body = kotlinx.serialization.json.Json.parseToJsonElement(response.bodyAsText()).toString()
         assertTrue(body.contains("\"userId\":123")); assertTrue(body.contains("\"revision\"")); assertEquals(
-        1, service.calls
+        1, service.calls,
     )
     }
 
@@ -112,7 +112,11 @@ class SettingsServiceRoutesTest {
     @Test
     fun `전용 조회 API에는 PATCH 동작이 없다`() = app { service ->
         val response =
-            client.patch("$path/admin") { bearerAuth(token()); contentType(ContentType.Application.Json); setBody("{}") }
+            client.patch("$path/admin") {
+                bearerAuth(token()); contentType(ContentType.Application.Json); setBody(
+                "{}",
+            )
+            }
         assertTrue(response.status.value in setOf(404, 405)); assertEquals(0, service.calls)
     }
 }

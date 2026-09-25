@@ -51,7 +51,7 @@ class SettingsCutoverIntegrationTest {
         val work = ExposedSettingsUnitOfWork(runner, clock)
         val queries = ExposedSettingsReadQueries(runner)
         val reads = DefaultSettingsServiceOperations(
-            work, queries, GetAdminSettings(ExposedAdminSettingsUnitOfWork(runner, clock)), clock
+            work, queries, GetAdminSettings(ExposedAdminSettingsUnitOfWork(runner, clock)), clock,
         )
         val relay = RememberListeningSelection(ExposedSelectionSettingsUnitOfWork(work))
         val update = UpdateUserSettings(work)
@@ -59,7 +59,7 @@ class SettingsCutoverIntegrationTest {
             GetUserSettings(work),
             update,
             GetAdminSettings(ExposedAdminSettingsUnitOfWork(runner, clock)),
-            UpdateAdminSettings(ExposedAdminSettingsUnitOfWork(runner, clock))
+            UpdateAdminSettings(ExposedAdminSettingsUnitOfWork(runner, clock)),
         )
 
         suspend fun configured(userId: Long = 123) =
@@ -85,12 +85,12 @@ class SettingsCutoverIntegrationTest {
             s.configured()
             sql(
                 db,
-                "UPDATE language_learning_user_setting SET pending_timezone='America/New_York', pending_effective_date='2026-09-24' WHERE user_id=123"
+                "UPDATE language_learning_user_setting SET pending_timezone='America/New_York', pending_effective_date='2026-09-24' WHERE user_id=123",
             )
             assertEquals(LocalDate.of(2026, 9, 24), s.reads.learningDate(123))
             assertEquals(
                 "America/New_York",
-                string(db, "SELECT pending_timezone FROM language_learning_user_setting WHERE user_id=123")
+                string(db, "SELECT pending_timezone FROM language_learning_user_setting WHERE user_id=123"),
             )
             val snapshot = s.reads.userSnapshot(123)
             assertEquals(LocalDate.of(2026, 9, 23), snapshot.learningDate)
@@ -105,15 +105,15 @@ class SettingsCutoverIntegrationTest {
             s.configured(123); s.configured(456); GetUserSettings(s.work).execute(789)
             sql(
                 db,
-                "UPDATE language_learning_user_setting SET pending_learning_language='en', pending_effective_date='2000-01-01' WHERE user_id=123"
+                "UPDATE language_learning_user_setting SET pending_learning_language='en', pending_effective_date='2000-01-01' WHERE user_id=123",
             )
             val pairs = s.reads.configuredLanguagePairs()
             assertEquals(1, pairs.size); assertEquals("ko", pairs.single().originLanguage); assertEquals(
-            "ja", pairs.single().learningLanguage
+            "ja", pairs.single().learningLanguage,
         )
             assertEquals(
                 "en",
-                string(db, "SELECT pending_learning_language FROM language_learning_user_setting WHERE user_id=123")
+                string(db, "SELECT pending_learning_language FROM language_learning_user_setting WHERE user_id=123"),
             )
         }
     }
@@ -160,15 +160,17 @@ class SettingsCutoverIntegrationTest {
                     val base = s.configured().updatedAt
                     listOf(
                         async { s.relay.execute(123, 10, base, listOf(DICTATION)) },
-                        async { other.relay.execute(123, 11, base, listOf(SUMMARY)) }).awaitAll()
+                        async { other.relay.execute(123, 11, base, listOf(SUMMARY)) },
+                    ).awaitAll()
                     assertEquals(
-                        "[\"SUMMARY\"]", s.reads.userSnapshot(123).result.settings.defaultListeningTaskTypesJson
+                        "[\"SUMMARY\"]", s.reads.userSnapshot(123).result.settings.defaultListeningTaskTypesJson,
                     )
                     assertEquals(
-                        11L, scalar(
+                        11L,
+                        scalar(
                             db,
-                            "SELECT last_event_id FROM language_learning_settings_selection_delivery WHERE user_id=123"
-                        )
+                            "SELECT last_event_id FROM language_learning_settings_selection_delivery WHERE user_id=123",
+                        ),
                     )
                 }
             }
@@ -181,17 +183,17 @@ class SettingsCutoverIntegrationTest {
             val base = s.configured().updatedAt
             sql(
                 db,
-                "UPDATE language_learning_user_setting SET pending_daily_sentence_count=7, pending_effective_date='2000-01-01' WHERE user_id=123"
+                "UPDATE language_learning_user_setting SET pending_daily_sentence_count=7, pending_effective_date='2000-01-01' WHERE user_id=123",
             )
             // 이 테스트가 소유한 임시 DB의 수신 테이블에만 실패를 주입한다.
             sql(db, "DROP TABLE language_learning_settings_selection_delivery")
             assertFails { s.relay.execute(123, 10, base, listOf(SUMMARY)) }
             assertEquals(
-                5L, scalar(db, "SELECT daily_sentence_count FROM language_learning_user_setting WHERE user_id=123")
+                5L, scalar(db, "SELECT daily_sentence_count FROM language_learning_user_setting WHERE user_id=123"),
             )
             assertEquals(
                 7L,
-                scalar(db, "SELECT pending_daily_sentence_count FROM language_learning_user_setting WHERE user_id=123")
+                scalar(db, "SELECT pending_daily_sentence_count FROM language_learning_user_setting WHERE user_id=123"),
             )
         }
     }
@@ -213,14 +215,15 @@ class SettingsCutoverIntegrationTest {
         sql(db, "UPDATE language_learning_admin_setting SET daily_keyword_max_count=6 WHERE id='DEFAULT'")
         sql(
             db,
-            "INSERT INTO language_learning_admin_setting_audit(admin_user_id,before_json,after_json,created_at) VALUES(900,'{}','{}',UTC_TIMESTAMP(6))"
+            "INSERT INTO language_learning_admin_setting_audit(admin_user_id,before_json,after_json,created_at) VALUES(900,'{}','{}',UTC_TIMESTAMP(6))",
         )
         DatabaseFactory(settings).use { factory ->
-            assertEquals(3, factory.migrationReport.migrationsExecuted); assertEquals(
-            6, factory.migrationReport.schemaVersion.toInt()
+            assertEquals(4, factory.migrationReport.migrationsExecuted); assertEquals(
+            7, factory.migrationReport.schemaVersion.toInt(),
         )
             assertEquals(
-                6L, scalar(db, "SELECT daily_keyword_max_count FROM language_learning_admin_setting WHERE id='DEFAULT'")
+                6L,
+                scalar(db, "SELECT daily_keyword_max_count FROM language_learning_admin_setting WHERE id='DEFAULT'"),
             )
             assertEquals(1L, scalar(db, "SELECT COUNT(*) FROM language_learning_admin_setting_audit"))
         }
@@ -234,7 +237,11 @@ class SettingsCutoverIntegrationTest {
             val auth = InternalApiSettings(enabled = true, secretBase64 = Base64.getEncoder().encodeToString(key))
             application {
                 configureSerialization(); configureStatusPages(); configureInternalAuthentication(auth)
-                routing { settingsRoutes(s.operations); settingsServiceRoutes(s.reads); settingsSelectionRoute(s.relay) }
+                routing {
+                    settingsRoutes(s.operations); settingsServiceRoutes(s.reads); settingsSelectionRoute(
+                    s.relay,
+                )
+                }
             }
             val userToken = token(key, false);
             val serviceToken = token(key, true)
@@ -243,9 +250,12 @@ class SettingsCutoverIntegrationTest {
             val get = client.get(servicePath) { bearerAuth(serviceToken) }
             assertEquals(HttpStatusCode.OK, get.status)
             assertEquals(1L, scalar(db, "SELECT COUNT(*) FROM language_learning_learner"))
-            assertEquals(HttpStatusCode.Unauthorized, client.patch("/internal/v1/admin/language-learning/settings") {
-                bearerAuth(serviceToken); contentType(ContentType.Application.Json); setBody("{}")
-            }.status)
+            assertEquals(
+                HttpStatusCode.Unauthorized,
+                client.patch("/internal/v1/admin/language-learning/settings") {
+                    bearerAuth(serviceToken); contentType(ContentType.Application.Json); setBody("{}")
+                }.status,
+            )
             s.configured()
             val snapshot = client.get(servicePath) { bearerAuth(serviceToken) }
             val revision =
@@ -257,11 +267,11 @@ class SettingsCutoverIntegrationTest {
             assertEquals(HttpStatusCode.OK, delivery.status)
             assertEquals(
                 "APPLIED",
-                Json.parseToJsonElement(delivery.bodyAsText()).jsonObject.getValue("status").jsonPrimitive.content
+                Json.parseToJsonElement(delivery.bodyAsText()).jsonObject.getValue("status").jsonPrimitive.content,
             )
             assertEquals(
                 "[\"SUMMARY\"]",
-                string(db, "SELECT default_listening_task_types FROM language_learning_user_setting WHERE user_id=123")
+                string(db, "SELECT default_listening_task_types FROM language_learning_user_setting WHERE user_id=123"),
             )
         }
     }

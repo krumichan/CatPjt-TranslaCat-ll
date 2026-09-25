@@ -23,7 +23,7 @@ internal object InternalClaimsPolicy {
         val roles = claims.roles ?: return null
         if (roles.isEmpty() || roles.size != roles.toSet().size || roles.any {
                 it !in setOf(
-                    "USER", "ADMIN"
+                    "USER", "ADMIN",
                 )
             }) return null
         val issued = claims.issuedAt ?: return null

@@ -35,10 +35,11 @@ class ResultJournalIntegrationTest {
                     assertEquals(1L, scalar(db, "SELECT COUNT(*) FROM language_learning_result_event"))
                     assertEquals(1L, scalar(db, "SELECT last_sequence FROM language_learning_result_stream"))
                     assertEquals(
-                        0L, scalar(
+                        0L,
+                        scalar(
                             db,
-                            "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema=DATABASE() AND table_name='language_learning_profile'"
-                        )
+                            "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema=DATABASE() AND table_name='language_learning_profile'",
+                        ),
                     )
                 }
             }
@@ -92,7 +93,7 @@ class ResultJournalIntegrationTest {
                     val event = F.event(); accept.execute(event)
                     assertFailsWith<ResultJournalConflict> {
                         accept.execute(
-                            F.event(payload = F.PAYLOAD + " ").copy(eventId = event.eventId)
+                            F.event(payload = F.PAYLOAD + " ").copy(eventId = event.eventId),
                         )
                     }
                     assertEquals(1L, scalar(db, "SELECT COUNT(*) FROM language_learning_result_event"))
@@ -109,7 +110,7 @@ class ResultJournalIntegrationTest {
                     // 이 테스트만 소유한 임시 DB에 UPDATE 거부 트리거를 두어 원자성을 검증한다.
                     sql(
                         db,
-                        "CREATE TRIGGER reject_result_cursor BEFORE UPDATE ON language_learning_result_stream FOR EACH ROW SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT='test cursor rejected'"
+                        "CREATE TRIGGER reject_result_cursor BEFORE UPDATE ON language_learning_result_stream FOR EACH ROW SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT='test cursor rejected'",
                     )
                     val accept = service(factory)
                     kotlin.test.assertFails { accept.execute(F.event()) }
@@ -121,7 +122,7 @@ class ResultJournalIntegrationTest {
     }
 
     @Test
-    fun `V005에서 V006으로 올려도 관리자 설정값을 보존한다`() {
+    fun `V005에서 최신 스키마로 올려도 관리자 설정값을 보존한다`() {
         LocalScratchMysql.use { db ->
             val s = db.settings()
             Flyway.configure()
@@ -136,14 +137,16 @@ class ResultJournalIntegrationTest {
                 .migrate()
             sql(db, "UPDATE language_learning_admin_setting SET daily_keyword_max_count=9 WHERE id='DEFAULT'")
             DatabaseFactory(s).use { f ->
-                assertEquals(1, f.migrationReport.migrationsExecuted)
-                assertEquals(6, f.migrationReport.schemaVersion.toInt())
+                assertEquals(2, f.migrationReport.migrationsExecuted)
+                assertEquals(7, f.migrationReport.schemaVersion.toInt())
                 assertEquals(
                     9L,
-                    scalar(db, "SELECT daily_keyword_max_count FROM language_learning_admin_setting WHERE id='DEFAULT'")
+                    scalar(
+                        db, "SELECT daily_keyword_max_count FROM language_learning_admin_setting WHERE id='DEFAULT'"
+                    ),
                 )
                 assertEquals(
-                    14L, scalar(db, "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema=DATABASE()")
+                    23L, scalar(db, "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema=DATABASE()"),
                 )
             }
             DatabaseFactory(s).use { assertEquals(0, it.migrationReport.migrationsExecuted) }

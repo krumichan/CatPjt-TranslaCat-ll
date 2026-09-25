@@ -22,7 +22,8 @@ internal class DefaultKeywordOperations(
                 catalog.filter { it.active }.map { keyword ->
                     val selection = selectionsById[keyword.id]
                     keyword.view(
-                        catalog, selection?.desiredActive ?: false, selection?.pendingEffectiveDate, display[keyword.id]
+                        catalog, selection?.desiredActive ?: false, selection?.pendingEffectiveDate,
+                        display[keyword.id],
                     )
                 },
                 customRows.map { it.view(catalog) },
@@ -53,7 +54,7 @@ internal class DefaultKeywordOperations(
     }
 
     override suspend fun updateCustom(
-        userId: Long, started: Boolean, keywordId: Long, change: KeywordChange
+        userId: Long, started: Boolean, keywordId: Long, change: KeywordChange,
     ): KeywordView {
         requireUser(userId)
         val today = dates.today(userId)
@@ -108,7 +109,7 @@ internal class DefaultKeywordOperations(
                     active = false,
                     availableFrom = effective,
                     pendingActive = true,
-                    pendingEffectiveDate = effective
+                    pendingEffectiveDate = effective,
                 )).promote(today).copy(pendingActive = selected, pendingEffectiveDate = effective).promote(today)
             val saved = selections.save(selection, userId, nowUtc)
             keyword.view(catalog, saved.desiredActive, saved.pendingEffectiveDate)
@@ -171,7 +172,7 @@ internal class DefaultKeywordOperations(
             val catalog = system.findAll().associateBy { it.id }
             val customCandidates = promoteCustom(userId, date, !started).filter { it.active }.map {
                 KeywordCandidate(
-                    "CUSTOM:" + it.id, it.text, KeywordSource.CUSTOM, it.type, it.canonicalKey, it.availableFrom
+                    "CUSTOM:" + it.id, it.text, KeywordSource.CUSTOM, it.type, it.canonicalKey, it.availableFrom,
                 )
             }
             val systemCandidates =
@@ -183,7 +184,7 @@ internal class DefaultKeywordOperations(
                             KeywordSource.SYSTEM,
                             it.type,
                             it.canonicalKey,
-                            selection.availableFrom
+                            selection.availableFrom,
                         )
                     }
                 }
@@ -207,13 +208,13 @@ internal class DefaultKeywordOperations(
         if (id == null) null else catalog.firstOrNull { it.id == id } ?: throw KeywordPolicy.invalidHierarchy()
 
     private fun validateSystemDuplicate(
-        all: List<SystemKeyword>, excluded: Long?, normalized: String, type: KeywordType
+        all: List<SystemKeyword>, excluded: Long?, normalized: String, type: KeywordType,
     ) {
         if (all.any { it.id != excluded && it.normalizedText == normalized && it.type == type }) throw KeywordPolicy.duplicated()
     }
 
     private fun validateCustomDuplicate(
-        all: List<CustomKeyword>, excluded: Long?, normalized: String, type: KeywordType
+        all: List<CustomKeyword>, excluded: Long?, normalized: String, type: KeywordType,
     ) {
         if (all.any { it.id != excluded && it.desiredNormalizedText == normalized && it.desiredType == type }) throw KeywordPolicy.duplicated()
     }

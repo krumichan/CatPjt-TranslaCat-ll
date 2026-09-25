@@ -13,7 +13,7 @@ internal object CustomKeywordsTable : Table("language_learning_custom_keyword") 
         LearnersTable.userId,
         onDelete = ReferenceOption.RESTRICT,
         onUpdate = ReferenceOption.RESTRICT,
-        fkName = "fk_ll_custom_keyword_learner"
+        fkName = "fk_ll_custom_keyword_learner",
     )
     val text = varchar("text", 200)
     val normalizedText = varchar("normalized_text", 200)
@@ -23,7 +23,7 @@ internal object CustomKeywordsTable : Table("language_learning_custom_keyword") 
         SystemKeywordsTable.id,
         onDelete = ReferenceOption.RESTRICT,
         onUpdate = ReferenceOption.RESTRICT,
-        fkName = "fk_ll_custom_keyword_parent"
+        fkName = "fk_ll_custom_keyword_parent",
     ).nullable()
     val active = bool("active")
     val availableFrom = date("available_from")
@@ -35,7 +35,7 @@ internal object CustomKeywordsTable : Table("language_learning_custom_keyword") 
         SystemKeywordsTable.id,
         onDelete = ReferenceOption.RESTRICT,
         onUpdate = ReferenceOption.RESTRICT,
-        fkName = "fk_ll_custom_keyword_pending_parent"
+        fkName = "fk_ll_custom_keyword_pending_parent",
     ).nullable()
     val pendingParentChanged = bool("pending_parent_changed")
     val pendingActive = bool("pending_active").nullable()

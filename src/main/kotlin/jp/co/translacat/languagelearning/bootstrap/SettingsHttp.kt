@@ -4,8 +4,8 @@ import io.ktor.server.application.*
 import io.ktor.server.plugins.di.*
 import io.ktor.server.routing.*
 import jp.co.translacat.languagelearning.features.settings.api.settingsRoutes
-import jp.co.translacat.languagelearning.features.settings.api.settingsServiceRoutes
 import jp.co.translacat.languagelearning.features.settings.api.settingsSelectionRoute
+import jp.co.translacat.languagelearning.features.settings.api.settingsServiceRoutes
 import jp.co.translacat.languagelearning.features.settings.application.RememberListeningSelection
 import jp.co.translacat.languagelearning.features.settings.application.SettingsOperations
 import jp.co.translacat.languagelearning.features.settings.application.SettingsServiceOperations

@@ -66,7 +66,7 @@ internal class MemoryKeywordUnitOfWork : KeywordUnitOfWork {
                     selectionRows.values.filter { it.userId == userId }.sortedBy { it.id }
 
                 override fun save(
-                    selection: SystemKeywordSelection, actorId: Long, now: LocalDateTime
+                    selection: SystemKeywordSelection, actorId: Long, now: LocalDateTime,
                 ): SystemKeywordSelection {
                     check(!failWrites); writes++
                     return selection.copy(id = if (selection.id == 0L) next++ else selection.id)

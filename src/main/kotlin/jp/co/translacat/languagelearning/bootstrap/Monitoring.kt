@@ -1,7 +1,7 @@
 package jp.co.translacat.languagelearning.bootstrap
 
-import io.ktor.server.application.*
 import io.ktor.http.*
+import io.ktor.server.application.*
 import io.ktor.server.plugins.callid.*
 
 fun Application.configureMonitoring() {

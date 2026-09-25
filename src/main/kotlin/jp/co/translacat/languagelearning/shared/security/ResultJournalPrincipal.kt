@@ -15,7 +15,7 @@ internal object ResultJournalClaimsPolicy {
         issuedAt: Instant?,
         expiresAt: Instant?,
         settings: InternalApiSettings,
-        now: Instant
+        now: Instant,
     ): ResultJournalPrincipal? {
         if (scopes != listOf("learning-results:write") || !roles.isNullOrEmpty()) return null
         if (!settings.enabled || subject != settings.callerService) return null

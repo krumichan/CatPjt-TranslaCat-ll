@@ -35,7 +35,7 @@ class KeywordCatalogIntegrationTest {
         LocalScratchMysql.use { db ->
             DatabaseFactory(db.settings()).use { factory ->
                 block(
-                    db, factory, service(factory)
+                    db, factory, service(factory),
                 )
             }
         }
@@ -67,25 +67,26 @@ class KeywordCatalogIntegrationTest {
             sql(db, "UPDATE language_learning_admin_setting SET daily_keyword_max_count=6 WHERE id='DEFAULT'")
             sql(
                 db,
-                "INSERT INTO language_learning_learner(user_id,status,identity_version,created_at,updated_at) VALUES(123,'ACTIVE',0,UTC_TIMESTAMP(6),UTC_TIMESTAMP(6))"
+                "INSERT INTO language_learning_learner(user_id,status,identity_version,created_at,updated_at) VALUES(123,'ACTIVE',0,UTC_TIMESTAMP(6),UTC_TIMESTAMP(6))",
             )
             sql(
                 db,
-                "INSERT INTO language_learning_settings_selection_delivery(user_id,last_event_id,base_revision,applied_revision) VALUES(123,99,UTC_TIMESTAMP(6),NULL)"
+                "INSERT INTO language_learning_settings_selection_delivery(user_id,last_event_id,base_revision,applied_revision) VALUES(123,99,UTC_TIMESTAMP(6),NULL)",
             )
             DatabaseFactory(settings).use { factory ->
-                assertEquals(2, factory.migrationReport.migrationsExecuted)
-                assertEquals(6, factory.migrationReport.schemaVersion.toInt())
+                assertEquals(3, factory.migrationReport.migrationsExecuted)
+                assertEquals(7, factory.migrationReport.schemaVersion.toInt())
             }
             assertEquals(
-                6L, number(db, "SELECT daily_keyword_max_count FROM language_learning_admin_setting WHERE id='DEFAULT'")
+                6L,
+                number(db, "SELECT daily_keyword_max_count FROM language_learning_admin_setting WHERE id='DEFAULT'"),
             )
             assertEquals(
                 99L,
-                number(db, "SELECT last_event_id FROM language_learning_settings_selection_delivery WHERE user_id=123")
+                number(db, "SELECT last_event_id FROM language_learning_settings_selection_delivery WHERE user_id=123"),
             )
             assertEquals(
-                14L, number(db, "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema=DATABASE()")
+                23L, number(db, "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema=DATABASE()"),
             )
             DatabaseFactory(settings).use { assertEquals(0, it.migrationReport.migrationsExecuted) }
         }
@@ -101,16 +102,18 @@ class KeywordCatalogIntegrationTest {
                 assertTrue(ops.candidates(123, true, today).isEmpty())
                 assertEquals("IT", ops.candidates(123, true, today.plusDays(1)).single().text)
                 assertEquals(
-                    1L, number(
+                    1L,
+                    number(
                         db,
-                        "SELECT COUNT(*) FROM language_learning_custom_keyword WHERE pending_effective_date IS NULL AND active=1"
-                    )
+                        "SELECT COUNT(*) FROM language_learning_custom_keyword WHERE pending_effective_date IS NULL AND active=1",
+                    ),
                 )
                 assertEquals(
-                    1L, number(
+                    1L,
+                    number(
                         db,
-                        "SELECT COUNT(*) FROM language_learning_custom_keyword WHERE created_by='123' AND updated_by='123'"
-                    )
+                        "SELECT COUNT(*) FROM language_learning_custom_keyword WHERE created_by='123' AND updated_by='123'",
+                    ),
                 )
             }
         }
@@ -127,7 +130,7 @@ class KeywordCatalogIntegrationTest {
                             async {
                                 try {
                                     (if (index % 2 == 0) ops else second).createCustom(
-                                        123, false, KeywordChange(text = "IT", type = KeywordType.TOPIC)
+                                        123, false, KeywordChange(text = "IT", type = KeywordType.TOPIC),
                                     ); true
                                 } catch (error: LearningBusinessException) {
                                     assertEquals("KEYWORD_DUPLICATED", error.code); false
@@ -170,9 +173,12 @@ class KeywordCatalogIntegrationTest {
             runBlocking {
                 ops.createCustom(123, false, KeywordChange(text = "café", type = KeywordType.TOPIC))
                 // 기존 utf8mb4_unicode_ci에서는 악센트 차이가 같은 unique 값일 수 있다.
-                assertEquals("KEYWORD_DUPLICATED", assertFailsWith<LearningBusinessException> {
-                    ops.createCustom(123, false, KeywordChange(text = "cafe", type = KeywordType.TOPIC))
-                }.code)
+                assertEquals(
+                    "KEYWORD_DUPLICATED",
+                    assertFailsWith<LearningBusinessException> {
+                        ops.createCustom(123, false, KeywordChange(text = "cafe", type = KeywordType.TOPIC))
+                    }.code,
+                )
                 assertEquals(1L, number(db, "SELECT COUNT(*) FROM language_learning_custom_keyword"))
             }
         }
@@ -186,18 +192,19 @@ class KeywordCatalogIntegrationTest {
                 ops.createCustom(
                     123,
                     false,
-                    KeywordChange(text = "deploy", type = KeywordType.VOCABULARY, parentKeywordId = parent.id)
+                    KeywordChange(text = "deploy", type = KeywordType.VOCABULARY, parentKeywordId = parent.id),
                 )
                 assertFailsWith<java.sql.SQLException> {
                     sql(
-                        db, "DELETE FROM language_learning_system_keyword WHERE id=${parent.id}"
+                        db, "DELETE FROM language_learning_system_keyword WHERE id=${parent.id}",
                     )
                 }
                 assertEquals(
-                    0L, number(
+                    0L,
+                    number(
                         db,
-                        "SELECT COUNT(*) FROM information_schema.key_column_usage WHERE table_schema=DATABASE() AND referenced_table_schema IS NOT NULL AND referenced_table_schema<>DATABASE()"
-                    )
+                        "SELECT COUNT(*) FROM information_schema.key_column_usage WHERE table_schema=DATABASE() AND referenced_table_schema IS NOT NULL AND referenced_table_schema<>DATABASE()",
+                    ),
                 )
             }
         }
@@ -211,7 +218,7 @@ class KeywordCatalogIntegrationTest {
                 sql(db, "UPDATE language_learning_learner SET status='SUSPENDED' WHERE user_id=123")
                 assertFailsWith<LearnerUnavailableException> {
                     ops.createCustom(
-                        123, false, KeywordChange(text = "IT", type = KeywordType.TOPIC)
+                        123, false, KeywordChange(text = "IT", type = KeywordType.TOPIC),
                     )
                 }
                 assertEquals(0L, number(db, "SELECT COUNT(*) FROM language_learning_custom_keyword"))
@@ -228,12 +235,12 @@ class KeywordCatalogIntegrationTest {
                 val id = parent.id
                 sql(
                     db,
-                    "INSERT INTO language_learning_system_keyword_locale(system_keyword_id,locale,display_name) VALUES($id,'ko-KR','아이티'),($id,'ja-JP','IT分野')"
+                    "INSERT INTO language_learning_system_keyword_locale(system_keyword_id,locale,display_name) VALUES($id,'ko-KR','아이티'),($id,'ja-JP','IT分野')",
                 )
                 val view = ops.list(123, false, "learning").systemKeywords.single()
                 assertEquals("IT分野", view.displayName); assertEquals("아이티", view.secondaryDisplayName)
                 ops.createCustom(
-                    123, true, KeywordChange(text = "deploy", type = KeywordType.VOCABULARY, parentKeywordId = id)
+                    123, true, KeywordChange(text = "deploy", type = KeywordType.VOCABULARY, parentKeywordId = id),
                 )
                 assertFailsWith<LearningBusinessException> { ops.updateSystem(900, id, KeywordChange(active = false)) }
                 assertEquals(1L, number(db, "SELECT COUNT(*) FROM language_learning_system_keyword WHERE active=1"))

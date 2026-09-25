@@ -9,7 +9,8 @@ import org.jetbrains.exposed.v1.jdbc.transactions.TransactionManager
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 
-internal class ExposedResultJournalUnitOfWork(private val transactions: JdbcTransactionRunner) : ResultJournalUnitOfWork {
+internal class ExposedResultJournalUnitOfWork(private val transactions: JdbcTransactionRunner) :
+    ResultJournalUnitOfWork {
     override suspend fun <T> execute(userId: Long, block: ResultJournalRepository.() -> T): T = transactions.write {
         val transaction = TransactionManager.current()
         val thread = Thread.currentThread()

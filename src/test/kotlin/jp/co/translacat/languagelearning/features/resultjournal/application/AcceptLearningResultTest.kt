@@ -60,7 +60,7 @@ class AcceptLearningResultTest {
                 event.copy(userId = 124),
                 event.copy(sequence = 2),
                 event.copy(referenceId = "124"),
-                event.copy(occurredAt = "2026-09-24T03:00:01Z")
+                event.copy(occurredAt = "2026-09-24T03:00:01Z"),
             )) {
                 assertFailsWith<ResultJournalConflict> { service.execute(changed) }
             }
@@ -122,7 +122,7 @@ class AcceptLearningResultTest {
             val service = AcceptLearningResult(db, F.SOURCE)
             assertFailsWith<ResultJournalConflict> {
                 service.execute(
-                    F.event().copy(sourceInstanceId = "7a8abfea-a0d1-4458-95e8-66cb5e68d9a0")
+                    F.event().copy(sourceInstanceId = "7a8abfea-a0d1-4458-95e8-66cb5e68d9a0"),
                 )
             }
             assertEquals(0, db.transactions)
@@ -136,7 +136,7 @@ class AcceptLearningResultTest {
             val service = AcceptLearningResult(db, F.SOURCE)
             assertFailsWith<IllegalArgumentException> {
                 service.execute(
-                    F.event().copy(payloadSha256 = "0".repeat(64))
+                    F.event().copy(payloadSha256 = "0".repeat(64)),
                 )
             }
             assertFailsWith<IllegalArgumentException> { service.execute(F.event().copy(schemaVersion = 2)) }
@@ -171,7 +171,7 @@ class AcceptLearningResultTest {
     @Test
     fun `해시는 언어별 구현에서 같은 UTF8 값이다`() {
         assertEquals(
-            "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad", IncomingLearningResult.hash("abc")
+            "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad", IncomingLearningResult.hash("abc"),
         )
     }
 

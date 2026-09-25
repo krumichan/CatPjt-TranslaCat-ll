@@ -55,9 +55,11 @@ internal class ExposedUserSettingsRepository(private val requireTransaction: () 
 
     override fun save(settings: UserSettings): UserSettings {
         requireTransaction()
-        val count = UserSettingsTable.update({
-            (UserSettingsTable.id eq settings.id) and (UserSettingsTable.userId eq settings.userId)
-        }) {
+        val count = UserSettingsTable.update(
+            {
+                (UserSettingsTable.id eq settings.id) and (UserSettingsTable.userId eq settings.userId)
+            },
+        ) {
             it[originLanguage] = settings.originLanguage
             it[learningLanguage] = settings.learningLanguage
             it[timezone] = settings.timezone

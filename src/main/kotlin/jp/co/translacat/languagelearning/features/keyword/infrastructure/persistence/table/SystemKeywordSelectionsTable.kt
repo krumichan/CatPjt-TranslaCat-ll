@@ -13,13 +13,13 @@ internal object SystemKeywordSelectionsTable : Table("language_learning_user_sys
         LearnersTable.userId,
         onDelete = ReferenceOption.RESTRICT,
         onUpdate = ReferenceOption.RESTRICT,
-        fkName = "fk_ll_user_keyword_learner"
+        fkName = "fk_ll_user_keyword_learner",
     )
     val systemKeywordId = long("system_keyword_id").references(
         SystemKeywordsTable.id,
         onDelete = ReferenceOption.RESTRICT,
         onUpdate = ReferenceOption.RESTRICT,
-        fkName = "fk_ll_user_keyword_system"
+        fkName = "fk_ll_user_keyword_system",
     )
     val active = bool("active")
     val availableFrom = date("available_from")

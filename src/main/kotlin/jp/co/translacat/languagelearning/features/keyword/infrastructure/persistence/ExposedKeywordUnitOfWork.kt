@@ -30,7 +30,9 @@ internal class ExposedKeywordUnitOfWork(
                 val owner = Thread.currentThread()
                 var active = true
                 val guard = {
-                    check(active && Thread.currentThread() === owner && TransactionManager.currentOrNull() === transaction) {
+                    check(
+                        active && Thread.currentThread() === owner && TransactionManager.currentOrNull() === transaction,
+                    ) {
                         "Keyword Repository는 생성된 트랜잭션 안에서만 사용할 수 있습니다."
                     }
                 }
@@ -39,9 +41,10 @@ internal class ExposedKeywordUnitOfWork(
                 // 모든 키워드 경로가 catalog → learner 순서로 잠근다. 외부 HTTP/AI는 이 블록에 없다.
                 check(
                     KeywordCatalogLockTable.selectAll()
-                    .where { KeywordCatalogLockTable.id eq 1 }
-                    .forUpdate()
-                    .singleOrNull() != null) {
+                        .where { KeywordCatalogLockTable.id eq 1 }
+                        .forUpdate()
+                        .singleOrNull() != null,
+                ) {
                     "키워드 잠금 기준 행이 없습니다. V005 migration을 확인해 주세요."
                 }
                 if (learnerId != null) ExposedLearnerRepository(guard).ensureAndLock(learnerId, now()).requireActive()

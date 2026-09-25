@@ -18,9 +18,12 @@ internal object ResultEventsTable : Table("language_learning_result_event") {
     val aggregationEligible = bool("aggregation_eligible")
     val receivedAt = datetime("received_at")
     override val primaryKey = PrimaryKey(eventId)
+
     init {
         uniqueIndex("uk_ll_result_event_sequence", sourceInstanceId, userId, sequence)
-        foreignKey(sourceInstanceId to ResultStreamsTable.sourceInstanceId, userId to ResultStreamsTable.userId,
-            name = "fk_ll_result_event_stream")
+        foreignKey(
+            sourceInstanceId to ResultStreamsTable.sourceInstanceId, userId to ResultStreamsTable.userId,
+            name = "fk_ll_result_event_stream",
+        )
     }
 }

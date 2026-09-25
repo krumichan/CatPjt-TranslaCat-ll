@@ -16,20 +16,22 @@ internal class MemoryResultJournal : ResultJournalUnitOfWork {
         val savedEvents = LinkedHashMap(events)
         val savedStreams = HashMap(streams)
         return try {
-            block(object : ResultJournalRepository {
-                override fun lastSequence(sourceInstanceId: String, userId: Long) =
-                    streams[sourceInstanceId to userId] ?: 0L
+            block(
+                object : ResultJournalRepository {
+                    override fun lastSequence(sourceInstanceId: String, userId: Long) =
+                        streams[sourceInstanceId to userId] ?: 0L
 
-                override fun findByEventId(eventId: String) = events[eventId]
-                override fun append(event: IncomingLearningResult, receivedAt: LocalDateTime) {
-                    check(events.putIfAbsent(event.eventId, event) == null)
-                }
+                    override fun findByEventId(eventId: String) = events[eventId]
+                    override fun append(event: IncomingLearningResult, receivedAt: LocalDateTime) {
+                        check(events.putIfAbsent(event.eventId, event) == null)
+                    }
 
-                override fun advance(sourceInstanceId: String, userId: Long, sequence: Long) {
-                    if (failAdvance) error("stream 갱신 실패")
-                    streams[sourceInstanceId to userId] = sequence
-                }
-            })
+                    override fun advance(sourceInstanceId: String, userId: Long, sequence: Long) {
+                        if (failAdvance) error("stream 갱신 실패")
+                        streams[sourceInstanceId to userId] = sequence
+                    }
+                },
+            )
         } catch (failure: Throwable) {
             events.clear(); events.putAll(savedEvents)
             streams.clear(); streams.putAll(savedStreams)

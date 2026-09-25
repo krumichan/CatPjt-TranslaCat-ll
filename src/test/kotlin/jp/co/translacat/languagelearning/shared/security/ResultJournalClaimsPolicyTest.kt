@@ -16,7 +16,7 @@ class ResultJournalClaimsPolicyTest {
         roles: List<String>? = null,
         subject: String = "translacat-be",
         issued: Instant? = now,
-        expires: Instant? = now.plusSeconds(120)
+        expires: Instant? = now.plusSeconds(120),
     ) = ResultJournalClaimsPolicy.validate(subject, scope, roles, issued, expires, settings, now)
 
     @Test
@@ -27,7 +27,7 @@ class ResultJournalClaimsPolicyTest {
             emptyList(),
             listOf("settings:read"),
             listOf("learning-results:write", "settings:read"),
-            listOf("learning-results:write", "learning-results:write")
+            listOf("learning-results:write", "learning-results:write"),
         )) assertNull(validate(scope))
     }
 
@@ -43,18 +43,18 @@ class ResultJournalClaimsPolicyTest {
         assertNull(validate(listOf("learning-results:write"), issued = null))
         assertNull(
             validate(
-                listOf("learning-results:write"), issued = now.minusSeconds(120), expires = now.minusSeconds(6)
-            )
+                listOf("learning-results:write"), issued = now.minusSeconds(120), expires = now.minusSeconds(6),
+            ),
         )
         assertNull(
             validate(
-                listOf("learning-results:write"), issued = now.plusSeconds(6), expires = now.plusSeconds(120)
-            )
+                listOf("learning-results:write"), issued = now.plusSeconds(6), expires = now.plusSeconds(120),
+            ),
         )
         assertNotNull(
             validate(
-                listOf("learning-results:write"), issued = now.minusSeconds(120), expires = now.minusSeconds(4)
-            )
+                listOf("learning-results:write"), issued = now.minusSeconds(120), expires = now.minusSeconds(4),
+            ),
         )
     }
 }
