@@ -1,7 +1,7 @@
 $ErrorActionPreference = 'Stop'
 $root = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
-$evidence = Join-Path $root '.tmp_ktor_final_cleanup'
-$allowedRoots = @('build/live-level-test-audio', '.tmp_ktor_m0/speaking-audio') |
+$evidence = [IO.Path]::GetFullPath((Join-Path $root '../.codex-workspace/verification/ll/final-cleanup'))
+$allowedRoots = @('build/live-level-test-audio', '../.codex-workspace/verification/ll/runtime/speaking-audio') |
     ForEach-Object { [IO.Path]::GetFullPath((Join-Path $root $_)) }
 
 # 준비: 해당 테스트 서버와 DB 참조가 먼저 중지·초기화됐는지 확인한다.

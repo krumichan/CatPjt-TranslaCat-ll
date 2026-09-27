@@ -1,7 +1,7 @@
 param([switch]$Apply)
 $ErrorActionPreference = 'Stop'
 $root = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
-$evidence = Join-Path $root '.tmp_ktor_final_cleanup'
+$evidence = [IO.Path]::GetFullPath((Join-Path $root '../.codex-workspace/verification/ll/final-cleanup'))
 $container = '9d6e91ffcea2'
 $coreCatalog = 'translacat_be_it_live_7cb72f72'
 $llCatalog = 'translacat_ll_it_live_7cb72f72'

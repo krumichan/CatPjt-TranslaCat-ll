@@ -1,6 +1,7 @@
 param([scriptblock]$BeforeStart, [switch]$RefreshClasspath)
 $ErrorActionPreference = 'Stop'
 $llRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
+$runtimeRoot = [IO.Path]::GetFullPath((Join-Path $llRoot '../.codex-workspace/verification/ll/runtime'))
 $catalog = 'translacat_ll_it_live_7cb72f72'
 
 # 준비: 이 작업의 격리 Ktor 프로세스만 확인하고 기존 실행 인자를 그대로 사용한다.
@@ -36,13 +37,16 @@ $env:LL_INTERNAL_JWT_SECRET_BASE64 = [Convert]::ToBase64String([byte[]](0..31))
 $env:AI_SERVER_URL = 'http://127.0.0.1:18765'
 $env:AI_SERVER_API_KEY = 'synthetic-local-model-key'
 
+# 준비: 중앙 검증 로그 디렉터리를 프로세스 중지 전에 확보한다.
+New-Item -ItemType Directory -Path $runtimeRoot -Force | Out-Null
+
 # 실행: 확인한 애플리케이션만 재시작하며 DB 데이터와 Gradle 프로세스는 보존한다.
 Stop-Process -Id $process.ProcessId
 if ($BeforeStart) { & $BeforeStart }
 $stamp = [guid]::NewGuid().ToString('N')
 $started = Start-Process -FilePath $process.ExecutablePath -ArgumentList $arguments -WorkingDirectory $llRoot -WindowStyle Hidden `
-    -RedirectStandardOutput "$llRoot/.tmp_ktor_m0/ktor-$stamp.out.log" `
-    -RedirectStandardError "$llRoot/.tmp_ktor_m0/ktor-$stamp.err.log" -PassThru
+    -RedirectStandardOutput "$runtimeRoot/ktor-$stamp.out.log" `
+    -RedirectStandardError "$runtimeRoot/ktor-$stamp.err.log" -PassThru
 
 # 검증: 인증 없는 로컬 요청의 401로 애플리케이션 준비를 확인한다.
 $ready = $false

@@ -4,7 +4,7 @@ $base = 'http://127.0.0.1:18767/api/v1'
 $container = '9d6e91ffcea2'
 $catalog = 'translacat_ll_it_live_7cb72f72'
 if ($catalog -notmatch '^translacat_ll_it_live_[0-9a-f]{8}$') { throw 'Scratch catalog required' }
-$testRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../../CatPjt-TranslaCat-ai/.tmp_ktor_m0'))
+$testRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../../.codex-workspace/verification/ai/runtime'))
 $control = Join-Path $testRoot 'practice-control.json'
 $statsFile = Join-Path $testRoot 'practice-stats.json'
 if (Test-Path -LiteralPath $control) { throw 'Another Practice fixture control is active' }

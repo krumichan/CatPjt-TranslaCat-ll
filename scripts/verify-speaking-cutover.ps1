@@ -5,7 +5,7 @@ $base = 'http://127.0.0.1:18767/api/v1'
 $container = '9d6e91ffcea2'
 $catalog = 'translacat_ll_it_live_7cb72f72'
 if ($catalog -notmatch '^translacat_ll_it_live_[0-9a-f]{8}$') { throw 'Scratch catalog required' }
-$fixtureRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../../CatPjt-TranslaCat-ai/.tmp_ktor_m0'))
+$fixtureRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../../.codex-workspace/verification/ai/runtime'))
 $control = Join-Path $fixtureRoot 'speaking-control.json'
 $stats = Join-Path $fixtureRoot 'synthetic_execution_stats.json'
 $speechStats = Join-Path $fixtureRoot 'speaking-speech-stats.json'
@@ -276,7 +276,10 @@ VALUES($userId,'PROFILE','ACTIVE',60,0,0.0,'stable','{}',UTC_TIMESTAMP(6),UTC_TI
 "@
         docker exec -e "MYSQL_PWD=$password" $container mysql -uroot $catalog -e $sql
         if ($LASTEXITCODE -ne 0) { throw 'Speaking synthetic UI prerequisite failed' }
-        $audioPath = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../.tmp_ktor_m0/speaking-ui-input.wav'))
+
+        # 준비: 브라우저 입력 오디오를 중앙 검증 디렉터리에 저장한다.
+        $audioPath = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../../.codex-workspace/verification/ll/runtime/speaking-ui-input.wav'))
+        New-Item -ItemType Directory -Path ([IO.Path]::GetDirectoryName($audioPath)) -Force | Out-Null
         [IO.File]::WriteAllBytes($audioPath, $audio)
         $env:E2E_SPEAKING_AUDIO_PATH = $audioPath
         $env:E2E_SPEAKING_CONTROL_PATH = $control

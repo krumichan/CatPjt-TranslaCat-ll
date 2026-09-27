@@ -2,7 +2,7 @@ param([ValidateSet('LL', 'BE')][string]$Service)
 $ErrorActionPreference = 'Stop'
 $root = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
 $beRoot = [IO.Path]::GetFullPath((Join-Path $root '../CatPjt-TranslaCat-be'))
-$evidence = Join-Path $root '.tmp_ktor_final_cleanup'
+$evidence = [IO.Path]::GetFullPath((Join-Path $root '../.codex-workspace/verification/ll/final-cleanup'))
 $java = 'C:/Users/lovel/.jdks/corretto-21.0.3/bin/java.exe'
 $port = if ($Service -eq 'LL') { 18766 } else { 18767 }
 

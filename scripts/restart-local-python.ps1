@@ -1,5 +1,9 @@
 $ErrorActionPreference = 'Stop'
 $aiRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../../CatPjt-TranslaCat-ai'))
+$runtimeRoot = [IO.Path]::GetFullPath((Join-Path $aiRoot '../.codex-workspace/verification/ai/runtime'))
+
+# 준비: 중앙 검증 로그 디렉터리를 프로세스 중지 전에 확보한다.
+New-Item -ItemType Directory -Path $runtimeRoot -Force | Out-Null
 
 # 준비: 이 작업의 loopback 합성 서버만 식별한다. 다른 프로세스는 종료하지 않는다.
 $listener = @(Get-NetTCPConnection -LocalPort 18765 -State Listen -ErrorAction SilentlyContinue | Where-Object { $_.LocalAddress -eq '127.0.0.1' })
@@ -18,8 +22,8 @@ $stamp = [guid]::NewGuid().ToString('N')
 $started = Start-Process -FilePath "$aiRoot/.venv/Scripts/python.exe" `
     -ArgumentList '-m uvicorn scripts.synthetic_model_server:app --host 127.0.0.1 --port 18765 --log-level warning' `
     -WorkingDirectory $aiRoot -WindowStyle Hidden `
-    -RedirectStandardOutput "$aiRoot/.tmp_ktor_m0/synthetic-$stamp.out.log" `
-    -RedirectStandardError "$aiRoot/.tmp_ktor_m0/synthetic-$stamp.err.log" -PassThru
+    -RedirectStandardOutput "$runtimeRoot/synthetic-$stamp.out.log" `
+    -RedirectStandardError "$runtimeRoot/synthetic-$stamp.err.log" -PassThru
 
 # 검증: 테스트 앱 readiness를 확인하되 응답 본문이나 자격증명은 출력하지 않는다.
 $ready = $false

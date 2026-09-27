@@ -2,7 +2,7 @@ $ErrorActionPreference = 'Stop'
 $base = 'http://127.0.0.1:18767/api/v1/language-learning/listening'
 $container = '9d6e91ffcea2'
 $catalog = 'translacat_ll_it_live_7cb72f72'
-$testRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../../CatPjt-TranslaCat-ai/.tmp_ktor_m0'))
+$testRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../../.codex-workspace/verification/ai/runtime'))
 $control = Join-Path $testRoot 'listening-control.json'
 $marker = Join-Path $testRoot 'listening-hold.json'
 if ((Test-Path -LiteralPath $control) -or (Test-Path -LiteralPath $marker)) { throw 'Another Listening control is active' }

@@ -2,7 +2,10 @@ param([ValidateSet('Http', 'Ui')][string]$Track, [string]$StartAt)
 $ErrorActionPreference = 'Stop'
 $root = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
 $aiRoot = [IO.Path]::GetFullPath((Join-Path $root '../CatPjt-TranslaCat-ai'))
-$evidence = Join-Path $root '.tmp_ktor_final_cleanup'
+$evidence = [IO.Path]::GetFullPath((Join-Path $root '../.codex-workspace/verification/ll/final-cleanup'))
+
+# 준비: 단계별 결과를 중앙 검증 디렉터리에 남긴다.
+New-Item -ItemType Directory -Path $evidence -Force | Out-Null
 $results = [Collections.Generic.List[object]]::new()
 $script:reachedStart = [string]::IsNullOrEmpty($StartAt)
 if (-not $script:reachedStart -and (Test-Path -LiteralPath (Join-Path $evidence "$Track-results.json"))) {
@@ -27,7 +30,7 @@ function Invoke-VerificationStep([string]$Name, [string]$Executable, [string[]]$
         } while ((Get-Date) -lt $deadline)
         if ($listeners.Count -gt 0) { throw 'FE test port is occupied; review ownership before reusing a server' }
     }
-    $statsFile = Join-Path $aiRoot '.tmp_ktor_m0/synthetic_execution_stats.json'
+    $statsFile = Join-Path $aiRoot '../.codex-workspace/verification/ai/runtime/synthetic_execution_stats.json'
     $before = Get-Content -LiteralPath $statsFile -Raw | ConvertFrom-Json
     $started = Get-Date
     $log = Join-Path $evidence "$Name.log"
