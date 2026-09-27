@@ -1,0 +1,26 @@
+{
+  "type": "object",
+  "properties": {
+    "explanations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "order": {
+            "type": "integer"
+          },
+          "text": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "order",
+          "text"
+        ]
+      }
+    }
+  },
+  "required": [
+    "explanations"
+  ]
+}

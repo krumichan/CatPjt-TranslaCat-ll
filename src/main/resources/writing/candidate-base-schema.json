@@ -1,0 +1,208 @@
+{
+  "$defs": {
+    "CommunicativeIntent": {
+      "enum": [
+        "DESCRIBE",
+        "REQUEST",
+        "CONFIRM",
+        "REPORT",
+        "SUGGEST",
+        "DECLINE",
+        "APOLOGIZE",
+        "COMPARE",
+        "EXPLAIN_REASON",
+        "ASK_INFORMATION",
+        "GIVE_INSTRUCTION",
+        "EXPRESS_PREFERENCE",
+        "SUMMARIZE"
+      ],
+      "title": "CommunicativeIntent",
+      "type": "string"
+    },
+    "DraftDiversityMetadata": {
+      "additionalProperties": false,
+      "properties": {
+        "communicativeIntent": {
+          "$ref": "#/$defs/CommunicativeIntent"
+        },
+        "grammarFocusCodes": {
+          "items": {
+            "maxLength": 200,
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 20,
+          "title": "Grammarfocuscodes",
+          "type": "array"
+        },
+        "lexicalFocusCodes": {
+          "items": {
+            "maxLength": 200,
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 20,
+          "title": "Lexicalfocuscodes",
+          "type": "array"
+        },
+        "requiresBackgroundKnowledge": {
+          "title": "Requiresbackgroundknowledge",
+          "type": "boolean"
+        },
+        "scenarioCategory": {
+          "$ref": "#/$defs/ScenarioCategory"
+        },
+        "semanticSummary": {
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "Semanticsummary",
+          "type": "string"
+        },
+        "taskArchetype": {
+          "maxLength": 100,
+          "minLength": 1,
+          "title": "Taskarchetype",
+          "type": "string"
+        }
+      },
+      "required": [
+        "scenarioCategory",
+        "communicativeIntent",
+        "taskArchetype",
+        "grammarFocusCodes",
+        "lexicalFocusCodes",
+        "semanticSummary",
+        "requiresBackgroundKnowledge"
+      ],
+      "title": "DraftDiversityMetadata",
+      "type": "object"
+    },
+    "ScenarioCategory": {
+      "enum": [
+        "DAILY_LIFE",
+        "WORK",
+        "TRAVEL",
+        "SHOPPING",
+        "FOOD",
+        "SERVICE",
+        "LEARNING",
+        "HOBBY",
+        "DIGITAL_LIFE",
+        "SOCIAL",
+        "SCHEDULE",
+        "HEALTH_GENERAL"
+      ],
+      "title": "ScenarioCategory",
+      "type": "string"
+    },
+    "WritingDraft": {
+      "additionalProperties": false,
+      "properties": {
+        "diversityMetadata": {
+          "$ref": "#/$defs/DraftDiversityMetadata"
+        },
+        "focusMetrics": {
+          "items": {
+            "$ref": "#/$defs/WritingMetric"
+          },
+          "maxItems": 5,
+          "minItems": 1,
+          "title": "Focusmetrics",
+          "type": "array"
+        },
+        "focusReason": {
+          "maxLength": 1000,
+          "minLength": 1,
+          "title": "Focusreason",
+          "type": "string"
+        },
+        "keywords": {
+          "items": {
+            "maxLength": 200,
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 20,
+          "title": "Keywords",
+          "type": "array"
+        },
+        "originText": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "title": "Origintext",
+          "type": "string"
+        },
+        "providedFacts": {
+          "items": {
+            "maxLength": 2000,
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 12,
+          "title": "Providedfacts",
+          "type": "array"
+        },
+        "requiredIntents": {
+          "items": {
+            "maxLength": 2000,
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 12,
+          "title": "Requiredintents",
+          "type": "array"
+        },
+        "responseConstraints": {
+          "items": {
+            "maxLength": 2000,
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 12,
+          "title": "Responseconstraints",
+          "type": "array"
+        }
+      },
+      "required": [
+        "originText",
+        "keywords",
+        "focusMetrics",
+        "focusReason",
+        "providedFacts",
+        "requiredIntents",
+        "responseConstraints",
+        "diversityMetadata"
+      ],
+      "title": "WritingDraft",
+      "type": "object"
+    },
+    "WritingMetric": {
+      "enum": [
+        "MEANING",
+        "GRAMMAR",
+        "VOCABULARY",
+        "NATURALNESS",
+        "EXPRESSION"
+      ],
+      "title": "WritingMetric",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "items": {
+      "items": {
+        "$ref": "#/$defs/WritingDraft"
+      },
+      "maxItems": 2,
+      "minItems": 1,
+      "title": "Items",
+      "type": "array"
+    }
+  },
+  "required": [
+    "items"
+  ],
+  "title": "WritingCandidateBatch",
+  "type": "object"
+}

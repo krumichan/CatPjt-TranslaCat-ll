@@ -1,0 +1,26 @@
+{
+  "type": "object",
+  "properties": {
+    "wrongOptions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "key",
+          "text"
+        ]
+      }
+    }
+  },
+  "required": [
+    "wrongOptions"
+  ]
+}

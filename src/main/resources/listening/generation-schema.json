@@ -1,0 +1,329 @@
+{
+  "$defs": {
+    "CommunicativeIntent": {
+      "enum": [
+        "DESCRIBE",
+        "REQUEST",
+        "CONFIRM",
+        "REPORT",
+        "SUGGEST",
+        "DECLINE",
+        "APOLOGIZE",
+        "COMPARE",
+        "EXPLAIN_REASON",
+        "ASK_INFORMATION",
+        "GIVE_INSTRUCTION",
+        "EXPRESS_PREFERENCE",
+        "SUMMARIZE"
+      ],
+      "title": "CommunicativeIntent",
+      "type": "string"
+    },
+    "DiversityMetadata": {
+      "additionalProperties": false,
+      "properties": {
+        "scenarioCategory": {
+          "$ref": "#/$defs/ScenarioCategory"
+        },
+        "communicativeIntent": {
+          "$ref": "#/$defs/CommunicativeIntent"
+        },
+        "taskArchetype": {
+          "maxLength": 100,
+          "minLength": 1,
+          "title": "Taskarchetype",
+          "type": "string"
+        },
+        "grammarFocusCodes": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 20,
+          "title": "Grammarfocuscodes",
+          "type": "array"
+        },
+        "lexicalFocusCodes": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 20,
+          "title": "Lexicalfocuscodes",
+          "type": "array"
+        },
+        "semanticSummary": {
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "Semanticsummary",
+          "type": "string"
+        },
+        "requiresBackgroundKnowledge": {
+          "default": false,
+          "title": "Requiresbackgroundknowledge",
+          "type": "boolean"
+        },
+        "contentHash": {
+          "anyOf": [
+            {
+              "maxLength": 128,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Contenthash"
+        },
+        "similarityKey": {
+          "anyOf": [
+            {
+              "maxLength": 128,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Similaritykey"
+        }
+      },
+      "required": [
+        "scenarioCategory",
+        "communicativeIntent",
+        "taskArchetype",
+        "semanticSummary"
+      ],
+      "title": "DiversityMetadata",
+      "type": "object"
+    },
+    "GeneratedListeningItemPayload": {
+      "additionalProperties": false,
+      "properties": {
+        "itemIndex": {
+          "maximum": 30,
+          "minimum": 1,
+          "title": "Itemindex",
+          "type": "integer"
+        },
+        "sourceText": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Sourcetext",
+          "type": "string"
+        },
+        "referenceMeanings": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 3,
+          "minItems": 2,
+          "title": "Referencemeanings",
+          "type": "array"
+        },
+        "keyMeaningUnits": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 30,
+          "minItems": 1,
+          "title": "Keymeaningunits",
+          "type": "array"
+        },
+        "targetKeywords": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 20,
+          "title": "Targetkeywords",
+          "type": "array"
+        },
+        "estimatedAudioSeconds": {
+          "maximum": 60,
+          "minimum": 1,
+          "title": "Estimatedaudioseconds",
+          "type": "number"
+        },
+        "safety": {
+          "$ref": "#/$defs/SafetyResult"
+        },
+        "languageComplexityBand": {
+          "anyOf": [
+            {
+              "maximum": 5,
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Languagecomplexityband"
+        },
+        "diversityMetadata": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DiversityMetadata"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "question": {
+          "anyOf": [
+            {
+              "maxLength": 2000,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Question"
+        },
+        "options": {
+          "items": {
+            "$ref": "#/$defs/ListeningChoiceOption"
+          },
+          "maxItems": 4,
+          "title": "Options",
+          "type": "array"
+        },
+        "correctOptionKey": {
+          "anyOf": [
+            {
+              "maxLength": 12,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Correctoptionkey"
+        },
+        "comprehensionFocus": {
+          "anyOf": [
+            {
+              "enum": [
+                "GIST",
+                "DETAIL",
+                "INTENT",
+                "INFERENCE",
+                "NEXT_ACTION"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Comprehensionfocus"
+        },
+        "summaryKeyPoints": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 8,
+          "title": "Summarykeypoints",
+          "type": "array"
+        }
+      },
+      "required": [
+        "itemIndex",
+        "sourceText",
+        "referenceMeanings",
+        "keyMeaningUnits",
+        "estimatedAudioSeconds",
+        "safety"
+      ],
+      "title": "GeneratedListeningItemPayload",
+      "type": "object"
+    },
+    "ListeningChoiceOption": {
+      "additionalProperties": false,
+      "properties": {
+        "key": {
+          "maxLength": 12,
+          "minLength": 1,
+          "title": "Key",
+          "type": "string"
+        },
+        "text": {
+          "maxLength": 1000,
+          "minLength": 1,
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "key",
+        "text"
+      ],
+      "title": "ListeningChoiceOption",
+      "type": "object"
+    },
+    "SafetyResult": {
+      "additionalProperties": false,
+      "properties": {
+        "passed": {
+          "title": "Passed",
+          "type": "boolean"
+        },
+        "categories": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 30,
+          "title": "Categories",
+          "type": "array"
+        }
+      },
+      "required": [
+        "passed"
+      ],
+      "title": "SafetyResult",
+      "type": "object"
+    },
+    "ScenarioCategory": {
+      "enum": [
+        "DAILY_LIFE",
+        "WORK",
+        "TRAVEL",
+        "SHOPPING",
+        "FOOD",
+        "SERVICE",
+        "LEARNING",
+        "HOBBY",
+        "DIGITAL_LIFE",
+        "SOCIAL",
+        "SCHEDULE",
+        "HEALTH_GENERAL"
+      ],
+      "title": "ScenarioCategory",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "items": {
+      "items": {
+        "$ref": "#/$defs/GeneratedListeningItemPayload"
+      },
+      "maxItems": 30,
+      "minItems": 1,
+      "title": "Items",
+      "type": "array"
+    }
+  },
+  "required": [
+    "items"
+  ],
+  "title": "ListeningGenerationPayload",
+  "type": "object"
+}

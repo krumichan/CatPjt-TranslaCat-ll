@@ -25,6 +25,7 @@ internal data class LevelGenerationContext(
     val recentItems: List<LevelItem>,
     val scenarios: List<String>,
     val nowUtc: LocalDateTime,
+    val diversityContext: kotlinx.serialization.json.JsonObject? = null,
 )
 
 internal data class LevelAudioUpload(

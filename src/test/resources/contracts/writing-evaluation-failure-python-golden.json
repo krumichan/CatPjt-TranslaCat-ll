@@ -1,0 +1,93 @@
+{
+  "sourceSha256": "2d89b5c9f3ded31e5adb8a76ed27aee36b46fbb00eed9749e21d975c7c86a094",
+  "cases": [
+    {
+      "name": "refusal",
+      "code": "REFUSAL",
+      "failureKind": null,
+      "providerStatus": null,
+      "calls": 2,
+      "httpStatus": 502
+    },
+    {
+      "name": "token_limit",
+      "code": "OUTPUT_TOKEN_LIMIT",
+      "failureKind": null,
+      "providerStatus": null,
+      "calls": 2,
+      "httpStatus": 502
+    },
+    {
+      "name": "configuration",
+      "code": "PROVIDER_CONFIGURATION_ERROR",
+      "failureKind": "HTTP_STATUS",
+      "providerStatus": 400,
+      "calls": 2,
+      "httpStatus": 502
+    },
+    {
+      "name": "sdk_timeout",
+      "code": "PROVIDER_TIMEOUT",
+      "failureKind": "SDK_TIMEOUT",
+      "providerStatus": null,
+      "calls": 2,
+      "httpStatus": 502
+    },
+    {
+      "name": "sdk_connection",
+      "code": "PROVIDER_UNAVAILABLE",
+      "failureKind": "SDK_CONNECTION",
+      "providerStatus": null,
+      "calls": 2,
+      "httpStatus": 502
+    },
+    {
+      "name": "timeout",
+      "code": "PROVIDER_TIMEOUT",
+      "failureKind": "TIMEOUT",
+      "providerStatus": null,
+      "calls": 2,
+      "httpStatus": 504
+    },
+    {
+      "name": "schema_configuration",
+      "code": "EXECUTION_SCHEMA_INVALID",
+      "failureKind": null,
+      "providerStatus": null,
+      "calls": 2,
+      "httpStatus": 502
+    },
+    {
+      "name": "invalid_schema",
+      "code": "EVALUATION_SCHEMA_INVALID",
+      "failureKind": null,
+      "providerStatus": null,
+      "calls": 2,
+      "httpStatus": 502
+    },
+    {
+      "name": "non_object",
+      "code": "EVALUATION_SCHEMA_INVALID",
+      "failureKind": null,
+      "providerStatus": null,
+      "calls": 2,
+      "httpStatus": 502
+    },
+    {
+      "name": "unknown",
+      "code": "PROVIDER_EXECUTION_FAILED",
+      "failureKind": null,
+      "providerStatus": null,
+      "calls": 2,
+      "httpStatus": 502
+    },
+    {
+      "name": "http_exception",
+      "code": "HTTP_EXCEPTION",
+      "failureKind": "HTTP_STATUS",
+      "providerStatus": 503,
+      "calls": 1,
+      "httpStatus": 503
+    }
+  ]
+}

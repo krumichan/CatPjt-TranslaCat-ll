@@ -21,5 +21,8 @@ internal object GrowthEvidenceTable : Table("language_learning_profile_evidence"
     val createdBy = varchar("created_by", 100)
     val updatedBy = varchar("updated_by", 100)
     override val primaryKey = PrimaryKey(id)
-    init { uniqueIndex(userId, evidenceSource, patternKey, direction) }
+
+    init {
+        uniqueIndex(userId, evidenceSource, patternKey, direction)
+    }
 }

@@ -1,0 +1,503 @@
+{
+  "$defs": {
+    "CommunicativeIntent": {
+      "enum": [
+        "DESCRIBE",
+        "REQUEST",
+        "CONFIRM",
+        "REPORT",
+        "SUGGEST",
+        "DECLINE",
+        "APOLOGIZE",
+        "COMPARE",
+        "EXPLAIN_REASON",
+        "ASK_INFORMATION",
+        "GIVE_INSTRUCTION",
+        "EXPRESS_PREFERENCE",
+        "SUMMARIZE"
+      ],
+      "title": "CommunicativeIntent",
+      "type": "string"
+    },
+    "DiversityMetadata": {
+      "additionalProperties": false,
+      "properties": {
+        "scenarioCategory": {
+          "$ref": "#/$defs/ScenarioCategory"
+        },
+        "communicativeIntent": {
+          "$ref": "#/$defs/CommunicativeIntent"
+        },
+        "taskArchetype": {
+          "maxLength": 100,
+          "minLength": 1,
+          "title": "Taskarchetype",
+          "type": "string"
+        },
+        "grammarFocusCodes": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 20,
+          "title": "Grammarfocuscodes",
+          "type": "array"
+        },
+        "lexicalFocusCodes": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 20,
+          "title": "Lexicalfocuscodes",
+          "type": "array"
+        },
+        "semanticSummary": {
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "Semanticsummary",
+          "type": "string"
+        },
+        "requiresBackgroundKnowledge": {
+          "default": false,
+          "title": "Requiresbackgroundknowledge",
+          "type": "boolean"
+        },
+        "contentHash": {
+          "anyOf": [
+            {
+              "maxLength": 128,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Contenthash"
+        },
+        "similarityKey": {
+          "anyOf": [
+            {
+              "maxLength": 128,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Similaritykey"
+        }
+      },
+      "required": [
+        "scenarioCategory",
+        "communicativeIntent",
+        "taskArchetype",
+        "semanticSummary"
+      ],
+      "title": "DiversityMetadata",
+      "type": "object"
+    },
+    "LevelTestAnswerMode": {
+      "enum": [
+        "CHOICE",
+        "TEXT",
+        "AUDIO"
+      ],
+      "title": "LevelTestAnswerMode",
+      "type": "string"
+    },
+    "LevelTestChoiceQualityAudit": {
+      "additionalProperties": false,
+      "properties": {
+        "uniqueCorrectOption": {
+          "title": "Uniquecorrectoption",
+          "type": "boolean"
+        },
+        "directlyCompatibleOptionKeys": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 4,
+          "title": "Directlycompatibleoptionkeys",
+          "type": "array"
+        }
+      },
+      "required": [
+        "uniqueCorrectOption"
+      ],
+      "title": "LevelTestChoiceQualityAudit",
+      "type": "object"
+    },
+    "LevelTestDomain": {
+      "enum": [
+        "VOCABULARY",
+        "GRAMMAR",
+        "READING",
+        "LISTENING",
+        "WRITING",
+        "SPEAKING"
+      ],
+      "title": "LevelTestDomain",
+      "type": "string"
+    },
+    "LevelTestInternalAnswerKey": {
+      "additionalProperties": false,
+      "properties": {
+        "correctOptionKey": {
+          "anyOf": [
+            {
+              "pattern": "^[A-D]$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Correctoptionkey"
+        },
+        "correctOrder": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 30,
+          "title": "Correctorder",
+          "type": "array"
+        }
+      },
+      "title": "LevelTestInternalAnswerKey",
+      "type": "object"
+    },
+    "LevelTestItemType": {
+      "enum": [
+        "VOCAB_CONTEXT_CHOICE",
+        "VOCAB_PARAPHRASE_CHOICE",
+        "GRAMMAR_FORM_CHOICE",
+        "GRAMMAR_SENTENCE_ORDER",
+        "READING_GIST",
+        "READING_DETAIL",
+        "READING_DISCOURSE_FUNCTION",
+        "READING_TEXT_INFERENCE",
+        "LISTENING_GIST_CHOICE",
+        "LISTENING_DETAIL_CHOICE",
+        "LISTENING_DICTATION",
+        "LISTENING_INTERPRETATION",
+        "WRITING_TRANSLATION",
+        "WRITING_GUIDED_SENTENCE",
+        "WRITING_SCENARIO_RESPONSE",
+        "WRITING_SHORT_PARAGRAPH",
+        "SPEAKING_REPEAT",
+        "SPEAKING_GUIDED_RESPONSE",
+        "SPEAKING_SHORT_RESPONSE"
+      ],
+      "title": "LevelTestItemType",
+      "type": "string"
+    },
+    "LevelTestOption": {
+      "additionalProperties": false,
+      "properties": {
+        "key": {
+          "pattern": "^[A-Z][A-Z0-9_-]{0,15}$",
+          "title": "Key",
+          "type": "string"
+        },
+        "text": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "key",
+        "text"
+      ],
+      "title": "LevelTestOption",
+      "type": "object"
+    },
+    "LevelTestReferencePayload": {
+      "additionalProperties": false,
+      "description": "Provider-visible structured reference fields.\n\nAll keys are required in the provider schema so Gemini sees the concrete shape.\nThe normalizer fills neutral defaults before Pydantic validation; domain-specific\nvalidators still require non-empty values where the item type needs them.",
+      "properties": {
+        "sourceText": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Sourcetext"
+        },
+        "referenceMeanings": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Referencemeanings",
+          "type": "array"
+        },
+        "keyMeaningUnits": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Keymeaningunits",
+          "type": "array"
+        },
+        "referenceText": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Referencetext"
+        },
+        "translationSourceText": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Translationsourcetext"
+        },
+        "emphasisText": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Emphasistext"
+        },
+        "readingPassage": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Readingpassage"
+        },
+        "readingQuestion": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Readingquestion"
+        },
+        "listeningQuestion": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Listeningquestion"
+        },
+        "providedFacts": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Providedfacts",
+          "type": "array"
+        },
+        "requiredIntents": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Requiredintents",
+          "type": "array"
+        },
+        "responseConstraints": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Responseconstraints",
+          "type": "array"
+        }
+      },
+      "required": [
+        "sourceText",
+        "referenceMeanings",
+        "keyMeaningUnits",
+        "referenceText",
+        "translationSourceText",
+        "emphasisText",
+        "readingPassage",
+        "readingQuestion",
+        "listeningQuestion",
+        "providedFacts",
+        "requiredIntents",
+        "responseConstraints"
+      ],
+      "title": "LevelTestReferencePayload",
+      "type": "object"
+    },
+    "ScenarioCategory": {
+      "enum": [
+        "DAILY_LIFE",
+        "WORK",
+        "TRAVEL",
+        "SHOPPING",
+        "FOOD",
+        "SERVICE",
+        "LEARNING",
+        "HOBBY",
+        "DIGITAL_LIFE",
+        "SOCIAL",
+        "SCHEDULE",
+        "HEALTH_GENERAL"
+      ],
+      "title": "ScenarioCategory",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "domain": {
+      "$ref": "#/$defs/LevelTestDomain"
+    },
+    "itemType": {
+      "$ref": "#/$defs/LevelTestItemType"
+    },
+    "complexityBand": {
+      "maximum": 5,
+      "minimum": 1,
+      "title": "Complexityband",
+      "type": "integer"
+    },
+    "instruction": {
+      "maxLength": 2000,
+      "minLength": 1,
+      "title": "Instruction",
+      "type": "string"
+    },
+    "instructionLanguage": {
+      "maxLength": 20,
+      "minLength": 2,
+      "title": "Instructionlanguage",
+      "type": "string"
+    },
+    "answerMode": {
+      "$ref": "#/$defs/LevelTestAnswerMode"
+    },
+    "answerLanguage": {
+      "anyOf": [
+        {
+          "maxLength": 20,
+          "minLength": 2,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Answerlanguage"
+    },
+    "promptText": {
+      "maxLength": 6000,
+      "minLength": 1,
+      "title": "Prompttext",
+      "type": "string"
+    },
+    "options": {
+      "items": {
+        "$ref": "#/$defs/LevelTestOption"
+      },
+      "maxItems": 30,
+      "title": "Options",
+      "type": "array"
+    },
+    "internalAnswerKey": {
+      "$ref": "#/$defs/LevelTestInternalAnswerKey"
+    },
+    "choiceQualityAudit": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/LevelTestChoiceQualityAudit"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "generationPlanId": {
+      "anyOf": [
+        {
+          "pattern": "^[AB]$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Generationplanid"
+    },
+    "referencePayload": {
+      "$ref": "#/$defs/LevelTestReferencePayload"
+    },
+    "diversityMetadata": {
+      "$ref": "#/$defs/DiversityMetadata"
+    },
+    "maxAnswerLength": {
+      "anyOf": [
+        {
+          "maximum": 10000,
+          "minimum": 1,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Maxanswerlength"
+    },
+    "maxAudioSeconds": {
+      "anyOf": [
+        {
+          "maximum": 60,
+          "minimum": 1,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Maxaudioseconds"
+    }
+  },
+  "required": [
+    "domain",
+    "itemType",
+    "complexityBand",
+    "instruction",
+    "instructionLanguage",
+    "answerMode",
+    "promptText",
+    "referencePayload",
+    "diversityMetadata"
+  ],
+  "title": "LevelTestQuestionCandidate",
+  "type": "object"
+}

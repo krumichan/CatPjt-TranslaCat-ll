@@ -1,0 +1,443 @@
+{
+  "$defs": {
+    "CommunicativeIntent": {
+      "enum": [
+        "DESCRIBE",
+        "REQUEST",
+        "CONFIRM",
+        "REPORT",
+        "SUGGEST",
+        "DECLINE",
+        "APOLOGIZE",
+        "COMPARE",
+        "EXPLAIN_REASON",
+        "ASK_INFORMATION",
+        "GIVE_INSTRUCTION",
+        "EXPRESS_PREFERENCE",
+        "SUMMARIZE"
+      ],
+      "title": "CommunicativeIntent",
+      "type": "string"
+    },
+    "DiversityContext": {
+      "additionalProperties": false,
+      "properties": {
+        "currentSession": {
+          "items": {
+            "$ref": "#/$defs/DiversityHistoryEntry"
+          },
+          "maxItems": 40,
+          "title": "Currentsession",
+          "type": "array"
+        },
+        "sameFeatureRecent": {
+          "items": {
+            "$ref": "#/$defs/DiversityHistoryEntry"
+          },
+          "maxItems": 80,
+          "title": "Samefeaturerecent",
+          "type": "array"
+        },
+        "crossFeatureRecent": {
+          "items": {
+            "$ref": "#/$defs/DiversityHistoryEntry"
+          },
+          "maxItems": 40,
+          "title": "Crossfeaturerecent",
+          "type": "array"
+        },
+        "exactContentHashes90d": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 200,
+          "title": "Exactcontenthashes90D",
+          "type": "array"
+        }
+      },
+      "title": "DiversityContext",
+      "type": "object"
+    },
+    "DiversityHistoryEntry": {
+      "additionalProperties": false,
+      "properties": {
+        "sourceType": {
+          "$ref": "#/$defs/GenerationSourceType"
+        },
+        "content": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Content",
+          "type": "string"
+        },
+        "contentHash": {
+          "anyOf": [
+            {
+              "maxLength": 128,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Contenthash"
+        },
+        "scenarioCategory": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ScenarioCategory"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "communicativeIntent": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CommunicativeIntent"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "taskArchetype": {
+          "anyOf": [
+            {
+              "maxLength": 100,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Taskarchetype"
+        },
+        "grammarFocusCodes": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 20,
+          "title": "Grammarfocuscodes",
+          "type": "array"
+        },
+        "semanticSummary": {
+          "anyOf": [
+            {
+              "maxLength": 500,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Semanticsummary"
+        },
+        "ageDays": {
+          "anyOf": [
+            {
+              "maximum": 3650,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Agedays"
+        }
+      },
+      "required": [
+        "sourceType",
+        "content"
+      ],
+      "title": "DiversityHistoryEntry",
+      "type": "object"
+    },
+    "GenerationSourceType": {
+      "enum": [
+        "LEVEL_TEST",
+        "WRITING",
+        "LISTENING"
+      ],
+      "title": "GenerationSourceType",
+      "type": "string"
+    },
+    "LevelTestDomain": {
+      "enum": [
+        "VOCABULARY",
+        "GRAMMAR",
+        "READING",
+        "LISTENING",
+        "WRITING",
+        "SPEAKING"
+      ],
+      "title": "LevelTestDomain",
+      "type": "string"
+    },
+    "LevelTestItemType": {
+      "enum": [
+        "VOCAB_CONTEXT_CHOICE",
+        "VOCAB_PARAPHRASE_CHOICE",
+        "GRAMMAR_FORM_CHOICE",
+        "GRAMMAR_SENTENCE_ORDER",
+        "READING_GIST",
+        "READING_DETAIL",
+        "READING_DISCOURSE_FUNCTION",
+        "READING_TEXT_INFERENCE",
+        "LISTENING_GIST_CHOICE",
+        "LISTENING_DETAIL_CHOICE",
+        "LISTENING_DICTATION",
+        "LISTENING_INTERPRETATION",
+        "WRITING_TRANSLATION",
+        "WRITING_GUIDED_SENTENCE",
+        "WRITING_SCENARIO_RESPONSE",
+        "WRITING_SHORT_PARAGRAPH",
+        "SPEAKING_REPEAT",
+        "SPEAKING_GUIDED_RESPONSE",
+        "SPEAKING_SHORT_RESPONSE"
+      ],
+      "title": "LevelTestItemType",
+      "type": "string"
+    },
+    "LevelTestPreviousResult": {
+      "additionalProperties": false,
+      "properties": {
+        "questionNumber": {
+          "maximum": 20,
+          "minimum": 1,
+          "title": "Questionnumber",
+          "type": "integer"
+        },
+        "domain": {
+          "$ref": "#/$defs/LevelTestDomain"
+        },
+        "itemType": {
+          "$ref": "#/$defs/LevelTestItemType"
+        },
+        "score": {
+          "anyOf": [
+            {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Score"
+        },
+        "complexityBand": {
+          "maximum": 5,
+          "minimum": 1,
+          "title": "Complexityband",
+          "type": "integer"
+        },
+        "evaluable": {
+          "default": true,
+          "title": "Evaluable",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "questionNumber",
+        "domain",
+        "itemType",
+        "complexityBand"
+      ],
+      "title": "LevelTestPreviousResult",
+      "type": "object"
+    },
+    "LevelTestReferenceAudioUpload": {
+      "additionalProperties": false,
+      "properties": {
+        "uploadUrl": {
+          "maxLength": 12000,
+          "minLength": 1,
+          "title": "Uploadurl",
+          "type": "string"
+        },
+        "objectKey": {
+          "maxLength": 1000,
+          "minLength": 1,
+          "title": "Objectkey",
+          "type": "string"
+        },
+        "contentType": {
+          "default": "audio/wav",
+          "maxLength": 100,
+          "minLength": 1,
+          "title": "Contenttype",
+          "type": "string"
+        },
+        "voice": {
+          "default": "marin",
+          "maxLength": 100,
+          "minLength": 1,
+          "title": "Voice",
+          "type": "string"
+        },
+        "playbackSpeed": {
+          "default": "NORMAL",
+          "maxLength": 30,
+          "minLength": 1,
+          "title": "Playbackspeed",
+          "type": "string"
+        }
+      },
+      "required": [
+        "uploadUrl",
+        "objectKey"
+      ],
+      "title": "LevelTestReferenceAudioUpload",
+      "type": "object"
+    },
+    "ScenarioCategory": {
+      "enum": [
+        "DAILY_LIFE",
+        "WORK",
+        "TRAVEL",
+        "SHOPPING",
+        "FOOD",
+        "SERVICE",
+        "LEARNING",
+        "HOBBY",
+        "DIGITAL_LIFE",
+        "SOCIAL",
+        "SCHEDULE",
+        "HEALTH_GENERAL"
+      ],
+      "title": "ScenarioCategory",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "requestId": {
+      "maxLength": 100,
+      "minLength": 1,
+      "title": "Requestid",
+      "type": "string"
+    },
+    "idempotencyKey": {
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Idempotencykey",
+      "type": "string"
+    },
+    "sessionId": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "string"
+        }
+      ],
+      "title": "Sessionid"
+    },
+    "questionNumber": {
+      "maximum": 20,
+      "minimum": 1,
+      "title": "Questionnumber",
+      "type": "integer"
+    },
+    "totalQuestions": {
+      "default": 20,
+      "maximum": 20,
+      "minimum": 20,
+      "title": "Totalquestions",
+      "type": "integer"
+    },
+    "domain": {
+      "$ref": "#/$defs/LevelTestDomain"
+    },
+    "itemType": {
+      "$ref": "#/$defs/LevelTestItemType"
+    },
+    "originLanguage": {
+      "maxLength": 20,
+      "minLength": 2,
+      "title": "Originlanguage",
+      "type": "string"
+    },
+    "learningLanguage": {
+      "maxLength": 20,
+      "minLength": 2,
+      "title": "Learninglanguage",
+      "type": "string"
+    },
+    "targetComplexityBand": {
+      "maximum": 5,
+      "minimum": 1,
+      "title": "Targetcomplexityband",
+      "type": "integer"
+    },
+    "previousResults": {
+      "items": {
+        "$ref": "#/$defs/LevelTestPreviousResult"
+      },
+      "maxItems": 19,
+      "title": "Previousresults",
+      "type": "array"
+    },
+    "diversityContext": {
+      "$ref": "#/$defs/DiversityContext"
+    },
+    "preferredScenarioCategories": {
+      "items": {
+        "$ref": "#/$defs/ScenarioCategory"
+      },
+      "maxItems": 4,
+      "title": "Preferredscenariocategories",
+      "type": "array"
+    },
+    "policyVersion": {
+      "default": "level-test-multiskill",
+      "maxLength": 100,
+      "minLength": 1,
+      "title": "Policyversion",
+      "type": "string"
+    },
+    "modelConfigVersion": {
+      "default": "level-test-model-config",
+      "maxLength": 100,
+      "minLength": 1,
+      "title": "Modelconfigversion",
+      "type": "string"
+    },
+    "referenceAudioUpload": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/LevelTestReferenceAudioUpload"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    }
+  },
+  "required": [
+    "requestId",
+    "idempotencyKey",
+    "sessionId",
+    "questionNumber",
+    "domain",
+    "itemType",
+    "originLanguage",
+    "learningLanguage",
+    "targetComplexityBand"
+  ],
+  "title": "LevelTestQuestionGenerationRequest",
+  "type": "object"
+}

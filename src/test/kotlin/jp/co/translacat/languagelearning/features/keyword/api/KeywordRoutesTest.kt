@@ -13,6 +13,7 @@ import jp.co.translacat.languagelearning.bootstrap.configureSerialization
 import jp.co.translacat.languagelearning.bootstrap.configureStatusPages
 import jp.co.translacat.languagelearning.features.keyword.application.DefaultKeywordOperations
 import jp.co.translacat.languagelearning.features.keyword.application.KeywordLearningDate
+import jp.co.translacat.languagelearning.features.keyword.application.KeywordLearningFacts
 import jp.co.translacat.languagelearning.shared.security.InternalApiSettings
 import jp.co.translacat.languagelearning.support.MemoryKeywordUnitOfWork
 import kotlinx.serialization.json.*
@@ -24,13 +25,14 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class KeywordRoutesTest {
+    private var serverStarted = false
     private val key = ByteArray(32) { (it + 1).toByte() }
     private val settings = InternalApiSettings(enabled = true, secretBase64 = Base64.getEncoder().encodeToString(key))
     private val path = "/internal/v1/language-learning/keywords"
     private val adminPath = "/internal/v1/admin/language-learning/system-keywords"
 
     private fun token(
-        user: Long = 123, admin: Boolean = false, started: Boolean? = false,
+        user: Long = 123, admin: Boolean = false, started: Boolean? = null,
         use: String = "ll-keywords", issued: Long = 0, ttl: Long = 60, signingKey: ByteArray = key,
         wrongType: Boolean = false,
     ): String {
@@ -49,7 +51,12 @@ class KeywordRoutesTest {
         app.configureSerialization()
         app.configureStatusPages()
         app.configureInternalAuthentication(settings)
-        app.routing { keywordRoutes(DefaultKeywordOperations(db, KeywordLearningDate { LocalDate.of(2026, 9, 24) })) }
+        app.routing {
+            keywordRoutes(
+                DefaultKeywordOperations(db, KeywordLearningDate { LocalDate.of(2026, 9, 24) }),
+                KeywordLearningFacts { serverStarted },
+            )
+        }
     }
 
     @Test
@@ -71,12 +78,12 @@ class KeywordRoutesTest {
     }
 
     @Test
-    fun `학습 시작 사실은 필수 Boolean 서명 클레임이다`() {
+    fun `만료되거나 지나치게 긴 키워드 토큰은 거부한다`() {
         testApplication {
             environment { config = MapApplicationConfig() }
             val db = MemoryKeywordUnitOfWork()
             application { configureTestApplication(this, db) }
-            for (t in listOf(token(started = null), token(wrongType = true), token(issued = -300), token(ttl = 121))) {
+            for (t in listOf(token(issued = -300), token(ttl = 121))) {
                 assertEquals(HttpStatusCode.Unauthorized, client.get(path) { bearerAuth(t) }.status)
             }
             assertTrue(db.learnerIds.isEmpty())
@@ -84,18 +91,47 @@ class KeywordRoutesTest {
     }
 
     @Test
-    fun `사용자 ID와 started 헤더는 서명된 주체와 사실을 바꾸지 못한다`() {
+    fun `외부 started 주장과 사용자 ID는 LL의 시작 사실과 인증 주체를 바꾸지 못한다`() {
         testApplication {
+            // 준비: 학습 시작 사실은 토큰 밖의 LL 조회에서 제공한다.
             environment { config = MapApplicationConfig() }
             val db = MemoryKeywordUnitOfWork()
+            serverStarted = true
             application { configureTestApplication(this, db) }
+
+            // 실행: 반대 값의 옛 클레임과 헤더를 주어도 LL 사실을 따른다.
             val response = client.post("$path/custom?userId=999&hasStartedLearning=false") {
-                bearerAuth(token(started = true)); header("X-User-Id", "999"); header("X-Learning-Started", "false")
+                bearerAuth(token(started = false)); header("X-User-Id", "999"); header("X-Learning-Started", "false")
                 contentType(ContentType.Application.Json); setBody("""{"text":"IT","type":"TOPIC"}""")
             }
+
+            // 검증: 인증된 사용자에게만 다음 날 예약값이 저장된다.
             assertEquals(HttpStatusCode.Created, response.status)
             val row = db.customRows.values.single()
             assertEquals(123L, row.userId); assertEquals(LocalDate.of(2026, 9, 25), row.pendingEffectiveDate)
+        }
+    }
+
+    @Test
+    fun `BE 토큰에 학습 사실이 없어도 동작하고 옛 true 클레임은 시작으로 간주하지 않는다`() {
+        testApplication {
+            // 준비
+            environment { config = MapApplicationConfig() }
+            val db = MemoryKeywordUnitOfWork()
+            application { configureTestApplication(this, db) }
+
+            // 실행
+            assertEquals(HttpStatusCode.OK, client.get(path) { bearerAuth(token()) }.status)
+            val response = client.post("$path/custom") {
+                bearerAuth(token(started = true))
+                contentType(ContentType.Application.Json)
+                setBody("""{"text":"Synthetic","type":"TOPIC"}""")
+            }
+
+            // 검증: LL에 시작 이력이 없으므로 즉시 활성화하며 옛 BE 주장은 무시한다.
+            assertEquals(HttpStatusCode.Created, response.status)
+            assertTrue(db.customRows.values.single().active)
+            assertEquals(null, db.customRows.values.single().pendingEffectiveDate)
         }
     }
 
@@ -177,6 +213,7 @@ class KeywordRoutesTest {
         testApplication {
             environment { config = MapApplicationConfig() }
             val db = MemoryKeywordUnitOfWork()
+            serverStarted = true
             application { configureTestApplication(this, db) }
             client.post("$path/custom") {
                 bearerAuth(token(started = true)); contentType(ContentType.Application.Json); setBody(

@@ -1,0 +1,29 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "candidateId": {
+      "maxLength": 100,
+      "minLength": 1,
+      "title": "Candidateid",
+      "type": "string"
+    },
+    "contentHash": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Contenthash",
+      "type": "string"
+    },
+    "focusReason": {
+      "maxLength": 1000,
+      "minLength": 1,
+      "title": "Focusreason",
+      "type": "string"
+    }
+  },
+  "required": [
+    "candidateId",
+    "contentHash",
+    "focusReason"
+  ],
+  "title": "LocalizedWritingNote",
+  "type": "object"
+}

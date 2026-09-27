@@ -1,0 +1,922 @@
+[
+  {
+    "draft": {
+      "diversityMetadata": {
+        "communicativeIntent": "REQUEST",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "requiresBackgroundKnowledge": false,
+        "scenarioCategory": "WORK",
+        "semanticSummary": "회의 변경 요청",
+        "taskArchetype": "meeting request"
+      },
+      "focusMetrics": [
+        "MEANING"
+      ],
+      "focusReason": "조건과 이유를 연결합니다.",
+      "keywords": [],
+      "originText": "회의 시간을 내일로 바꿔도 될까요? 이유를 설명해 주세요.",
+      "providedFacts": [],
+      "requiredIntents": [],
+      "responseConstraints": []
+    },
+    "name": "valid",
+    "noteNeedsLocalization": false,
+    "reason": null,
+    "request": {
+      "contentDiversityPolicyVersion": null,
+      "difficultyDistribution": {
+        "challenge": 0,
+        "normal": 1,
+        "review": 0
+      },
+      "diversityContext": {
+        "crossFeatureRecent": [],
+        "currentSession": [],
+        "exactContentHashes90d": [],
+        "sameFeatureRecent": []
+      },
+      "generationDate": "2026-09-26",
+      "languageComplexity": {
+        "baseComplexityBand": 3,
+        "baseLevelScore": null,
+        "policyVersion": "language-complexity",
+        "targetComplexityBand": null
+      },
+      "learningLanguage": "en",
+      "learningProfile": null,
+      "originLanguage": "ko",
+      "recentEvaluationSummary": null,
+      "recentMistakes": [],
+      "recentlyLearnedExpressions": [],
+      "requestId": "synthetic-draft",
+      "selectedKeywords": [],
+      "sentenceCount": 1,
+      "snapshotId": null,
+      "writingType": "FREE"
+    }
+  },
+  {
+    "draft": {
+      "diversityMetadata": {
+        "communicativeIntent": "REQUEST",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "requiresBackgroundKnowledge": true,
+        "scenarioCategory": "WORK",
+        "semanticSummary": "회의 변경 요청",
+        "taskArchetype": "meeting request"
+      },
+      "focusMetrics": [
+        "MEANING"
+      ],
+      "focusReason": "조건과 이유를 연결합니다.",
+      "keywords": [],
+      "originText": "회의 시간을 내일로 바꿔도 될까요? 이유를 설명해 주세요.",
+      "providedFacts": [],
+      "requiredIntents": [],
+      "responseConstraints": []
+    },
+    "name": "background",
+    "noteNeedsLocalization": false,
+    "reason": "BACKGROUND_KNOWLEDGE_REQUIRED",
+    "request": {
+      "contentDiversityPolicyVersion": null,
+      "difficultyDistribution": {
+        "challenge": 0,
+        "normal": 1,
+        "review": 0
+      },
+      "diversityContext": {
+        "crossFeatureRecent": [],
+        "currentSession": [],
+        "exactContentHashes90d": [],
+        "sameFeatureRecent": []
+      },
+      "generationDate": "2026-09-26",
+      "languageComplexity": {
+        "baseComplexityBand": 3,
+        "baseLevelScore": null,
+        "policyVersion": "language-complexity",
+        "targetComplexityBand": null
+      },
+      "learningLanguage": "en",
+      "learningProfile": null,
+      "originLanguage": "ko",
+      "recentEvaluationSummary": null,
+      "recentMistakes": [],
+      "recentlyLearnedExpressions": [],
+      "requestId": "synthetic-draft",
+      "selectedKeywords": [],
+      "sentenceCount": 1,
+      "snapshotId": null,
+      "writingType": "FREE"
+    }
+  },
+  {
+    "draft": {
+      "diversityMetadata": {
+        "communicativeIntent": "REQUEST",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "requiresBackgroundKnowledge": false,
+        "scenarioCategory": "WORK",
+        "semanticSummary": "회의 변경 요청",
+        "taskArchetype": "meeting request"
+      },
+      "focusMetrics": [
+        "MEANING"
+      ],
+      "focusReason": "조건과 이유를 연결합니다.",
+      "keywords": [
+        "travel",
+        "travel"
+      ],
+      "originText": "회의 시간을 내일로 바꿔도 될까요? 이유를 설명해 주세요.",
+      "providedFacts": [],
+      "requiredIntents": [],
+      "responseConstraints": []
+    },
+    "name": "duplicateKeyword",
+    "noteNeedsLocalization": false,
+    "reason": "DUPLICATE_KEYWORD",
+    "request": {
+      "contentDiversityPolicyVersion": null,
+      "difficultyDistribution": {
+        "challenge": 0,
+        "normal": 1,
+        "review": 0
+      },
+      "diversityContext": {
+        "crossFeatureRecent": [],
+        "currentSession": [],
+        "exactContentHashes90d": [],
+        "sameFeatureRecent": []
+      },
+      "generationDate": "2026-09-26",
+      "languageComplexity": {
+        "baseComplexityBand": 3,
+        "baseLevelScore": null,
+        "policyVersion": "language-complexity",
+        "targetComplexityBand": null
+      },
+      "learningLanguage": "en",
+      "learningProfile": null,
+      "originLanguage": "ko",
+      "recentEvaluationSummary": null,
+      "recentMistakes": [],
+      "recentlyLearnedExpressions": [],
+      "requestId": "synthetic-draft",
+      "selectedKeywords": [
+        {
+          "canonicalKey": null,
+          "key": "travel",
+          "selectionWeight": null,
+          "source": "SYSTEM",
+          "text": "여행",
+          "type": "TOPIC"
+        }
+      ],
+      "sentenceCount": 1,
+      "snapshotId": null,
+      "writingType": "FREE"
+    }
+  },
+  {
+    "draft": {
+      "diversityMetadata": {
+        "communicativeIntent": "REQUEST",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "requiresBackgroundKnowledge": false,
+        "scenarioCategory": "WORK",
+        "semanticSummary": "회의 변경 요청",
+        "taskArchetype": "meeting request"
+      },
+      "focusMetrics": [
+        "MEANING"
+      ],
+      "focusReason": "조건과 이유를 연결합니다.",
+      "keywords": [
+        "travel"
+      ],
+      "originText": "회의 시간을 내일로 바꿔도 될까요? 이유를 설명해 주세요.",
+      "providedFacts": [],
+      "requiredIntents": [],
+      "responseConstraints": []
+    },
+    "name": "unknownKeyword",
+    "noteNeedsLocalization": false,
+    "reason": "UNKNOWN_KEYWORD",
+    "request": {
+      "contentDiversityPolicyVersion": null,
+      "difficultyDistribution": {
+        "challenge": 0,
+        "normal": 1,
+        "review": 0
+      },
+      "diversityContext": {
+        "crossFeatureRecent": [],
+        "currentSession": [],
+        "exactContentHashes90d": [],
+        "sameFeatureRecent": []
+      },
+      "generationDate": "2026-09-26",
+      "languageComplexity": {
+        "baseComplexityBand": 3,
+        "baseLevelScore": null,
+        "policyVersion": "language-complexity",
+        "targetComplexityBand": null
+      },
+      "learningLanguage": "en",
+      "learningProfile": null,
+      "originLanguage": "ko",
+      "recentEvaluationSummary": null,
+      "recentMistakes": [],
+      "recentlyLearnedExpressions": [],
+      "requestId": "synthetic-draft",
+      "selectedKeywords": [],
+      "sentenceCount": 1,
+      "snapshotId": null,
+      "writingType": "FREE"
+    }
+  },
+  {
+    "draft": {
+      "diversityMetadata": {
+        "communicativeIntent": "REQUEST",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "requiresBackgroundKnowledge": false,
+        "scenarioCategory": "WORK",
+        "semanticSummary": "회의 변경 요청",
+        "taskArchetype": "meeting request"
+      },
+      "focusMetrics": [
+        "MEANING",
+        "MEANING"
+      ],
+      "focusReason": "조건과 이유를 연결합니다.",
+      "keywords": [],
+      "originText": "회의 시간을 내일로 바꿔도 될까요? 이유를 설명해 주세요.",
+      "providedFacts": [],
+      "requiredIntents": [],
+      "responseConstraints": []
+    },
+    "name": "duplicateMetric",
+    "noteNeedsLocalization": false,
+    "reason": "DUPLICATE_FOCUS_METRIC",
+    "request": {
+      "contentDiversityPolicyVersion": null,
+      "difficultyDistribution": {
+        "challenge": 0,
+        "normal": 1,
+        "review": 0
+      },
+      "diversityContext": {
+        "crossFeatureRecent": [],
+        "currentSession": [],
+        "exactContentHashes90d": [],
+        "sameFeatureRecent": []
+      },
+      "generationDate": "2026-09-26",
+      "languageComplexity": {
+        "baseComplexityBand": 3,
+        "baseLevelScore": null,
+        "policyVersion": "language-complexity",
+        "targetComplexityBand": null
+      },
+      "learningLanguage": "en",
+      "learningProfile": null,
+      "originLanguage": "ko",
+      "recentEvaluationSummary": null,
+      "recentMistakes": [],
+      "recentlyLearnedExpressions": [],
+      "requestId": "synthetic-draft",
+      "selectedKeywords": [],
+      "sentenceCount": 1,
+      "snapshotId": null,
+      "writingType": "FREE"
+    }
+  },
+  {
+    "draft": {
+      "diversityMetadata": {
+        "communicativeIntent": "REQUEST",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "requiresBackgroundKnowledge": false,
+        "scenarioCategory": "WORK",
+        "semanticSummary": "회의 변경 요청",
+        "taskArchetype": "meeting request"
+      },
+      "focusMetrics": [
+        "MEANING"
+      ],
+      "focusReason": "조건과 이유를 연결합니다.",
+      "keywords": [],
+      "originText": "회의 시간을 내일로 바꿔도 될까요? 이유를 설명해 주세요.",
+      "providedFacts": [
+        "회의실이 비었습니다."
+      ],
+      "requiredIntents": [],
+      "responseConstraints": []
+    },
+    "name": "freeGuidance",
+    "noteNeedsLocalization": false,
+    "reason": "FREE_GUIDANCE_MUST_BE_EMPTY",
+    "request": {
+      "contentDiversityPolicyVersion": null,
+      "difficultyDistribution": {
+        "challenge": 0,
+        "normal": 1,
+        "review": 0
+      },
+      "diversityContext": {
+        "crossFeatureRecent": [],
+        "currentSession": [],
+        "exactContentHashes90d": [],
+        "sameFeatureRecent": []
+      },
+      "generationDate": "2026-09-26",
+      "languageComplexity": {
+        "baseComplexityBand": 3,
+        "baseLevelScore": null,
+        "policyVersion": "language-complexity",
+        "targetComplexityBand": null
+      },
+      "learningLanguage": "en",
+      "learningProfile": null,
+      "originLanguage": "ko",
+      "recentEvaluationSummary": null,
+      "recentMistakes": [],
+      "recentlyLearnedExpressions": [],
+      "requestId": "synthetic-draft",
+      "selectedKeywords": [],
+      "sentenceCount": 1,
+      "snapshotId": null,
+      "writingType": "FREE"
+    }
+  },
+  {
+    "draft": {
+      "diversityMetadata": {
+        "communicativeIntent": "REQUEST",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "requiresBackgroundKnowledge": false,
+        "scenarioCategory": "WORK",
+        "semanticSummary": "회의 변경 요청",
+        "taskArchetype": "meeting request"
+      },
+      "focusMetrics": [
+        "MEANING"
+      ],
+      "focusReason": "조건\u0001연결",
+      "keywords": [],
+      "originText": "회의 시간을 내일로 바꿔도 될까요? 이유를 설명해 주세요.",
+      "providedFacts": [],
+      "requiredIntents": [],
+      "responseConstraints": []
+    },
+    "name": "control",
+    "noteNeedsLocalization": false,
+    "reason": "CONTROL_CHARACTER",
+    "request": {
+      "contentDiversityPolicyVersion": null,
+      "difficultyDistribution": {
+        "challenge": 0,
+        "normal": 1,
+        "review": 0
+      },
+      "diversityContext": {
+        "crossFeatureRecent": [],
+        "currentSession": [],
+        "exactContentHashes90d": [],
+        "sameFeatureRecent": []
+      },
+      "generationDate": "2026-09-26",
+      "languageComplexity": {
+        "baseComplexityBand": 3,
+        "baseLevelScore": null,
+        "policyVersion": "language-complexity",
+        "targetComplexityBand": null
+      },
+      "learningLanguage": "en",
+      "learningProfile": null,
+      "originLanguage": "ko",
+      "recentEvaluationSummary": null,
+      "recentMistakes": [],
+      "recentlyLearnedExpressions": [],
+      "requestId": "synthetic-draft",
+      "selectedKeywords": [],
+      "sentenceCount": 1,
+      "snapshotId": null,
+      "writingType": "FREE"
+    }
+  },
+  {
+    "draft": {
+      "diversityMetadata": {
+        "communicativeIntent": "REQUEST",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "requiresBackgroundKnowledge": false,
+        "scenarioCategory": "WORK",
+        "semanticSummary": "회의 변경 요청",
+        "taskArchetype": "meeting request"
+      },
+      "focusMetrics": [
+        "MEANING"
+      ],
+      "focusReason": "조건과 이유를 연결합니다.",
+      "keywords": [],
+      "originText": "Change the meeting time tomorrow.",
+      "providedFacts": [],
+      "requiredIntents": [],
+      "responseConstraints": []
+    },
+    "name": "sourceScript",
+    "noteNeedsLocalization": false,
+    "reason": "ORIGIN_TEXT_SCRIPT_MISMATCH",
+    "request": {
+      "contentDiversityPolicyVersion": null,
+      "difficultyDistribution": {
+        "challenge": 0,
+        "normal": 1,
+        "review": 0
+      },
+      "diversityContext": {
+        "crossFeatureRecent": [],
+        "currentSession": [],
+        "exactContentHashes90d": [],
+        "sameFeatureRecent": []
+      },
+      "generationDate": "2026-09-26",
+      "languageComplexity": {
+        "baseComplexityBand": 3,
+        "baseLevelScore": null,
+        "policyVersion": "language-complexity",
+        "targetComplexityBand": null
+      },
+      "learningLanguage": "en",
+      "learningProfile": null,
+      "originLanguage": "ko",
+      "recentEvaluationSummary": null,
+      "recentMistakes": [],
+      "recentlyLearnedExpressions": [],
+      "requestId": "synthetic-draft",
+      "selectedKeywords": [],
+      "sentenceCount": 1,
+      "snapshotId": null,
+      "writingType": "FREE"
+    }
+  },
+  {
+    "draft": {
+      "diversityMetadata": {
+        "communicativeIntent": "REQUEST",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "requiresBackgroundKnowledge": false,
+        "scenarioCategory": "WORK",
+        "semanticSummary": "회의 변경 요청",
+        "taskArchetype": "meeting request"
+      },
+      "focusMetrics": [
+        "MEANING"
+      ],
+      "focusReason": "Explain the condition.",
+      "keywords": [],
+      "originText": "회의 시간을 내일로 바꿔도 될까요? 이유를 설명해 주세요.",
+      "providedFacts": [],
+      "requiredIntents": [],
+      "responseConstraints": []
+    },
+    "name": "noteLocalization",
+    "noteNeedsLocalization": true,
+    "reason": null,
+    "request": {
+      "contentDiversityPolicyVersion": null,
+      "difficultyDistribution": {
+        "challenge": 0,
+        "normal": 1,
+        "review": 0
+      },
+      "diversityContext": {
+        "crossFeatureRecent": [],
+        "currentSession": [],
+        "exactContentHashes90d": [],
+        "sameFeatureRecent": []
+      },
+      "generationDate": "2026-09-26",
+      "languageComplexity": {
+        "baseComplexityBand": 3,
+        "baseLevelScore": null,
+        "policyVersion": "language-complexity",
+        "targetComplexityBand": null
+      },
+      "learningLanguage": "en",
+      "learningProfile": null,
+      "originLanguage": "ko",
+      "recentEvaluationSummary": null,
+      "recentMistakes": [],
+      "recentlyLearnedExpressions": [],
+      "requestId": "synthetic-draft",
+      "selectedKeywords": [],
+      "sentenceCount": 1,
+      "snapshotId": null,
+      "writingType": "FREE"
+    }
+  },
+  {
+    "draft": {
+      "diversityMetadata": {
+        "communicativeIntent": "REQUEST",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "requiresBackgroundKnowledge": false,
+        "scenarioCategory": "WORK",
+        "semanticSummary": "회의 변경 요청",
+        "taskArchetype": "meeting request"
+      },
+      "focusMetrics": [
+        "MEANING"
+      ],
+      "focusReason": "조건과 이유를 연결합니다.",
+      "keywords": [],
+      "originText": "회의 시간을 내일로 바꿔도 될까요? 이유를 설명해 주세요.",
+      "providedFacts": [],
+      "requiredIntents": [],
+      "responseConstraints": []
+    },
+    "name": "scenarioLimit",
+    "noteNeedsLocalization": false,
+    "reason": "DIVERSITY_SCENARIO_LIMIT",
+    "request": {
+      "contentDiversityPolicyVersion": null,
+      "difficultyDistribution": {
+        "challenge": 0,
+        "normal": 1,
+        "review": 0
+      },
+      "diversityContext": {
+        "crossFeatureRecent": [],
+        "currentSession": [
+          {
+            "ageDays": null,
+            "communicativeIntent": null,
+            "content": "합성 이력",
+            "contentHash": null,
+            "grammarFocusCodes": [],
+            "scenarioCategory": "WORK",
+            "semanticSummary": null,
+            "sourceType": "WRITING",
+            "taskArchetype": null
+          },
+          {
+            "ageDays": null,
+            "communicativeIntent": null,
+            "content": "다른 합성 이력",
+            "contentHash": null,
+            "grammarFocusCodes": [],
+            "scenarioCategory": "WORK",
+            "semanticSummary": null,
+            "sourceType": "WRITING",
+            "taskArchetype": null
+          }
+        ],
+        "exactContentHashes90d": [],
+        "sameFeatureRecent": []
+      },
+      "generationDate": "2026-09-26",
+      "languageComplexity": {
+        "baseComplexityBand": 3,
+        "baseLevelScore": null,
+        "policyVersion": "language-complexity",
+        "targetComplexityBand": null
+      },
+      "learningLanguage": "en",
+      "learningProfile": null,
+      "originLanguage": "ko",
+      "recentEvaluationSummary": null,
+      "recentMistakes": [],
+      "recentlyLearnedExpressions": [],
+      "requestId": "synthetic-draft",
+      "selectedKeywords": [],
+      "sentenceCount": 1,
+      "snapshotId": null,
+      "writingType": "FREE"
+    }
+  },
+  {
+    "draft": {
+      "diversityMetadata": {
+        "communicativeIntent": "REQUEST",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "requiresBackgroundKnowledge": false,
+        "scenarioCategory": "WORK",
+        "semanticSummary": "회의 변경 요청",
+        "taskArchetype": "meeting request"
+      },
+      "focusMetrics": [
+        "MEANING"
+      ],
+      "focusReason": "조건과 이유를 연결합니다.",
+      "keywords": [],
+      "originText": "회의 시간을 내일로 바꿔도 될까요? 이유를 설명해 주세요.",
+      "providedFacts": [],
+      "requiredIntents": [],
+      "responseConstraints": []
+    },
+    "name": "keywordMissing",
+    "noteNeedsLocalization": false,
+    "reason": "DIVERSITY_KEYWORD_MISSING",
+    "request": {
+      "contentDiversityPolicyVersion": null,
+      "difficultyDistribution": {
+        "challenge": 0,
+        "normal": 1,
+        "review": 0
+      },
+      "diversityContext": {
+        "crossFeatureRecent": [],
+        "currentSession": [],
+        "exactContentHashes90d": [],
+        "sameFeatureRecent": []
+      },
+      "generationDate": "2026-09-26",
+      "languageComplexity": {
+        "baseComplexityBand": 3,
+        "baseLevelScore": null,
+        "policyVersion": "language-complexity",
+        "targetComplexityBand": null
+      },
+      "learningLanguage": "en",
+      "learningProfile": null,
+      "originLanguage": "ko",
+      "recentEvaluationSummary": null,
+      "recentMistakes": [],
+      "recentlyLearnedExpressions": [],
+      "requestId": "synthetic-draft",
+      "selectedKeywords": [
+        {
+          "canonicalKey": null,
+          "key": "travel",
+          "selectionWeight": null,
+          "source": "SYSTEM",
+          "text": "여행",
+          "type": "TOPIC"
+        }
+      ],
+      "sentenceCount": 1,
+      "snapshotId": null,
+      "writingType": "FREE"
+    }
+  },
+  {
+    "draft": {
+      "diversityMetadata": {
+        "communicativeIntent": "REQUEST",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "requiresBackgroundKnowledge": false,
+        "scenarioCategory": "WORK",
+        "semanticSummary": "회의 변경 요청",
+        "taskArchetype": "meeting request"
+      },
+      "focusMetrics": [
+        "MEANING"
+      ],
+      "focusReason": "조건과 이유를 연결합니다.",
+      "keywords": [],
+      "originText": "회의 시간을 내일로 바꿔도 될까요? 이유를 설명해 주세요.",
+      "providedFacts": [
+        "회의실이 비었습니다."
+      ],
+      "requiredIntents": [
+        "변경을 요청합니다."
+      ],
+      "responseConstraints": [
+        "이유를 설명합니다."
+      ]
+    },
+    "name": "guidedValid",
+    "noteNeedsLocalization": false,
+    "reason": null,
+    "request": {
+      "contentDiversityPolicyVersion": null,
+      "difficultyDistribution": {
+        "challenge": 0,
+        "normal": 1,
+        "review": 0
+      },
+      "diversityContext": {
+        "crossFeatureRecent": [],
+        "currentSession": [],
+        "exactContentHashes90d": [],
+        "sameFeatureRecent": []
+      },
+      "generationDate": "2026-09-26",
+      "languageComplexity": {
+        "baseComplexityBand": 3,
+        "baseLevelScore": null,
+        "policyVersion": "language-complexity",
+        "targetComplexityBand": null
+      },
+      "learningLanguage": "en",
+      "learningProfile": null,
+      "originLanguage": "ko",
+      "recentEvaluationSummary": null,
+      "recentMistakes": [],
+      "recentlyLearnedExpressions": [],
+      "requestId": "synthetic-draft",
+      "selectedKeywords": [],
+      "sentenceCount": 1,
+      "snapshotId": null,
+      "writingType": "GUIDED"
+    }
+  },
+  {
+    "draft": {
+      "diversityMetadata": {
+        "communicativeIntent": "REQUEST",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "requiresBackgroundKnowledge": false,
+        "scenarioCategory": "WORK",
+        "semanticSummary": "회의 변경 요청",
+        "taskArchetype": "meeting request"
+      },
+      "focusMetrics": [
+        "MEANING"
+      ],
+      "focusReason": "조건과 이유를 연결합니다.",
+      "keywords": [],
+      "originText": "회의 시간을 내일로 바꿔도 될까요? 이유를 설명해 주세요.",
+      "providedFacts": [],
+      "requiredIntents": [
+        "변경을 요청합니다."
+      ],
+      "responseConstraints": [
+        "이유를 설명합니다."
+      ]
+    },
+    "name": "guidedMissingFact",
+    "noteNeedsLocalization": false,
+    "reason": "GUIDED_PROVIDED_FACTS_MISSING",
+    "request": {
+      "contentDiversityPolicyVersion": null,
+      "difficultyDistribution": {
+        "challenge": 0,
+        "normal": 1,
+        "review": 0
+      },
+      "diversityContext": {
+        "crossFeatureRecent": [],
+        "currentSession": [],
+        "exactContentHashes90d": [],
+        "sameFeatureRecent": []
+      },
+      "generationDate": "2026-09-26",
+      "languageComplexity": {
+        "baseComplexityBand": 3,
+        "baseLevelScore": null,
+        "policyVersion": "language-complexity",
+        "targetComplexityBand": null
+      },
+      "learningLanguage": "en",
+      "learningProfile": null,
+      "originLanguage": "ko",
+      "recentEvaluationSummary": null,
+      "recentMistakes": [],
+      "recentlyLearnedExpressions": [],
+      "requestId": "synthetic-draft",
+      "selectedKeywords": [],
+      "sentenceCount": 1,
+      "snapshotId": null,
+      "writingType": "GUIDED"
+    }
+  },
+  {
+    "draft": {
+      "diversityMetadata": {
+        "communicativeIntent": "REQUEST",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "requiresBackgroundKnowledge": false,
+        "scenarioCategory": "WORK",
+        "semanticSummary": "회의 변경 요청",
+        "taskArchetype": "meeting request"
+      },
+      "focusMetrics": [
+        "MEANING"
+      ],
+      "focusReason": "조건과 이유를 연결합니다.",
+      "keywords": [],
+      "originText": "회의 시간을 내일로 바꿔도 될까요? 이유를 설명해 주세요.",
+      "providedFacts": [
+        "The room is open."
+      ],
+      "requiredIntents": [
+        "변경을 요청합니다."
+      ],
+      "responseConstraints": [
+        "이유를 설명합니다."
+      ]
+    },
+    "name": "guidedFactScript",
+    "noteNeedsLocalization": false,
+    "reason": "GUIDED_PROVIDED_FACTS_SCRIPT_MISMATCH",
+    "request": {
+      "contentDiversityPolicyVersion": null,
+      "difficultyDistribution": {
+        "challenge": 0,
+        "normal": 1,
+        "review": 0
+      },
+      "diversityContext": {
+        "crossFeatureRecent": [],
+        "currentSession": [],
+        "exactContentHashes90d": [],
+        "sameFeatureRecent": []
+      },
+      "generationDate": "2026-09-26",
+      "languageComplexity": {
+        "baseComplexityBand": 3,
+        "baseLevelScore": null,
+        "policyVersion": "language-complexity",
+        "targetComplexityBand": null
+      },
+      "learningLanguage": "en",
+      "learningProfile": null,
+      "originLanguage": "ko",
+      "recentEvaluationSummary": null,
+      "recentMistakes": [],
+      "recentlyLearnedExpressions": [],
+      "requestId": "synthetic-draft",
+      "selectedKeywords": [],
+      "sentenceCount": 1,
+      "snapshotId": null,
+      "writingType": "GUIDED"
+    }
+  },
+  {
+    "draft": {
+      "diversityMetadata": {
+        "communicativeIntent": "REQUEST",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "requiresBackgroundKnowledge": false,
+        "scenarioCategory": "WORK",
+        "semanticSummary": "회의 변경 요청",
+        "taskArchetype": "meeting request"
+      },
+      "focusMetrics": [
+        "MEANING"
+      ],
+      "focusReason": "가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가",
+      "keywords": [],
+      "originText": "회의 시간을 내일로 바꿔도 될까요? 이유를 설명해 주세요.",
+      "providedFacts": [],
+      "requiredIntents": [],
+      "responseConstraints": []
+    },
+    "name": "noteLength",
+    "noteNeedsLocalization": false,
+    "reason": "SPEC_NOTE_LENGTH",
+    "request": {
+      "contentDiversityPolicyVersion": null,
+      "difficultyDistribution": {
+        "challenge": 0,
+        "normal": 1,
+        "review": 0
+      },
+      "diversityContext": {
+        "crossFeatureRecent": [],
+        "currentSession": [],
+        "exactContentHashes90d": [],
+        "sameFeatureRecent": []
+      },
+      "generationDate": "2026-09-26",
+      "languageComplexity": {
+        "baseComplexityBand": 3,
+        "baseLevelScore": null,
+        "policyVersion": "language-complexity",
+        "targetComplexityBand": null
+      },
+      "learningLanguage": "en",
+      "learningProfile": null,
+      "originLanguage": "ko",
+      "recentEvaluationSummary": null,
+      "recentMistakes": [],
+      "recentlyLearnedExpressions": [],
+      "requestId": "synthetic-draft",
+      "selectedKeywords": [],
+      "sentenceCount": 1,
+      "snapshotId": null,
+      "writingType": "FREE"
+    }
+  }
+]

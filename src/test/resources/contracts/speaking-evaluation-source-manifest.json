@@ -1,0 +1,38 @@
+[
+  {
+    "path": "app/features/language_learning/speaking/evaluation_service.py",
+    "sha256": "b5ae37b2be60b0e1110c652d77f9e3430270ec61563bbc0b34f859ba2c31bd92"
+  },
+  {
+    "path": "app/features/language_learning/speaking/coaching_service.py",
+    "sha256": "801c8c78faee8ed1a776c335d5b904b1da82ed5bac9ab75cdd90f5849f81898b"
+  },
+  {
+    "path": "app/features/language_learning/speaking/prompts.py",
+    "sha256": "abf337130b3b6a3de6f337e1c1c474b201614596ad42362c00ff989a96eb9dd8"
+  },
+  {
+    "path": "app/features/language_learning/speaking/evidence_policy.py",
+    "sha256": "91ebf4d38c641c9a2db30603f69ff4e14ae1102bb5bbcf6a2800168734bd5aae"
+  },
+  {
+    "path": "app/features/language_learning/speaking/policy.py",
+    "sha256": "5fe12fbc59f4ef4053139b88f130441475f5b8aaafeea699398ea594a2021f00"
+  },
+  {
+    "path": "app/schemas/language_learning_speaking/evaluation.py",
+    "sha256": "0f8ae0e424b9b9b444ebc4a294048eab0e5d2019836c6ea50c7f10221824735b"
+  },
+  {
+    "path": "app/schemas/language_learning_speaking/coaching.py",
+    "sha256": "83ec44a2e67ef7090636e23d785637d5613053d49784e77c15a3611038cdf641"
+  },
+  {
+    "path": "app/schemas/language_learning_speaking/common.py",
+    "sha256": "41bc4936d27ca448284c752c2b9815b1a73cb7d4a36b83e996a143cd05b54919"
+  },
+  {
+    "path": "app/schemas/language_learning_speaking/turn.py",
+    "sha256": "f0b470e760e16a764e7d2db7813b719c3d0bfd5b9370120b7db43d3ece35ae8a"
+  }
+]

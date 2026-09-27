@@ -10,6 +10,8 @@ import jp.co.translacat.languagelearning.features.leveltest.domain.policy.LevelA
 import jp.co.translacat.languagelearning.features.leveltest.domain.policy.LevelTestRules
 import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.withContext
+import java.net.URI
+import java.net.URLDecoder
 import java.security.MessageDigest
 import java.security.SecureRandom
 import java.util.*
@@ -19,6 +21,23 @@ internal class LevelAudioService(
     private val storage: LevelTestAudioStore,
     private val callbackOrigin: String,
 ) {
+    suspend fun publishReference(upload: LevelAudioUpload, bytes: ByteArray, mime: String) {
+        // LL이 발급한 예약 capability를 기존 업로드 검증에 전달한다. 외부 URL로 다시 HTTP 호출하지 않는다.
+        val uri = URI.create(upload.uploadUrl)
+        val expected = URI.create(callbackOrigin)
+        if (uri.scheme != expected.scheme || uri.authority != expected.authority ||
+            uri.path != "${
+                expected.path.trimEnd(
+                    '/',
+                )
+            }/internal/v1/language-learning/level-test/audio-uploads/${upload.objectKey}"
+        )
+            throw LevelTestException("LEVEL_TEST_UPLOAD_FORBIDDEN", 403, "업로드 예약 경로가 일치하지 않습니다.")
+        val token = uri.rawQuery?.split('&')?.singleOrNull { it.startsWith("token=") }?.substringAfter('=')
+            ?.let { URLDecoder.decode(it, Charsets.UTF_8) }
+        upload(upload.objectKey, token, bytes, mime)
+    }
+
     suspend fun reserveReference(userId: Long?): LevelAudioUpload {
         val key = UUID.randomUUID().toString() + ".wav"
         val token = ByteArray(32).also { SecureRandom().nextBytes(it) }

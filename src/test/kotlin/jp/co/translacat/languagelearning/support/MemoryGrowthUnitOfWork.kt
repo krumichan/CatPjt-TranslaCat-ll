@@ -9,7 +9,7 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import java.time.LocalDate
 
-/** 저장소만 대체한다. projector와 수신/중복 정책은 실제 코드를 실행한다. */
+/** 저장소만 대체한다. projector와 트랜잭션 정책은 실제 코드를 실행한다. */
 internal class MemoryGrowthUnitOfWork : GrowthUnitOfWork {
     class State : GrowthRepository {
         val profiles = linkedMapOf<Long, GrowthProfile>()
@@ -18,15 +18,13 @@ internal class MemoryGrowthUnitOfWork : GrowthUnitOfWork {
         val evidence = linkedMapOf<List<Any>, GrowthEvidence>()
         val activities = linkedMapOf<Triple<Long, String, String>, GrowthActivity>()
         val metricRows = linkedMapOf<Long, List<GrowthMetric>>()
-        val sequences = linkedMapOf<Pair<String, Long>, Long>()
-        val receipts = linkedMapOf<String, GrowthReceipt>()
-        val operationHashes = linkedMapOf<List<Any>, String>()
+        val revisions = linkedMapOf<Long, Long>()
         val inactive = mutableSetOf<Long>()
         var nextId = 1L
         fun copy(): State = State().also {
             it.profiles.putAll(profiles); it.masteries.putAll(masteries); it.signals.putAll(signals)
             it.evidence.putAll(evidence); it.activities.putAll(activities); it.metricRows.putAll(metricRows)
-            it.sequences.putAll(sequences); it.receipts.putAll(receipts); it.operationHashes.putAll(operationHashes)
+            it.revisions.putAll(revisions)
             it.inactive.addAll(inactive); it.nextId = nextId
         }
 
@@ -70,7 +68,9 @@ internal class MemoryGrowthUnitOfWork : GrowthUnitOfWork {
 
         override fun saveActivity(value: GrowthActivity): GrowthActivity {
             val result = value.copy(id = if (value.id == 0L) nextId++ else value.id)
-            activities[Triple(value.userId, value.source, value.referenceId)] = result; return result
+            activities[Triple(value.userId, value.source, value.referenceId)] = result
+            revisions[value.userId] = activityRevision(value.userId) + 1
+            return result
         }
 
         override fun activities(
@@ -80,10 +80,14 @@ internal class MemoryGrowthUnitOfWork : GrowthUnitOfWork {
                 .sortedBy { it.id }
                 .take(limit)
 
+        override fun activityRevision(userId: Long) = revisions[userId] ?: 0L
+
         override fun metrics(activityId: Long) = metricRows[activityId].orEmpty()
         override fun replaceMetrics(activityId: Long, metrics: List<GrowthMetric>) {
             require(metrics.map { it.metricType }.distinct().size == metrics.size); metricRows[activityId] =
                 metrics.toList()
+            val userId = activities.values.single { it.id == activityId }.userId
+            revisions[userId] = activityRevision(userId) + 1
         }
     }
 
@@ -93,24 +97,6 @@ internal class MemoryGrowthUnitOfWork : GrowthUnitOfWork {
         override val records: GrowthRepository = s
         override fun requireActiveIfPresent(userId: Long) {
             if (userId in s.inactive) throw LearnerUnavailableException(userId)
-        }
-
-        override fun lastSequence(sourceId: String, userId: Long) = s.sequences[sourceId to userId] ?: 0L
-        override fun receipt(eventId: String) = s.receipts[eventId]
-        override fun operationHash(sourceId: String, userId: Long, key: String) =
-            s.operationHashes[listOf(sourceId, userId, key)]
-
-        override fun rememberOperation(sourceId: String, userId: Long, operation: GrowthOperation) {
-            s.operationHashes[listOf(sourceId, userId, operation.key)] = operation.hash
-        }
-
-        override fun recordReceipt(event: GrowthEvent) {
-            check(event.eventId !in s.receipts); s.receipts[event.eventId] =
-                GrowthReceipt(event.eventId, event.envelopeHash, event.sequence)
-        }
-
-        override fun advance(sourceId: String, userId: Long, sequence: Long) {
-            s.sequences[sourceId to userId] = sequence
         }
     }
 

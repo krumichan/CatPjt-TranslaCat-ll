@@ -1,0 +1,72 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "candidateId": {
+      "maxLength": 100,
+      "minLength": 1,
+      "title": "Candidateid",
+      "type": "string"
+    },
+    "confidence": {
+      "anyOf": [
+        {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Confidence"
+    },
+    "contentHash": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Contenthash",
+      "type": "string"
+    },
+    "evidenceSegmentIds": {
+      "items": {
+        "maxLength": 12,
+        "minLength": 2,
+        "type": "string"
+      },
+      "maxItems": 12,
+      "title": "Evidencesegmentids",
+      "type": "array"
+    },
+    "issues": {
+      "items": {
+        "enum": [
+          "ORIGIN_LANGUAGE",
+          "ANSWER_LEAK",
+          "UNSUPPORTED_FOCUS_REASON",
+          "INTERNAL_CLAIM"
+        ],
+        "type": "string"
+      },
+      "maxItems": 4,
+      "title": "Issues",
+      "type": "array"
+    },
+    "verdict": {
+      "enum": [
+        "PASS",
+        "REJECT",
+        "UNSURE"
+      ],
+      "title": "Verdict",
+      "type": "string"
+    }
+  },
+  "required": [
+    "candidateId",
+    "contentHash",
+    "confidence",
+    "verdict",
+    "issues",
+    "evidenceSegmentIds"
+  ],
+  "title": "NoteReview",
+  "type": "object"
+}

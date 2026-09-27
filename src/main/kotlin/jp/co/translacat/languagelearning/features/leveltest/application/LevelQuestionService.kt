@@ -9,6 +9,8 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
+import kotlinx.serialization.json.jsonArray
+import kotlinx.serialization.json.jsonPrimitive
 import java.util.*
 
 /** AI 호출 중에는 JDBC 트랜잭션을 유지하지 않는다. 후보 lease의 token이 현재 소유자인 경우에만 저장한다. */
@@ -74,7 +76,9 @@ internal class LevelQuestionService(
         val candidates = work.write(session.userId) {
             val items = records.items(session.id)
             val recent = records.recentItems(session.userId, session.learningLanguage, nowUtc.minusDays(90))
-            val excluded = (items + recent).map { it.data.diversityMetadata.contentHash }.toSet()
+            val diversity = history.context(session.userId, session.learningLanguage, items, recent, nowUtc)
+            val excluded = (items + recent).map { it.data.diversityMetadata.contentHash }.toSet() +
+                diversity.getValue("exactContentHashes90d").jsonArray.map { it.jsonPrimitive.content }
             val number = session.currentQuestionNumber;
             val band = session.currentComplexityBand
             val preferred =
@@ -152,7 +156,7 @@ internal class LevelQuestionService(
                     session.id, number, current.map { it.data.diversityMetadata.scenarioCategory },
                     recent.map { it.data.diversityMetadata.scenarioCategory },
                 ),
-                nowUtc,
+                nowUtc, history.context(session.userId, session.learningLanguage, current, recent, nowUtc),
             ),
             candidate,
         )
@@ -225,6 +229,7 @@ internal class LevelQuestionService(
                     poolQuestionId = pool.id, createdAt = nowUtc,
                 ),
             )
+            history.register(session, item, nowUtc)
             records.saveSession(latest.copy(lastActivityAt = nowUtc))
             item
         }
@@ -242,7 +247,7 @@ internal class LevelQuestionService(
                 .forEach { band ->
                     if (records.candidate(session.id, number, band) == null) records.saveCandidate(
                         LevelCandidate(
-                            sessionId = session.id, questionNumber = number, band = band, createdAt = nowUtc
+                            sessionId = session.id, questionNumber = number, band = band, createdAt = nowUtc,
                         ),
                     )
                 }

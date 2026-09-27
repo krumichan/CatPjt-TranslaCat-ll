@@ -1,0 +1,144 @@
+{
+  "$defs": {
+    "LevelTestMetricState": {
+      "enum": [
+        "EVALUATED",
+        "NOT_EVALUABLE"
+      ],
+      "title": "LevelTestMetricState",
+      "type": "string"
+    },
+    "LevelTestSpeakingMetricPayload": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "pattern": "^(PRONUNCIATION|FLUENCY|GRAMMAR|VOCABULARY|TASK_FULFILLMENT)$",
+          "title": "Type",
+          "type": "string"
+        },
+        "state": {
+          "$ref": "#/$defs/LevelTestMetricState",
+          "default": "EVALUATED"
+        },
+        "score": {
+          "anyOf": [
+            {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Score"
+        },
+        "confidence": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Confidence",
+          "type": "number"
+        },
+        "summary": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "title": "Summary",
+          "type": "string"
+        },
+        "evidence": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 20,
+          "title": "Evidence",
+          "type": "array"
+        },
+        "notEvaluableReason": {
+          "anyOf": [
+            {
+              "maxLength": 1000,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Notevaluablereason"
+        }
+      },
+      "required": [
+        "type",
+        "confidence",
+        "summary"
+      ],
+      "title": "LevelTestSpeakingMetricPayload",
+      "type": "object"
+    },
+    "LevelTestSpeakingTaskResponseStatus": {
+      "enum": [
+        "FULFILLED",
+        "PARTIAL",
+        "META_REFUSAL",
+        "OFF_TOPIC",
+        "EMPTY_CONTENT"
+      ],
+      "title": "LevelTestSpeakingTaskResponseStatus",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "evaluationConfidence": {
+      "maximum": 1,
+      "minimum": 0,
+      "title": "Evaluationconfidence",
+      "type": "number"
+    },
+    "taskResponseStatus": {
+      "$ref": "#/$defs/LevelTestSpeakingTaskResponseStatus"
+    },
+    "metrics": {
+      "items": {
+        "$ref": "#/$defs/LevelTestSpeakingMetricPayload"
+      },
+      "maxItems": 5,
+      "minItems": 5,
+      "title": "Metrics",
+      "type": "array"
+    },
+    "strengths": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 20,
+      "title": "Strengths",
+      "type": "array"
+    },
+    "improvements": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 20,
+      "title": "Improvements",
+      "type": "array"
+    },
+    "recommendedAnswers": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 2,
+      "title": "Recommendedanswers",
+      "type": "array"
+    }
+  },
+  "required": [
+    "evaluationConfidence",
+    "taskResponseStatus",
+    "metrics",
+    "recommendedAnswers"
+  ],
+  "title": "LevelTestSpeakingEvaluationPayload",
+  "type": "object"
+}

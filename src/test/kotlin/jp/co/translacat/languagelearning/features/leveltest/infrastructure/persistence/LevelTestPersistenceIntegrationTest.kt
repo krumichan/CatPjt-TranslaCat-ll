@@ -1,6 +1,5 @@
 package jp.co.translacat.languagelearning.features.leveltest.infrastructure.persistence
 
-import jp.co.translacat.languagelearning.support.CurrentSchema
 import jp.co.translacat.languagelearning.features.leveltest.application.LevelAnswerService
 import jp.co.translacat.languagelearning.features.leveltest.application.LevelAudioService
 import jp.co.translacat.languagelearning.features.leveltest.application.LevelSessionService
@@ -14,6 +13,7 @@ import jp.co.translacat.languagelearning.features.leveltest.support.TestLevelAi
 import jp.co.translacat.languagelearning.features.leveltest.support.TestLevelContext
 import jp.co.translacat.languagelearning.shared.persistence.DatabaseFactory
 import jp.co.translacat.languagelearning.shared.persistence.transaction.JdbcTransactionRunner
+import jp.co.translacat.languagelearning.support.CurrentSchema
 import jp.co.translacat.languagelearning.support.LocalScratchMysql
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -29,6 +29,7 @@ import kotlin.test.*
 class LevelTestPersistenceIntegrationTest {
     private val clock = Clock.fixed(Instant.parse("2026-09-25T01:00:00Z"), ZoneOffset.UTC)
     private fun work(f: DatabaseFactory) = ExposedLevelTestUnitOfWork(JdbcTransactionRunner(f.database, 4), clock)
+
     @Test
     fun `V006에서 V007로 올려도 기존 설정과 Journal을 변경하지 않는다`() {
         LocalScratchMysql.use { db ->
@@ -54,15 +55,17 @@ class LevelTestPersistenceIntegrationTest {
                         }
                 }
             DatabaseFactory(s).use { f ->
-                assertEquals(CurrentSchema.VERSION - 6, f.migrationReport.migrationsExecuted); assertEquals(CurrentSchema.VERSION, f.migrationReport.schemaVersion.toInt(),
+                assertEquals(CurrentSchema.MIGRATION_COUNT - 6, f.migrationReport.migrationsExecuted); assertEquals(
+                CurrentSchema.VERSION, f.migrationReport.schemaVersion.toInt(),
             )
                 assertEquals(
-                    CurrentSchema.TABLE_COUNT, scalar(db, "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema=DATABASE()"),
+                    CurrentSchema.TABLE_COUNT,
+                    scalar(db, "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema=DATABASE()"),
                 )
                 assertEquals(
                     6L,
                     scalar(
-                        db, "SELECT daily_keyword_max_count FROM language_learning_admin_setting WHERE id='DEFAULT'"
+                        db, "SELECT daily_keyword_max_count FROM language_learning_admin_setting WHERE id='DEFAULT'",
                     ),
                 )
                 assertEquals(0L, scalar(db, "SELECT COUNT(*) FROM language_learning_result_event"))
@@ -130,8 +133,12 @@ class LevelTestPersistenceIntegrationTest {
                 )
                     assertEquals(20, sessions.detail(123, s.id).items.size)
                     assertEquals(20L, scalar(db, "SELECT COUNT(*) FROM language_learning_level_test_evaluation"))
-                    assertEquals(1L, scalar(db, "SELECT COUNT(*) FROM language_learning_profile WHERE base_level_score=90"))
-                    assertEquals(1L, scalar(db, "SELECT COUNT(*) FROM language_learning_activity WHERE source='LEVEL_TEST'"))
+                    assertEquals(
+                        1L, scalar(db, "SELECT COUNT(*) FROM language_learning_profile WHERE base_level_score=90"),
+                    )
+                    assertEquals(
+                        1L, scalar(db, "SELECT COUNT(*) FROM language_learning_activity WHERE source='LEVEL_TEST'"),
+                    )
                     val again = LevelSessionService(work(f), ctx)
                     assertEquals(s.uid, again.baseline(123)?.completionId)
                 }

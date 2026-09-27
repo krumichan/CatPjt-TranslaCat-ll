@@ -1,0 +1,106 @@
+{
+  "$defs": {
+    "CommunicativeIntent": {
+      "enum": [
+        "DESCRIBE",
+        "REQUEST",
+        "CONFIRM",
+        "REPORT",
+        "SUGGEST",
+        "DECLINE",
+        "APOLOGIZE",
+        "COMPARE",
+        "EXPLAIN_REASON",
+        "ASK_INFORMATION",
+        "GIVE_INSTRUCTION",
+        "EXPRESS_PREFERENCE",
+        "SUMMARIZE"
+      ],
+      "title": "CommunicativeIntent",
+      "type": "string"
+    },
+    "LevelTestVocabContextDesign": {
+      "additionalProperties": false,
+      "description": "Small semantic contract for target-first vocabulary generation.\n\nOnly information that must be decided before learner-facing wording is kept\nhere. Presentation metadata and distractor wording belong to the generation\nstage, which materially reduces provider-schema failure surface.",
+      "properties": {
+        "designId": {
+          "enum": [
+            "A",
+            "B"
+          ],
+          "title": "Designid",
+          "type": "string"
+        },
+        "targetExpression": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Targetexpression",
+          "type": "string"
+        },
+        "targetMeaning": {
+          "maxLength": 300,
+          "minLength": 1,
+          "title": "Targetmeaning",
+          "type": "string"
+        },
+        "semanticConstraint": {
+          "maxLength": 800,
+          "minLength": 1,
+          "title": "Semanticconstraint",
+          "type": "string"
+        },
+        "scenarioCategory": {
+          "$ref": "#/$defs/ScenarioCategory"
+        },
+        "communicativeIntent": {
+          "$ref": "#/$defs/CommunicativeIntent"
+        }
+      },
+      "required": [
+        "designId",
+        "targetExpression",
+        "targetMeaning",
+        "semanticConstraint",
+        "scenarioCategory",
+        "communicativeIntent"
+      ],
+      "title": "LevelTestVocabContextDesign",
+      "type": "object"
+    },
+    "ScenarioCategory": {
+      "enum": [
+        "DAILY_LIFE",
+        "WORK",
+        "TRAVEL",
+        "SHOPPING",
+        "FOOD",
+        "SERVICE",
+        "LEARNING",
+        "HOBBY",
+        "DIGITAL_LIFE",
+        "SOCIAL",
+        "SCHEDULE",
+        "HEALTH_GENERAL"
+      ],
+      "title": "ScenarioCategory",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "designs": {
+      "items": {
+        "$ref": "#/$defs/LevelTestVocabContextDesign"
+      },
+      "maxItems": 2,
+      "minItems": 2,
+      "title": "Designs",
+      "type": "array"
+    }
+  },
+  "required": [
+    "designs"
+  ],
+  "title": "LevelTestVocabContextDesignPayload",
+  "type": "object"
+}

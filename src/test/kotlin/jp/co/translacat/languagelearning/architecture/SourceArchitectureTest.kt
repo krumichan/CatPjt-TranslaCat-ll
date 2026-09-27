@@ -68,6 +68,8 @@ class SourceArchitectureTest {
     fun `다른 기능의 영속성 구현 참조는 의도한 연결만 허용한다`() {
         // 같은 LL DB 안의 learner FK와 UnitOfWork 조립만 명시적으로 허용한다.
         val allowed = setOf(
+            // 현재 활동 조회 버전은 동일 LL 학습자 FK에 속한다.
+            "$ROOT.features.growth.infrastructure.persistence.table.GrowthActivityRevisionsTable" to "$ROOT.features.learner.infrastructure.persistence.table.LearnersTable",
             "$ROOT.features.growth.infrastructure.persistence.table.GrowthActivitiesTable" to "$ROOT.features.learner.infrastructure.persistence.table.LearnersTable",
             "$ROOT.features.growth.infrastructure.persistence.table.GrowthEvidenceTable" to "$ROOT.features.learner.infrastructure.persistence.table.LearnersTable",
             "$ROOT.features.growth.infrastructure.persistence.table.GrowthProfilesTable" to "$ROOT.features.learner.infrastructure.persistence.table.LearnersTable",
@@ -78,14 +80,25 @@ class SourceArchitectureTest {
             "$ROOT.features.leveltest.infrastructure.persistence.table.LevelSessionsTable" to "$ROOT.features.learner.infrastructure.persistence.table.LearnersTable",
             "$ROOT.features.leveltest.infrastructure.persistence.table.LevelBaselinesTable" to "$ROOT.features.learner.infrastructure.persistence.table.LearnersTable",
             "$ROOT.features.leveltest.infrastructure.persistence.ExposedLevelTestUnitOfWork" to "$ROOT.features.learner.infrastructure.persistence.repository.ExposedLearnerRepository",
-            "$ROOT.features.resultjournal.infrastructure.persistence.table.ResultStreamsTable" to "$ROOT.features.learner.infrastructure.persistence.table.LearnersTable",
-            "$ROOT.features.resultjournal.infrastructure.persistence.ExposedResultJournalUnitOfWork" to "$ROOT.features.learner.infrastructure.persistence.repository.ExposedLearnerRepository",
             "$ROOT.features.keyword.infrastructure.persistence.table.CustomKeywordsTable" to "$ROOT.features.learner.infrastructure.persistence.table.LearnersTable",
             "$ROOT.features.keyword.infrastructure.persistence.table.SystemKeywordSelectionsTable" to "$ROOT.features.learner.infrastructure.persistence.table.LearnersTable",
             "$ROOT.features.keyword.infrastructure.persistence.ExposedKeywordUnitOfWork" to "$ROOT.features.learner.infrastructure.persistence.repository.ExposedLearnerRepository",
-            "$ROOT.features.settings.infrastructure.persistence.table.SettingsSelectionDeliveriesTable" to "$ROOT.features.learner.infrastructure.persistence.table.LearnersTable",
             "$ROOT.features.settings.infrastructure.persistence.table.UserSettingsTable" to "$ROOT.features.learner.infrastructure.persistence.table.LearnersTable",
             "$ROOT.features.settings.infrastructure.persistence.ExposedSettingsUnitOfWork" to "$ROOT.features.learner.infrastructure.persistence.repository.ExposedLearnerRepository",
+            "$ROOT.features.writing.infrastructure.persistence.table.WritingSetsTable" to "$ROOT.features.learner.infrastructure.persistence.table.LearnersTable",
+            "$ROOT.features.writing.infrastructure.persistence.ExposedWritingSetUnitOfWork" to "$ROOT.features.learner.infrastructure.persistence.repository.ExposedLearnerRepository",
+            "$ROOT.features.writing.infrastructure.persistence.ExposedWritingSetUnitOfWork" to "$ROOT.features.growth.infrastructure.persistence.repository.ExposedGrowthRepository",
+            // 같은 LL 사용자 잠금과 트랜잭션에서 기존 Growth/설정 저장소를 조립하는 연결이다.
+            "$ROOT.features.listening.infrastructure.persistence.ExposedListeningUnitOfWork" to "$ROOT.features.growth.infrastructure.persistence.repository.ExposedGrowthRepository",
+            "$ROOT.features.listening.infrastructure.persistence.ExposedListeningUnitOfWork" to "$ROOT.features.learner.infrastructure.persistence.repository.ExposedLearnerRepository",
+            "$ROOT.features.listening.infrastructure.persistence.ExposedListeningUnitOfWork" to "$ROOT.features.settings.infrastructure.persistence.repository.ExposedUserSettingsRepository",
+            "$ROOT.features.practice.infrastructure.ExposedPracticeUnitOfWork" to "$ROOT.features.growth.infrastructure.persistence.repository.ExposedGrowthRepository",
+            "$ROOT.features.practice.infrastructure.ExposedPracticeUnitOfWork" to "$ROOT.features.learner.infrastructure.persistence.repository.ExposedLearnerRepository",
+            "$ROOT.features.speaking.infrastructure.ExposedSpeakingUnitOfWork" to "$ROOT.features.growth.infrastructure.persistence.repository.ExposedGrowthRepository",
+            "$ROOT.features.speaking.infrastructure.ExposedSpeakingUnitOfWork" to "$ROOT.features.learner.infrastructure.persistence.repository.ExposedLearnerRepository",
+            // 키워드 변경 가능 여부는 원본처럼 Writing 세트와 Speaking 세션의 존재만 읽는다.
+            "$ROOT.features.keyword.infrastructure.persistence.ExposedKeywordLearningFacts" to "$ROOT.features.speaking.infrastructure.persistence.table.SpeakingSessions",
+            "$ROOT.features.keyword.infrastructure.persistence.ExposedKeywordLearningFacts" to "$ROOT.features.writing.infrastructure.persistence.table.WritingSetsTable",
         )
         val violations = mutableListOf<String>()
         for (source in productionSources()) {

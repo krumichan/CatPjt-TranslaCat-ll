@@ -3,7 +3,6 @@ package jp.co.translacat.languagelearning.features.settings.infrastructure.persi
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
 import io.ktor.client.request.*
-import io.ktor.client.statement.*
 import io.ktor.http.*
 import io.ktor.server.config.*
 import io.ktor.server.routing.*
@@ -11,26 +10,16 @@ import io.ktor.server.testing.*
 import jp.co.translacat.languagelearning.bootstrap.configureInternalAuthentication
 import jp.co.translacat.languagelearning.bootstrap.configureSerialization
 import jp.co.translacat.languagelearning.bootstrap.configureStatusPages
-import jp.co.translacat.languagelearning.features.listening.domain.model.ListeningTaskType.DICTATION
-import jp.co.translacat.languagelearning.features.listening.domain.model.ListeningTaskType.SUMMARY
 import jp.co.translacat.languagelearning.features.settings.api.settingsRoutes
-import jp.co.translacat.languagelearning.features.settings.api.settingsSelectionRoute
 import jp.co.translacat.languagelearning.features.settings.api.settingsServiceRoutes
 import jp.co.translacat.languagelearning.features.settings.application.*
-import jp.co.translacat.languagelearning.features.settings.domain.model.SelectionDeliveryStatus.*
 import jp.co.translacat.languagelearning.features.settings.domain.model.UserSettingsChange
 import jp.co.translacat.languagelearning.shared.persistence.DatabaseFactory
 import jp.co.translacat.languagelearning.shared.persistence.transaction.JdbcTransactionRunner
 import jp.co.translacat.languagelearning.shared.security.InternalApiSettings
 import jp.co.translacat.languagelearning.support.CurrentSchema
 import jp.co.translacat.languagelearning.support.LocalScratchMysql
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withTimeout
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.jsonObject
-import kotlinx.serialization.json.jsonPrimitive
 import org.flywaydb.core.Flyway
 import java.time.Clock
 import java.time.Instant
@@ -39,7 +28,6 @@ import java.time.ZoneOffset
 import java.util.*
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertFails
 import kotlin.test.assertNull
 
 /** LL_TEST_MYSQL_*의 loopback 임시 DB만 사용한다. 기존 LL/Core DB에는 접속하지 않는다. */
@@ -54,7 +42,6 @@ class SettingsCutoverIntegrationTest {
         val reads = DefaultSettingsServiceOperations(
             work, queries, GetAdminSettings(ExposedAdminSettingsUnitOfWork(runner, clock)), clock,
         )
-        val relay = RememberListeningSelection(ExposedSelectionSettingsUnitOfWork(work))
         val update = UpdateUserSettings(work)
         val operations = DefaultSettingsOperations(
             GetUserSettings(work),
@@ -130,76 +117,6 @@ class SettingsCutoverIntegrationTest {
     }
 
     @Test
-    fun `같은 전달과 역순 전달은 데이터와 revision을 덮어쓰지 않는다`() = db { db, _, s ->
-        runBlocking {
-            val base = s.configured().updatedAt
-            assertEquals(APPLIED, s.relay.execute(123, 11, base, listOf(SUMMARY)))
-            val first = s.reads.userSnapshot(123).result.settings
-            assertEquals(DUPLICATE, s.relay.execute(123, 11, base, listOf(DICTATION)))
-            assertEquals(DUPLICATE, s.relay.execute(123, 10, base, listOf(DICTATION)))
-            assertEquals(first, s.reads.userSnapshot(123).result.settings)
-            assertEquals(1L, scalar(db, "SELECT COUNT(*) FROM language_learning_settings_selection_delivery"))
-        }
-    }
-
-    @Test
-    fun `동일 Task의 직접 PATCH도 오래된 선택 전달을 차단한다`() = db { _, _, s ->
-        runBlocking {
-            val base = s.configured().updatedAt
-            s.update.execute(123, UserSettingsChange(defaultListeningTaskTypes = listOf(DICTATION)))
-            assertEquals(SUPERSEDED, s.relay.execute(123, 11, base, listOf(SUMMARY)))
-            assertEquals("[\"DICTATION\"]", s.reads.userSnapshot(123).result.settings.defaultListeningTaskTypesJson)
-        }
-    }
-
-    @Test
-    fun `같은 base의 동시 이벤트는 source ID가 큰 최종 선택으로 수렴한다`() = db { db, _, s ->
-        DatabaseFactory(db.settings()).use { second ->
-            runBlocking {
-                withTimeout(30_000) {
-                    val other = Services(second, clock);
-                    val base = s.configured().updatedAt
-                    listOf(
-                        async { s.relay.execute(123, 10, base, listOf(DICTATION)) },
-                        async { other.relay.execute(123, 11, base, listOf(SUMMARY)) },
-                    ).awaitAll()
-                    assertEquals(
-                        "[\"SUMMARY\"]", s.reads.userSnapshot(123).result.settings.defaultListeningTaskTypesJson,
-                    )
-                    assertEquals(
-                        11L,
-                        scalar(
-                            db,
-                            "SELECT last_event_id FROM language_learning_settings_selection_delivery WHERE user_id=123",
-                        ),
-                    )
-                }
-            }
-        }
-    }
-
-    @Test
-    fun `수신 저장소 실패는 앞선 pending 승격까지 롤백한다`() = db { db, _, s ->
-        runBlocking {
-            val base = s.configured().updatedAt
-            sql(
-                db,
-                "UPDATE language_learning_user_setting SET pending_daily_sentence_count=7, pending_effective_date='2000-01-01' WHERE user_id=123",
-            )
-            // 이 테스트가 소유한 임시 DB의 수신 테이블에만 실패를 주입한다.
-            sql(db, "DROP TABLE language_learning_settings_selection_delivery")
-            assertFails { s.relay.execute(123, 10, base, listOf(SUMMARY)) }
-            assertEquals(
-                5L, scalar(db, "SELECT daily_sentence_count FROM language_learning_user_setting WHERE user_id=123"),
-            )
-            assertEquals(
-                7L,
-                scalar(db, "SELECT pending_daily_sentence_count FROM language_learning_user_setting WHERE user_id=123"),
-            )
-        }
-    }
-
-    @Test
     fun `V003에서 최신 버전으로 올려도 관리자 변경값과 감사 데이터가 보존된다`() = LocalScratchMysql.use { db ->
         val settings = db.settings()
         Flyway.configure()
@@ -219,7 +136,7 @@ class SettingsCutoverIntegrationTest {
             "INSERT INTO language_learning_admin_setting_audit(admin_user_id,before_json,after_json,created_at) VALUES(900,'{}','{}',UTC_TIMESTAMP(6))",
         )
         DatabaseFactory(settings).use { factory ->
-            assertEquals(CurrentSchema.VERSION - 3, factory.migrationReport.migrationsExecuted); assertEquals(
+            assertEquals(CurrentSchema.MIGRATION_COUNT - 3, factory.migrationReport.migrationsExecuted); assertEquals(
             CurrentSchema.VERSION, factory.migrationReport.schemaVersion.toInt(),
         )
             assertEquals(
@@ -231,7 +148,7 @@ class SettingsCutoverIntegrationTest {
     }
 
     @Test
-    fun `서비스 JWT 조회와 사용자 outbox 전달이 HTTP에서 분리된다`() = db { db, _, s ->
+    fun `서비스 JWT 조회와 관리자 권한을 유지하고 옛 전달 경로는 없다`() = db { db, _, s ->
         testApplication {
             environment { config = MapApplicationConfig() }
             val key = ByteArray(32) { (it + 1).toByte() }
@@ -239,18 +156,16 @@ class SettingsCutoverIntegrationTest {
             application {
                 configureSerialization(); configureStatusPages(); configureInternalAuthentication(auth)
                 routing {
-                    settingsRoutes(s.operations); settingsServiceRoutes(s.reads); settingsSelectionRoute(
-                    s.relay,
-                )
+                    settingsRoutes(s.operations); settingsServiceRoutes(s.reads)
                 }
             }
             val userToken = token(key, false);
             val serviceToken = token(key, true)
-            val servicePath = "/internal/v1/service/language-learning/settings/users/123"
+            val servicePath = "/internal/v1/service/language-learning/settings/listening-policy"
             assertEquals(HttpStatusCode.Unauthorized, client.get(servicePath) { bearerAuth(userToken) }.status)
             val get = client.get(servicePath) { bearerAuth(serviceToken) }
             assertEquals(HttpStatusCode.OK, get.status)
-            assertEquals(1L, scalar(db, "SELECT COUNT(*) FROM language_learning_learner"))
+            assertEquals(0L, scalar(db, "SELECT COUNT(*) FROM language_learning_learner"))
             assertEquals(
                 HttpStatusCode.Unauthorized,
                 client.patch("/internal/v1/admin/language-learning/settings") {
@@ -259,21 +174,23 @@ class SettingsCutoverIntegrationTest {
             )
             s.configured()
             val snapshot = client.get(servicePath) { bearerAuth(serviceToken) }
-            val revision =
-                Json.parseToJsonElement(snapshot.bodyAsText()).jsonObject.getValue("revision").jsonPrimitive.content
-            val payload = """{"eventId":100,"expectedRevision":"$revision","taskTypes":["SUMMARY"]}"""
+            assertEquals(HttpStatusCode.OK, snapshot.status)
+
+            // 검증: 옛 Core 전달 경로는 더 이상 등록하지 않는다.
             val delivery = client.post("/internal/v1/language-learning/settings/listening-selection") {
-                bearerAuth(userToken); contentType(ContentType.Application.Json); setBody(payload)
+                bearerAuth(userToken); contentType(ContentType.Application.Json); setBody("{}")
             }
-            assertEquals(HttpStatusCode.OK, delivery.status)
-            assertEquals(
-                "APPLIED",
-                Json.parseToJsonElement(delivery.bodyAsText()).jsonObject.getValue("status").jsonPrimitive.content,
-            )
-            assertEquals(
-                "[\"SUMMARY\"]",
-                string(db, "SELECT default_listening_task_types FROM language_learning_user_setting WHERE user_id=123"),
-            )
+            assertEquals(HttpStatusCode.NotFound, delivery.status)
+            for (path in listOf("users/123", "users/123/learning-date", "admin", "language-pairs")) {
+                assertEquals(
+                    HttpStatusCode.NotFound,
+                    client.get("/internal/v1/service/language-learning/settings/$path") {
+                        bearerAuth(
+                            serviceToken,
+                        )
+                    }.status,
+                )
+            }
         }
     }
 

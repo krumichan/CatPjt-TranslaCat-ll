@@ -1,0 +1,2056 @@
+{
+  "passage:COMPREHENSION:1": {
+    "version": "reading-difficulty-recipe-v2",
+    "kind": "PASSAGE",
+    "band": 1,
+    "anchor": "Direct, linear familiar text with one plainly expressed situation or message.",
+    "deterministicDimensions": [
+      "normalizedCharacterCount",
+      "paragraphCount",
+      "surfaceUnitCount",
+      "serverPassageDiscourseBlueprint"
+    ],
+    "preferredDimensions": [
+      "Use length, paragraphing and surface-unit count only as broad editorial signals.",
+      "Shape discourse so it supports the requested Reading mode COMPREHENSION."
+    ],
+    "semanticDimensions": [
+      "linguisticAndDiscourseComplexity",
+      "coherenceAndReferenceLoad",
+      "registerAndPragmaticNuance",
+      "selfContainedWithoutExternalKnowledge"
+    ],
+    "hardStructuralConstraints": [
+      "Use only the requested learning language.",
+      "Return non-blank passageText bound to the requested passageId."
+    ],
+    "enforcement": "The passageDemand blueprint is server-selected. Surface measurements are diagnostic only; actual linguistic/discourse difficulty remains shadow-observed.",
+    "passageDemand": {
+      "version": "reading-passage-blueprint-b4-v2",
+      "minimumInteractingRelationCategories": 0,
+      "relationCategoryOptions": [],
+      "crossParagraphDependencyRequired": false,
+      "localOnlyLinearDiscourseAllowed": true,
+      "integrationRequirement": "ONE_DIRECT_EXPLICIT_SITUATION",
+      "interpretiveRequirements": [],
+      "modeEmphasis": [
+        "Support content and inference questions at the assigned passage band."
+      ],
+      "externalKnowledgeAllowed": false,
+      "authority": "SERVER_SELECTED_REQUIREMENT"
+    }
+  },
+  "question:COMPREHENSION:1:CONTENT": {
+    "version": "reading-difficulty-recipe-v2",
+    "kind": "QUESTION_DEMAND",
+    "band": 1,
+    "anchor": "Answerable from one explicit local span by direct evidence lookup.",
+    "deterministicDimensions": [
+      "promptCharacterCount",
+      "optionCountAndCharacterLengths",
+      "evidenceExactMatchAndOffset",
+      "evidenceParagraphAndSurfaceUnitCoverage",
+      "evidenceToQuestionSurfaceUnitDistance",
+      "skillTagAndPassageBinding",
+      "serverQuestionDemandBlueprint"
+    ],
+    "preferredDimensions": [
+      "Treat measured evidence geometry as an observation, never as a band by itself.",
+      "Realize the server-selected skill CONTENT without changing the assigned passage."
+    ],
+    "semanticDimensions": [
+      "evidenceExplicitness",
+      "inferenceDemand",
+      "discourseRelationDemand",
+      "distractorDiscriminationDemand",
+      "singleBestSupportedAnswerWithoutAmbiguity",
+      "selfContainedWithoutExternalKnowledge"
+    ],
+    "hardStructuralConstraints": [
+      "Reuse the exact server-assigned passage and passageId.",
+      "Use the server-required single-choice shape and held answer-key binding.",
+      "Keep vocabulary identity fields empty for Reading questions."
+    ],
+    "enforcement": "The questionDemand blueprint is server-selected. Surface measurements are deterministic diagnostics; semantic difficulty remains shadow-only.",
+    "questionDemand": {
+      "kind": "EXPLICIT_LOCAL",
+      "evidenceScope": "LOCAL",
+      "minimumDistinctCues": 1,
+      "minimumEvidenceUnits": 1,
+      "minimumEvidenceParagraphs": 1,
+      "inferenceRequirement": "NONE",
+      "discourseRequirements": [],
+      "distractorRequirements": [
+        "DIRECTLY_SUPPORTED_ALTERNATIVES"
+      ],
+      "disallowedShortcuts": [],
+      "authority": "SERVER_SELECTED_REQUIREMENT"
+    }
+  },
+  "question:COMPREHENSION:1:DETAIL": {
+    "version": "reading-difficulty-recipe-v2",
+    "kind": "QUESTION_DEMAND",
+    "band": 1,
+    "anchor": "Answerable from one explicit local span by direct evidence lookup.",
+    "deterministicDimensions": [
+      "promptCharacterCount",
+      "optionCountAndCharacterLengths",
+      "evidenceExactMatchAndOffset",
+      "evidenceParagraphAndSurfaceUnitCoverage",
+      "evidenceToQuestionSurfaceUnitDistance",
+      "skillTagAndPassageBinding",
+      "serverQuestionDemandBlueprint"
+    ],
+    "preferredDimensions": [
+      "Treat measured evidence geometry as an observation, never as a band by itself.",
+      "Realize the server-selected skill DETAIL without changing the assigned passage."
+    ],
+    "semanticDimensions": [
+      "evidenceExplicitness",
+      "inferenceDemand",
+      "discourseRelationDemand",
+      "distractorDiscriminationDemand",
+      "singleBestSupportedAnswerWithoutAmbiguity",
+      "selfContainedWithoutExternalKnowledge"
+    ],
+    "hardStructuralConstraints": [
+      "Reuse the exact server-assigned passage and passageId.",
+      "Use the server-required single-choice shape and held answer-key binding.",
+      "Keep vocabulary identity fields empty for Reading questions."
+    ],
+    "enforcement": "The questionDemand blueprint is server-selected. Surface measurements are deterministic diagnostics; semantic difficulty remains shadow-only.",
+    "questionDemand": {
+      "kind": "EXPLICIT_LOCAL",
+      "evidenceScope": "LOCAL",
+      "minimumDistinctCues": 1,
+      "minimumEvidenceUnits": 1,
+      "minimumEvidenceParagraphs": 1,
+      "inferenceRequirement": "NONE",
+      "discourseRequirements": [],
+      "distractorRequirements": [
+        "DIRECTLY_SUPPORTED_ALTERNATIVES"
+      ],
+      "disallowedShortcuts": [],
+      "authority": "SERVER_SELECTED_REQUIREMENT"
+    }
+  },
+  "question:COMPREHENSION:1:INFERENCE": {
+    "version": "reading-difficulty-recipe-v2",
+    "kind": "QUESTION_DEMAND",
+    "band": 1,
+    "anchor": "Answerable from one explicit local span by direct evidence lookup.",
+    "deterministicDimensions": [
+      "promptCharacterCount",
+      "optionCountAndCharacterLengths",
+      "evidenceExactMatchAndOffset",
+      "evidenceParagraphAndSurfaceUnitCoverage",
+      "evidenceToQuestionSurfaceUnitDistance",
+      "skillTagAndPassageBinding",
+      "serverQuestionDemandBlueprint"
+    ],
+    "preferredDimensions": [
+      "Treat measured evidence geometry as an observation, never as a band by itself.",
+      "Realize the server-selected skill INFERENCE without changing the assigned passage."
+    ],
+    "semanticDimensions": [
+      "evidenceExplicitness",
+      "inferenceDemand",
+      "discourseRelationDemand",
+      "distractorDiscriminationDemand",
+      "singleBestSupportedAnswerWithoutAmbiguity",
+      "selfContainedWithoutExternalKnowledge"
+    ],
+    "hardStructuralConstraints": [
+      "Reuse the exact server-assigned passage and passageId.",
+      "Use the server-required single-choice shape and held answer-key binding.",
+      "Keep vocabulary identity fields empty for Reading questions."
+    ],
+    "enforcement": "The questionDemand blueprint is server-selected. Surface measurements are deterministic diagnostics; semantic difficulty remains shadow-only.",
+    "questionDemand": {
+      "kind": "EXPLICIT_LOCAL",
+      "evidenceScope": "LOCAL",
+      "minimumDistinctCues": 1,
+      "minimumEvidenceUnits": 1,
+      "minimumEvidenceParagraphs": 1,
+      "inferenceRequirement": "NONE",
+      "discourseRequirements": [],
+      "distractorRequirements": [
+        "DIRECTLY_SUPPORTED_ALTERNATIVES"
+      ],
+      "disallowedShortcuts": [],
+      "authority": "SERVER_SELECTED_REQUIREMENT"
+    }
+  },
+  "question:COMPREHENSION:2:DETAIL": {
+    "version": "reading-difficulty-recipe-v2",
+    "kind": "QUESTION_DEMAND",
+    "band": 2,
+    "anchor": "Requires a paraphrase or connection between nearby explicit units.",
+    "deterministicDimensions": [
+      "promptCharacterCount",
+      "optionCountAndCharacterLengths",
+      "evidenceExactMatchAndOffset",
+      "evidenceParagraphAndSurfaceUnitCoverage",
+      "evidenceToQuestionSurfaceUnitDistance",
+      "skillTagAndPassageBinding",
+      "serverQuestionDemandBlueprint"
+    ],
+    "preferredDimensions": [
+      "Treat measured evidence geometry as an observation, never as a band by itself.",
+      "Realize the server-selected skill DETAIL without changing the assigned passage."
+    ],
+    "semanticDimensions": [
+      "evidenceExplicitness",
+      "inferenceDemand",
+      "discourseRelationDemand",
+      "distractorDiscriminationDemand",
+      "singleBestSupportedAnswerWithoutAmbiguity",
+      "selfContainedWithoutExternalKnowledge"
+    ],
+    "hardStructuralConstraints": [
+      "Reuse the exact server-assigned passage and passageId.",
+      "Use the server-required single-choice shape and held answer-key binding.",
+      "Keep vocabulary identity fields empty for Reading questions."
+    ],
+    "enforcement": "The questionDemand blueprint is server-selected. Surface measurements are deterministic diagnostics; semantic difficulty remains shadow-only.",
+    "questionDemand": {
+      "kind": "PARAPHRASED_LOCAL",
+      "evidenceScope": "ADJACENT_UNITS",
+      "minimumDistinctCues": 1,
+      "minimumEvidenceUnits": 1,
+      "minimumEvidenceParagraphs": 1,
+      "inferenceRequirement": "PARAPHRASE_OR_ADJACENT_CONNECTION",
+      "discourseRequirements": [
+        "ADJACENT_INFORMATION_CONNECTION"
+      ],
+      "distractorRequirements": [
+        "PLAUSIBLE_PARAPHRASE_NEAR_MISS"
+      ],
+      "disallowedShortcuts": [
+        "VERBATIM_ANSWER_COPY"
+      ],
+      "authority": "SERVER_SELECTED_REQUIREMENT"
+    }
+  },
+  "passage:COMPREHENSION:2": {
+    "version": "reading-difficulty-recipe-v2",
+    "kind": "PASSAGE",
+    "band": 2,
+    "anchor": "Familiar text with a simple sequence, reason, time relation or ordinary request.",
+    "deterministicDimensions": [
+      "normalizedCharacterCount",
+      "paragraphCount",
+      "surfaceUnitCount",
+      "serverPassageDiscourseBlueprint"
+    ],
+    "preferredDimensions": [
+      "Use length, paragraphing and surface-unit count only as broad editorial signals.",
+      "Shape discourse so it supports the requested Reading mode COMPREHENSION."
+    ],
+    "semanticDimensions": [
+      "linguisticAndDiscourseComplexity",
+      "coherenceAndReferenceLoad",
+      "registerAndPragmaticNuance",
+      "selfContainedWithoutExternalKnowledge"
+    ],
+    "hardStructuralConstraints": [
+      "Use only the requested learning language.",
+      "Return non-blank passageText bound to the requested passageId."
+    ],
+    "enforcement": "The passageDemand blueprint is server-selected. Surface measurements are diagnostic only; actual linguistic/discourse difficulty remains shadow-observed.",
+    "passageDemand": {
+      "version": "reading-passage-blueprint-b4-v2",
+      "minimumInteractingRelationCategories": 1,
+      "relationCategoryOptions": [
+        "SEQUENCE",
+        "EXPLICIT_REASON",
+        "TIME_RELATION"
+      ],
+      "crossParagraphDependencyRequired": false,
+      "localOnlyLinearDiscourseAllowed": true,
+      "integrationRequirement": "ONE_SIMPLE_LINEAR_CONNECTION",
+      "interpretiveRequirements": [],
+      "modeEmphasis": [
+        "Support content and inference questions at the assigned passage band."
+      ],
+      "externalKnowledgeAllowed": false,
+      "authority": "SERVER_SELECTED_REQUIREMENT"
+    }
+  },
+  "question:COMPREHENSION:2:CONTENT": {
+    "version": "reading-difficulty-recipe-v2",
+    "kind": "QUESTION_DEMAND",
+    "band": 2,
+    "anchor": "Requires a paraphrase or connection between nearby explicit units.",
+    "deterministicDimensions": [
+      "promptCharacterCount",
+      "optionCountAndCharacterLengths",
+      "evidenceExactMatchAndOffset",
+      "evidenceParagraphAndSurfaceUnitCoverage",
+      "evidenceToQuestionSurfaceUnitDistance",
+      "skillTagAndPassageBinding",
+      "serverQuestionDemandBlueprint"
+    ],
+    "preferredDimensions": [
+      "Treat measured evidence geometry as an observation, never as a band by itself.",
+      "Realize the server-selected skill CONTENT without changing the assigned passage."
+    ],
+    "semanticDimensions": [
+      "evidenceExplicitness",
+      "inferenceDemand",
+      "discourseRelationDemand",
+      "distractorDiscriminationDemand",
+      "singleBestSupportedAnswerWithoutAmbiguity",
+      "selfContainedWithoutExternalKnowledge"
+    ],
+    "hardStructuralConstraints": [
+      "Reuse the exact server-assigned passage and passageId.",
+      "Use the server-required single-choice shape and held answer-key binding.",
+      "Keep vocabulary identity fields empty for Reading questions."
+    ],
+    "enforcement": "The questionDemand blueprint is server-selected. Surface measurements are deterministic diagnostics; semantic difficulty remains shadow-only.",
+    "questionDemand": {
+      "kind": "PARAPHRASED_LOCAL",
+      "evidenceScope": "ADJACENT_UNITS",
+      "minimumDistinctCues": 1,
+      "minimumEvidenceUnits": 1,
+      "minimumEvidenceParagraphs": 1,
+      "inferenceRequirement": "PARAPHRASE_OR_ADJACENT_CONNECTION",
+      "discourseRequirements": [
+        "ADJACENT_INFORMATION_CONNECTION"
+      ],
+      "distractorRequirements": [
+        "PLAUSIBLE_PARAPHRASE_NEAR_MISS"
+      ],
+      "disallowedShortcuts": [
+        "VERBATIM_ANSWER_COPY"
+      ],
+      "authority": "SERVER_SELECTED_REQUIREMENT"
+    }
+  },
+  "question:COMPREHENSION:2:INFERENCE": {
+    "version": "reading-difficulty-recipe-v2",
+    "kind": "QUESTION_DEMAND",
+    "band": 2,
+    "anchor": "Requires a paraphrase or connection between nearby explicit units.",
+    "deterministicDimensions": [
+      "promptCharacterCount",
+      "optionCountAndCharacterLengths",
+      "evidenceExactMatchAndOffset",
+      "evidenceParagraphAndSurfaceUnitCoverage",
+      "evidenceToQuestionSurfaceUnitDistance",
+      "skillTagAndPassageBinding",
+      "serverQuestionDemandBlueprint"
+    ],
+    "preferredDimensions": [
+      "Treat measured evidence geometry as an observation, never as a band by itself.",
+      "Realize the server-selected skill INFERENCE without changing the assigned passage."
+    ],
+    "semanticDimensions": [
+      "evidenceExplicitness",
+      "inferenceDemand",
+      "discourseRelationDemand",
+      "distractorDiscriminationDemand",
+      "singleBestSupportedAnswerWithoutAmbiguity",
+      "selfContainedWithoutExternalKnowledge"
+    ],
+    "hardStructuralConstraints": [
+      "Reuse the exact server-assigned passage and passageId.",
+      "Use the server-required single-choice shape and held answer-key binding.",
+      "Keep vocabulary identity fields empty for Reading questions."
+    ],
+    "enforcement": "The questionDemand blueprint is server-selected. Surface measurements are deterministic diagnostics; semantic difficulty remains shadow-only.",
+    "questionDemand": {
+      "kind": "PARAPHRASED_LOCAL",
+      "evidenceScope": "ADJACENT_UNITS",
+      "minimumDistinctCues": 1,
+      "minimumEvidenceUnits": 1,
+      "minimumEvidenceParagraphs": 1,
+      "inferenceRequirement": "PARAPHRASE_OR_ADJACENT_CONNECTION",
+      "discourseRequirements": [
+        "ADJACENT_INFORMATION_CONNECTION"
+      ],
+      "distractorRequirements": [
+        "PLAUSIBLE_PARAPHRASE_NEAR_MISS"
+      ],
+      "disallowedShortcuts": [
+        "VERBATIM_ANSWER_COPY"
+      ],
+      "authority": "SERVER_SELECTED_REQUIREMENT"
+    }
+  },
+  "question:COMPREHENSION:3:DETAIL": {
+    "version": "reading-difficulty-recipe-v2",
+    "kind": "QUESTION_DEMAND",
+    "band": 3,
+    "anchor": "Requires a cause, condition, comparison or other bounded relation judgment.",
+    "deterministicDimensions": [
+      "promptCharacterCount",
+      "optionCountAndCharacterLengths",
+      "evidenceExactMatchAndOffset",
+      "evidenceParagraphAndSurfaceUnitCoverage",
+      "evidenceToQuestionSurfaceUnitDistance",
+      "skillTagAndPassageBinding",
+      "serverQuestionDemandBlueprint"
+    ],
+    "preferredDimensions": [
+      "Treat measured evidence geometry as an observation, never as a band by itself.",
+      "Realize the server-selected skill DETAIL without changing the assigned passage."
+    ],
+    "semanticDimensions": [
+      "evidenceExplicitness",
+      "inferenceDemand",
+      "discourseRelationDemand",
+      "distractorDiscriminationDemand",
+      "singleBestSupportedAnswerWithoutAmbiguity",
+      "selfContainedWithoutExternalKnowledge"
+    ],
+    "hardStructuralConstraints": [
+      "Reuse the exact server-assigned passage and passageId.",
+      "Use the server-required single-choice shape and held answer-key binding.",
+      "Keep vocabulary identity fields empty for Reading questions."
+    ],
+    "enforcement": "The questionDemand blueprint is server-selected. Surface measurements are deterministic diagnostics; semantic difficulty remains shadow-only.",
+    "questionDemand": {
+      "kind": "LOCAL_RELATION",
+      "evidenceScope": "ADJACENT_UNITS",
+      "minimumDistinctCues": 2,
+      "minimumEvidenceUnits": 2,
+      "minimumEvidenceParagraphs": 1,
+      "inferenceRequirement": "ONE_BOUNDED_REASONING_STEP",
+      "discourseRequirements": [
+        "CAUSE_OR_CONDITION_OR_COMPARISON"
+      ],
+      "distractorRequirements": [
+        "RELATION_MISMATCH"
+      ],
+      "disallowedShortcuts": [
+        "SINGLE_SENTENCE_ANSWER_COPY"
+      ],
+      "authority": "SERVER_SELECTED_REQUIREMENT"
+    }
+  },
+  "passage:COMPREHENSION:3": {
+    "version": "reading-difficulty-recipe-v2",
+    "kind": "PASSAGE",
+    "band": 3,
+    "anchor": "Coherent connected text using cause, condition or comparison with explicit scope.",
+    "deterministicDimensions": [
+      "normalizedCharacterCount",
+      "paragraphCount",
+      "surfaceUnitCount",
+      "serverPassageDiscourseBlueprint"
+    ],
+    "preferredDimensions": [
+      "Use length, paragraphing and surface-unit count only as broad editorial signals.",
+      "Shape discourse so it supports the requested Reading mode COMPREHENSION."
+    ],
+    "semanticDimensions": [
+      "linguisticAndDiscourseComplexity",
+      "coherenceAndReferenceLoad",
+      "registerAndPragmaticNuance",
+      "selfContainedWithoutExternalKnowledge"
+    ],
+    "hardStructuralConstraints": [
+      "Use only the requested learning language.",
+      "Return non-blank passageText bound to the requested passageId."
+    ],
+    "enforcement": "The passageDemand blueprint is server-selected. Surface measurements are diagnostic only; actual linguistic/discourse difficulty remains shadow-observed.",
+    "passageDemand": {
+      "version": "reading-passage-blueprint-b4-v2",
+      "minimumInteractingRelationCategories": 1,
+      "relationCategoryOptions": [
+        "EXPLICIT_CAUSE_EFFECT",
+        "EXPLICIT_CONDITION",
+        "EXPLICIT_COMPARISON"
+      ],
+      "crossParagraphDependencyRequired": false,
+      "localOnlyLinearDiscourseAllowed": true,
+      "integrationRequirement": "ONE_EXPLICIT_RELATION_CONNECTS_UNITS",
+      "interpretiveRequirements": [],
+      "modeEmphasis": [
+        "Support content and inference questions at the assigned passage band."
+      ],
+      "externalKnowledgeAllowed": false,
+      "authority": "SERVER_SELECTED_REQUIREMENT"
+    }
+  },
+  "question:COMPREHENSION:3:CONTENT": {
+    "version": "reading-difficulty-recipe-v2",
+    "kind": "QUESTION_DEMAND",
+    "band": 3,
+    "anchor": "Requires a cause, condition, comparison or other bounded relation judgment.",
+    "deterministicDimensions": [
+      "promptCharacterCount",
+      "optionCountAndCharacterLengths",
+      "evidenceExactMatchAndOffset",
+      "evidenceParagraphAndSurfaceUnitCoverage",
+      "evidenceToQuestionSurfaceUnitDistance",
+      "skillTagAndPassageBinding",
+      "serverQuestionDemandBlueprint"
+    ],
+    "preferredDimensions": [
+      "Treat measured evidence geometry as an observation, never as a band by itself.",
+      "Realize the server-selected skill CONTENT without changing the assigned passage."
+    ],
+    "semanticDimensions": [
+      "evidenceExplicitness",
+      "inferenceDemand",
+      "discourseRelationDemand",
+      "distractorDiscriminationDemand",
+      "singleBestSupportedAnswerWithoutAmbiguity",
+      "selfContainedWithoutExternalKnowledge"
+    ],
+    "hardStructuralConstraints": [
+      "Reuse the exact server-assigned passage and passageId.",
+      "Use the server-required single-choice shape and held answer-key binding.",
+      "Keep vocabulary identity fields empty for Reading questions."
+    ],
+    "enforcement": "The questionDemand blueprint is server-selected. Surface measurements are deterministic diagnostics; semantic difficulty remains shadow-only.",
+    "questionDemand": {
+      "kind": "LOCAL_RELATION",
+      "evidenceScope": "ADJACENT_UNITS",
+      "minimumDistinctCues": 2,
+      "minimumEvidenceUnits": 2,
+      "minimumEvidenceParagraphs": 1,
+      "inferenceRequirement": "ONE_BOUNDED_REASONING_STEP",
+      "discourseRequirements": [
+        "CAUSE_OR_CONDITION_OR_COMPARISON"
+      ],
+      "distractorRequirements": [
+        "RELATION_MISMATCH"
+      ],
+      "disallowedShortcuts": [
+        "SINGLE_SENTENCE_ANSWER_COPY"
+      ],
+      "authority": "SERVER_SELECTED_REQUIREMENT"
+    }
+  },
+  "question:COMPREHENSION:3:INFERENCE": {
+    "version": "reading-difficulty-recipe-v2",
+    "kind": "QUESTION_DEMAND",
+    "band": 3,
+    "anchor": "Requires a cause, condition, comparison or other bounded relation judgment.",
+    "deterministicDimensions": [
+      "promptCharacterCount",
+      "optionCountAndCharacterLengths",
+      "evidenceExactMatchAndOffset",
+      "evidenceParagraphAndSurfaceUnitCoverage",
+      "evidenceToQuestionSurfaceUnitDistance",
+      "skillTagAndPassageBinding",
+      "serverQuestionDemandBlueprint"
+    ],
+    "preferredDimensions": [
+      "Treat measured evidence geometry as an observation, never as a band by itself.",
+      "Realize the server-selected skill INFERENCE without changing the assigned passage."
+    ],
+    "semanticDimensions": [
+      "evidenceExplicitness",
+      "inferenceDemand",
+      "discourseRelationDemand",
+      "distractorDiscriminationDemand",
+      "singleBestSupportedAnswerWithoutAmbiguity",
+      "selfContainedWithoutExternalKnowledge"
+    ],
+    "hardStructuralConstraints": [
+      "Reuse the exact server-assigned passage and passageId.",
+      "Use the server-required single-choice shape and held answer-key binding.",
+      "Keep vocabulary identity fields empty for Reading questions."
+    ],
+    "enforcement": "The questionDemand blueprint is server-selected. Surface measurements are deterministic diagnostics; semantic difficulty remains shadow-only.",
+    "questionDemand": {
+      "kind": "LOCAL_RELATION",
+      "evidenceScope": "ADJACENT_UNITS",
+      "minimumDistinctCues": 2,
+      "minimumEvidenceUnits": 2,
+      "minimumEvidenceParagraphs": 1,
+      "inferenceRequirement": "ONE_BOUNDED_REASONING_STEP",
+      "discourseRequirements": [
+        "CAUSE_OR_CONDITION_OR_COMPARISON"
+      ],
+      "distractorRequirements": [
+        "RELATION_MISMATCH"
+      ],
+      "disallowedShortcuts": [
+        "SINGLE_SENTENCE_ANSWER_COPY"
+      ],
+      "authority": "SERVER_SELECTED_REQUIREMENT"
+    }
+  },
+  "question:COMPREHENSION:4:INFERENCE": {
+    "version": "reading-difficulty-recipe-v2",
+    "kind": "QUESTION_DEMAND",
+    "band": 4,
+    "anchor": "Requires integrating multiple units or discourse cues; local lookup alone is insufficient.",
+    "deterministicDimensions": [
+      "promptCharacterCount",
+      "optionCountAndCharacterLengths",
+      "evidenceExactMatchAndOffset",
+      "evidenceParagraphAndSurfaceUnitCoverage",
+      "evidenceToQuestionSurfaceUnitDistance",
+      "skillTagAndPassageBinding",
+      "serverQuestionDemandBlueprint"
+    ],
+    "preferredDimensions": [
+      "Treat measured evidence geometry as an observation, never as a band by itself.",
+      "Realize the server-selected skill INFERENCE without changing the assigned passage."
+    ],
+    "semanticDimensions": [
+      "evidenceExplicitness",
+      "inferenceDemand",
+      "discourseRelationDemand",
+      "distractorDiscriminationDemand",
+      "singleBestSupportedAnswerWithoutAmbiguity",
+      "selfContainedWithoutExternalKnowledge"
+    ],
+    "hardStructuralConstraints": [
+      "Reuse the exact server-assigned passage and passageId.",
+      "Use the server-required single-choice shape and held answer-key binding.",
+      "Keep vocabulary identity fields empty for Reading questions."
+    ],
+    "enforcement": "The questionDemand blueprint is server-selected. Surface measurements are deterministic diagnostics; semantic difficulty remains shadow-only.",
+    "questionDemand": {
+      "kind": "CROSS_UNIT_INFERENCE",
+      "evidenceScope": "CROSS_UNIT",
+      "minimumDistinctCues": 2,
+      "minimumEvidenceUnits": 2,
+      "minimumEvidenceParagraphs": 1,
+      "inferenceRequirement": "SUPPORTED_CROSS_UNIT_INFERENCE",
+      "discourseRequirements": [
+        "CAUSE_EFFECT_OR_CLAIM_EVIDENCE_OR_CONDITION_RESULT"
+      ],
+      "distractorRequirements": [
+        "PASSAGE_GROUNDED_NEAR_MISS",
+        "SCOPE_OR_RELATION_MISMATCH"
+      ],
+      "disallowedShortcuts": [
+        "SINGLE_LOCAL_EXPLICIT_LOOKUP"
+      ],
+      "authority": "SERVER_SELECTED_REQUIREMENT"
+    }
+  },
+  "passage:COMPREHENSION:4": {
+    "version": "reading-difficulty-recipe-v2",
+    "kind": "PASSAGE",
+    "band": 4,
+    "anchor": "Connected discourse where multiple relations such as concession, competing priorities, condition/consequence, evidence or qualification interact across paragraphs, so no single local statement determines the overall interpretation.",
+    "deterministicDimensions": [
+      "normalizedCharacterCount",
+      "paragraphCount",
+      "surfaceUnitCount",
+      "serverPassageDiscourseBlueprint"
+    ],
+    "preferredDimensions": [
+      "Use length, paragraphing and surface-unit count only as broad editorial signals.",
+      "Shape discourse so it supports the requested Reading mode COMPREHENSION.",
+      "Realize at least two interacting discourse-relation categories with a meaningful cross-paragraph dependency; do not satisfy this by length or paragraph count alone.",
+      "Use competing constraints or qualification so a single explicit local statement does not settle the overall interpretation."
+    ],
+    "semanticDimensions": [
+      "linguisticAndDiscourseComplexity",
+      "coherenceAndReferenceLoad",
+      "registerAndPragmaticNuance",
+      "selfContainedWithoutExternalKnowledge",
+      "interactingDiscourseRelations",
+      "crossParagraphDependency",
+      "crossUnitDependencyForComprehension"
+    ],
+    "hardStructuralConstraints": [
+      "Use only the requested learning language.",
+      "Return non-blank passageText bound to the requested passageId."
+    ],
+    "enforcement": "The passageDemand blueprint is server-selected. Surface measurements are diagnostic only; actual linguistic/discourse difficulty remains shadow-observed.",
+    "passageDemand": {
+      "version": "reading-passage-blueprint-b4-v2",
+      "minimumInteractingRelationCategories": 2,
+      "relationCategoryOptions": [
+        "CONCESSION_OR_CONTRAST",
+        "CONDITION_AND_CONSEQUENCE",
+        "CLAIM_AND_EVIDENCE",
+        "PROPOSAL_AND_LIMITATION",
+        "COMPETING_PRIORITIES",
+        "STANCE_OR_QUALIFICATION",
+        "CROSS_PARAGRAPH_REFERENCE"
+      ],
+      "crossParagraphDependencyRequired": true,
+      "localOnlyLinearDiscourseAllowed": false,
+      "integrationRequirement": "INTERACTING_RELATIONS_WITH_CROSS_PARAGRAPH_DEPENDENCY",
+      "interpretiveRequirements": [
+        "STANCE_WITH_LIMITATION"
+      ],
+      "modeEmphasis": [
+        "Require a qualified overall judgment: one condition supports an advantage while another limits it, so no single explicit sentence settles the final stance."
+      ],
+      "externalKnowledgeAllowed": false,
+      "authority": "SERVER_SELECTED_REQUIREMENT"
+    }
+  },
+  "question:COMPREHENSION:4:CONTENT": {
+    "version": "reading-difficulty-recipe-v2",
+    "kind": "QUESTION_DEMAND",
+    "band": 4,
+    "anchor": "Requires integrating multiple units or discourse cues; local lookup alone is insufficient.",
+    "deterministicDimensions": [
+      "promptCharacterCount",
+      "optionCountAndCharacterLengths",
+      "evidenceExactMatchAndOffset",
+      "evidenceParagraphAndSurfaceUnitCoverage",
+      "evidenceToQuestionSurfaceUnitDistance",
+      "skillTagAndPassageBinding",
+      "serverQuestionDemandBlueprint"
+    ],
+    "preferredDimensions": [
+      "Treat measured evidence geometry as an observation, never as a band by itself.",
+      "Realize the server-selected skill CONTENT without changing the assigned passage."
+    ],
+    "semanticDimensions": [
+      "evidenceExplicitness",
+      "inferenceDemand",
+      "discourseRelationDemand",
+      "distractorDiscriminationDemand",
+      "singleBestSupportedAnswerWithoutAmbiguity",
+      "selfContainedWithoutExternalKnowledge"
+    ],
+    "hardStructuralConstraints": [
+      "Reuse the exact server-assigned passage and passageId.",
+      "Use the server-required single-choice shape and held answer-key binding.",
+      "Keep vocabulary identity fields empty for Reading questions."
+    ],
+    "enforcement": "The questionDemand blueprint is server-selected. Surface measurements are deterministic diagnostics; semantic difficulty remains shadow-only.",
+    "questionDemand": {
+      "kind": "CROSS_UNIT_INFERENCE",
+      "evidenceScope": "CROSS_UNIT",
+      "minimumDistinctCues": 2,
+      "minimumEvidenceUnits": 2,
+      "minimumEvidenceParagraphs": 1,
+      "inferenceRequirement": "SUPPORTED_CROSS_UNIT_INFERENCE",
+      "discourseRequirements": [
+        "CAUSE_EFFECT_OR_CLAIM_EVIDENCE_OR_CONDITION_RESULT"
+      ],
+      "distractorRequirements": [
+        "PASSAGE_GROUNDED_NEAR_MISS",
+        "SCOPE_OR_RELATION_MISMATCH"
+      ],
+      "disallowedShortcuts": [
+        "SINGLE_LOCAL_EXPLICIT_LOOKUP"
+      ],
+      "authority": "SERVER_SELECTED_REQUIREMENT"
+    }
+  },
+  "question:COMPREHENSION:5:INFERENCE": {
+    "version": "reading-difficulty-recipe-v2",
+    "kind": "QUESTION_DEMAND",
+    "band": 5,
+    "anchor": "Requires multiple cues plus at least two interacting constraints such as scope, qualification, condition or exception.",
+    "deterministicDimensions": [
+      "promptCharacterCount",
+      "optionCountAndCharacterLengths",
+      "evidenceExactMatchAndOffset",
+      "evidenceParagraphAndSurfaceUnitCoverage",
+      "evidenceToQuestionSurfaceUnitDistance",
+      "skillTagAndPassageBinding",
+      "serverQuestionDemandBlueprint"
+    ],
+    "preferredDimensions": [
+      "Treat measured evidence geometry as an observation, never as a band by itself.",
+      "Realize the server-selected skill INFERENCE without changing the assigned passage."
+    ],
+    "semanticDimensions": [
+      "evidenceExplicitness",
+      "inferenceDemand",
+      "discourseRelationDemand",
+      "distractorDiscriminationDemand",
+      "singleBestSupportedAnswerWithoutAmbiguity",
+      "selfContainedWithoutExternalKnowledge"
+    ],
+    "hardStructuralConstraints": [
+      "Reuse the exact server-assigned passage and passageId.",
+      "Use the server-required single-choice shape and held answer-key binding.",
+      "Keep vocabulary identity fields empty for Reading questions."
+    ],
+    "enforcement": "The questionDemand blueprint is server-selected. Surface measurements are deterministic diagnostics; semantic difficulty remains shadow-only.",
+    "questionDemand": {
+      "kind": "QUALIFIED_MULTI_CUE",
+      "evidenceScope": "CROSS_UNIT",
+      "minimumDistinctCues": 3,
+      "minimumEvidenceUnits": 2,
+      "minimumEvidenceParagraphs": 1,
+      "inferenceRequirement": "MULTI_CUE_SYNTHESIS",
+      "discourseRequirements": [
+        "TWO_OR_MORE_OF_SCOPE_QUALIFICATION_CONDITION_EXCEPTION"
+      ],
+      "distractorRequirements": [
+        "PARTIAL_TRUTH",
+        "SCOPE_OR_RELATION_MISMATCH"
+      ],
+      "disallowedShortcuts": [
+        "SINGLE_LOCAL_EXPLICIT_LOOKUP",
+        "UNQUALIFIED_DETAIL_RETRIEVAL"
+      ],
+      "authority": "SERVER_SELECTED_REQUIREMENT"
+    }
+  },
+  "passage:COMPREHENSION:5": {
+    "version": "reading-difficulty-recipe-v2",
+    "kind": "PASSAGE",
+    "band": 5,
+    "anchor": "Coherent discourse with interacting scope, qualification, stance or reference relations, without specialist knowledge.",
+    "deterministicDimensions": [
+      "normalizedCharacterCount",
+      "paragraphCount",
+      "surfaceUnitCount",
+      "serverPassageDiscourseBlueprint"
+    ],
+    "preferredDimensions": [
+      "Use length, paragraphing and surface-unit count only as broad editorial signals.",
+      "Shape discourse so it supports the requested Reading mode COMPREHENSION.",
+      "Use competing constraints or qualification so a single explicit local statement does not settle the overall interpretation."
+    ],
+    "semanticDimensions": [
+      "linguisticAndDiscourseComplexity",
+      "coherenceAndReferenceLoad",
+      "registerAndPragmaticNuance",
+      "selfContainedWithoutExternalKnowledge",
+      "crossUnitDependencyForComprehension"
+    ],
+    "hardStructuralConstraints": [
+      "Use only the requested learning language.",
+      "Return non-blank passageText bound to the requested passageId."
+    ],
+    "enforcement": "The passageDemand blueprint is server-selected. Surface measurements are diagnostic only; actual linguistic/discourse difficulty remains shadow-observed.",
+    "passageDemand": {
+      "version": "reading-passage-blueprint-b4-v2",
+      "minimumInteractingRelationCategories": 3,
+      "relationCategoryOptions": [
+        "SCOPE",
+        "QUALIFICATION",
+        "STANCE",
+        "REFERENCE",
+        "CONDITION_OR_EXCEPTION",
+        "COMPETING_CONSTRAINTS"
+      ],
+      "crossParagraphDependencyRequired": true,
+      "localOnlyLinearDiscourseAllowed": false,
+      "integrationRequirement": "MULTIPLE_CONSTRAINTS_INTEGRATED_ACROSS_THE_WHOLE_TEXT",
+      "interpretiveRequirements": [
+        "QUALIFIED_CLAIM",
+        "COMPETING_INTERPRETATIONS",
+        "REGISTER_OR_ROLE_SENSITIVE_STANCE"
+      ],
+      "modeEmphasis": [
+        "Support content and inference questions at the assigned passage band."
+      ],
+      "externalKnowledgeAllowed": false,
+      "authority": "SERVER_SELECTED_REQUIREMENT"
+    }
+  },
+  "question:COMPREHENSION:5:CONTENT": {
+    "version": "reading-difficulty-recipe-v2",
+    "kind": "QUESTION_DEMAND",
+    "band": 5,
+    "anchor": "Requires multiple cues plus at least two interacting constraints such as scope, qualification, condition or exception.",
+    "deterministicDimensions": [
+      "promptCharacterCount",
+      "optionCountAndCharacterLengths",
+      "evidenceExactMatchAndOffset",
+      "evidenceParagraphAndSurfaceUnitCoverage",
+      "evidenceToQuestionSurfaceUnitDistance",
+      "skillTagAndPassageBinding",
+      "serverQuestionDemandBlueprint"
+    ],
+    "preferredDimensions": [
+      "Treat measured evidence geometry as an observation, never as a band by itself.",
+      "Realize the server-selected skill CONTENT without changing the assigned passage."
+    ],
+    "semanticDimensions": [
+      "evidenceExplicitness",
+      "inferenceDemand",
+      "discourseRelationDemand",
+      "distractorDiscriminationDemand",
+      "singleBestSupportedAnswerWithoutAmbiguity",
+      "selfContainedWithoutExternalKnowledge"
+    ],
+    "hardStructuralConstraints": [
+      "Reuse the exact server-assigned passage and passageId.",
+      "Use the server-required single-choice shape and held answer-key binding.",
+      "Keep vocabulary identity fields empty for Reading questions."
+    ],
+    "enforcement": "The questionDemand blueprint is server-selected. Surface measurements are deterministic diagnostics; semantic difficulty remains shadow-only.",
+    "questionDemand": {
+      "kind": "QUALIFIED_MULTI_CUE",
+      "evidenceScope": "CROSS_UNIT",
+      "minimumDistinctCues": 3,
+      "minimumEvidenceUnits": 2,
+      "minimumEvidenceParagraphs": 1,
+      "inferenceRequirement": "MULTI_CUE_SYNTHESIS",
+      "discourseRequirements": [
+        "TWO_OR_MORE_OF_SCOPE_QUALIFICATION_CONDITION_EXCEPTION"
+      ],
+      "distractorRequirements": [
+        "PARTIAL_TRUTH",
+        "SCOPE_OR_RELATION_MISMATCH"
+      ],
+      "disallowedShortcuts": [
+        "SINGLE_LOCAL_EXPLICIT_LOOKUP",
+        "UNQUALIFIED_DETAIL_RETRIEVAL"
+      ],
+      "authority": "SERVER_SELECTED_REQUIREMENT"
+    }
+  },
+  "passage:STRUCTURE:1": {
+    "version": "reading-difficulty-recipe-v2",
+    "kind": "PASSAGE",
+    "band": 1,
+    "anchor": "Direct, linear familiar text with one plainly expressed situation or message.",
+    "deterministicDimensions": [
+      "normalizedCharacterCount",
+      "paragraphCount",
+      "surfaceUnitCount",
+      "serverPassageDiscourseBlueprint"
+    ],
+    "preferredDimensions": [
+      "Use length, paragraphing and surface-unit count only as broad editorial signals.",
+      "Shape discourse so it supports the requested Reading mode STRUCTURE."
+    ],
+    "semanticDimensions": [
+      "linguisticAndDiscourseComplexity",
+      "coherenceAndReferenceLoad",
+      "registerAndPragmaticNuance",
+      "selfContainedWithoutExternalKnowledge"
+    ],
+    "hardStructuralConstraints": [
+      "Use only the requested learning language.",
+      "Return non-blank passageText bound to the requested passageId."
+    ],
+    "enforcement": "The passageDemand blueprint is server-selected. Surface measurements are diagnostic only; actual linguistic/discourse difficulty remains shadow-observed.",
+    "passageDemand": {
+      "version": "reading-passage-blueprint-b4-v2",
+      "minimumInteractingRelationCategories": 0,
+      "relationCategoryOptions": [],
+      "crossParagraphDependencyRequired": false,
+      "localOnlyLinearDiscourseAllowed": true,
+      "integrationRequirement": "ONE_DIRECT_EXPLICIT_SITUATION",
+      "interpretiveRequirements": [],
+      "modeEmphasis": [
+        "Support paragraph and discourse-structure questions without an artificial template."
+      ],
+      "externalKnowledgeAllowed": false,
+      "authority": "SERVER_SELECTED_REQUIREMENT"
+    }
+  },
+  "question:STRUCTURE:1:GIST": {
+    "version": "reading-difficulty-recipe-v2",
+    "kind": "QUESTION_DEMAND",
+    "band": 1,
+    "anchor": "Answerable from one explicit local span by direct evidence lookup.",
+    "deterministicDimensions": [
+      "promptCharacterCount",
+      "optionCountAndCharacterLengths",
+      "evidenceExactMatchAndOffset",
+      "evidenceParagraphAndSurfaceUnitCoverage",
+      "evidenceToQuestionSurfaceUnitDistance",
+      "skillTagAndPassageBinding",
+      "serverQuestionDemandBlueprint"
+    ],
+    "preferredDimensions": [
+      "Treat measured evidence geometry as an observation, never as a band by itself.",
+      "Realize the server-selected skill GIST without changing the assigned passage."
+    ],
+    "semanticDimensions": [
+      "evidenceExplicitness",
+      "inferenceDemand",
+      "discourseRelationDemand",
+      "distractorDiscriminationDemand",
+      "singleBestSupportedAnswerWithoutAmbiguity",
+      "selfContainedWithoutExternalKnowledge"
+    ],
+    "hardStructuralConstraints": [
+      "Reuse the exact server-assigned passage and passageId.",
+      "Use the server-required single-choice shape and held answer-key binding.",
+      "Keep vocabulary identity fields empty for Reading questions."
+    ],
+    "enforcement": "The questionDemand blueprint is server-selected. Surface measurements are deterministic diagnostics; semantic difficulty remains shadow-only.",
+    "questionDemand": {
+      "kind": "PARAPHRASED_LOCAL",
+      "evidenceScope": "LOCAL",
+      "minimumDistinctCues": 1,
+      "minimumEvidenceUnits": 1,
+      "minimumEvidenceParagraphs": 1,
+      "inferenceRequirement": "PARAGRAPH_GIST_OR_SIMPLE_ROLE",
+      "discourseRequirements": [
+        "ONE_PARAGRAPH_FUNCTION"
+      ],
+      "distractorRequirements": [
+        "WRONG_PARAGRAPH_ROLE"
+      ],
+      "disallowedShortcuts": [
+        "ISOLATED_FACT_RETRIEVAL"
+      ],
+      "authority": "SERVER_SELECTED_REQUIREMENT"
+    }
+  },
+  "question:STRUCTURE:1:STRUCTURE": {
+    "version": "reading-difficulty-recipe-v2",
+    "kind": "QUESTION_DEMAND",
+    "band": 1,
+    "anchor": "Answerable from one explicit local span by direct evidence lookup.",
+    "deterministicDimensions": [
+      "promptCharacterCount",
+      "optionCountAndCharacterLengths",
+      "evidenceExactMatchAndOffset",
+      "evidenceParagraphAndSurfaceUnitCoverage",
+      "evidenceToQuestionSurfaceUnitDistance",
+      "skillTagAndPassageBinding",
+      "serverQuestionDemandBlueprint"
+    ],
+    "preferredDimensions": [
+      "Treat measured evidence geometry as an observation, never as a band by itself.",
+      "Realize the server-selected skill STRUCTURE without changing the assigned passage."
+    ],
+    "semanticDimensions": [
+      "evidenceExplicitness",
+      "inferenceDemand",
+      "discourseRelationDemand",
+      "distractorDiscriminationDemand",
+      "singleBestSupportedAnswerWithoutAmbiguity",
+      "selfContainedWithoutExternalKnowledge"
+    ],
+    "hardStructuralConstraints": [
+      "Reuse the exact server-assigned passage and passageId.",
+      "Use the server-required single-choice shape and held answer-key binding.",
+      "Keep vocabulary identity fields empty for Reading questions."
+    ],
+    "enforcement": "The questionDemand blueprint is server-selected. Surface measurements are deterministic diagnostics; semantic difficulty remains shadow-only.",
+    "questionDemand": {
+      "kind": "PARAPHRASED_LOCAL",
+      "evidenceScope": "LOCAL",
+      "minimumDistinctCues": 1,
+      "minimumEvidenceUnits": 1,
+      "minimumEvidenceParagraphs": 1,
+      "inferenceRequirement": "PARAGRAPH_GIST_OR_SIMPLE_ROLE",
+      "discourseRequirements": [
+        "ONE_PARAGRAPH_FUNCTION"
+      ],
+      "distractorRequirements": [
+        "WRONG_PARAGRAPH_ROLE"
+      ],
+      "disallowedShortcuts": [
+        "ISOLATED_FACT_RETRIEVAL"
+      ],
+      "authority": "SERVER_SELECTED_REQUIREMENT"
+    }
+  },
+  "question:STRUCTURE:2:GIST": {
+    "version": "reading-difficulty-recipe-v2",
+    "kind": "QUESTION_DEMAND",
+    "band": 2,
+    "anchor": "Requires a paraphrase or connection between nearby explicit units.",
+    "deterministicDimensions": [
+      "promptCharacterCount",
+      "optionCountAndCharacterLengths",
+      "evidenceExactMatchAndOffset",
+      "evidenceParagraphAndSurfaceUnitCoverage",
+      "evidenceToQuestionSurfaceUnitDistance",
+      "skillTagAndPassageBinding",
+      "serverQuestionDemandBlueprint"
+    ],
+    "preferredDimensions": [
+      "Treat measured evidence geometry as an observation, never as a band by itself.",
+      "Realize the server-selected skill GIST without changing the assigned passage."
+    ],
+    "semanticDimensions": [
+      "evidenceExplicitness",
+      "inferenceDemand",
+      "discourseRelationDemand",
+      "distractorDiscriminationDemand",
+      "singleBestSupportedAnswerWithoutAmbiguity",
+      "selfContainedWithoutExternalKnowledge"
+    ],
+    "hardStructuralConstraints": [
+      "Reuse the exact server-assigned passage and passageId.",
+      "Use the server-required single-choice shape and held answer-key binding.",
+      "Keep vocabulary identity fields empty for Reading questions."
+    ],
+    "enforcement": "The questionDemand blueprint is server-selected. Surface measurements are deterministic diagnostics; semantic difficulty remains shadow-only.",
+    "questionDemand": {
+      "kind": "DISCOURSE_STRUCTURE",
+      "evidenceScope": "ADJACENT_UNITS",
+      "minimumDistinctCues": 2,
+      "minimumEvidenceUnits": 2,
+      "minimumEvidenceParagraphs": 1,
+      "inferenceRequirement": "SIMPLE_DEVELOPMENT_ORDER",
+      "discourseRequirements": [
+        "PARAGRAPH_ROLE_OR_SIMPLE_SEQUENCE"
+      ],
+      "distractorRequirements": [
+        "ROLE_OR_ORDER_MISMATCH"
+      ],
+      "disallowedShortcuts": [
+        "CONTENT_REASON_RETRIEVAL_ONLY"
+      ],
+      "authority": "SERVER_SELECTED_REQUIREMENT"
+    }
+  },
+  "passage:STRUCTURE:2": {
+    "version": "reading-difficulty-recipe-v2",
+    "kind": "PASSAGE",
+    "band": 2,
+    "anchor": "Familiar text with a simple sequence, reason, time relation or ordinary request.",
+    "deterministicDimensions": [
+      "normalizedCharacterCount",
+      "paragraphCount",
+      "surfaceUnitCount",
+      "serverPassageDiscourseBlueprint"
+    ],
+    "preferredDimensions": [
+      "Use length, paragraphing and surface-unit count only as broad editorial signals.",
+      "Shape discourse so it supports the requested Reading mode STRUCTURE."
+    ],
+    "semanticDimensions": [
+      "linguisticAndDiscourseComplexity",
+      "coherenceAndReferenceLoad",
+      "registerAndPragmaticNuance",
+      "selfContainedWithoutExternalKnowledge"
+    ],
+    "hardStructuralConstraints": [
+      "Use only the requested learning language.",
+      "Return non-blank passageText bound to the requested passageId."
+    ],
+    "enforcement": "The passageDemand blueprint is server-selected. Surface measurements are diagnostic only; actual linguistic/discourse difficulty remains shadow-observed.",
+    "passageDemand": {
+      "version": "reading-passage-blueprint-b4-v2",
+      "minimumInteractingRelationCategories": 1,
+      "relationCategoryOptions": [
+        "SEQUENCE",
+        "EXPLICIT_REASON",
+        "TIME_RELATION"
+      ],
+      "crossParagraphDependencyRequired": false,
+      "localOnlyLinearDiscourseAllowed": true,
+      "integrationRequirement": "ONE_SIMPLE_LINEAR_CONNECTION",
+      "interpretiveRequirements": [],
+      "modeEmphasis": [
+        "Support paragraph and discourse-structure questions without an artificial template."
+      ],
+      "externalKnowledgeAllowed": false,
+      "authority": "SERVER_SELECTED_REQUIREMENT"
+    }
+  },
+  "question:STRUCTURE:2:STRUCTURE": {
+    "version": "reading-difficulty-recipe-v2",
+    "kind": "QUESTION_DEMAND",
+    "band": 2,
+    "anchor": "Requires a paraphrase or connection between nearby explicit units.",
+    "deterministicDimensions": [
+      "promptCharacterCount",
+      "optionCountAndCharacterLengths",
+      "evidenceExactMatchAndOffset",
+      "evidenceParagraphAndSurfaceUnitCoverage",
+      "evidenceToQuestionSurfaceUnitDistance",
+      "skillTagAndPassageBinding",
+      "serverQuestionDemandBlueprint"
+    ],
+    "preferredDimensions": [
+      "Treat measured evidence geometry as an observation, never as a band by itself.",
+      "Realize the server-selected skill STRUCTURE without changing the assigned passage."
+    ],
+    "semanticDimensions": [
+      "evidenceExplicitness",
+      "inferenceDemand",
+      "discourseRelationDemand",
+      "distractorDiscriminationDemand",
+      "singleBestSupportedAnswerWithoutAmbiguity",
+      "selfContainedWithoutExternalKnowledge"
+    ],
+    "hardStructuralConstraints": [
+      "Reuse the exact server-assigned passage and passageId.",
+      "Use the server-required single-choice shape and held answer-key binding.",
+      "Keep vocabulary identity fields empty for Reading questions."
+    ],
+    "enforcement": "The questionDemand blueprint is server-selected. Surface measurements are deterministic diagnostics; semantic difficulty remains shadow-only.",
+    "questionDemand": {
+      "kind": "DISCOURSE_STRUCTURE",
+      "evidenceScope": "ADJACENT_UNITS",
+      "minimumDistinctCues": 2,
+      "minimumEvidenceUnits": 2,
+      "minimumEvidenceParagraphs": 1,
+      "inferenceRequirement": "SIMPLE_DEVELOPMENT_ORDER",
+      "discourseRequirements": [
+        "PARAGRAPH_ROLE_OR_SIMPLE_SEQUENCE"
+      ],
+      "distractorRequirements": [
+        "ROLE_OR_ORDER_MISMATCH"
+      ],
+      "disallowedShortcuts": [
+        "CONTENT_REASON_RETRIEVAL_ONLY"
+      ],
+      "authority": "SERVER_SELECTED_REQUIREMENT"
+    }
+  },
+  "question:STRUCTURE:3:STRUCTURE": {
+    "version": "reading-difficulty-recipe-v2",
+    "kind": "QUESTION_DEMAND",
+    "band": 3,
+    "anchor": "Requires a cause, condition, comparison or other bounded relation judgment.",
+    "deterministicDimensions": [
+      "promptCharacterCount",
+      "optionCountAndCharacterLengths",
+      "evidenceExactMatchAndOffset",
+      "evidenceParagraphAndSurfaceUnitCoverage",
+      "evidenceToQuestionSurfaceUnitDistance",
+      "skillTagAndPassageBinding",
+      "serverQuestionDemandBlueprint"
+    ],
+    "preferredDimensions": [
+      "Treat measured evidence geometry as an observation, never as a band by itself.",
+      "Realize the server-selected skill STRUCTURE without changing the assigned passage."
+    ],
+    "semanticDimensions": [
+      "evidenceExplicitness",
+      "inferenceDemand",
+      "discourseRelationDemand",
+      "distractorDiscriminationDemand",
+      "singleBestSupportedAnswerWithoutAmbiguity",
+      "selfContainedWithoutExternalKnowledge"
+    ],
+    "hardStructuralConstraints": [
+      "Reuse the exact server-assigned passage and passageId.",
+      "Use the server-required single-choice shape and held answer-key binding.",
+      "Keep vocabulary identity fields empty for Reading questions."
+    ],
+    "enforcement": "The questionDemand blueprint is server-selected. Surface measurements are deterministic diagnostics; semantic difficulty remains shadow-only.",
+    "questionDemand": {
+      "kind": "DISCOURSE_STRUCTURE",
+      "evidenceScope": "CROSS_PARAGRAPH",
+      "minimumDistinctCues": 2,
+      "minimumEvidenceUnits": 2,
+      "minimumEvidenceParagraphs": 2,
+      "inferenceRequirement": "ADJACENT_PARAGRAPH_RELATION",
+      "discourseRequirements": [
+        "PROPOSAL_EVIDENCE_RESULT_OR_CONTRAST"
+      ],
+      "distractorRequirements": [
+        "DISCOURSE_RELATION_MISMATCH"
+      ],
+      "disallowedShortcuts": [
+        "CONTENT_REASON_RETRIEVAL_ONLY"
+      ],
+      "authority": "SERVER_SELECTED_REQUIREMENT"
+    }
+  },
+  "passage:STRUCTURE:3": {
+    "version": "reading-difficulty-recipe-v2",
+    "kind": "PASSAGE",
+    "band": 3,
+    "anchor": "Coherent connected text using cause, condition or comparison with explicit scope.",
+    "deterministicDimensions": [
+      "normalizedCharacterCount",
+      "paragraphCount",
+      "surfaceUnitCount",
+      "serverPassageDiscourseBlueprint"
+    ],
+    "preferredDimensions": [
+      "Use length, paragraphing and surface-unit count only as broad editorial signals.",
+      "Shape discourse so it supports the requested Reading mode STRUCTURE."
+    ],
+    "semanticDimensions": [
+      "linguisticAndDiscourseComplexity",
+      "coherenceAndReferenceLoad",
+      "registerAndPragmaticNuance",
+      "selfContainedWithoutExternalKnowledge"
+    ],
+    "hardStructuralConstraints": [
+      "Use only the requested learning language.",
+      "Return non-blank passageText bound to the requested passageId."
+    ],
+    "enforcement": "The passageDemand blueprint is server-selected. Surface measurements are diagnostic only; actual linguistic/discourse difficulty remains shadow-observed.",
+    "passageDemand": {
+      "version": "reading-passage-blueprint-b4-v2",
+      "minimumInteractingRelationCategories": 1,
+      "relationCategoryOptions": [
+        "EXPLICIT_CAUSE_EFFECT",
+        "EXPLICIT_CONDITION",
+        "EXPLICIT_COMPARISON"
+      ],
+      "crossParagraphDependencyRequired": false,
+      "localOnlyLinearDiscourseAllowed": true,
+      "integrationRequirement": "ONE_EXPLICIT_RELATION_CONNECTS_UNITS",
+      "interpretiveRequirements": [],
+      "modeEmphasis": [
+        "Support paragraph and discourse-structure questions without an artificial template."
+      ],
+      "externalKnowledgeAllowed": false,
+      "authority": "SERVER_SELECTED_REQUIREMENT"
+    }
+  },
+  "question:STRUCTURE:4:STRUCTURE": {
+    "version": "reading-difficulty-recipe-v2",
+    "kind": "QUESTION_DEMAND",
+    "band": 4,
+    "anchor": "Requires integrating multiple units or discourse cues; local lookup alone is insufficient.",
+    "deterministicDimensions": [
+      "promptCharacterCount",
+      "optionCountAndCharacterLengths",
+      "evidenceExactMatchAndOffset",
+      "evidenceParagraphAndSurfaceUnitCoverage",
+      "evidenceToQuestionSurfaceUnitDistance",
+      "skillTagAndPassageBinding",
+      "serverQuestionDemandBlueprint"
+    ],
+    "preferredDimensions": [
+      "Treat measured evidence geometry as an observation, never as a band by itself.",
+      "Realize the server-selected skill STRUCTURE without changing the assigned passage."
+    ],
+    "semanticDimensions": [
+      "evidenceExplicitness",
+      "inferenceDemand",
+      "discourseRelationDemand",
+      "distractorDiscriminationDemand",
+      "singleBestSupportedAnswerWithoutAmbiguity",
+      "selfContainedWithoutExternalKnowledge"
+    ],
+    "hardStructuralConstraints": [
+      "Reuse the exact server-assigned passage and passageId.",
+      "Use the server-required single-choice shape and held answer-key binding.",
+      "Keep vocabulary identity fields empty for Reading questions."
+    ],
+    "enforcement": "The questionDemand blueprint is server-selected. Surface measurements are deterministic diagnostics; semantic difficulty remains shadow-only.",
+    "questionDemand": {
+      "kind": "DISCOURSE_STRUCTURE",
+      "evidenceScope": "CROSS_PARAGRAPH",
+      "minimumDistinctCues": 3,
+      "minimumEvidenceUnits": 3,
+      "minimumEvidenceParagraphs": 2,
+      "inferenceRequirement": "MULTI_PARAGRAPH_FUNCTION_RELATION",
+      "discourseRequirements": [
+        "PROBLEM_ALTERNATIVE_DECISION_OR_CLAIM_CONCESSION_CONCLUSION"
+      ],
+      "distractorRequirements": [
+        "PARAGRAPH_FUNCTION_NEAR_MISS",
+        "RELATION_MISMATCH"
+      ],
+      "disallowedShortcuts": [
+        "CONTENT_REASON_RETRIEVAL_ONLY",
+        "SINGLE_PARAGRAPH_LOOKUP"
+      ],
+      "authority": "SERVER_SELECTED_REQUIREMENT"
+    }
+  },
+  "passage:STRUCTURE:4": {
+    "version": "reading-difficulty-recipe-v2",
+    "kind": "PASSAGE",
+    "band": 4,
+    "anchor": "Connected discourse where multiple relations such as concession, competing priorities, condition/consequence, evidence or qualification interact across paragraphs, so no single local statement determines the overall interpretation.",
+    "deterministicDimensions": [
+      "normalizedCharacterCount",
+      "paragraphCount",
+      "surfaceUnitCount",
+      "serverPassageDiscourseBlueprint"
+    ],
+    "preferredDimensions": [
+      "Use length, paragraphing and surface-unit count only as broad editorial signals.",
+      "Shape discourse so it supports the requested Reading mode STRUCTURE.",
+      "Realize at least two interacting discourse-relation categories with a meaningful cross-paragraph dependency; do not satisfy this by length or paragraph count alone."
+    ],
+    "semanticDimensions": [
+      "linguisticAndDiscourseComplexity",
+      "coherenceAndReferenceLoad",
+      "registerAndPragmaticNuance",
+      "selfContainedWithoutExternalKnowledge",
+      "interactingDiscourseRelations",
+      "crossParagraphDependency"
+    ],
+    "hardStructuralConstraints": [
+      "Use only the requested learning language.",
+      "Return non-blank passageText bound to the requested passageId."
+    ],
+    "enforcement": "The passageDemand blueprint is server-selected. Surface measurements are diagnostic only; actual linguistic/discourse difficulty remains shadow-observed.",
+    "passageDemand": {
+      "version": "reading-passage-blueprint-b4-v2",
+      "minimumInteractingRelationCategories": 2,
+      "relationCategoryOptions": [
+        "CONCESSION_OR_CONTRAST",
+        "CONDITION_AND_CONSEQUENCE",
+        "CLAIM_AND_EVIDENCE",
+        "PROPOSAL_AND_LIMITATION",
+        "COMPETING_PRIORITIES",
+        "STANCE_OR_QUALIFICATION",
+        "CROSS_PARAGRAPH_REFERENCE"
+      ],
+      "crossParagraphDependencyRequired": true,
+      "localOnlyLinearDiscourseAllowed": false,
+      "integrationRequirement": "INTERACTING_RELATIONS_WITH_CROSS_PARAGRAPH_DEPENDENCY",
+      "interpretiveRequirements": [
+        "CONCESSION_WITH_QUALIFICATION"
+      ],
+      "modeEmphasis": [
+        "Vary natural paragraph functions such as proposal, concession or competing position, qualification, and final stance; do not impose a fixed template."
+      ],
+      "externalKnowledgeAllowed": false,
+      "authority": "SERVER_SELECTED_REQUIREMENT"
+    }
+  },
+  "question:STRUCTURE:5:STRUCTURE": {
+    "version": "reading-difficulty-recipe-v2",
+    "kind": "QUESTION_DEMAND",
+    "band": 5,
+    "anchor": "Requires multiple cues plus at least two interacting constraints such as scope, qualification, condition or exception.",
+    "deterministicDimensions": [
+      "promptCharacterCount",
+      "optionCountAndCharacterLengths",
+      "evidenceExactMatchAndOffset",
+      "evidenceParagraphAndSurfaceUnitCoverage",
+      "evidenceToQuestionSurfaceUnitDistance",
+      "skillTagAndPassageBinding",
+      "serverQuestionDemandBlueprint"
+    ],
+    "preferredDimensions": [
+      "Treat measured evidence geometry as an observation, never as a band by itself.",
+      "Realize the server-selected skill STRUCTURE without changing the assigned passage."
+    ],
+    "semanticDimensions": [
+      "evidenceExplicitness",
+      "inferenceDemand",
+      "discourseRelationDemand",
+      "distractorDiscriminationDemand",
+      "singleBestSupportedAnswerWithoutAmbiguity",
+      "selfContainedWithoutExternalKnowledge"
+    ],
+    "hardStructuralConstraints": [
+      "Reuse the exact server-assigned passage and passageId.",
+      "Use the server-required single-choice shape and held answer-key binding.",
+      "Keep vocabulary identity fields empty for Reading questions."
+    ],
+    "enforcement": "The questionDemand blueprint is server-selected. Surface measurements are deterministic diagnostics; semantic difficulty remains shadow-only.",
+    "questionDemand": {
+      "kind": "WHOLE_TEXT_SYNTHESIS",
+      "evidenceScope": "WHOLE_TEXT",
+      "minimumDistinctCues": 3,
+      "minimumEvidenceUnits": 3,
+      "minimumEvidenceParagraphs": 2,
+      "inferenceRequirement": "WHOLE_ARGUMENT_STRUCTURE",
+      "discourseRequirements": [
+        "MULTIPLE_PARAGRAPH_ROLES",
+        "ALTERNATIVE_TO_FINAL_CONCLUSION_FUNCTION"
+      ],
+      "distractorRequirements": [
+        "PARTIALLY_CORRECT_ARGUMENT_MAP",
+        "FUNCTION_OR_SCOPE_MISMATCH"
+      ],
+      "disallowedShortcuts": [
+        "CONTENT_REASON_RETRIEVAL_ONLY",
+        "SINGLE_PARAGRAPH_LOOKUP"
+      ],
+      "authority": "SERVER_SELECTED_REQUIREMENT"
+    }
+  },
+  "passage:STRUCTURE:5": {
+    "version": "reading-difficulty-recipe-v2",
+    "kind": "PASSAGE",
+    "band": 5,
+    "anchor": "Coherent discourse with interacting scope, qualification, stance or reference relations, without specialist knowledge.",
+    "deterministicDimensions": [
+      "normalizedCharacterCount",
+      "paragraphCount",
+      "surfaceUnitCount",
+      "serverPassageDiscourseBlueprint"
+    ],
+    "preferredDimensions": [
+      "Use length, paragraphing and surface-unit count only as broad editorial signals.",
+      "Shape discourse so it supports the requested Reading mode STRUCTURE."
+    ],
+    "semanticDimensions": [
+      "linguisticAndDiscourseComplexity",
+      "coherenceAndReferenceLoad",
+      "registerAndPragmaticNuance",
+      "selfContainedWithoutExternalKnowledge"
+    ],
+    "hardStructuralConstraints": [
+      "Use only the requested learning language.",
+      "Return non-blank passageText bound to the requested passageId."
+    ],
+    "enforcement": "The passageDemand blueprint is server-selected. Surface measurements are diagnostic only; actual linguistic/discourse difficulty remains shadow-observed.",
+    "passageDemand": {
+      "version": "reading-passage-blueprint-b4-v2",
+      "minimumInteractingRelationCategories": 3,
+      "relationCategoryOptions": [
+        "SCOPE",
+        "QUALIFICATION",
+        "STANCE",
+        "REFERENCE",
+        "CONDITION_OR_EXCEPTION",
+        "COMPETING_CONSTRAINTS"
+      ],
+      "crossParagraphDependencyRequired": true,
+      "localOnlyLinearDiscourseAllowed": false,
+      "integrationRequirement": "MULTIPLE_CONSTRAINTS_INTEGRATED_ACROSS_THE_WHOLE_TEXT",
+      "interpretiveRequirements": [
+        "QUALIFIED_CLAIM",
+        "COMPETING_INTERPRETATIONS",
+        "REGISTER_OR_ROLE_SENSITIVE_STANCE"
+      ],
+      "modeEmphasis": [
+        "Support paragraph and discourse-structure questions without an artificial template."
+      ],
+      "externalKnowledgeAllowed": false,
+      "authority": "SERVER_SELECTED_REQUIREMENT"
+    }
+  },
+  "passage:CONTEXT_INFERENCE:1": {
+    "version": "reading-difficulty-recipe-v2",
+    "kind": "PASSAGE",
+    "band": 1,
+    "anchor": "Direct, linear familiar text with one plainly expressed situation or message.",
+    "deterministicDimensions": [
+      "normalizedCharacterCount",
+      "paragraphCount",
+      "surfaceUnitCount",
+      "serverPassageDiscourseBlueprint"
+    ],
+    "preferredDimensions": [
+      "Use length, paragraphing and surface-unit count only as broad editorial signals.",
+      "Shape discourse so it supports the requested Reading mode CONTEXT_INFERENCE."
+    ],
+    "semanticDimensions": [
+      "linguisticAndDiscourseComplexity",
+      "coherenceAndReferenceLoad",
+      "registerAndPragmaticNuance",
+      "selfContainedWithoutExternalKnowledge"
+    ],
+    "hardStructuralConstraints": [
+      "Use only the requested learning language.",
+      "Return non-blank passageText bound to the requested passageId."
+    ],
+    "enforcement": "The passageDemand blueprint is server-selected. Surface measurements are diagnostic only; actual linguistic/discourse difficulty remains shadow-observed.",
+    "passageDemand": {
+      "version": "reading-passage-blueprint-b4-v2",
+      "minimumInteractingRelationCategories": 0,
+      "relationCategoryOptions": [],
+      "crossParagraphDependencyRequired": false,
+      "localOnlyLinearDiscourseAllowed": true,
+      "integrationRequirement": "ONE_DIRECT_EXPLICIT_SITUATION",
+      "interpretiveRequirements": [],
+      "modeEmphasis": [
+        "Distribute contextual cues across units without increasing question-demand policy or specialist knowledge."
+      ],
+      "externalKnowledgeAllowed": false,
+      "authority": "SERVER_SELECTED_REQUIREMENT"
+    }
+  },
+  "question:CONTEXT_INFERENCE:1:CONTEXT_INFERENCE": {
+    "version": "reading-difficulty-recipe-v2",
+    "kind": "QUESTION_DEMAND",
+    "band": 1,
+    "anchor": "Answerable from one explicit local piece of evidence with direct discrimination.",
+    "deterministicDimensions": [
+      "promptCharacterCount",
+      "optionCountAndCharacterLengths",
+      "evidenceExactMatchAndOffset",
+      "evidenceParagraphAndSurfaceUnit",
+      "evidenceToQuestionSurfaceUnitDistance",
+      "skillTagAndPassageBinding"
+    ],
+    "preferredDimensions": [
+      "Treat evidence location and distance as observed signals, never as a band by themselves.",
+      "Realize the server-selected skill CONTEXT_INFERENCE without changing the assigned passage."
+    ],
+    "semanticDimensions": [
+      "evidenceExplicitness",
+      "inferenceDemand",
+      "discourseRelationDemand",
+      "distractorDiscriminationDemand",
+      "singleBestSupportedAnswerWithoutAmbiguity",
+      "selfContainedWithoutExternalKnowledge"
+    ],
+    "hardStructuralConstraints": [
+      "Reuse the exact server-assigned passage and passageId.",
+      "Use the server-required single-choice shape and held answer-key binding.",
+      "Keep vocabulary identity fields empty for Reading questions."
+    ],
+    "enforcement": "Preferred dimensions guide generation and shadow measurement only. They are not empirical hard thresholds."
+  },
+  "question:CONTEXT_INFERENCE:1:INFERENCE": {
+    "version": "reading-difficulty-recipe-v2",
+    "kind": "QUESTION_DEMAND",
+    "band": 1,
+    "anchor": "Answerable from one explicit local piece of evidence with direct discrimination.",
+    "deterministicDimensions": [
+      "promptCharacterCount",
+      "optionCountAndCharacterLengths",
+      "evidenceExactMatchAndOffset",
+      "evidenceParagraphAndSurfaceUnit",
+      "evidenceToQuestionSurfaceUnitDistance",
+      "skillTagAndPassageBinding"
+    ],
+    "preferredDimensions": [
+      "Treat evidence location and distance as observed signals, never as a band by themselves.",
+      "Realize the server-selected skill INFERENCE without changing the assigned passage."
+    ],
+    "semanticDimensions": [
+      "evidenceExplicitness",
+      "inferenceDemand",
+      "discourseRelationDemand",
+      "distractorDiscriminationDemand",
+      "singleBestSupportedAnswerWithoutAmbiguity",
+      "selfContainedWithoutExternalKnowledge"
+    ],
+    "hardStructuralConstraints": [
+      "Reuse the exact server-assigned passage and passageId.",
+      "Use the server-required single-choice shape and held answer-key binding.",
+      "Keep vocabulary identity fields empty for Reading questions."
+    ],
+    "enforcement": "Preferred dimensions guide generation and shadow measurement only. They are not empirical hard thresholds."
+  },
+  "question:CONTEXT_INFERENCE:2:INFERENCE": {
+    "version": "reading-difficulty-recipe-v2",
+    "kind": "QUESTION_DEMAND",
+    "band": 2,
+    "anchor": "Requires a simple paraphrase or relation between nearby explicit evidence.",
+    "deterministicDimensions": [
+      "promptCharacterCount",
+      "optionCountAndCharacterLengths",
+      "evidenceExactMatchAndOffset",
+      "evidenceParagraphAndSurfaceUnit",
+      "evidenceToQuestionSurfaceUnitDistance",
+      "skillTagAndPassageBinding"
+    ],
+    "preferredDimensions": [
+      "Treat evidence location and distance as observed signals, never as a band by themselves.",
+      "Realize the server-selected skill INFERENCE without changing the assigned passage."
+    ],
+    "semanticDimensions": [
+      "evidenceExplicitness",
+      "inferenceDemand",
+      "discourseRelationDemand",
+      "distractorDiscriminationDemand",
+      "singleBestSupportedAnswerWithoutAmbiguity",
+      "selfContainedWithoutExternalKnowledge"
+    ],
+    "hardStructuralConstraints": [
+      "Reuse the exact server-assigned passage and passageId.",
+      "Use the server-required single-choice shape and held answer-key binding.",
+      "Keep vocabulary identity fields empty for Reading questions."
+    ],
+    "enforcement": "Preferred dimensions guide generation and shadow measurement only. They are not empirical hard thresholds."
+  },
+  "passage:CONTEXT_INFERENCE:2": {
+    "version": "reading-difficulty-recipe-v2",
+    "kind": "PASSAGE",
+    "band": 2,
+    "anchor": "Familiar text with a simple sequence, reason, time relation or ordinary request.",
+    "deterministicDimensions": [
+      "normalizedCharacterCount",
+      "paragraphCount",
+      "surfaceUnitCount",
+      "serverPassageDiscourseBlueprint"
+    ],
+    "preferredDimensions": [
+      "Use length, paragraphing and surface-unit count only as broad editorial signals.",
+      "Shape discourse so it supports the requested Reading mode CONTEXT_INFERENCE."
+    ],
+    "semanticDimensions": [
+      "linguisticAndDiscourseComplexity",
+      "coherenceAndReferenceLoad",
+      "registerAndPragmaticNuance",
+      "selfContainedWithoutExternalKnowledge"
+    ],
+    "hardStructuralConstraints": [
+      "Use only the requested learning language.",
+      "Return non-blank passageText bound to the requested passageId."
+    ],
+    "enforcement": "The passageDemand blueprint is server-selected. Surface measurements are diagnostic only; actual linguistic/discourse difficulty remains shadow-observed.",
+    "passageDemand": {
+      "version": "reading-passage-blueprint-b4-v2",
+      "minimumInteractingRelationCategories": 1,
+      "relationCategoryOptions": [
+        "SEQUENCE",
+        "EXPLICIT_REASON",
+        "TIME_RELATION"
+      ],
+      "crossParagraphDependencyRequired": false,
+      "localOnlyLinearDiscourseAllowed": true,
+      "integrationRequirement": "ONE_SIMPLE_LINEAR_CONNECTION",
+      "interpretiveRequirements": [],
+      "modeEmphasis": [
+        "Distribute contextual cues across units without increasing question-demand policy or specialist knowledge."
+      ],
+      "externalKnowledgeAllowed": false,
+      "authority": "SERVER_SELECTED_REQUIREMENT"
+    }
+  },
+  "question:CONTEXT_INFERENCE:2:CONTEXT_INFERENCE": {
+    "version": "reading-difficulty-recipe-v2",
+    "kind": "QUESTION_DEMAND",
+    "band": 2,
+    "anchor": "Requires a simple paraphrase or relation between nearby explicit evidence.",
+    "deterministicDimensions": [
+      "promptCharacterCount",
+      "optionCountAndCharacterLengths",
+      "evidenceExactMatchAndOffset",
+      "evidenceParagraphAndSurfaceUnit",
+      "evidenceToQuestionSurfaceUnitDistance",
+      "skillTagAndPassageBinding"
+    ],
+    "preferredDimensions": [
+      "Treat evidence location and distance as observed signals, never as a band by themselves.",
+      "Realize the server-selected skill CONTEXT_INFERENCE without changing the assigned passage."
+    ],
+    "semanticDimensions": [
+      "evidenceExplicitness",
+      "inferenceDemand",
+      "discourseRelationDemand",
+      "distractorDiscriminationDemand",
+      "singleBestSupportedAnswerWithoutAmbiguity",
+      "selfContainedWithoutExternalKnowledge"
+    ],
+    "hardStructuralConstraints": [
+      "Reuse the exact server-assigned passage and passageId.",
+      "Use the server-required single-choice shape and held answer-key binding.",
+      "Keep vocabulary identity fields empty for Reading questions."
+    ],
+    "enforcement": "Preferred dimensions guide generation and shadow measurement only. They are not empirical hard thresholds."
+  },
+  "question:CONTEXT_INFERENCE:3:INFERENCE": {
+    "version": "reading-difficulty-recipe-v2",
+    "kind": "QUESTION_DEMAND",
+    "band": 3,
+    "anchor": "Requires gist, one bounded inference, or a clear cause/condition/structure relation.",
+    "deterministicDimensions": [
+      "promptCharacterCount",
+      "optionCountAndCharacterLengths",
+      "evidenceExactMatchAndOffset",
+      "evidenceParagraphAndSurfaceUnit",
+      "evidenceToQuestionSurfaceUnitDistance",
+      "skillTagAndPassageBinding"
+    ],
+    "preferredDimensions": [
+      "Treat evidence location and distance as observed signals, never as a band by themselves.",
+      "Realize the server-selected skill INFERENCE without changing the assigned passage."
+    ],
+    "semanticDimensions": [
+      "evidenceExplicitness",
+      "inferenceDemand",
+      "discourseRelationDemand",
+      "distractorDiscriminationDemand",
+      "singleBestSupportedAnswerWithoutAmbiguity",
+      "selfContainedWithoutExternalKnowledge"
+    ],
+    "hardStructuralConstraints": [
+      "Reuse the exact server-assigned passage and passageId.",
+      "Use the server-required single-choice shape and held answer-key binding.",
+      "Keep vocabulary identity fields empty for Reading questions."
+    ],
+    "enforcement": "Preferred dimensions guide generation and shadow measurement only. They are not empirical hard thresholds."
+  },
+  "passage:CONTEXT_INFERENCE:3": {
+    "version": "reading-difficulty-recipe-v2",
+    "kind": "PASSAGE",
+    "band": 3,
+    "anchor": "Coherent connected text using cause, condition or comparison with explicit scope.",
+    "deterministicDimensions": [
+      "normalizedCharacterCount",
+      "paragraphCount",
+      "surfaceUnitCount",
+      "serverPassageDiscourseBlueprint"
+    ],
+    "preferredDimensions": [
+      "Use length, paragraphing and surface-unit count only as broad editorial signals.",
+      "Shape discourse so it supports the requested Reading mode CONTEXT_INFERENCE."
+    ],
+    "semanticDimensions": [
+      "linguisticAndDiscourseComplexity",
+      "coherenceAndReferenceLoad",
+      "registerAndPragmaticNuance",
+      "selfContainedWithoutExternalKnowledge"
+    ],
+    "hardStructuralConstraints": [
+      "Use only the requested learning language.",
+      "Return non-blank passageText bound to the requested passageId."
+    ],
+    "enforcement": "The passageDemand blueprint is server-selected. Surface measurements are diagnostic only; actual linguistic/discourse difficulty remains shadow-observed.",
+    "passageDemand": {
+      "version": "reading-passage-blueprint-b4-v2",
+      "minimumInteractingRelationCategories": 1,
+      "relationCategoryOptions": [
+        "EXPLICIT_CAUSE_EFFECT",
+        "EXPLICIT_CONDITION",
+        "EXPLICIT_COMPARISON"
+      ],
+      "crossParagraphDependencyRequired": false,
+      "localOnlyLinearDiscourseAllowed": true,
+      "integrationRequirement": "ONE_EXPLICIT_RELATION_CONNECTS_UNITS",
+      "interpretiveRequirements": [],
+      "modeEmphasis": [
+        "Distribute contextual cues across units without increasing question-demand policy or specialist knowledge."
+      ],
+      "externalKnowledgeAllowed": false,
+      "authority": "SERVER_SELECTED_REQUIREMENT"
+    }
+  },
+  "question:CONTEXT_INFERENCE:3:CONTEXT_INFERENCE": {
+    "version": "reading-difficulty-recipe-v2",
+    "kind": "QUESTION_DEMAND",
+    "band": 3,
+    "anchor": "Requires gist, one bounded inference, or a clear cause/condition/structure relation.",
+    "deterministicDimensions": [
+      "promptCharacterCount",
+      "optionCountAndCharacterLengths",
+      "evidenceExactMatchAndOffset",
+      "evidenceParagraphAndSurfaceUnit",
+      "evidenceToQuestionSurfaceUnitDistance",
+      "skillTagAndPassageBinding"
+    ],
+    "preferredDimensions": [
+      "Treat evidence location and distance as observed signals, never as a band by themselves.",
+      "Realize the server-selected skill CONTEXT_INFERENCE without changing the assigned passage."
+    ],
+    "semanticDimensions": [
+      "evidenceExplicitness",
+      "inferenceDemand",
+      "discourseRelationDemand",
+      "distractorDiscriminationDemand",
+      "singleBestSupportedAnswerWithoutAmbiguity",
+      "selfContainedWithoutExternalKnowledge"
+    ],
+    "hardStructuralConstraints": [
+      "Reuse the exact server-assigned passage and passageId.",
+      "Use the server-required single-choice shape and held answer-key binding.",
+      "Keep vocabulary identity fields empty for Reading questions."
+    ],
+    "enforcement": "Preferred dimensions guide generation and shadow measurement only. They are not empirical hard thresholds."
+  },
+  "question:CONTEXT_INFERENCE:4:INFERENCE": {
+    "version": "reading-difficulty-recipe-v2",
+    "kind": "QUESTION_DEMAND",
+    "band": 4,
+    "anchor": "Requires cross-unit evidence, discourse-function recognition, or a supported pragmatic inference.",
+    "deterministicDimensions": [
+      "promptCharacterCount",
+      "optionCountAndCharacterLengths",
+      "evidenceExactMatchAndOffset",
+      "evidenceParagraphAndSurfaceUnit",
+      "evidenceToQuestionSurfaceUnitDistance",
+      "skillTagAndPassageBinding"
+    ],
+    "preferredDimensions": [
+      "Treat evidence location and distance as observed signals, never as a band by themselves.",
+      "Realize the server-selected skill INFERENCE without changing the assigned passage."
+    ],
+    "semanticDimensions": [
+      "evidenceExplicitness",
+      "inferenceDemand",
+      "discourseRelationDemand",
+      "distractorDiscriminationDemand",
+      "singleBestSupportedAnswerWithoutAmbiguity",
+      "selfContainedWithoutExternalKnowledge"
+    ],
+    "hardStructuralConstraints": [
+      "Reuse the exact server-assigned passage and passageId.",
+      "Use the server-required single-choice shape and held answer-key binding.",
+      "Keep vocabulary identity fields empty for Reading questions."
+    ],
+    "enforcement": "Preferred dimensions guide generation and shadow measurement only. They are not empirical hard thresholds."
+  },
+  "passage:CONTEXT_INFERENCE:4": {
+    "version": "reading-difficulty-recipe-v2",
+    "kind": "PASSAGE",
+    "band": 4,
+    "anchor": "Connected discourse where multiple relations such as concession, competing priorities, condition/consequence, evidence or qualification interact across paragraphs, so no single local statement determines the overall interpretation.",
+    "deterministicDimensions": [
+      "normalizedCharacterCount",
+      "paragraphCount",
+      "surfaceUnitCount",
+      "serverPassageDiscourseBlueprint"
+    ],
+    "preferredDimensions": [
+      "Use length, paragraphing and surface-unit count only as broad editorial signals.",
+      "Shape discourse so it supports the requested Reading mode CONTEXT_INFERENCE.",
+      "Realize at least two interacting discourse-relation categories with a meaningful cross-paragraph dependency; do not satisfy this by length or paragraph count alone."
+    ],
+    "semanticDimensions": [
+      "linguisticAndDiscourseComplexity",
+      "coherenceAndReferenceLoad",
+      "registerAndPragmaticNuance",
+      "selfContainedWithoutExternalKnowledge",
+      "interactingDiscourseRelations",
+      "crossParagraphDependency"
+    ],
+    "hardStructuralConstraints": [
+      "Use only the requested learning language.",
+      "Return non-blank passageText bound to the requested passageId."
+    ],
+    "enforcement": "The passageDemand blueprint is server-selected. Surface measurements are diagnostic only; actual linguistic/discourse difficulty remains shadow-observed.",
+    "passageDemand": {
+      "version": "reading-passage-blueprint-b4-v2",
+      "minimumInteractingRelationCategories": 2,
+      "relationCategoryOptions": [
+        "CONCESSION_OR_CONTRAST",
+        "CONDITION_AND_CONSEQUENCE",
+        "CLAIM_AND_EVIDENCE",
+        "PROPOSAL_AND_LIMITATION",
+        "COMPETING_PRIORITIES",
+        "STANCE_OR_QUALIFICATION",
+        "CROSS_PARAGRAPH_REFERENCE"
+      ],
+      "crossParagraphDependencyRequired": true,
+      "localOnlyLinearDiscourseAllowed": false,
+      "integrationRequirement": "INTERACTING_RELATIONS_WITH_CROSS_PARAGRAPH_DEPENDENCY",
+      "interpretiveRequirements": [
+        "INDIRECT_INTENT"
+      ],
+      "modeEmphasis": [
+        "Distribute cues for indirect intent or qualified stance across units without changing the CONTEXT_INFERENCE question policy or requiring specialist knowledge."
+      ],
+      "externalKnowledgeAllowed": false,
+      "authority": "SERVER_SELECTED_REQUIREMENT"
+    }
+  },
+  "question:CONTEXT_INFERENCE:4:CONTEXT_INFERENCE": {
+    "version": "reading-difficulty-recipe-v2",
+    "kind": "QUESTION_DEMAND",
+    "band": 4,
+    "anchor": "Requires cross-unit evidence, discourse-function recognition, or a supported pragmatic inference.",
+    "deterministicDimensions": [
+      "promptCharacterCount",
+      "optionCountAndCharacterLengths",
+      "evidenceExactMatchAndOffset",
+      "evidenceParagraphAndSurfaceUnit",
+      "evidenceToQuestionSurfaceUnitDistance",
+      "skillTagAndPassageBinding"
+    ],
+    "preferredDimensions": [
+      "Treat evidence location and distance as observed signals, never as a band by themselves.",
+      "Realize the server-selected skill CONTEXT_INFERENCE without changing the assigned passage."
+    ],
+    "semanticDimensions": [
+      "evidenceExplicitness",
+      "inferenceDemand",
+      "discourseRelationDemand",
+      "distractorDiscriminationDemand",
+      "singleBestSupportedAnswerWithoutAmbiguity",
+      "selfContainedWithoutExternalKnowledge"
+    ],
+    "hardStructuralConstraints": [
+      "Reuse the exact server-assigned passage and passageId.",
+      "Use the server-required single-choice shape and held answer-key binding.",
+      "Keep vocabulary identity fields empty for Reading questions."
+    ],
+    "enforcement": "Preferred dimensions guide generation and shadow measurement only. They are not empirical hard thresholds."
+  },
+  "question:CONTEXT_INFERENCE:5:INFERENCE": {
+    "version": "reading-difficulty-recipe-v2",
+    "kind": "QUESTION_DEMAND",
+    "band": 5,
+    "anchor": "Requires combining multiple supplied linguistic cues while preserving scope, stance or qualification; ambiguity and outside knowledge do not count as difficulty.",
+    "deterministicDimensions": [
+      "promptCharacterCount",
+      "optionCountAndCharacterLengths",
+      "evidenceExactMatchAndOffset",
+      "evidenceParagraphAndSurfaceUnit",
+      "evidenceToQuestionSurfaceUnitDistance",
+      "skillTagAndPassageBinding"
+    ],
+    "preferredDimensions": [
+      "Treat evidence location and distance as observed signals, never as a band by themselves.",
+      "Realize the server-selected skill INFERENCE without changing the assigned passage."
+    ],
+    "semanticDimensions": [
+      "evidenceExplicitness",
+      "inferenceDemand",
+      "discourseRelationDemand",
+      "distractorDiscriminationDemand",
+      "singleBestSupportedAnswerWithoutAmbiguity",
+      "selfContainedWithoutExternalKnowledge"
+    ],
+    "hardStructuralConstraints": [
+      "Reuse the exact server-assigned passage and passageId.",
+      "Use the server-required single-choice shape and held answer-key binding.",
+      "Keep vocabulary identity fields empty for Reading questions."
+    ],
+    "enforcement": "Preferred dimensions guide generation and shadow measurement only. They are not empirical hard thresholds."
+  },
+  "passage:CONTEXT_INFERENCE:5": {
+    "version": "reading-difficulty-recipe-v2",
+    "kind": "PASSAGE",
+    "band": 5,
+    "anchor": "Coherent discourse with interacting scope, qualification, stance or reference relations, without specialist knowledge.",
+    "deterministicDimensions": [
+      "normalizedCharacterCount",
+      "paragraphCount",
+      "surfaceUnitCount",
+      "serverPassageDiscourseBlueprint"
+    ],
+    "preferredDimensions": [
+      "Use length, paragraphing and surface-unit count only as broad editorial signals.",
+      "Shape discourse so it supports the requested Reading mode CONTEXT_INFERENCE."
+    ],
+    "semanticDimensions": [
+      "linguisticAndDiscourseComplexity",
+      "coherenceAndReferenceLoad",
+      "registerAndPragmaticNuance",
+      "selfContainedWithoutExternalKnowledge"
+    ],
+    "hardStructuralConstraints": [
+      "Use only the requested learning language.",
+      "Return non-blank passageText bound to the requested passageId."
+    ],
+    "enforcement": "The passageDemand blueprint is server-selected. Surface measurements are diagnostic only; actual linguistic/discourse difficulty remains shadow-observed.",
+    "passageDemand": {
+      "version": "reading-passage-blueprint-b4-v2",
+      "minimumInteractingRelationCategories": 3,
+      "relationCategoryOptions": [
+        "SCOPE",
+        "QUALIFICATION",
+        "STANCE",
+        "REFERENCE",
+        "CONDITION_OR_EXCEPTION",
+        "COMPETING_CONSTRAINTS"
+      ],
+      "crossParagraphDependencyRequired": true,
+      "localOnlyLinearDiscourseAllowed": false,
+      "integrationRequirement": "MULTIPLE_CONSTRAINTS_INTEGRATED_ACROSS_THE_WHOLE_TEXT",
+      "interpretiveRequirements": [
+        "QUALIFIED_CLAIM",
+        "COMPETING_INTERPRETATIONS",
+        "REGISTER_OR_ROLE_SENSITIVE_STANCE"
+      ],
+      "modeEmphasis": [
+        "Distribute contextual cues across units without increasing question-demand policy or specialist knowledge."
+      ],
+      "externalKnowledgeAllowed": false,
+      "authority": "SERVER_SELECTED_REQUIREMENT"
+    }
+  },
+  "question:CONTEXT_INFERENCE:5:CONTEXT_INFERENCE": {
+    "version": "reading-difficulty-recipe-v2",
+    "kind": "QUESTION_DEMAND",
+    "band": 5,
+    "anchor": "Requires combining multiple supplied linguistic cues while preserving scope, stance or qualification; ambiguity and outside knowledge do not count as difficulty.",
+    "deterministicDimensions": [
+      "promptCharacterCount",
+      "optionCountAndCharacterLengths",
+      "evidenceExactMatchAndOffset",
+      "evidenceParagraphAndSurfaceUnit",
+      "evidenceToQuestionSurfaceUnitDistance",
+      "skillTagAndPassageBinding"
+    ],
+    "preferredDimensions": [
+      "Treat evidence location and distance as observed signals, never as a band by themselves.",
+      "Realize the server-selected skill CONTEXT_INFERENCE without changing the assigned passage."
+    ],
+    "semanticDimensions": [
+      "evidenceExplicitness",
+      "inferenceDemand",
+      "discourseRelationDemand",
+      "distractorDiscriminationDemand",
+      "singleBestSupportedAnswerWithoutAmbiguity",
+      "selfContainedWithoutExternalKnowledge"
+    ],
+    "hardStructuralConstraints": [
+      "Reuse the exact server-assigned passage and passageId.",
+      "Use the server-required single-choice shape and held answer-key binding.",
+      "Keep vocabulary identity fields empty for Reading questions."
+    ],
+    "enforcement": "Preferred dimensions guide generation and shadow measurement only. They are not empirical hard thresholds."
+  }
+}

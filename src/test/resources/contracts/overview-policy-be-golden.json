@@ -1,0 +1,2709 @@
+[ {
+  "writingCount" : 0,
+  "writing" : {
+    "evaluations" : [ ]
+  },
+  "speaking" : {
+    "evaluations" : [ {
+      "sessionId" : -1,
+      "learningDate" : "2026-09-24",
+      "evaluatedAt" : "2026-09-24T12:00:00",
+      "status" : "EVALUATED",
+      "overallScore" : 80,
+      "evaluationConfidence" : 0.8,
+      "eligibilityJson" : "{\"validSttTurnRatio\":0.75}",
+      "assistanceUsage" : [ "SAMPLE_ANSWER" ],
+      "profileSignalsJson" : "[{\"patternKey\":\"article\",\"direction\":\"WEAKNESS\",\"recommendedFocus\":\"grammar focus\",\"confidence\":0.9,\"metricType\":\"GRAMMAR\"},{\"patternKey\":\"rhythm\",\"direction\":\"STRENGTH\",\"recommendedFocus\":null,\"confidence\":0.8,\"metricType\":\"FLUENCY\"}]"
+    }, {
+      "sessionId" : -2,
+      "learningDate" : "2026-09-24",
+      "evaluatedAt" : "2026-09-24T12:00:00",
+      "status" : "EVALUATED",
+      "overallScore" : 80,
+      "evaluationConfidence" : 0.8,
+      "eligibilityJson" : "{\"validSttTurnRatio\":0.75}",
+      "assistanceUsage" : [ "SAMPLE_ANSWER" ],
+      "profileSignalsJson" : "[{\"patternKey\":\"article\",\"direction\":\"WEAKNESS\",\"recommendedFocus\":\"grammar focus\",\"confidence\":0.9,\"metricType\":\"GRAMMAR\"},{\"patternKey\":\"rhythm\",\"direction\":\"STRENGTH\",\"recommendedFocus\":null,\"confidence\":0.8,\"metricType\":\"FLUENCY\"}]"
+    } ]
+  },
+  "speakingGrowth" : [ {
+    "id" : 1,
+    "source" : "SPEAKING",
+    "learningDate" : "2026-09-24",
+    "status" : "EVALUATED",
+    "evaluationConfidence" : 0.0,
+    "metrics" : [ {
+      "metricType" : "FLUENCY",
+      "state" : "EVALUATED",
+      "score" : 50
+    } ]
+  }, {
+    "id" : 2,
+    "source" : "SPEAKING",
+    "learningDate" : "2026-09-24",
+    "status" : "EVALUATED",
+    "evaluationConfidence" : 0.8,
+    "metrics" : [ {
+      "metricType" : "FLUENCY",
+      "state" : "EVALUATED",
+      "score" : 60
+    } ]
+  }, {
+    "id" : 3,
+    "source" : "SPEAKING",
+    "learningDate" : "2026-09-24",
+    "status" : "EVALUATED",
+    "evaluationConfidence" : 0.8,
+    "metrics" : [ {
+      "metricType" : "FLUENCY",
+      "state" : "EVALUATED",
+      "score" : 70
+    } ]
+  } ],
+  "listening" : {
+    "evaluations" : [ {
+      "attemptId" : 1,
+      "taskType" : "DICTATION",
+      "confidence" : 0.9,
+      "score" : 70,
+      "evaluatedAt" : "2026-09-23T12:00:00",
+      "metrics" : [ {
+        "type" : " MEANING ",
+        "score" : 60,
+        "confidence" : 0.8,
+        "weight" : 0.5
+      } ]
+    }, {
+      "attemptId" : 1,
+      "taskType" : "DICTATION",
+      "confidence" : 0.9,
+      "score" : 70,
+      "evaluatedAt" : "2026-09-23T12:00:00",
+      "metrics" : [ {
+        "type" : " MEANING ",
+        "score" : 70,
+        "confidence" : 0.8,
+        "weight" : 0.5
+      } ]
+    }, {
+      "attemptId" : 2,
+      "taskType" : "DICTATION",
+      "confidence" : 0.9,
+      "score" : 70,
+      "evaluatedAt" : "2026-09-23T12:00:00",
+      "metrics" : [ {
+        "type" : " MEANING ",
+        "score" : 80,
+        "confidence" : 0.8,
+        "weight" : 0.0
+      } ]
+    } ]
+  },
+  "listeningDashboard" : {
+    "metrics" : [ {
+      "metric" : "MEANING",
+      "score" : 60,
+      "sampleCount" : 2,
+      "confidence" : "LOW",
+      "weaknessState" : "ACTIVE"
+    } ]
+  },
+  "practice" : {
+    "sets" : [ {
+      "domain" : "READING",
+      "status" : "COMPLETED",
+      "learningDate" : "2026-09-22",
+      "metrics" : [ {
+        "skillTag" : "READING_DETAIL",
+        "score" : 20,
+        "sampleCount" : 1
+      } ]
+    }, {
+      "domain" : "READING",
+      "status" : "COMPLETED",
+      "learningDate" : "2026-09-22",
+      "metrics" : [ {
+        "skillTag" : "READING_DETAIL",
+        "score" : 80,
+        "sampleCount" : 2
+      } ]
+    }, {
+      "domain" : "READING",
+      "status" : "ACTIVE",
+      "learningDate" : "2026-09-22",
+      "metrics" : [ {
+        "skillTag" : "READING_DETAIL",
+        "score" : 80,
+        "sampleCount" : 3
+      } ]
+    }, {
+      "domain" : "VOCABULARY",
+      "status" : "COMPLETED",
+      "learningDate" : "2026-09-22",
+      "metrics" : [ {
+        "skillTag" : "VOCABULARY_DETAIL",
+        "score" : 20,
+        "sampleCount" : 1
+      } ]
+    }, {
+      "domain" : "VOCABULARY",
+      "status" : "COMPLETED",
+      "learningDate" : "2026-09-22",
+      "metrics" : [ {
+        "skillTag" : "VOCABULARY_DETAIL",
+        "score" : 80,
+        "sampleCount" : 2
+      } ]
+    }, {
+      "domain" : "VOCABULARY",
+      "status" : "ACTIVE",
+      "learningDate" : "2026-09-22",
+      "metrics" : [ {
+        "skillTag" : "VOCABULARY_DETAIL",
+        "score" : 80,
+        "sampleCount" : 3
+      } ]
+    } ]
+  },
+  "expected" : {
+    "ALL" : {
+      "trend" : {
+        "source" : "ALL",
+        "sampleCount" : 7,
+        "confidence" : 0.72,
+        "collectingData" : false,
+        "metrics" : {
+          "FLUENCY" : [ {
+            "date" : "2026-09-24",
+            "score" : 65.71
+          } ],
+          "MEANING" : [ {
+            "date" : "2026-09-23",
+            "score" : 64.29
+          } ],
+          "READING_DETAIL" : [ {
+            "date" : "2026-09-22",
+            "score" : 50.0
+          } ]
+        }
+      },
+      "insights" : [ {
+        "patternKey" : "MEANING",
+        "direction" : "WEAKNESS",
+        "evidenceCount" : 2,
+        "weightedEvidence" : 2.0,
+        "sources" : [ "LISTENING" ],
+        "unified" : false,
+        "recommendedFocus" : "meaning"
+      }, {
+        "patternKey" : "rhythm",
+        "direction" : "STRENGTH",
+        "evidenceCount" : 2,
+        "weightedEvidence" : 0.72,
+        "sources" : [ "SPEAKING" ],
+        "unified" : false,
+        "recommendedFocus" : null
+      }, {
+        "patternKey" : "article",
+        "direction" : "WEAKNESS",
+        "evidenceCount" : 2,
+        "weightedEvidence" : 0.49,
+        "sources" : [ "SPEAKING" ],
+        "unified" : false,
+        "recommendedFocus" : "grammar focus"
+      } ]
+    },
+    "WRITING" : {
+      "trend" : {
+        "source" : "WRITING",
+        "sampleCount" : 0,
+        "confidence" : 0.0,
+        "collectingData" : true,
+        "metrics" : { }
+      },
+      "insights" : [ ]
+    },
+    "SPEAKING" : {
+      "trend" : {
+        "source" : "SPEAKING",
+        "sampleCount" : 3,
+        "confidence" : 0.53,
+        "collectingData" : false,
+        "metrics" : {
+          "FLUENCY" : [ {
+            "date" : "2026-09-24",
+            "score" : 65.71
+          } ]
+        }
+      },
+      "insights" : [ {
+        "patternKey" : "rhythm",
+        "direction" : "STRENGTH",
+        "evidenceCount" : 2,
+        "weightedEvidence" : 0.72,
+        "sources" : [ "SPEAKING" ],
+        "unified" : false,
+        "recommendedFocus" : null
+      }, {
+        "patternKey" : "article",
+        "direction" : "WEAKNESS",
+        "evidenceCount" : 2,
+        "weightedEvidence" : 0.49,
+        "sources" : [ "SPEAKING" ],
+        "unified" : false,
+        "recommendedFocus" : "grammar focus"
+      } ]
+    },
+    "LISTENING" : {
+      "trend" : {
+        "source" : "LISTENING",
+        "sampleCount" : 2,
+        "confidence" : 0.9,
+        "collectingData" : true,
+        "metrics" : {
+          "MEANING" : [ {
+            "date" : "2026-09-23",
+            "score" : 64.29
+          } ]
+        }
+      },
+      "insights" : [ {
+        "patternKey" : "MEANING",
+        "direction" : "WEAKNESS",
+        "evidenceCount" : 2,
+        "weightedEvidence" : 2.0,
+        "sources" : [ "LISTENING" ],
+        "unified" : false,
+        "recommendedFocus" : "meaning"
+      } ]
+    },
+    "READING" : {
+      "trend" : {
+        "source" : "READING",
+        "sampleCount" : 2,
+        "confidence" : 0.0,
+        "collectingData" : true,
+        "metrics" : {
+          "READING_DETAIL" : [ {
+            "date" : "2026-09-22",
+            "score" : 50.0
+          } ]
+        }
+      },
+      "insights" : [ ]
+    },
+    "VOCABULARY" : {
+      "trend" : {
+        "source" : "VOCABULARY",
+        "sampleCount" : 2,
+        "confidence" : 0.0,
+        "collectingData" : true,
+        "metrics" : {
+          "VOCABULARY_DETAIL" : [ {
+            "date" : "2026-09-22",
+            "score" : 50.0
+          } ]
+        }
+      },
+      "insights" : [ ]
+    },
+    "LEVEL_TEST" : {
+      "trend" : {
+        "source" : "LEVEL_TEST",
+        "sampleCount" : 0,
+        "confidence" : 0.0,
+        "collectingData" : true,
+        "metrics" : { }
+      },
+      "insights" : [ ]
+    }
+  }
+}, {
+  "writingCount" : 2,
+  "writing" : {
+    "evaluations" : [ {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 50,
+      "meaningScore" : 50,
+      "grammarScore" : 50,
+      "vocabularyScore" : 50,
+      "naturalnessScore" : 50,
+      "expressionScore" : 50,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 51,
+      "meaningScore" : 51,
+      "grammarScore" : 51,
+      "vocabularyScore" : 51,
+      "naturalnessScore" : 51,
+      "expressionScore" : 51,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    } ]
+  },
+  "speaking" : {
+    "evaluations" : [ {
+      "sessionId" : -1,
+      "learningDate" : "2026-09-24",
+      "evaluatedAt" : "2026-09-24T12:00:00",
+      "status" : "EVALUATED",
+      "overallScore" : 80,
+      "evaluationConfidence" : 0.8,
+      "eligibilityJson" : "{\"validSttTurnRatio\":0.75}",
+      "assistanceUsage" : [ "SAMPLE_ANSWER" ],
+      "profileSignalsJson" : "[{\"patternKey\":\"article\",\"direction\":\"WEAKNESS\",\"recommendedFocus\":\"grammar focus\",\"confidence\":0.9,\"metricType\":\"GRAMMAR\"},{\"patternKey\":\"rhythm\",\"direction\":\"STRENGTH\",\"recommendedFocus\":null,\"confidence\":0.8,\"metricType\":\"FLUENCY\"}]"
+    }, {
+      "sessionId" : -2,
+      "learningDate" : "2026-09-24",
+      "evaluatedAt" : "2026-09-24T12:00:00",
+      "status" : "EVALUATED",
+      "overallScore" : 80,
+      "evaluationConfidence" : 0.8,
+      "eligibilityJson" : "{\"validSttTurnRatio\":0.75}",
+      "assistanceUsage" : [ "SAMPLE_ANSWER" ],
+      "profileSignalsJson" : "[{\"patternKey\":\"article\",\"direction\":\"WEAKNESS\",\"recommendedFocus\":\"grammar focus\",\"confidence\":0.9,\"metricType\":\"GRAMMAR\"},{\"patternKey\":\"rhythm\",\"direction\":\"STRENGTH\",\"recommendedFocus\":null,\"confidence\":0.8,\"metricType\":\"FLUENCY\"}]"
+    } ]
+  },
+  "speakingGrowth" : [ {
+    "id" : 1,
+    "source" : "SPEAKING",
+    "learningDate" : "2026-09-24",
+    "status" : "EVALUATED",
+    "evaluationConfidence" : 0.0,
+    "metrics" : [ {
+      "metricType" : "FLUENCY",
+      "state" : "EVALUATED",
+      "score" : 50
+    } ]
+  }, {
+    "id" : 2,
+    "source" : "SPEAKING",
+    "learningDate" : "2026-09-24",
+    "status" : "EVALUATED",
+    "evaluationConfidence" : 0.8,
+    "metrics" : [ {
+      "metricType" : "FLUENCY",
+      "state" : "EVALUATED",
+      "score" : 60
+    } ]
+  }, {
+    "id" : 3,
+    "source" : "SPEAKING",
+    "learningDate" : "2026-09-24",
+    "status" : "EVALUATED",
+    "evaluationConfidence" : 0.8,
+    "metrics" : [ {
+      "metricType" : "FLUENCY",
+      "state" : "EVALUATED",
+      "score" : 70
+    } ]
+  } ],
+  "listening" : {
+    "evaluations" : [ {
+      "attemptId" : 1,
+      "taskType" : "DICTATION",
+      "confidence" : 0.9,
+      "score" : 70,
+      "evaluatedAt" : "2026-09-23T12:00:00",
+      "metrics" : [ {
+        "type" : " MEANING ",
+        "score" : 60,
+        "confidence" : 0.8,
+        "weight" : 0.5
+      } ]
+    }, {
+      "attemptId" : 1,
+      "taskType" : "DICTATION",
+      "confidence" : 0.9,
+      "score" : 70,
+      "evaluatedAt" : "2026-09-23T12:00:00",
+      "metrics" : [ {
+        "type" : " MEANING ",
+        "score" : 70,
+        "confidence" : 0.8,
+        "weight" : 0.5
+      } ]
+    }, {
+      "attemptId" : 2,
+      "taskType" : "DICTATION",
+      "confidence" : 0.9,
+      "score" : 70,
+      "evaluatedAt" : "2026-09-23T12:00:00",
+      "metrics" : [ {
+        "type" : " MEANING ",
+        "score" : 80,
+        "confidence" : 0.8,
+        "weight" : 0.0
+      } ]
+    } ]
+  },
+  "listeningDashboard" : {
+    "metrics" : [ {
+      "metric" : "MEANING",
+      "score" : 60,
+      "sampleCount" : 2,
+      "confidence" : "LOW",
+      "weaknessState" : "ACTIVE"
+    } ]
+  },
+  "practice" : {
+    "sets" : [ {
+      "domain" : "READING",
+      "status" : "COMPLETED",
+      "learningDate" : "2026-09-22",
+      "metrics" : [ {
+        "skillTag" : "READING_DETAIL",
+        "score" : 20,
+        "sampleCount" : 1
+      } ]
+    }, {
+      "domain" : "READING",
+      "status" : "COMPLETED",
+      "learningDate" : "2026-09-22",
+      "metrics" : [ {
+        "skillTag" : "READING_DETAIL",
+        "score" : 80,
+        "sampleCount" : 2
+      } ]
+    }, {
+      "domain" : "READING",
+      "status" : "ACTIVE",
+      "learningDate" : "2026-09-22",
+      "metrics" : [ {
+        "skillTag" : "READING_DETAIL",
+        "score" : 80,
+        "sampleCount" : 3
+      } ]
+    }, {
+      "domain" : "VOCABULARY",
+      "status" : "COMPLETED",
+      "learningDate" : "2026-09-22",
+      "metrics" : [ {
+        "skillTag" : "VOCABULARY_DETAIL",
+        "score" : 20,
+        "sampleCount" : 1
+      } ]
+    }, {
+      "domain" : "VOCABULARY",
+      "status" : "COMPLETED",
+      "learningDate" : "2026-09-22",
+      "metrics" : [ {
+        "skillTag" : "VOCABULARY_DETAIL",
+        "score" : 80,
+        "sampleCount" : 2
+      } ]
+    }, {
+      "domain" : "VOCABULARY",
+      "status" : "ACTIVE",
+      "learningDate" : "2026-09-22",
+      "metrics" : [ {
+        "skillTag" : "VOCABULARY_DETAIL",
+        "score" : 80,
+        "sampleCount" : 3
+      } ]
+    } ]
+  },
+  "expected" : {
+    "ALL" : {
+      "trend" : {
+        "source" : "ALL",
+        "sampleCount" : 9,
+        "confidence" : 0.72,
+        "collectingData" : false,
+        "metrics" : {
+          "MEANING" : [ {
+            "date" : "2026-09-23",
+            "score" : 64.29
+          }, {
+            "date" : "2026-09-25",
+            "score" : 50.33
+          } ],
+          "GRAMMAR" : [ {
+            "date" : "2026-09-25",
+            "score" : 50.33
+          } ],
+          "VOCABULARY" : [ {
+            "date" : "2026-09-25",
+            "score" : 50.33
+          } ],
+          "NATURALNESS" : [ {
+            "date" : "2026-09-25",
+            "score" : 50.33
+          } ],
+          "EXPRESSION" : [ {
+            "date" : "2026-09-25",
+            "score" : 50.33
+          } ],
+          "FLUENCY" : [ {
+            "date" : "2026-09-24",
+            "score" : 65.71
+          } ],
+          "READING_DETAIL" : [ {
+            "date" : "2026-09-22",
+            "score" : 50.0
+          } ]
+        }
+      },
+      "insights" : [ {
+        "patternKey" : "article",
+        "direction" : "WEAKNESS",
+        "evidenceCount" : 4,
+        "weightedEvidence" : 2.21,
+        "sources" : [ "WRITING", "SPEAKING" ],
+        "unified" : true,
+        "recommendedFocus" : "grammar focus"
+      }, {
+        "patternKey" : "MEANING",
+        "direction" : "WEAKNESS",
+        "evidenceCount" : 2,
+        "weightedEvidence" : 2.0,
+        "sources" : [ "LISTENING" ],
+        "unified" : false,
+        "recommendedFocus" : "meaning"
+      }, {
+        "patternKey" : "Clear",
+        "direction" : "STRENGTH",
+        "evidenceCount" : 2,
+        "weightedEvidence" : 1.83,
+        "sources" : [ "WRITING" ],
+        "unified" : false,
+        "recommendedFocus" : null
+      }, {
+        "patternKey" : "rhythm",
+        "direction" : "STRENGTH",
+        "evidenceCount" : 2,
+        "weightedEvidence" : 0.56,
+        "sources" : [ "SPEAKING" ],
+        "unified" : false,
+        "recommendedFocus" : null
+      } ]
+    },
+    "WRITING" : {
+      "trend" : {
+        "source" : "WRITING",
+        "sampleCount" : 2,
+        "confidence" : 0.0,
+        "collectingData" : true,
+        "metrics" : {
+          "MEANING" : [ {
+            "date" : "2026-09-25",
+            "score" : 50.33
+          } ],
+          "GRAMMAR" : [ {
+            "date" : "2026-09-25",
+            "score" : 50.33
+          } ],
+          "VOCABULARY" : [ {
+            "date" : "2026-09-25",
+            "score" : 50.33
+          } ],
+          "NATURALNESS" : [ {
+            "date" : "2026-09-25",
+            "score" : 50.33
+          } ],
+          "EXPRESSION" : [ {
+            "date" : "2026-09-25",
+            "score" : 50.33
+          } ]
+        }
+      },
+      "insights" : [ {
+        "patternKey" : "Clear",
+        "direction" : "STRENGTH",
+        "evidenceCount" : 2,
+        "weightedEvidence" : 1.83,
+        "sources" : [ "WRITING" ],
+        "unified" : false,
+        "recommendedFocus" : null
+      }, {
+        "patternKey" : "article",
+        "direction" : "WEAKNESS",
+        "evidenceCount" : 2,
+        "weightedEvidence" : 1.83,
+        "sources" : [ "WRITING" ],
+        "unified" : false,
+        "recommendedFocus" : null
+      } ]
+    },
+    "SPEAKING" : {
+      "trend" : {
+        "source" : "SPEAKING",
+        "sampleCount" : 3,
+        "confidence" : 0.53,
+        "collectingData" : false,
+        "metrics" : {
+          "FLUENCY" : [ {
+            "date" : "2026-09-24",
+            "score" : 65.71
+          } ]
+        }
+      },
+      "insights" : [ {
+        "patternKey" : "rhythm",
+        "direction" : "STRENGTH",
+        "evidenceCount" : 2,
+        "weightedEvidence" : 0.56,
+        "sources" : [ "SPEAKING" ],
+        "unified" : false,
+        "recommendedFocus" : null
+      }, {
+        "patternKey" : "article",
+        "direction" : "WEAKNESS",
+        "evidenceCount" : 2,
+        "weightedEvidence" : 0.38,
+        "sources" : [ "SPEAKING" ],
+        "unified" : false,
+        "recommendedFocus" : "grammar focus"
+      } ]
+    },
+    "LISTENING" : {
+      "trend" : {
+        "source" : "LISTENING",
+        "sampleCount" : 2,
+        "confidence" : 0.9,
+        "collectingData" : true,
+        "metrics" : {
+          "MEANING" : [ {
+            "date" : "2026-09-23",
+            "score" : 64.29
+          } ]
+        }
+      },
+      "insights" : [ {
+        "patternKey" : "MEANING",
+        "direction" : "WEAKNESS",
+        "evidenceCount" : 2,
+        "weightedEvidence" : 2.0,
+        "sources" : [ "LISTENING" ],
+        "unified" : false,
+        "recommendedFocus" : "meaning"
+      } ]
+    },
+    "READING" : {
+      "trend" : {
+        "source" : "READING",
+        "sampleCount" : 2,
+        "confidence" : 0.0,
+        "collectingData" : true,
+        "metrics" : {
+          "READING_DETAIL" : [ {
+            "date" : "2026-09-22",
+            "score" : 50.0
+          } ]
+        }
+      },
+      "insights" : [ ]
+    },
+    "VOCABULARY" : {
+      "trend" : {
+        "source" : "VOCABULARY",
+        "sampleCount" : 2,
+        "confidence" : 0.0,
+        "collectingData" : true,
+        "metrics" : {
+          "VOCABULARY_DETAIL" : [ {
+            "date" : "2026-09-22",
+            "score" : 50.0
+          } ]
+        }
+      },
+      "insights" : [ ]
+    },
+    "LEVEL_TEST" : {
+      "trend" : {
+        "source" : "LEVEL_TEST",
+        "sampleCount" : 0,
+        "confidence" : 0.0,
+        "collectingData" : true,
+        "metrics" : { }
+      },
+      "insights" : [ ]
+    }
+  }
+}, {
+  "writingCount" : 28,
+  "writing" : {
+    "evaluations" : [ {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 50,
+      "meaningScore" : 50,
+      "grammarScore" : 50,
+      "vocabularyScore" : 50,
+      "naturalnessScore" : 50,
+      "expressionScore" : 50,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 51,
+      "meaningScore" : 51,
+      "grammarScore" : 51,
+      "vocabularyScore" : 51,
+      "naturalnessScore" : 51,
+      "expressionScore" : 51,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 52,
+      "meaningScore" : 52,
+      "grammarScore" : 52,
+      "vocabularyScore" : 52,
+      "naturalnessScore" : 52,
+      "expressionScore" : 52,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 53,
+      "meaningScore" : 53,
+      "grammarScore" : 53,
+      "vocabularyScore" : 53,
+      "naturalnessScore" : 53,
+      "expressionScore" : 53,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 54,
+      "meaningScore" : 54,
+      "grammarScore" : 54,
+      "vocabularyScore" : 54,
+      "naturalnessScore" : 54,
+      "expressionScore" : 54,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 55,
+      "meaningScore" : 55,
+      "grammarScore" : 55,
+      "vocabularyScore" : 55,
+      "naturalnessScore" : 55,
+      "expressionScore" : 55,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 56,
+      "meaningScore" : 56,
+      "grammarScore" : 56,
+      "vocabularyScore" : 56,
+      "naturalnessScore" : 56,
+      "expressionScore" : 56,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 57,
+      "meaningScore" : 57,
+      "grammarScore" : 57,
+      "vocabularyScore" : 57,
+      "naturalnessScore" : 57,
+      "expressionScore" : 57,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 58,
+      "meaningScore" : 58,
+      "grammarScore" : 58,
+      "vocabularyScore" : 58,
+      "naturalnessScore" : 58,
+      "expressionScore" : 58,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 59,
+      "meaningScore" : 59,
+      "grammarScore" : 59,
+      "vocabularyScore" : 59,
+      "naturalnessScore" : 59,
+      "expressionScore" : 59,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 60,
+      "meaningScore" : 60,
+      "grammarScore" : 60,
+      "vocabularyScore" : 60,
+      "naturalnessScore" : 60,
+      "expressionScore" : 60,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 61,
+      "meaningScore" : 61,
+      "grammarScore" : 61,
+      "vocabularyScore" : 61,
+      "naturalnessScore" : 61,
+      "expressionScore" : 61,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 62,
+      "meaningScore" : 62,
+      "grammarScore" : 62,
+      "vocabularyScore" : 62,
+      "naturalnessScore" : 62,
+      "expressionScore" : 62,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 63,
+      "meaningScore" : 63,
+      "grammarScore" : 63,
+      "vocabularyScore" : 63,
+      "naturalnessScore" : 63,
+      "expressionScore" : 63,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 64,
+      "meaningScore" : 64,
+      "grammarScore" : 64,
+      "vocabularyScore" : 64,
+      "naturalnessScore" : 64,
+      "expressionScore" : 64,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 65,
+      "meaningScore" : 65,
+      "grammarScore" : 65,
+      "vocabularyScore" : 65,
+      "naturalnessScore" : 65,
+      "expressionScore" : 65,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 66,
+      "meaningScore" : 66,
+      "grammarScore" : 66,
+      "vocabularyScore" : 66,
+      "naturalnessScore" : 66,
+      "expressionScore" : 66,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 67,
+      "meaningScore" : 67,
+      "grammarScore" : 67,
+      "vocabularyScore" : 67,
+      "naturalnessScore" : 67,
+      "expressionScore" : 67,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 68,
+      "meaningScore" : 68,
+      "grammarScore" : 68,
+      "vocabularyScore" : 68,
+      "naturalnessScore" : 68,
+      "expressionScore" : 68,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 69,
+      "meaningScore" : 69,
+      "grammarScore" : 69,
+      "vocabularyScore" : 69,
+      "naturalnessScore" : 69,
+      "expressionScore" : 69,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 70,
+      "meaningScore" : 70,
+      "grammarScore" : 70,
+      "vocabularyScore" : 70,
+      "naturalnessScore" : 70,
+      "expressionScore" : 70,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 71,
+      "meaningScore" : 71,
+      "grammarScore" : 71,
+      "vocabularyScore" : 71,
+      "naturalnessScore" : 71,
+      "expressionScore" : 71,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 72,
+      "meaningScore" : 72,
+      "grammarScore" : 72,
+      "vocabularyScore" : 72,
+      "naturalnessScore" : 72,
+      "expressionScore" : 72,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 73,
+      "meaningScore" : 73,
+      "grammarScore" : 73,
+      "vocabularyScore" : 73,
+      "naturalnessScore" : 73,
+      "expressionScore" : 73,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 74,
+      "meaningScore" : 74,
+      "grammarScore" : 74,
+      "vocabularyScore" : 74,
+      "naturalnessScore" : 74,
+      "expressionScore" : 74,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 75,
+      "meaningScore" : 75,
+      "grammarScore" : 75,
+      "vocabularyScore" : 75,
+      "naturalnessScore" : 75,
+      "expressionScore" : 75,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 76,
+      "meaningScore" : 76,
+      "grammarScore" : 76,
+      "vocabularyScore" : 76,
+      "naturalnessScore" : 76,
+      "expressionScore" : 76,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 77,
+      "meaningScore" : 77,
+      "grammarScore" : 77,
+      "vocabularyScore" : 77,
+      "naturalnessScore" : 77,
+      "expressionScore" : 77,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    } ]
+  },
+  "speaking" : {
+    "evaluations" : [ {
+      "sessionId" : -1,
+      "learningDate" : "2026-09-24",
+      "evaluatedAt" : "2026-09-24T12:00:00",
+      "status" : "EVALUATED",
+      "overallScore" : 80,
+      "evaluationConfidence" : 0.8,
+      "eligibilityJson" : "{\"validSttTurnRatio\":0.75}",
+      "assistanceUsage" : [ "SAMPLE_ANSWER" ],
+      "profileSignalsJson" : "[{\"patternKey\":\"article\",\"direction\":\"WEAKNESS\",\"recommendedFocus\":\"grammar focus\",\"confidence\":0.9,\"metricType\":\"GRAMMAR\"},{\"patternKey\":\"rhythm\",\"direction\":\"STRENGTH\",\"recommendedFocus\":null,\"confidence\":0.8,\"metricType\":\"FLUENCY\"}]"
+    }, {
+      "sessionId" : -2,
+      "learningDate" : "2026-09-24",
+      "evaluatedAt" : "2026-09-24T12:00:00",
+      "status" : "EVALUATED",
+      "overallScore" : 80,
+      "evaluationConfidence" : 0.8,
+      "eligibilityJson" : "{\"validSttTurnRatio\":0.75}",
+      "assistanceUsage" : [ "SAMPLE_ANSWER" ],
+      "profileSignalsJson" : "[{\"patternKey\":\"article\",\"direction\":\"WEAKNESS\",\"recommendedFocus\":\"grammar focus\",\"confidence\":0.9,\"metricType\":\"GRAMMAR\"},{\"patternKey\":\"rhythm\",\"direction\":\"STRENGTH\",\"recommendedFocus\":null,\"confidence\":0.8,\"metricType\":\"FLUENCY\"}]"
+    } ]
+  },
+  "speakingGrowth" : [ {
+    "id" : 1,
+    "source" : "SPEAKING",
+    "learningDate" : "2026-09-24",
+    "status" : "EVALUATED",
+    "evaluationConfidence" : 0.0,
+    "metrics" : [ {
+      "metricType" : "FLUENCY",
+      "state" : "EVALUATED",
+      "score" : 50
+    } ]
+  }, {
+    "id" : 2,
+    "source" : "SPEAKING",
+    "learningDate" : "2026-09-24",
+    "status" : "EVALUATED",
+    "evaluationConfidence" : 0.8,
+    "metrics" : [ {
+      "metricType" : "FLUENCY",
+      "state" : "EVALUATED",
+      "score" : 60
+    } ]
+  }, {
+    "id" : 3,
+    "source" : "SPEAKING",
+    "learningDate" : "2026-09-24",
+    "status" : "EVALUATED",
+    "evaluationConfidence" : 0.8,
+    "metrics" : [ {
+      "metricType" : "FLUENCY",
+      "state" : "EVALUATED",
+      "score" : 70
+    } ]
+  } ],
+  "listening" : {
+    "evaluations" : [ {
+      "attemptId" : 1,
+      "taskType" : "DICTATION",
+      "confidence" : 0.9,
+      "score" : 70,
+      "evaluatedAt" : "2026-09-23T12:00:00",
+      "metrics" : [ {
+        "type" : " MEANING ",
+        "score" : 60,
+        "confidence" : 0.8,
+        "weight" : 0.5
+      } ]
+    }, {
+      "attemptId" : 1,
+      "taskType" : "DICTATION",
+      "confidence" : 0.9,
+      "score" : 70,
+      "evaluatedAt" : "2026-09-23T12:00:00",
+      "metrics" : [ {
+        "type" : " MEANING ",
+        "score" : 70,
+        "confidence" : 0.8,
+        "weight" : 0.5
+      } ]
+    }, {
+      "attemptId" : 2,
+      "taskType" : "DICTATION",
+      "confidence" : 0.9,
+      "score" : 70,
+      "evaluatedAt" : "2026-09-23T12:00:00",
+      "metrics" : [ {
+        "type" : " MEANING ",
+        "score" : 80,
+        "confidence" : 0.8,
+        "weight" : 0.0
+      } ]
+    } ]
+  },
+  "listeningDashboard" : {
+    "metrics" : [ {
+      "metric" : "MEANING",
+      "score" : 60,
+      "sampleCount" : 2,
+      "confidence" : "LOW",
+      "weaknessState" : "ACTIVE"
+    } ]
+  },
+  "practice" : {
+    "sets" : [ {
+      "domain" : "READING",
+      "status" : "COMPLETED",
+      "learningDate" : "2026-09-22",
+      "metrics" : [ {
+        "skillTag" : "READING_DETAIL",
+        "score" : 20,
+        "sampleCount" : 1
+      } ]
+    }, {
+      "domain" : "READING",
+      "status" : "COMPLETED",
+      "learningDate" : "2026-09-22",
+      "metrics" : [ {
+        "skillTag" : "READING_DETAIL",
+        "score" : 80,
+        "sampleCount" : 2
+      } ]
+    }, {
+      "domain" : "READING",
+      "status" : "ACTIVE",
+      "learningDate" : "2026-09-22",
+      "metrics" : [ {
+        "skillTag" : "READING_DETAIL",
+        "score" : 80,
+        "sampleCount" : 3
+      } ]
+    }, {
+      "domain" : "VOCABULARY",
+      "status" : "COMPLETED",
+      "learningDate" : "2026-09-22",
+      "metrics" : [ {
+        "skillTag" : "VOCABULARY_DETAIL",
+        "score" : 20,
+        "sampleCount" : 1
+      } ]
+    }, {
+      "domain" : "VOCABULARY",
+      "status" : "COMPLETED",
+      "learningDate" : "2026-09-22",
+      "metrics" : [ {
+        "skillTag" : "VOCABULARY_DETAIL",
+        "score" : 80,
+        "sampleCount" : 2
+      } ]
+    }, {
+      "domain" : "VOCABULARY",
+      "status" : "ACTIVE",
+      "learningDate" : "2026-09-22",
+      "metrics" : [ {
+        "skillTag" : "VOCABULARY_DETAIL",
+        "score" : 80,
+        "sampleCount" : 3
+      } ]
+    } ]
+  },
+  "expected" : {
+    "ALL" : {
+      "trend" : {
+        "source" : "ALL",
+        "sampleCount" : 35,
+        "confidence" : 0.72,
+        "collectingData" : false,
+        "metrics" : {
+          "MEANING" : [ {
+            "date" : "2026-09-23",
+            "score" : 64.29
+          }, {
+            "date" : "2026-09-25",
+            "score" : 61.89
+          } ],
+          "GRAMMAR" : [ {
+            "date" : "2026-09-25",
+            "score" : 61.89
+          } ],
+          "VOCABULARY" : [ {
+            "date" : "2026-09-25",
+            "score" : 61.89
+          } ],
+          "NATURALNESS" : [ {
+            "date" : "2026-09-25",
+            "score" : 61.89
+          } ],
+          "EXPRESSION" : [ {
+            "date" : "2026-09-25",
+            "score" : 61.89
+          } ],
+          "FLUENCY" : [ {
+            "date" : "2026-09-24",
+            "score" : 65.71
+          } ],
+          "READING_DETAIL" : [ {
+            "date" : "2026-09-22",
+            "score" : 50.0
+          } ]
+        }
+      },
+      "insights" : [ {
+        "patternKey" : "article",
+        "direction" : "WEAKNESS",
+        "evidenceCount" : 30,
+        "weightedEvidence" : 21.81,
+        "sources" : [ "WRITING", "SPEAKING" ],
+        "unified" : true,
+        "recommendedFocus" : "grammar focus"
+      }, {
+        "patternKey" : "Clear",
+        "direction" : "STRENGTH",
+        "evidenceCount" : 28,
+        "weightedEvidence" : 21.48,
+        "sources" : [ "WRITING" ],
+        "unified" : false,
+        "recommendedFocus" : null
+      }, {
+        "patternKey" : "MEANING",
+        "direction" : "WEAKNESS",
+        "evidenceCount" : 2,
+        "weightedEvidence" : 2.0,
+        "sources" : [ "LISTENING" ],
+        "unified" : false,
+        "recommendedFocus" : "meaning"
+      }, {
+        "patternKey" : "rhythm",
+        "direction" : "STRENGTH",
+        "evidenceCount" : 2,
+        "weightedEvidence" : 0.49,
+        "sources" : [ "SPEAKING" ],
+        "unified" : false,
+        "recommendedFocus" : null
+      } ]
+    },
+    "WRITING" : {
+      "trend" : {
+        "source" : "WRITING",
+        "sampleCount" : 28,
+        "confidence" : 0.0,
+        "collectingData" : false,
+        "metrics" : {
+          "MEANING" : [ {
+            "date" : "2026-09-25",
+            "score" : 61.89
+          } ],
+          "GRAMMAR" : [ {
+            "date" : "2026-09-25",
+            "score" : 61.89
+          } ],
+          "VOCABULARY" : [ {
+            "date" : "2026-09-25",
+            "score" : 61.89
+          } ],
+          "NATURALNESS" : [ {
+            "date" : "2026-09-25",
+            "score" : 61.89
+          } ],
+          "EXPRESSION" : [ {
+            "date" : "2026-09-25",
+            "score" : 61.89
+          } ]
+        }
+      },
+      "insights" : [ {
+        "patternKey" : "Clear",
+        "direction" : "STRENGTH",
+        "evidenceCount" : 28,
+        "weightedEvidence" : 21.48,
+        "sources" : [ "WRITING" ],
+        "unified" : false,
+        "recommendedFocus" : null
+      }, {
+        "patternKey" : "article",
+        "direction" : "WEAKNESS",
+        "evidenceCount" : 28,
+        "weightedEvidence" : 21.48,
+        "sources" : [ "WRITING" ],
+        "unified" : false,
+        "recommendedFocus" : null
+      } ]
+    },
+    "SPEAKING" : {
+      "trend" : {
+        "source" : "SPEAKING",
+        "sampleCount" : 3,
+        "confidence" : 0.53,
+        "collectingData" : false,
+        "metrics" : {
+          "FLUENCY" : [ {
+            "date" : "2026-09-24",
+            "score" : 65.71
+          } ]
+        }
+      },
+      "insights" : [ {
+        "patternKey" : "rhythm",
+        "direction" : "STRENGTH",
+        "evidenceCount" : 2,
+        "weightedEvidence" : 0.49,
+        "sources" : [ "SPEAKING" ],
+        "unified" : false,
+        "recommendedFocus" : null
+      }, {
+        "patternKey" : "article",
+        "direction" : "WEAKNESS",
+        "evidenceCount" : 2,
+        "weightedEvidence" : 0.33,
+        "sources" : [ "SPEAKING" ],
+        "unified" : false,
+        "recommendedFocus" : "grammar focus"
+      } ]
+    },
+    "LISTENING" : {
+      "trend" : {
+        "source" : "LISTENING",
+        "sampleCount" : 2,
+        "confidence" : 0.9,
+        "collectingData" : true,
+        "metrics" : {
+          "MEANING" : [ {
+            "date" : "2026-09-23",
+            "score" : 64.29
+          } ]
+        }
+      },
+      "insights" : [ {
+        "patternKey" : "MEANING",
+        "direction" : "WEAKNESS",
+        "evidenceCount" : 2,
+        "weightedEvidence" : 2.0,
+        "sources" : [ "LISTENING" ],
+        "unified" : false,
+        "recommendedFocus" : "meaning"
+      } ]
+    },
+    "READING" : {
+      "trend" : {
+        "source" : "READING",
+        "sampleCount" : 2,
+        "confidence" : 0.0,
+        "collectingData" : true,
+        "metrics" : {
+          "READING_DETAIL" : [ {
+            "date" : "2026-09-22",
+            "score" : 50.0
+          } ]
+        }
+      },
+      "insights" : [ ]
+    },
+    "VOCABULARY" : {
+      "trend" : {
+        "source" : "VOCABULARY",
+        "sampleCount" : 2,
+        "confidence" : 0.0,
+        "collectingData" : true,
+        "metrics" : {
+          "VOCABULARY_DETAIL" : [ {
+            "date" : "2026-09-22",
+            "score" : 50.0
+          } ]
+        }
+      },
+      "insights" : [ ]
+    },
+    "LEVEL_TEST" : {
+      "trend" : {
+        "source" : "LEVEL_TEST",
+        "sampleCount" : 0,
+        "confidence" : 0.0,
+        "collectingData" : true,
+        "metrics" : { }
+      },
+      "insights" : [ ]
+    }
+  }
+}, {
+  "writingCount" : 29,
+  "writing" : {
+    "evaluations" : [ {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 50,
+      "meaningScore" : 50,
+      "grammarScore" : 50,
+      "vocabularyScore" : 50,
+      "naturalnessScore" : 50,
+      "expressionScore" : 50,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 51,
+      "meaningScore" : 51,
+      "grammarScore" : 51,
+      "vocabularyScore" : 51,
+      "naturalnessScore" : 51,
+      "expressionScore" : 51,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 52,
+      "meaningScore" : 52,
+      "grammarScore" : 52,
+      "vocabularyScore" : 52,
+      "naturalnessScore" : 52,
+      "expressionScore" : 52,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 53,
+      "meaningScore" : 53,
+      "grammarScore" : 53,
+      "vocabularyScore" : 53,
+      "naturalnessScore" : 53,
+      "expressionScore" : 53,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 54,
+      "meaningScore" : 54,
+      "grammarScore" : 54,
+      "vocabularyScore" : 54,
+      "naturalnessScore" : 54,
+      "expressionScore" : 54,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 55,
+      "meaningScore" : 55,
+      "grammarScore" : 55,
+      "vocabularyScore" : 55,
+      "naturalnessScore" : 55,
+      "expressionScore" : 55,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 56,
+      "meaningScore" : 56,
+      "grammarScore" : 56,
+      "vocabularyScore" : 56,
+      "naturalnessScore" : 56,
+      "expressionScore" : 56,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 57,
+      "meaningScore" : 57,
+      "grammarScore" : 57,
+      "vocabularyScore" : 57,
+      "naturalnessScore" : 57,
+      "expressionScore" : 57,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 58,
+      "meaningScore" : 58,
+      "grammarScore" : 58,
+      "vocabularyScore" : 58,
+      "naturalnessScore" : 58,
+      "expressionScore" : 58,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 59,
+      "meaningScore" : 59,
+      "grammarScore" : 59,
+      "vocabularyScore" : 59,
+      "naturalnessScore" : 59,
+      "expressionScore" : 59,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 60,
+      "meaningScore" : 60,
+      "grammarScore" : 60,
+      "vocabularyScore" : 60,
+      "naturalnessScore" : 60,
+      "expressionScore" : 60,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 61,
+      "meaningScore" : 61,
+      "grammarScore" : 61,
+      "vocabularyScore" : 61,
+      "naturalnessScore" : 61,
+      "expressionScore" : 61,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 62,
+      "meaningScore" : 62,
+      "grammarScore" : 62,
+      "vocabularyScore" : 62,
+      "naturalnessScore" : 62,
+      "expressionScore" : 62,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 63,
+      "meaningScore" : 63,
+      "grammarScore" : 63,
+      "vocabularyScore" : 63,
+      "naturalnessScore" : 63,
+      "expressionScore" : 63,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 64,
+      "meaningScore" : 64,
+      "grammarScore" : 64,
+      "vocabularyScore" : 64,
+      "naturalnessScore" : 64,
+      "expressionScore" : 64,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 65,
+      "meaningScore" : 65,
+      "grammarScore" : 65,
+      "vocabularyScore" : 65,
+      "naturalnessScore" : 65,
+      "expressionScore" : 65,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 66,
+      "meaningScore" : 66,
+      "grammarScore" : 66,
+      "vocabularyScore" : 66,
+      "naturalnessScore" : 66,
+      "expressionScore" : 66,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 67,
+      "meaningScore" : 67,
+      "grammarScore" : 67,
+      "vocabularyScore" : 67,
+      "naturalnessScore" : 67,
+      "expressionScore" : 67,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 68,
+      "meaningScore" : 68,
+      "grammarScore" : 68,
+      "vocabularyScore" : 68,
+      "naturalnessScore" : 68,
+      "expressionScore" : 68,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 69,
+      "meaningScore" : 69,
+      "grammarScore" : 69,
+      "vocabularyScore" : 69,
+      "naturalnessScore" : 69,
+      "expressionScore" : 69,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 70,
+      "meaningScore" : 70,
+      "grammarScore" : 70,
+      "vocabularyScore" : 70,
+      "naturalnessScore" : 70,
+      "expressionScore" : 70,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 71,
+      "meaningScore" : 71,
+      "grammarScore" : 71,
+      "vocabularyScore" : 71,
+      "naturalnessScore" : 71,
+      "expressionScore" : 71,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 72,
+      "meaningScore" : 72,
+      "grammarScore" : 72,
+      "vocabularyScore" : 72,
+      "naturalnessScore" : 72,
+      "expressionScore" : 72,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 73,
+      "meaningScore" : 73,
+      "grammarScore" : 73,
+      "vocabularyScore" : 73,
+      "naturalnessScore" : 73,
+      "expressionScore" : 73,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 74,
+      "meaningScore" : 74,
+      "grammarScore" : 74,
+      "vocabularyScore" : 74,
+      "naturalnessScore" : 74,
+      "expressionScore" : 74,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 75,
+      "meaningScore" : 75,
+      "grammarScore" : 75,
+      "vocabularyScore" : 75,
+      "naturalnessScore" : 75,
+      "expressionScore" : 75,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 76,
+      "meaningScore" : 76,
+      "grammarScore" : 76,
+      "vocabularyScore" : 76,
+      "naturalnessScore" : 76,
+      "expressionScore" : 76,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 77,
+      "meaningScore" : 77,
+      "grammarScore" : 77,
+      "vocabularyScore" : 77,
+      "naturalnessScore" : 77,
+      "expressionScore" : 77,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 78,
+      "meaningScore" : 78,
+      "grammarScore" : 78,
+      "vocabularyScore" : 78,
+      "naturalnessScore" : 78,
+      "expressionScore" : 78,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    } ]
+  },
+  "speaking" : {
+    "evaluations" : [ {
+      "sessionId" : -1,
+      "learningDate" : "2026-09-24",
+      "evaluatedAt" : "2026-09-24T12:00:00",
+      "status" : "EVALUATED",
+      "overallScore" : 80,
+      "evaluationConfidence" : 0.8,
+      "eligibilityJson" : "{\"validSttTurnRatio\":0.75}",
+      "assistanceUsage" : [ "SAMPLE_ANSWER" ],
+      "profileSignalsJson" : "[{\"patternKey\":\"article\",\"direction\":\"WEAKNESS\",\"recommendedFocus\":\"grammar focus\",\"confidence\":0.9,\"metricType\":\"GRAMMAR\"},{\"patternKey\":\"rhythm\",\"direction\":\"STRENGTH\",\"recommendedFocus\":null,\"confidence\":0.8,\"metricType\":\"FLUENCY\"}]"
+    }, {
+      "sessionId" : -2,
+      "learningDate" : "2026-09-24",
+      "evaluatedAt" : "2026-09-24T12:00:00",
+      "status" : "EVALUATED",
+      "overallScore" : 80,
+      "evaluationConfidence" : 0.8,
+      "eligibilityJson" : "{\"validSttTurnRatio\":0.75}",
+      "assistanceUsage" : [ "SAMPLE_ANSWER" ],
+      "profileSignalsJson" : "[{\"patternKey\":\"article\",\"direction\":\"WEAKNESS\",\"recommendedFocus\":\"grammar focus\",\"confidence\":0.9,\"metricType\":\"GRAMMAR\"},{\"patternKey\":\"rhythm\",\"direction\":\"STRENGTH\",\"recommendedFocus\":null,\"confidence\":0.8,\"metricType\":\"FLUENCY\"}]"
+    } ]
+  },
+  "speakingGrowth" : [ {
+    "id" : 1,
+    "source" : "SPEAKING",
+    "learningDate" : "2026-09-24",
+    "status" : "EVALUATED",
+    "evaluationConfidence" : 0.0,
+    "metrics" : [ {
+      "metricType" : "FLUENCY",
+      "state" : "EVALUATED",
+      "score" : 50
+    } ]
+  }, {
+    "id" : 2,
+    "source" : "SPEAKING",
+    "learningDate" : "2026-09-24",
+    "status" : "EVALUATED",
+    "evaluationConfidence" : 0.8,
+    "metrics" : [ {
+      "metricType" : "FLUENCY",
+      "state" : "EVALUATED",
+      "score" : 60
+    } ]
+  }, {
+    "id" : 3,
+    "source" : "SPEAKING",
+    "learningDate" : "2026-09-24",
+    "status" : "EVALUATED",
+    "evaluationConfidence" : 0.8,
+    "metrics" : [ {
+      "metricType" : "FLUENCY",
+      "state" : "EVALUATED",
+      "score" : 70
+    } ]
+  } ],
+  "listening" : {
+    "evaluations" : [ {
+      "attemptId" : 1,
+      "taskType" : "DICTATION",
+      "confidence" : 0.9,
+      "score" : 70,
+      "evaluatedAt" : "2026-09-23T12:00:00",
+      "metrics" : [ {
+        "type" : " MEANING ",
+        "score" : 60,
+        "confidence" : 0.8,
+        "weight" : 0.5
+      } ]
+    }, {
+      "attemptId" : 1,
+      "taskType" : "DICTATION",
+      "confidence" : 0.9,
+      "score" : 70,
+      "evaluatedAt" : "2026-09-23T12:00:00",
+      "metrics" : [ {
+        "type" : " MEANING ",
+        "score" : 70,
+        "confidence" : 0.8,
+        "weight" : 0.5
+      } ]
+    }, {
+      "attemptId" : 2,
+      "taskType" : "DICTATION",
+      "confidence" : 0.9,
+      "score" : 70,
+      "evaluatedAt" : "2026-09-23T12:00:00",
+      "metrics" : [ {
+        "type" : " MEANING ",
+        "score" : 80,
+        "confidence" : 0.8,
+        "weight" : 0.0
+      } ]
+    } ]
+  },
+  "listeningDashboard" : {
+    "metrics" : [ {
+      "metric" : "MEANING",
+      "score" : 60,
+      "sampleCount" : 2,
+      "confidence" : "LOW",
+      "weaknessState" : "ACTIVE"
+    } ]
+  },
+  "practice" : {
+    "sets" : [ {
+      "domain" : "READING",
+      "status" : "COMPLETED",
+      "learningDate" : "2026-09-22",
+      "metrics" : [ {
+        "skillTag" : "READING_DETAIL",
+        "score" : 20,
+        "sampleCount" : 1
+      } ]
+    }, {
+      "domain" : "READING",
+      "status" : "COMPLETED",
+      "learningDate" : "2026-09-22",
+      "metrics" : [ {
+        "skillTag" : "READING_DETAIL",
+        "score" : 80,
+        "sampleCount" : 2
+      } ]
+    }, {
+      "domain" : "READING",
+      "status" : "ACTIVE",
+      "learningDate" : "2026-09-22",
+      "metrics" : [ {
+        "skillTag" : "READING_DETAIL",
+        "score" : 80,
+        "sampleCount" : 3
+      } ]
+    }, {
+      "domain" : "VOCABULARY",
+      "status" : "COMPLETED",
+      "learningDate" : "2026-09-22",
+      "metrics" : [ {
+        "skillTag" : "VOCABULARY_DETAIL",
+        "score" : 20,
+        "sampleCount" : 1
+      } ]
+    }, {
+      "domain" : "VOCABULARY",
+      "status" : "COMPLETED",
+      "learningDate" : "2026-09-22",
+      "metrics" : [ {
+        "skillTag" : "VOCABULARY_DETAIL",
+        "score" : 80,
+        "sampleCount" : 2
+      } ]
+    }, {
+      "domain" : "VOCABULARY",
+      "status" : "ACTIVE",
+      "learningDate" : "2026-09-22",
+      "metrics" : [ {
+        "skillTag" : "VOCABULARY_DETAIL",
+        "score" : 80,
+        "sampleCount" : 3
+      } ]
+    } ]
+  },
+  "expected" : {
+    "ALL" : {
+      "trend" : {
+        "source" : "ALL",
+        "sampleCount" : 36,
+        "confidence" : 0.72,
+        "collectingData" : false,
+        "metrics" : {
+          "MEANING" : [ {
+            "date" : "2026-09-23",
+            "score" : 64.29
+          }, {
+            "date" : "2026-09-25",
+            "score" : 62.33
+          } ],
+          "GRAMMAR" : [ {
+            "date" : "2026-09-25",
+            "score" : 62.33
+          } ],
+          "VOCABULARY" : [ {
+            "date" : "2026-09-25",
+            "score" : 62.33
+          } ],
+          "NATURALNESS" : [ {
+            "date" : "2026-09-25",
+            "score" : 62.33
+          } ],
+          "EXPRESSION" : [ {
+            "date" : "2026-09-25",
+            "score" : 62.33
+          } ],
+          "FLUENCY" : [ {
+            "date" : "2026-09-24",
+            "score" : 65.71
+          } ],
+          "READING_DETAIL" : [ {
+            "date" : "2026-09-22",
+            "score" : 50.0
+          } ]
+        }
+      },
+      "insights" : [ {
+        "patternKey" : "article",
+        "direction" : "WEAKNESS",
+        "evidenceCount" : 30,
+        "weightedEvidence" : 22.16,
+        "sources" : [ "WRITING", "SPEAKING" ],
+        "unified" : true,
+        "recommendedFocus" : "grammar focus"
+      }, {
+        "patternKey" : "Clear",
+        "direction" : "STRENGTH",
+        "evidenceCount" : 29,
+        "weightedEvidence" : 22.0,
+        "sources" : [ "WRITING" ],
+        "unified" : false,
+        "recommendedFocus" : null
+      }, {
+        "patternKey" : "MEANING",
+        "direction" : "WEAKNESS",
+        "evidenceCount" : 2,
+        "weightedEvidence" : 2.0,
+        "sources" : [ "LISTENING" ],
+        "unified" : false,
+        "recommendedFocus" : "meaning"
+      } ]
+    },
+    "WRITING" : {
+      "trend" : {
+        "source" : "WRITING",
+        "sampleCount" : 29,
+        "confidence" : 0.0,
+        "collectingData" : false,
+        "metrics" : {
+          "MEANING" : [ {
+            "date" : "2026-09-25",
+            "score" : 62.33
+          } ],
+          "GRAMMAR" : [ {
+            "date" : "2026-09-25",
+            "score" : 62.33
+          } ],
+          "VOCABULARY" : [ {
+            "date" : "2026-09-25",
+            "score" : 62.33
+          } ],
+          "NATURALNESS" : [ {
+            "date" : "2026-09-25",
+            "score" : 62.33
+          } ],
+          "EXPRESSION" : [ {
+            "date" : "2026-09-25",
+            "score" : 62.33
+          } ]
+        }
+      },
+      "insights" : [ {
+        "patternKey" : "Clear",
+        "direction" : "STRENGTH",
+        "evidenceCount" : 29,
+        "weightedEvidence" : 22.0,
+        "sources" : [ "WRITING" ],
+        "unified" : false,
+        "recommendedFocus" : null
+      }, {
+        "patternKey" : "article",
+        "direction" : "WEAKNESS",
+        "evidenceCount" : 29,
+        "weightedEvidence" : 22.0,
+        "sources" : [ "WRITING" ],
+        "unified" : false,
+        "recommendedFocus" : null
+      } ]
+    },
+    "SPEAKING" : {
+      "trend" : {
+        "source" : "SPEAKING",
+        "sampleCount" : 3,
+        "confidence" : 0.53,
+        "collectingData" : false,
+        "metrics" : {
+          "FLUENCY" : [ {
+            "date" : "2026-09-24",
+            "score" : 65.71
+          } ]
+        }
+      },
+      "insights" : [ ]
+    },
+    "LISTENING" : {
+      "trend" : {
+        "source" : "LISTENING",
+        "sampleCount" : 2,
+        "confidence" : 0.9,
+        "collectingData" : true,
+        "metrics" : {
+          "MEANING" : [ {
+            "date" : "2026-09-23",
+            "score" : 64.29
+          } ]
+        }
+      },
+      "insights" : [ {
+        "patternKey" : "MEANING",
+        "direction" : "WEAKNESS",
+        "evidenceCount" : 2,
+        "weightedEvidence" : 2.0,
+        "sources" : [ "LISTENING" ],
+        "unified" : false,
+        "recommendedFocus" : "meaning"
+      } ]
+    },
+    "READING" : {
+      "trend" : {
+        "source" : "READING",
+        "sampleCount" : 2,
+        "confidence" : 0.0,
+        "collectingData" : true,
+        "metrics" : {
+          "READING_DETAIL" : [ {
+            "date" : "2026-09-22",
+            "score" : 50.0
+          } ]
+        }
+      },
+      "insights" : [ ]
+    },
+    "VOCABULARY" : {
+      "trend" : {
+        "source" : "VOCABULARY",
+        "sampleCount" : 2,
+        "confidence" : 0.0,
+        "collectingData" : true,
+        "metrics" : {
+          "VOCABULARY_DETAIL" : [ {
+            "date" : "2026-09-22",
+            "score" : 50.0
+          } ]
+        }
+      },
+      "insights" : [ ]
+    },
+    "LEVEL_TEST" : {
+      "trend" : {
+        "source" : "LEVEL_TEST",
+        "sampleCount" : 0,
+        "confidence" : 0.0,
+        "collectingData" : true,
+        "metrics" : { }
+      },
+      "insights" : [ ]
+    }
+  }
+}, {
+  "writingCount" : 31,
+  "writing" : {
+    "evaluations" : [ {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 50,
+      "meaningScore" : 50,
+      "grammarScore" : 50,
+      "vocabularyScore" : 50,
+      "naturalnessScore" : 50,
+      "expressionScore" : 50,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 51,
+      "meaningScore" : 51,
+      "grammarScore" : 51,
+      "vocabularyScore" : 51,
+      "naturalnessScore" : 51,
+      "expressionScore" : 51,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 52,
+      "meaningScore" : 52,
+      "grammarScore" : 52,
+      "vocabularyScore" : 52,
+      "naturalnessScore" : 52,
+      "expressionScore" : 52,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 53,
+      "meaningScore" : 53,
+      "grammarScore" : 53,
+      "vocabularyScore" : 53,
+      "naturalnessScore" : 53,
+      "expressionScore" : 53,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 54,
+      "meaningScore" : 54,
+      "grammarScore" : 54,
+      "vocabularyScore" : 54,
+      "naturalnessScore" : 54,
+      "expressionScore" : 54,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 55,
+      "meaningScore" : 55,
+      "grammarScore" : 55,
+      "vocabularyScore" : 55,
+      "naturalnessScore" : 55,
+      "expressionScore" : 55,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 56,
+      "meaningScore" : 56,
+      "grammarScore" : 56,
+      "vocabularyScore" : 56,
+      "naturalnessScore" : 56,
+      "expressionScore" : 56,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 57,
+      "meaningScore" : 57,
+      "grammarScore" : 57,
+      "vocabularyScore" : 57,
+      "naturalnessScore" : 57,
+      "expressionScore" : 57,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 58,
+      "meaningScore" : 58,
+      "grammarScore" : 58,
+      "vocabularyScore" : 58,
+      "naturalnessScore" : 58,
+      "expressionScore" : 58,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 59,
+      "meaningScore" : 59,
+      "grammarScore" : 59,
+      "vocabularyScore" : 59,
+      "naturalnessScore" : 59,
+      "expressionScore" : 59,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 60,
+      "meaningScore" : 60,
+      "grammarScore" : 60,
+      "vocabularyScore" : 60,
+      "naturalnessScore" : 60,
+      "expressionScore" : 60,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 61,
+      "meaningScore" : 61,
+      "grammarScore" : 61,
+      "vocabularyScore" : 61,
+      "naturalnessScore" : 61,
+      "expressionScore" : 61,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 62,
+      "meaningScore" : 62,
+      "grammarScore" : 62,
+      "vocabularyScore" : 62,
+      "naturalnessScore" : 62,
+      "expressionScore" : 62,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 63,
+      "meaningScore" : 63,
+      "grammarScore" : 63,
+      "vocabularyScore" : 63,
+      "naturalnessScore" : 63,
+      "expressionScore" : 63,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 64,
+      "meaningScore" : 64,
+      "grammarScore" : 64,
+      "vocabularyScore" : 64,
+      "naturalnessScore" : 64,
+      "expressionScore" : 64,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 65,
+      "meaningScore" : 65,
+      "grammarScore" : 65,
+      "vocabularyScore" : 65,
+      "naturalnessScore" : 65,
+      "expressionScore" : 65,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 66,
+      "meaningScore" : 66,
+      "grammarScore" : 66,
+      "vocabularyScore" : 66,
+      "naturalnessScore" : 66,
+      "expressionScore" : 66,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 67,
+      "meaningScore" : 67,
+      "grammarScore" : 67,
+      "vocabularyScore" : 67,
+      "naturalnessScore" : 67,
+      "expressionScore" : 67,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 68,
+      "meaningScore" : 68,
+      "grammarScore" : 68,
+      "vocabularyScore" : 68,
+      "naturalnessScore" : 68,
+      "expressionScore" : 68,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 69,
+      "meaningScore" : 69,
+      "grammarScore" : 69,
+      "vocabularyScore" : 69,
+      "naturalnessScore" : 69,
+      "expressionScore" : 69,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 70,
+      "meaningScore" : 70,
+      "grammarScore" : 70,
+      "vocabularyScore" : 70,
+      "naturalnessScore" : 70,
+      "expressionScore" : 70,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 71,
+      "meaningScore" : 71,
+      "grammarScore" : 71,
+      "vocabularyScore" : 71,
+      "naturalnessScore" : 71,
+      "expressionScore" : 71,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 72,
+      "meaningScore" : 72,
+      "grammarScore" : 72,
+      "vocabularyScore" : 72,
+      "naturalnessScore" : 72,
+      "expressionScore" : 72,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 73,
+      "meaningScore" : 73,
+      "grammarScore" : 73,
+      "vocabularyScore" : 73,
+      "naturalnessScore" : 73,
+      "expressionScore" : 73,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 74,
+      "meaningScore" : 74,
+      "grammarScore" : 74,
+      "vocabularyScore" : 74,
+      "naturalnessScore" : 74,
+      "expressionScore" : 74,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 75,
+      "meaningScore" : 75,
+      "grammarScore" : 75,
+      "vocabularyScore" : 75,
+      "naturalnessScore" : 75,
+      "expressionScore" : 75,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 76,
+      "meaningScore" : 76,
+      "grammarScore" : 76,
+      "vocabularyScore" : 76,
+      "naturalnessScore" : 76,
+      "expressionScore" : 76,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 77,
+      "meaningScore" : 77,
+      "grammarScore" : 77,
+      "vocabularyScore" : 77,
+      "naturalnessScore" : 77,
+      "expressionScore" : 77,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 78,
+      "meaningScore" : 78,
+      "grammarScore" : 78,
+      "vocabularyScore" : 78,
+      "naturalnessScore" : 78,
+      "expressionScore" : 78,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 79,
+      "meaningScore" : 79,
+      "grammarScore" : 79,
+      "vocabularyScore" : 79,
+      "naturalnessScore" : 79,
+      "expressionScore" : 79,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    }, {
+      "learningDate" : "2026-09-25",
+      "evaluatedAt" : "2026-09-25T12:00:00",
+      "overallScore" : 80,
+      "meaningScore" : 80,
+      "grammarScore" : 80,
+      "vocabularyScore" : 80,
+      "naturalnessScore" : 80,
+      "expressionScore" : 80,
+      "profileSignalsJson" : "{\"strengthTags\":[\" Clear \",\"Clear\"],\"weaknessTags\":[\"article\"],\"grammarPatterns\":[\"article\"]}"
+    } ]
+  },
+  "speaking" : {
+    "evaluations" : [ {
+      "sessionId" : -1,
+      "learningDate" : "2026-09-24",
+      "evaluatedAt" : "2026-09-24T12:00:00",
+      "status" : "EVALUATED",
+      "overallScore" : 80,
+      "evaluationConfidence" : 0.8,
+      "eligibilityJson" : "{\"validSttTurnRatio\":0.75}",
+      "assistanceUsage" : [ "SAMPLE_ANSWER" ],
+      "profileSignalsJson" : "[{\"patternKey\":\"article\",\"direction\":\"WEAKNESS\",\"recommendedFocus\":\"grammar focus\",\"confidence\":0.9,\"metricType\":\"GRAMMAR\"},{\"patternKey\":\"rhythm\",\"direction\":\"STRENGTH\",\"recommendedFocus\":null,\"confidence\":0.8,\"metricType\":\"FLUENCY\"}]"
+    }, {
+      "sessionId" : -2,
+      "learningDate" : "2026-09-24",
+      "evaluatedAt" : "2026-09-24T12:00:00",
+      "status" : "EVALUATED",
+      "overallScore" : 80,
+      "evaluationConfidence" : 0.8,
+      "eligibilityJson" : "{\"validSttTurnRatio\":0.75}",
+      "assistanceUsage" : [ "SAMPLE_ANSWER" ],
+      "profileSignalsJson" : "[{\"patternKey\":\"article\",\"direction\":\"WEAKNESS\",\"recommendedFocus\":\"grammar focus\",\"confidence\":0.9,\"metricType\":\"GRAMMAR\"},{\"patternKey\":\"rhythm\",\"direction\":\"STRENGTH\",\"recommendedFocus\":null,\"confidence\":0.8,\"metricType\":\"FLUENCY\"}]"
+    } ]
+  },
+  "speakingGrowth" : [ {
+    "id" : 1,
+    "source" : "SPEAKING",
+    "learningDate" : "2026-09-24",
+    "status" : "EVALUATED",
+    "evaluationConfidence" : 0.0,
+    "metrics" : [ {
+      "metricType" : "FLUENCY",
+      "state" : "EVALUATED",
+      "score" : 50
+    } ]
+  }, {
+    "id" : 2,
+    "source" : "SPEAKING",
+    "learningDate" : "2026-09-24",
+    "status" : "EVALUATED",
+    "evaluationConfidence" : 0.8,
+    "metrics" : [ {
+      "metricType" : "FLUENCY",
+      "state" : "EVALUATED",
+      "score" : 60
+    } ]
+  }, {
+    "id" : 3,
+    "source" : "SPEAKING",
+    "learningDate" : "2026-09-24",
+    "status" : "EVALUATED",
+    "evaluationConfidence" : 0.8,
+    "metrics" : [ {
+      "metricType" : "FLUENCY",
+      "state" : "EVALUATED",
+      "score" : 70
+    } ]
+  } ],
+  "listening" : {
+    "evaluations" : [ {
+      "attemptId" : 1,
+      "taskType" : "DICTATION",
+      "confidence" : 0.9,
+      "score" : 70,
+      "evaluatedAt" : "2026-09-23T12:00:00",
+      "metrics" : [ {
+        "type" : " MEANING ",
+        "score" : 60,
+        "confidence" : 0.8,
+        "weight" : 0.5
+      } ]
+    }, {
+      "attemptId" : 1,
+      "taskType" : "DICTATION",
+      "confidence" : 0.9,
+      "score" : 70,
+      "evaluatedAt" : "2026-09-23T12:00:00",
+      "metrics" : [ {
+        "type" : " MEANING ",
+        "score" : 70,
+        "confidence" : 0.8,
+        "weight" : 0.5
+      } ]
+    }, {
+      "attemptId" : 2,
+      "taskType" : "DICTATION",
+      "confidence" : 0.9,
+      "score" : 70,
+      "evaluatedAt" : "2026-09-23T12:00:00",
+      "metrics" : [ {
+        "type" : " MEANING ",
+        "score" : 80,
+        "confidence" : 0.8,
+        "weight" : 0.0
+      } ]
+    } ]
+  },
+  "listeningDashboard" : {
+    "metrics" : [ {
+      "metric" : "MEANING",
+      "score" : 60,
+      "sampleCount" : 2,
+      "confidence" : "LOW",
+      "weaknessState" : "ACTIVE"
+    } ]
+  },
+  "practice" : {
+    "sets" : [ {
+      "domain" : "READING",
+      "status" : "COMPLETED",
+      "learningDate" : "2026-09-22",
+      "metrics" : [ {
+        "skillTag" : "READING_DETAIL",
+        "score" : 20,
+        "sampleCount" : 1
+      } ]
+    }, {
+      "domain" : "READING",
+      "status" : "COMPLETED",
+      "learningDate" : "2026-09-22",
+      "metrics" : [ {
+        "skillTag" : "READING_DETAIL",
+        "score" : 80,
+        "sampleCount" : 2
+      } ]
+    }, {
+      "domain" : "READING",
+      "status" : "ACTIVE",
+      "learningDate" : "2026-09-22",
+      "metrics" : [ {
+        "skillTag" : "READING_DETAIL",
+        "score" : 80,
+        "sampleCount" : 3
+      } ]
+    }, {
+      "domain" : "VOCABULARY",
+      "status" : "COMPLETED",
+      "learningDate" : "2026-09-22",
+      "metrics" : [ {
+        "skillTag" : "VOCABULARY_DETAIL",
+        "score" : 20,
+        "sampleCount" : 1
+      } ]
+    }, {
+      "domain" : "VOCABULARY",
+      "status" : "COMPLETED",
+      "learningDate" : "2026-09-22",
+      "metrics" : [ {
+        "skillTag" : "VOCABULARY_DETAIL",
+        "score" : 80,
+        "sampleCount" : 2
+      } ]
+    }, {
+      "domain" : "VOCABULARY",
+      "status" : "ACTIVE",
+      "learningDate" : "2026-09-22",
+      "metrics" : [ {
+        "skillTag" : "VOCABULARY_DETAIL",
+        "score" : 80,
+        "sampleCount" : 3
+      } ]
+    } ]
+  },
+  "expected" : {
+    "ALL" : {
+      "trend" : {
+        "source" : "ALL",
+        "sampleCount" : 38,
+        "confidence" : 0.72,
+        "collectingData" : false,
+        "metrics" : {
+          "MEANING" : [ {
+            "date" : "2026-09-23",
+            "score" : 64.29
+          }, {
+            "date" : "2026-09-25",
+            "score" : 63.22
+          } ],
+          "GRAMMAR" : [ {
+            "date" : "2026-09-25",
+            "score" : 63.22
+          } ],
+          "VOCABULARY" : [ {
+            "date" : "2026-09-25",
+            "score" : 63.22
+          } ],
+          "NATURALNESS" : [ {
+            "date" : "2026-09-25",
+            "score" : 63.22
+          } ],
+          "EXPRESSION" : [ {
+            "date" : "2026-09-25",
+            "score" : 63.22
+          } ],
+          "FLUENCY" : [ {
+            "date" : "2026-09-24",
+            "score" : 65.71
+          } ],
+          "READING_DETAIL" : [ {
+            "date" : "2026-09-22",
+            "score" : 50.0
+          } ]
+        }
+      },
+      "insights" : [ {
+        "patternKey" : "Clear",
+        "direction" : "STRENGTH",
+        "evidenceCount" : 30,
+        "weightedEvidence" : 22.5,
+        "sources" : [ "WRITING" ],
+        "unified" : false,
+        "recommendedFocus" : null
+      }, {
+        "patternKey" : "article",
+        "direction" : "WEAKNESS",
+        "evidenceCount" : 30,
+        "weightedEvidence" : 22.5,
+        "sources" : [ "WRITING" ],
+        "unified" : false,
+        "recommendedFocus" : null
+      }, {
+        "patternKey" : "MEANING",
+        "direction" : "WEAKNESS",
+        "evidenceCount" : 2,
+        "weightedEvidence" : 2.0,
+        "sources" : [ "LISTENING" ],
+        "unified" : false,
+        "recommendedFocus" : "meaning"
+      } ]
+    },
+    "WRITING" : {
+      "trend" : {
+        "source" : "WRITING",
+        "sampleCount" : 31,
+        "confidence" : 0.0,
+        "collectingData" : false,
+        "metrics" : {
+          "MEANING" : [ {
+            "date" : "2026-09-25",
+            "score" : 63.22
+          } ],
+          "GRAMMAR" : [ {
+            "date" : "2026-09-25",
+            "score" : 63.22
+          } ],
+          "VOCABULARY" : [ {
+            "date" : "2026-09-25",
+            "score" : 63.22
+          } ],
+          "NATURALNESS" : [ {
+            "date" : "2026-09-25",
+            "score" : 63.22
+          } ],
+          "EXPRESSION" : [ {
+            "date" : "2026-09-25",
+            "score" : 63.22
+          } ]
+        }
+      },
+      "insights" : [ {
+        "patternKey" : "Clear",
+        "direction" : "STRENGTH",
+        "evidenceCount" : 30,
+        "weightedEvidence" : 22.5,
+        "sources" : [ "WRITING" ],
+        "unified" : false,
+        "recommendedFocus" : null
+      }, {
+        "patternKey" : "article",
+        "direction" : "WEAKNESS",
+        "evidenceCount" : 30,
+        "weightedEvidence" : 22.5,
+        "sources" : [ "WRITING" ],
+        "unified" : false,
+        "recommendedFocus" : null
+      } ]
+    },
+    "SPEAKING" : {
+      "trend" : {
+        "source" : "SPEAKING",
+        "sampleCount" : 3,
+        "confidence" : 0.53,
+        "collectingData" : false,
+        "metrics" : {
+          "FLUENCY" : [ {
+            "date" : "2026-09-24",
+            "score" : 65.71
+          } ]
+        }
+      },
+      "insights" : [ ]
+    },
+    "LISTENING" : {
+      "trend" : {
+        "source" : "LISTENING",
+        "sampleCount" : 2,
+        "confidence" : 0.9,
+        "collectingData" : true,
+        "metrics" : {
+          "MEANING" : [ {
+            "date" : "2026-09-23",
+            "score" : 64.29
+          } ]
+        }
+      },
+      "insights" : [ {
+        "patternKey" : "MEANING",
+        "direction" : "WEAKNESS",
+        "evidenceCount" : 2,
+        "weightedEvidence" : 2.0,
+        "sources" : [ "LISTENING" ],
+        "unified" : false,
+        "recommendedFocus" : "meaning"
+      } ]
+    },
+    "READING" : {
+      "trend" : {
+        "source" : "READING",
+        "sampleCount" : 2,
+        "confidence" : 0.0,
+        "collectingData" : true,
+        "metrics" : {
+          "READING_DETAIL" : [ {
+            "date" : "2026-09-22",
+            "score" : 50.0
+          } ]
+        }
+      },
+      "insights" : [ ]
+    },
+    "VOCABULARY" : {
+      "trend" : {
+        "source" : "VOCABULARY",
+        "sampleCount" : 2,
+        "confidence" : 0.0,
+        "collectingData" : true,
+        "metrics" : {
+          "VOCABULARY_DETAIL" : [ {
+            "date" : "2026-09-22",
+            "score" : 50.0
+          } ]
+        }
+      },
+      "insights" : [ ]
+    },
+    "LEVEL_TEST" : {
+      "trend" : {
+        "source" : "LEVEL_TEST",
+        "sampleCount" : 0,
+        "confidence" : 0.0,
+        "collectingData" : true,
+        "metrics" : { }
+      },
+      "insights" : [ ]
+    }
+  }
+} ]

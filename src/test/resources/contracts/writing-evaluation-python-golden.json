@@ -1,0 +1,77 @@
+{
+  "compactPayload": "{\"requestId\":\"synthetic-writing-eval\",\"context\":\"DAILY\",\"writingType\":\"FREE\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"originSentence\":\"합성 질문\",\"userAnswer\":\"A synthetic answer.\",\"difficulty\":\"NORMAL\",\"keywords\":[],\"focusMetrics\":[],\"learningProfileSummary\":null,\"taskType\":null,\"translationSourceText\":null,\"providedFacts\":[],\"requiredIntents\":[],\"responseConstraints\":[]}",
+  "prompt": "# Current task\nEvaluate this DAILY writing answer.\nFeedback originText fields MUST be written in ko.\nFeedback learningText fields and recommendedAnswers MUST be written in en.\n\n<evaluation-data>\n{\"requestId\":\"synthetic-writing-eval\",\"context\":\"DAILY\",\"writingType\":\"FREE\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"originSentence\":\"합성 질문\",\"userAnswer\":\"A synthetic answer.\",\"difficulty\":\"NORMAL\",\"keywords\":[],\"focusMetrics\":[],\"learningProfileSummary\":null,\"taskType\":null,\"translationSourceText\":null,\"providedFacts\":[],\"requiredIntents\":[],\"responseConstraints\":[]}\n</evaluation-data>",
+  "request": {
+    "context": "DAILY",
+    "difficulty": "NORMAL",
+    "focusMetrics": [],
+    "keywords": [],
+    "learningLanguage": "en",
+    "learningProfileSummary": null,
+    "originLanguage": "ko",
+    "originSentence": "합성 질문",
+    "providedFacts": [],
+    "requestId": "synthetic-writing-eval",
+    "requiredIntents": [],
+    "responseConstraints": [],
+    "taskType": null,
+    "translationSourceText": null,
+    "userAnswer": "A synthetic answer.",
+    "writingType": "FREE"
+  },
+  "richCompactPayload": "{\"requestId\":\"synthetic-writing-eval\",\"context\":\"DAILY\",\"writingType\":\"FREE\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"originSentence\":\"합성 질문\",\"userAnswer\":\"A synthetic answer.\",\"difficulty\":\"NORMAL\",\"keywords\":[{\"key\":\"travel\",\"text\":\"여행\",\"source\":\"SYSTEM\",\"type\":\"TOPIC\",\"canonicalKey\":\"travel\",\"selectionWeight\":0.7}],\"focusMetrics\":[],\"learningProfileSummary\":{\"profileVersion\":\"PROFILE\",\"baseLevelScore\":73.0,\"skillScores\":null,\"grammarWeaknesses\":[\"synthetic grammar\"],\"keywordMasteries\":[],\"difficultyPerformance\":null,\"errorPatterns\":[],\"trend\":null,\"confidence\":null,\"strengths\":[],\"weaknesses\":[],\"recommendedFocus\":[\"synthetic focus\"],\"additionalSignals\":{}},\"taskType\":null,\"translationSourceText\":null,\"providedFacts\":[],\"requiredIntents\":[],\"responseConstraints\":[]}",
+  "richSnapshotJson": "{\"selectedKeywords\":[{\"key\":\"travel\",\"text\":\"여행\",\"source\":\"SYSTEM\",\"type\":\"TOPIC\",\"canonicalKey\":\"travel\",\"selectionWeight\":0.7},{\"key\":\"work\",\"text\":\"일\",\"source\":\"CUSTOM\",\"type\":\"TOPIC\",\"canonicalKey\":\"work\",\"selectionWeight\":0.3}],\"learningProfile\":{\"profileVersion\":\"PROFILE\",\"baseLevelScore\":73.0,\"skillScores\":null,\"grammarWeaknesses\":[\"synthetic grammar\"],\"keywordMasteries\":[],\"difficultyPerformance\":null,\"errorPatterns\":[],\"trend\":null,\"confidence\":null,\"strengths\":[],\"weaknesses\":[],\"recommendedFocus\":[\"synthetic focus\"],\"additionalSignals\":{}}}",
+  "scores": [
+    {
+      "overall": 49,
+      "raw": {
+        "expression": 100.0,
+        "grammar": 100.0,
+        "meaning": 29.0,
+        "naturalness": 100.0,
+        "vocabulary": 100.0
+      },
+      "rounded": {
+        "expression": 100,
+        "grammar": 100,
+        "meaning": 29,
+        "naturalness": 100,
+        "vocabulary": 100
+      }
+    },
+    {
+      "overall": 69,
+      "raw": {
+        "expression": 100.0,
+        "grammar": 100.0,
+        "meaning": 49.0,
+        "naturalness": 100.0,
+        "vocabulary": 100.0
+      },
+      "rounded": {
+        "expression": 100,
+        "grammar": 100,
+        "meaning": 49,
+        "naturalness": 100,
+        "vocabulary": 100
+      }
+    },
+    {
+      "overall": 76,
+      "raw": {
+        "expression": 90.5,
+        "grammar": 79.5,
+        "meaning": 80.5,
+        "naturalness": 60.5,
+        "vocabulary": 70.5
+      },
+      "rounded": {
+        "expression": 91,
+        "grammar": 80,
+        "meaning": 81,
+        "naturalness": 61,
+        "vocabulary": 71
+      }
+    }
+  ]
+}

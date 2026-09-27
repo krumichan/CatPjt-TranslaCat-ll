@@ -1,0 +1,78 @@
+{
+  "type": "object",
+  "properties": {
+    "verdicts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "order": {
+            "type": "integer"
+          },
+          "bestAnswerKey": {
+            "type": "string"
+          },
+          "ambiguous": {
+            "type": "boolean"
+          },
+          "supported": {
+            "type": "boolean"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "modeFit": {
+            "type": "boolean"
+          },
+          "answerLeakage": {
+            "type": "boolean"
+          },
+          "contextDependent": {
+            "type": "boolean"
+          },
+          "distractorsPlausible": {
+            "type": "boolean"
+          },
+          "stemPresuppositionsSupported": {
+            "type": "boolean"
+          },
+          "stemEvidenceSpanIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "readingOperation": {
+            "type": "string",
+            "enum": [
+              "DIRECT_RETRIEVAL",
+              "INFERENCE",
+              "DISCOURSE_STRUCTURE"
+            ]
+          },
+          "distinctReadingTask": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "order",
+          "bestAnswerKey",
+          "ambiguous",
+          "supported",
+          "reason",
+          "modeFit",
+          "answerLeakage",
+          "contextDependent",
+          "distractorsPlausible",
+          "stemPresuppositionsSupported",
+          "stemEvidenceSpanIds",
+          "readingOperation",
+          "distinctReadingTask"
+        ]
+      }
+    }
+  },
+  "required": [
+    "verdicts"
+  ]
+}

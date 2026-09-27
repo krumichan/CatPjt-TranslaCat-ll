@@ -1,0 +1,1338 @@
+{
+  "slots": [
+    {
+      "mode": "COMPREHENSION",
+      "band": 1,
+      "slots": [
+        {
+          "globalOrder": 1,
+          "difficulty": "CURRENT",
+          "complexityBand": 1,
+          "skillTag": "CONTENT"
+        },
+        {
+          "globalOrder": 2,
+          "difficulty": "EASIER",
+          "complexityBand": 1,
+          "skillTag": "DETAIL"
+        },
+        {
+          "globalOrder": 3,
+          "difficulty": "CURRENT",
+          "complexityBand": 1,
+          "skillTag": "INFERENCE"
+        },
+        {
+          "globalOrder": 4,
+          "difficulty": "CHALLENGE",
+          "complexityBand": 2,
+          "skillTag": "DETAIL"
+        },
+        {
+          "globalOrder": 5,
+          "difficulty": "CURRENT",
+          "complexityBand": 1,
+          "skillTag": "INFERENCE"
+        }
+      ]
+    },
+    {
+      "mode": "COMPREHENSION",
+      "band": 2,
+      "slots": [
+        {
+          "globalOrder": 1,
+          "difficulty": "CURRENT",
+          "complexityBand": 2,
+          "skillTag": "CONTENT"
+        },
+        {
+          "globalOrder": 2,
+          "difficulty": "EASIER",
+          "complexityBand": 1,
+          "skillTag": "DETAIL"
+        },
+        {
+          "globalOrder": 3,
+          "difficulty": "CURRENT",
+          "complexityBand": 2,
+          "skillTag": "INFERENCE"
+        },
+        {
+          "globalOrder": 4,
+          "difficulty": "CHALLENGE",
+          "complexityBand": 3,
+          "skillTag": "DETAIL"
+        },
+        {
+          "globalOrder": 5,
+          "difficulty": "CURRENT",
+          "complexityBand": 2,
+          "skillTag": "INFERENCE"
+        }
+      ]
+    },
+    {
+      "mode": "COMPREHENSION",
+      "band": 3,
+      "slots": [
+        {
+          "globalOrder": 1,
+          "difficulty": "CURRENT",
+          "complexityBand": 3,
+          "skillTag": "CONTENT"
+        },
+        {
+          "globalOrder": 2,
+          "difficulty": "EASIER",
+          "complexityBand": 2,
+          "skillTag": "DETAIL"
+        },
+        {
+          "globalOrder": 3,
+          "difficulty": "CURRENT",
+          "complexityBand": 3,
+          "skillTag": "INFERENCE"
+        },
+        {
+          "globalOrder": 4,
+          "difficulty": "CHALLENGE",
+          "complexityBand": 4,
+          "skillTag": "INFERENCE"
+        },
+        {
+          "globalOrder": 5,
+          "difficulty": "CURRENT",
+          "complexityBand": 3,
+          "skillTag": "INFERENCE"
+        }
+      ]
+    },
+    {
+      "mode": "COMPREHENSION",
+      "band": 4,
+      "slots": [
+        {
+          "globalOrder": 1,
+          "difficulty": "CURRENT",
+          "complexityBand": 4,
+          "skillTag": "CONTENT"
+        },
+        {
+          "globalOrder": 2,
+          "difficulty": "EASIER",
+          "complexityBand": 3,
+          "skillTag": "DETAIL"
+        },
+        {
+          "globalOrder": 3,
+          "difficulty": "CURRENT",
+          "complexityBand": 4,
+          "skillTag": "INFERENCE"
+        },
+        {
+          "globalOrder": 4,
+          "difficulty": "CHALLENGE",
+          "complexityBand": 5,
+          "skillTag": "INFERENCE"
+        },
+        {
+          "globalOrder": 5,
+          "difficulty": "CURRENT",
+          "complexityBand": 4,
+          "skillTag": "INFERENCE"
+        }
+      ]
+    },
+    {
+      "mode": "COMPREHENSION",
+      "band": 5,
+      "slots": [
+        {
+          "globalOrder": 1,
+          "difficulty": "CURRENT",
+          "complexityBand": 5,
+          "skillTag": "CONTENT"
+        },
+        {
+          "globalOrder": 2,
+          "difficulty": "EASIER",
+          "complexityBand": 4,
+          "skillTag": "INFERENCE"
+        },
+        {
+          "globalOrder": 3,
+          "difficulty": "CURRENT",
+          "complexityBand": 5,
+          "skillTag": "INFERENCE"
+        },
+        {
+          "globalOrder": 4,
+          "difficulty": "CHALLENGE",
+          "complexityBand": 5,
+          "skillTag": "INFERENCE"
+        },
+        {
+          "globalOrder": 5,
+          "difficulty": "CURRENT",
+          "complexityBand": 5,
+          "skillTag": "INFERENCE"
+        }
+      ]
+    },
+    {
+      "mode": "STRUCTURE",
+      "band": 1,
+      "slots": [
+        {
+          "globalOrder": 1,
+          "difficulty": "CURRENT",
+          "complexityBand": 1,
+          "skillTag": "GIST"
+        },
+        {
+          "globalOrder": 2,
+          "difficulty": "EASIER",
+          "complexityBand": 1,
+          "skillTag": "STRUCTURE"
+        },
+        {
+          "globalOrder": 3,
+          "difficulty": "CURRENT",
+          "complexityBand": 1,
+          "skillTag": "STRUCTURE"
+        },
+        {
+          "globalOrder": 4,
+          "difficulty": "CHALLENGE",
+          "complexityBand": 2,
+          "skillTag": "GIST"
+        },
+        {
+          "globalOrder": 5,
+          "difficulty": "CURRENT",
+          "complexityBand": 1,
+          "skillTag": "STRUCTURE"
+        }
+      ]
+    },
+    {
+      "mode": "STRUCTURE",
+      "band": 2,
+      "slots": [
+        {
+          "globalOrder": 1,
+          "difficulty": "CURRENT",
+          "complexityBand": 2,
+          "skillTag": "GIST"
+        },
+        {
+          "globalOrder": 2,
+          "difficulty": "EASIER",
+          "complexityBand": 1,
+          "skillTag": "STRUCTURE"
+        },
+        {
+          "globalOrder": 3,
+          "difficulty": "CURRENT",
+          "complexityBand": 2,
+          "skillTag": "STRUCTURE"
+        },
+        {
+          "globalOrder": 4,
+          "difficulty": "CHALLENGE",
+          "complexityBand": 3,
+          "skillTag": "STRUCTURE"
+        },
+        {
+          "globalOrder": 5,
+          "difficulty": "CURRENT",
+          "complexityBand": 2,
+          "skillTag": "STRUCTURE"
+        }
+      ]
+    },
+    {
+      "mode": "STRUCTURE",
+      "band": 3,
+      "slots": [
+        {
+          "globalOrder": 1,
+          "difficulty": "CURRENT",
+          "complexityBand": 3,
+          "skillTag": "STRUCTURE"
+        },
+        {
+          "globalOrder": 2,
+          "difficulty": "EASIER",
+          "complexityBand": 2,
+          "skillTag": "STRUCTURE"
+        },
+        {
+          "globalOrder": 3,
+          "difficulty": "CURRENT",
+          "complexityBand": 3,
+          "skillTag": "STRUCTURE"
+        },
+        {
+          "globalOrder": 4,
+          "difficulty": "CHALLENGE",
+          "complexityBand": 4,
+          "skillTag": "STRUCTURE"
+        },
+        {
+          "globalOrder": 5,
+          "difficulty": "CURRENT",
+          "complexityBand": 3,
+          "skillTag": "STRUCTURE"
+        }
+      ]
+    },
+    {
+      "mode": "STRUCTURE",
+      "band": 4,
+      "slots": [
+        {
+          "globalOrder": 1,
+          "difficulty": "CURRENT",
+          "complexityBand": 4,
+          "skillTag": "STRUCTURE"
+        },
+        {
+          "globalOrder": 2,
+          "difficulty": "EASIER",
+          "complexityBand": 3,
+          "skillTag": "STRUCTURE"
+        },
+        {
+          "globalOrder": 3,
+          "difficulty": "CURRENT",
+          "complexityBand": 4,
+          "skillTag": "STRUCTURE"
+        },
+        {
+          "globalOrder": 4,
+          "difficulty": "CHALLENGE",
+          "complexityBand": 5,
+          "skillTag": "STRUCTURE"
+        },
+        {
+          "globalOrder": 5,
+          "difficulty": "CURRENT",
+          "complexityBand": 4,
+          "skillTag": "STRUCTURE"
+        }
+      ]
+    },
+    {
+      "mode": "STRUCTURE",
+      "band": 5,
+      "slots": [
+        {
+          "globalOrder": 1,
+          "difficulty": "CURRENT",
+          "complexityBand": 5,
+          "skillTag": "STRUCTURE"
+        },
+        {
+          "globalOrder": 2,
+          "difficulty": "EASIER",
+          "complexityBand": 4,
+          "skillTag": "STRUCTURE"
+        },
+        {
+          "globalOrder": 3,
+          "difficulty": "CURRENT",
+          "complexityBand": 5,
+          "skillTag": "STRUCTURE"
+        },
+        {
+          "globalOrder": 4,
+          "difficulty": "CHALLENGE",
+          "complexityBand": 5,
+          "skillTag": "STRUCTURE"
+        },
+        {
+          "globalOrder": 5,
+          "difficulty": "CURRENT",
+          "complexityBand": 5,
+          "skillTag": "STRUCTURE"
+        }
+      ]
+    },
+    {
+      "mode": "CONTEXT_INFERENCE",
+      "band": 1,
+      "slots": [
+        {
+          "globalOrder": 1,
+          "difficulty": "CURRENT",
+          "complexityBand": 1,
+          "skillTag": "CONTEXT_INFERENCE"
+        },
+        {
+          "globalOrder": 2,
+          "difficulty": "EASIER",
+          "complexityBand": 1,
+          "skillTag": "INFERENCE"
+        },
+        {
+          "globalOrder": 3,
+          "difficulty": "CURRENT",
+          "complexityBand": 1,
+          "skillTag": "CONTEXT_INFERENCE"
+        },
+        {
+          "globalOrder": 4,
+          "difficulty": "CHALLENGE",
+          "complexityBand": 2,
+          "skillTag": "INFERENCE"
+        },
+        {
+          "globalOrder": 5,
+          "difficulty": "CURRENT",
+          "complexityBand": 1,
+          "skillTag": "CONTEXT_INFERENCE"
+        }
+      ]
+    },
+    {
+      "mode": "CONTEXT_INFERENCE",
+      "band": 2,
+      "slots": [
+        {
+          "globalOrder": 1,
+          "difficulty": "CURRENT",
+          "complexityBand": 2,
+          "skillTag": "CONTEXT_INFERENCE"
+        },
+        {
+          "globalOrder": 2,
+          "difficulty": "EASIER",
+          "complexityBand": 1,
+          "skillTag": "INFERENCE"
+        },
+        {
+          "globalOrder": 3,
+          "difficulty": "CURRENT",
+          "complexityBand": 2,
+          "skillTag": "CONTEXT_INFERENCE"
+        },
+        {
+          "globalOrder": 4,
+          "difficulty": "CHALLENGE",
+          "complexityBand": 3,
+          "skillTag": "INFERENCE"
+        },
+        {
+          "globalOrder": 5,
+          "difficulty": "CURRENT",
+          "complexityBand": 2,
+          "skillTag": "CONTEXT_INFERENCE"
+        }
+      ]
+    },
+    {
+      "mode": "CONTEXT_INFERENCE",
+      "band": 3,
+      "slots": [
+        {
+          "globalOrder": 1,
+          "difficulty": "CURRENT",
+          "complexityBand": 3,
+          "skillTag": "CONTEXT_INFERENCE"
+        },
+        {
+          "globalOrder": 2,
+          "difficulty": "EASIER",
+          "complexityBand": 2,
+          "skillTag": "INFERENCE"
+        },
+        {
+          "globalOrder": 3,
+          "difficulty": "CURRENT",
+          "complexityBand": 3,
+          "skillTag": "CONTEXT_INFERENCE"
+        },
+        {
+          "globalOrder": 4,
+          "difficulty": "CHALLENGE",
+          "complexityBand": 4,
+          "skillTag": "INFERENCE"
+        },
+        {
+          "globalOrder": 5,
+          "difficulty": "CURRENT",
+          "complexityBand": 3,
+          "skillTag": "CONTEXT_INFERENCE"
+        }
+      ]
+    },
+    {
+      "mode": "CONTEXT_INFERENCE",
+      "band": 4,
+      "slots": [
+        {
+          "globalOrder": 1,
+          "difficulty": "CURRENT",
+          "complexityBand": 4,
+          "skillTag": "CONTEXT_INFERENCE"
+        },
+        {
+          "globalOrder": 2,
+          "difficulty": "EASIER",
+          "complexityBand": 3,
+          "skillTag": "INFERENCE"
+        },
+        {
+          "globalOrder": 3,
+          "difficulty": "CURRENT",
+          "complexityBand": 4,
+          "skillTag": "CONTEXT_INFERENCE"
+        },
+        {
+          "globalOrder": 4,
+          "difficulty": "CHALLENGE",
+          "complexityBand": 5,
+          "skillTag": "INFERENCE"
+        },
+        {
+          "globalOrder": 5,
+          "difficulty": "CURRENT",
+          "complexityBand": 4,
+          "skillTag": "CONTEXT_INFERENCE"
+        }
+      ]
+    },
+    {
+      "mode": "CONTEXT_INFERENCE",
+      "band": 5,
+      "slots": [
+        {
+          "globalOrder": 1,
+          "difficulty": "CURRENT",
+          "complexityBand": 5,
+          "skillTag": "CONTEXT_INFERENCE"
+        },
+        {
+          "globalOrder": 2,
+          "difficulty": "EASIER",
+          "complexityBand": 4,
+          "skillTag": "INFERENCE"
+        },
+        {
+          "globalOrder": 3,
+          "difficulty": "CURRENT",
+          "complexityBand": 5,
+          "skillTag": "CONTEXT_INFERENCE"
+        },
+        {
+          "globalOrder": 4,
+          "difficulty": "CHALLENGE",
+          "complexityBand": 5,
+          "skillTag": "INFERENCE"
+        },
+        {
+          "globalOrder": 5,
+          "difficulty": "CURRENT",
+          "complexityBand": 5,
+          "skillTag": "CONTEXT_INFERENCE"
+        }
+      ]
+    }
+  ],
+  "semantics": [
+    {
+      "mode": "COMPREHENSION",
+      "skill": "INFERENCE",
+      "position": 1,
+      "assessment": {
+        "best_answer_key": "A",
+        "ambiguous": false,
+        "supported": true,
+        "mode_fit": true,
+        "answer_leakage": false,
+        "distractors_plausible": true,
+        "stem_presuppositions_supported": true,
+        "distinct_reading_task": true,
+        "reading_operation": "INFERENCE"
+      },
+      "action": "ACCEPT",
+      "reason": "semantic verifier accepted candidate"
+    },
+    {
+      "mode": "COMPREHENSION",
+      "skill": "INFERENCE",
+      "position": 1,
+      "assessment": {
+        "best_answer_key": "A",
+        "ambiguous": true,
+        "supported": true,
+        "mode_fit": true,
+        "answer_leakage": false,
+        "distractors_plausible": true,
+        "stem_presuppositions_supported": true,
+        "distinct_reading_task": true,
+        "reading_operation": "INFERENCE"
+      },
+      "action": "REJECT",
+      "reason": "ambiguous single-choice item"
+    },
+    {
+      "mode": "COMPREHENSION",
+      "skill": "INFERENCE",
+      "position": 1,
+      "assessment": {
+        "best_answer_key": "A",
+        "ambiguous": false,
+        "supported": false,
+        "mode_fit": true,
+        "answer_leakage": false,
+        "distractors_plausible": true,
+        "stem_presuppositions_supported": true,
+        "distinct_reading_task": true,
+        "reading_operation": "INFERENCE"
+      },
+      "action": "REJECT",
+      "reason": "answer is not sufficiently supported"
+    },
+    {
+      "mode": "COMPREHENSION",
+      "skill": "INFERENCE",
+      "position": 1,
+      "assessment": {
+        "best_answer_key": "A",
+        "ambiguous": false,
+        "supported": true,
+        "mode_fit": true,
+        "answer_leakage": false,
+        "distractors_plausible": true,
+        "stem_presuppositions_supported": false,
+        "distinct_reading_task": true,
+        "reading_operation": "INFERENCE"
+      },
+      "action": "REJECT",
+      "reason": "question stem presupposition is not supported by passage"
+    },
+    {
+      "mode": "COMPREHENSION",
+      "skill": "INFERENCE",
+      "position": 1,
+      "assessment": {
+        "best_answer_key": "A",
+        "ambiguous": false,
+        "supported": true,
+        "mode_fit": true,
+        "answer_leakage": false,
+        "distractors_plausible": true,
+        "stem_presuppositions_supported": true,
+        "distinct_reading_task": false,
+        "reading_operation": "INFERENCE"
+      },
+      "action": "REJECT",
+      "reason": "question repeats a previous reading judgment"
+    },
+    {
+      "mode": "COMPREHENSION",
+      "skill": "INFERENCE",
+      "position": 1,
+      "assessment": {
+        "best_answer_key": "A",
+        "ambiguous": false,
+        "supported": true,
+        "mode_fit": true,
+        "answer_leakage": false,
+        "distractors_plausible": true,
+        "stem_presuppositions_supported": true,
+        "distinct_reading_task": true,
+        "reading_operation": "DIRECT_RETRIEVAL"
+      },
+      "action": "REJECT",
+      "reason": "inference question only requires direct retrieval"
+    },
+    {
+      "mode": "COMPREHENSION",
+      "skill": "INFERENCE",
+      "position": 1,
+      "assessment": {
+        "best_answer_key": "A",
+        "ambiguous": false,
+        "supported": true,
+        "mode_fit": false,
+        "answer_leakage": false,
+        "distractors_plausible": true,
+        "stem_presuppositions_supported": true,
+        "distinct_reading_task": true,
+        "reading_operation": "INFERENCE"
+      },
+      "action": "REJECT",
+      "reason": "question does not fit requested mode/skill"
+    },
+    {
+      "mode": "COMPREHENSION",
+      "skill": "INFERENCE",
+      "position": 1,
+      "assessment": {
+        "best_answer_key": "A",
+        "ambiguous": false,
+        "supported": true,
+        "mode_fit": true,
+        "answer_leakage": true,
+        "distractors_plausible": true,
+        "stem_presuppositions_supported": true,
+        "distinct_reading_task": true,
+        "reading_operation": "INFERENCE"
+      },
+      "action": "REJECT",
+      "reason": "semantic verifier detected answer leakage"
+    },
+    {
+      "mode": "COMPREHENSION",
+      "skill": "INFERENCE",
+      "position": 1,
+      "assessment": {
+        "best_answer_key": "A",
+        "ambiguous": false,
+        "supported": true,
+        "mode_fit": true,
+        "answer_leakage": false,
+        "distractors_plausible": false,
+        "stem_presuppositions_supported": true,
+        "distinct_reading_task": true,
+        "reading_operation": "INFERENCE"
+      },
+      "action": "REJECT",
+      "reason": "distractors are too weak or unrelated"
+    },
+    {
+      "mode": "COMPREHENSION",
+      "skill": "INFERENCE",
+      "position": 1,
+      "assessment": {
+        "best_answer_key": "B",
+        "ambiguous": false,
+        "supported": true,
+        "mode_fit": true,
+        "answer_leakage": false,
+        "distractors_plausible": true,
+        "stem_presuppositions_supported": true,
+        "distinct_reading_task": true,
+        "reading_operation": "INFERENCE"
+      },
+      "action": "REJECT",
+      "reason": "answer mismatch expected=A verifier=B"
+    },
+    {
+      "mode": "COMPREHENSION",
+      "skill": "INFERENCE",
+      "position": 1,
+      "assessment": {
+        "best_answer_key": "A",
+        "ambiguous": true,
+        "supported": false,
+        "mode_fit": true,
+        "answer_leakage": false,
+        "distractors_plausible": true,
+        "stem_presuppositions_supported": true,
+        "distinct_reading_task": true,
+        "reading_operation": "INFERENCE"
+      },
+      "action": "REJECT",
+      "reason": "ambiguous single-choice item"
+    },
+    {
+      "mode": "STRUCTURE",
+      "skill": "STRUCTURE",
+      "position": 1,
+      "assessment": {
+        "best_answer_key": "A",
+        "ambiguous": false,
+        "supported": true,
+        "mode_fit": true,
+        "answer_leakage": false,
+        "distractors_plausible": true,
+        "stem_presuppositions_supported": true,
+        "distinct_reading_task": true,
+        "reading_operation": "INFERENCE"
+      },
+      "action": "REJECT",
+      "reason": "structure question does not require discourse reasoning"
+    },
+    {
+      "mode": "STRUCTURE",
+      "skill": "STRUCTURE",
+      "position": 1,
+      "assessment": {
+        "best_answer_key": "A",
+        "ambiguous": true,
+        "supported": true,
+        "mode_fit": true,
+        "answer_leakage": false,
+        "distractors_plausible": true,
+        "stem_presuppositions_supported": true,
+        "distinct_reading_task": true,
+        "reading_operation": "INFERENCE"
+      },
+      "action": "REJECT",
+      "reason": "ambiguous single-choice item"
+    },
+    {
+      "mode": "STRUCTURE",
+      "skill": "STRUCTURE",
+      "position": 1,
+      "assessment": {
+        "best_answer_key": "A",
+        "ambiguous": false,
+        "supported": false,
+        "mode_fit": true,
+        "answer_leakage": false,
+        "distractors_plausible": true,
+        "stem_presuppositions_supported": true,
+        "distinct_reading_task": true,
+        "reading_operation": "INFERENCE"
+      },
+      "action": "REJECT",
+      "reason": "answer is not sufficiently supported"
+    },
+    {
+      "mode": "STRUCTURE",
+      "skill": "STRUCTURE",
+      "position": 1,
+      "assessment": {
+        "best_answer_key": "A",
+        "ambiguous": false,
+        "supported": true,
+        "mode_fit": true,
+        "answer_leakage": false,
+        "distractors_plausible": true,
+        "stem_presuppositions_supported": false,
+        "distinct_reading_task": true,
+        "reading_operation": "INFERENCE"
+      },
+      "action": "REJECT",
+      "reason": "question stem presupposition is not supported by passage"
+    },
+    {
+      "mode": "STRUCTURE",
+      "skill": "STRUCTURE",
+      "position": 1,
+      "assessment": {
+        "best_answer_key": "A",
+        "ambiguous": false,
+        "supported": true,
+        "mode_fit": true,
+        "answer_leakage": false,
+        "distractors_plausible": true,
+        "stem_presuppositions_supported": true,
+        "distinct_reading_task": false,
+        "reading_operation": "INFERENCE"
+      },
+      "action": "REJECT",
+      "reason": "question consumes later passage structure tasks"
+    },
+    {
+      "mode": "STRUCTURE",
+      "skill": "STRUCTURE",
+      "position": 1,
+      "assessment": {
+        "best_answer_key": "A",
+        "ambiguous": false,
+        "supported": true,
+        "mode_fit": true,
+        "answer_leakage": false,
+        "distractors_plausible": true,
+        "stem_presuppositions_supported": true,
+        "distinct_reading_task": true,
+        "reading_operation": "DIRECT_RETRIEVAL"
+      },
+      "action": "REJECT",
+      "reason": "structure question does not require discourse reasoning"
+    },
+    {
+      "mode": "STRUCTURE",
+      "skill": "STRUCTURE",
+      "position": 1,
+      "assessment": {
+        "best_answer_key": "A",
+        "ambiguous": false,
+        "supported": true,
+        "mode_fit": false,
+        "answer_leakage": false,
+        "distractors_plausible": true,
+        "stem_presuppositions_supported": true,
+        "distinct_reading_task": true,
+        "reading_operation": "INFERENCE"
+      },
+      "action": "REJECT",
+      "reason": "structure question does not require discourse reasoning"
+    },
+    {
+      "mode": "STRUCTURE",
+      "skill": "STRUCTURE",
+      "position": 1,
+      "assessment": {
+        "best_answer_key": "A",
+        "ambiguous": false,
+        "supported": true,
+        "mode_fit": true,
+        "answer_leakage": true,
+        "distractors_plausible": true,
+        "stem_presuppositions_supported": true,
+        "distinct_reading_task": true,
+        "reading_operation": "INFERENCE"
+      },
+      "action": "REJECT",
+      "reason": "structure question does not require discourse reasoning"
+    },
+    {
+      "mode": "STRUCTURE",
+      "skill": "STRUCTURE",
+      "position": 1,
+      "assessment": {
+        "best_answer_key": "A",
+        "ambiguous": false,
+        "supported": true,
+        "mode_fit": true,
+        "answer_leakage": false,
+        "distractors_plausible": false,
+        "stem_presuppositions_supported": true,
+        "distinct_reading_task": true,
+        "reading_operation": "INFERENCE"
+      },
+      "action": "REJECT",
+      "reason": "structure question does not require discourse reasoning"
+    },
+    {
+      "mode": "STRUCTURE",
+      "skill": "STRUCTURE",
+      "position": 1,
+      "assessment": {
+        "best_answer_key": "B",
+        "ambiguous": false,
+        "supported": true,
+        "mode_fit": true,
+        "answer_leakage": false,
+        "distractors_plausible": true,
+        "stem_presuppositions_supported": true,
+        "distinct_reading_task": true,
+        "reading_operation": "INFERENCE"
+      },
+      "action": "REJECT",
+      "reason": "structure question does not require discourse reasoning"
+    },
+    {
+      "mode": "STRUCTURE",
+      "skill": "STRUCTURE",
+      "position": 1,
+      "assessment": {
+        "best_answer_key": "A",
+        "ambiguous": true,
+        "supported": false,
+        "mode_fit": true,
+        "answer_leakage": false,
+        "distractors_plausible": true,
+        "stem_presuppositions_supported": true,
+        "distinct_reading_task": true,
+        "reading_operation": "INFERENCE"
+      },
+      "action": "REJECT",
+      "reason": "ambiguous single-choice item"
+    },
+    {
+      "mode": "STRUCTURE",
+      "skill": "STRUCTURE",
+      "position": 2,
+      "assessment": {
+        "best_answer_key": "A",
+        "ambiguous": false,
+        "supported": true,
+        "mode_fit": true,
+        "answer_leakage": false,
+        "distractors_plausible": true,
+        "stem_presuppositions_supported": true,
+        "distinct_reading_task": true,
+        "reading_operation": "INFERENCE"
+      },
+      "action": "REJECT",
+      "reason": "structure question does not require discourse reasoning"
+    },
+    {
+      "mode": "STRUCTURE",
+      "skill": "STRUCTURE",
+      "position": 2,
+      "assessment": {
+        "best_answer_key": "A",
+        "ambiguous": true,
+        "supported": true,
+        "mode_fit": true,
+        "answer_leakage": false,
+        "distractors_plausible": true,
+        "stem_presuppositions_supported": true,
+        "distinct_reading_task": true,
+        "reading_operation": "INFERENCE"
+      },
+      "action": "REJECT",
+      "reason": "ambiguous single-choice item"
+    },
+    {
+      "mode": "STRUCTURE",
+      "skill": "STRUCTURE",
+      "position": 2,
+      "assessment": {
+        "best_answer_key": "A",
+        "ambiguous": false,
+        "supported": false,
+        "mode_fit": true,
+        "answer_leakage": false,
+        "distractors_plausible": true,
+        "stem_presuppositions_supported": true,
+        "distinct_reading_task": true,
+        "reading_operation": "INFERENCE"
+      },
+      "action": "REJECT",
+      "reason": "answer is not sufficiently supported"
+    },
+    {
+      "mode": "STRUCTURE",
+      "skill": "STRUCTURE",
+      "position": 2,
+      "assessment": {
+        "best_answer_key": "A",
+        "ambiguous": false,
+        "supported": true,
+        "mode_fit": true,
+        "answer_leakage": false,
+        "distractors_plausible": true,
+        "stem_presuppositions_supported": false,
+        "distinct_reading_task": true,
+        "reading_operation": "INFERENCE"
+      },
+      "action": "REJECT",
+      "reason": "question stem presupposition is not supported by passage"
+    },
+    {
+      "mode": "STRUCTURE",
+      "skill": "STRUCTURE",
+      "position": 2,
+      "assessment": {
+        "best_answer_key": "A",
+        "ambiguous": false,
+        "supported": true,
+        "mode_fit": true,
+        "answer_leakage": false,
+        "distractors_plausible": true,
+        "stem_presuppositions_supported": true,
+        "distinct_reading_task": false,
+        "reading_operation": "INFERENCE"
+      },
+      "action": "REJECT",
+      "reason": "question repeats a previous reading judgment"
+    },
+    {
+      "mode": "STRUCTURE",
+      "skill": "STRUCTURE",
+      "position": 2,
+      "assessment": {
+        "best_answer_key": "A",
+        "ambiguous": false,
+        "supported": true,
+        "mode_fit": true,
+        "answer_leakage": false,
+        "distractors_plausible": true,
+        "stem_presuppositions_supported": true,
+        "distinct_reading_task": true,
+        "reading_operation": "DIRECT_RETRIEVAL"
+      },
+      "action": "REJECT",
+      "reason": "structure question does not require discourse reasoning"
+    },
+    {
+      "mode": "STRUCTURE",
+      "skill": "STRUCTURE",
+      "position": 2,
+      "assessment": {
+        "best_answer_key": "A",
+        "ambiguous": false,
+        "supported": true,
+        "mode_fit": false,
+        "answer_leakage": false,
+        "distractors_plausible": true,
+        "stem_presuppositions_supported": true,
+        "distinct_reading_task": true,
+        "reading_operation": "INFERENCE"
+      },
+      "action": "REJECT",
+      "reason": "structure question does not require discourse reasoning"
+    },
+    {
+      "mode": "STRUCTURE",
+      "skill": "STRUCTURE",
+      "position": 2,
+      "assessment": {
+        "best_answer_key": "A",
+        "ambiguous": false,
+        "supported": true,
+        "mode_fit": true,
+        "answer_leakage": true,
+        "distractors_plausible": true,
+        "stem_presuppositions_supported": true,
+        "distinct_reading_task": true,
+        "reading_operation": "INFERENCE"
+      },
+      "action": "REJECT",
+      "reason": "structure question does not require discourse reasoning"
+    },
+    {
+      "mode": "STRUCTURE",
+      "skill": "STRUCTURE",
+      "position": 2,
+      "assessment": {
+        "best_answer_key": "A",
+        "ambiguous": false,
+        "supported": true,
+        "mode_fit": true,
+        "answer_leakage": false,
+        "distractors_plausible": false,
+        "stem_presuppositions_supported": true,
+        "distinct_reading_task": true,
+        "reading_operation": "INFERENCE"
+      },
+      "action": "REJECT",
+      "reason": "structure question does not require discourse reasoning"
+    },
+    {
+      "mode": "STRUCTURE",
+      "skill": "STRUCTURE",
+      "position": 2,
+      "assessment": {
+        "best_answer_key": "B",
+        "ambiguous": false,
+        "supported": true,
+        "mode_fit": true,
+        "answer_leakage": false,
+        "distractors_plausible": true,
+        "stem_presuppositions_supported": true,
+        "distinct_reading_task": true,
+        "reading_operation": "INFERENCE"
+      },
+      "action": "REJECT",
+      "reason": "structure question does not require discourse reasoning"
+    },
+    {
+      "mode": "STRUCTURE",
+      "skill": "STRUCTURE",
+      "position": 2,
+      "assessment": {
+        "best_answer_key": "A",
+        "ambiguous": true,
+        "supported": false,
+        "mode_fit": true,
+        "answer_leakage": false,
+        "distractors_plausible": true,
+        "stem_presuppositions_supported": true,
+        "distinct_reading_task": true,
+        "reading_operation": "INFERENCE"
+      },
+      "action": "REJECT",
+      "reason": "ambiguous single-choice item"
+    },
+    {
+      "mode": "CONTEXT_INFERENCE",
+      "skill": "CONTEXT_INFERENCE",
+      "position": 1,
+      "assessment": {
+        "best_answer_key": "A",
+        "ambiguous": false,
+        "supported": true,
+        "mode_fit": true,
+        "answer_leakage": false,
+        "distractors_plausible": true,
+        "stem_presuppositions_supported": true,
+        "distinct_reading_task": true,
+        "reading_operation": "INFERENCE"
+      },
+      "action": "ACCEPT",
+      "reason": "semantic verifier accepted candidate"
+    },
+    {
+      "mode": "CONTEXT_INFERENCE",
+      "skill": "CONTEXT_INFERENCE",
+      "position": 1,
+      "assessment": {
+        "best_answer_key": "A",
+        "ambiguous": true,
+        "supported": true,
+        "mode_fit": true,
+        "answer_leakage": false,
+        "distractors_plausible": true,
+        "stem_presuppositions_supported": true,
+        "distinct_reading_task": true,
+        "reading_operation": "INFERENCE"
+      },
+      "action": "REJECT",
+      "reason": "ambiguous single-choice item"
+    },
+    {
+      "mode": "CONTEXT_INFERENCE",
+      "skill": "CONTEXT_INFERENCE",
+      "position": 1,
+      "assessment": {
+        "best_answer_key": "A",
+        "ambiguous": false,
+        "supported": false,
+        "mode_fit": true,
+        "answer_leakage": false,
+        "distractors_plausible": true,
+        "stem_presuppositions_supported": true,
+        "distinct_reading_task": true,
+        "reading_operation": "INFERENCE"
+      },
+      "action": "REJECT",
+      "reason": "answer is not sufficiently supported"
+    },
+    {
+      "mode": "CONTEXT_INFERENCE",
+      "skill": "CONTEXT_INFERENCE",
+      "position": 1,
+      "assessment": {
+        "best_answer_key": "A",
+        "ambiguous": false,
+        "supported": true,
+        "mode_fit": true,
+        "answer_leakage": false,
+        "distractors_plausible": true,
+        "stem_presuppositions_supported": false,
+        "distinct_reading_task": true,
+        "reading_operation": "INFERENCE"
+      },
+      "action": "REJECT",
+      "reason": "question stem presupposition is not supported by passage"
+    },
+    {
+      "mode": "CONTEXT_INFERENCE",
+      "skill": "CONTEXT_INFERENCE",
+      "position": 1,
+      "assessment": {
+        "best_answer_key": "A",
+        "ambiguous": false,
+        "supported": true,
+        "mode_fit": true,
+        "answer_leakage": false,
+        "distractors_plausible": true,
+        "stem_presuppositions_supported": true,
+        "distinct_reading_task": false,
+        "reading_operation": "INFERENCE"
+      },
+      "action": "REJECT",
+      "reason": "question repeats a previous reading judgment"
+    },
+    {
+      "mode": "CONTEXT_INFERENCE",
+      "skill": "CONTEXT_INFERENCE",
+      "position": 1,
+      "assessment": {
+        "best_answer_key": "A",
+        "ambiguous": false,
+        "supported": true,
+        "mode_fit": true,
+        "answer_leakage": false,
+        "distractors_plausible": true,
+        "stem_presuppositions_supported": true,
+        "distinct_reading_task": true,
+        "reading_operation": "DIRECT_RETRIEVAL"
+      },
+      "action": "REJECT",
+      "reason": "inference question only requires direct retrieval"
+    },
+    {
+      "mode": "CONTEXT_INFERENCE",
+      "skill": "CONTEXT_INFERENCE",
+      "position": 1,
+      "assessment": {
+        "best_answer_key": "A",
+        "ambiguous": false,
+        "supported": true,
+        "mode_fit": false,
+        "answer_leakage": false,
+        "distractors_plausible": true,
+        "stem_presuppositions_supported": true,
+        "distinct_reading_task": true,
+        "reading_operation": "INFERENCE"
+      },
+      "action": "REJECT",
+      "reason": "question does not fit requested mode/skill"
+    },
+    {
+      "mode": "CONTEXT_INFERENCE",
+      "skill": "CONTEXT_INFERENCE",
+      "position": 1,
+      "assessment": {
+        "best_answer_key": "A",
+        "ambiguous": false,
+        "supported": true,
+        "mode_fit": true,
+        "answer_leakage": true,
+        "distractors_plausible": true,
+        "stem_presuppositions_supported": true,
+        "distinct_reading_task": true,
+        "reading_operation": "INFERENCE"
+      },
+      "action": "REJECT",
+      "reason": "semantic verifier detected answer leakage"
+    },
+    {
+      "mode": "CONTEXT_INFERENCE",
+      "skill": "CONTEXT_INFERENCE",
+      "position": 1,
+      "assessment": {
+        "best_answer_key": "A",
+        "ambiguous": false,
+        "supported": true,
+        "mode_fit": true,
+        "answer_leakage": false,
+        "distractors_plausible": false,
+        "stem_presuppositions_supported": true,
+        "distinct_reading_task": true,
+        "reading_operation": "INFERENCE"
+      },
+      "action": "REJECT",
+      "reason": "distractors are too weak or unrelated"
+    },
+    {
+      "mode": "CONTEXT_INFERENCE",
+      "skill": "CONTEXT_INFERENCE",
+      "position": 1,
+      "assessment": {
+        "best_answer_key": "B",
+        "ambiguous": false,
+        "supported": true,
+        "mode_fit": true,
+        "answer_leakage": false,
+        "distractors_plausible": true,
+        "stem_presuppositions_supported": true,
+        "distinct_reading_task": true,
+        "reading_operation": "INFERENCE"
+      },
+      "action": "REJECT",
+      "reason": "answer mismatch expected=A verifier=B"
+    },
+    {
+      "mode": "CONTEXT_INFERENCE",
+      "skill": "CONTEXT_INFERENCE",
+      "position": 1,
+      "assessment": {
+        "best_answer_key": "A",
+        "ambiguous": true,
+        "supported": false,
+        "mode_fit": true,
+        "answer_leakage": false,
+        "distractors_plausible": true,
+        "stem_presuppositions_supported": true,
+        "distinct_reading_task": true,
+        "reading_operation": "INFERENCE"
+      },
+      "action": "REJECT",
+      "reason": "ambiguous single-choice item"
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "sufficient": {
+      "title": "Sufficient",
+      "type": "boolean"
+    },
+    "requiresExternalKnowledge": {
+      "title": "Requiresexternalknowledge",
+      "type": "boolean"
+    },
+    "requiresProblemSolving": {
+      "title": "Requiresproblemsolving",
+      "type": "boolean"
+    },
+    "providedFactsSufficient": {
+      "title": "Providedfactssufficient",
+      "type": "boolean"
+    },
+    "communicativeGoalsClear": {
+      "title": "Communicativegoalsclear",
+      "type": "boolean"
+    },
+    "instructionAndTaskRolesSeparated": {
+      "title": "Instructionandtaskrolesseparated",
+      "type": "boolean"
+    },
+    "missingInformation": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 6,
+      "title": "Missinginformation",
+      "type": "array"
+    }
+  },
+  "required": [
+    "sufficient",
+    "requiresExternalKnowledge",
+    "requiresProblemSolving",
+    "providedFactsSufficient",
+    "communicativeGoalsClear",
+    "instructionAndTaskRolesSeparated"
+  ],
+  "title": "LevelTestTaskSufficiencyVerificationPayload",
+  "type": "object"
+}

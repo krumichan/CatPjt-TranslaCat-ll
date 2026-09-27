@@ -1,0 +1,1175 @@
+{
+  "keywordFocused": {
+    "plan": {
+      "allowedCommunicativeIntents": [
+        "DESCRIBE",
+        "CONFIRM",
+        "REPORT",
+        "SUGGEST",
+        "DECLINE",
+        "APOLOGIZE",
+        "COMPARE",
+        "EXPLAIN_REASON",
+        "ASK_INFORMATION",
+        "GIVE_INSTRUCTION",
+        "EXPRESS_PREFERENCE",
+        "SUMMARIZE"
+      ],
+      "allowedScenarioCategories": [
+        "DAILY_LIFE",
+        "WORK",
+        "TRAVEL",
+        "SHOPPING",
+        "FOOD",
+        "SERVICE",
+        "LEARNING",
+        "HOBBY",
+        "DIGITAL_LIFE",
+        "SOCIAL",
+        "SCHEDULE",
+        "HEALTH_GENERAL"
+      ],
+      "eligibleKeywordKeys": [
+        "travel"
+      ],
+      "maxSameIntent": 2,
+      "maxSameScenario": null,
+      "minimumRelevantKeywords": 1,
+      "mode": "KEYWORD_FOCUSED",
+      "policyVersion": "writing-set-diversity-v1",
+      "preferredCommunicativeIntents": [
+        "EXPLAIN_REASON",
+        "EXPRESS_PREFERENCE",
+        "COMPARE",
+        "GIVE_INSTRUCTION"
+      ],
+      "preferredScenarioCategories": [
+        "SOCIAL",
+        "DIGITAL_LIFE",
+        "TRAVEL",
+        "DAILY_LIFE"
+      ],
+      "windowSize": 5
+    },
+    "prompt": "# Current task\nGenerate up to 2 distinct content candidates for ONE Writing slot.\nDo not fill server-owned order/difficulty/band fields and do not provide an answer.\nContent will undergo independent difficulty and task-quality checks before publication.\nFollow writingDiversityPlan before choosing the setting/intent; do not merely change labels.\nRealize productionBlueprint.semanticRequirements in the visible source/task, not in metadata.\nThese are language-production demands, not an invitation to add technical knowledge or padding.\n\n<learning-data>\n{\"requestId\":\"synthetic-writing-generation\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"writingType\":\"FREE\",\"selectedKeywords\":[{\"key\":\"travel\",\"text\":\"여행\",\"source\":\"SYSTEM\",\"type\":\"TOPIC\",\"canonicalKey\":null,\"selectionWeight\":null}],\"learningProfile\":null,\"recentEvaluationSummary\":null,\"recentMistakes\":[],\"recentlyLearnedExpressions\":[],\"generationDate\":\"2026-09-26\",\"snapshotId\":null,\"diversityContext\":{\"currentSession\":[{\"sourceType\":\"WRITING\",\"content\":\"Synthetic work 0\",\"contentHash\":null,\"scenarioCategory\":\"WORK\",\"communicativeIntent\":\"REQUEST\",\"taskArchetype\":null,\"grammarFocusCodes\":[],\"semanticSummary\":null,\"ageDays\":null},{\"sourceType\":\"WRITING\",\"content\":\"Synthetic work 1\",\"contentHash\":null,\"scenarioCategory\":\"WORK\",\"communicativeIntent\":\"REQUEST\",\"taskArchetype\":null,\"grammarFocusCodes\":[],\"semanticSummary\":null,\"ageDays\":null}],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"contentDiversityPolicyVersion\":null,\"writingDiversityPlan\":{\"policyVersion\":\"writing-set-diversity-v1\",\"mode\":\"KEYWORD_FOCUSED\",\"windowSize\":5,\"maxSameScenario\":null,\"maxSameIntent\":2,\"allowedScenarioCategories\":[\"DAILY_LIFE\",\"WORK\",\"TRAVEL\",\"SHOPPING\",\"FOOD\",\"SERVICE\",\"LEARNING\",\"HOBBY\",\"DIGITAL_LIFE\",\"SOCIAL\",\"SCHEDULE\",\"HEALTH_GENERAL\"],\"preferredScenarioCategories\":[\"SOCIAL\",\"DIGITAL_LIFE\",\"TRAVEL\",\"DAILY_LIFE\"],\"allowedCommunicativeIntents\":[\"DESCRIBE\",\"CONFIRM\",\"REPORT\",\"SUGGEST\",\"DECLINE\",\"APOLOGIZE\",\"COMPARE\",\"EXPLAIN_REASON\",\"ASK_INFORMATION\",\"GIVE_INSTRUCTION\",\"EXPRESS_PREFERENCE\",\"SUMMARIZE\"],\"preferredCommunicativeIntents\":[\"EXPLAIN_REASON\",\"EXPRESS_PREFERENCE\",\"COMPARE\",\"GIVE_INSTRUCTION\"],\"eligibleKeywordKeys\":[\"travel\"],\"minimumRelevantKeywords\":1},\"scenarioClassificationRule\":\"Classify the real-life setting, not an incidental action or medium. Office meetings, workplace reports, project handovers and employee deadlines are WORK, even when scheduling or software is involved; do not relabel them SCHEDULE or DIGITAL_LIFE. Travel plans are TRAVEL, buying/returning goods is SHOPPING, meals are FOOD, study is LEARNING, leisure is HOBBY, personal relationships are SOCIAL, ordinary home life is DAILY_LIFE. SERVICE is consumer/service interaction, DIGITAL_LIFE is personal digital activity, HEALTH_GENERAL is non-specialist everyday health. Use SCHEDULE for genuinely general timing without a more specific setting. Respect legitimate context ambiguity; classify by the main setting.\",\"productionBlueprint\":{\"version\":\"writing-difficulty-control-v1\",\"blueprintId\":\"FREE.B3.PRACTICAL_EXPLANATION\",\"semanticRequirements\":[{\"code\":\"CONNECTED_MESSAGE\",\"demand\":\"Connect a practical reason or condition to its consequence or requested action.\"},{\"code\":\"DIRECT_SCOPE\",\"demand\":\"Keep who does what and the condition's scope explicit and straightforward.\"},{\"code\":\"LIMIT_NUANCE\",\"demand\":\"Avoid stacking concessions, evidence limitations and indirect commitments in one task.\"}],\"renderingRule\":\"Ask for these language relationships in the learner's own or explicitly imagined content. Do not supply mandatory factual claims or turn this into guided translation. State the communicative demands visibly; sophistication the learner might voluntarily add does not count as task difficulty. Keep all guidance arrays empty.\",\"productionAnchor\":\"INTERMEDIATE: a connected practical reason, condition or time relation with explicit, straightforward scope and suitable everyday/work register. Ordinary politeness alone does not make this band 4; do not require layered qualifications for this band.\",\"enforcement\":\"Independent review of visible content; not regex, word count or generated tags.\"},\"generationPlan\":{\"candidateCount\":2,\"targetBand\":3,\"writingType\":\"FREE\"},\"languageProductionRubric\":{\"1\":\"FOUNDATION: one direct familiar statement/question; basic words and simple production.\",\"2\":\"BASIC: familiar communication with one simple reason, sequence or ordinary polite request; limited linking.\",\"3\":\"INTERMEDIATE: a connected practical reason, condition or time relation with explicit, straightforward scope and suitable everyday/work register. Ordinary politeness alone does not make this band 4; do not require layered qualifications for this band.\",\"4\":\"UPPER_INTERMEDIATE: a nuanced condition/concession, indirect request or hedge that needs register-sensitive phrasing. A longer practical request or several independent steps do not by themselves reach band 5.\",\"5\":\"ADVANCED: interacting relations whose scope must be preserved together, a precisely bounded stance/claim/commitment, and coherent controlled register. For example, a commitment depends on a condition but is limited by an exception, or evidence supports only a qualified conclusion that constrains a further action. All needed facts must be supplied or freely chosen by the learner as the mode allows. Removing a qualification changes the claim, not just the sentence length. Familiar vocabulary is sufficient; technical knowledge, verbosity and isolated advanced phrases are not evidence of band 5. A short message can qualify if these demands are actually present.\"},\"difficultySpec\":{\"policyVersion\":\"writing-difficulty-spec-v2\",\"targetBand\":3,\"writingType\":\"FREE\",\"hardConstraints\":{\"originMaxCharacters\":600,\"originMaxSurfaceUnits\":5,\"guidanceMinEntriesPerGroup\":0,\"guidanceMaxEntriesPerGroup\":0,\"guidanceMaxCharactersPerEntry\":240,\"guidanceMaxTotalCharacters\":1800,\"noteMaxCharacters\":400,\"characterMeasure\":\"NFC Unicode code points including internal spaces\",\"surfaceUnitMeasure\":\"nonempty punctuation/newline-delimited units; NOT clauses\"},\"semanticRecipe\":\"INTERMEDIATE: a connected practical reason, condition or time relation with explicit, straightforward scope and suitable everyday/work register. Ordinary politeness alone does not make this band 4; do not require layered qualifications for this band.\",\"semanticRecipeEnforcement\":\"independent reviewer, not tag counting or regex\"},\"failedChecks\":{}}\n</learning-data>",
+    "request": {
+      "contentDiversityPolicyVersion": null,
+      "difficultyDistribution": {
+        "challenge": 0,
+        "normal": 1,
+        "review": 0
+      },
+      "diversityContext": {
+        "crossFeatureRecent": [],
+        "currentSession": [
+          {
+            "ageDays": null,
+            "communicativeIntent": "REQUEST",
+            "content": "Synthetic work 0",
+            "contentHash": null,
+            "grammarFocusCodes": [],
+            "scenarioCategory": "WORK",
+            "semanticSummary": null,
+            "sourceType": "WRITING",
+            "taskArchetype": null
+          },
+          {
+            "ageDays": null,
+            "communicativeIntent": "REQUEST",
+            "content": "Synthetic work 1",
+            "contentHash": null,
+            "grammarFocusCodes": [],
+            "scenarioCategory": "WORK",
+            "semanticSummary": null,
+            "sourceType": "WRITING",
+            "taskArchetype": null
+          }
+        ],
+        "exactContentHashes90d": [],
+        "sameFeatureRecent": []
+      },
+      "generationDate": "2026-09-26",
+      "languageComplexity": {
+        "baseComplexityBand": 3,
+        "baseLevelScore": 61.0,
+        "policyVersion": "language-complexity",
+        "targetComplexityBand": null
+      },
+      "learningLanguage": "en",
+      "learningProfile": null,
+      "originLanguage": "ko",
+      "recentEvaluationSummary": null,
+      "recentMistakes": [],
+      "recentlyLearnedExpressions": [],
+      "requestId": "synthetic-writing-generation",
+      "selectedKeywords": [
+        {
+          "canonicalKey": null,
+          "key": "travel",
+          "selectionWeight": null,
+          "source": "SYSTEM",
+          "text": "여행",
+          "type": "TOPIC"
+        }
+      ],
+      "sentenceCount": 1,
+      "snapshotId": null,
+      "writingType": "FREE"
+    },
+    "schema": {
+      "$defs": {
+        "CommunicativeIntent": {
+          "enum": [
+            "DESCRIBE",
+            "CONFIRM",
+            "REPORT",
+            "SUGGEST",
+            "DECLINE",
+            "APOLOGIZE",
+            "COMPARE",
+            "EXPLAIN_REASON",
+            "ASK_INFORMATION",
+            "GIVE_INSTRUCTION",
+            "EXPRESS_PREFERENCE",
+            "SUMMARIZE"
+          ],
+          "title": "CommunicativeIntent",
+          "type": "string"
+        },
+        "DraftDiversityMetadata": {
+          "additionalProperties": false,
+          "properties": {
+            "communicativeIntent": {
+              "$ref": "#/$defs/CommunicativeIntent"
+            },
+            "grammarFocusCodes": {
+              "items": {
+                "maxLength": 200,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 20,
+              "title": "Grammarfocuscodes",
+              "type": "array"
+            },
+            "lexicalFocusCodes": {
+              "items": {
+                "maxLength": 200,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 20,
+              "title": "Lexicalfocuscodes",
+              "type": "array"
+            },
+            "requiresBackgroundKnowledge": {
+              "title": "Requiresbackgroundknowledge",
+              "type": "boolean"
+            },
+            "scenarioCategory": {
+              "$ref": "#/$defs/ScenarioCategory"
+            },
+            "semanticSummary": {
+              "maxLength": 500,
+              "minLength": 1,
+              "title": "Semanticsummary",
+              "type": "string"
+            },
+            "taskArchetype": {
+              "maxLength": 100,
+              "minLength": 1,
+              "title": "Taskarchetype",
+              "type": "string"
+            }
+          },
+          "required": [
+            "scenarioCategory",
+            "communicativeIntent",
+            "taskArchetype",
+            "grammarFocusCodes",
+            "lexicalFocusCodes",
+            "semanticSummary",
+            "requiresBackgroundKnowledge"
+          ],
+          "title": "DraftDiversityMetadata",
+          "type": "object"
+        },
+        "ScenarioCategory": {
+          "enum": [
+            "DAILY_LIFE",
+            "WORK",
+            "TRAVEL",
+            "SHOPPING",
+            "FOOD",
+            "SERVICE",
+            "LEARNING",
+            "HOBBY",
+            "DIGITAL_LIFE",
+            "SOCIAL",
+            "SCHEDULE",
+            "HEALTH_GENERAL"
+          ],
+          "title": "ScenarioCategory",
+          "type": "string"
+        },
+        "WritingDraft": {
+          "additionalProperties": false,
+          "properties": {
+            "diversityMetadata": {
+              "$ref": "#/$defs/DraftDiversityMetadata"
+            },
+            "focusMetrics": {
+              "items": {
+                "$ref": "#/$defs/WritingMetric"
+              },
+              "maxItems": 5,
+              "minItems": 1,
+              "title": "Focusmetrics",
+              "type": "array"
+            },
+            "focusReason": {
+              "maxLength": 400,
+              "minLength": 1,
+              "title": "Focusreason",
+              "type": "string"
+            },
+            "keywords": {
+              "items": {
+                "enum": [
+                  "travel"
+                ],
+                "maxLength": 200,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 20,
+              "minItems": 1,
+              "title": "Keywords",
+              "type": "array"
+            },
+            "originText": {
+              "maxLength": 600,
+              "minLength": 1,
+              "title": "Origintext",
+              "type": "string"
+            },
+            "providedFacts": {
+              "items": {
+                "maxLength": 240,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 0,
+              "minItems": 0,
+              "title": "Providedfacts",
+              "type": "array"
+            },
+            "requiredIntents": {
+              "items": {
+                "maxLength": 240,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 0,
+              "minItems": 0,
+              "title": "Requiredintents",
+              "type": "array"
+            },
+            "responseConstraints": {
+              "items": {
+                "maxLength": 240,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 0,
+              "minItems": 0,
+              "title": "Responseconstraints",
+              "type": "array"
+            }
+          },
+          "required": [
+            "originText",
+            "keywords",
+            "focusMetrics",
+            "focusReason",
+            "providedFacts",
+            "requiredIntents",
+            "responseConstraints",
+            "diversityMetadata"
+          ],
+          "title": "WritingDraft",
+          "type": "object"
+        },
+        "WritingMetric": {
+          "enum": [
+            "MEANING",
+            "GRAMMAR",
+            "VOCABULARY",
+            "NATURALNESS",
+            "EXPRESSION"
+          ],
+          "title": "WritingMetric",
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "properties": {
+        "items": {
+          "items": {
+            "$ref": "#/$defs/WritingDraft"
+          },
+          "maxItems": 2,
+          "minItems": 1,
+          "title": "Items",
+          "type": "array"
+        }
+      },
+      "required": [
+        "items"
+      ],
+      "title": "WritingCandidateBatch",
+      "type": "object"
+    }
+  },
+  "prompt": "# Current task\nGenerate up to 2 distinct content candidates for ONE Writing slot.\nDo not fill server-owned order/difficulty/band fields and do not provide an answer.\nContent will undergo independent difficulty and task-quality checks before publication.\nFollow writingDiversityPlan before choosing the setting/intent; do not merely change labels.\nRealize productionBlueprint.semanticRequirements in the visible source/task, not in metadata.\nThese are language-production demands, not an invitation to add technical knowledge or padding.\n\n<learning-data>\n{\"requestId\":\"synthetic-writing-generation\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"writingType\":\"FREE\",\"selectedKeywords\":[],\"learningProfile\":null,\"recentEvaluationSummary\":null,\"recentMistakes\":[],\"recentlyLearnedExpressions\":[],\"generationDate\":\"2026-09-26\",\"snapshotId\":null,\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"contentDiversityPolicyVersion\":null,\"writingDiversityPlan\":{\"policyVersion\":\"writing-set-diversity-v1\",\"mode\":\"UNCONSTRAINED\",\"windowSize\":5,\"maxSameScenario\":2,\"maxSameIntent\":2,\"allowedScenarioCategories\":[\"DAILY_LIFE\",\"WORK\",\"TRAVEL\",\"SHOPPING\",\"FOOD\",\"SERVICE\",\"LEARNING\",\"HOBBY\",\"DIGITAL_LIFE\",\"SOCIAL\",\"SCHEDULE\",\"HEALTH_GENERAL\"],\"preferredScenarioCategories\":[\"SOCIAL\",\"DIGITAL_LIFE\",\"TRAVEL\",\"DAILY_LIFE\"],\"allowedCommunicativeIntents\":[\"DESCRIBE\",\"REQUEST\",\"CONFIRM\",\"REPORT\",\"SUGGEST\",\"DECLINE\",\"APOLOGIZE\",\"COMPARE\",\"EXPLAIN_REASON\",\"ASK_INFORMATION\",\"GIVE_INSTRUCTION\",\"EXPRESS_PREFERENCE\",\"SUMMARIZE\"],\"preferredCommunicativeIntents\":[\"EXPLAIN_REASON\",\"EXPRESS_PREFERENCE\",\"COMPARE\",\"GIVE_INSTRUCTION\"],\"eligibleKeywordKeys\":[],\"minimumRelevantKeywords\":0},\"scenarioClassificationRule\":\"Classify the real-life setting, not an incidental action or medium. Office meetings, workplace reports, project handovers and employee deadlines are WORK, even when scheduling or software is involved; do not relabel them SCHEDULE or DIGITAL_LIFE. Travel plans are TRAVEL, buying/returning goods is SHOPPING, meals are FOOD, study is LEARNING, leisure is HOBBY, personal relationships are SOCIAL, ordinary home life is DAILY_LIFE. SERVICE is consumer/service interaction, DIGITAL_LIFE is personal digital activity, HEALTH_GENERAL is non-specialist everyday health. Use SCHEDULE for genuinely general timing without a more specific setting. Respect legitimate context ambiguity; classify by the main setting.\",\"productionBlueprint\":{\"version\":\"writing-difficulty-control-v1\",\"blueprintId\":\"FREE.B3.PRACTICAL_EXPLANATION\",\"semanticRequirements\":[{\"code\":\"CONNECTED_MESSAGE\",\"demand\":\"Connect a practical reason or condition to its consequence or requested action.\"},{\"code\":\"DIRECT_SCOPE\",\"demand\":\"Keep who does what and the condition's scope explicit and straightforward.\"},{\"code\":\"LIMIT_NUANCE\",\"demand\":\"Avoid stacking concessions, evidence limitations and indirect commitments in one task.\"}],\"renderingRule\":\"Ask for these language relationships in the learner's own or explicitly imagined content. Do not supply mandatory factual claims or turn this into guided translation. State the communicative demands visibly; sophistication the learner might voluntarily add does not count as task difficulty. Keep all guidance arrays empty.\",\"productionAnchor\":\"INTERMEDIATE: a connected practical reason, condition or time relation with explicit, straightforward scope and suitable everyday/work register. Ordinary politeness alone does not make this band 4; do not require layered qualifications for this band.\",\"enforcement\":\"Independent review of visible content; not regex, word count or generated tags.\"},\"generationPlan\":{\"candidateCount\":2,\"targetBand\":3,\"writingType\":\"FREE\"},\"languageProductionRubric\":{\"1\":\"FOUNDATION: one direct familiar statement/question; basic words and simple production.\",\"2\":\"BASIC: familiar communication with one simple reason, sequence or ordinary polite request; limited linking.\",\"3\":\"INTERMEDIATE: a connected practical reason, condition or time relation with explicit, straightforward scope and suitable everyday/work register. Ordinary politeness alone does not make this band 4; do not require layered qualifications for this band.\",\"4\":\"UPPER_INTERMEDIATE: a nuanced condition/concession, indirect request or hedge that needs register-sensitive phrasing. A longer practical request or several independent steps do not by themselves reach band 5.\",\"5\":\"ADVANCED: interacting relations whose scope must be preserved together, a precisely bounded stance/claim/commitment, and coherent controlled register. For example, a commitment depends on a condition but is limited by an exception, or evidence supports only a qualified conclusion that constrains a further action. All needed facts must be supplied or freely chosen by the learner as the mode allows. Removing a qualification changes the claim, not just the sentence length. Familiar vocabulary is sufficient; technical knowledge, verbosity and isolated advanced phrases are not evidence of band 5. A short message can qualify if these demands are actually present.\"},\"difficultySpec\":{\"policyVersion\":\"writing-difficulty-spec-v2\",\"targetBand\":3,\"writingType\":\"FREE\",\"hardConstraints\":{\"originMaxCharacters\":600,\"originMaxSurfaceUnits\":5,\"guidanceMinEntriesPerGroup\":0,\"guidanceMaxEntriesPerGroup\":0,\"guidanceMaxCharactersPerEntry\":240,\"guidanceMaxTotalCharacters\":1800,\"noteMaxCharacters\":400,\"characterMeasure\":\"NFC Unicode code points including internal spaces\",\"surfaceUnitMeasure\":\"nonempty punctuation/newline-delimited units; NOT clauses\"},\"semanticRecipe\":\"INTERMEDIATE: a connected practical reason, condition or time relation with explicit, straightforward scope and suitable everyday/work register. Ordinary politeness alone does not make this band 4; do not require layered qualifications for this band.\",\"semanticRecipeEnforcement\":\"independent reviewer, not tag counting or regex\"},\"failedChecks\":{}}\n</learning-data>",
+  "request": {
+    "contentDiversityPolicyVersion": null,
+    "difficultyDistribution": {
+      "challenge": 0,
+      "normal": 1,
+      "review": 0
+    },
+    "diversityContext": {
+      "crossFeatureRecent": [],
+      "currentSession": [],
+      "exactContentHashes90d": [],
+      "sameFeatureRecent": []
+    },
+    "generationDate": "2026-09-26",
+    "languageComplexity": {
+      "baseComplexityBand": 3,
+      "baseLevelScore": 61.0,
+      "policyVersion": "language-complexity",
+      "targetComplexityBand": null
+    },
+    "learningLanguage": "en",
+    "learningProfile": null,
+    "originLanguage": "ko",
+    "recentEvaluationSummary": null,
+    "recentMistakes": [],
+    "recentlyLearnedExpressions": [],
+    "requestId": "synthetic-writing-generation",
+    "selectedKeywords": [],
+    "sentenceCount": 1,
+    "snapshotId": null,
+    "writingType": "FREE"
+  },
+  "schema": {
+    "$defs": {
+      "CommunicativeIntent": {
+        "enum": [
+          "DESCRIBE",
+          "REQUEST",
+          "CONFIRM",
+          "REPORT",
+          "SUGGEST",
+          "DECLINE",
+          "APOLOGIZE",
+          "COMPARE",
+          "EXPLAIN_REASON",
+          "ASK_INFORMATION",
+          "GIVE_INSTRUCTION",
+          "EXPRESS_PREFERENCE",
+          "SUMMARIZE"
+        ],
+        "title": "CommunicativeIntent",
+        "type": "string"
+      },
+      "DraftDiversityMetadata": {
+        "additionalProperties": false,
+        "properties": {
+          "communicativeIntent": {
+            "$ref": "#/$defs/CommunicativeIntent"
+          },
+          "grammarFocusCodes": {
+            "items": {
+              "maxLength": 200,
+              "minLength": 1,
+              "type": "string"
+            },
+            "maxItems": 20,
+            "title": "Grammarfocuscodes",
+            "type": "array"
+          },
+          "lexicalFocusCodes": {
+            "items": {
+              "maxLength": 200,
+              "minLength": 1,
+              "type": "string"
+            },
+            "maxItems": 20,
+            "title": "Lexicalfocuscodes",
+            "type": "array"
+          },
+          "requiresBackgroundKnowledge": {
+            "title": "Requiresbackgroundknowledge",
+            "type": "boolean"
+          },
+          "scenarioCategory": {
+            "$ref": "#/$defs/ScenarioCategory"
+          },
+          "semanticSummary": {
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Semanticsummary",
+            "type": "string"
+          },
+          "taskArchetype": {
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Taskarchetype",
+            "type": "string"
+          }
+        },
+        "required": [
+          "scenarioCategory",
+          "communicativeIntent",
+          "taskArchetype",
+          "grammarFocusCodes",
+          "lexicalFocusCodes",
+          "semanticSummary",
+          "requiresBackgroundKnowledge"
+        ],
+        "title": "DraftDiversityMetadata",
+        "type": "object"
+      },
+      "ScenarioCategory": {
+        "enum": [
+          "DAILY_LIFE",
+          "WORK",
+          "TRAVEL",
+          "SHOPPING",
+          "FOOD",
+          "SERVICE",
+          "LEARNING",
+          "HOBBY",
+          "DIGITAL_LIFE",
+          "SOCIAL",
+          "SCHEDULE",
+          "HEALTH_GENERAL"
+        ],
+        "title": "ScenarioCategory",
+        "type": "string"
+      },
+      "WritingDraft": {
+        "additionalProperties": false,
+        "properties": {
+          "diversityMetadata": {
+            "$ref": "#/$defs/DraftDiversityMetadata"
+          },
+          "focusMetrics": {
+            "items": {
+              "$ref": "#/$defs/WritingMetric"
+            },
+            "maxItems": 5,
+            "minItems": 1,
+            "title": "Focusmetrics",
+            "type": "array"
+          },
+          "focusReason": {
+            "maxLength": 400,
+            "minLength": 1,
+            "title": "Focusreason",
+            "type": "string"
+          },
+          "keywords": {
+            "items": {
+              "maxLength": 200,
+              "minLength": 1,
+              "type": "string"
+            },
+            "maxItems": 0,
+            "title": "Keywords",
+            "type": "array"
+          },
+          "originText": {
+            "maxLength": 600,
+            "minLength": 1,
+            "title": "Origintext",
+            "type": "string"
+          },
+          "providedFacts": {
+            "items": {
+              "maxLength": 240,
+              "minLength": 1,
+              "type": "string"
+            },
+            "maxItems": 0,
+            "minItems": 0,
+            "title": "Providedfacts",
+            "type": "array"
+          },
+          "requiredIntents": {
+            "items": {
+              "maxLength": 240,
+              "minLength": 1,
+              "type": "string"
+            },
+            "maxItems": 0,
+            "minItems": 0,
+            "title": "Requiredintents",
+            "type": "array"
+          },
+          "responseConstraints": {
+            "items": {
+              "maxLength": 240,
+              "minLength": 1,
+              "type": "string"
+            },
+            "maxItems": 0,
+            "minItems": 0,
+            "title": "Responseconstraints",
+            "type": "array"
+          }
+        },
+        "required": [
+          "originText",
+          "keywords",
+          "focusMetrics",
+          "focusReason",
+          "providedFacts",
+          "requiredIntents",
+          "responseConstraints",
+          "diversityMetadata"
+        ],
+        "title": "WritingDraft",
+        "type": "object"
+      },
+      "WritingMetric": {
+        "enum": [
+          "MEANING",
+          "GRAMMAR",
+          "VOCABULARY",
+          "NATURALNESS",
+          "EXPRESSION"
+        ],
+        "title": "WritingMetric",
+        "type": "string"
+      }
+    },
+    "additionalProperties": false,
+    "properties": {
+      "items": {
+        "items": {
+          "$ref": "#/$defs/WritingDraft"
+        },
+        "maxItems": 2,
+        "minItems": 1,
+        "title": "Items",
+        "type": "array"
+      }
+    },
+    "required": [
+      "items"
+    ],
+    "title": "WritingCandidateBatch",
+    "type": "object"
+  },
+  "secondAttempt": {
+    "prompt": "# Current task\nGenerate up to 2 distinct content candidates for ONE Writing slot.\nDo not fill server-owned order/difficulty/band fields and do not provide an answer.\nContent will undergo independent difficulty and task-quality checks before publication.\nFollow writingDiversityPlan before choosing the setting/intent; do not merely change labels.\nRealize productionBlueprint.semanticRequirements in the visible source/task, not in metadata.\nThese are language-production demands, not an invitation to add technical knowledge or padding.\n\n<learning-data>\n{\"requestId\":\"synthetic-writing-generation\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"writingType\":\"FREE\",\"selectedKeywords\":[],\"learningProfile\":null,\"recentEvaluationSummary\":null,\"recentMistakes\":[],\"recentlyLearnedExpressions\":[],\"generationDate\":\"2026-09-26\",\"snapshotId\":null,\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"contentDiversityPolicyVersion\":null,\"writingDiversityPlan\":{\"policyVersion\":\"writing-set-diversity-v1\",\"mode\":\"UNCONSTRAINED\",\"windowSize\":5,\"maxSameScenario\":2,\"maxSameIntent\":2,\"allowedScenarioCategories\":[\"DAILY_LIFE\",\"WORK\",\"TRAVEL\",\"SHOPPING\",\"FOOD\",\"SERVICE\",\"LEARNING\",\"HOBBY\",\"DIGITAL_LIFE\",\"SOCIAL\",\"SCHEDULE\",\"HEALTH_GENERAL\"],\"preferredScenarioCategories\":[\"SOCIAL\",\"DIGITAL_LIFE\",\"TRAVEL\",\"DAILY_LIFE\"],\"allowedCommunicativeIntents\":[\"DESCRIBE\",\"REQUEST\",\"CONFIRM\",\"REPORT\",\"SUGGEST\",\"DECLINE\",\"APOLOGIZE\",\"COMPARE\",\"EXPLAIN_REASON\",\"ASK_INFORMATION\",\"GIVE_INSTRUCTION\",\"EXPRESS_PREFERENCE\",\"SUMMARIZE\"],\"preferredCommunicativeIntents\":[\"EXPLAIN_REASON\",\"EXPRESS_PREFERENCE\",\"COMPARE\",\"GIVE_INSTRUCTION\"],\"eligibleKeywordKeys\":[],\"minimumRelevantKeywords\":0},\"scenarioClassificationRule\":\"Classify the real-life setting, not an incidental action or medium. Office meetings, workplace reports, project handovers and employee deadlines are WORK, even when scheduling or software is involved; do not relabel them SCHEDULE or DIGITAL_LIFE. Travel plans are TRAVEL, buying/returning goods is SHOPPING, meals are FOOD, study is LEARNING, leisure is HOBBY, personal relationships are SOCIAL, ordinary home life is DAILY_LIFE. SERVICE is consumer/service interaction, DIGITAL_LIFE is personal digital activity, HEALTH_GENERAL is non-specialist everyday health. Use SCHEDULE for genuinely general timing without a more specific setting. Respect legitimate context ambiguity; classify by the main setting.\",\"productionBlueprint\":{\"version\":\"writing-difficulty-control-v1\",\"blueprintId\":\"FREE.B3.PRACTICAL_SEQUENCE\",\"semanticRequirements\":[{\"code\":\"CONNECTED_MESSAGE\",\"demand\":\"Relate timing or a changed condition to a practical explanation or request.\"},{\"code\":\"DIRECT_SCOPE\",\"demand\":\"Use familiar facts and suitable everyday/work politeness, without layered qualifications.\"}],\"renderingRule\":\"Ask for these language relationships in the learner's own or explicitly imagined content. Do not supply mandatory factual claims or turn this into guided translation. State the communicative demands visibly; sophistication the learner might voluntarily add does not count as task difficulty. Keep all guidance arrays empty.\",\"productionAnchor\":\"INTERMEDIATE: a connected practical reason, condition or time relation with explicit, straightforward scope and suitable everyday/work register. Ordinary politeness alone does not make this band 4; do not require layered qualifications for this band.\",\"enforcement\":\"Independent review of visible content; not regex, word count or generated tags.\"},\"generationPlan\":{\"candidateCount\":2,\"targetBand\":3,\"writingType\":\"FREE\"},\"languageProductionRubric\":{\"1\":\"FOUNDATION: one direct familiar statement/question; basic words and simple production.\",\"2\":\"BASIC: familiar communication with one simple reason, sequence or ordinary polite request; limited linking.\",\"3\":\"INTERMEDIATE: a connected practical reason, condition or time relation with explicit, straightforward scope and suitable everyday/work register. Ordinary politeness alone does not make this band 4; do not require layered qualifications for this band.\",\"4\":\"UPPER_INTERMEDIATE: a nuanced condition/concession, indirect request or hedge that needs register-sensitive phrasing. A longer practical request or several independent steps do not by themselves reach band 5.\",\"5\":\"ADVANCED: interacting relations whose scope must be preserved together, a precisely bounded stance/claim/commitment, and coherent controlled register. For example, a commitment depends on a condition but is limited by an exception, or evidence supports only a qualified conclusion that constrains a further action. All needed facts must be supplied or freely chosen by the learner as the mode allows. Removing a qualification changes the claim, not just the sentence length. Familiar vocabulary is sufficient; technical knowledge, verbosity and isolated advanced phrases are not evidence of band 5. A short message can qualify if these demands are actually present.\"},\"difficultySpec\":{\"policyVersion\":\"writing-difficulty-spec-v2\",\"targetBand\":3,\"writingType\":\"FREE\",\"hardConstraints\":{\"originMaxCharacters\":600,\"originMaxSurfaceUnits\":5,\"guidanceMinEntriesPerGroup\":0,\"guidanceMaxEntriesPerGroup\":0,\"guidanceMaxCharactersPerEntry\":240,\"guidanceMaxTotalCharacters\":1800,\"noteMaxCharacters\":400,\"characterMeasure\":\"NFC Unicode code points including internal spaces\",\"surfaceUnitMeasure\":\"nonempty punctuation/newline-delimited units; NOT clauses\"},\"semanticRecipe\":\"INTERMEDIATE: a connected practical reason, condition or time relation with explicit, straightforward scope and suitable everyday/work register. Ordinary politeness alone does not make this band 4; do not require layered qualifications for this band.\",\"semanticRecipeEnforcement\":\"independent reviewer, not tag counting or regex\"},\"failedChecks\":{\"SPEC_NOTE_LENGTH\":1}}\n</learning-data>",
+    "request": {
+      "contentDiversityPolicyVersion": null,
+      "difficultyDistribution": {
+        "challenge": 0,
+        "normal": 1,
+        "review": 0
+      },
+      "diversityContext": {
+        "crossFeatureRecent": [],
+        "currentSession": [],
+        "exactContentHashes90d": [],
+        "sameFeatureRecent": []
+      },
+      "generationDate": "2026-09-26",
+      "languageComplexity": {
+        "baseComplexityBand": 3,
+        "baseLevelScore": 61.0,
+        "policyVersion": "language-complexity",
+        "targetComplexityBand": null
+      },
+      "learningLanguage": "en",
+      "learningProfile": null,
+      "originLanguage": "ko",
+      "recentEvaluationSummary": null,
+      "recentMistakes": [],
+      "recentlyLearnedExpressions": [],
+      "requestId": "synthetic-writing-generation",
+      "selectedKeywords": [],
+      "sentenceCount": 1,
+      "snapshotId": null,
+      "writingType": "FREE"
+    }
+  },
+  "translation": {
+    "prompt": "# Current task\nGenerate up to 2 distinct content candidates for ONE Writing slot.\nDo not fill server-owned order/difficulty/band fields and do not provide an answer.\nContent will undergo independent difficulty and task-quality checks before publication.\nFollow writingDiversityPlan before choosing the setting/intent; do not merely change labels.\nRealize productionBlueprint.semanticRequirements in the visible source/task, not in metadata.\nThese are language-production demands, not an invitation to add technical knowledge or padding.\n\n<learning-data>\n{\"requestId\":\"synthetic-writing-generation\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"writingType\":\"TRANSLATION\",\"selectedKeywords\":[],\"learningProfile\":null,\"recentEvaluationSummary\":null,\"recentMistakes\":[],\"recentlyLearnedExpressions\":[],\"generationDate\":\"2026-09-26\",\"snapshotId\":null,\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"contentDiversityPolicyVersion\":null,\"writingDiversityPlan\":{\"policyVersion\":\"writing-set-diversity-v1\",\"mode\":\"UNCONSTRAINED\",\"windowSize\":5,\"maxSameScenario\":2,\"maxSameIntent\":2,\"allowedScenarioCategories\":[\"DAILY_LIFE\",\"WORK\",\"TRAVEL\",\"SHOPPING\",\"FOOD\",\"SERVICE\",\"LEARNING\",\"HOBBY\",\"DIGITAL_LIFE\",\"SOCIAL\",\"SCHEDULE\",\"HEALTH_GENERAL\"],\"preferredScenarioCategories\":[\"DIGITAL_LIFE\",\"TRAVEL\",\"SOCIAL\",\"SERVICE\"],\"allowedCommunicativeIntents\":[\"DESCRIBE\",\"REQUEST\",\"CONFIRM\",\"REPORT\",\"SUGGEST\",\"DECLINE\",\"APOLOGIZE\",\"COMPARE\",\"EXPLAIN_REASON\",\"ASK_INFORMATION\",\"GIVE_INSTRUCTION\",\"EXPRESS_PREFERENCE\",\"SUMMARIZE\"],\"preferredCommunicativeIntents\":[\"EXPLAIN_REASON\",\"DESCRIBE\",\"CONFIRM\",\"SUGGEST\"],\"eligibleKeywordKeys\":[],\"minimumRelevantKeywords\":0},\"scenarioClassificationRule\":\"Classify the real-life setting, not an incidental action or medium. Office meetings, workplace reports, project handovers and employee deadlines are WORK, even when scheduling or software is involved; do not relabel them SCHEDULE or DIGITAL_LIFE. Travel plans are TRAVEL, buying/returning goods is SHOPPING, meals are FOOD, study is LEARNING, leisure is HOBBY, personal relationships are SOCIAL, ordinary home life is DAILY_LIFE. SERVICE is consumer/service interaction, DIGITAL_LIFE is personal digital activity, HEALTH_GENERAL is non-specialist everyday health. Use SCHEDULE for genuinely general timing without a more specific setting. Respect legitimate context ambiguity; classify by the main setting.\",\"productionBlueprint\":{\"version\":\"writing-difficulty-control-v1\",\"blueprintId\":\"TRANSLATION.B3.PRACTICAL_EXPLANATION\",\"semanticRequirements\":[{\"code\":\"CONNECTED_MESSAGE\",\"demand\":\"Connect a practical reason or condition to its consequence or requested action.\"},{\"code\":\"DIRECT_SCOPE\",\"demand\":\"Keep who does what and the condition's scope explicit and straightforward.\"},{\"code\":\"LIMIT_NUANCE\",\"demand\":\"Avoid stacking concessions, evidence limitations and indirect commitments in one task.\"}],\"renderingRule\":\"Put ALL required meanings in originText in originLanguage as the actual source message, not directions to the learner. One item may contain several connected sentences when useful. Keep all guidance arrays empty and never supply a learningLanguage model answer. The learner only translates: do not ask them to invent facts or choose a strategy.\",\"productionAnchor\":\"INTERMEDIATE: a connected practical reason, condition or time relation with explicit, straightforward scope and suitable everyday/work register. Ordinary politeness alone does not make this band 4; do not require layered qualifications for this band.\",\"enforcement\":\"Independent review of visible content; not regex, word count or generated tags.\"},\"generationPlan\":{\"candidateCount\":2,\"targetBand\":3,\"writingType\":\"TRANSLATION\"},\"sourceLanguageContract\":{\"policyVersion\":\"writing-source-language-v1\",\"field\":\"originText\",\"sourceLanguage\":\"ko\",\"learnerAnswerLanguage\":\"en\",\"fieldRole\":\"SOURCE_SENTENCE_NOT_TRANSLATED_ANSWER\",\"requiredScriptPattern\":\"[\\\\uac00-\\\\ud7a3\\\\u1100-\\\\u11ff]\",\"technicalNamesAllowed\":true,\"scriptPresenceIsNotLanguageProof\":true},\"languageProductionRubric\":{\"1\":\"FOUNDATION: one direct familiar statement/question; basic words and simple production.\",\"2\":\"BASIC: familiar communication with one simple reason, sequence or ordinary polite request; limited linking.\",\"3\":\"INTERMEDIATE: a connected practical reason, condition or time relation with explicit, straightforward scope and suitable everyday/work register. Ordinary politeness alone does not make this band 4; do not require layered qualifications for this band.\",\"4\":\"UPPER_INTERMEDIATE: a nuanced condition/concession, indirect request or hedge that needs register-sensitive phrasing. A longer practical request or several independent steps do not by themselves reach band 5.\",\"5\":\"ADVANCED: interacting relations whose scope must be preserved together, a precisely bounded stance/claim/commitment, and coherent controlled register. For example, a commitment depends on a condition but is limited by an exception, or evidence supports only a qualified conclusion that constrains a further action. All needed facts must be supplied or freely chosen by the learner as the mode allows. Removing a qualification changes the claim, not just the sentence length. Familiar vocabulary is sufficient; technical knowledge, verbosity and isolated advanced phrases are not evidence of band 5. A short message can qualify if these demands are actually present.\"},\"difficultySpec\":{\"policyVersion\":\"writing-difficulty-spec-v2\",\"targetBand\":3,\"writingType\":\"TRANSLATION\",\"hardConstraints\":{\"originMaxCharacters\":420,\"originMaxSurfaceUnits\":4,\"guidanceMinEntriesPerGroup\":0,\"guidanceMaxEntriesPerGroup\":0,\"guidanceMaxCharactersPerEntry\":240,\"guidanceMaxTotalCharacters\":1800,\"noteMaxCharacters\":400,\"characterMeasure\":\"NFC Unicode code points including internal spaces\",\"surfaceUnitMeasure\":\"nonempty punctuation/newline-delimited units; NOT clauses\"},\"semanticRecipe\":\"INTERMEDIATE: a connected practical reason, condition or time relation with explicit, straightforward scope and suitable everyday/work register. Ordinary politeness alone does not make this band 4; do not require layered qualifications for this band.\",\"semanticRecipeEnforcement\":\"independent reviewer, not tag counting or regex\"},\"failedChecks\":{}}\n</learning-data>",
+    "request": {
+      "contentDiversityPolicyVersion": null,
+      "difficultyDistribution": {
+        "challenge": 0,
+        "normal": 1,
+        "review": 0
+      },
+      "diversityContext": {
+        "crossFeatureRecent": [],
+        "currentSession": [],
+        "exactContentHashes90d": [],
+        "sameFeatureRecent": []
+      },
+      "generationDate": "2026-09-26",
+      "languageComplexity": {
+        "baseComplexityBand": 3,
+        "baseLevelScore": 61.0,
+        "policyVersion": "language-complexity",
+        "targetComplexityBand": null
+      },
+      "learningLanguage": "en",
+      "learningProfile": null,
+      "originLanguage": "ko",
+      "recentEvaluationSummary": null,
+      "recentMistakes": [],
+      "recentlyLearnedExpressions": [],
+      "requestId": "synthetic-writing-generation",
+      "selectedKeywords": [],
+      "sentenceCount": 1,
+      "snapshotId": null,
+      "writingType": "TRANSLATION"
+    },
+    "schema": {
+      "$defs": {
+        "CommunicativeIntent": {
+          "enum": [
+            "DESCRIBE",
+            "REQUEST",
+            "CONFIRM",
+            "REPORT",
+            "SUGGEST",
+            "DECLINE",
+            "APOLOGIZE",
+            "COMPARE",
+            "EXPLAIN_REASON",
+            "ASK_INFORMATION",
+            "GIVE_INSTRUCTION",
+            "EXPRESS_PREFERENCE",
+            "SUMMARIZE"
+          ],
+          "title": "CommunicativeIntent",
+          "type": "string"
+        },
+        "DraftDiversityMetadata": {
+          "additionalProperties": false,
+          "properties": {
+            "communicativeIntent": {
+              "$ref": "#/$defs/CommunicativeIntent"
+            },
+            "grammarFocusCodes": {
+              "items": {
+                "maxLength": 200,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 20,
+              "title": "Grammarfocuscodes",
+              "type": "array"
+            },
+            "lexicalFocusCodes": {
+              "items": {
+                "maxLength": 200,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 20,
+              "title": "Lexicalfocuscodes",
+              "type": "array"
+            },
+            "requiresBackgroundKnowledge": {
+              "title": "Requiresbackgroundknowledge",
+              "type": "boolean"
+            },
+            "scenarioCategory": {
+              "$ref": "#/$defs/ScenarioCategory"
+            },
+            "semanticSummary": {
+              "maxLength": 500,
+              "minLength": 1,
+              "title": "Semanticsummary",
+              "type": "string"
+            },
+            "taskArchetype": {
+              "maxLength": 100,
+              "minLength": 1,
+              "title": "Taskarchetype",
+              "type": "string"
+            }
+          },
+          "required": [
+            "scenarioCategory",
+            "communicativeIntent",
+            "taskArchetype",
+            "grammarFocusCodes",
+            "lexicalFocusCodes",
+            "semanticSummary",
+            "requiresBackgroundKnowledge"
+          ],
+          "title": "DraftDiversityMetadata",
+          "type": "object"
+        },
+        "ScenarioCategory": {
+          "enum": [
+            "DAILY_LIFE",
+            "WORK",
+            "TRAVEL",
+            "SHOPPING",
+            "FOOD",
+            "SERVICE",
+            "LEARNING",
+            "HOBBY",
+            "DIGITAL_LIFE",
+            "SOCIAL",
+            "SCHEDULE",
+            "HEALTH_GENERAL"
+          ],
+          "title": "ScenarioCategory",
+          "type": "string"
+        },
+        "WritingDraft": {
+          "additionalProperties": false,
+          "properties": {
+            "diversityMetadata": {
+              "$ref": "#/$defs/DraftDiversityMetadata"
+            },
+            "focusMetrics": {
+              "items": {
+                "$ref": "#/$defs/WritingMetric"
+              },
+              "maxItems": 5,
+              "minItems": 1,
+              "title": "Focusmetrics",
+              "type": "array"
+            },
+            "focusReason": {
+              "maxLength": 400,
+              "minLength": 1,
+              "title": "Focusreason",
+              "type": "string"
+            },
+            "keywords": {
+              "items": {
+                "maxLength": 200,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 0,
+              "title": "Keywords",
+              "type": "array"
+            },
+            "originText": {
+              "maxLength": 420,
+              "minLength": 1,
+              "pattern": "[\\uac00-\\ud7a3\\u1100-\\u11ff]",
+              "title": "Origintext",
+              "type": "string"
+            },
+            "providedFacts": {
+              "items": {
+                "maxLength": 240,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 0,
+              "minItems": 0,
+              "title": "Providedfacts",
+              "type": "array"
+            },
+            "requiredIntents": {
+              "items": {
+                "maxLength": 240,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 0,
+              "minItems": 0,
+              "title": "Requiredintents",
+              "type": "array"
+            },
+            "responseConstraints": {
+              "items": {
+                "maxLength": 240,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 0,
+              "minItems": 0,
+              "title": "Responseconstraints",
+              "type": "array"
+            }
+          },
+          "required": [
+            "originText",
+            "keywords",
+            "focusMetrics",
+            "focusReason",
+            "providedFacts",
+            "requiredIntents",
+            "responseConstraints",
+            "diversityMetadata"
+          ],
+          "title": "WritingDraft",
+          "type": "object"
+        },
+        "WritingMetric": {
+          "enum": [
+            "MEANING",
+            "GRAMMAR",
+            "VOCABULARY",
+            "NATURALNESS",
+            "EXPRESSION"
+          ],
+          "title": "WritingMetric",
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "properties": {
+        "items": {
+          "items": {
+            "$ref": "#/$defs/WritingDraft"
+          },
+          "maxItems": 2,
+          "minItems": 1,
+          "title": "Items",
+          "type": "array"
+        }
+      },
+      "required": [
+        "items"
+      ],
+      "title": "WritingCandidateBatch",
+      "type": "object"
+    }
+  },
+  "unconstrainedWindow": {
+    "plan": {
+      "allowedCommunicativeIntents": [
+        "DESCRIBE",
+        "CONFIRM",
+        "REPORT",
+        "SUGGEST",
+        "DECLINE",
+        "APOLOGIZE",
+        "COMPARE",
+        "EXPLAIN_REASON",
+        "ASK_INFORMATION",
+        "GIVE_INSTRUCTION",
+        "EXPRESS_PREFERENCE",
+        "SUMMARIZE"
+      ],
+      "allowedScenarioCategories": [
+        "DAILY_LIFE",
+        "TRAVEL",
+        "SHOPPING",
+        "FOOD",
+        "SERVICE",
+        "LEARNING",
+        "HOBBY",
+        "DIGITAL_LIFE",
+        "SOCIAL",
+        "SCHEDULE",
+        "HEALTH_GENERAL"
+      ],
+      "eligibleKeywordKeys": [],
+      "maxSameIntent": 2,
+      "maxSameScenario": 2,
+      "minimumRelevantKeywords": 0,
+      "mode": "UNCONSTRAINED",
+      "policyVersion": "writing-set-diversity-v1",
+      "preferredCommunicativeIntents": [
+        "EXPLAIN_REASON",
+        "EXPRESS_PREFERENCE",
+        "COMPARE",
+        "GIVE_INSTRUCTION"
+      ],
+      "preferredScenarioCategories": [
+        "SOCIAL",
+        "DIGITAL_LIFE",
+        "TRAVEL",
+        "DAILY_LIFE"
+      ],
+      "windowSize": 5
+    },
+    "prompt": "# Current task\nGenerate up to 2 distinct content candidates for ONE Writing slot.\nDo not fill server-owned order/difficulty/band fields and do not provide an answer.\nContent will undergo independent difficulty and task-quality checks before publication.\nFollow writingDiversityPlan before choosing the setting/intent; do not merely change labels.\nRealize productionBlueprint.semanticRequirements in the visible source/task, not in metadata.\nThese are language-production demands, not an invitation to add technical knowledge or padding.\n\n<learning-data>\n{\"requestId\":\"synthetic-writing-generation\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"writingType\":\"FREE\",\"selectedKeywords\":[],\"learningProfile\":null,\"recentEvaluationSummary\":null,\"recentMistakes\":[],\"recentlyLearnedExpressions\":[],\"generationDate\":\"2026-09-26\",\"snapshotId\":null,\"diversityContext\":{\"currentSession\":[{\"sourceType\":\"WRITING\",\"content\":\"Synthetic work 0\",\"contentHash\":null,\"scenarioCategory\":\"WORK\",\"communicativeIntent\":\"REQUEST\",\"taskArchetype\":null,\"grammarFocusCodes\":[],\"semanticSummary\":null,\"ageDays\":null},{\"sourceType\":\"WRITING\",\"content\":\"Synthetic work 1\",\"contentHash\":null,\"scenarioCategory\":\"WORK\",\"communicativeIntent\":\"REQUEST\",\"taskArchetype\":null,\"grammarFocusCodes\":[],\"semanticSummary\":null,\"ageDays\":null}],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"contentDiversityPolicyVersion\":null,\"writingDiversityPlan\":{\"policyVersion\":\"writing-set-diversity-v1\",\"mode\":\"UNCONSTRAINED\",\"windowSize\":5,\"maxSameScenario\":2,\"maxSameIntent\":2,\"allowedScenarioCategories\":[\"DAILY_LIFE\",\"TRAVEL\",\"SHOPPING\",\"FOOD\",\"SERVICE\",\"LEARNING\",\"HOBBY\",\"DIGITAL_LIFE\",\"SOCIAL\",\"SCHEDULE\",\"HEALTH_GENERAL\"],\"preferredScenarioCategories\":[\"SOCIAL\",\"DIGITAL_LIFE\",\"TRAVEL\",\"DAILY_LIFE\"],\"allowedCommunicativeIntents\":[\"DESCRIBE\",\"CONFIRM\",\"REPORT\",\"SUGGEST\",\"DECLINE\",\"APOLOGIZE\",\"COMPARE\",\"EXPLAIN_REASON\",\"ASK_INFORMATION\",\"GIVE_INSTRUCTION\",\"EXPRESS_PREFERENCE\",\"SUMMARIZE\"],\"preferredCommunicativeIntents\":[\"EXPLAIN_REASON\",\"EXPRESS_PREFERENCE\",\"COMPARE\",\"GIVE_INSTRUCTION\"],\"eligibleKeywordKeys\":[],\"minimumRelevantKeywords\":0},\"scenarioClassificationRule\":\"Classify the real-life setting, not an incidental action or medium. Office meetings, workplace reports, project handovers and employee deadlines are WORK, even when scheduling or software is involved; do not relabel them SCHEDULE or DIGITAL_LIFE. Travel plans are TRAVEL, buying/returning goods is SHOPPING, meals are FOOD, study is LEARNING, leisure is HOBBY, personal relationships are SOCIAL, ordinary home life is DAILY_LIFE. SERVICE is consumer/service interaction, DIGITAL_LIFE is personal digital activity, HEALTH_GENERAL is non-specialist everyday health. Use SCHEDULE for genuinely general timing without a more specific setting. Respect legitimate context ambiguity; classify by the main setting.\",\"productionBlueprint\":{\"version\":\"writing-difficulty-control-v1\",\"blueprintId\":\"FREE.B3.PRACTICAL_EXPLANATION\",\"semanticRequirements\":[{\"code\":\"CONNECTED_MESSAGE\",\"demand\":\"Connect a practical reason or condition to its consequence or requested action.\"},{\"code\":\"DIRECT_SCOPE\",\"demand\":\"Keep who does what and the condition's scope explicit and straightforward.\"},{\"code\":\"LIMIT_NUANCE\",\"demand\":\"Avoid stacking concessions, evidence limitations and indirect commitments in one task.\"}],\"renderingRule\":\"Ask for these language relationships in the learner's own or explicitly imagined content. Do not supply mandatory factual claims or turn this into guided translation. State the communicative demands visibly; sophistication the learner might voluntarily add does not count as task difficulty. Keep all guidance arrays empty.\",\"productionAnchor\":\"INTERMEDIATE: a connected practical reason, condition or time relation with explicit, straightforward scope and suitable everyday/work register. Ordinary politeness alone does not make this band 4; do not require layered qualifications for this band.\",\"enforcement\":\"Independent review of visible content; not regex, word count or generated tags.\"},\"generationPlan\":{\"candidateCount\":2,\"targetBand\":3,\"writingType\":\"FREE\"},\"languageProductionRubric\":{\"1\":\"FOUNDATION: one direct familiar statement/question; basic words and simple production.\",\"2\":\"BASIC: familiar communication with one simple reason, sequence or ordinary polite request; limited linking.\",\"3\":\"INTERMEDIATE: a connected practical reason, condition or time relation with explicit, straightforward scope and suitable everyday/work register. Ordinary politeness alone does not make this band 4; do not require layered qualifications for this band.\",\"4\":\"UPPER_INTERMEDIATE: a nuanced condition/concession, indirect request or hedge that needs register-sensitive phrasing. A longer practical request or several independent steps do not by themselves reach band 5.\",\"5\":\"ADVANCED: interacting relations whose scope must be preserved together, a precisely bounded stance/claim/commitment, and coherent controlled register. For example, a commitment depends on a condition but is limited by an exception, or evidence supports only a qualified conclusion that constrains a further action. All needed facts must be supplied or freely chosen by the learner as the mode allows. Removing a qualification changes the claim, not just the sentence length. Familiar vocabulary is sufficient; technical knowledge, verbosity and isolated advanced phrases are not evidence of band 5. A short message can qualify if these demands are actually present.\"},\"difficultySpec\":{\"policyVersion\":\"writing-difficulty-spec-v2\",\"targetBand\":3,\"writingType\":\"FREE\",\"hardConstraints\":{\"originMaxCharacters\":600,\"originMaxSurfaceUnits\":5,\"guidanceMinEntriesPerGroup\":0,\"guidanceMaxEntriesPerGroup\":0,\"guidanceMaxCharactersPerEntry\":240,\"guidanceMaxTotalCharacters\":1800,\"noteMaxCharacters\":400,\"characterMeasure\":\"NFC Unicode code points including internal spaces\",\"surfaceUnitMeasure\":\"nonempty punctuation/newline-delimited units; NOT clauses\"},\"semanticRecipe\":\"INTERMEDIATE: a connected practical reason, condition or time relation with explicit, straightforward scope and suitable everyday/work register. Ordinary politeness alone does not make this band 4; do not require layered qualifications for this band.\",\"semanticRecipeEnforcement\":\"independent reviewer, not tag counting or regex\"},\"failedChecks\":{}}\n</learning-data>",
+    "request": {
+      "contentDiversityPolicyVersion": null,
+      "difficultyDistribution": {
+        "challenge": 0,
+        "normal": 1,
+        "review": 0
+      },
+      "diversityContext": {
+        "crossFeatureRecent": [],
+        "currentSession": [
+          {
+            "ageDays": null,
+            "communicativeIntent": "REQUEST",
+            "content": "Synthetic work 0",
+            "contentHash": null,
+            "grammarFocusCodes": [],
+            "scenarioCategory": "WORK",
+            "semanticSummary": null,
+            "sourceType": "WRITING",
+            "taskArchetype": null
+          },
+          {
+            "ageDays": null,
+            "communicativeIntent": "REQUEST",
+            "content": "Synthetic work 1",
+            "contentHash": null,
+            "grammarFocusCodes": [],
+            "scenarioCategory": "WORK",
+            "semanticSummary": null,
+            "sourceType": "WRITING",
+            "taskArchetype": null
+          }
+        ],
+        "exactContentHashes90d": [],
+        "sameFeatureRecent": []
+      },
+      "generationDate": "2026-09-26",
+      "languageComplexity": {
+        "baseComplexityBand": 3,
+        "baseLevelScore": 61.0,
+        "policyVersion": "language-complexity",
+        "targetComplexityBand": null
+      },
+      "learningLanguage": "en",
+      "learningProfile": null,
+      "originLanguage": "ko",
+      "recentEvaluationSummary": null,
+      "recentMistakes": [],
+      "recentlyLearnedExpressions": [],
+      "requestId": "synthetic-writing-generation",
+      "selectedKeywords": [],
+      "sentenceCount": 1,
+      "snapshotId": null,
+      "writingType": "FREE"
+    },
+    "schema": {
+      "$defs": {
+        "CommunicativeIntent": {
+          "enum": [
+            "DESCRIBE",
+            "CONFIRM",
+            "REPORT",
+            "SUGGEST",
+            "DECLINE",
+            "APOLOGIZE",
+            "COMPARE",
+            "EXPLAIN_REASON",
+            "ASK_INFORMATION",
+            "GIVE_INSTRUCTION",
+            "EXPRESS_PREFERENCE",
+            "SUMMARIZE"
+          ],
+          "title": "CommunicativeIntent",
+          "type": "string"
+        },
+        "DraftDiversityMetadata": {
+          "additionalProperties": false,
+          "properties": {
+            "communicativeIntent": {
+              "$ref": "#/$defs/CommunicativeIntent"
+            },
+            "grammarFocusCodes": {
+              "items": {
+                "maxLength": 200,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 20,
+              "title": "Grammarfocuscodes",
+              "type": "array"
+            },
+            "lexicalFocusCodes": {
+              "items": {
+                "maxLength": 200,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 20,
+              "title": "Lexicalfocuscodes",
+              "type": "array"
+            },
+            "requiresBackgroundKnowledge": {
+              "title": "Requiresbackgroundknowledge",
+              "type": "boolean"
+            },
+            "scenarioCategory": {
+              "$ref": "#/$defs/ScenarioCategory"
+            },
+            "semanticSummary": {
+              "maxLength": 500,
+              "minLength": 1,
+              "title": "Semanticsummary",
+              "type": "string"
+            },
+            "taskArchetype": {
+              "maxLength": 100,
+              "minLength": 1,
+              "title": "Taskarchetype",
+              "type": "string"
+            }
+          },
+          "required": [
+            "scenarioCategory",
+            "communicativeIntent",
+            "taskArchetype",
+            "grammarFocusCodes",
+            "lexicalFocusCodes",
+            "semanticSummary",
+            "requiresBackgroundKnowledge"
+          ],
+          "title": "DraftDiversityMetadata",
+          "type": "object"
+        },
+        "ScenarioCategory": {
+          "enum": [
+            "DAILY_LIFE",
+            "TRAVEL",
+            "SHOPPING",
+            "FOOD",
+            "SERVICE",
+            "LEARNING",
+            "HOBBY",
+            "DIGITAL_LIFE",
+            "SOCIAL",
+            "SCHEDULE",
+            "HEALTH_GENERAL"
+          ],
+          "title": "ScenarioCategory",
+          "type": "string"
+        },
+        "WritingDraft": {
+          "additionalProperties": false,
+          "properties": {
+            "diversityMetadata": {
+              "$ref": "#/$defs/DraftDiversityMetadata"
+            },
+            "focusMetrics": {
+              "items": {
+                "$ref": "#/$defs/WritingMetric"
+              },
+              "maxItems": 5,
+              "minItems": 1,
+              "title": "Focusmetrics",
+              "type": "array"
+            },
+            "focusReason": {
+              "maxLength": 400,
+              "minLength": 1,
+              "title": "Focusreason",
+              "type": "string"
+            },
+            "keywords": {
+              "items": {
+                "maxLength": 200,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 0,
+              "title": "Keywords",
+              "type": "array"
+            },
+            "originText": {
+              "maxLength": 600,
+              "minLength": 1,
+              "title": "Origintext",
+              "type": "string"
+            },
+            "providedFacts": {
+              "items": {
+                "maxLength": 240,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 0,
+              "minItems": 0,
+              "title": "Providedfacts",
+              "type": "array"
+            },
+            "requiredIntents": {
+              "items": {
+                "maxLength": 240,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 0,
+              "minItems": 0,
+              "title": "Requiredintents",
+              "type": "array"
+            },
+            "responseConstraints": {
+              "items": {
+                "maxLength": 240,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 0,
+              "minItems": 0,
+              "title": "Responseconstraints",
+              "type": "array"
+            }
+          },
+          "required": [
+            "originText",
+            "keywords",
+            "focusMetrics",
+            "focusReason",
+            "providedFacts",
+            "requiredIntents",
+            "responseConstraints",
+            "diversityMetadata"
+          ],
+          "title": "WritingDraft",
+          "type": "object"
+        },
+        "WritingMetric": {
+          "enum": [
+            "MEANING",
+            "GRAMMAR",
+            "VOCABULARY",
+            "NATURALNESS",
+            "EXPRESSION"
+          ],
+          "title": "WritingMetric",
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "properties": {
+        "items": {
+          "items": {
+            "$ref": "#/$defs/WritingDraft"
+          },
+          "maxItems": 2,
+          "minItems": 1,
+          "title": "Items",
+          "type": "array"
+        }
+      },
+      "required": [
+        "items"
+      ],
+      "title": "WritingCandidateBatch",
+      "type": "object"
+    }
+  }
+}

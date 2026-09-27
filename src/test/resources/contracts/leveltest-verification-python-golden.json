@@ -1,0 +1,696 @@
+[
+  {
+    "candidate": {
+      "domain": "VOCABULARY",
+      "itemType": "VOCAB_CONTEXT_CHOICE",
+      "complexityBand": 3,
+      "instruction": "Choose the expression that best fits the context.",
+      "instructionLanguage": "en",
+      "answerMode": "CHOICE",
+      "answerLanguage": null,
+      "promptText": "Synthetic ____ context.",
+      "options": [
+        {
+          "key": "A",
+          "text": "first"
+        },
+        {
+          "key": "B",
+          "text": "second"
+        },
+        {
+          "key": "C",
+          "text": "third"
+        },
+        {
+          "key": "D",
+          "text": "fourth"
+        }
+      ],
+      "internalAnswerKey": {
+        "correctOptionKey": "A",
+        "correctOrder": []
+      },
+      "choiceQualityAudit": null,
+      "generationPlanId": null,
+      "referencePayload": {
+        "sourceText": null,
+        "referenceMeanings": [],
+        "keyMeaningUnits": [],
+        "referenceText": null,
+        "translationSourceText": null,
+        "emphasisText": null,
+        "readingPassage": null,
+        "readingQuestion": null,
+        "listeningQuestion": null,
+        "providedFacts": [],
+        "requiredIntents": [],
+        "responseConstraints": []
+      },
+      "diversityMetadata": {
+        "scenarioCategory": "WORK",
+        "communicativeIntent": "DESCRIBE",
+        "taskArchetype": "synthetic",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "semanticSummary": "Synthetic task",
+        "requiresBackgroundKnowledge": false,
+        "contentHash": null,
+        "similarityKey": null
+      },
+      "maxAnswerLength": null,
+      "maxAudioSeconds": null
+    },
+    "verdicts": [
+      {
+        "verifiable": true,
+        "plausibleOptionKeys": [
+          "A"
+        ],
+        "nearEquivalentOptionKeys": [],
+        "bestOptionKey": "A",
+        "bestOptionAdvantage": "CLEAR"
+      },
+      {
+        "verifiable": true,
+        "plausibleOptionKeys": [
+          "A",
+          "C"
+        ],
+        "nearEquivalentOptionKeys": [],
+        "bestOptionKey": "A",
+        "bestOptionAdvantage": "CLEAR"
+      }
+    ],
+    "selection": "UNIQUE_ANSWER",
+    "passes": 1,
+    "rejection": null,
+    "repairable": false,
+    "scores": {
+      "A": 100,
+      "B": 0,
+      "C": 0,
+      "D": 0
+    },
+    "prompts": [
+      "Independently judge plausible options and the single best option. The generator's expected answer key is deliberately omitted.\n\n{\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"domain\":\"VOCABULARY\",\"itemType\":\"VOCAB_CONTEXT_CHOICE\",\"complexityBand\":3,\"selectionPolicy\":\"UNIQUE_ANSWER\",\"verificationPass\":1,\"instruction\":\"Choose the expression that best fits the context.\",\"promptText\":\"Synthetic ____ context.\",\"options\":[{\"key\":\"A\",\"optionText\":\"first\",\"completedText\":\"Synthetic first context.\"},{\"key\":\"B\",\"optionText\":\"second\",\"completedText\":\"Synthetic second context.\"},{\"key\":\"C\",\"optionText\":\"third\",\"completedText\":\"Synthetic third context.\"},{\"key\":\"D\",\"optionText\":\"fourth\",\"completedText\":\"Synthetic fourth context.\"}],\"verifierEvidence\":{}}",
+      "Adversarial second pass: actively search for a rival option that could tie or outrank the apparent best answer before returning your verdict. The generator's expected answer key is deliberately omitted.\n\n{\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"domain\":\"VOCABULARY\",\"itemType\":\"VOCAB_CONTEXT_CHOICE\",\"complexityBand\":3,\"selectionPolicy\":\"UNIQUE_ANSWER\",\"verificationPass\":2,\"instruction\":\"Choose the expression that best fits the context.\",\"promptText\":\"Synthetic ____ context.\",\"options\":[{\"key\":\"A\",\"optionText\":\"first\",\"completedText\":\"Synthetic first context.\"},{\"key\":\"B\",\"optionText\":\"second\",\"completedText\":\"Synthetic second context.\"},{\"key\":\"C\",\"optionText\":\"third\",\"completedText\":\"Synthetic third context.\"},{\"key\":\"D\",\"optionText\":\"fourth\",\"completedText\":\"Synthetic fourth context.\"}],\"verifierEvidence\":{}}"
+    ]
+  },
+  {
+    "candidate": {
+      "domain": "VOCABULARY",
+      "itemType": "VOCAB_CONTEXT_CHOICE",
+      "complexityBand": 3,
+      "instruction": "Choose the expression that best fits the context.",
+      "instructionLanguage": "en",
+      "answerMode": "CHOICE",
+      "answerLanguage": null,
+      "promptText": "Synthetic ____ context.",
+      "options": [
+        {
+          "key": "A",
+          "text": "first"
+        },
+        {
+          "key": "B",
+          "text": "second"
+        },
+        {
+          "key": "C",
+          "text": "third"
+        },
+        {
+          "key": "D",
+          "text": "fourth"
+        }
+      ],
+      "internalAnswerKey": {
+        "correctOptionKey": "A",
+        "correctOrder": []
+      },
+      "choiceQualityAudit": null,
+      "generationPlanId": null,
+      "referencePayload": {
+        "sourceText": null,
+        "referenceMeanings": [],
+        "keyMeaningUnits": [],
+        "referenceText": null,
+        "translationSourceText": null,
+        "emphasisText": null,
+        "readingPassage": null,
+        "readingQuestion": null,
+        "listeningQuestion": null,
+        "providedFacts": [],
+        "requiredIntents": [],
+        "responseConstraints": []
+      },
+      "diversityMetadata": {
+        "scenarioCategory": "WORK",
+        "communicativeIntent": "DESCRIBE",
+        "taskArchetype": "synthetic",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "semanticSummary": "Synthetic task",
+        "requiresBackgroundKnowledge": false,
+        "contentHash": null,
+        "similarityKey": null
+      },
+      "maxAnswerLength": null,
+      "maxAudioSeconds": null
+    },
+    "verdicts": [
+      {
+        "verifiable": true,
+        "plausibleOptionKeys": [
+          "A",
+          "B"
+        ],
+        "nearEquivalentOptionKeys": [],
+        "bestOptionKey": "A",
+        "bestOptionAdvantage": "CLEAR"
+      },
+      {
+        "verifiable": true,
+        "plausibleOptionKeys": [
+          "A",
+          "C"
+        ],
+        "nearEquivalentOptionKeys": [],
+        "bestOptionKey": "A",
+        "bestOptionAdvantage": "CLEAR"
+      }
+    ],
+    "selection": "UNIQUE_ANSWER",
+    "passes": 1,
+    "rejection": "VOCAB_CONTEXT_CHOICE UNIQUE_ANSWER 검증에서 복수 정답 가능성 또는 정답 불일치가 발견되었습니다.",
+    "repairable": true,
+    "scores": {
+      "A": 100,
+      "B": 0,
+      "C": 0,
+      "D": 0
+    },
+    "prompts": [
+      "Independently judge plausible options and the single best option. The generator's expected answer key is deliberately omitted.\n\n{\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"domain\":\"VOCABULARY\",\"itemType\":\"VOCAB_CONTEXT_CHOICE\",\"complexityBand\":3,\"selectionPolicy\":\"UNIQUE_ANSWER\",\"verificationPass\":1,\"instruction\":\"Choose the expression that best fits the context.\",\"promptText\":\"Synthetic ____ context.\",\"options\":[{\"key\":\"A\",\"optionText\":\"first\",\"completedText\":\"Synthetic first context.\"},{\"key\":\"B\",\"optionText\":\"second\",\"completedText\":\"Synthetic second context.\"},{\"key\":\"C\",\"optionText\":\"third\",\"completedText\":\"Synthetic third context.\"},{\"key\":\"D\",\"optionText\":\"fourth\",\"completedText\":\"Synthetic fourth context.\"}],\"verifierEvidence\":{}}",
+      "Adversarial second pass: actively search for a rival option that could tie or outrank the apparent best answer before returning your verdict. The generator's expected answer key is deliberately omitted.\n\n{\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"domain\":\"VOCABULARY\",\"itemType\":\"VOCAB_CONTEXT_CHOICE\",\"complexityBand\":3,\"selectionPolicy\":\"UNIQUE_ANSWER\",\"verificationPass\":2,\"instruction\":\"Choose the expression that best fits the context.\",\"promptText\":\"Synthetic ____ context.\",\"options\":[{\"key\":\"A\",\"optionText\":\"first\",\"completedText\":\"Synthetic first context.\"},{\"key\":\"B\",\"optionText\":\"second\",\"completedText\":\"Synthetic second context.\"},{\"key\":\"C\",\"optionText\":\"third\",\"completedText\":\"Synthetic third context.\"},{\"key\":\"D\",\"optionText\":\"fourth\",\"completedText\":\"Synthetic fourth context.\"}],\"verifierEvidence\":{}}"
+    ]
+  },
+  {
+    "candidate": {
+      "domain": "VOCABULARY",
+      "itemType": "VOCAB_CONTEXT_CHOICE",
+      "complexityBand": 4,
+      "instruction": "Choose the expression that best fits the context.",
+      "instructionLanguage": "en",
+      "answerMode": "CHOICE",
+      "answerLanguage": null,
+      "promptText": "Synthetic ____ context.",
+      "options": [
+        {
+          "key": "A",
+          "text": "first"
+        },
+        {
+          "key": "B",
+          "text": "second"
+        },
+        {
+          "key": "C",
+          "text": "third"
+        },
+        {
+          "key": "D",
+          "text": "fourth"
+        }
+      ],
+      "internalAnswerKey": {
+        "correctOptionKey": "A",
+        "correctOrder": []
+      },
+      "choiceQualityAudit": null,
+      "generationPlanId": null,
+      "referencePayload": {
+        "sourceText": null,
+        "referenceMeanings": [],
+        "keyMeaningUnits": [],
+        "referenceText": null,
+        "translationSourceText": null,
+        "emphasisText": null,
+        "readingPassage": null,
+        "readingQuestion": null,
+        "listeningQuestion": null,
+        "providedFacts": [],
+        "requiredIntents": [],
+        "responseConstraints": []
+      },
+      "diversityMetadata": {
+        "scenarioCategory": "WORK",
+        "communicativeIntent": "DESCRIBE",
+        "taskArchetype": "synthetic",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "semanticSummary": "Synthetic task",
+        "requiresBackgroundKnowledge": false,
+        "contentHash": null,
+        "similarityKey": null
+      },
+      "maxAnswerLength": null,
+      "maxAudioSeconds": null
+    },
+    "verdicts": [
+      {
+        "verifiable": true,
+        "plausibleOptionKeys": [
+          "A",
+          "B"
+        ],
+        "nearEquivalentOptionKeys": [],
+        "bestOptionKey": "A",
+        "bestOptionAdvantage": "CLEAR"
+      },
+      {
+        "verifiable": true,
+        "plausibleOptionKeys": [
+          "A",
+          "C"
+        ],
+        "nearEquivalentOptionKeys": [],
+        "bestOptionKey": "A",
+        "bestOptionAdvantage": "CLEAR"
+      }
+    ],
+    "selection": "BEST_ANSWER",
+    "passes": 2,
+    "rejection": null,
+    "repairable": false,
+    "scores": {
+      "A": 100,
+      "B": 10,
+      "C": 10,
+      "D": 0
+    },
+    "prompts": [
+      "Independently judge plausible options and the single best option. The generator's expected answer key is deliberately omitted.\n\n{\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"domain\":\"VOCABULARY\",\"itemType\":\"VOCAB_CONTEXT_CHOICE\",\"complexityBand\":4,\"selectionPolicy\":\"BEST_ANSWER\",\"verificationPass\":1,\"instruction\":\"Choose the expression that best fits the context.\",\"promptText\":\"Synthetic ____ context.\",\"options\":[{\"key\":\"A\",\"optionText\":\"first\",\"completedText\":\"Synthetic first context.\"},{\"key\":\"B\",\"optionText\":\"second\",\"completedText\":\"Synthetic second context.\"},{\"key\":\"C\",\"optionText\":\"third\",\"completedText\":\"Synthetic third context.\"},{\"key\":\"D\",\"optionText\":\"fourth\",\"completedText\":\"Synthetic fourth context.\"}],\"verifierEvidence\":{}}",
+      "Adversarial second pass: actively search for a rival option that could tie or outrank the apparent best answer before returning your verdict. The generator's expected answer key is deliberately omitted.\n\n{\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"domain\":\"VOCABULARY\",\"itemType\":\"VOCAB_CONTEXT_CHOICE\",\"complexityBand\":4,\"selectionPolicy\":\"BEST_ANSWER\",\"verificationPass\":2,\"instruction\":\"Choose the expression that best fits the context.\",\"promptText\":\"Synthetic ____ context.\",\"options\":[{\"key\":\"A\",\"optionText\":\"first\",\"completedText\":\"Synthetic first context.\"},{\"key\":\"B\",\"optionText\":\"second\",\"completedText\":\"Synthetic second context.\"},{\"key\":\"C\",\"optionText\":\"third\",\"completedText\":\"Synthetic third context.\"},{\"key\":\"D\",\"optionText\":\"fourth\",\"completedText\":\"Synthetic fourth context.\"}],\"verifierEvidence\":{}}"
+    ]
+  },
+  {
+    "candidate": {
+      "domain": "VOCABULARY",
+      "itemType": "VOCAB_CONTEXT_CHOICE",
+      "complexityBand": 4,
+      "instruction": "Choose the expression that best fits the context.",
+      "instructionLanguage": "en",
+      "answerMode": "CHOICE",
+      "answerLanguage": null,
+      "promptText": "Synthetic ____ context.",
+      "options": [
+        {
+          "key": "A",
+          "text": "first"
+        },
+        {
+          "key": "B",
+          "text": "second"
+        },
+        {
+          "key": "C",
+          "text": "third"
+        },
+        {
+          "key": "D",
+          "text": "fourth"
+        }
+      ],
+      "internalAnswerKey": {
+        "correctOptionKey": "A",
+        "correctOrder": []
+      },
+      "choiceQualityAudit": null,
+      "generationPlanId": null,
+      "referencePayload": {
+        "sourceText": null,
+        "referenceMeanings": [],
+        "keyMeaningUnits": [],
+        "referenceText": null,
+        "translationSourceText": null,
+        "emphasisText": null,
+        "readingPassage": null,
+        "readingQuestion": null,
+        "listeningQuestion": null,
+        "providedFacts": [],
+        "requiredIntents": [],
+        "responseConstraints": []
+      },
+      "diversityMetadata": {
+        "scenarioCategory": "WORK",
+        "communicativeIntent": "DESCRIBE",
+        "taskArchetype": "synthetic",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "semanticSummary": "Synthetic task",
+        "requiresBackgroundKnowledge": false,
+        "contentHash": null,
+        "similarityKey": null
+      },
+      "maxAnswerLength": null,
+      "maxAudioSeconds": null
+    },
+    "verdicts": [
+      {
+        "verifiable": true,
+        "plausibleOptionKeys": [
+          "A",
+          "B"
+        ],
+        "nearEquivalentOptionKeys": [],
+        "bestOptionKey": "A",
+        "bestOptionAdvantage": "WEAK"
+      },
+      {
+        "verifiable": true,
+        "plausibleOptionKeys": [
+          "A",
+          "C"
+        ],
+        "nearEquivalentOptionKeys": [],
+        "bestOptionKey": "A",
+        "bestOptionAdvantage": "WEAK"
+      }
+    ],
+    "selection": "BEST_ANSWER",
+    "passes": 2,
+    "rejection": "VOCAB_CONTEXT_CHOICE BEST_ANSWER 검증에서 서버 정답이 명백한 최선의 선택지로 확인되지 않았습니다.",
+    "repairable": true,
+    "scores": {
+      "A": 100,
+      "B": 10,
+      "C": 10,
+      "D": 0
+    },
+    "prompts": [
+      "Independently judge plausible options and the single best option. The generator's expected answer key is deliberately omitted.\n\n{\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"domain\":\"VOCABULARY\",\"itemType\":\"VOCAB_CONTEXT_CHOICE\",\"complexityBand\":4,\"selectionPolicy\":\"BEST_ANSWER\",\"verificationPass\":1,\"instruction\":\"Choose the expression that best fits the context.\",\"promptText\":\"Synthetic ____ context.\",\"options\":[{\"key\":\"A\",\"optionText\":\"first\",\"completedText\":\"Synthetic first context.\"},{\"key\":\"B\",\"optionText\":\"second\",\"completedText\":\"Synthetic second context.\"},{\"key\":\"C\",\"optionText\":\"third\",\"completedText\":\"Synthetic third context.\"},{\"key\":\"D\",\"optionText\":\"fourth\",\"completedText\":\"Synthetic fourth context.\"}],\"verifierEvidence\":{}}",
+      "Adversarial second pass: actively search for a rival option that could tie or outrank the apparent best answer before returning your verdict. The generator's expected answer key is deliberately omitted.\n\n{\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"domain\":\"VOCABULARY\",\"itemType\":\"VOCAB_CONTEXT_CHOICE\",\"complexityBand\":4,\"selectionPolicy\":\"BEST_ANSWER\",\"verificationPass\":2,\"instruction\":\"Choose the expression that best fits the context.\",\"promptText\":\"Synthetic ____ context.\",\"options\":[{\"key\":\"A\",\"optionText\":\"first\",\"completedText\":\"Synthetic first context.\"},{\"key\":\"B\",\"optionText\":\"second\",\"completedText\":\"Synthetic second context.\"},{\"key\":\"C\",\"optionText\":\"third\",\"completedText\":\"Synthetic third context.\"},{\"key\":\"D\",\"optionText\":\"fourth\",\"completedText\":\"Synthetic fourth context.\"}],\"verifierEvidence\":{}}"
+    ]
+  },
+  {
+    "candidate": {
+      "domain": "VOCABULARY",
+      "itemType": "VOCAB_CONTEXT_CHOICE",
+      "complexityBand": 4,
+      "instruction": "Choose the expression that best fits the context.",
+      "instructionLanguage": "en",
+      "answerMode": "CHOICE",
+      "answerLanguage": null,
+      "promptText": "Synthetic ____ context.",
+      "options": [
+        {
+          "key": "A",
+          "text": "first"
+        },
+        {
+          "key": "B",
+          "text": "second"
+        },
+        {
+          "key": "C",
+          "text": "third"
+        },
+        {
+          "key": "D",
+          "text": "fourth"
+        }
+      ],
+      "internalAnswerKey": {
+        "correctOptionKey": "A",
+        "correctOrder": []
+      },
+      "choiceQualityAudit": null,
+      "generationPlanId": null,
+      "referencePayload": {
+        "sourceText": null,
+        "referenceMeanings": [],
+        "keyMeaningUnits": [],
+        "referenceText": null,
+        "translationSourceText": null,
+        "emphasisText": null,
+        "readingPassage": null,
+        "readingQuestion": null,
+        "listeningQuestion": null,
+        "providedFacts": [],
+        "requiredIntents": [],
+        "responseConstraints": []
+      },
+      "diversityMetadata": {
+        "scenarioCategory": "WORK",
+        "communicativeIntent": "DESCRIBE",
+        "taskArchetype": "synthetic",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "semanticSummary": "Synthetic task",
+        "requiresBackgroundKnowledge": false,
+        "contentHash": null,
+        "similarityKey": null
+      },
+      "maxAnswerLength": null,
+      "maxAudioSeconds": null
+    },
+    "verdicts": [
+      {
+        "verifiable": true,
+        "plausibleOptionKeys": [
+          "A"
+        ],
+        "nearEquivalentOptionKeys": [
+          "B"
+        ],
+        "bestOptionKey": "A",
+        "bestOptionAdvantage": "CLEAR"
+      },
+      {
+        "verifiable": true,
+        "plausibleOptionKeys": [
+          "A",
+          "C"
+        ],
+        "nearEquivalentOptionKeys": [
+          "B"
+        ],
+        "bestOptionKey": "A",
+        "bestOptionAdvantage": "CLEAR"
+      }
+    ],
+    "selection": "BEST_ANSWER",
+    "passes": 2,
+    "rejection": "VOCAB_CONTEXT_CHOICE BEST_ANSWER 검증에서 정답과 기능적으로 거의 동등한 경쟁 선택지가 발견되었습니다.",
+    "repairable": false,
+    "scores": {
+      "A": 100,
+      "B": 0,
+      "C": 0,
+      "D": 0
+    },
+    "prompts": [
+      "Independently judge plausible options and the single best option. The generator's expected answer key is deliberately omitted.\n\n{\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"domain\":\"VOCABULARY\",\"itemType\":\"VOCAB_CONTEXT_CHOICE\",\"complexityBand\":4,\"selectionPolicy\":\"BEST_ANSWER\",\"verificationPass\":1,\"instruction\":\"Choose the expression that best fits the context.\",\"promptText\":\"Synthetic ____ context.\",\"options\":[{\"key\":\"A\",\"optionText\":\"first\",\"completedText\":\"Synthetic first context.\"},{\"key\":\"B\",\"optionText\":\"second\",\"completedText\":\"Synthetic second context.\"},{\"key\":\"C\",\"optionText\":\"third\",\"completedText\":\"Synthetic third context.\"},{\"key\":\"D\",\"optionText\":\"fourth\",\"completedText\":\"Synthetic fourth context.\"}],\"verifierEvidence\":{}}",
+      "Adversarial second pass: actively search for a rival option that could tie or outrank the apparent best answer before returning your verdict. The generator's expected answer key is deliberately omitted.\n\n{\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"domain\":\"VOCABULARY\",\"itemType\":\"VOCAB_CONTEXT_CHOICE\",\"complexityBand\":4,\"selectionPolicy\":\"BEST_ANSWER\",\"verificationPass\":2,\"instruction\":\"Choose the expression that best fits the context.\",\"promptText\":\"Synthetic ____ context.\",\"options\":[{\"key\":\"A\",\"optionText\":\"first\",\"completedText\":\"Synthetic first context.\"},{\"key\":\"B\",\"optionText\":\"second\",\"completedText\":\"Synthetic second context.\"},{\"key\":\"C\",\"optionText\":\"third\",\"completedText\":\"Synthetic third context.\"},{\"key\":\"D\",\"optionText\":\"fourth\",\"completedText\":\"Synthetic fourth context.\"}],\"verifierEvidence\":{}}"
+    ]
+  },
+  {
+    "candidate": {
+      "domain": "VOCABULARY",
+      "itemType": "VOCAB_CONTEXT_CHOICE",
+      "complexityBand": 4,
+      "instruction": "Choose the expression that best fits the context.",
+      "instructionLanguage": "en",
+      "answerMode": "CHOICE",
+      "answerLanguage": null,
+      "promptText": "Synthetic ____ context.",
+      "options": [
+        {
+          "key": "A",
+          "text": "first"
+        },
+        {
+          "key": "B",
+          "text": "second"
+        },
+        {
+          "key": "C",
+          "text": "third"
+        },
+        {
+          "key": "D",
+          "text": "fourth"
+        }
+      ],
+      "internalAnswerKey": {
+        "correctOptionKey": "A",
+        "correctOrder": []
+      },
+      "choiceQualityAudit": null,
+      "generationPlanId": null,
+      "referencePayload": {
+        "sourceText": null,
+        "referenceMeanings": [],
+        "keyMeaningUnits": [],
+        "referenceText": null,
+        "translationSourceText": null,
+        "emphasisText": null,
+        "readingPassage": null,
+        "readingQuestion": null,
+        "listeningQuestion": null,
+        "providedFacts": [],
+        "requiredIntents": [],
+        "responseConstraints": []
+      },
+      "diversityMetadata": {
+        "scenarioCategory": "WORK",
+        "communicativeIntent": "DESCRIBE",
+        "taskArchetype": "synthetic",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "semanticSummary": "Synthetic task",
+        "requiresBackgroundKnowledge": false,
+        "contentHash": null,
+        "similarityKey": null
+      },
+      "maxAnswerLength": null,
+      "maxAudioSeconds": null
+    },
+    "verdicts": [
+      {
+        "verifiable": false,
+        "plausibleOptionKeys": [
+          "A"
+        ],
+        "nearEquivalentOptionKeys": [],
+        "bestOptionKey": "A",
+        "bestOptionAdvantage": "CLEAR"
+      },
+      {
+        "verifiable": false,
+        "plausibleOptionKeys": [
+          "A",
+          "C"
+        ],
+        "nearEquivalentOptionKeys": [],
+        "bestOptionKey": "A",
+        "bestOptionAdvantage": "CLEAR"
+      }
+    ],
+    "selection": "BEST_ANSWER",
+    "passes": 2,
+    "rejection": "VOCAB_CONTEXT_CHOICE 문항을 공정한 단일 정답 문제로 독립 검증할 수 없습니다.",
+    "repairable": false,
+    "scores": {
+      "A": 100,
+      "B": 0,
+      "C": 10,
+      "D": 0
+    },
+    "prompts": [
+      "Independently judge plausible options and the single best option. The generator's expected answer key is deliberately omitted.\n\n{\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"domain\":\"VOCABULARY\",\"itemType\":\"VOCAB_CONTEXT_CHOICE\",\"complexityBand\":4,\"selectionPolicy\":\"BEST_ANSWER\",\"verificationPass\":1,\"instruction\":\"Choose the expression that best fits the context.\",\"promptText\":\"Synthetic ____ context.\",\"options\":[{\"key\":\"A\",\"optionText\":\"first\",\"completedText\":\"Synthetic first context.\"},{\"key\":\"B\",\"optionText\":\"second\",\"completedText\":\"Synthetic second context.\"},{\"key\":\"C\",\"optionText\":\"third\",\"completedText\":\"Synthetic third context.\"},{\"key\":\"D\",\"optionText\":\"fourth\",\"completedText\":\"Synthetic fourth context.\"}],\"verifierEvidence\":{}}",
+      "Adversarial second pass: actively search for a rival option that could tie or outrank the apparent best answer before returning your verdict. The generator's expected answer key is deliberately omitted.\n\n{\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"domain\":\"VOCABULARY\",\"itemType\":\"VOCAB_CONTEXT_CHOICE\",\"complexityBand\":4,\"selectionPolicy\":\"BEST_ANSWER\",\"verificationPass\":2,\"instruction\":\"Choose the expression that best fits the context.\",\"promptText\":\"Synthetic ____ context.\",\"options\":[{\"key\":\"A\",\"optionText\":\"first\",\"completedText\":\"Synthetic first context.\"},{\"key\":\"B\",\"optionText\":\"second\",\"completedText\":\"Synthetic second context.\"},{\"key\":\"C\",\"optionText\":\"third\",\"completedText\":\"Synthetic third context.\"},{\"key\":\"D\",\"optionText\":\"fourth\",\"completedText\":\"Synthetic fourth context.\"}],\"verifierEvidence\":{}}"
+    ]
+  },
+  {
+    "candidate": {
+      "domain": "VOCABULARY",
+      "itemType": "VOCAB_CONTEXT_CHOICE",
+      "complexityBand": 4,
+      "instruction": "Choose the expression that best fits the context.",
+      "instructionLanguage": "en",
+      "answerMode": "CHOICE",
+      "answerLanguage": null,
+      "promptText": "Synthetic ____ context.",
+      "options": [
+        {
+          "key": "A",
+          "text": "first"
+        },
+        {
+          "key": "B",
+          "text": "second"
+        },
+        {
+          "key": "C",
+          "text": "third"
+        },
+        {
+          "key": "D",
+          "text": "fourth"
+        }
+      ],
+      "internalAnswerKey": {
+        "correctOptionKey": "A",
+        "correctOrder": []
+      },
+      "choiceQualityAudit": null,
+      "generationPlanId": null,
+      "referencePayload": {
+        "sourceText": null,
+        "referenceMeanings": [],
+        "keyMeaningUnits": [],
+        "referenceText": null,
+        "translationSourceText": null,
+        "emphasisText": null,
+        "readingPassage": null,
+        "readingQuestion": null,
+        "listeningQuestion": null,
+        "providedFacts": [],
+        "requiredIntents": [],
+        "responseConstraints": []
+      },
+      "diversityMetadata": {
+        "scenarioCategory": "WORK",
+        "communicativeIntent": "DESCRIBE",
+        "taskArchetype": "synthetic",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "semanticSummary": "Synthetic task",
+        "requiresBackgroundKnowledge": false,
+        "contentHash": null,
+        "similarityKey": null
+      },
+      "maxAnswerLength": null,
+      "maxAudioSeconds": null
+    },
+    "verdicts": [
+      {
+        "verifiable": true,
+        "plausibleOptionKeys": [
+          "A",
+          "X"
+        ],
+        "nearEquivalentOptionKeys": [],
+        "bestOptionKey": "A",
+        "bestOptionAdvantage": "CLEAR"
+      },
+      {
+        "verifiable": true,
+        "plausibleOptionKeys": [
+          "A",
+          "C"
+        ],
+        "nearEquivalentOptionKeys": [],
+        "bestOptionKey": "A",
+        "bestOptionAdvantage": "CLEAR"
+      }
+    ],
+    "selection": "BEST_ANSWER",
+    "passes": 2,
+    "rejection": "VOCAB_CONTEXT_CHOICE 의미 검증 결과에 존재하지 않는 Option key가 포함되어 있습니다.",
+    "repairable": false,
+    "scores": {
+      "A": 100,
+      "B": 0,
+      "C": 10,
+      "D": 0
+    },
+    "prompts": [
+      "Independently judge plausible options and the single best option. The generator's expected answer key is deliberately omitted.\n\n{\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"domain\":\"VOCABULARY\",\"itemType\":\"VOCAB_CONTEXT_CHOICE\",\"complexityBand\":4,\"selectionPolicy\":\"BEST_ANSWER\",\"verificationPass\":1,\"instruction\":\"Choose the expression that best fits the context.\",\"promptText\":\"Synthetic ____ context.\",\"options\":[{\"key\":\"A\",\"optionText\":\"first\",\"completedText\":\"Synthetic first context.\"},{\"key\":\"B\",\"optionText\":\"second\",\"completedText\":\"Synthetic second context.\"},{\"key\":\"C\",\"optionText\":\"third\",\"completedText\":\"Synthetic third context.\"},{\"key\":\"D\",\"optionText\":\"fourth\",\"completedText\":\"Synthetic fourth context.\"}],\"verifierEvidence\":{}}",
+      "Adversarial second pass: actively search for a rival option that could tie or outrank the apparent best answer before returning your verdict. The generator's expected answer key is deliberately omitted.\n\n{\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"domain\":\"VOCABULARY\",\"itemType\":\"VOCAB_CONTEXT_CHOICE\",\"complexityBand\":4,\"selectionPolicy\":\"BEST_ANSWER\",\"verificationPass\":2,\"instruction\":\"Choose the expression that best fits the context.\",\"promptText\":\"Synthetic ____ context.\",\"options\":[{\"key\":\"A\",\"optionText\":\"first\",\"completedText\":\"Synthetic first context.\"},{\"key\":\"B\",\"optionText\":\"second\",\"completedText\":\"Synthetic second context.\"},{\"key\":\"C\",\"optionText\":\"third\",\"completedText\":\"Synthetic third context.\"},{\"key\":\"D\",\"optionText\":\"fourth\",\"completedText\":\"Synthetic fourth context.\"}],\"verifierEvidence\":{}}"
+    ]
+  }
+]

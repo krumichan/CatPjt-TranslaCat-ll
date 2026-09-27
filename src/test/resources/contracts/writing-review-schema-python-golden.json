@@ -1,0 +1,763 @@
+{
+  "repaired": {
+    "$defs": {
+      "CriterionCheck": {
+        "additionalProperties": false,
+        "properties": {
+          "criterion": {
+            "enum": [
+              "ORIGIN_LANGUAGE",
+              "TASK_VALIDITY",
+              "ANSWER_LEAK",
+              "NATURALNESS",
+              "NOTE_QUALITY"
+            ],
+            "title": "Criterion",
+            "type": "string"
+          },
+          "evidenceSegmentIds": {
+            "items": {
+              "enum": [
+                "O1",
+                "F1",
+                "I1",
+                "C1",
+                "N1"
+              ],
+              "maxLength": 12,
+              "minLength": 2,
+              "type": "string"
+            },
+            "maxItems": 12,
+            "title": "Evidencesegmentids",
+            "type": "array"
+          },
+          "status": {
+            "enum": [
+              "PASS",
+              "FAIL",
+              "UNSURE"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "criterion",
+          "status",
+          "evidenceSegmentIds"
+        ],
+        "title": "CriterionCheck",
+        "type": "object"
+      },
+      "ProductionDemandCheck": {
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "enum": [
+              "SCOPE_INTERACTION",
+              "PRECISE_STANCE",
+              "COHERENT_REGISTER"
+            ],
+            "title": "Code",
+            "type": "string"
+          },
+          "evidenceSegmentIds": {
+            "items": {
+              "enum": [
+                "O1",
+                "F1",
+                "I1",
+                "C1"
+              ],
+              "maxLength": 12,
+              "minLength": 2,
+              "type": "string"
+            },
+            "maxItems": 12,
+            "title": "Evidencesegmentids",
+            "type": "array"
+          },
+          "gapCode": {
+            "anyOf": [
+              {
+                "enum": [
+                  "RELATIONS_NOT_INTERDEPENDENT",
+                  "SCOPE_TOO_ROUTINE",
+                  "REGISTER_NOT_INTEGRATED"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Gapcode"
+          },
+          "status": {
+            "enum": [
+              "PRESENT",
+              "MISSING",
+              "UNSURE"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "status",
+          "evidenceSegmentIds",
+          "gapCode"
+        ],
+        "title": "ProductionDemandCheck",
+        "type": "object"
+      },
+      "RevisionPreservationCheck": {
+        "anyOf": [
+          {
+            "additionalProperties": false,
+            "properties": {
+              "evidenceSegmentIds": {
+                "items": {
+                  "enum": [
+                    "B0",
+                    "O1",
+                    "F1",
+                    "I1",
+                    "C1"
+                  ],
+                  "maxLength": 12,
+                  "minLength": 2,
+                  "type": "string"
+                },
+                "maxItems": 12,
+                "minItems": 2,
+                "title": "Evidencesegmentids",
+                "type": "array"
+              },
+              "issues": {
+                "items": {
+                  "enum": [
+                    "SCENE_CHANGED",
+                    "FACT_CHANGED",
+                    "INTENT_CHANGED",
+                    "KEYWORD_CHANGED",
+                    "UNRELATED_ADDITION",
+                    "COSMETIC_ONLY"
+                  ],
+                  "type": "string"
+                },
+                "maxItems": 0,
+                "title": "Issues",
+                "type": "array"
+              },
+              "status": {
+                "enum": [
+                  "PASS"
+                ],
+                "title": "Status",
+                "type": "string"
+              }
+            },
+            "required": [
+              "status",
+              "issues",
+              "evidenceSegmentIds"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "evidenceSegmentIds": {
+                "items": {
+                  "enum": [
+                    "B0",
+                    "O1",
+                    "F1",
+                    "I1",
+                    "C1"
+                  ],
+                  "maxLength": 12,
+                  "minLength": 2,
+                  "type": "string"
+                },
+                "maxItems": 12,
+                "minItems": 2,
+                "title": "Evidencesegmentids",
+                "type": "array"
+              },
+              "issues": {
+                "items": {
+                  "enum": [
+                    "SCENE_CHANGED",
+                    "FACT_CHANGED",
+                    "INTENT_CHANGED",
+                    "KEYWORD_CHANGED",
+                    "UNRELATED_ADDITION",
+                    "COSMETIC_ONLY"
+                  ],
+                  "type": "string"
+                },
+                "maxItems": 6,
+                "minItems": 1,
+                "title": "Issues",
+                "type": "array"
+              },
+              "status": {
+                "enum": [
+                  "FAIL"
+                ],
+                "title": "Status",
+                "type": "string"
+              }
+            },
+            "required": [
+              "status",
+              "issues",
+              "evidenceSegmentIds"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "evidenceSegmentIds": {
+                "items": {
+                  "enum": [
+                    "B0",
+                    "O1",
+                    "F1",
+                    "I1",
+                    "C1"
+                  ],
+                  "maxLength": 12,
+                  "minLength": 2,
+                  "type": "string"
+                },
+                "maxItems": 12,
+                "title": "Evidencesegmentids",
+                "type": "array"
+              },
+              "issues": {
+                "items": {
+                  "enum": [
+                    "SCENE_CHANGED",
+                    "FACT_CHANGED",
+                    "INTENT_CHANGED",
+                    "KEYWORD_CHANGED",
+                    "UNRELATED_ADDITION",
+                    "COSMETIC_ONLY"
+                  ],
+                  "type": "string"
+                },
+                "maxItems": 0,
+                "title": "Issues",
+                "type": "array"
+              },
+              "status": {
+                "enum": [
+                  "UNSURE"
+                ],
+                "title": "Status",
+                "type": "string"
+              }
+            },
+            "required": [
+              "status",
+              "issues",
+              "evidenceSegmentIds"
+            ],
+            "type": "object"
+          }
+        ]
+      }
+    },
+    "additionalProperties": false,
+    "properties": {
+      "alternativeBand": {
+        "anyOf": [
+          {
+            "maximum": 5,
+            "minimum": 1,
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "title": "Alternativeband"
+      },
+      "candidateId": {
+        "enum": [
+          "synthetic-candidate"
+        ],
+        "maxLength": 100,
+        "minLength": 1,
+        "title": "Candidateid",
+        "type": "string"
+      },
+      "checks": {
+        "items": {
+          "$ref": "#/$defs/CriterionCheck"
+        },
+        "maxItems": 5,
+        "minItems": 5,
+        "title": "Checks",
+        "type": "array"
+      },
+      "confidence": {
+        "anyOf": [
+          {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "title": "Confidence"
+      },
+      "contentHash": {
+        "enum": [
+          "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        ],
+        "pattern": "^[a-f0-9]{64}$",
+        "title": "Contenthash",
+        "type": "string"
+      },
+      "difficultyConfidence": {
+        "anyOf": [
+          {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "title": "Difficultyconfidence"
+      },
+      "difficultyEvidenceSegmentIds": {
+        "items": {
+          "enum": [
+            "O1",
+            "F1",
+            "I1",
+            "C1"
+          ],
+          "maxLength": 12,
+          "minLength": 2,
+          "type": "string"
+        },
+        "maxItems": 12,
+        "title": "Difficultyevidencesegmentids",
+        "type": "array"
+      },
+      "difficultyStatus": {
+        "enum": [
+          "ASSESSED",
+          "BORDERLINE",
+          "UNSURE"
+        ],
+        "title": "Difficultystatus",
+        "type": "string"
+      },
+      "estimatedBand": {
+        "anyOf": [
+          {
+            "maximum": 5,
+            "minimum": 1,
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "title": "Estimatedband"
+      },
+      "issues": {
+        "items": {
+          "enum": [
+            "ORIGIN_LANGUAGE",
+            "ANSWER_LEAK",
+            "TASK_TYPE",
+            "MISSING_FACTS",
+            "CONTRADICTORY_GUIDANCE",
+            "AMBIGUOUS_TASK",
+            "BACKGROUND_KNOWLEDGE",
+            "UNNATURAL_LANGUAGE",
+            "NOT_LANGUAGE_TASK",
+            "NOTE_ORIGIN_LANGUAGE",
+            "UNSUPPORTED_FOCUS_REASON",
+            "INTERNAL_CLAIM",
+            "DIVERSITY_METADATA_MISMATCH",
+            "DIVERSITY_SCENE_REPETITION",
+            "KEYWORD_SCOPE_MISMATCH"
+          ],
+          "type": "string"
+        },
+        "maxItems": 12,
+        "title": "Issues",
+        "type": "array"
+      },
+      "observedWritingType": {
+        "enum": [
+          "TRANSLATION",
+          "GUIDED",
+          "FREE",
+          "UNSURE"
+        ],
+        "title": "Observedwritingtype",
+        "type": "string"
+      },
+      "productionDemandChecks": {
+        "items": {
+          "$ref": "#/$defs/ProductionDemandCheck"
+        },
+        "maxItems": 3,
+        "minItems": 3,
+        "type": "array"
+      },
+      "revisionHash": {
+        "enum": [
+          "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        ],
+        "pattern": "^[a-f0-9]{64}$",
+        "title": "Revisionhash",
+        "type": "string"
+      },
+      "revisionPreservation": {
+        "$ref": "#/$defs/RevisionPreservationCheck"
+      },
+      "verdict": {
+        "enum": [
+          "PASS",
+          "REJECT",
+          "UNSURE"
+        ],
+        "title": "Verdict",
+        "type": "string"
+      }
+    },
+    "required": [
+      "candidateId",
+      "contentHash",
+      "confidence",
+      "verdict",
+      "observedWritingType",
+      "difficultyStatus",
+      "estimatedBand",
+      "alternativeBand",
+      "difficultyConfidence",
+      "difficultyEvidenceSegmentIds",
+      "checks",
+      "issues",
+      "productionDemandChecks",
+      "revisionHash",
+      "revisionPreservation"
+    ],
+    "title": "RepairedTaskReview",
+    "type": "object"
+  },
+  "task": {
+    "$defs": {
+      "CriterionCheck": {
+        "additionalProperties": false,
+        "properties": {
+          "criterion": {
+            "enum": [
+              "ORIGIN_LANGUAGE",
+              "TASK_VALIDITY",
+              "ANSWER_LEAK",
+              "NATURALNESS",
+              "NOTE_QUALITY"
+            ],
+            "title": "Criterion",
+            "type": "string"
+          },
+          "evidenceSegmentIds": {
+            "items": {
+              "enum": [
+                "O1",
+                "F1",
+                "I1",
+                "C1",
+                "N1"
+              ],
+              "maxLength": 12,
+              "minLength": 2,
+              "type": "string"
+            },
+            "maxItems": 12,
+            "title": "Evidencesegmentids",
+            "type": "array"
+          },
+          "status": {
+            "enum": [
+              "PASS",
+              "FAIL",
+              "UNSURE"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "criterion",
+          "status",
+          "evidenceSegmentIds"
+        ],
+        "title": "CriterionCheck",
+        "type": "object"
+      },
+      "ProductionDemandCheck": {
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "enum": [
+              "SCOPE_INTERACTION",
+              "PRECISE_STANCE",
+              "COHERENT_REGISTER"
+            ],
+            "title": "Code",
+            "type": "string"
+          },
+          "evidenceSegmentIds": {
+            "items": {
+              "enum": [
+                "O1",
+                "F1",
+                "I1",
+                "C1"
+              ],
+              "maxLength": 12,
+              "minLength": 2,
+              "type": "string"
+            },
+            "maxItems": 12,
+            "title": "Evidencesegmentids",
+            "type": "array"
+          },
+          "gapCode": {
+            "anyOf": [
+              {
+                "enum": [
+                  "RELATIONS_NOT_INTERDEPENDENT",
+                  "SCOPE_TOO_ROUTINE",
+                  "REGISTER_NOT_INTEGRATED"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Gapcode"
+          },
+          "status": {
+            "enum": [
+              "PRESENT",
+              "MISSING",
+              "UNSURE"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "status",
+          "evidenceSegmentIds",
+          "gapCode"
+        ],
+        "title": "ProductionDemandCheck",
+        "type": "object"
+      }
+    },
+    "additionalProperties": false,
+    "properties": {
+      "alternativeBand": {
+        "anyOf": [
+          {
+            "maximum": 5,
+            "minimum": 1,
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "title": "Alternativeband"
+      },
+      "candidateId": {
+        "enum": [
+          "synthetic-candidate"
+        ],
+        "maxLength": 100,
+        "minLength": 1,
+        "title": "Candidateid",
+        "type": "string"
+      },
+      "checks": {
+        "items": {
+          "$ref": "#/$defs/CriterionCheck"
+        },
+        "maxItems": 5,
+        "minItems": 5,
+        "title": "Checks",
+        "type": "array"
+      },
+      "confidence": {
+        "anyOf": [
+          {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "title": "Confidence"
+      },
+      "contentHash": {
+        "enum": [
+          "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        ],
+        "pattern": "^[a-f0-9]{64}$",
+        "title": "Contenthash",
+        "type": "string"
+      },
+      "difficultyConfidence": {
+        "anyOf": [
+          {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "title": "Difficultyconfidence"
+      },
+      "difficultyEvidenceSegmentIds": {
+        "items": {
+          "enum": [
+            "O1",
+            "F1",
+            "I1",
+            "C1"
+          ],
+          "maxLength": 12,
+          "minLength": 2,
+          "type": "string"
+        },
+        "maxItems": 12,
+        "title": "Difficultyevidencesegmentids",
+        "type": "array"
+      },
+      "difficultyStatus": {
+        "enum": [
+          "ASSESSED",
+          "BORDERLINE",
+          "UNSURE"
+        ],
+        "title": "Difficultystatus",
+        "type": "string"
+      },
+      "estimatedBand": {
+        "anyOf": [
+          {
+            "maximum": 5,
+            "minimum": 1,
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "title": "Estimatedband"
+      },
+      "issues": {
+        "items": {
+          "enum": [
+            "ORIGIN_LANGUAGE",
+            "ANSWER_LEAK",
+            "TASK_TYPE",
+            "MISSING_FACTS",
+            "CONTRADICTORY_GUIDANCE",
+            "AMBIGUOUS_TASK",
+            "BACKGROUND_KNOWLEDGE",
+            "UNNATURAL_LANGUAGE",
+            "NOT_LANGUAGE_TASK",
+            "NOTE_ORIGIN_LANGUAGE",
+            "UNSUPPORTED_FOCUS_REASON",
+            "INTERNAL_CLAIM",
+            "DIVERSITY_METADATA_MISMATCH",
+            "DIVERSITY_SCENE_REPETITION",
+            "KEYWORD_SCOPE_MISMATCH"
+          ],
+          "type": "string"
+        },
+        "maxItems": 12,
+        "title": "Issues",
+        "type": "array"
+      },
+      "observedWritingType": {
+        "enum": [
+          "TRANSLATION",
+          "GUIDED",
+          "FREE",
+          "UNSURE"
+        ],
+        "title": "Observedwritingtype",
+        "type": "string"
+      },
+      "productionDemandChecks": {
+        "anyOf": [
+          {
+            "items": {
+              "$ref": "#/$defs/ProductionDemandCheck"
+            },
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "title": "Productiondemandchecks"
+      },
+      "verdict": {
+        "enum": [
+          "PASS",
+          "REJECT",
+          "UNSURE"
+        ],
+        "title": "Verdict",
+        "type": "string"
+      }
+    },
+    "required": [
+      "candidateId",
+      "contentHash",
+      "confidence",
+      "verdict",
+      "observedWritingType",
+      "difficultyStatus",
+      "estimatedBand",
+      "alternativeBand",
+      "difficultyConfidence",
+      "difficultyEvidenceSegmentIds",
+      "checks",
+      "issues",
+      "productionDemandChecks"
+    ],
+    "title": "TaskReview",
+    "type": "object"
+  }
+}

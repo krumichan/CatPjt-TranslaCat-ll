@@ -5,6 +5,7 @@ import java.time.LocalDateTime
 
 internal interface LevelTestTransaction {
     val records: LevelTestRepository
+    val history: LevelGenerationHistoryRepository
     val nowUtc: LocalDateTime
 }
 

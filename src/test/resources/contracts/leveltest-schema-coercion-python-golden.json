@@ -1,0 +1,558 @@
+[
+  {
+    "name": "numeric_strings",
+    "asset": "speaking-evaluation",
+    "input": {
+      "evaluationConfidence": "0.8",
+      "taskResponseStatus": "FULFILLED",
+      "metrics": [
+        {
+          "type": "PRONUNCIATION",
+          "state": "EVALUATED",
+          "score": "7.5e1",
+          "confidence": 0.8,
+          "summary": "합성 요약",
+          "evidence": [
+            "합성 근거"
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "FLUENCY",
+          "state": "EVALUATED",
+          "score": 70.0,
+          "confidence": 0.8,
+          "summary": "합성 요약",
+          "evidence": [
+            "합성 근거"
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "GRAMMAR",
+          "state": "EVALUATED",
+          "score": 60.0,
+          "confidence": 0.8,
+          "summary": "합성 요약",
+          "evidence": [
+            "합성 근거"
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "VOCABULARY",
+          "state": "EVALUATED",
+          "score": 65.0,
+          "confidence": 0.8,
+          "summary": "합성 요약",
+          "evidence": [
+            "합성 근거"
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "TASK_FULFILLMENT",
+          "state": "EVALUATED",
+          "score": 75.0,
+          "confidence": 0.8,
+          "summary": "합성 요약",
+          "evidence": [
+            "합성 근거"
+          ],
+          "notEvaluableReason": null
+        }
+      ],
+      "strengths": [
+        "합성 강점"
+      ],
+      "improvements": [
+        "합성 개선"
+      ],
+      "recommendedAnswers": [
+        "Synthetic improved answer"
+      ]
+    },
+    "output": {
+      "evaluationConfidence": 0.8,
+      "taskResponseStatus": "FULFILLED",
+      "metrics": [
+        {
+          "type": "PRONUNCIATION",
+          "state": "EVALUATED",
+          "score": 75.0,
+          "confidence": 0.8,
+          "summary": "합성 요약",
+          "evidence": [
+            "합성 근거"
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "FLUENCY",
+          "state": "EVALUATED",
+          "score": 70.0,
+          "confidence": 0.8,
+          "summary": "합성 요약",
+          "evidence": [
+            "합성 근거"
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "GRAMMAR",
+          "state": "EVALUATED",
+          "score": 60.0,
+          "confidence": 0.8,
+          "summary": "합성 요약",
+          "evidence": [
+            "합성 근거"
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "VOCABULARY",
+          "state": "EVALUATED",
+          "score": 65.0,
+          "confidence": 0.8,
+          "summary": "합성 요약",
+          "evidence": [
+            "합성 근거"
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "TASK_FULFILLMENT",
+          "state": "EVALUATED",
+          "score": 75.0,
+          "confidence": 0.8,
+          "summary": "합성 요약",
+          "evidence": [
+            "합성 근거"
+          ],
+          "notEvaluableReason": null
+        }
+      ],
+      "strengths": [
+        "합성 강점"
+      ],
+      "improvements": [
+        "합성 개선"
+      ],
+      "recommendedAnswers": [
+        "Synthetic improved answer"
+      ]
+    },
+    "issues": []
+  },
+  {
+    "name": "numeric_booleans",
+    "asset": "speaking-evaluation",
+    "input": {
+      "evaluationConfidence": true,
+      "taskResponseStatus": "FULFILLED",
+      "metrics": [
+        {
+          "type": "PRONUNCIATION",
+          "state": "EVALUATED",
+          "score": false,
+          "confidence": 0.8,
+          "summary": "합성 요약",
+          "evidence": [
+            "합성 근거"
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "FLUENCY",
+          "state": "EVALUATED",
+          "score": 70.0,
+          "confidence": 0.8,
+          "summary": "합성 요약",
+          "evidence": [
+            "합성 근거"
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "GRAMMAR",
+          "state": "EVALUATED",
+          "score": 60.0,
+          "confidence": 0.8,
+          "summary": "합성 요약",
+          "evidence": [
+            "합성 근거"
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "VOCABULARY",
+          "state": "EVALUATED",
+          "score": 65.0,
+          "confidence": 0.8,
+          "summary": "합성 요약",
+          "evidence": [
+            "합성 근거"
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "TASK_FULFILLMENT",
+          "state": "EVALUATED",
+          "score": 75.0,
+          "confidence": 0.8,
+          "summary": "합성 요약",
+          "evidence": [
+            "합성 근거"
+          ],
+          "notEvaluableReason": null
+        }
+      ],
+      "strengths": [
+        "합성 강점"
+      ],
+      "improvements": [
+        "합성 개선"
+      ],
+      "recommendedAnswers": [
+        "Synthetic improved answer"
+      ]
+    },
+    "output": {
+      "evaluationConfidence": 1.0,
+      "taskResponseStatus": "FULFILLED",
+      "metrics": [
+        {
+          "type": "PRONUNCIATION",
+          "state": "EVALUATED",
+          "score": 0.0,
+          "confidence": 0.8,
+          "summary": "합성 요약",
+          "evidence": [
+            "합성 근거"
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "FLUENCY",
+          "state": "EVALUATED",
+          "score": 70.0,
+          "confidence": 0.8,
+          "summary": "합성 요약",
+          "evidence": [
+            "합성 근거"
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "GRAMMAR",
+          "state": "EVALUATED",
+          "score": 60.0,
+          "confidence": 0.8,
+          "summary": "합성 요약",
+          "evidence": [
+            "합성 근거"
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "VOCABULARY",
+          "state": "EVALUATED",
+          "score": 65.0,
+          "confidence": 0.8,
+          "summary": "합성 요약",
+          "evidence": [
+            "합성 근거"
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "TASK_FULFILLMENT",
+          "state": "EVALUATED",
+          "score": 75.0,
+          "confidence": 0.8,
+          "summary": "합성 요약",
+          "evidence": [
+            "합성 근거"
+          ],
+          "notEvaluableReason": null
+        }
+      ],
+      "strengths": [
+        "합성 강점"
+      ],
+      "improvements": [
+        "합성 개선"
+      ],
+      "recommendedAnswers": [
+        "Synthetic improved answer"
+      ]
+    },
+    "issues": []
+  },
+  {
+    "name": "invalid_numeric",
+    "asset": "speaking-evaluation",
+    "input": {
+      "evaluationConfidence": "Synthetic",
+      "taskResponseStatus": "FULFILLED",
+      "metrics": [
+        {
+          "type": "PRONUNCIATION",
+          "state": "EVALUATED",
+          "score": 70,
+          "confidence": 0.8,
+          "summary": "합성 요약",
+          "evidence": [
+            "합성 근거"
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "FLUENCY",
+          "state": "EVALUATED",
+          "score": 70.0,
+          "confidence": 0.8,
+          "summary": "합성 요약",
+          "evidence": [
+            "합성 근거"
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "GRAMMAR",
+          "state": "EVALUATED",
+          "score": 60.0,
+          "confidence": 0.8,
+          "summary": "합성 요약",
+          "evidence": [
+            "합성 근거"
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "VOCABULARY",
+          "state": "EVALUATED",
+          "score": 65.0,
+          "confidence": 0.8,
+          "summary": "합성 요약",
+          "evidence": [
+            "합성 근거"
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "TASK_FULFILLMENT",
+          "state": "EVALUATED",
+          "score": 75.0,
+          "confidence": 0.8,
+          "summary": "합성 요약",
+          "evidence": [
+            "합성 근거"
+          ],
+          "notEvaluableReason": null
+        }
+      ],
+      "strengths": [
+        "합성 강점"
+      ],
+      "improvements": [
+        "합성 개선"
+      ],
+      "recommendedAnswers": [
+        "Synthetic improved answer"
+      ]
+    },
+    "output": null,
+    "issues": [
+      {
+        "path": "evaluationConfidence",
+        "code": "float_parsing"
+      }
+    ]
+  },
+  {
+    "name": "numeric_range",
+    "asset": "speaking-evaluation",
+    "input": {
+      "evaluationConfidence": "1.1",
+      "taskResponseStatus": "FULFILLED",
+      "metrics": [
+        {
+          "type": "PRONUNCIATION",
+          "state": "EVALUATED",
+          "score": 70,
+          "confidence": 0.8,
+          "summary": "합성 요약",
+          "evidence": [
+            "합성 근거"
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "FLUENCY",
+          "state": "EVALUATED",
+          "score": 70.0,
+          "confidence": 0.8,
+          "summary": "합성 요약",
+          "evidence": [
+            "합성 근거"
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "GRAMMAR",
+          "state": "EVALUATED",
+          "score": 60.0,
+          "confidence": 0.8,
+          "summary": "합성 요약",
+          "evidence": [
+            "합성 근거"
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "VOCABULARY",
+          "state": "EVALUATED",
+          "score": 65.0,
+          "confidence": 0.8,
+          "summary": "합성 요약",
+          "evidence": [
+            "합성 근거"
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "TASK_FULFILLMENT",
+          "state": "EVALUATED",
+          "score": 75.0,
+          "confidence": 0.8,
+          "summary": "합성 요약",
+          "evidence": [
+            "합성 근거"
+          ],
+          "notEvaluableReason": null
+        }
+      ],
+      "strengths": [
+        "합성 강점"
+      ],
+      "improvements": [
+        "합성 개선"
+      ],
+      "recommendedAnswers": [
+        "Synthetic improved answer"
+      ]
+    },
+    "output": null,
+    "issues": [
+      {
+        "path": "evaluationConfidence",
+        "code": "less_than_equal"
+      }
+    ]
+  },
+  {
+    "name": "boolean_false",
+    "asset": "choice-verification",
+    "input": {
+      "verifiable": "false",
+      "plausibleOptionKeys": [
+        "A"
+      ],
+      "bestOptionKey": "A",
+      "bestOptionAdvantage": "CLEAR"
+    },
+    "output": {
+      "verifiable": false,
+      "plausibleOptionKeys": [
+        "A"
+      ],
+      "nearEquivalentOptionKeys": [],
+      "bestOptionKey": "A",
+      "bestOptionAdvantage": "CLEAR"
+    },
+    "issues": []
+  },
+  {
+    "name": "boolean_YES",
+    "asset": "choice-verification",
+    "input": {
+      "verifiable": "YES",
+      "plausibleOptionKeys": [
+        "A"
+      ],
+      "bestOptionKey": "A",
+      "bestOptionAdvantage": "CLEAR"
+    },
+    "output": {
+      "verifiable": true,
+      "plausibleOptionKeys": [
+        "A"
+      ],
+      "nearEquivalentOptionKeys": [],
+      "bestOptionKey": "A",
+      "bestOptionAdvantage": "CLEAR"
+    },
+    "issues": []
+  },
+  {
+    "name": "boolean_1.0",
+    "asset": "choice-verification",
+    "input": {
+      "verifiable": "1.0",
+      "plausibleOptionKeys": [
+        "A"
+      ],
+      "bestOptionKey": "A",
+      "bestOptionAdvantage": "CLEAR"
+    },
+    "output": null,
+    "issues": [
+      {
+        "path": "verifiable",
+        "code": "bool_parsing"
+      }
+    ]
+  },
+  {
+    "name": "boolean_1.0",
+    "asset": "choice-verification",
+    "input": {
+      "verifiable": 1.0,
+      "plausibleOptionKeys": [
+        "A"
+      ],
+      "bestOptionKey": "A",
+      "bestOptionAdvantage": "CLEAR"
+    },
+    "output": {
+      "verifiable": true,
+      "plausibleOptionKeys": [
+        "A"
+      ],
+      "nearEquivalentOptionKeys": [],
+      "bestOptionKey": "A",
+      "bestOptionAdvantage": "CLEAR"
+    },
+    "issues": []
+  },
+  {
+    "name": "boolean_2",
+    "asset": "choice-verification",
+    "input": {
+      "verifiable": 2,
+      "plausibleOptionKeys": [
+        "A"
+      ],
+      "bestOptionKey": "A",
+      "bestOptionAdvantage": "CLEAR"
+    },
+    "output": null,
+    "issues": [
+      {
+        "path": "verifiable",
+        "code": "bool_parsing"
+      }
+    ]
+  }
+]

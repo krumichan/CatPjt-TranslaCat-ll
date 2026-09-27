@@ -18,5 +18,8 @@ internal object KeywordMasteriesTable : Table("language_learning_keyword_mastery
     val createdBy = varchar("created_by", 100)
     val updatedBy = varchar("updated_by", 100)
     override val primaryKey = PrimaryKey(id)
-    init { uniqueIndex(userId, canonicalKey) }
+
+    init {
+        uniqueIndex(userId, canonicalKey)
+    }
 }

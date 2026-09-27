@@ -1,0 +1,434 @@
+[
+  {
+    "itemType": "WRITING_TRANSLATION",
+    "request": {
+      "requestId": "lt:synthetic:eval:2:v1:r0",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "itemId": 2,
+      "domain": "WRITING",
+      "itemType": "WRITING_TRANSLATION",
+      "promptText": "Straße test source and synthetic task",
+      "answer": "Synthetic answer",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "complexityBand": 3,
+      "sourceText": null,
+      "referenceMeanings": [],
+      "keyMeaningUnits": [],
+      "translationSourceText": "합성 원문",
+      "providedFacts": [
+        "합성 사실"
+      ],
+      "requiredIntents": [
+        "합성 의도"
+      ],
+      "responseConstraints": [
+        "두 문장"
+      ],
+      "focusMetrics": [],
+      "manualRetryAttempt": 0
+    },
+    "providerOutput": {
+      "scores": {
+        "meaning": 79.5,
+        "grammar": 70,
+        "vocabulary": 61.4,
+        "naturalness": 75,
+        "expression": 65
+      },
+      "strengths": [
+        {
+          "originText": "합성 강점",
+          "learningText": "Synthetic strength"
+        },
+        {
+          "originText": "  Straße test source  ",
+          "learningText": "Repeated source"
+        }
+      ],
+      "weaknesses": [
+        {
+          "originText": "합성 개선",
+          "learningText": "Synthetic improvement"
+        }
+      ],
+      "corrections": [
+        {
+          "original": "sample old",
+          "corrected": "sample new",
+          "category": "GRAMMAR",
+          "explanation": {
+            "originText": "합성 교정",
+            "learningText": "Synthetic correction"
+          }
+        }
+      ],
+      "recommendedAnswers": [
+        "Synthetic answer one",
+        "Synthetic answer two"
+      ],
+      "explanation": {
+        "originText": "합성 전체 설명",
+        "learningText": "Synthetic explanation"
+      },
+      "profileSignals": {
+        "strengthTags": [],
+        "weaknessTags": [],
+        "grammarPatterns": [],
+        "vocabularyPatterns": [],
+        "naturalnessPatterns": [],
+        "expressionPatterns": [],
+        "meaningPatterns": [],
+        "recommendedFocus": []
+      }
+    },
+    "prompt": "# Current task\nEvaluate this LEVEL_TEST writing answer.\nFeedback originText fields MUST be written in ko.\nFeedback learningText fields and recommendedAnswers MUST be written in en.\n\n<evaluation-data>\n{\"requestId\":\"lt:synthetic:eval:2:v1:r0\",\"context\":\"LEVEL_TEST\",\"writingType\":null,\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"originSentence\":\"Straße test source and synthetic task\",\"userAnswer\":\"Synthetic answer\",\"difficulty\":\"BAND_3\",\"keywords\":[],\"focusMetrics\":[\"MEANING\",\"GRAMMAR\",\"VOCABULARY\",\"NATURALNESS\",\"EXPRESSION\"],\"learningProfileSummary\":null,\"taskType\":\"WRITING_TRANSLATION\",\"translationSourceText\":\"합성 원문\",\"providedFacts\":[\"합성 사실\"],\"requiredIntents\":[\"합성 의도\"],\"responseConstraints\":[\"두 문장\"]}\n</evaluation-data>",
+    "response": {
+      "requestId": "lt:synthetic:eval:2:v1:r0",
+      "sessionId": 1,
+      "itemId": 2,
+      "domain": "WRITING",
+      "itemType": "WRITING_TRANSLATION",
+      "evaluable": true,
+      "score": 72,
+      "confidence": 1.0,
+      "transcript": null,
+      "metrics": [
+        {
+          "type": "MEANING",
+          "state": "EVALUATED",
+          "score": 80.0,
+          "confidence": 1.0,
+          "summary": null,
+          "evidence": [],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "GRAMMAR",
+          "state": "EVALUATED",
+          "score": 70.0,
+          "confidence": 1.0,
+          "summary": null,
+          "evidence": [],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "VOCABULARY",
+          "state": "EVALUATED",
+          "score": 61.0,
+          "confidence": 1.0,
+          "summary": null,
+          "evidence": [],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "NATURALNESS",
+          "state": "EVALUATED",
+          "score": 75.0,
+          "confidence": 1.0,
+          "summary": null,
+          "evidence": [],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "EXPRESSION",
+          "state": "EVALUATED",
+          "score": 65.0,
+          "confidence": 1.0,
+          "summary": null,
+          "evidence": [],
+          "notEvaluableReason": null
+        }
+      ],
+      "strengths": [
+        "합성 강점"
+      ],
+      "improvements": [
+        "합성 개선",
+        "「sample old」 → 「sample new」: 합성 교정",
+        "합성 전체 설명"
+      ],
+      "recommendedAnswers": [
+        "Synthetic answer one",
+        "Synthetic answer two"
+      ],
+      "detailedFeedback": [
+        {
+          "category": "GRAMMAR",
+          "severity": "CORRECTION",
+          "original": "sample old",
+          "corrected": "sample new",
+          "explanation": "합성 교정"
+        },
+        {
+          "category": "IMPROVEMENT",
+          "severity": "IMPROVEMENT",
+          "original": null,
+          "corrected": null,
+          "explanation": "합성 개선"
+        }
+      ],
+      "assessmentSignals": [
+        {
+          "domain": "WRITING",
+          "metric": "MEANING",
+          "score": 80.0,
+          "confidence": 1.0
+        },
+        {
+          "domain": "WRITING",
+          "metric": "GRAMMAR",
+          "score": 70.0,
+          "confidence": 1.0
+        },
+        {
+          "domain": "WRITING",
+          "metric": "VOCABULARY",
+          "score": 61.0,
+          "confidence": 1.0
+        },
+        {
+          "domain": "WRITING",
+          "metric": "NATURALNESS",
+          "score": 75.0,
+          "confidence": 1.0
+        },
+        {
+          "domain": "WRITING",
+          "metric": "EXPRESSION",
+          "score": 65.0,
+          "confidence": 1.0
+        }
+      ],
+      "reasonCode": null,
+      "evaluationVersion": "level-test-evaluation",
+      "promptVersion": "writing-evaluation",
+      "usage": {
+        "latencyMs": 0,
+        "inputTokens": 0,
+        "outputTokens": 0,
+        "provider": null,
+        "model": null,
+        "promptVersion": null,
+        "evaluationVersion": null
+      }
+    }
+  },
+  {
+    "itemType": "WRITING_SHORT_PARAGRAPH",
+    "request": {
+      "requestId": "lt:synthetic:eval:2:v1:r0",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "itemId": 2,
+      "domain": "WRITING",
+      "itemType": "WRITING_SHORT_PARAGRAPH",
+      "promptText": "Straße test source and synthetic task",
+      "answer": "Synthetic answer",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "complexityBand": 3,
+      "sourceText": null,
+      "referenceMeanings": [],
+      "keyMeaningUnits": [],
+      "translationSourceText": "합성 원문",
+      "providedFacts": [
+        "합성 사실"
+      ],
+      "requiredIntents": [
+        "합성 의도"
+      ],
+      "responseConstraints": [
+        "두 문장"
+      ],
+      "focusMetrics": [],
+      "manualRetryAttempt": 0
+    },
+    "providerOutput": {
+      "scores": {
+        "meaning": 79.5,
+        "grammar": 70,
+        "vocabulary": 61.4,
+        "naturalness": 75,
+        "expression": 65
+      },
+      "strengths": [
+        {
+          "originText": "합성 강점",
+          "learningText": "Synthetic strength"
+        },
+        {
+          "originText": "  Straße test source  ",
+          "learningText": "Repeated source"
+        }
+      ],
+      "weaknesses": [
+        {
+          "originText": "합성 개선",
+          "learningText": "Synthetic improvement"
+        }
+      ],
+      "corrections": [
+        {
+          "original": "sample old",
+          "corrected": "sample new",
+          "category": "GRAMMAR",
+          "explanation": {
+            "originText": "합성 교정",
+            "learningText": "Synthetic correction"
+          }
+        }
+      ],
+      "recommendedAnswers": [
+        "Synthetic answer one",
+        "Synthetic answer two"
+      ],
+      "explanation": {
+        "originText": "합성 전체 설명",
+        "learningText": "Synthetic explanation"
+      },
+      "profileSignals": {
+        "strengthTags": [],
+        "weaknessTags": [],
+        "grammarPatterns": [],
+        "vocabularyPatterns": [],
+        "naturalnessPatterns": [],
+        "expressionPatterns": [],
+        "meaningPatterns": [],
+        "recommendedFocus": []
+      }
+    },
+    "prompt": "# Current task\nEvaluate this LEVEL_TEST writing answer.\nFeedback originText fields MUST be written in ko.\nFeedback learningText fields and recommendedAnswers MUST be written in en.\n\n<evaluation-data>\n{\"requestId\":\"lt:synthetic:eval:2:v1:r0\",\"context\":\"LEVEL_TEST\",\"writingType\":null,\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"originSentence\":\"Straße test source and synthetic task\",\"userAnswer\":\"Synthetic answer\",\"difficulty\":\"BAND_3\",\"keywords\":[],\"focusMetrics\":[\"MEANING\",\"GRAMMAR\",\"VOCABULARY\",\"NATURALNESS\",\"EXPRESSION\"],\"learningProfileSummary\":null,\"taskType\":\"WRITING_SHORT_PARAGRAPH\",\"translationSourceText\":\"합성 원문\",\"providedFacts\":[\"합성 사실\"],\"requiredIntents\":[\"합성 의도\"],\"responseConstraints\":[\"두 문장\"]}\n</evaluation-data>",
+    "response": {
+      "requestId": "lt:synthetic:eval:2:v1:r0",
+      "sessionId": 1,
+      "itemId": 2,
+      "domain": "WRITING",
+      "itemType": "WRITING_SHORT_PARAGRAPH",
+      "evaluable": true,
+      "score": 72,
+      "confidence": 1.0,
+      "transcript": null,
+      "metrics": [
+        {
+          "type": "MEANING",
+          "state": "EVALUATED",
+          "score": 80.0,
+          "confidence": 1.0,
+          "summary": null,
+          "evidence": [],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "GRAMMAR",
+          "state": "EVALUATED",
+          "score": 70.0,
+          "confidence": 1.0,
+          "summary": null,
+          "evidence": [],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "VOCABULARY",
+          "state": "EVALUATED",
+          "score": 61.0,
+          "confidence": 1.0,
+          "summary": null,
+          "evidence": [],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "NATURALNESS",
+          "state": "EVALUATED",
+          "score": 75.0,
+          "confidence": 1.0,
+          "summary": null,
+          "evidence": [],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "EXPRESSION",
+          "state": "EVALUATED",
+          "score": 65.0,
+          "confidence": 1.0,
+          "summary": null,
+          "evidence": [],
+          "notEvaluableReason": null
+        }
+      ],
+      "strengths": [
+        "합성 강점"
+      ],
+      "improvements": [
+        "합성 개선",
+        "「sample old」 → 「sample new」: 합성 교정",
+        "합성 전체 설명"
+      ],
+      "recommendedAnswers": [
+        "Synthetic answer one",
+        "Synthetic answer two"
+      ],
+      "detailedFeedback": [
+        {
+          "category": "GRAMMAR",
+          "severity": "CORRECTION",
+          "original": "sample old",
+          "corrected": "sample new",
+          "explanation": "합성 교정"
+        },
+        {
+          "category": "IMPROVEMENT",
+          "severity": "IMPROVEMENT",
+          "original": null,
+          "corrected": null,
+          "explanation": "합성 개선"
+        }
+      ],
+      "assessmentSignals": [
+        {
+          "domain": "WRITING",
+          "metric": "MEANING",
+          "score": 80.0,
+          "confidence": 1.0
+        },
+        {
+          "domain": "WRITING",
+          "metric": "GRAMMAR",
+          "score": 70.0,
+          "confidence": 1.0
+        },
+        {
+          "domain": "WRITING",
+          "metric": "VOCABULARY",
+          "score": 61.0,
+          "confidence": 1.0
+        },
+        {
+          "domain": "WRITING",
+          "metric": "NATURALNESS",
+          "score": 75.0,
+          "confidence": 1.0
+        },
+        {
+          "domain": "WRITING",
+          "metric": "EXPRESSION",
+          "score": 65.0,
+          "confidence": 1.0
+        }
+      ],
+      "reasonCode": null,
+      "evaluationVersion": "level-test-evaluation",
+      "promptVersion": "writing-evaluation",
+      "usage": {
+        "latencyMs": 0,
+        "inputTokens": 0,
+        "outputTokens": 0,
+        "provider": null,
+        "model": null,
+        "promptVersion": null,
+        "evaluationVersion": null
+      }
+    }
+  }
+]

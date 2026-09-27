@@ -1,0 +1,25 @@
+-- LL가 새로 승인한 언어학습 문항의 분산 이력. 기존 Core 행은 자동으로 재해석하지 않는다.
+CREATE TABLE language_learning_generation_fingerprint (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    user_id BIGINT NOT NULL,
+    source_type VARCHAR(30) NOT NULL,
+    source_id VARCHAR(100) NOT NULL,
+    learning_language VARCHAR(20) NOT NULL,
+    generated_at DATETIME(6) NOT NULL,
+    content_hash VARCHAR(100) NOT NULL,
+    similarity_key VARCHAR(500) NULL,
+    content_excerpt VARCHAR(500) NULL,
+    scenario_category VARCHAR(50) NULL,
+    communicative_intent VARCHAR(50) NULL,
+    task_archetype VARCHAR(100) NULL,
+    grammar_focus_json TEXT NULL,
+    semantic_summary VARCHAR(1000) NULL,
+    policy_version VARCHAR(100) NOT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT uk_ll_gen_fp_source_content UNIQUE (user_id,source_type,source_id,content_hash),
+    CONSTRAINT fk_ll_gen_fp_learner FOREIGN KEY (user_id) REFERENCES language_learning_learner (user_id) ON DELETE RESTRICT ON UPDATE RESTRICT,
+    CONSTRAINT ck_ll_gen_fp_source CHECK (source_type IN ('WRITING','LISTENING','LEVEL_TEST')),
+    INDEX idx_ll_gen_fp_user_source_lang_date (user_id,source_type,learning_language,generated_at),
+    INDEX idx_ll_gen_fp_user_lang_hash (user_id,learning_language,content_hash),
+    INDEX idx_ll_gen_fp_user_lang_date (user_id,learning_language,generated_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

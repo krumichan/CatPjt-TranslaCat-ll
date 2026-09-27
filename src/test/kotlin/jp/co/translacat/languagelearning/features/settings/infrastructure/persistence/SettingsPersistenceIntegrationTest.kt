@@ -55,7 +55,8 @@ class SettingsPersistenceIntegrationTest {
             scalar(db, "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema=DATABASE()"),
         )
         assertEquals(
-            CurrentSchema.VERSION.toLong(), scalar(db, "SELECT COUNT(*) FROM flyway_schema_history WHERE success=1"),
+            CurrentSchema.MIGRATION_COUNT.toLong(),
+            scalar(db, "SELECT COUNT(*) FROM flyway_schema_history WHERE success=1"),
         )
     }
 

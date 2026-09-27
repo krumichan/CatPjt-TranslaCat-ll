@@ -1,0 +1,244 @@
+{
+  "sourceSha256": "12bb3461bf125f605bccd23b2b8a34cb411ca0f9131e9496c146387800bf750a",
+  "cases": [
+    {
+      "name": "trim_segments",
+      "input": {
+        "text": "  Synthetic speech.  ",
+        "languageProbability": 0.9,
+        "segments": [
+          {
+            "startSeconds": 0.0019,
+            "endSeconds": 1.9009,
+            "text": " Synthetic ",
+            "avgLogprob": -0.2
+          },
+          {
+            "startSeconds": 1.9,
+            "endSeconds": 3.1,
+            "text": "speech.",
+            "avgLogprob": -0.6
+          }
+        ]
+      },
+      "transcript": {
+        "text": "Synthetic speech.",
+        "language": "en",
+        "confidence": 0.6838,
+        "isLowConfidence": false,
+        "segments": [
+          {
+            "startMs": 1,
+            "endMs": 1900,
+            "text": "Synthetic",
+            "confidence": 0.8187307530779818
+          },
+          {
+            "startMs": 1900,
+            "endMs": 3100,
+            "text": "speech.",
+            "confidence": 0.5488116360940265
+          }
+        ],
+        "metadata": {
+          "provider": "synthetic",
+          "model": "fixture",
+          "modelVersion": "v1",
+          "detectedLanguage": "en",
+          "requestedLanguage": "en",
+          "lowConfidenceThreshold": 0.55,
+          "audioDuration": 3.125,
+          "audioQualitySignals": {
+            "rms": 0.123456,
+            "peak": 0.8,
+            "silenceRatio": 0.01,
+            "sampleRate": 16000,
+            "channels": 1
+          },
+          "normalizationVersion": "speaking-audio-normalization",
+          "sttHintVersion": "speaking-stt-hint"
+        }
+      }
+    },
+    {
+      "name": "empty_segment",
+      "input": {
+        "text": "Synthetic text.",
+        "languageProbability": 0.2,
+        "segments": [
+          {
+            "startSeconds": 0.0,
+            "endSeconds": 1.0,
+            "text": "  ",
+            "avgLogprob": 0.0
+          },
+          {
+            "startSeconds": 1.0,
+            "endSeconds": 2.0,
+            "text": "text",
+            "avgLogprob": -2.0
+          }
+        ]
+      },
+      "transcript": {
+        "text": "Synthetic text.",
+        "language": "en",
+        "confidence": 0.1353,
+        "isLowConfidence": true,
+        "segments": [
+          {
+            "startMs": 1000,
+            "endMs": 2000,
+            "text": "text",
+            "confidence": 0.1353352832366127
+          }
+        ],
+        "metadata": {
+          "provider": "synthetic",
+          "model": "fixture",
+          "modelVersion": "v1",
+          "detectedLanguage": "en",
+          "requestedLanguage": "en",
+          "lowConfidenceThreshold": 0.55,
+          "audioDuration": 3.125,
+          "audioQualitySignals": {
+            "rms": 0.123456,
+            "peak": 0.8,
+            "silenceRatio": 0.01,
+            "sampleRate": 16000,
+            "channels": 1
+          },
+          "normalizationVersion": "speaking-audio-normalization",
+          "sttHintVersion": "speaking-stt-hint"
+        }
+      }
+    },
+    {
+      "name": "language_fallback",
+      "input": {
+        "text": "Synthetic text.",
+        "languageProbability": 0.44445,
+        "segments": []
+      },
+      "transcript": {
+        "text": "Synthetic text.",
+        "language": "en",
+        "confidence": 0.4445,
+        "isLowConfidence": true,
+        "segments": [],
+        "metadata": {
+          "provider": "synthetic",
+          "model": "fixture",
+          "modelVersion": "v1",
+          "detectedLanguage": "en",
+          "requestedLanguage": "en",
+          "lowConfidenceThreshold": 0.55,
+          "audioDuration": 3.125,
+          "audioQualitySignals": {
+            "rms": 0.123456,
+            "peak": 0.8,
+            "silenceRatio": 0.01,
+            "sampleRate": 16000,
+            "channels": 1
+          },
+          "normalizationVersion": "speaking-audio-normalization",
+          "sttHintVersion": "speaking-stt-hint"
+        }
+      }
+    },
+    {
+      "name": "positive_logprob",
+      "input": {
+        "text": "Synthetic text.",
+        "languageProbability": 0.1,
+        "segments": [
+          {
+            "startSeconds": 0.0,
+            "endSeconds": 1.0,
+            "text": "text",
+            "avgLogprob": 0.3
+          }
+        ]
+      },
+      "transcript": {
+        "text": "Synthetic text.",
+        "language": "en",
+        "confidence": 1.0,
+        "isLowConfidence": false,
+        "segments": [
+          {
+            "startMs": 0,
+            "endMs": 1000,
+            "text": "text",
+            "confidence": 1.0
+          }
+        ],
+        "metadata": {
+          "provider": "synthetic",
+          "model": "fixture",
+          "modelVersion": "v1",
+          "detectedLanguage": "en",
+          "requestedLanguage": "en",
+          "lowConfidenceThreshold": 0.55,
+          "audioDuration": 3.125,
+          "audioQualitySignals": {
+            "rms": 0.123456,
+            "peak": 0.8,
+            "silenceRatio": 0.01,
+            "sampleRate": 16000,
+            "channels": 1
+          },
+          "normalizationVersion": "speaking-audio-normalization",
+          "sttHintVersion": "speaking-stt-hint"
+        }
+      }
+    },
+    {
+      "name": "low_confidence",
+      "input": {
+        "text": "Synthetic text.",
+        "languageProbability": 0.9,
+        "segments": [
+          {
+            "startSeconds": 0.0,
+            "endSeconds": 1.0,
+            "text": "text",
+            "avgLogprob": -1.0
+          }
+        ]
+      },
+      "transcript": {
+        "text": "Synthetic text.",
+        "language": "en",
+        "confidence": 0.3679,
+        "isLowConfidence": true,
+        "segments": [
+          {
+            "startMs": 0,
+            "endMs": 1000,
+            "text": "text",
+            "confidence": 0.36787944117144233
+          }
+        ],
+        "metadata": {
+          "provider": "synthetic",
+          "model": "fixture",
+          "modelVersion": "v1",
+          "detectedLanguage": "en",
+          "requestedLanguage": "en",
+          "lowConfidenceThreshold": 0.55,
+          "audioDuration": 3.125,
+          "audioQualitySignals": {
+            "rms": 0.123456,
+            "peak": 0.8,
+            "silenceRatio": 0.01,
+            "sampleRate": 16000,
+            "channels": 1
+          },
+          "normalizationVersion": "speaking-audio-normalization",
+          "sttHintVersion": "speaking-stt-hint"
+        }
+      }
+    }
+  ]
+}

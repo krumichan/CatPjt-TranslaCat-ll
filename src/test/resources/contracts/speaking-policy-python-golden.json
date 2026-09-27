@@ -1,0 +1,636 @@
+{
+  "sourceSha256": {
+    "app/features/language_learning/speaking/policy.py": "5fe12fbc59f4ef4053139b88f130441475f5b8aaafeea699398ea594a2021f00",
+    "app/features/language_learning/speaking/evidence_policy.py": "91ebf4d38c641c9a2db30603f69ff4e14ae1102bb5bbcf6a2800168734bd5aae"
+  },
+  "eligibility": [
+    {
+      "turns": [],
+      "result": {
+        "validUserTurns": 0,
+        "validUserSpeechSeconds": 0.0,
+        "validSttTurnRatio": 0.0,
+        "requiredUserTurns": 5,
+        "requiredSpeechSeconds": 60.0,
+        "requiredSttTurnRatio": 0.8,
+        "requiredEvaluationConfidence": 0.7,
+        "eligibleBeforeAi": false,
+        "missingRequirements": [
+          "VALID_USER_TURNS",
+          "VALID_SPEECH_SECONDS",
+          "VALID_STT_TURN_RATIO"
+        ]
+      },
+      "usable": []
+    },
+    {
+      "turns": [
+        {
+          "turnId": "synthetic-1",
+          "transcript": "Synthetic speech",
+          "sttConfidence": 0.55,
+          "durationSeconds": 12.0,
+          "excludedFromEvaluation": false,
+          "segmentConfidences": []
+        },
+        {
+          "turnId": "synthetic-2",
+          "transcript": "Synthetic speech",
+          "sttConfidence": 0.55,
+          "durationSeconds": 12.0,
+          "excludedFromEvaluation": false,
+          "segmentConfidences": []
+        },
+        {
+          "turnId": "synthetic-3",
+          "transcript": "Synthetic speech",
+          "sttConfidence": 0.55,
+          "durationSeconds": 12.0,
+          "excludedFromEvaluation": false,
+          "segmentConfidences": []
+        },
+        {
+          "turnId": "synthetic-4",
+          "transcript": "Synthetic speech",
+          "sttConfidence": 0.55,
+          "durationSeconds": 12.0,
+          "excludedFromEvaluation": false,
+          "segmentConfidences": []
+        },
+        {
+          "turnId": "synthetic-5",
+          "transcript": "Synthetic speech",
+          "sttConfidence": 0.55,
+          "durationSeconds": 12.0,
+          "excludedFromEvaluation": false,
+          "segmentConfidences": []
+        }
+      ],
+      "result": {
+        "validUserTurns": 5,
+        "validUserSpeechSeconds": 60.0,
+        "validSttTurnRatio": 1.0,
+        "requiredUserTurns": 5,
+        "requiredSpeechSeconds": 60.0,
+        "requiredSttTurnRatio": 0.8,
+        "requiredEvaluationConfidence": 0.7,
+        "eligibleBeforeAi": true,
+        "missingRequirements": []
+      },
+      "usable": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "turns": [
+        {
+          "turnId": "synthetic-1",
+          "transcript": "Synthetic speech",
+          "sttConfidence": 0.55,
+          "durationSeconds": 12.0,
+          "excludedFromEvaluation": false,
+          "segmentConfidences": []
+        },
+        {
+          "turnId": "synthetic-2",
+          "transcript": "Synthetic speech",
+          "sttConfidence": 0.55,
+          "durationSeconds": 12.0,
+          "excludedFromEvaluation": false,
+          "segmentConfidences": []
+        },
+        {
+          "turnId": "synthetic-3",
+          "transcript": "Synthetic speech",
+          "sttConfidence": 0.55,
+          "durationSeconds": 12.0,
+          "excludedFromEvaluation": false,
+          "segmentConfidences": []
+        },
+        {
+          "turnId": "synthetic-4",
+          "transcript": "Synthetic speech",
+          "sttConfidence": 0.55,
+          "durationSeconds": 12.0,
+          "excludedFromEvaluation": false,
+          "segmentConfidences": []
+        }
+      ],
+      "result": {
+        "validUserTurns": 4,
+        "validUserSpeechSeconds": 48.0,
+        "validSttTurnRatio": 1.0,
+        "requiredUserTurns": 5,
+        "requiredSpeechSeconds": 60.0,
+        "requiredSttTurnRatio": 0.8,
+        "requiredEvaluationConfidence": 0.7,
+        "eligibleBeforeAi": false,
+        "missingRequirements": [
+          "VALID_USER_TURNS",
+          "VALID_SPEECH_SECONDS"
+        ]
+      },
+      "usable": [
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "turns": [
+        {
+          "turnId": "synthetic-1",
+          "transcript": "Synthetic speech",
+          "sttConfidence": 0.55,
+          "durationSeconds": 12.0,
+          "excludedFromEvaluation": false,
+          "segmentConfidences": []
+        },
+        {
+          "turnId": "synthetic-2",
+          "transcript": "Synthetic speech",
+          "sttConfidence": 0.55,
+          "durationSeconds": 12.0,
+          "excludedFromEvaluation": false,
+          "segmentConfidences": []
+        },
+        {
+          "turnId": "synthetic-3",
+          "transcript": "Synthetic speech",
+          "sttConfidence": 0.55,
+          "durationSeconds": 12.0,
+          "excludedFromEvaluation": false,
+          "segmentConfidences": []
+        },
+        {
+          "turnId": "synthetic-4",
+          "transcript": "Synthetic speech",
+          "sttConfidence": 0.55,
+          "durationSeconds": 12.0,
+          "excludedFromEvaluation": false,
+          "segmentConfidences": []
+        },
+        {
+          "turnId": "synthetic-5",
+          "transcript": "",
+          "sttConfidence": 0.55,
+          "durationSeconds": 12.0,
+          "excludedFromEvaluation": false,
+          "segmentConfidences": []
+        }
+      ],
+      "result": {
+        "validUserTurns": 4,
+        "validUserSpeechSeconds": 60.0,
+        "validSttTurnRatio": 0.8,
+        "requiredUserTurns": 5,
+        "requiredSpeechSeconds": 60.0,
+        "requiredSttTurnRatio": 0.8,
+        "requiredEvaluationConfidence": 0.7,
+        "eligibleBeforeAi": false,
+        "missingRequirements": [
+          "VALID_USER_TURNS"
+        ]
+      },
+      "usable": [
+        true,
+        true,
+        true,
+        true,
+        false
+      ]
+    },
+    {
+      "turns": [
+        {
+          "turnId": "synthetic-1",
+          "transcript": "Synthetic speech",
+          "sttConfidence": 0.55,
+          "durationSeconds": 12.0,
+          "excludedFromEvaluation": false,
+          "segmentConfidences": []
+        },
+        {
+          "turnId": "synthetic-2",
+          "transcript": "Synthetic speech",
+          "sttConfidence": 0.55,
+          "durationSeconds": 12.0,
+          "excludedFromEvaluation": false,
+          "segmentConfidences": []
+        },
+        {
+          "turnId": "synthetic-3",
+          "transcript": "Synthetic speech",
+          "sttConfidence": 0.55,
+          "durationSeconds": 12.0,
+          "excludedFromEvaluation": false,
+          "segmentConfidences": []
+        },
+        {
+          "turnId": "synthetic-4",
+          "transcript": "Synthetic speech",
+          "sttConfidence": 0.55,
+          "durationSeconds": 12.0,
+          "excludedFromEvaluation": false,
+          "segmentConfidences": []
+        },
+        {
+          "turnId": "synthetic-5",
+          "transcript": "Synthetic speech",
+          "sttConfidence": 0.55,
+          "durationSeconds": 12.0,
+          "excludedFromEvaluation": true,
+          "segmentConfidences": []
+        }
+      ],
+      "result": {
+        "validUserTurns": 4,
+        "validUserSpeechSeconds": 48.0,
+        "validSttTurnRatio": 1.0,
+        "requiredUserTurns": 5,
+        "requiredSpeechSeconds": 60.0,
+        "requiredSttTurnRatio": 0.8,
+        "requiredEvaluationConfidence": 0.7,
+        "eligibleBeforeAi": false,
+        "missingRequirements": [
+          "VALID_USER_TURNS",
+          "VALID_SPEECH_SECONDS"
+        ]
+      },
+      "usable": [
+        true,
+        true,
+        true,
+        true,
+        false
+      ]
+    },
+    {
+      "turns": [
+        {
+          "turnId": "synthetic-1",
+          "transcript": "Synthetic speech",
+          "sttConfidence": 0.55,
+          "durationSeconds": 12.0,
+          "excludedFromEvaluation": false,
+          "segmentConfidences": []
+        },
+        {
+          "turnId": "synthetic-2",
+          "transcript": "Synthetic speech",
+          "sttConfidence": 0.55,
+          "durationSeconds": 12.0,
+          "excludedFromEvaluation": false,
+          "segmentConfidences": []
+        },
+        {
+          "turnId": "synthetic-3",
+          "transcript": "Synthetic speech",
+          "sttConfidence": 0.55,
+          "durationSeconds": 12.0,
+          "excludedFromEvaluation": false,
+          "segmentConfidences": []
+        },
+        {
+          "turnId": "synthetic-4",
+          "transcript": "Synthetic speech",
+          "sttConfidence": 0.5499,
+          "durationSeconds": 12.0,
+          "excludedFromEvaluation": false,
+          "segmentConfidences": []
+        },
+        {
+          "turnId": "synthetic-5",
+          "transcript": "Synthetic speech",
+          "sttConfidence": 0.5499,
+          "durationSeconds": 12.0,
+          "excludedFromEvaluation": false,
+          "segmentConfidences": []
+        }
+      ],
+      "result": {
+        "validUserTurns": 5,
+        "validUserSpeechSeconds": 60.0,
+        "validSttTurnRatio": 0.6,
+        "requiredUserTurns": 5,
+        "requiredSpeechSeconds": 60.0,
+        "requiredSttTurnRatio": 0.8,
+        "requiredEvaluationConfidence": 0.7,
+        "eligibleBeforeAi": false,
+        "missingRequirements": [
+          "VALID_STT_TURN_RATIO"
+        ]
+      },
+      "usable": [
+        true,
+        true,
+        true,
+        false,
+        false
+      ]
+    },
+    {
+      "turns": [
+        {
+          "turnId": "synthetic-1",
+          "transcript": "Synthetic speech",
+          "sttConfidence": 0.55,
+          "durationSeconds": 0.1235,
+          "excludedFromEvaluation": false,
+          "segmentConfidences": []
+        }
+      ],
+      "result": {
+        "validUserTurns": 1,
+        "validUserSpeechSeconds": 0.123,
+        "validSttTurnRatio": 1.0,
+        "requiredUserTurns": 5,
+        "requiredSpeechSeconds": 60.0,
+        "requiredSttTurnRatio": 0.8,
+        "requiredEvaluationConfidence": 0.7,
+        "eligibleBeforeAi": false,
+        "missingRequirements": [
+          "VALID_USER_TURNS",
+          "VALID_SPEECH_SECONDS"
+        ]
+      },
+      "usable": [
+        true
+      ]
+    },
+    {
+      "turns": [
+        {
+          "turnId": "synthetic-1",
+          "transcript": "Synthetic speech",
+          "sttConfidence": 0.55,
+          "durationSeconds": 12.0,
+          "excludedFromEvaluation": false,
+          "segmentConfidences": [
+            0.54
+          ]
+        }
+      ],
+      "result": {
+        "validUserTurns": 1,
+        "validUserSpeechSeconds": 12.0,
+        "validSttTurnRatio": 1.0,
+        "requiredUserTurns": 5,
+        "requiredSpeechSeconds": 60.0,
+        "requiredSttTurnRatio": 0.8,
+        "requiredEvaluationConfidence": 0.7,
+        "eligibleBeforeAi": false,
+        "missingRequirements": [
+          "VALID_USER_TURNS",
+          "VALID_SPEECH_SECONDS"
+        ]
+      },
+      "usable": [
+        false
+      ]
+    }
+  ],
+  "scores": [
+    {
+      "metrics": [
+        {
+          "type": "GRAMMAR",
+          "state": "NOT_EVALUABLE",
+          "score": null
+        },
+        {
+          "type": "VOCABULARY",
+          "state": "NOT_EVALUABLE",
+          "score": null
+        },
+        {
+          "type": "NATURALNESS",
+          "state": "NOT_EVALUABLE",
+          "score": null
+        },
+        {
+          "type": "MEANING",
+          "state": "NOT_EVALUABLE",
+          "score": null
+        },
+        {
+          "type": "EXPRESSIVENESS",
+          "state": "NOT_EVALUABLE",
+          "score": null
+        },
+        {
+          "type": "FLUENCY",
+          "state": "NOT_EVALUABLE",
+          "score": null
+        },
+        {
+          "type": "PRONUNCIATION",
+          "state": "NOT_EVALUABLE",
+          "score": null
+        },
+        {
+          "type": "INTERACTION",
+          "state": "NOT_EVALUABLE",
+          "score": null
+        }
+      ],
+      "result": null
+    },
+    {
+      "metrics": [
+        {
+          "type": "GRAMMAR",
+          "state": "NOT_EVALUABLE",
+          "score": null
+        },
+        {
+          "type": "VOCABULARY",
+          "state": "NOT_EVALUABLE",
+          "score": null
+        },
+        {
+          "type": "NATURALNESS",
+          "state": "NOT_EVALUABLE",
+          "score": null
+        },
+        {
+          "type": "MEANING",
+          "state": "EVALUATED",
+          "score": 71.5
+        },
+        {
+          "type": "EXPRESSIVENESS",
+          "state": "NOT_EVALUABLE",
+          "score": null
+        },
+        {
+          "type": "FLUENCY",
+          "state": "NOT_EVALUABLE",
+          "score": null
+        },
+        {
+          "type": "PRONUNCIATION",
+          "state": "NOT_EVALUABLE",
+          "score": null
+        },
+        {
+          "type": "INTERACTION",
+          "state": "NOT_EVALUABLE",
+          "score": null
+        }
+      ],
+      "result": 72
+    },
+    {
+      "metrics": [
+        {
+          "type": "GRAMMAR",
+          "state": "EVALUATED",
+          "score": 61.0
+        },
+        {
+          "type": "VOCABULARY",
+          "state": "NOT_EVALUABLE",
+          "score": null
+        },
+        {
+          "type": "NATURALNESS",
+          "state": "NOT_EVALUABLE",
+          "score": null
+        },
+        {
+          "type": "MEANING",
+          "state": "NOT_EVALUABLE",
+          "score": null
+        },
+        {
+          "type": "EXPRESSIVENESS",
+          "state": "NOT_EVALUABLE",
+          "score": null
+        },
+        {
+          "type": "FLUENCY",
+          "state": "NOT_EVALUABLE",
+          "score": null
+        },
+        {
+          "type": "PRONUNCIATION",
+          "state": "NOT_EVALUABLE",
+          "score": null
+        },
+        {
+          "type": "INTERACTION",
+          "state": "EVALUATED",
+          "score": 85.5
+        }
+      ],
+      "result": 76
+    },
+    {
+      "metrics": [
+        {
+          "type": "GRAMMAR",
+          "state": "EVALUATED",
+          "score": 61.0
+        },
+        {
+          "type": "VOCABULARY",
+          "state": "EVALUATED",
+          "score": 64.5
+        },
+        {
+          "type": "NATURALNESS",
+          "state": "EVALUATED",
+          "score": 68.0
+        },
+        {
+          "type": "MEANING",
+          "state": "EVALUATED",
+          "score": 71.5
+        },
+        {
+          "type": "EXPRESSIVENESS",
+          "state": "EVALUATED",
+          "score": 75.0
+        },
+        {
+          "type": "FLUENCY",
+          "state": "EVALUATED",
+          "score": 78.5
+        },
+        {
+          "type": "PRONUNCIATION",
+          "state": "EVALUATED",
+          "score": 82.0
+        },
+        {
+          "type": "INTERACTION",
+          "state": "EVALUATED",
+          "score": 85.5
+        }
+      ],
+      "result": 75
+    }
+  ],
+  "assistance": [
+    {
+      "types": [],
+      "result": "NONE"
+    },
+    {
+      "types": [
+        "REPLAY"
+      ],
+      "result": "NONE"
+    },
+    {
+      "types": [
+        "HINT"
+      ],
+      "result": "ASSISTED"
+    },
+    {
+      "types": [
+        "TRANSLATION"
+      ],
+      "result": "ASSISTED"
+    },
+    {
+      "types": [
+        "SAMPLE_ANSWER"
+      ],
+      "result": "GUIDED"
+    },
+    {
+      "types": [
+        "HINT",
+        "SAMPLE_ANSWER"
+      ],
+      "result": "GUIDED"
+    }
+  ],
+  "unsupported": {
+    "READ_ALOUD": {
+      "PRONUNCIATION": "TEXT_EVALUATOR_HAS_NO_ACOUSTIC_EVIDENCE",
+      "FLUENCY": "NO_VERIFIED_TEMPORAL_FLUENCY_MEASUREMENTS",
+      "GRAMMAR": "READ_ALOUD_COPIED_TEXT_IS_NOT_SPONTANEOUS_LANGUAGE_EVIDENCE",
+      "VOCABULARY": "READ_ALOUD_COPIED_TEXT_IS_NOT_SPONTANEOUS_LANGUAGE_EVIDENCE",
+      "NATURALNESS": "READ_ALOUD_COPIED_TEXT_IS_NOT_SPONTANEOUS_LANGUAGE_EVIDENCE",
+      "EXPRESSIVENESS": "READ_ALOUD_COPIED_TEXT_IS_NOT_SPONTANEOUS_LANGUAGE_EVIDENCE",
+      "INTERACTION": "READ_ALOUD_COPIED_TEXT_IS_NOT_SPONTANEOUS_LANGUAGE_EVIDENCE"
+    },
+    "GUIDED": {
+      "PRONUNCIATION": "TEXT_EVALUATOR_HAS_NO_ACOUSTIC_EVIDENCE",
+      "FLUENCY": "NO_VERIFIED_TEMPORAL_FLUENCY_MEASUREMENTS"
+    },
+    "FREE": {
+      "PRONUNCIATION": "TEXT_EVALUATOR_HAS_NO_ACOUSTIC_EVIDENCE",
+      "FLUENCY": "NO_VERIFIED_TEMPORAL_FLUENCY_MEASUREMENTS"
+    }
+  }
+}

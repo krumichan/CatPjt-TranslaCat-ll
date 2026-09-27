@@ -1,0 +1,446 @@
+[
+  {
+    "itemType": "LISTENING_DICTATION",
+    "request": {
+      "requestId": "lt:synthetic:eval:2:v1:r0",
+      "idempotencyKey": "lt:synthetic:eval:2:v1:r0",
+      "sessionId": 1,
+      "itemId": 2,
+      "domain": "LISTENING",
+      "itemType": "LISTENING_DICTATION",
+      "promptText": "합성 안내",
+      "answer": "Synthetic missing answer",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "complexityBand": 3,
+      "sourceText": "Synthetic source answer",
+      "referenceMeanings": [
+        "합성 해석 하나",
+        "합성 해석 둘"
+      ],
+      "keyMeaningUnits": [
+        "synthetic unit one",
+        "synthetic unit two"
+      ],
+      "translationSourceText": null,
+      "providedFacts": [],
+      "requiredIntents": [],
+      "responseConstraints": [],
+      "focusMetrics": [],
+      "manualRetryAttempt": 0
+    },
+    "providerOutput": {
+      "evaluationConfidence": 0.9,
+      "metrics": [
+        {
+          "type": "MEANING_FIDELITY",
+          "score": 80,
+          "confidence": 0.9,
+          "evidence": [
+            {
+              "metric": "MEANING_FIDELITY",
+              "feedback": "합성 근거",
+              "severity": "INFO"
+            }
+          ]
+        },
+        {
+          "type": "DETAIL_AND_NUANCE",
+          "score": 70,
+          "confidence": 0.9,
+          "evidence": [
+            {
+              "metric": "DETAIL_AND_NUANCE",
+              "feedback": "합성 근거",
+              "severity": "INFO"
+            }
+          ]
+        },
+        {
+          "type": "ORIGIN_NATURALNESS",
+          "score": 90,
+          "confidence": 0.9,
+          "evidence": [
+            {
+              "metric": "ORIGIN_NATURALNESS",
+              "feedback": "합성 근거",
+              "severity": "INFO"
+            }
+          ]
+        }
+      ],
+      "deliveredMeaningUnits": [
+        "synthetic unit one"
+      ],
+      "omittedMeaningUnits": [
+        "synthetic unit two"
+      ],
+      "misunderstoodMeaningUnits": [],
+      "addedInformation": [],
+      "recommendedInterpretations": [
+        "합성 해석 하나",
+        "합성 해석 둘"
+      ],
+      "strengths": [
+        "합성 강점"
+      ],
+      "improvements": [
+        "합성 개선"
+      ]
+    },
+    "prompt": "",
+    "response": {
+      "requestId": "lt:synthetic:eval:2:v1:r0",
+      "sessionId": 1,
+      "itemId": 2,
+      "domain": "LISTENING",
+      "itemType": "LISTENING_DICTATION",
+      "evaluable": true,
+      "score": 77,
+      "confidence": 1.0,
+      "transcript": null,
+      "metrics": [
+        {
+          "type": "TOKEN_RECOGNITION",
+          "state": "EVALUATED",
+          "score": 67.0,
+          "confidence": 1.0,
+          "summary": null,
+          "evidence": [
+            {
+              "startMs": null,
+              "endMs": null,
+              "reference": null,
+              "recognized": null,
+              "metric": "TOKEN_RECOGNITION",
+              "severity": "INFO",
+              "feedback": "들은 Token의 인식 정확도를 확인했습니다."
+            }
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "OMISSION_ADDITION_ORDER",
+          "state": "EVALUATED",
+          "score": 100.0,
+          "confidence": 1.0,
+          "summary": null,
+          "evidence": [
+            {
+              "startMs": null,
+              "endMs": null,
+              "reference": null,
+              "recognized": null,
+              "metric": "OMISSION_ADDITION_ORDER",
+              "severity": "INFO",
+              "feedback": "누락·추가·어순 Alignment를 확인했습니다."
+            }
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "ORTHOGRAPHY",
+          "state": "EVALUATED",
+          "score": 77.0,
+          "confidence": 1.0,
+          "summary": null,
+          "evidence": [
+            {
+              "startMs": null,
+              "endMs": null,
+              "reference": null,
+              "recognized": null,
+              "metric": "ORTHOGRAPHY",
+              "severity": "INFO",
+              "feedback": "Locale 정규화 후 표기 정확도를 확인했습니다."
+            }
+          ],
+          "notEvaluableReason": null
+        }
+      ],
+      "strengths": [
+        "정확히 인식한 Token을 기준으로 문장을 재구성했습니다."
+      ],
+      "improvements": [
+        "다르게 받아씀: 원문 「source」 / 내 답변 「missing」. 원문 구간 「synthetic source answer」 / 내 답변 구간 「synthetic missing answer」. 비슷하게 들린 소리를 원문과 비교하며 해당 구간을 다시 확인해 보세요."
+      ],
+      "recommendedAnswers": [
+        "Synthetic source answer"
+      ],
+      "detailedFeedback": [
+        {
+          "category": "TOKEN_RECOGNITION",
+          "severity": "IMPROVEMENT",
+          "original": "missing",
+          "corrected": "source",
+          "explanation": "원문 「source」를 「missing」로 다르게 받아썼습니다."
+        }
+      ],
+      "assessmentSignals": [
+        {
+          "domain": "LISTENING",
+          "metric": "TOKEN_RECOGNITION",
+          "score": 67.0,
+          "confidence": 1.0
+        },
+        {
+          "domain": "LISTENING",
+          "metric": "OMISSION_ADDITION_ORDER",
+          "score": 100.0,
+          "confidence": 1.0
+        },
+        {
+          "domain": "LISTENING",
+          "metric": "ORTHOGRAPHY",
+          "score": 77.0,
+          "confidence": 1.0
+        }
+      ],
+      "reasonCode": null,
+      "evaluationVersion": "listening-evaluation",
+      "promptVersion": null,
+      "usage": {
+        "latencyMs": 0,
+        "inputTokens": 0,
+        "outputTokens": 0,
+        "provider": null,
+        "model": null,
+        "promptVersion": null,
+        "evaluationVersion": null
+      }
+    }
+  },
+  {
+    "itemType": "LISTENING_INTERPRETATION",
+    "request": {
+      "requestId": "lt:synthetic:eval:2:v1:r0",
+      "idempotencyKey": "lt:synthetic:eval:2:v1:r0",
+      "sessionId": 1,
+      "itemId": 2,
+      "domain": "LISTENING",
+      "itemType": "LISTENING_INTERPRETATION",
+      "promptText": "합성 안내",
+      "answer": "Synthetic missing answer",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "complexityBand": 3,
+      "sourceText": "Synthetic source answer",
+      "referenceMeanings": [
+        "합성 해석 하나",
+        "합성 해석 둘"
+      ],
+      "keyMeaningUnits": [
+        "synthetic unit one",
+        "synthetic unit two"
+      ],
+      "translationSourceText": null,
+      "providedFacts": [],
+      "requiredIntents": [],
+      "responseConstraints": [],
+      "focusMetrics": [],
+      "manualRetryAttempt": 0
+    },
+    "providerOutput": {
+      "evaluationConfidence": 0.9,
+      "metrics": [
+        {
+          "type": "MEANING_FIDELITY",
+          "score": 80,
+          "confidence": 0.9,
+          "evidence": [
+            {
+              "metric": "MEANING_FIDELITY",
+              "feedback": "합성 근거",
+              "severity": "INFO"
+            }
+          ]
+        },
+        {
+          "type": "DETAIL_AND_NUANCE",
+          "score": 70,
+          "confidence": 0.9,
+          "evidence": [
+            {
+              "metric": "DETAIL_AND_NUANCE",
+              "feedback": "합성 근거",
+              "severity": "INFO"
+            }
+          ]
+        },
+        {
+          "type": "ORIGIN_NATURALNESS",
+          "score": 90,
+          "confidence": 0.9,
+          "evidence": [
+            {
+              "metric": "ORIGIN_NATURALNESS",
+              "feedback": "합성 근거",
+              "severity": "INFO"
+            }
+          ]
+        }
+      ],
+      "deliveredMeaningUnits": [
+        "synthetic unit one"
+      ],
+      "omittedMeaningUnits": [
+        "synthetic unit two"
+      ],
+      "misunderstoodMeaningUnits": [],
+      "addedInformation": [],
+      "recommendedInterpretations": [
+        "합성 해석 하나",
+        "합성 해석 둘"
+      ],
+      "strengths": [
+        "합성 강점"
+      ],
+      "improvements": [
+        "합성 개선"
+      ]
+    },
+    "prompt": "Evaluate the learner answer against sourceText and keyMeaningUnits. Do not calculate the final weighted score or profile signals. Every evidence.severity MUST be exactly INFO, LOW, MEDIUM, or HIGH. Every metrics[].score MUST use a 0 to 100 point scale; return 92, never 0.92. evaluationConfidence and every metrics[].confidence MUST be numeric values from 0.0 to 1.0; never use a 1-5 scale or percentage. Use only exact request.keyMeaningUnits strings in deliveredMeaningUnits, omittedMeaningUnits, and misunderstoodMeaningUnits. Write recommendedInterpretations and all learner-facing feedback in originLanguage (ko).\n\n{\"requestId\":\"lt:synthetic:eval:2:v1:r0\",\"idempotencyKey\":\"lt:synthetic:eval:2:v1:r0\",\"itemId\":2,\"attemptId\":1,\"evaluationPurpose\":\"PRACTICE\",\"answerRevealed\":false,\"assistanceUsage\":[],\"policyVersion\":\"level-test-multiskill\",\"modelConfigVersion\":\"level-test-model-config\",\"manualRetryAttempt\":0,\"sourceText\":\"Synthetic source answer\",\"referenceMeanings\":[\"합성 해석 하나\",\"합성 해석 둘\"],\"keyMeaningUnits\":[\"synthetic unit one\",\"synthetic unit two\"],\"answer\":\"Synthetic missing answer\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\"}",
+    "response": {
+      "requestId": "lt:synthetic:eval:2:v1:r0",
+      "sessionId": 1,
+      "itemId": 2,
+      "domain": "LISTENING",
+      "itemType": "LISTENING_INTERPRETATION",
+      "evaluable": true,
+      "score": 79,
+      "confidence": 0.9,
+      "transcript": null,
+      "metrics": [
+        {
+          "type": "MEANING_FIDELITY",
+          "state": "EVALUATED",
+          "score": 80.0,
+          "confidence": 0.9,
+          "summary": null,
+          "evidence": [
+            {
+              "startMs": null,
+              "endMs": null,
+              "reference": null,
+              "recognized": null,
+              "metric": "MEANING_FIDELITY",
+              "severity": "INFO",
+              "feedback": "합성 근거"
+            }
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "DETAIL_AND_NUANCE",
+          "state": "EVALUATED",
+          "score": 70.0,
+          "confidence": 0.9,
+          "summary": null,
+          "evidence": [
+            {
+              "startMs": null,
+              "endMs": null,
+              "reference": null,
+              "recognized": null,
+              "metric": "DETAIL_AND_NUANCE",
+              "severity": "INFO",
+              "feedback": "합성 근거"
+            }
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "ORIGIN_NATURALNESS",
+          "state": "EVALUATED",
+          "score": 90.0,
+          "confidence": 0.9,
+          "summary": null,
+          "evidence": [
+            {
+              "startMs": null,
+              "endMs": null,
+              "reference": null,
+              "recognized": null,
+              "metric": "ORIGIN_NATURALNESS",
+              "severity": "INFO",
+              "feedback": "합성 근거"
+            }
+          ],
+          "notEvaluableReason": null
+        }
+      ],
+      "strengths": [
+        "합성 강점"
+      ],
+      "improvements": [
+        "합성 개선"
+      ],
+      "recommendedAnswers": [
+        "합성 해석 하나",
+        "합성 해석 둘"
+      ],
+      "detailedFeedback": [
+        {
+          "category": "MEANING_FIDELITY",
+          "severity": "INFO",
+          "original": null,
+          "corrected": null,
+          "explanation": "합성 근거"
+        },
+        {
+          "category": "DETAIL_AND_NUANCE",
+          "severity": "INFO",
+          "original": null,
+          "corrected": null,
+          "explanation": "합성 근거"
+        },
+        {
+          "category": "ORIGIN_NATURALNESS",
+          "severity": "INFO",
+          "original": null,
+          "corrected": null,
+          "explanation": "합성 근거"
+        },
+        {
+          "category": "MEANING_OMISSION",
+          "severity": "OMISSION",
+          "original": null,
+          "corrected": "synthetic unit two",
+          "explanation": "답변에서 핵심 의미가 빠졌습니다: synthetic unit two"
+        }
+      ],
+      "assessmentSignals": [
+        {
+          "domain": "LISTENING",
+          "metric": "MEANING_FIDELITY",
+          "score": 80.0,
+          "confidence": 0.9
+        },
+        {
+          "domain": "LISTENING",
+          "metric": "DETAIL_AND_NUANCE",
+          "score": 70.0,
+          "confidence": 0.9
+        },
+        {
+          "domain": "LISTENING",
+          "metric": "ORIGIN_NATURALNESS",
+          "score": 90.0,
+          "confidence": 0.9
+        }
+      ],
+      "reasonCode": null,
+      "evaluationVersion": "listening-evaluation",
+      "promptVersion": null,
+      "usage": {
+        "latencyMs": 0,
+        "inputTokens": 0,
+        "outputTokens": 0,
+        "provider": null,
+        "model": null,
+        "promptVersion": null,
+        "evaluationVersion": null
+      }
+    }
+  }
+]

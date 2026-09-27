@@ -4,8 +4,8 @@ import jp.co.translacat.languagelearning.features.growth.domain.model.*
 import jp.co.translacat.languagelearning.features.growth.domain.repository.GrowthRepository
 import jp.co.translacat.languagelearning.features.growth.infrastructure.persistence.table.*
 import org.jetbrains.exposed.v1.core.*
-import org.jetbrains.exposed.v1.jdbc.*
 import org.jetbrains.exposed.v1.core.statements.UpdateBuilder
+import org.jetbrains.exposed.v1.jdbc.*
 import java.time.LocalDate
 
 internal class ExposedGrowthRepository(private val guard: () -> Unit) : GrowthRepository {
@@ -64,13 +64,22 @@ internal class ExposedGrowthRepository(private val guard: () -> Unit) : GrowthRe
 
     override fun profile(userId: Long): GrowthProfile? {
         guard()
-        return GrowthProfilesTable.selectAll().where { (GrowthProfilesTable.userId eq userId) }.singleOrNull()?.let(::toGrowthProfile)
+        return GrowthProfilesTable.selectAll()
+            .where { (GrowthProfilesTable.userId eq userId) }
+            .singleOrNull()
+            ?.let(::toGrowthProfile)
     }
 
     override fun saveProfile(value: GrowthProfile) {
         guard()
         if (profile(value.userId) == null) GrowthProfilesTable.insert { writeGrowthProfile(it, value, creating = true) }
-        else check(GrowthProfilesTable.update({ (GrowthProfilesTable.userId eq value.userId) }) { writeGrowthProfile(it, value) } == 1)
+        else check(
+            GrowthProfilesTable.update({ (GrowthProfilesTable.userId eq value.userId) }) {
+                writeGrowthProfile(
+                    it, value,
+                )
+            } == 1,
+        )
     }
 
     private fun toKeywordMastery(row: ResultRow) = KeywordMastery(
@@ -99,13 +108,28 @@ internal class ExposedGrowthRepository(private val guard: () -> Unit) : GrowthRe
 
     override fun mastery(userId: Long, key: String): KeywordMastery? {
         guard()
-        return KeywordMasteriesTable.selectAll().where { (KeywordMasteriesTable.userId eq userId) and (KeywordMasteriesTable.canonicalKey eq key) }.singleOrNull()?.let(::toKeywordMastery)
+        return KeywordMasteriesTable.selectAll()
+            .where { (KeywordMasteriesTable.userId eq userId) and (KeywordMasteriesTable.canonicalKey eq key) }
+            .singleOrNull()
+            ?.let(::toKeywordMastery)
     }
 
     override fun saveMastery(value: KeywordMastery) {
         guard()
-        if (mastery(value.userId, value.canonicalKey) == null) KeywordMasteriesTable.insert { writeKeywordMastery(it, value, creating = true) }
-        else check(KeywordMasteriesTable.update({ (KeywordMasteriesTable.userId eq value.userId) and (KeywordMasteriesTable.canonicalKey eq value.canonicalKey) }) { writeKeywordMastery(it, value) } == 1)
+        if (mastery(value.userId, value.canonicalKey) == null) KeywordMasteriesTable.insert {
+            writeKeywordMastery(
+                it, value, creating = true,
+            )
+        }
+        else check(
+            KeywordMasteriesTable.update(
+                { (KeywordMasteriesTable.userId eq value.userId) and (KeywordMasteriesTable.canonicalKey eq value.canonicalKey) },
+            ) {
+                writeKeywordMastery(
+                    it, value,
+                )
+            } == 1,
+        )
     }
 
     private fun toGrowthSignal(row: ResultRow) = GrowthSignal(
@@ -132,13 +156,28 @@ internal class ExposedGrowthRepository(private val guard: () -> Unit) : GrowthRe
 
     override fun signal(userId: Long, type: String, key: String): GrowthSignal? {
         guard()
-        return GrowthSignalsTable.selectAll().where { (GrowthSignalsTable.userId eq userId) and (GrowthSignalsTable.type eq type) and (GrowthSignalsTable.key eq key) }.singleOrNull()?.let(::toGrowthSignal)
+        return GrowthSignalsTable.selectAll()
+            .where { (GrowthSignalsTable.userId eq userId) and (GrowthSignalsTable.type eq type) and (GrowthSignalsTable.key eq key) }
+            .singleOrNull()
+            ?.let(::toGrowthSignal)
     }
 
     override fun saveSignal(value: GrowthSignal) {
         guard()
-        if (signal(value.userId, value.type, value.key) == null) GrowthSignalsTable.insert { writeGrowthSignal(it, value, creating = true) }
-        else check(GrowthSignalsTable.update({ (GrowthSignalsTable.userId eq value.userId) and (GrowthSignalsTable.type eq value.type) and (GrowthSignalsTable.key eq value.key) }) { writeGrowthSignal(it, value) } == 1)
+        if (signal(value.userId, value.type, value.key) == null) GrowthSignalsTable.insert {
+            writeGrowthSignal(
+                it, value, creating = true,
+            )
+        }
+        else check(
+            GrowthSignalsTable.update(
+                { (GrowthSignalsTable.userId eq value.userId) and (GrowthSignalsTable.type eq value.type) and (GrowthSignalsTable.key eq value.key) },
+            ) {
+                writeGrowthSignal(
+                    it, value,
+                )
+            } == 1,
+        )
     }
 
     private fun toGrowthEvidence(row: ResultRow) = GrowthEvidence(
@@ -175,13 +214,27 @@ internal class ExposedGrowthRepository(private val guard: () -> Unit) : GrowthRe
 
     override fun evidence(userId: Long, source: String, pattern: String, direction: String): GrowthEvidence? {
         guard()
-        return GrowthEvidenceTable.selectAll().where { (GrowthEvidenceTable.userId eq userId) and (GrowthEvidenceTable.evidenceSource eq source) and (GrowthEvidenceTable.patternKey eq pattern) and (GrowthEvidenceTable.direction eq direction) }.singleOrNull()?.let(::toGrowthEvidence)
+        return GrowthEvidenceTable.selectAll()
+            .where { (GrowthEvidenceTable.userId eq userId) and (GrowthEvidenceTable.evidenceSource eq source) and (GrowthEvidenceTable.patternKey eq pattern) and (GrowthEvidenceTable.direction eq direction) }
+            .singleOrNull()
+            ?.let(::toGrowthEvidence)
     }
 
     override fun saveEvidence(value: GrowthEvidence) {
         guard()
-        if (evidence(value.userId, value.source, value.patternKey, value.direction) == null) GrowthEvidenceTable.insert { writeGrowthEvidence(it, value, creating = true) }
-        else check(GrowthEvidenceTable.update({ (GrowthEvidenceTable.userId eq value.userId) and (GrowthEvidenceTable.evidenceSource eq value.source) and (GrowthEvidenceTable.patternKey eq value.patternKey) and (GrowthEvidenceTable.direction eq value.direction) }) { writeGrowthEvidence(it, value) } == 1)
+        if (evidence(
+                value.userId, value.source, value.patternKey, value.direction,
+            ) == null
+        ) GrowthEvidenceTable.insert { writeGrowthEvidence(it, value, creating = true) }
+        else check(
+            GrowthEvidenceTable.update(
+                { (GrowthEvidenceTable.userId eq value.userId) and (GrowthEvidenceTable.evidenceSource eq value.source) and (GrowthEvidenceTable.patternKey eq value.patternKey) and (GrowthEvidenceTable.direction eq value.direction) },
+            ) {
+                writeGrowthEvidence(
+                    it, value,
+                )
+            } == 1,
+        )
     }
 
     private fun toGrowthActivity(row: ResultRow) = GrowthActivity(
@@ -223,17 +276,52 @@ internal class ExposedGrowthRepository(private val guard: () -> Unit) : GrowthRe
 
     override fun activity(userId: Long, source: String, referenceId: String): GrowthActivity? {
         guard()
-        return GrowthActivitiesTable.selectAll().where { (GrowthActivitiesTable.userId eq userId) and (GrowthActivitiesTable.activitySource eq source) and (GrowthActivitiesTable.referenceId eq referenceId) }.singleOrNull()?.let(::toGrowthActivity)
+        return GrowthActivitiesTable.selectAll()
+            .where { (GrowthActivitiesTable.userId eq userId) and (GrowthActivitiesTable.activitySource eq source) and (GrowthActivitiesTable.referenceId eq referenceId) }
+            .singleOrNull()
+            ?.let(::toGrowthActivity)
     }
 
     override fun saveActivity(value: GrowthActivity): GrowthActivity {
         guard()
-        val id = if (value.id == 0L) GrowthActivitiesTable.insert { writeGrowthActivity(it, value, creating = true) }[GrowthActivitiesTable.id]
+        val id = if (value.id == 0L) GrowthActivitiesTable.insert {
+            writeGrowthActivity(
+                it, value, creating = true,
+            )
+        }[GrowthActivitiesTable.id]
         else {
-            check(GrowthActivitiesTable.update({ (GrowthActivitiesTable.id eq value.id) and (GrowthActivitiesTable.userId eq value.userId) }) { writeGrowthActivity(it, value) } == 1)
+            check(
+                GrowthActivitiesTable.update(
+                    { (GrowthActivitiesTable.id eq value.id) and (GrowthActivitiesTable.userId eq value.userId) },
+                ) {
+                    writeGrowthActivity(
+                        it, value,
+                    )
+                } == 1,
+            )
             value.id
         }
+        advanceActivityRevision(value.userId)
         return value.copy(id = id)
+    }
+
+    override fun activityRevision(userId: Long): Long {
+        guard()
+        return GrowthActivityRevisionsTable.selectAll().where { GrowthActivityRevisionsTable.userId eq userId }
+            .singleOrNull()?.get(GrowthActivityRevisionsTable.revision) ?: 0L
+    }
+
+    private fun advanceActivityRevision(userId: Long) {
+        // 시각 정밀도와 무관하게 변경을 구분한다. 활동/지표 저장 실패 시 이 증분도 롤백된다.
+        GrowthActivityRevisionsTable.insertIgnore {
+            it[GrowthActivityRevisionsTable.userId] = userId
+            it[revision] = 0
+        }
+        check(
+            GrowthActivityRevisionsTable.update({ GrowthActivityRevisionsTable.userId eq userId }) {
+                it[revision] = GrowthActivityRevisionsTable.revision + 1
+            } == 1,
+        )
     }
 
     private fun toGrowthMetric(row: ResultRow) = GrowthMetric(
@@ -254,9 +342,11 @@ internal class ExposedGrowthRepository(private val guard: () -> Unit) : GrowthRe
 
     override fun signals(userId: Long, type: String, limit: Int): List<GrowthSignal> {
         guard()
-        return GrowthSignalsTable.selectAll().where { (GrowthSignalsTable.userId eq userId) and (GrowthSignalsTable.type eq type) }
+        return GrowthSignalsTable.selectAll()
+            .where { (GrowthSignalsTable.userId eq userId) and (GrowthSignalsTable.type eq type) }
             .orderBy(GrowthSignalsTable.occurrenceCount to SortOrder.DESC, GrowthSignalsTable.id to SortOrder.ASC)
-            .limit(limit).map(::toGrowthSignal)
+            .limit(limit)
+            .map(::toGrowthSignal)
     }
 
     override fun evidenceList(userId: Long, source: String?, limit: Int): List<GrowthEvidence> {
@@ -267,7 +357,9 @@ internal class ExposedGrowthRepository(private val guard: () -> Unit) : GrowthRe
             .limit(limit).map(::toGrowthEvidence)
     }
 
-    override fun activities(userId: Long, source: String?, from: LocalDate, to: LocalDate, afterId: Long, limit: Int): List<GrowthActivity> {
+    override fun activities(
+        userId: Long, source: String?, from: LocalDate, to: LocalDate, afterId: Long, limit: Int,
+    ): List<GrowthActivity> {
         guard()
         val query = GrowthActivitiesTable.selectAll().where {
             (GrowthActivitiesTable.userId eq userId) and (GrowthActivitiesTable.learningDate greaterEq from) and
@@ -302,5 +394,6 @@ internal class ExposedGrowthRepository(private val guard: () -> Unit) : GrowthRe
                 it[updatedAt] = owner[GrowthActivitiesTable.updatedAt]
             }
         }
+        advanceActivityRevision(owner[GrowthActivitiesTable.userId])
     }
 }

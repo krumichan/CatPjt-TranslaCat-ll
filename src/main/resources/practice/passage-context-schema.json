@@ -1,0 +1,85 @@
+{
+  "type": "object",
+  "properties": {
+    "passageId": {
+      "type": "string"
+    },
+    "passageText": {
+      "type": "string"
+    },
+    "inferencePlans": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "questionOrder": {
+            "type": "integer"
+          },
+          "clueQuote": {
+            "type": "string"
+          },
+          "unstatedInference": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "questionOrder",
+          "clueQuote",
+          "unstatedInference"
+        ]
+      }
+    },
+    "questionPlans": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "globalOrder": {
+            "type": "integer"
+          },
+          "skillTag": {
+            "type": "string"
+          },
+          "difficulty": {
+            "type": "string",
+            "enum": [
+              "EASIER",
+              "CURRENT",
+              "CHALLENGE"
+            ]
+          },
+          "complexityBand": {
+            "type": "integer"
+          },
+          "clueQuote": {
+            "type": "string"
+          },
+          "questionFocus": {
+            "type": "string"
+          },
+          "unstatedInference": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "globalOrder",
+          "skillTag",
+          "difficulty",
+          "complexityBand",
+          "clueQuote",
+          "questionFocus",
+          "unstatedInference"
+        ]
+      }
+    }
+  },
+  "required": [
+    "passageId",
+    "passageText",
+    "inferencePlans",
+    "questionPlans"
+  ]
+}

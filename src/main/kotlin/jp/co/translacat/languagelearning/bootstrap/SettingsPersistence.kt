@@ -4,7 +4,6 @@ import io.ktor.server.application.*
 import io.ktor.server.plugins.di.*
 import jp.co.translacat.languagelearning.features.settings.application.*
 import jp.co.translacat.languagelearning.features.settings.infrastructure.persistence.ExposedAdminSettingsUnitOfWork
-import jp.co.translacat.languagelearning.features.settings.infrastructure.persistence.ExposedSelectionSettingsUnitOfWork
 import jp.co.translacat.languagelearning.features.settings.infrastructure.persistence.ExposedSettingsReadQueries
 import jp.co.translacat.languagelearning.features.settings.infrastructure.persistence.ExposedSettingsUnitOfWork
 import jp.co.translacat.languagelearning.shared.persistence.DatabaseFactory
@@ -30,10 +29,5 @@ internal fun Application.configureSettingsPersistence(factory: DatabaseFactory, 
         provide<GetOrCreateUserSettings> { service }
         provide<SettingsOperations> { operations }
         provide<SettingsServiceOperations> { serviceOperations }
-        provide<RememberListeningSelection> {
-            RememberListeningSelection(
-                ExposedSelectionSettingsUnitOfWork(unitOfWork),
-            )
-        }
     }
 }

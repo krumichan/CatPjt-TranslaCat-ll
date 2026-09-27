@@ -1,0 +1,195 @@
+{
+  "$defs": {
+    "MetricEvidence": {
+      "additionalProperties": false,
+      "properties": {
+        "startMs": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Startms"
+        },
+        "endMs": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Endms"
+        },
+        "reference": {
+          "anyOf": [
+            {
+              "maxLength": 1000,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reference"
+        },
+        "recognized": {
+          "anyOf": [
+            {
+              "maxLength": 1000,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Recognized"
+        },
+        "metric": {
+          "title": "Metric",
+          "type": "string"
+        },
+        "severity": {
+          "default": "INFO",
+          "pattern": "^(INFO|LOW|MEDIUM|HIGH)$",
+          "title": "Severity",
+          "type": "string"
+        },
+        "feedback": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "title": "Feedback",
+          "type": "string"
+        }
+      },
+      "required": [
+        "metric",
+        "feedback"
+      ],
+      "title": "MetricEvidence",
+      "type": "object"
+    },
+    "SummaryMetricPayload": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "$ref": "#/$defs/SummaryMetricType"
+        },
+        "score": {
+          "maximum": 100,
+          "minimum": 0,
+          "title": "Score",
+          "type": "number"
+        },
+        "confidence": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Confidence",
+          "type": "number"
+        },
+        "evidence": {
+          "items": {
+            "$ref": "#/$defs/MetricEvidence"
+          },
+          "maxItems": 30,
+          "minItems": 1,
+          "title": "Evidence",
+          "type": "array"
+        }
+      },
+      "required": [
+        "type",
+        "score",
+        "confidence",
+        "evidence"
+      ],
+      "title": "SummaryMetricPayload",
+      "type": "object"
+    },
+    "SummaryMetricType": {
+      "enum": [
+        "GIST_COVERAGE",
+        "KEY_POINT_COVERAGE",
+        "LANGUAGE_CLARITY"
+      ],
+      "title": "SummaryMetricType",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "evaluationConfidence": {
+      "maximum": 1,
+      "minimum": 0,
+      "title": "Evaluationconfidence",
+      "type": "number"
+    },
+    "metrics": {
+      "items": {
+        "$ref": "#/$defs/SummaryMetricPayload"
+      },
+      "maxItems": 3,
+      "minItems": 3,
+      "title": "Metrics",
+      "type": "array"
+    },
+    "strengths": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 20,
+      "title": "Strengths",
+      "type": "array"
+    },
+    "improvements": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 20,
+      "title": "Improvements",
+      "type": "array"
+    },
+    "recommendedSummaries": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 3,
+      "minItems": 2,
+      "title": "Recommendedsummaries",
+      "type": "array"
+    },
+    "deliveredKeyPoints": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 30,
+      "title": "Deliveredkeypoints",
+      "type": "array"
+    },
+    "omittedKeyPoints": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 30,
+      "title": "Omittedkeypoints",
+      "type": "array"
+    }
+  },
+  "required": [
+    "evaluationConfidence",
+    "metrics",
+    "recommendedSummaries"
+  ],
+  "title": "SummaryEvaluationPayload",
+  "type": "object"
+}

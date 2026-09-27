@@ -1,0 +1,56 @@
+{
+  "$defs": {
+    "LevelTestBestOptionAdvantage": {
+      "enum": [
+        "CLEAR",
+        "WEAK",
+        "NONE"
+      ],
+      "title": "LevelTestBestOptionAdvantage",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "verifiable": {
+      "title": "Verifiable",
+      "type": "boolean"
+    },
+    "plausibleOptionKeys": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 4,
+      "title": "Plausibleoptionkeys",
+      "type": "array"
+    },
+    "nearEquivalentOptionKeys": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 4,
+      "title": "Nearequivalentoptionkeys",
+      "type": "array"
+    },
+    "bestOptionKey": {
+      "enum": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "title": "Bestoptionkey",
+      "type": "string"
+    },
+    "bestOptionAdvantage": {
+      "$ref": "#/$defs/LevelTestBestOptionAdvantage"
+    }
+  },
+  "required": [
+    "verifiable",
+    "bestOptionKey",
+    "bestOptionAdvantage"
+  ],
+  "title": "LevelTestChoiceSemanticVerificationPayload",
+  "type": "object"
+}

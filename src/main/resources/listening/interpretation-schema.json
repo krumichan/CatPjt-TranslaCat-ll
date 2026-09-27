@@ -1,0 +1,211 @@
+{
+  "$defs": {
+    "InterpretationMetricPayload": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "$ref": "#/$defs/InterpretationMetricType"
+        },
+        "score": {
+          "maximum": 100,
+          "minimum": 0,
+          "title": "Score",
+          "type": "number"
+        },
+        "confidence": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Confidence",
+          "type": "number"
+        },
+        "evidence": {
+          "items": {
+            "$ref": "#/$defs/MetricEvidence"
+          },
+          "maxItems": 30,
+          "minItems": 1,
+          "title": "Evidence",
+          "type": "array"
+        }
+      },
+      "required": [
+        "type",
+        "score",
+        "confidence",
+        "evidence"
+      ],
+      "title": "InterpretationMetricPayload",
+      "type": "object"
+    },
+    "InterpretationMetricType": {
+      "enum": [
+        "MEANING_FIDELITY",
+        "DETAIL_AND_NUANCE",
+        "ORIGIN_NATURALNESS"
+      ],
+      "title": "InterpretationMetricType",
+      "type": "string"
+    },
+    "MetricEvidence": {
+      "additionalProperties": false,
+      "properties": {
+        "startMs": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Startms"
+        },
+        "endMs": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Endms"
+        },
+        "reference": {
+          "anyOf": [
+            {
+              "maxLength": 1000,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reference"
+        },
+        "recognized": {
+          "anyOf": [
+            {
+              "maxLength": 1000,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Recognized"
+        },
+        "metric": {
+          "title": "Metric",
+          "type": "string"
+        },
+        "severity": {
+          "default": "INFO",
+          "pattern": "^(INFO|LOW|MEDIUM|HIGH)$",
+          "title": "Severity",
+          "type": "string"
+        },
+        "feedback": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "title": "Feedback",
+          "type": "string"
+        }
+      },
+      "required": [
+        "metric",
+        "feedback"
+      ],
+      "title": "MetricEvidence",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "evaluationConfidence": {
+      "maximum": 1,
+      "minimum": 0,
+      "title": "Evaluationconfidence",
+      "type": "number"
+    },
+    "metrics": {
+      "items": {
+        "$ref": "#/$defs/InterpretationMetricPayload"
+      },
+      "maxItems": 3,
+      "minItems": 3,
+      "title": "Metrics",
+      "type": "array"
+    },
+    "deliveredMeaningUnits": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 30,
+      "title": "Deliveredmeaningunits",
+      "type": "array"
+    },
+    "omittedMeaningUnits": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 30,
+      "title": "Omittedmeaningunits",
+      "type": "array"
+    },
+    "misunderstoodMeaningUnits": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 30,
+      "title": "Misunderstoodmeaningunits",
+      "type": "array"
+    },
+    "addedInformation": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 30,
+      "title": "Addedinformation",
+      "type": "array"
+    },
+    "recommendedInterpretations": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 3,
+      "minItems": 2,
+      "title": "Recommendedinterpretations",
+      "type": "array"
+    },
+    "strengths": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 20,
+      "title": "Strengths",
+      "type": "array"
+    },
+    "improvements": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 20,
+      "title": "Improvements",
+      "type": "array"
+    }
+  },
+  "required": [
+    "evaluationConfidence",
+    "metrics",
+    "recommendedInterpretations"
+  ],
+  "title": "InterpretationEvaluationPayload",
+  "type": "object"
+}

@@ -1,0 +1,185 @@
+{
+  "candidateId": "synthetic-note",
+  "contentHash": "8109a9050f5badef0f29250b2ddd9d2e18b3d45e58688c8898eacdb73304b45b",
+  "draft": {
+    "diversityMetadata": {
+      "communicativeIntent": "REQUEST",
+      "grammarFocusCodes": [],
+      "lexicalFocusCodes": [],
+      "requiresBackgroundKnowledge": false,
+      "scenarioCategory": "WORK",
+      "semanticSummary": "회의 변경 요청",
+      "taskArchetype": "meeting request"
+    },
+    "focusMetrics": [
+      "MEANING"
+    ],
+    "focusReason": "Explain the condition.",
+    "keywords": [],
+    "originText": "회의 시간을 내일로 바꿔도 될까요? 이유를 설명해 주세요.",
+    "providedFacts": [],
+    "requiredIntents": [],
+    "responseConstraints": []
+  },
+  "localized": {
+    "diversityMetadata": {
+      "communicativeIntent": "REQUEST",
+      "grammarFocusCodes": [],
+      "lexicalFocusCodes": [],
+      "requiresBackgroundKnowledge": false,
+      "scenarioCategory": "WORK",
+      "semanticSummary": "회의 변경 요청",
+      "taskArchetype": "meeting request"
+    },
+    "focusMetrics": [
+      "MEANING"
+    ],
+    "focusReason": "조건과 이유를 연결해 표현합니다.",
+    "keywords": [],
+    "originText": "회의 시간을 내일로 바꿔도 될까요? 이유를 설명해 주세요.",
+    "providedFacts": [],
+    "requiredIntents": [],
+    "responseConstraints": []
+  },
+  "localizedContentHash": "bd599897993eda501af3a0b8e17014570e85af234da9399cae5ec5628fa14d98",
+  "notePrompt": "<writing-note-data>\n{\"candidateId\":\"synthetic-note\",\"contentHash\":\"8109a9050f5badef0f29250b2ddd9d2e18b3d45e58688c8898eacdb73304b45b\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"writingType\":\"FREE\",\"content\":{\"originText\":\"회의 시간을 내일로 바꿔도 될까요? 이유를 설명해 주세요.\",\"providedFacts\":[],\"requiredIntents\":[],\"responseConstraints\":[],\"focusReason\":\"Explain the condition.\"}}\n</writing-note-data>",
+  "noteSchema": {
+    "additionalProperties": false,
+    "properties": {
+      "candidateId": {
+        "maxLength": 100,
+        "minLength": 1,
+        "title": "Candidateid",
+        "type": "string"
+      },
+      "contentHash": {
+        "pattern": "^[a-f0-9]{64}$",
+        "title": "Contenthash",
+        "type": "string"
+      },
+      "focusReason": {
+        "maxLength": 1000,
+        "minLength": 1,
+        "title": "Focusreason",
+        "type": "string"
+      }
+    },
+    "required": [
+      "candidateId",
+      "contentHash",
+      "focusReason"
+    ],
+    "title": "LocalizedWritingNote",
+    "type": "object"
+  },
+  "request": {
+    "contentDiversityPolicyVersion": null,
+    "difficultyDistribution": {
+      "challenge": 0,
+      "normal": 1,
+      "review": 0
+    },
+    "diversityContext": {
+      "crossFeatureRecent": [],
+      "currentSession": [],
+      "exactContentHashes90d": [],
+      "sameFeatureRecent": []
+    },
+    "generationDate": "2026-09-26",
+    "languageComplexity": {
+      "baseComplexityBand": 3,
+      "baseLevelScore": null,
+      "policyVersion": "language-complexity",
+      "targetComplexityBand": null
+    },
+    "learningLanguage": "en",
+    "learningProfile": null,
+    "originLanguage": "ko",
+    "recentEvaluationSummary": null,
+    "recentMistakes": [],
+    "recentlyLearnedExpressions": [],
+    "requestId": "synthetic-draft",
+    "selectedKeywords": [],
+    "sentenceCount": 1,
+    "snapshotId": null,
+    "writingType": "FREE"
+  },
+  "reviewId": "synthetic-note-review",
+  "reviewPrompt": "<writing-review-data>\n{\"candidateId\":\"synthetic-note-review\",\"contentHash\":\"bd599897993eda501af3a0b8e17014570e85af234da9399cae5ec5628fa14d98\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"writingType\":\"FREE\",\"segments\":[{\"id\":\"O1\",\"field\":\"originText\",\"text\":\"회의 시간을 내일로 바꿔도 될까요? 이유를 설명해 주세요.\"},{\"id\":\"N1\",\"field\":\"focusReason\",\"text\":\"조건과 이유를 연결해 표현합니다.\"}]}\n</writing-review-data>",
+  "reviewSchema": {
+    "additionalProperties": false,
+    "properties": {
+      "candidateId": {
+        "maxLength": 100,
+        "minLength": 1,
+        "title": "Candidateid",
+        "type": "string"
+      },
+      "confidence": {
+        "anyOf": [
+          {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "title": "Confidence"
+      },
+      "contentHash": {
+        "pattern": "^[a-f0-9]{64}$",
+        "title": "Contenthash",
+        "type": "string"
+      },
+      "evidenceSegmentIds": {
+        "items": {
+          "enum": [
+            "O1",
+            "N1"
+          ],
+          "maxLength": 12,
+          "minLength": 2,
+          "type": "string"
+        },
+        "maxItems": 12,
+        "title": "Evidencesegmentids",
+        "type": "array"
+      },
+      "issues": {
+        "items": {
+          "enum": [
+            "ORIGIN_LANGUAGE",
+            "ANSWER_LEAK",
+            "UNSUPPORTED_FOCUS_REASON",
+            "INTERNAL_CLAIM"
+          ],
+          "type": "string"
+        },
+        "maxItems": 4,
+        "title": "Issues",
+        "type": "array"
+      },
+      "verdict": {
+        "enum": [
+          "PASS",
+          "REJECT",
+          "UNSURE"
+        ],
+        "title": "Verdict",
+        "type": "string"
+      }
+    },
+    "required": [
+      "candidateId",
+      "contentHash",
+      "confidence",
+      "verdict",
+      "issues",
+      "evidenceSegmentIds"
+    ],
+    "title": "NoteReview",
+    "type": "object"
+  }
+}

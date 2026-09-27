@@ -1,0 +1,12 @@
+{
+  "gaps": {
+    "REGISTER_NOT_INTEGRATED": "Revise the cited local phrasing so the same speaker's bounded stance and reference must stay coherent across the interacting relations. Keep the existing participants and intent; do not substitute formal endings, difficult words or padding.",
+    "RELATIONS_NOT_INTERDEPENDENT": "Edit the cited existing relation rather than add another independent step: make one condition, exception or evidence limitation change the scope of a second claim/action. Preserve the original facts and scene; make this dependency visible and necessary in an adequate answer. Removing it must change the message.",
+    "SCOPE_TOO_ROUTINE": "Strengthen the cited hedge/limit into an explicit distinction between what is asserted or promised and what remains conditional or is not implied. Couple this boundary to the existing condition or evidence, without contradicting the facts."
+  },
+  "missing": {
+    "COHERENT_REGISTER": "Integrate the revised relations into one coherent message with precise reference and controlled stance suitable for the existing participants. Do not add jargon, ornate phrasing, or polite suffixes as a substitute for language-production demand.",
+    "PRECISE_STANCE": "Qualify the existing claim or commitment with an explicit scope boundary. Preserve the original factual anchors and main purpose, but clarify what remains conditional or outside the commitment. The boundary must change the meaning if removed.",
+    "SCOPE_INTERACTION": "Revise the existing message so a condition and an explicit exception interact, or an evidence limitation constrains a dependent action. State the relation in the visible task; do not merely append an unrelated sentence or a conjunction."
+  }
+}

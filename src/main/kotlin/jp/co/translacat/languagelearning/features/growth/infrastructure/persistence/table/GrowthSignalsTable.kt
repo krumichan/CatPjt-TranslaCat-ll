@@ -2,7 +2,6 @@ package jp.co.translacat.languagelearning.features.growth.infrastructure.persist
 
 import jp.co.translacat.languagelearning.features.learner.infrastructure.persistence.table.LearnersTable
 import org.jetbrains.exposed.v1.core.Table
-import org.jetbrains.exposed.v1.javatime.date
 import org.jetbrains.exposed.v1.javatime.datetime
 
 internal object GrowthSignalsTable : Table("language_learning_profile_signal") {
@@ -17,5 +16,8 @@ internal object GrowthSignalsTable : Table("language_learning_profile_signal") {
     val createdBy = varchar("created_by", 100)
     val updatedBy = varchar("updated_by", 100)
     override val primaryKey = PrimaryKey(id)
-    init { uniqueIndex(userId, type, key) }
+
+    init {
+        uniqueIndex(userId, type, key)
+    }
 }

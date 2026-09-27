@@ -40,6 +40,7 @@ internal class ExposedLevelTestUnitOfWork(
         }
         val scope = object : LevelTestTransaction {
             override val records = ExposedLevelTestRepository(guard)
+            override val history = ExposedLevelGenerationHistory(guard)
             override val nowUtc get() = now()
         }
         try {

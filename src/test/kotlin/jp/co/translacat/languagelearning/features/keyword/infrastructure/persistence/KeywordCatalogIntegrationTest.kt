@@ -75,7 +75,7 @@ class KeywordCatalogIntegrationTest {
                 "INSERT INTO language_learning_settings_selection_delivery(user_id,last_event_id,base_revision,applied_revision) VALUES(123,99,UTC_TIMESTAMP(6),NULL)",
             )
             DatabaseFactory(settings).use { factory ->
-                assertEquals(CurrentSchema.VERSION - 4, factory.migrationReport.migrationsExecuted)
+                assertEquals(CurrentSchema.MIGRATION_COUNT - 4, factory.migrationReport.migrationsExecuted)
                 assertEquals(CurrentSchema.VERSION, factory.migrationReport.schemaVersion.toInt())
             }
             assertEquals(

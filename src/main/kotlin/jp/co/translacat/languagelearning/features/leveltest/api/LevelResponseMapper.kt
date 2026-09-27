@@ -103,17 +103,6 @@ internal object LevelResponseMapper {
             },
         )
 
-    fun baseline(value: LevelBaseline) = LevelCompletionDto(
-        value.userId, value.sessionId, value.completionId, value.sessionType, value.score,
-        value.proficiencyBand, value.completedDate.toString(), value.startedAt.toString(), value.completedAt.toString(),
-    )
-
-    fun completion(value: LevelSession) = LevelCompletionDto(
-        value.userId, value.id, value.uid, value.sessionType, checkNotNull(value.baseLevelScore),
-        checkNotNull(value.proficiencyBand), checkNotNull(value.completedDate).toString(), value.startedAt.toString(),
-        checkNotNull(value.completedAt).toString(),
-    )
-
     private fun guidance(value: JsonObject): LevelTestTaskGuidanceResponseDto? {
         val facts = value.strings("providedFacts");
         val intents = value.strings("requiredIntents");

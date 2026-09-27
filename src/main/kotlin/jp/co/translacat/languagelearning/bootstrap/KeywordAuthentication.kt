@@ -26,7 +26,6 @@ internal fun AuthenticationConfig.configureKeywordAuthentication(settings: Inter
         validate { credential ->
             try {
                 val payload = credential.payload
-                val started = payload.getClaim("keywordLearningStarted").asBoolean()
                 val user = InternalClaimsPolicy.validate(
                     InternalClaims(
                         payload.subject,
@@ -36,7 +35,7 @@ internal fun AuthenticationConfig.configureKeywordAuthentication(settings: Inter
                     ),
                     settings, clock.instant(),
                 )
-                if (user == null || started == null) null else KeywordPrincipal(user, started)
+                if (user == null) null else KeywordPrincipal(user)
             } catch (_: Exception) {
                 null
             }

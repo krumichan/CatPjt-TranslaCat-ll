@@ -1,0 +1,649 @@
+{
+  "cases": [
+    {
+      "accepted": [],
+      "acceptedDecision": true,
+      "content": "회의 시간을 내일로 바꿔도 될까요? 이유를 설명해 주세요.",
+      "context": {
+        "crossFeatureRecent": [],
+        "currentSession": [],
+        "exactContentHashes90d": [],
+        "sameFeatureRecent": []
+      },
+      "finalizedMetadata": {
+        "communicativeIntent": "REQUEST",
+        "contentHash": "a80a86252fbb0c86a6a7b5c816dc6adde291c8076ac04a7ecc7719d7e0f28efc",
+        "grammarFocusCodes": [
+          "G1"
+        ],
+        "lexicalFocusCodes": [],
+        "requiresBackgroundKnowledge": false,
+        "scenarioCategory": "WORK",
+        "semanticSummary": "회의 변경 요청",
+        "similarityKey": "b0ff6610c601b23264b36153cd655fd80f0e7e8a2f4846fe39dee34e87f50c1c",
+        "taskArchetype": "meeting request"
+      },
+      "metadata": {
+        "communicativeIntent": "REQUEST",
+        "grammarFocusCodes": [
+          "G1"
+        ],
+        "lexicalFocusCodes": [],
+        "requiresBackgroundKnowledge": false,
+        "scenarioCategory": "WORK",
+        "semanticSummary": "회의 변경 요청",
+        "taskArchetype": "meeting request"
+      },
+      "name": "empty",
+      "reason": null,
+      "relaxed": false
+    },
+    {
+      "accepted": [],
+      "acceptedDecision": false,
+      "content": "회의 시간을 내일로 바꿔도 될까요? 이유를 설명해 주세요.",
+      "context": {
+        "crossFeatureRecent": [],
+        "currentSession": [],
+        "exactContentHashes90d": [],
+        "sameFeatureRecent": []
+      },
+      "finalizedMetadata": {
+        "communicativeIntent": "REQUEST",
+        "contentHash": "a80a86252fbb0c86a6a7b5c816dc6adde291c8076ac04a7ecc7719d7e0f28efc",
+        "grammarFocusCodes": [
+          "G1"
+        ],
+        "lexicalFocusCodes": [],
+        "requiresBackgroundKnowledge": true,
+        "scenarioCategory": "WORK",
+        "semanticSummary": "회의 변경 요청",
+        "similarityKey": "b0ff6610c601b23264b36153cd655fd80f0e7e8a2f4846fe39dee34e87f50c1c",
+        "taskArchetype": "meeting request"
+      },
+      "metadata": {
+        "communicativeIntent": "REQUEST",
+        "grammarFocusCodes": [
+          "G1"
+        ],
+        "lexicalFocusCodes": [],
+        "requiresBackgroundKnowledge": true,
+        "scenarioCategory": "WORK",
+        "semanticSummary": "회의 변경 요청",
+        "taskArchetype": "meeting request"
+      },
+      "name": "background",
+      "reason": "BACKGROUND_KNOWLEDGE",
+      "relaxed": false
+    },
+    {
+      "accepted": [],
+      "acceptedDecision": false,
+      "content": "회의 시간을 내일로 바꿔도 될까요? 이유를 설명해 주세요.",
+      "context": {
+        "crossFeatureRecent": [],
+        "currentSession": [],
+        "exactContentHashes90d": [
+          "a80a86252fbb0c86a6a7b5c816dc6adde291c8076ac04a7ecc7719d7e0f28efc"
+        ],
+        "sameFeatureRecent": []
+      },
+      "finalizedMetadata": {
+        "communicativeIntent": "REQUEST",
+        "contentHash": "a80a86252fbb0c86a6a7b5c816dc6adde291c8076ac04a7ecc7719d7e0f28efc",
+        "grammarFocusCodes": [
+          "G1"
+        ],
+        "lexicalFocusCodes": [],
+        "requiresBackgroundKnowledge": false,
+        "scenarioCategory": "WORK",
+        "semanticSummary": "회의 변경 요청",
+        "similarityKey": "b0ff6610c601b23264b36153cd655fd80f0e7e8a2f4846fe39dee34e87f50c1c",
+        "taskArchetype": "meeting request"
+      },
+      "metadata": {
+        "communicativeIntent": "REQUEST",
+        "grammarFocusCodes": [
+          "G1"
+        ],
+        "lexicalFocusCodes": [],
+        "requiresBackgroundKnowledge": false,
+        "scenarioCategory": "WORK",
+        "semanticSummary": "회의 변경 요청",
+        "taskArchetype": "meeting request"
+      },
+      "name": "exact90d",
+      "reason": "EXACT",
+      "relaxed": false
+    },
+    {
+      "accepted": [],
+      "acceptedDecision": false,
+      "content": "회의 시간을 내일로 바꿔도 될까요? 이유를 설명해 주세요.",
+      "context": {
+        "crossFeatureRecent": [],
+        "currentSession": [],
+        "exactContentHashes90d": [],
+        "sameFeatureRecent": [
+          {
+            "ageDays": null,
+            "communicativeIntent": null,
+            "content": "회의 시간을 내일로 바꿔도 될까요? 이유를 설명해 주세요.",
+            "contentHash": null,
+            "grammarFocusCodes": [],
+            "scenarioCategory": null,
+            "semanticSummary": null,
+            "sourceType": "WRITING",
+            "taskArchetype": null
+          }
+        ]
+      },
+      "finalizedMetadata": {
+        "communicativeIntent": "REQUEST",
+        "contentHash": "a80a86252fbb0c86a6a7b5c816dc6adde291c8076ac04a7ecc7719d7e0f28efc",
+        "grammarFocusCodes": [
+          "G1"
+        ],
+        "lexicalFocusCodes": [],
+        "requiresBackgroundKnowledge": false,
+        "scenarioCategory": "WORK",
+        "semanticSummary": "회의 변경 요청",
+        "similarityKey": "b0ff6610c601b23264b36153cd655fd80f0e7e8a2f4846fe39dee34e87f50c1c",
+        "taskArchetype": "meeting request"
+      },
+      "metadata": {
+        "communicativeIntent": "REQUEST",
+        "grammarFocusCodes": [
+          "G1"
+        ],
+        "lexicalFocusCodes": [],
+        "requiresBackgroundKnowledge": false,
+        "scenarioCategory": "WORK",
+        "semanticSummary": "회의 변경 요청",
+        "taskArchetype": "meeting request"
+      },
+      "name": "exactHistory",
+      "reason": "EXACT",
+      "relaxed": false
+    },
+    {
+      "accepted": [
+        {
+          "content": "다른 주제를 설명해 주세요.",
+          "metadata": {
+            "communicativeIntent": "REQUEST",
+            "grammarFocusCodes": [
+              "G1"
+            ],
+            "lexicalFocusCodes": [],
+            "requiresBackgroundKnowledge": false,
+            "scenarioCategory": "WORK",
+            "semanticSummary": "회의 변경 요청",
+            "taskArchetype": "meeting request"
+          }
+        }
+      ],
+      "acceptedDecision": false,
+      "content": "회의 일정을 다음 주로 옮기고 싶습니다. 가능한 시간을 알려 주세요.",
+      "context": {
+        "crossFeatureRecent": [],
+        "currentSession": [],
+        "exactContentHashes90d": [],
+        "sameFeatureRecent": []
+      },
+      "finalizedMetadata": {
+        "communicativeIntent": "REQUEST",
+        "contentHash": "a38ea1fdfef0566482c3b9750caf462081d94a843af774a3a3e02cc4e13e2173",
+        "grammarFocusCodes": [
+          "G1"
+        ],
+        "lexicalFocusCodes": [],
+        "requiresBackgroundKnowledge": false,
+        "scenarioCategory": "WORK",
+        "semanticSummary": "회의 변경 요청",
+        "similarityKey": "d2f0046207da236c6372605c2934165c5394e9da0c30f4d646215b5cb81b4d3d",
+        "taskArchetype": "meeting request"
+      },
+      "metadata": {
+        "communicativeIntent": "REQUEST",
+        "grammarFocusCodes": [
+          "G1"
+        ],
+        "lexicalFocusCodes": [],
+        "requiresBackgroundKnowledge": false,
+        "scenarioCategory": "WORK",
+        "semanticSummary": "회의 변경 요청",
+        "taskArchetype": "meeting request"
+      },
+      "name": "acceptedStructural",
+      "reason": "STRUCTURAL",
+      "relaxed": false
+    },
+    {
+      "accepted": [
+        {
+          "content": "회의 시간을 내일로 바꿔도 될까요? 이유를 설명해 주세요.",
+          "metadata": {
+            "communicativeIntent": "REQUEST",
+            "grammarFocusCodes": [
+              "G1"
+            ],
+            "lexicalFocusCodes": [],
+            "requiresBackgroundKnowledge": false,
+            "scenarioCategory": "WORK",
+            "semanticSummary": "회의 변경 요청",
+            "taskArchetype": "meeting request"
+          }
+        }
+      ],
+      "acceptedDecision": false,
+      "content": "회의 시간을 내일로 바꿔도 될까요? 이유를 설명해 주세요.",
+      "context": {
+        "crossFeatureRecent": [],
+        "currentSession": [],
+        "exactContentHashes90d": [],
+        "sameFeatureRecent": []
+      },
+      "finalizedMetadata": {
+        "communicativeIntent": "REQUEST",
+        "contentHash": "a80a86252fbb0c86a6a7b5c816dc6adde291c8076ac04a7ecc7719d7e0f28efc",
+        "grammarFocusCodes": [
+          "G1"
+        ],
+        "lexicalFocusCodes": [],
+        "requiresBackgroundKnowledge": false,
+        "scenarioCategory": "WORK",
+        "semanticSummary": "회의 변경 요청",
+        "similarityKey": "b0ff6610c601b23264b36153cd655fd80f0e7e8a2f4846fe39dee34e87f50c1c",
+        "taskArchetype": "different"
+      },
+      "metadata": {
+        "communicativeIntent": "REQUEST",
+        "grammarFocusCodes": [
+          "G1"
+        ],
+        "lexicalFocusCodes": [],
+        "requiresBackgroundKnowledge": false,
+        "scenarioCategory": "WORK",
+        "semanticSummary": "회의 변경 요청",
+        "taskArchetype": "different"
+      },
+      "name": "acceptedSimilarity",
+      "reason": "SIMILARITY",
+      "relaxed": false
+    },
+    {
+      "accepted": [],
+      "acceptedDecision": false,
+      "content": "회의 일정을 다음 주로 옮기고 싶습니다. 가능한 시간을 알려 주세요.",
+      "context": {
+        "crossFeatureRecent": [],
+        "currentSession": [
+          {
+            "ageDays": null,
+            "communicativeIntent": "REQUEST",
+            "content": "다른 주제를 설명해 주세요.",
+            "contentHash": null,
+            "grammarFocusCodes": [],
+            "scenarioCategory": "WORK",
+            "semanticSummary": null,
+            "sourceType": "WRITING",
+            "taskArchetype": "meeting request"
+          }
+        ],
+        "exactContentHashes90d": [],
+        "sameFeatureRecent": []
+      },
+      "finalizedMetadata": {
+        "communicativeIntent": "REQUEST",
+        "contentHash": "a38ea1fdfef0566482c3b9750caf462081d94a843af774a3a3e02cc4e13e2173",
+        "grammarFocusCodes": [
+          "G1"
+        ],
+        "lexicalFocusCodes": [],
+        "requiresBackgroundKnowledge": false,
+        "scenarioCategory": "WORK",
+        "semanticSummary": "회의 변경 요청",
+        "similarityKey": "d2f0046207da236c6372605c2934165c5394e9da0c30f4d646215b5cb81b4d3d",
+        "taskArchetype": "meeting request"
+      },
+      "metadata": {
+        "communicativeIntent": "REQUEST",
+        "grammarFocusCodes": [
+          "G1"
+        ],
+        "lexicalFocusCodes": [],
+        "requiresBackgroundKnowledge": false,
+        "scenarioCategory": "WORK",
+        "semanticSummary": "회의 변경 요청",
+        "taskArchetype": "meeting request"
+      },
+      "name": "sessionStructural",
+      "reason": "STRUCTURAL",
+      "relaxed": false
+    },
+    {
+      "accepted": [],
+      "acceptedDecision": false,
+      "content": "회의 일정을 다음 주로 옮기고 싶습니다. 가능한 시간을 알려 주세요.",
+      "context": {
+        "crossFeatureRecent": [],
+        "currentSession": [],
+        "exactContentHashes90d": [],
+        "sameFeatureRecent": [
+          {
+            "ageDays": 7,
+            "communicativeIntent": "REQUEST",
+            "content": "다른 주제를 설명해 주세요.",
+            "contentHash": null,
+            "grammarFocusCodes": [
+              "G1"
+            ],
+            "scenarioCategory": "WORK",
+            "semanticSummary": null,
+            "sourceType": "WRITING",
+            "taskArchetype": "meeting request"
+          }
+        ]
+      },
+      "finalizedMetadata": {
+        "communicativeIntent": "REQUEST",
+        "contentHash": "a38ea1fdfef0566482c3b9750caf462081d94a843af774a3a3e02cc4e13e2173",
+        "grammarFocusCodes": [
+          "G1"
+        ],
+        "lexicalFocusCodes": [],
+        "requiresBackgroundKnowledge": false,
+        "scenarioCategory": "WORK",
+        "semanticSummary": "회의 변경 요청",
+        "similarityKey": "d2f0046207da236c6372605c2934165c5394e9da0c30f4d646215b5cb81b4d3d",
+        "taskArchetype": "meeting request"
+      },
+      "metadata": {
+        "communicativeIntent": "REQUEST",
+        "grammarFocusCodes": [
+          "G1"
+        ],
+        "lexicalFocusCodes": [],
+        "requiresBackgroundKnowledge": false,
+        "scenarioCategory": "WORK",
+        "semanticSummary": "회의 변경 요청",
+        "taskArchetype": "meeting request"
+      },
+      "name": "recentStructural",
+      "reason": "STRUCTURAL",
+      "relaxed": false
+    },
+    {
+      "accepted": [],
+      "acceptedDecision": true,
+      "content": "회의 일정을 다음 주로 옮기고 싶습니다. 가능한 시간을 알려 주세요.",
+      "context": {
+        "crossFeatureRecent": [],
+        "currentSession": [],
+        "exactContentHashes90d": [],
+        "sameFeatureRecent": [
+          {
+            "ageDays": 8,
+            "communicativeIntent": "REQUEST",
+            "content": "다른 주제를 설명해 주세요.",
+            "contentHash": null,
+            "grammarFocusCodes": [
+              "G1"
+            ],
+            "scenarioCategory": "WORK",
+            "semanticSummary": null,
+            "sourceType": "WRITING",
+            "taskArchetype": "meeting request"
+          }
+        ]
+      },
+      "finalizedMetadata": {
+        "communicativeIntent": "REQUEST",
+        "contentHash": "a38ea1fdfef0566482c3b9750caf462081d94a843af774a3a3e02cc4e13e2173",
+        "grammarFocusCodes": [
+          "G1"
+        ],
+        "lexicalFocusCodes": [],
+        "requiresBackgroundKnowledge": false,
+        "scenarioCategory": "WORK",
+        "semanticSummary": "회의 변경 요청",
+        "similarityKey": "d2f0046207da236c6372605c2934165c5394e9da0c30f4d646215b5cb81b4d3d",
+        "taskArchetype": "meeting request"
+      },
+      "metadata": {
+        "communicativeIntent": "REQUEST",
+        "grammarFocusCodes": [
+          "G1"
+        ],
+        "lexicalFocusCodes": [],
+        "requiresBackgroundKnowledge": false,
+        "scenarioCategory": "WORK",
+        "semanticSummary": "회의 변경 요청",
+        "taskArchetype": "meeting request"
+      },
+      "name": "recentOldStructuralAllowed",
+      "reason": null,
+      "relaxed": false
+    },
+    {
+      "accepted": [],
+      "acceptedDecision": false,
+      "content": "회의 시간을 내일로 바꿔도 될까요? 이유를 설명해 주세요. 지금요",
+      "context": {
+        "crossFeatureRecent": [
+          {
+            "ageDays": null,
+            "communicativeIntent": null,
+            "content": "회의 시간을 내일로 바꿔도 될까요? 이유를 설명해 주세요.",
+            "contentHash": null,
+            "grammarFocusCodes": [],
+            "scenarioCategory": null,
+            "semanticSummary": null,
+            "sourceType": "LISTENING",
+            "taskArchetype": null
+          }
+        ],
+        "currentSession": [],
+        "exactContentHashes90d": [],
+        "sameFeatureRecent": []
+      },
+      "finalizedMetadata": {
+        "communicativeIntent": "REQUEST",
+        "contentHash": "9c577fccfc1d8e876191cc7c7715042045b2b07a5a4d84b4e48e37a3860b5960",
+        "grammarFocusCodes": [
+          "G1"
+        ],
+        "lexicalFocusCodes": [],
+        "requiresBackgroundKnowledge": false,
+        "scenarioCategory": "WORK",
+        "semanticSummary": "회의 변경 요청",
+        "similarityKey": "f747f610d86e46aa8f7082256e8872ad2585f473f2476915139cc0197e5e241f",
+        "taskArchetype": "meeting request"
+      },
+      "metadata": {
+        "communicativeIntent": "REQUEST",
+        "grammarFocusCodes": [
+          "G1"
+        ],
+        "lexicalFocusCodes": [],
+        "requiresBackgroundKnowledge": false,
+        "scenarioCategory": "WORK",
+        "semanticSummary": "회의 변경 요청",
+        "taskArchetype": "meeting request"
+      },
+      "name": "crossSimilarity",
+      "reason": "SIMILARITY",
+      "relaxed": false
+    },
+    {
+      "accepted": [],
+      "acceptedDecision": true,
+      "content": "회의 시간을 내일로 바꿔도 될까요? 이유를 설명해 주세요. 지금요",
+      "context": {
+        "crossFeatureRecent": [
+          {
+            "ageDays": null,
+            "communicativeIntent": null,
+            "content": "회의 시간을 내일로 바꿔도 될까요? 이유를 설명해 주세요.",
+            "contentHash": null,
+            "grammarFocusCodes": [],
+            "scenarioCategory": null,
+            "semanticSummary": null,
+            "sourceType": "LISTENING",
+            "taskArchetype": null
+          }
+        ],
+        "currentSession": [],
+        "exactContentHashes90d": [],
+        "sameFeatureRecent": []
+      },
+      "finalizedMetadata": {
+        "communicativeIntent": "REQUEST",
+        "contentHash": "9c577fccfc1d8e876191cc7c7715042045b2b07a5a4d84b4e48e37a3860b5960",
+        "grammarFocusCodes": [
+          "G1"
+        ],
+        "lexicalFocusCodes": [],
+        "requiresBackgroundKnowledge": false,
+        "scenarioCategory": "WORK",
+        "semanticSummary": "회의 변경 요청",
+        "similarityKey": "f747f610d86e46aa8f7082256e8872ad2585f473f2476915139cc0197e5e241f",
+        "taskArchetype": "meeting request"
+      },
+      "metadata": {
+        "communicativeIntent": "REQUEST",
+        "grammarFocusCodes": [
+          "G1"
+        ],
+        "lexicalFocusCodes": [],
+        "requiresBackgroundKnowledge": false,
+        "scenarioCategory": "WORK",
+        "semanticSummary": "회의 변경 요청",
+        "taskArchetype": "meeting request"
+      },
+      "name": "crossSimilarityRelaxed",
+      "reason": null,
+      "relaxed": true
+    },
+    {
+      "accepted": [],
+      "acceptedDecision": false,
+      "content": "회의 일정을 다음 주로 옮기고 싶습니다. 가능한 시간을 알려 주세요.",
+      "context": {
+        "crossFeatureRecent": [],
+        "currentSession": [
+          {
+            "ageDays": null,
+            "communicativeIntent": "REQUEST",
+            "content": "다른 주제를 설명해 주세요.",
+            "contentHash": null,
+            "grammarFocusCodes": [],
+            "scenarioCategory": "WORK",
+            "semanticSummary": null,
+            "sourceType": "WRITING",
+            "taskArchetype": "meeting request"
+          }
+        ],
+        "exactContentHashes90d": [],
+        "sameFeatureRecent": []
+      },
+      "finalizedMetadata": {
+        "communicativeIntent": "REQUEST",
+        "contentHash": "a38ea1fdfef0566482c3b9750caf462081d94a843af774a3a3e02cc4e13e2173",
+        "grammarFocusCodes": [
+          "G1"
+        ],
+        "lexicalFocusCodes": [],
+        "requiresBackgroundKnowledge": false,
+        "scenarioCategory": "WORK",
+        "semanticSummary": "회의 변경 요청",
+        "similarityKey": "d2f0046207da236c6372605c2934165c5394e9da0c30f4d646215b5cb81b4d3d",
+        "taskArchetype": "meeting request"
+      },
+      "metadata": {
+        "communicativeIntent": "REQUEST",
+        "grammarFocusCodes": [
+          "G1"
+        ],
+        "lexicalFocusCodes": [],
+        "requiresBackgroundKnowledge": false,
+        "scenarioCategory": "WORK",
+        "semanticSummary": "회의 변경 요청",
+        "taskArchetype": "meeting request"
+      },
+      "name": "relaxedStillRejectsSession",
+      "reason": "STRUCTURAL",
+      "relaxed": true
+    },
+    {
+      "accepted": [],
+      "acceptedDecision": true,
+      "content": "ＡＢＣ！  회의　시간",
+      "context": {
+        "crossFeatureRecent": [],
+        "currentSession": [],
+        "exactContentHashes90d": [],
+        "sameFeatureRecent": []
+      },
+      "finalizedMetadata": {
+        "communicativeIntent": "DESCRIBE",
+        "contentHash": "cf5f23537fcf4296eed0f6ed9e0bcf8ef314ea12248bd1254c42934ae435a826",
+        "grammarFocusCodes": [
+          "G1"
+        ],
+        "lexicalFocusCodes": [],
+        "requiresBackgroundKnowledge": false,
+        "scenarioCategory": "LEARNING",
+        "semanticSummary": "회의 변경 요청",
+        "similarityKey": "753dca8798e2a18a53f3bb697c843cdc5428f93433a9c04eb92c5cfd83d525c9",
+        "taskArchetype": "normalization"
+      },
+      "metadata": {
+        "communicativeIntent": "DESCRIBE",
+        "grammarFocusCodes": [
+          "G1"
+        ],
+        "lexicalFocusCodes": [],
+        "requiresBackgroundKnowledge": false,
+        "scenarioCategory": "LEARNING",
+        "semanticSummary": "회의 변경 요청",
+        "taskArchetype": "normalization"
+      },
+      "name": "unicodeNormalize",
+      "reason": null,
+      "relaxed": false
+    }
+  ],
+  "cosine": [
+    {
+      "left": "회의 시간을 내일로 바꿔도 될까요? 이유를 설명해 주세요.",
+      "right": "회의 시간을 내일로 바꿔도 될까요? 이유를 설명해 주세요.",
+      "value": 1.0
+    },
+    {
+      "left": "회의 시간을 내일로 바꿔도 될까요? 이유를 설명해 주세요.",
+      "right": "회의 시간을 내일로 바꿔도 될까요? 이유를 설명해 주세요. 지금 알려 주세요.",
+      "value": 0.8765009801785554
+    },
+    {
+      "left": "회의 시간을 내일로 바꿔도 될까요? 이유를 설명해 주세요.",
+      "right": "회의 일정을 다음 주로 옮기고 싶습니다. 가능한 시간을 알려 주세요.",
+      "value": 0.08728715609439695
+    }
+  ],
+  "normalization": [
+    {
+      "input": "ＡＢＣ！  회의　시간",
+      "normalized": "abc 회의 시간"
+    },
+    {
+      "input": "Meeting, tomorrow?",
+      "normalized": "meeting tomorrow"
+    },
+    {
+      "input": "Straße",
+      "normalized": "strasse"
+    }
+  ]
+}

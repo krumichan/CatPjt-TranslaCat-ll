@@ -14,6 +14,23 @@ internal object ListeningTaskSelectionPolicy {
         setOf(COMPREHENSION), setOf(SUMMARY),
     )
 
+    fun tasksForMode(mode: String): List<ListeningTaskType> = when (mode) {
+        "DICTATION" -> listOf(DICTATION, INTERPRETATION)
+        "COMPREHENSION" -> listOf(COMPREHENSION)
+        "SUMMARY" -> listOf(SUMMARY)
+        else -> throw LearningBusinessException(
+            "LISTENING_INVALID_TASK_COMBINATION", "Listening Task 선택 조합이 허용되지 않습니다.",
+        )
+    }
+
+    fun validateForMode(mode: String, requested: List<ListeningTaskType?>): List<ListeningTaskType> {
+        val selected = validate(requested)
+        if (selected.toSet() != tasksForMode(mode).toSet()) {
+            throw LearningBusinessException("LISTENING_INVALID_TASK_COMBINATION", "Listening Task 선택 조합이 허용되지 않습니다.")
+        }
+        return selected
+    }
+
     fun validate(requested: List<ListeningTaskType?>): List<ListeningTaskType> {
         val selected = requested.filterNotNull()
         if (selected.isEmpty() || selected.size != requested.size || selected.toSet().size != selected.size || selected.toSet() !in allowed) {

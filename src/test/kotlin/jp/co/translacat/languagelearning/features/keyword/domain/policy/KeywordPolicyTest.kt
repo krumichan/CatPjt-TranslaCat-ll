@@ -28,6 +28,7 @@ class KeywordPolicyTest {
     }
 
     private val rows = listOf(SystemKeywordLocale(1, "ko-KR", "쇼핑"), SystemKeywordLocale(1, "ja-JP", "買い物"))
+
     @Test
     fun `한국어와 일본어 헤더 및 알 수 없는 로케일을 처리한다`() {
         assertEquals("쇼핑", KeywordDisplayPolicy.resolve(rows, "ko")[1]?.primary)

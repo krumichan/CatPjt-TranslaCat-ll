@@ -1,0 +1,12 @@
+{
+  "productionDemandDefinitions": {
+    "COHERENT_REGISTER": "Presence: reference and situation-appropriate stance/register matter to the required message. Advanced demand: the required answer must maintain coherent reference and controlled, context-appropriate stance across the interacting relations. Ordinary politeness alone is insufficient.",
+    "PRECISE_STANCE": "Presence: the required message qualifies a claim, conclusion or commitment. Advanced demand: the required answer must preserve a precisely bounded claim, conclusion or commitment; it distinguishes its scope and what is not asserted or promised.",
+    "SCOPE_INTERACTION": "Presence: the required message contains a condition, exception, concession or evidence/action relation. Advanced demand: the task requires interacting logical relations whose scope must be preserved together, not independent steps or one ordinary condition. Removing one qualification changes the application of another relation."
+  },
+  "productionGapDefinitions": {
+    "REGISTER_NOT_INTEGRATED": "Appropriate wording exists locally, but the task does not require maintaining precise reference and bounded stance across the coupled relations. Politeness alone is not integrated control. Do not demand formal vocabulary or jargon.",
+    "RELATIONS_NOT_INTERDEPENDENT": "Relations exist, but an adequate answer can express them as independent steps or a single ordinary condition. No qualification changes another relation's scope.",
+    "SCOPE_TOO_ROUTINE": "A hedge or limit exists, but an adequate answer need not distinguish the main claim/commitment from an exception, non-entailment or evidence-limited conclusion."
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "$defs": {
+    "SourceProposal": {
+      "additionalProperties": false,
+      "properties": {
+        "candidateId": {
+          "maxLength": 100,
+          "minLength": 1,
+          "title": "Candidateid",
+          "type": "string"
+        },
+        "contentHash": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Contenthash",
+          "type": "string"
+        },
+        "originText": {
+          "anyOf": [
+            {
+              "maxLength": 2000,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Origintext"
+        },
+        "status": {
+          "enum": [
+            "LOCALIZED",
+            "UNRECOVERABLE"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "candidateId",
+        "contentHash",
+        "status",
+        "originText"
+      ],
+      "title": "SourceProposal",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "candidateId": {
+      "maxLength": 100,
+      "minLength": 1,
+      "title": "Candidateid",
+      "type": "string"
+    },
+    "contentHash": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Contenthash",
+      "type": "string"
+    },
+    "items": {
+      "items": {
+        "$ref": "#/$defs/SourceProposal"
+      },
+      "maxItems": 2,
+      "minItems": 1,
+      "title": "Items",
+      "type": "array"
+    }
+  },
+  "required": [
+    "candidateId",
+    "contentHash",
+    "items"
+  ],
+  "title": "SourceProposalBatch",
+  "type": "object"
+}

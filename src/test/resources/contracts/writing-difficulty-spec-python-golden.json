@@ -1,0 +1,655 @@
+{
+  "bands": [
+    {
+      "baseBand": 1,
+      "difficulty": "REVIEW",
+      "targetBand": 1
+    },
+    {
+      "baseBand": 1,
+      "difficulty": "NORMAL",
+      "targetBand": 1
+    },
+    {
+      "baseBand": 1,
+      "difficulty": "CHALLENGE",
+      "targetBand": 2
+    },
+    {
+      "baseBand": 2,
+      "difficulty": "REVIEW",
+      "targetBand": 1
+    },
+    {
+      "baseBand": 2,
+      "difficulty": "NORMAL",
+      "targetBand": 2
+    },
+    {
+      "baseBand": 2,
+      "difficulty": "CHALLENGE",
+      "targetBand": 3
+    },
+    {
+      "baseBand": 3,
+      "difficulty": "REVIEW",
+      "targetBand": 2
+    },
+    {
+      "baseBand": 3,
+      "difficulty": "NORMAL",
+      "targetBand": 3
+    },
+    {
+      "baseBand": 3,
+      "difficulty": "CHALLENGE",
+      "targetBand": 4
+    },
+    {
+      "baseBand": 4,
+      "difficulty": "REVIEW",
+      "targetBand": 3
+    },
+    {
+      "baseBand": 4,
+      "difficulty": "NORMAL",
+      "targetBand": 4
+    },
+    {
+      "baseBand": 4,
+      "difficulty": "CHALLENGE",
+      "targetBand": 5
+    },
+    {
+      "baseBand": 5,
+      "difficulty": "REVIEW",
+      "targetBand": 4
+    },
+    {
+      "baseBand": 5,
+      "difficulty": "NORMAL",
+      "targetBand": 5
+    },
+    {
+      "baseBand": 5,
+      "difficulty": "CHALLENGE",
+      "targetBand": 5
+    }
+  ],
+  "reasons": [
+    {
+      "focusReason": "Synthetic note",
+      "originText": "Synthetic prompt",
+      "providedFacts": [],
+      "reason": null,
+      "requiredIntents": [],
+      "responseConstraints": []
+    },
+    {
+      "focusReason": "Synthetic note",
+      "originText": "",
+      "providedFacts": [],
+      "reason": "SPEC_ORIGIN_EMPTY",
+      "requiredIntents": [],
+      "responseConstraints": []
+    },
+    {
+      "focusReason": "Synthetic note",
+      "originText": "가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가",
+      "providedFacts": [],
+      "reason": "SPEC_ORIGIN_LENGTH",
+      "requiredIntents": [],
+      "responseConstraints": []
+    },
+    {
+      "focusReason": "",
+      "originText": "Synthetic prompt",
+      "providedFacts": [],
+      "reason": "SPEC_NOTE_LENGTH",
+      "requiredIntents": [],
+      "responseConstraints": []
+    }
+  ],
+  "specs": [
+    {
+      "originLanguage": "ko",
+      "spec": {
+        "guidance_max_characters_per_entry": 240,
+        "guidance_max_entries": 0,
+        "guidance_max_total_characters": 1800,
+        "guidance_min_entries": 0,
+        "note_max_characters": 400,
+        "origin_max_characters": 160,
+        "origin_max_surface_units": 2,
+        "semantic_recipe": "FOUNDATION: one direct familiar statement/question; basic words and simple production.",
+        "target_band": 1,
+        "version": "writing-difficulty-spec-v2",
+        "writing_type": "TRANSLATION"
+      },
+      "targetBand": 1,
+      "writingType": "TRANSLATION"
+    },
+    {
+      "originLanguage": "ko",
+      "spec": {
+        "guidance_max_characters_per_entry": 240,
+        "guidance_max_entries": 0,
+        "guidance_max_total_characters": 1800,
+        "guidance_min_entries": 0,
+        "note_max_characters": 400,
+        "origin_max_characters": 240,
+        "origin_max_surface_units": 3,
+        "semantic_recipe": "BASIC: familiar communication with one simple reason, sequence or ordinary polite request; limited linking.",
+        "target_band": 2,
+        "version": "writing-difficulty-spec-v2",
+        "writing_type": "TRANSLATION"
+      },
+      "targetBand": 2,
+      "writingType": "TRANSLATION"
+    },
+    {
+      "originLanguage": "ko",
+      "spec": {
+        "guidance_max_characters_per_entry": 240,
+        "guidance_max_entries": 0,
+        "guidance_max_total_characters": 1800,
+        "guidance_min_entries": 0,
+        "note_max_characters": 400,
+        "origin_max_characters": 420,
+        "origin_max_surface_units": 4,
+        "semantic_recipe": "INTERMEDIATE: a connected practical reason, condition or time relation with explicit, straightforward scope and suitable everyday/work register. Ordinary politeness alone does not make this band 4; do not require layered qualifications for this band.",
+        "target_band": 3,
+        "version": "writing-difficulty-spec-v2",
+        "writing_type": "TRANSLATION"
+      },
+      "targetBand": 3,
+      "writingType": "TRANSLATION"
+    },
+    {
+      "originLanguage": "ko",
+      "spec": {
+        "guidance_max_characters_per_entry": 240,
+        "guidance_max_entries": 0,
+        "guidance_max_total_characters": 1800,
+        "guidance_min_entries": 0,
+        "note_max_characters": 400,
+        "origin_max_characters": 650,
+        "origin_max_surface_units": 5,
+        "semantic_recipe": "UPPER_INTERMEDIATE: a nuanced condition/concession, indirect request or hedge that needs register-sensitive phrasing. A longer practical request or several independent steps do not by themselves reach band 5.",
+        "target_band": 4,
+        "version": "writing-difficulty-spec-v2",
+        "writing_type": "TRANSLATION"
+      },
+      "targetBand": 4,
+      "writingType": "TRANSLATION"
+    },
+    {
+      "originLanguage": "ko",
+      "spec": {
+        "guidance_max_characters_per_entry": 240,
+        "guidance_max_entries": 0,
+        "guidance_max_total_characters": 1800,
+        "guidance_min_entries": 0,
+        "note_max_characters": 400,
+        "origin_max_characters": 950,
+        "origin_max_surface_units": 6,
+        "semantic_recipe": "ADVANCED: interacting relations whose scope must be preserved together, a precisely bounded stance/claim/commitment, and coherent controlled register. For example, a commitment depends on a condition but is limited by an exception, or evidence supports only a qualified conclusion that constrains a further action. All needed facts must be supplied or freely chosen by the learner as the mode allows. Removing a qualification changes the claim, not just the sentence length. Familiar vocabulary is sufficient; technical knowledge, verbosity and isolated advanced phrases are not evidence of band 5. A short message can qualify if these demands are actually present.",
+        "target_band": 5,
+        "version": "writing-difficulty-spec-v2",
+        "writing_type": "TRANSLATION"
+      },
+      "targetBand": 5,
+      "writingType": "TRANSLATION"
+    },
+    {
+      "originLanguage": "ko",
+      "spec": {
+        "guidance_max_characters_per_entry": 240,
+        "guidance_max_entries": 3,
+        "guidance_max_total_characters": 1800,
+        "guidance_min_entries": 1,
+        "note_max_characters": 400,
+        "origin_max_characters": 600,
+        "origin_max_surface_units": 5,
+        "semantic_recipe": "FOUNDATION: one direct familiar statement/question; basic words and simple production.",
+        "target_band": 1,
+        "version": "writing-difficulty-spec-v2",
+        "writing_type": "GUIDED"
+      },
+      "targetBand": 1,
+      "writingType": "GUIDED"
+    },
+    {
+      "originLanguage": "ko",
+      "spec": {
+        "guidance_max_characters_per_entry": 240,
+        "guidance_max_entries": 4,
+        "guidance_max_total_characters": 1800,
+        "guidance_min_entries": 1,
+        "note_max_characters": 400,
+        "origin_max_characters": 600,
+        "origin_max_surface_units": 5,
+        "semantic_recipe": "BASIC: familiar communication with one simple reason, sequence or ordinary polite request; limited linking.",
+        "target_band": 2,
+        "version": "writing-difficulty-spec-v2",
+        "writing_type": "GUIDED"
+      },
+      "targetBand": 2,
+      "writingType": "GUIDED"
+    },
+    {
+      "originLanguage": "ko",
+      "spec": {
+        "guidance_max_characters_per_entry": 240,
+        "guidance_max_entries": 5,
+        "guidance_max_total_characters": 1800,
+        "guidance_min_entries": 1,
+        "note_max_characters": 400,
+        "origin_max_characters": 600,
+        "origin_max_surface_units": 5,
+        "semantic_recipe": "INTERMEDIATE: a connected practical reason, condition or time relation with explicit, straightforward scope and suitable everyday/work register. Ordinary politeness alone does not make this band 4; do not require layered qualifications for this band.",
+        "target_band": 3,
+        "version": "writing-difficulty-spec-v2",
+        "writing_type": "GUIDED"
+      },
+      "targetBand": 3,
+      "writingType": "GUIDED"
+    },
+    {
+      "originLanguage": "ko",
+      "spec": {
+        "guidance_max_characters_per_entry": 240,
+        "guidance_max_entries": 6,
+        "guidance_max_total_characters": 1800,
+        "guidance_min_entries": 1,
+        "note_max_characters": 400,
+        "origin_max_characters": 600,
+        "origin_max_surface_units": 5,
+        "semantic_recipe": "UPPER_INTERMEDIATE: a nuanced condition/concession, indirect request or hedge that needs register-sensitive phrasing. A longer practical request or several independent steps do not by themselves reach band 5.",
+        "target_band": 4,
+        "version": "writing-difficulty-spec-v2",
+        "writing_type": "GUIDED"
+      },
+      "targetBand": 4,
+      "writingType": "GUIDED"
+    },
+    {
+      "originLanguage": "ko",
+      "spec": {
+        "guidance_max_characters_per_entry": 240,
+        "guidance_max_entries": 8,
+        "guidance_max_total_characters": 1800,
+        "guidance_min_entries": 1,
+        "note_max_characters": 400,
+        "origin_max_characters": 600,
+        "origin_max_surface_units": 5,
+        "semantic_recipe": "ADVANCED: interacting relations whose scope must be preserved together, a precisely bounded stance/claim/commitment, and coherent controlled register. For example, a commitment depends on a condition but is limited by an exception, or evidence supports only a qualified conclusion that constrains a further action. All needed facts must be supplied or freely chosen by the learner as the mode allows. Removing a qualification changes the claim, not just the sentence length. Familiar vocabulary is sufficient; technical knowledge, verbosity and isolated advanced phrases are not evidence of band 5. A short message can qualify if these demands are actually present.",
+        "target_band": 5,
+        "version": "writing-difficulty-spec-v2",
+        "writing_type": "GUIDED"
+      },
+      "targetBand": 5,
+      "writingType": "GUIDED"
+    },
+    {
+      "originLanguage": "ko",
+      "spec": {
+        "guidance_max_characters_per_entry": 240,
+        "guidance_max_entries": 0,
+        "guidance_max_total_characters": 1800,
+        "guidance_min_entries": 0,
+        "note_max_characters": 400,
+        "origin_max_characters": 600,
+        "origin_max_surface_units": 5,
+        "semantic_recipe": "FOUNDATION: one direct familiar statement/question; basic words and simple production.",
+        "target_band": 1,
+        "version": "writing-difficulty-spec-v2",
+        "writing_type": "FREE"
+      },
+      "targetBand": 1,
+      "writingType": "FREE"
+    },
+    {
+      "originLanguage": "ko",
+      "spec": {
+        "guidance_max_characters_per_entry": 240,
+        "guidance_max_entries": 0,
+        "guidance_max_total_characters": 1800,
+        "guidance_min_entries": 0,
+        "note_max_characters": 400,
+        "origin_max_characters": 600,
+        "origin_max_surface_units": 5,
+        "semantic_recipe": "BASIC: familiar communication with one simple reason, sequence or ordinary polite request; limited linking.",
+        "target_band": 2,
+        "version": "writing-difficulty-spec-v2",
+        "writing_type": "FREE"
+      },
+      "targetBand": 2,
+      "writingType": "FREE"
+    },
+    {
+      "originLanguage": "ko",
+      "spec": {
+        "guidance_max_characters_per_entry": 240,
+        "guidance_max_entries": 0,
+        "guidance_max_total_characters": 1800,
+        "guidance_min_entries": 0,
+        "note_max_characters": 400,
+        "origin_max_characters": 600,
+        "origin_max_surface_units": 5,
+        "semantic_recipe": "INTERMEDIATE: a connected practical reason, condition or time relation with explicit, straightforward scope and suitable everyday/work register. Ordinary politeness alone does not make this band 4; do not require layered qualifications for this band.",
+        "target_band": 3,
+        "version": "writing-difficulty-spec-v2",
+        "writing_type": "FREE"
+      },
+      "targetBand": 3,
+      "writingType": "FREE"
+    },
+    {
+      "originLanguage": "ko",
+      "spec": {
+        "guidance_max_characters_per_entry": 240,
+        "guidance_max_entries": 0,
+        "guidance_max_total_characters": 1800,
+        "guidance_min_entries": 0,
+        "note_max_characters": 400,
+        "origin_max_characters": 600,
+        "origin_max_surface_units": 5,
+        "semantic_recipe": "UPPER_INTERMEDIATE: a nuanced condition/concession, indirect request or hedge that needs register-sensitive phrasing. A longer practical request or several independent steps do not by themselves reach band 5.",
+        "target_band": 4,
+        "version": "writing-difficulty-spec-v2",
+        "writing_type": "FREE"
+      },
+      "targetBand": 4,
+      "writingType": "FREE"
+    },
+    {
+      "originLanguage": "ko",
+      "spec": {
+        "guidance_max_characters_per_entry": 240,
+        "guidance_max_entries": 0,
+        "guidance_max_total_characters": 1800,
+        "guidance_min_entries": 0,
+        "note_max_characters": 400,
+        "origin_max_characters": 600,
+        "origin_max_surface_units": 5,
+        "semantic_recipe": "ADVANCED: interacting relations whose scope must be preserved together, a precisely bounded stance/claim/commitment, and coherent controlled register. For example, a commitment depends on a condition but is limited by an exception, or evidence supports only a qualified conclusion that constrains a further action. All needed facts must be supplied or freely chosen by the learner as the mode allows. Removing a qualification changes the claim, not just the sentence length. Familiar vocabulary is sufficient; technical knowledge, verbosity and isolated advanced phrases are not evidence of band 5. A short message can qualify if these demands are actually present.",
+        "target_band": 5,
+        "version": "writing-difficulty-spec-v2",
+        "writing_type": "FREE"
+      },
+      "targetBand": 5,
+      "writingType": "FREE"
+    },
+    {
+      "originLanguage": "en",
+      "spec": {
+        "guidance_max_characters_per_entry": 480,
+        "guidance_max_entries": 0,
+        "guidance_max_total_characters": 3600,
+        "guidance_min_entries": 0,
+        "note_max_characters": 800,
+        "origin_max_characters": 320,
+        "origin_max_surface_units": 2,
+        "semantic_recipe": "FOUNDATION: one direct familiar statement/question; basic words and simple production.",
+        "target_band": 1,
+        "version": "writing-difficulty-spec-v2",
+        "writing_type": "TRANSLATION"
+      },
+      "targetBand": 1,
+      "writingType": "TRANSLATION"
+    },
+    {
+      "originLanguage": "en",
+      "spec": {
+        "guidance_max_characters_per_entry": 480,
+        "guidance_max_entries": 0,
+        "guidance_max_total_characters": 3600,
+        "guidance_min_entries": 0,
+        "note_max_characters": 800,
+        "origin_max_characters": 480,
+        "origin_max_surface_units": 3,
+        "semantic_recipe": "BASIC: familiar communication with one simple reason, sequence or ordinary polite request; limited linking.",
+        "target_band": 2,
+        "version": "writing-difficulty-spec-v2",
+        "writing_type": "TRANSLATION"
+      },
+      "targetBand": 2,
+      "writingType": "TRANSLATION"
+    },
+    {
+      "originLanguage": "en",
+      "spec": {
+        "guidance_max_characters_per_entry": 480,
+        "guidance_max_entries": 0,
+        "guidance_max_total_characters": 3600,
+        "guidance_min_entries": 0,
+        "note_max_characters": 800,
+        "origin_max_characters": 840,
+        "origin_max_surface_units": 4,
+        "semantic_recipe": "INTERMEDIATE: a connected practical reason, condition or time relation with explicit, straightforward scope and suitable everyday/work register. Ordinary politeness alone does not make this band 4; do not require layered qualifications for this band.",
+        "target_band": 3,
+        "version": "writing-difficulty-spec-v2",
+        "writing_type": "TRANSLATION"
+      },
+      "targetBand": 3,
+      "writingType": "TRANSLATION"
+    },
+    {
+      "originLanguage": "en",
+      "spec": {
+        "guidance_max_characters_per_entry": 480,
+        "guidance_max_entries": 0,
+        "guidance_max_total_characters": 3600,
+        "guidance_min_entries": 0,
+        "note_max_characters": 800,
+        "origin_max_characters": 1300,
+        "origin_max_surface_units": 5,
+        "semantic_recipe": "UPPER_INTERMEDIATE: a nuanced condition/concession, indirect request or hedge that needs register-sensitive phrasing. A longer practical request or several independent steps do not by themselves reach band 5.",
+        "target_band": 4,
+        "version": "writing-difficulty-spec-v2",
+        "writing_type": "TRANSLATION"
+      },
+      "targetBand": 4,
+      "writingType": "TRANSLATION"
+    },
+    {
+      "originLanguage": "en",
+      "spec": {
+        "guidance_max_characters_per_entry": 480,
+        "guidance_max_entries": 0,
+        "guidance_max_total_characters": 3600,
+        "guidance_min_entries": 0,
+        "note_max_characters": 800,
+        "origin_max_characters": 1900,
+        "origin_max_surface_units": 6,
+        "semantic_recipe": "ADVANCED: interacting relations whose scope must be preserved together, a precisely bounded stance/claim/commitment, and coherent controlled register. For example, a commitment depends on a condition but is limited by an exception, or evidence supports only a qualified conclusion that constrains a further action. All needed facts must be supplied or freely chosen by the learner as the mode allows. Removing a qualification changes the claim, not just the sentence length. Familiar vocabulary is sufficient; technical knowledge, verbosity and isolated advanced phrases are not evidence of band 5. A short message can qualify if these demands are actually present.",
+        "target_band": 5,
+        "version": "writing-difficulty-spec-v2",
+        "writing_type": "TRANSLATION"
+      },
+      "targetBand": 5,
+      "writingType": "TRANSLATION"
+    },
+    {
+      "originLanguage": "en",
+      "spec": {
+        "guidance_max_characters_per_entry": 480,
+        "guidance_max_entries": 3,
+        "guidance_max_total_characters": 3600,
+        "guidance_min_entries": 1,
+        "note_max_characters": 800,
+        "origin_max_characters": 1200,
+        "origin_max_surface_units": 5,
+        "semantic_recipe": "FOUNDATION: one direct familiar statement/question; basic words and simple production.",
+        "target_band": 1,
+        "version": "writing-difficulty-spec-v2",
+        "writing_type": "GUIDED"
+      },
+      "targetBand": 1,
+      "writingType": "GUIDED"
+    },
+    {
+      "originLanguage": "en",
+      "spec": {
+        "guidance_max_characters_per_entry": 480,
+        "guidance_max_entries": 4,
+        "guidance_max_total_characters": 3600,
+        "guidance_min_entries": 1,
+        "note_max_characters": 800,
+        "origin_max_characters": 1200,
+        "origin_max_surface_units": 5,
+        "semantic_recipe": "BASIC: familiar communication with one simple reason, sequence or ordinary polite request; limited linking.",
+        "target_band": 2,
+        "version": "writing-difficulty-spec-v2",
+        "writing_type": "GUIDED"
+      },
+      "targetBand": 2,
+      "writingType": "GUIDED"
+    },
+    {
+      "originLanguage": "en",
+      "spec": {
+        "guidance_max_characters_per_entry": 480,
+        "guidance_max_entries": 5,
+        "guidance_max_total_characters": 3600,
+        "guidance_min_entries": 1,
+        "note_max_characters": 800,
+        "origin_max_characters": 1200,
+        "origin_max_surface_units": 5,
+        "semantic_recipe": "INTERMEDIATE: a connected practical reason, condition or time relation with explicit, straightforward scope and suitable everyday/work register. Ordinary politeness alone does not make this band 4; do not require layered qualifications for this band.",
+        "target_band": 3,
+        "version": "writing-difficulty-spec-v2",
+        "writing_type": "GUIDED"
+      },
+      "targetBand": 3,
+      "writingType": "GUIDED"
+    },
+    {
+      "originLanguage": "en",
+      "spec": {
+        "guidance_max_characters_per_entry": 480,
+        "guidance_max_entries": 6,
+        "guidance_max_total_characters": 3600,
+        "guidance_min_entries": 1,
+        "note_max_characters": 800,
+        "origin_max_characters": 1200,
+        "origin_max_surface_units": 5,
+        "semantic_recipe": "UPPER_INTERMEDIATE: a nuanced condition/concession, indirect request or hedge that needs register-sensitive phrasing. A longer practical request or several independent steps do not by themselves reach band 5.",
+        "target_band": 4,
+        "version": "writing-difficulty-spec-v2",
+        "writing_type": "GUIDED"
+      },
+      "targetBand": 4,
+      "writingType": "GUIDED"
+    },
+    {
+      "originLanguage": "en",
+      "spec": {
+        "guidance_max_characters_per_entry": 480,
+        "guidance_max_entries": 8,
+        "guidance_max_total_characters": 3600,
+        "guidance_min_entries": 1,
+        "note_max_characters": 800,
+        "origin_max_characters": 1200,
+        "origin_max_surface_units": 5,
+        "semantic_recipe": "ADVANCED: interacting relations whose scope must be preserved together, a precisely bounded stance/claim/commitment, and coherent controlled register. For example, a commitment depends on a condition but is limited by an exception, or evidence supports only a qualified conclusion that constrains a further action. All needed facts must be supplied or freely chosen by the learner as the mode allows. Removing a qualification changes the claim, not just the sentence length. Familiar vocabulary is sufficient; technical knowledge, verbosity and isolated advanced phrases are not evidence of band 5. A short message can qualify if these demands are actually present.",
+        "target_band": 5,
+        "version": "writing-difficulty-spec-v2",
+        "writing_type": "GUIDED"
+      },
+      "targetBand": 5,
+      "writingType": "GUIDED"
+    },
+    {
+      "originLanguage": "en",
+      "spec": {
+        "guidance_max_characters_per_entry": 480,
+        "guidance_max_entries": 0,
+        "guidance_max_total_characters": 3600,
+        "guidance_min_entries": 0,
+        "note_max_characters": 800,
+        "origin_max_characters": 1200,
+        "origin_max_surface_units": 5,
+        "semantic_recipe": "FOUNDATION: one direct familiar statement/question; basic words and simple production.",
+        "target_band": 1,
+        "version": "writing-difficulty-spec-v2",
+        "writing_type": "FREE"
+      },
+      "targetBand": 1,
+      "writingType": "FREE"
+    },
+    {
+      "originLanguage": "en",
+      "spec": {
+        "guidance_max_characters_per_entry": 480,
+        "guidance_max_entries": 0,
+        "guidance_max_total_characters": 3600,
+        "guidance_min_entries": 0,
+        "note_max_characters": 800,
+        "origin_max_characters": 1200,
+        "origin_max_surface_units": 5,
+        "semantic_recipe": "BASIC: familiar communication with one simple reason, sequence or ordinary polite request; limited linking.",
+        "target_band": 2,
+        "version": "writing-difficulty-spec-v2",
+        "writing_type": "FREE"
+      },
+      "targetBand": 2,
+      "writingType": "FREE"
+    },
+    {
+      "originLanguage": "en",
+      "spec": {
+        "guidance_max_characters_per_entry": 480,
+        "guidance_max_entries": 0,
+        "guidance_max_total_characters": 3600,
+        "guidance_min_entries": 0,
+        "note_max_characters": 800,
+        "origin_max_characters": 1200,
+        "origin_max_surface_units": 5,
+        "semantic_recipe": "INTERMEDIATE: a connected practical reason, condition or time relation with explicit, straightforward scope and suitable everyday/work register. Ordinary politeness alone does not make this band 4; do not require layered qualifications for this band.",
+        "target_band": 3,
+        "version": "writing-difficulty-spec-v2",
+        "writing_type": "FREE"
+      },
+      "targetBand": 3,
+      "writingType": "FREE"
+    },
+    {
+      "originLanguage": "en",
+      "spec": {
+        "guidance_max_characters_per_entry": 480,
+        "guidance_max_entries": 0,
+        "guidance_max_total_characters": 3600,
+        "guidance_min_entries": 0,
+        "note_max_characters": 800,
+        "origin_max_characters": 1200,
+        "origin_max_surface_units": 5,
+        "semantic_recipe": "UPPER_INTERMEDIATE: a nuanced condition/concession, indirect request or hedge that needs register-sensitive phrasing. A longer practical request or several independent steps do not by themselves reach band 5.",
+        "target_band": 4,
+        "version": "writing-difficulty-spec-v2",
+        "writing_type": "FREE"
+      },
+      "targetBand": 4,
+      "writingType": "FREE"
+    },
+    {
+      "originLanguage": "en",
+      "spec": {
+        "guidance_max_characters_per_entry": 480,
+        "guidance_max_entries": 0,
+        "guidance_max_total_characters": 3600,
+        "guidance_min_entries": 0,
+        "note_max_characters": 800,
+        "origin_max_characters": 1200,
+        "origin_max_surface_units": 5,
+        "semantic_recipe": "ADVANCED: interacting relations whose scope must be preserved together, a precisely bounded stance/claim/commitment, and coherent controlled register. For example, a commitment depends on a condition but is limited by an exception, or evidence supports only a qualified conclusion that constrains a further action. All needed facts must be supplied or freely chosen by the learner as the mode allows. Removing a qualification changes the claim, not just the sentence length. Familiar vocabulary is sufficient; technical knowledge, verbosity and isolated advanced phrases are not evidence of band 5. A short message can qualify if these demands are actually present.",
+        "target_band": 5,
+        "version": "writing-difficulty-spec-v2",
+        "writing_type": "FREE"
+      },
+      "targetBand": 5,
+      "writingType": "FREE"
+    }
+  ]
+}

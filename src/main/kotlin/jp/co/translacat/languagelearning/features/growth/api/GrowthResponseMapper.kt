@@ -4,17 +4,15 @@ import jp.co.translacat.languagelearning.features.growth.domain.model.*
 import kotlinx.serialization.json.*
 
 internal fun JsonObjectBuilder.nullable(name: String, value: Any?) {
-    put(name, when (value) {
-        null -> JsonNull
-        is Number -> JsonPrimitive(value)
-        is Boolean -> JsonPrimitive(value)
-        else -> JsonPrimitive(value.toString())
-    })
-}
-
-internal fun GrowthAcknowledgement.toJson() = buildJsonObject {
-    put("sourceInstanceId", sourceInstanceId); put("eventId", eventId); put("userId", userId)
-    put("sequence", sequence); put("payloadSha256", payloadSha256); put("outcome", outcome)
+    put(
+        name,
+        when (value) {
+            null -> JsonNull
+            is Number -> JsonPrimitive(value)
+            is Boolean -> JsonPrimitive(value)
+            else -> JsonPrimitive(value.toString())
+        },
+    )
 }
 
 internal fun GrowthProfile.toJson() = buildJsonObject {
@@ -37,7 +35,7 @@ internal fun GrowthProfile.toJson() = buildJsonObject {
     nullable("additionalSignalsJson", additionalSignalsJson)
     nullable("baselineCompletionId", baselineCompletionId)
     nullable("baselineCompletedAt", baselineCompletedAt)
- }
+}
 
 internal fun KeywordMastery.toJson() = buildJsonObject {
     put("canonicalKey", canonicalKey); put("score", score); put("evaluationCount", evaluationCount)
@@ -70,13 +68,17 @@ internal fun GrowthMetric.toJson() = buildJsonObject {
 }
 
 internal fun GrowthSnapshot.toJson() = buildJsonObject {
-    put("userId", userId); put("sourceInstanceId", sourceInstanceId); put("sequence", sequence); put("preview", preview)
+    put("userId", userId)
     put("profile", profile?.toJson() ?: JsonNull)
     put("masteries", JsonArray(masteries.map { it.toJson() }))
-    put("signals", buildJsonObject { signals.forEach { (type, values) -> put(type, JsonArray(values.map { it.toJson() })) } })
+    put(
+        "signals",
+        buildJsonObject { signals.forEach { (type, values) -> put(type, JsonArray(values.map { it.toJson() })) } },
+    )
 }
+
 internal fun GrowthActivityPage.toJson() = buildJsonObject {
-    put("userId", userId); put("sourceInstanceId", sourceInstanceId); put("sequence", sequence)
+    put("userId", userId)
     put("activities", JsonArray(activities.map { (activity, metrics) -> activity.toJson(metrics) }))
     nullable("nextAfterId", nextAfterId)
     put("projectionRevision", projectionRevision)

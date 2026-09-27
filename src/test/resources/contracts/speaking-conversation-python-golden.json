@@ -1,0 +1,3607 @@
+[
+  {
+    "name": "FREE",
+    "kind": "conversation",
+    "rawRequest": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 0,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "conversationStartMode": "AI_FIRST",
+      "practiceMode": "FREE"
+    },
+    "request": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 0,
+      "problemIndex": null,
+      "attemptIndex": null,
+      "readAloudGenerateNextProblem": false,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "practiceMode": "FREE",
+      "category": null,
+      "goal": null,
+      "persona": null,
+      "conversationStartMode": "AI_FIRST",
+      "topicRecommendedStartMode": null,
+      "correctionMode": "CONVERSATION",
+      "targetLevel": null,
+      "learningProfileSummary": null,
+      "selectedKeywords": [],
+      "focusSignals": [],
+      "conversationHistory": [],
+      "assistanceUsage": [],
+      "sessionSummary": null,
+      "sessionElapsedSeconds": 0.0,
+      "sessionPolicySnapshot": {
+        "maxSessionMinutes": 10,
+        "maxTurns": 20,
+        "minValidAudioSeconds": 1.0,
+        "maxTurnAudioSeconds": 60.0,
+        "maxAudioFileBytes": 10485760,
+        "automaticRetryLimitPerStage": 2,
+        "manualRetryLimitPerStage": 1
+      },
+      "audioReference": null,
+      "audioFormat": null,
+      "durationSeconds": null,
+      "voice": "marin",
+      "playbackSpeed": "NORMAL",
+      "manualRetryAttempt": 0,
+      "transcript": null,
+      "isInitialTurn": false
+    },
+    "output": {
+      "assistantText": "週末は何をしますか？",
+      "intent": "PLAN",
+      "difficulty": "A2"
+    },
+    "providerFailure": null,
+    "prompt": "Generate the next assistant turn from this session context.\nIf isInitialTurn=true, generate the first task/prompt for the selected practiceMode.\nIf correctionMode=COACHING, return coachingCorrections only when useful.\n\n{\"requestId\":\"synthetic-conversation\",\"sessionId\":\"synthetic-session\",\"turnIndex\":0,\"problemIndex\":null,\"attemptIndex\":null,\"readAloudGenerateNextProblem\":false,\"originLanguage\":\"ko\",\"learningLanguage\":\"ja\",\"topic\":\"합성 주말 계획\",\"practiceMode\":\"FREE\",\"category\":null,\"goal\":null,\"persona\":null,\"conversationStartMode\":\"AI_FIRST\",\"topicRecommendedStartMode\":null,\"correctionMode\":\"CONVERSATION\",\"targetLevel\":null,\"learningProfileSummary\":null,\"selectedKeywords\":[],\"focusSignals\":[],\"conversationHistory\":[],\"sessionSummary\":null,\"sessionElapsedSeconds\":0,\"transcript\":null,\"assistanceUsage\":[],\"assistanceLevel\":\"NONE\",\"isInitialTurn\":false,\"sessionPolicySnapshot\":{\"maxSessionMinutes\":10,\"maxTurns\":20,\"minValidAudioSeconds\":1.0,\"maxTurnAudioSeconds\":60.0,\"maxAudioFileBytes\":10485760,\"automaticRetryLimitPerStage\":2,\"manualRetryLimitPerStage\":1}}",
+    "response": {
+      "requestId": "synthetic-conversation",
+      "sessionId": "synthetic-session",
+      "turnIndex": 0,
+      "assistantText": "週末は何をしますか？",
+      "conversation": {
+        "intent": "PLAN",
+        "resolvedTopic": null,
+        "scriptText": null,
+        "providedFacts": [],
+        "requiredIntents": [],
+        "responseConstraints": [],
+        "difficulty": "A2",
+        "shouldEnd": false,
+        "endReason": null,
+        "hint": null,
+        "coachingCorrections": [],
+        "sessionSummary": null,
+        "assistanceLevel": "NONE"
+      },
+      "usage": {
+        "stt": null,
+        "conversation": {
+          "latencyMs": 0,
+          "inputTokens": 7,
+          "outputTokens": 2,
+          "audioSeconds": 0.0,
+          "ttsCharacters": 0,
+          "ttsAudioSeconds": 0.0,
+          "provider": "synthetic",
+          "model": "fixed",
+          "promptVersion": "speaking-conversation-v2",
+          "evaluationVersion": null
+        },
+        "tts": null,
+        "evaluation": null
+      }
+    },
+    "replay": {
+      "requestId": "synthetic-conversation",
+      "sessionId": "synthetic-session",
+      "turnIndex": 0,
+      "assistantText": "週末は何をしますか？",
+      "conversation": {
+        "intent": "PLAN",
+        "resolvedTopic": null,
+        "scriptText": null,
+        "providedFacts": [],
+        "requiredIntents": [],
+        "responseConstraints": [],
+        "difficulty": "A2",
+        "shouldEnd": false,
+        "endReason": null,
+        "hint": null,
+        "coachingCorrections": [],
+        "sessionSummary": null,
+        "assistanceLevel": "NONE"
+      },
+      "usage": {
+        "stt": null,
+        "conversation": {
+          "latencyMs": 0,
+          "inputTokens": 7,
+          "outputTokens": 2,
+          "audioSeconds": 0.0,
+          "ttsCharacters": 0,
+          "ttsAudioSeconds": 0.0,
+          "provider": "synthetic",
+          "model": "fixed",
+          "promptVersion": "speaking-conversation-v2",
+          "evaluationVersion": null
+        },
+        "tts": null,
+        "evaluation": null
+      }
+    },
+    "calls": 1
+  },
+  {
+    "name": "GUIDED",
+    "kind": "conversation",
+    "rawRequest": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 0,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "conversationStartMode": "AI_FIRST",
+      "practiceMode": "GUIDED"
+    },
+    "request": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 0,
+      "problemIndex": null,
+      "attemptIndex": null,
+      "readAloudGenerateNextProblem": false,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "practiceMode": "GUIDED",
+      "category": null,
+      "goal": null,
+      "persona": null,
+      "conversationStartMode": "AI_FIRST",
+      "topicRecommendedStartMode": null,
+      "correctionMode": "CONVERSATION",
+      "targetLevel": null,
+      "learningProfileSummary": null,
+      "selectedKeywords": [],
+      "focusSignals": [],
+      "conversationHistory": [],
+      "assistanceUsage": [],
+      "sessionSummary": null,
+      "sessionElapsedSeconds": 0.0,
+      "sessionPolicySnapshot": {
+        "maxSessionMinutes": 10,
+        "maxTurns": 20,
+        "minValidAudioSeconds": 1.0,
+        "maxTurnAudioSeconds": 60.0,
+        "maxAudioFileBytes": 10485760,
+        "automaticRetryLimitPerStage": 2,
+        "manualRetryLimitPerStage": 1
+      },
+      "audioReference": null,
+      "audioFormat": null,
+      "durationSeconds": null,
+      "voice": "marin",
+      "playbackSpeed": "NORMAL",
+      "manualRetryAttempt": 0,
+      "transcript": null,
+      "isInitialTurn": false
+    },
+    "output": {
+      "assistantText": "週末は何をしますか？",
+      "intent": "PLAN",
+      "difficulty": "A2",
+      "providedFacts": [
+        "合成の予定"
+      ],
+      "requiredIntents": [
+        "予定を伝える"
+      ],
+      "responseConstraints": [
+        "丁寧に話す"
+      ]
+    },
+    "providerFailure": null,
+    "prompt": "Generate the next assistant turn from this session context.\nIf isInitialTurn=true, generate the first task/prompt for the selected practiceMode.\nIf correctionMode=COACHING, return coachingCorrections only when useful.\n\n{\"requestId\":\"synthetic-conversation\",\"sessionId\":\"synthetic-session\",\"turnIndex\":0,\"problemIndex\":null,\"attemptIndex\":null,\"readAloudGenerateNextProblem\":false,\"originLanguage\":\"ko\",\"learningLanguage\":\"ja\",\"topic\":\"합성 주말 계획\",\"practiceMode\":\"GUIDED\",\"category\":null,\"goal\":null,\"persona\":null,\"conversationStartMode\":\"AI_FIRST\",\"topicRecommendedStartMode\":null,\"correctionMode\":\"CONVERSATION\",\"targetLevel\":null,\"learningProfileSummary\":null,\"selectedKeywords\":[],\"focusSignals\":[],\"conversationHistory\":[],\"sessionSummary\":null,\"sessionElapsedSeconds\":0,\"transcript\":null,\"assistanceUsage\":[],\"assistanceLevel\":\"NONE\",\"isInitialTurn\":false,\"sessionPolicySnapshot\":{\"maxSessionMinutes\":10,\"maxTurns\":20,\"minValidAudioSeconds\":1.0,\"maxTurnAudioSeconds\":60.0,\"maxAudioFileBytes\":10485760,\"automaticRetryLimitPerStage\":2,\"manualRetryLimitPerStage\":1}}",
+    "response": {
+      "requestId": "synthetic-conversation",
+      "sessionId": "synthetic-session",
+      "turnIndex": 0,
+      "assistantText": "週末は何をしますか？",
+      "conversation": {
+        "intent": "PLAN",
+        "resolvedTopic": null,
+        "scriptText": null,
+        "providedFacts": [
+          "合成の予定"
+        ],
+        "requiredIntents": [
+          "予定を伝える"
+        ],
+        "responseConstraints": [
+          "丁寧に話す"
+        ],
+        "difficulty": "A2",
+        "shouldEnd": false,
+        "endReason": null,
+        "hint": null,
+        "coachingCorrections": [],
+        "sessionSummary": null,
+        "assistanceLevel": "NONE"
+      },
+      "usage": {
+        "stt": null,
+        "conversation": {
+          "latencyMs": 0,
+          "inputTokens": 7,
+          "outputTokens": 2,
+          "audioSeconds": 0.0,
+          "ttsCharacters": 0,
+          "ttsAudioSeconds": 0.0,
+          "provider": "synthetic",
+          "model": "fixed",
+          "promptVersion": "speaking-conversation-v2",
+          "evaluationVersion": null
+        },
+        "tts": null,
+        "evaluation": null
+      }
+    },
+    "replay": {
+      "requestId": "synthetic-conversation",
+      "sessionId": "synthetic-session",
+      "turnIndex": 0,
+      "assistantText": "週末は何をしますか？",
+      "conversation": {
+        "intent": "PLAN",
+        "resolvedTopic": null,
+        "scriptText": null,
+        "providedFacts": [
+          "合成の予定"
+        ],
+        "requiredIntents": [
+          "予定を伝える"
+        ],
+        "responseConstraints": [
+          "丁寧に話す"
+        ],
+        "difficulty": "A2",
+        "shouldEnd": false,
+        "endReason": null,
+        "hint": null,
+        "coachingCorrections": [],
+        "sessionSummary": null,
+        "assistanceLevel": "NONE"
+      },
+      "usage": {
+        "stt": null,
+        "conversation": {
+          "latencyMs": 0,
+          "inputTokens": 7,
+          "outputTokens": 2,
+          "audioSeconds": 0.0,
+          "ttsCharacters": 0,
+          "ttsAudioSeconds": 0.0,
+          "provider": "synthetic",
+          "model": "fixed",
+          "promptVersion": "speaking-conversation-v2",
+          "evaluationVersion": null
+        },
+        "tts": null,
+        "evaluation": null
+      }
+    },
+    "calls": 1
+  },
+  {
+    "name": "READ_ALOUD",
+    "kind": "conversation",
+    "rawRequest": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 0,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "conversationStartMode": "AI_FIRST",
+      "practiceMode": "READ_ALOUD"
+    },
+    "request": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 0,
+      "problemIndex": null,
+      "attemptIndex": null,
+      "readAloudGenerateNextProblem": false,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "practiceMode": "READ_ALOUD",
+      "category": null,
+      "goal": null,
+      "persona": null,
+      "conversationStartMode": "AI_FIRST",
+      "topicRecommendedStartMode": null,
+      "correctionMode": "CONVERSATION",
+      "targetLevel": null,
+      "learningProfileSummary": null,
+      "selectedKeywords": [],
+      "focusSignals": [],
+      "conversationHistory": [],
+      "assistanceUsage": [],
+      "sessionSummary": null,
+      "sessionElapsedSeconds": 0.0,
+      "sessionPolicySnapshot": {
+        "maxSessionMinutes": 10,
+        "maxTurns": 20,
+        "minValidAudioSeconds": 1.0,
+        "maxTurnAudioSeconds": 60.0,
+        "maxAudioFileBytes": 10485760,
+        "automaticRetryLimitPerStage": 2,
+        "manualRetryLimitPerStage": 1
+      },
+      "audioReference": null,
+      "audioFormat": null,
+      "durationSeconds": null,
+      "voice": "marin",
+      "playbackSpeed": "NORMAL",
+      "manualRetryAttempt": 0,
+      "transcript": null,
+      "isInitialTurn": false
+    },
+    "output": {
+      "assistantText": "週末は公園へ行きます。",
+      "intent": "PLAN",
+      "difficulty": "A2",
+      "scriptText": "週末は公園へ行きます。"
+    },
+    "providerFailure": null,
+    "prompt": "Generate the next assistant turn from this session context.\nIf isInitialTurn=true, generate the first task/prompt for the selected practiceMode.\nIf correctionMode=COACHING, return coachingCorrections only when useful.\n\n{\"requestId\":\"synthetic-conversation\",\"sessionId\":\"synthetic-session\",\"turnIndex\":0,\"problemIndex\":null,\"attemptIndex\":null,\"readAloudGenerateNextProblem\":false,\"originLanguage\":\"ko\",\"learningLanguage\":\"ja\",\"topic\":\"합성 주말 계획\",\"practiceMode\":\"READ_ALOUD\",\"category\":null,\"goal\":null,\"persona\":null,\"conversationStartMode\":\"AI_FIRST\",\"topicRecommendedStartMode\":null,\"correctionMode\":\"CONVERSATION\",\"targetLevel\":null,\"learningProfileSummary\":null,\"selectedKeywords\":[],\"focusSignals\":[],\"conversationHistory\":[],\"sessionSummary\":null,\"sessionElapsedSeconds\":0,\"transcript\":null,\"assistanceUsage\":[],\"assistanceLevel\":\"NONE\",\"isInitialTurn\":false,\"sessionPolicySnapshot\":{\"maxSessionMinutes\":10,\"maxTurns\":20,\"minValidAudioSeconds\":1.0,\"maxTurnAudioSeconds\":60.0,\"maxAudioFileBytes\":10485760,\"automaticRetryLimitPerStage\":2,\"manualRetryLimitPerStage\":1}}",
+    "response": {
+      "requestId": "synthetic-conversation",
+      "sessionId": "synthetic-session",
+      "turnIndex": 0,
+      "assistantText": "週末は公園へ行きます。",
+      "conversation": {
+        "intent": "PLAN",
+        "resolvedTopic": null,
+        "scriptText": "週末は公園へ行きます。",
+        "providedFacts": [],
+        "requiredIntents": [],
+        "responseConstraints": [],
+        "difficulty": "A2",
+        "shouldEnd": false,
+        "endReason": null,
+        "hint": null,
+        "coachingCorrections": [],
+        "sessionSummary": null,
+        "assistanceLevel": "NONE"
+      },
+      "usage": {
+        "stt": null,
+        "conversation": {
+          "latencyMs": 0,
+          "inputTokens": 7,
+          "outputTokens": 2,
+          "audioSeconds": 0.0,
+          "ttsCharacters": 0,
+          "ttsAudioSeconds": 0.0,
+          "provider": "synthetic",
+          "model": "fixed",
+          "promptVersion": "speaking-conversation-v2",
+          "evaluationVersion": null
+        },
+        "tts": null,
+        "evaluation": null
+      }
+    },
+    "replay": {
+      "requestId": "synthetic-conversation",
+      "sessionId": "synthetic-session",
+      "turnIndex": 0,
+      "assistantText": "週末は公園へ行きます。",
+      "conversation": {
+        "intent": "PLAN",
+        "resolvedTopic": null,
+        "scriptText": "週末は公園へ行きます。",
+        "providedFacts": [],
+        "requiredIntents": [],
+        "responseConstraints": [],
+        "difficulty": "A2",
+        "shouldEnd": false,
+        "endReason": null,
+        "hint": null,
+        "coachingCorrections": [],
+        "sessionSummary": null,
+        "assistanceLevel": "NONE"
+      },
+      "usage": {
+        "stt": null,
+        "conversation": {
+          "latencyMs": 0,
+          "inputTokens": 7,
+          "outputTokens": 2,
+          "audioSeconds": 0.0,
+          "ttsCharacters": 0,
+          "ttsAudioSeconds": 0.0,
+          "provider": "synthetic",
+          "model": "fixed",
+          "promptVersion": "speaking-conversation-v2",
+          "evaluationVersion": null
+        },
+        "tts": null,
+        "evaluation": null
+      }
+    },
+    "calls": 1
+  },
+  {
+    "name": "keyword_missing",
+    "kind": "conversation",
+    "rawRequest": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "conversationStartMode": "AI_FIRST",
+      "category": "KEYWORDS",
+      "isInitialTurn": true
+    },
+    "request": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "problemIndex": null,
+      "attemptIndex": null,
+      "readAloudGenerateNextProblem": false,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "practiceMode": "FREE",
+      "category": "KEYWORDS",
+      "goal": null,
+      "persona": null,
+      "conversationStartMode": "AI_FIRST",
+      "topicRecommendedStartMode": null,
+      "correctionMode": "CONVERSATION",
+      "targetLevel": null,
+      "learningProfileSummary": null,
+      "selectedKeywords": [],
+      "focusSignals": [],
+      "conversationHistory": [],
+      "assistanceUsage": [],
+      "sessionSummary": null,
+      "sessionElapsedSeconds": 0.0,
+      "sessionPolicySnapshot": {
+        "maxSessionMinutes": 10,
+        "maxTurns": 20,
+        "minValidAudioSeconds": 1.0,
+        "maxTurnAudioSeconds": 60.0,
+        "maxAudioFileBytes": 10485760,
+        "automaticRetryLimitPerStage": 2,
+        "manualRetryLimitPerStage": 1
+      },
+      "audioReference": null,
+      "audioFormat": null,
+      "durationSeconds": null,
+      "voice": "marin",
+      "playbackSpeed": "NORMAL",
+      "manualRetryAttempt": 0,
+      "transcript": null,
+      "isInitialTurn": true
+    },
+    "output": {
+      "assistantText": "週末は何をしますか？",
+      "intent": "PLAN",
+      "difficulty": "A2"
+    },
+    "providerFailure": null,
+    "prompt": "Generate the next assistant turn from this session context.\nIf isInitialTurn=true, generate the first task/prompt for the selected practiceMode.\nIf correctionMode=COACHING, return coachingCorrections only when useful.\n\n{\"requestId\":\"synthetic-conversation\",\"sessionId\":\"synthetic-session\",\"turnIndex\":1,\"problemIndex\":null,\"attemptIndex\":null,\"readAloudGenerateNextProblem\":false,\"originLanguage\":\"ko\",\"learningLanguage\":\"ja\",\"topic\":\"합성 주말 계획\",\"practiceMode\":\"FREE\",\"category\":\"KEYWORDS\",\"goal\":null,\"persona\":null,\"conversationStartMode\":\"AI_FIRST\",\"topicRecommendedStartMode\":null,\"correctionMode\":\"CONVERSATION\",\"targetLevel\":null,\"learningProfileSummary\":null,\"selectedKeywords\":[],\"focusSignals\":[],\"conversationHistory\":[],\"sessionSummary\":null,\"sessionElapsedSeconds\":0,\"transcript\":null,\"assistanceUsage\":[],\"assistanceLevel\":\"NONE\",\"isInitialTurn\":true,\"sessionPolicySnapshot\":{\"maxSessionMinutes\":10,\"maxTurns\":20,\"minValidAudioSeconds\":1.0,\"maxTurnAudioSeconds\":60.0,\"maxAudioFileBytes\":10485760,\"automaticRetryLimitPerStage\":2,\"manualRetryLimitPerStage\":1}}",
+    "failure": {
+      "code": "INVALID_RESPONSE_SCHEMA",
+      "stage": "CONVERSATION",
+      "retryable": true
+    },
+    "calls": 3
+  },
+  {
+    "name": "keyword_resolved",
+    "kind": "conversation",
+    "rawRequest": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "conversationStartMode": "AI_FIRST",
+      "category": "KEYWORDS",
+      "isInitialTurn": true
+    },
+    "request": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "problemIndex": null,
+      "attemptIndex": null,
+      "readAloudGenerateNextProblem": false,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "practiceMode": "FREE",
+      "category": "KEYWORDS",
+      "goal": null,
+      "persona": null,
+      "conversationStartMode": "AI_FIRST",
+      "topicRecommendedStartMode": null,
+      "correctionMode": "CONVERSATION",
+      "targetLevel": null,
+      "learningProfileSummary": null,
+      "selectedKeywords": [],
+      "focusSignals": [],
+      "conversationHistory": [],
+      "assistanceUsage": [],
+      "sessionSummary": null,
+      "sessionElapsedSeconds": 0.0,
+      "sessionPolicySnapshot": {
+        "maxSessionMinutes": 10,
+        "maxTurns": 20,
+        "minValidAudioSeconds": 1.0,
+        "maxTurnAudioSeconds": 60.0,
+        "maxAudioFileBytes": 10485760,
+        "automaticRetryLimitPerStage": 2,
+        "manualRetryLimitPerStage": 1
+      },
+      "audioReference": null,
+      "audioFormat": null,
+      "durationSeconds": null,
+      "voice": "marin",
+      "playbackSpeed": "NORMAL",
+      "manualRetryAttempt": 0,
+      "transcript": null,
+      "isInitialTurn": true
+    },
+    "output": {
+      "assistantText": "週末は何をしますか？",
+      "intent": "PLAN",
+      "difficulty": "A2",
+      "resolvedTopic": "公園の予定"
+    },
+    "providerFailure": null,
+    "prompt": "Generate the next assistant turn from this session context.\nIf isInitialTurn=true, generate the first task/prompt for the selected practiceMode.\nIf correctionMode=COACHING, return coachingCorrections only when useful.\n\n{\"requestId\":\"synthetic-conversation\",\"sessionId\":\"synthetic-session\",\"turnIndex\":1,\"problemIndex\":null,\"attemptIndex\":null,\"readAloudGenerateNextProblem\":false,\"originLanguage\":\"ko\",\"learningLanguage\":\"ja\",\"topic\":\"합성 주말 계획\",\"practiceMode\":\"FREE\",\"category\":\"KEYWORDS\",\"goal\":null,\"persona\":null,\"conversationStartMode\":\"AI_FIRST\",\"topicRecommendedStartMode\":null,\"correctionMode\":\"CONVERSATION\",\"targetLevel\":null,\"learningProfileSummary\":null,\"selectedKeywords\":[],\"focusSignals\":[],\"conversationHistory\":[],\"sessionSummary\":null,\"sessionElapsedSeconds\":0,\"transcript\":null,\"assistanceUsage\":[],\"assistanceLevel\":\"NONE\",\"isInitialTurn\":true,\"sessionPolicySnapshot\":{\"maxSessionMinutes\":10,\"maxTurns\":20,\"minValidAudioSeconds\":1.0,\"maxTurnAudioSeconds\":60.0,\"maxAudioFileBytes\":10485760,\"automaticRetryLimitPerStage\":2,\"manualRetryLimitPerStage\":1}}",
+    "response": {
+      "requestId": "synthetic-conversation",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "assistantText": "週末は何をしますか？",
+      "conversation": {
+        "intent": "PLAN",
+        "resolvedTopic": "公園の予定",
+        "scriptText": null,
+        "providedFacts": [],
+        "requiredIntents": [],
+        "responseConstraints": [],
+        "difficulty": "A2",
+        "shouldEnd": false,
+        "endReason": null,
+        "hint": null,
+        "coachingCorrections": [],
+        "sessionSummary": null,
+        "assistanceLevel": "NONE"
+      },
+      "usage": {
+        "stt": null,
+        "conversation": {
+          "latencyMs": 0,
+          "inputTokens": 7,
+          "outputTokens": 2,
+          "audioSeconds": 0.0,
+          "ttsCharacters": 0,
+          "ttsAudioSeconds": 0.0,
+          "provider": "synthetic",
+          "model": "fixed",
+          "promptVersion": "speaking-conversation-v2",
+          "evaluationVersion": null
+        },
+        "tts": null,
+        "evaluation": null
+      }
+    },
+    "replay": {
+      "requestId": "synthetic-conversation",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "assistantText": "週末は何をしますか？",
+      "conversation": {
+        "intent": "PLAN",
+        "resolvedTopic": "公園の予定",
+        "scriptText": null,
+        "providedFacts": [],
+        "requiredIntents": [],
+        "responseConstraints": [],
+        "difficulty": "A2",
+        "shouldEnd": false,
+        "endReason": null,
+        "hint": null,
+        "coachingCorrections": [],
+        "sessionSummary": null,
+        "assistanceLevel": "NONE"
+      },
+      "usage": {
+        "stt": null,
+        "conversation": {
+          "latencyMs": 0,
+          "inputTokens": 7,
+          "outputTokens": 2,
+          "audioSeconds": 0.0,
+          "ttsCharacters": 0,
+          "ttsAudioSeconds": 0.0,
+          "provider": "synthetic",
+          "model": "fixed",
+          "promptVersion": "speaking-conversation-v2",
+          "evaluationVersion": null
+        },
+        "tts": null,
+        "evaluation": null
+      }
+    },
+    "calls": 1
+  },
+  {
+    "name": "max_turns",
+    "kind": "conversation",
+    "rawRequest": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 20,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "conversationStartMode": "AI_FIRST"
+    },
+    "request": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 20,
+      "problemIndex": null,
+      "attemptIndex": null,
+      "readAloudGenerateNextProblem": false,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "practiceMode": "FREE",
+      "category": null,
+      "goal": null,
+      "persona": null,
+      "conversationStartMode": "AI_FIRST",
+      "topicRecommendedStartMode": null,
+      "correctionMode": "CONVERSATION",
+      "targetLevel": null,
+      "learningProfileSummary": null,
+      "selectedKeywords": [],
+      "focusSignals": [],
+      "conversationHistory": [],
+      "assistanceUsage": [],
+      "sessionSummary": null,
+      "sessionElapsedSeconds": 0.0,
+      "sessionPolicySnapshot": {
+        "maxSessionMinutes": 10,
+        "maxTurns": 20,
+        "minValidAudioSeconds": 1.0,
+        "maxTurnAudioSeconds": 60.0,
+        "maxAudioFileBytes": 10485760,
+        "automaticRetryLimitPerStage": 2,
+        "manualRetryLimitPerStage": 1
+      },
+      "audioReference": null,
+      "audioFormat": null,
+      "durationSeconds": null,
+      "voice": "marin",
+      "playbackSpeed": "NORMAL",
+      "manualRetryAttempt": 0,
+      "transcript": null,
+      "isInitialTurn": false
+    },
+    "output": {
+      "assistantText": "週末は何をしますか？",
+      "intent": "PLAN",
+      "difficulty": "A2"
+    },
+    "providerFailure": null,
+    "prompt": "Generate the next assistant turn from this session context.\nIf isInitialTurn=true, generate the first task/prompt for the selected practiceMode.\nIf correctionMode=COACHING, return coachingCorrections only when useful.\n\n{\"requestId\":\"synthetic-conversation\",\"sessionId\":\"synthetic-session\",\"turnIndex\":20,\"problemIndex\":null,\"attemptIndex\":null,\"readAloudGenerateNextProblem\":false,\"originLanguage\":\"ko\",\"learningLanguage\":\"ja\",\"topic\":\"합성 주말 계획\",\"practiceMode\":\"FREE\",\"category\":null,\"goal\":null,\"persona\":null,\"conversationStartMode\":\"AI_FIRST\",\"topicRecommendedStartMode\":null,\"correctionMode\":\"CONVERSATION\",\"targetLevel\":null,\"learningProfileSummary\":null,\"selectedKeywords\":[],\"focusSignals\":[],\"conversationHistory\":[],\"sessionSummary\":null,\"sessionElapsedSeconds\":0,\"transcript\":null,\"assistanceUsage\":[],\"assistanceLevel\":\"NONE\",\"isInitialTurn\":false,\"sessionPolicySnapshot\":{\"maxSessionMinutes\":10,\"maxTurns\":20,\"minValidAudioSeconds\":1.0,\"maxTurnAudioSeconds\":60.0,\"maxAudioFileBytes\":10485760,\"automaticRetryLimitPerStage\":2,\"manualRetryLimitPerStage\":1}}",
+    "response": {
+      "requestId": "synthetic-conversation",
+      "sessionId": "synthetic-session",
+      "turnIndex": 20,
+      "assistantText": "週末は何をしますか？",
+      "conversation": {
+        "intent": "PLAN",
+        "resolvedTopic": null,
+        "scriptText": null,
+        "providedFacts": [],
+        "requiredIntents": [],
+        "responseConstraints": [],
+        "difficulty": "A2",
+        "shouldEnd": true,
+        "endReason": "MAX_TURNS",
+        "hint": null,
+        "coachingCorrections": [],
+        "sessionSummary": null,
+        "assistanceLevel": "NONE"
+      },
+      "usage": {
+        "stt": null,
+        "conversation": {
+          "latencyMs": 0,
+          "inputTokens": 7,
+          "outputTokens": 2,
+          "audioSeconds": 0.0,
+          "ttsCharacters": 0,
+          "ttsAudioSeconds": 0.0,
+          "provider": "synthetic",
+          "model": "fixed",
+          "promptVersion": "speaking-conversation-v2",
+          "evaluationVersion": null
+        },
+        "tts": null,
+        "evaluation": null
+      }
+    },
+    "replay": {
+      "requestId": "synthetic-conversation",
+      "sessionId": "synthetic-session",
+      "turnIndex": 20,
+      "assistantText": "週末は何をしますか？",
+      "conversation": {
+        "intent": "PLAN",
+        "resolvedTopic": null,
+        "scriptText": null,
+        "providedFacts": [],
+        "requiredIntents": [],
+        "responseConstraints": [],
+        "difficulty": "A2",
+        "shouldEnd": true,
+        "endReason": "MAX_TURNS",
+        "hint": null,
+        "coachingCorrections": [],
+        "sessionSummary": null,
+        "assistanceLevel": "NONE"
+      },
+      "usage": {
+        "stt": null,
+        "conversation": {
+          "latencyMs": 0,
+          "inputTokens": 7,
+          "outputTokens": 2,
+          "audioSeconds": 0.0,
+          "ttsCharacters": 0,
+          "ttsAudioSeconds": 0.0,
+          "provider": "synthetic",
+          "model": "fixed",
+          "promptVersion": "speaking-conversation-v2",
+          "evaluationVersion": null
+        },
+        "tts": null,
+        "evaluation": null
+      }
+    },
+    "calls": 1
+  },
+  {
+    "name": "max_duration",
+    "kind": "conversation",
+    "rawRequest": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "conversationStartMode": "AI_FIRST",
+      "sessionElapsedSeconds": 600
+    },
+    "request": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "problemIndex": null,
+      "attemptIndex": null,
+      "readAloudGenerateNextProblem": false,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "practiceMode": "FREE",
+      "category": null,
+      "goal": null,
+      "persona": null,
+      "conversationStartMode": "AI_FIRST",
+      "topicRecommendedStartMode": null,
+      "correctionMode": "CONVERSATION",
+      "targetLevel": null,
+      "learningProfileSummary": null,
+      "selectedKeywords": [],
+      "focusSignals": [],
+      "conversationHistory": [],
+      "assistanceUsage": [],
+      "sessionSummary": null,
+      "sessionElapsedSeconds": 600.0,
+      "sessionPolicySnapshot": {
+        "maxSessionMinutes": 10,
+        "maxTurns": 20,
+        "minValidAudioSeconds": 1.0,
+        "maxTurnAudioSeconds": 60.0,
+        "maxAudioFileBytes": 10485760,
+        "automaticRetryLimitPerStage": 2,
+        "manualRetryLimitPerStage": 1
+      },
+      "audioReference": null,
+      "audioFormat": null,
+      "durationSeconds": null,
+      "voice": "marin",
+      "playbackSpeed": "NORMAL",
+      "manualRetryAttempt": 0,
+      "transcript": null,
+      "isInitialTurn": false
+    },
+    "output": {
+      "assistantText": "週末は何をしますか？",
+      "intent": "PLAN",
+      "difficulty": "A2"
+    },
+    "providerFailure": null,
+    "prompt": "Generate the next assistant turn from this session context.\nIf isInitialTurn=true, generate the first task/prompt for the selected practiceMode.\nIf correctionMode=COACHING, return coachingCorrections only when useful.\n\n{\"requestId\":\"synthetic-conversation\",\"sessionId\":\"synthetic-session\",\"turnIndex\":1,\"problemIndex\":null,\"attemptIndex\":null,\"readAloudGenerateNextProblem\":false,\"originLanguage\":\"ko\",\"learningLanguage\":\"ja\",\"topic\":\"합성 주말 계획\",\"practiceMode\":\"FREE\",\"category\":null,\"goal\":null,\"persona\":null,\"conversationStartMode\":\"AI_FIRST\",\"topicRecommendedStartMode\":null,\"correctionMode\":\"CONVERSATION\",\"targetLevel\":null,\"learningProfileSummary\":null,\"selectedKeywords\":[],\"focusSignals\":[],\"conversationHistory\":[],\"sessionSummary\":null,\"sessionElapsedSeconds\":600.0,\"transcript\":null,\"assistanceUsage\":[],\"assistanceLevel\":\"NONE\",\"isInitialTurn\":false,\"sessionPolicySnapshot\":{\"maxSessionMinutes\":10,\"maxTurns\":20,\"minValidAudioSeconds\":1.0,\"maxTurnAudioSeconds\":60.0,\"maxAudioFileBytes\":10485760,\"automaticRetryLimitPerStage\":2,\"manualRetryLimitPerStage\":1}}",
+    "response": {
+      "requestId": "synthetic-conversation",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "assistantText": "週末は何をしますか？",
+      "conversation": {
+        "intent": "PLAN",
+        "resolvedTopic": null,
+        "scriptText": null,
+        "providedFacts": [],
+        "requiredIntents": [],
+        "responseConstraints": [],
+        "difficulty": "A2",
+        "shouldEnd": true,
+        "endReason": "MAX_SESSION_DURATION",
+        "hint": null,
+        "coachingCorrections": [],
+        "sessionSummary": null,
+        "assistanceLevel": "NONE"
+      },
+      "usage": {
+        "stt": null,
+        "conversation": {
+          "latencyMs": 0,
+          "inputTokens": 7,
+          "outputTokens": 2,
+          "audioSeconds": 0.0,
+          "ttsCharacters": 0,
+          "ttsAudioSeconds": 0.0,
+          "provider": "synthetic",
+          "model": "fixed",
+          "promptVersion": "speaking-conversation-v2",
+          "evaluationVersion": null
+        },
+        "tts": null,
+        "evaluation": null
+      }
+    },
+    "replay": {
+      "requestId": "synthetic-conversation",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "assistantText": "週末は何をしますか？",
+      "conversation": {
+        "intent": "PLAN",
+        "resolvedTopic": null,
+        "scriptText": null,
+        "providedFacts": [],
+        "requiredIntents": [],
+        "responseConstraints": [],
+        "difficulty": "A2",
+        "shouldEnd": true,
+        "endReason": "MAX_SESSION_DURATION",
+        "hint": null,
+        "coachingCorrections": [],
+        "sessionSummary": null,
+        "assistanceLevel": "NONE"
+      },
+      "usage": {
+        "stt": null,
+        "conversation": {
+          "latencyMs": 0,
+          "inputTokens": 7,
+          "outputTokens": 2,
+          "audioSeconds": 0.0,
+          "ttsCharacters": 0,
+          "ttsAudioSeconds": 0.0,
+          "provider": "synthetic",
+          "model": "fixed",
+          "promptVersion": "speaking-conversation-v2",
+          "evaluationVersion": null
+        },
+        "tts": null,
+        "evaluation": null
+      }
+    },
+    "calls": 1
+  },
+  {
+    "name": "model_end",
+    "kind": "conversation",
+    "rawRequest": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "conversationStartMode": "AI_FIRST"
+    },
+    "request": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "problemIndex": null,
+      "attemptIndex": null,
+      "readAloudGenerateNextProblem": false,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "practiceMode": "FREE",
+      "category": null,
+      "goal": null,
+      "persona": null,
+      "conversationStartMode": "AI_FIRST",
+      "topicRecommendedStartMode": null,
+      "correctionMode": "CONVERSATION",
+      "targetLevel": null,
+      "learningProfileSummary": null,
+      "selectedKeywords": [],
+      "focusSignals": [],
+      "conversationHistory": [],
+      "assistanceUsage": [],
+      "sessionSummary": null,
+      "sessionElapsedSeconds": 0.0,
+      "sessionPolicySnapshot": {
+        "maxSessionMinutes": 10,
+        "maxTurns": 20,
+        "minValidAudioSeconds": 1.0,
+        "maxTurnAudioSeconds": 60.0,
+        "maxAudioFileBytes": 10485760,
+        "automaticRetryLimitPerStage": 2,
+        "manualRetryLimitPerStage": 1
+      },
+      "audioReference": null,
+      "audioFormat": null,
+      "durationSeconds": null,
+      "voice": "marin",
+      "playbackSpeed": "NORMAL",
+      "manualRetryAttempt": 0,
+      "transcript": null,
+      "isInitialTurn": false
+    },
+    "output": {
+      "assistantText": "週末は何をしますか？",
+      "intent": "PLAN",
+      "difficulty": "A2",
+      "shouldEnd": true,
+      "endReason": "DONE"
+    },
+    "providerFailure": null,
+    "prompt": "Generate the next assistant turn from this session context.\nIf isInitialTurn=true, generate the first task/prompt for the selected practiceMode.\nIf correctionMode=COACHING, return coachingCorrections only when useful.\n\n{\"requestId\":\"synthetic-conversation\",\"sessionId\":\"synthetic-session\",\"turnIndex\":1,\"problemIndex\":null,\"attemptIndex\":null,\"readAloudGenerateNextProblem\":false,\"originLanguage\":\"ko\",\"learningLanguage\":\"ja\",\"topic\":\"합성 주말 계획\",\"practiceMode\":\"FREE\",\"category\":null,\"goal\":null,\"persona\":null,\"conversationStartMode\":\"AI_FIRST\",\"topicRecommendedStartMode\":null,\"correctionMode\":\"CONVERSATION\",\"targetLevel\":null,\"learningProfileSummary\":null,\"selectedKeywords\":[],\"focusSignals\":[],\"conversationHistory\":[],\"sessionSummary\":null,\"sessionElapsedSeconds\":0,\"transcript\":null,\"assistanceUsage\":[],\"assistanceLevel\":\"NONE\",\"isInitialTurn\":false,\"sessionPolicySnapshot\":{\"maxSessionMinutes\":10,\"maxTurns\":20,\"minValidAudioSeconds\":1.0,\"maxTurnAudioSeconds\":60.0,\"maxAudioFileBytes\":10485760,\"automaticRetryLimitPerStage\":2,\"manualRetryLimitPerStage\":1}}",
+    "response": {
+      "requestId": "synthetic-conversation",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "assistantText": "週末は何をしますか？",
+      "conversation": {
+        "intent": "PLAN",
+        "resolvedTopic": null,
+        "scriptText": null,
+        "providedFacts": [],
+        "requiredIntents": [],
+        "responseConstraints": [],
+        "difficulty": "A2",
+        "shouldEnd": true,
+        "endReason": "DONE",
+        "hint": null,
+        "coachingCorrections": [],
+        "sessionSummary": null,
+        "assistanceLevel": "NONE"
+      },
+      "usage": {
+        "stt": null,
+        "conversation": {
+          "latencyMs": 0,
+          "inputTokens": 7,
+          "outputTokens": 2,
+          "audioSeconds": 0.0,
+          "ttsCharacters": 0,
+          "ttsAudioSeconds": 0.0,
+          "provider": "synthetic",
+          "model": "fixed",
+          "promptVersion": "speaking-conversation-v2",
+          "evaluationVersion": null
+        },
+        "tts": null,
+        "evaluation": null
+      }
+    },
+    "replay": {
+      "requestId": "synthetic-conversation",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "assistantText": "週末は何をしますか？",
+      "conversation": {
+        "intent": "PLAN",
+        "resolvedTopic": null,
+        "scriptText": null,
+        "providedFacts": [],
+        "requiredIntents": [],
+        "responseConstraints": [],
+        "difficulty": "A2",
+        "shouldEnd": true,
+        "endReason": "DONE",
+        "hint": null,
+        "coachingCorrections": [],
+        "sessionSummary": null,
+        "assistanceLevel": "NONE"
+      },
+      "usage": {
+        "stt": null,
+        "conversation": {
+          "latencyMs": 0,
+          "inputTokens": 7,
+          "outputTokens": 2,
+          "audioSeconds": 0.0,
+          "ttsCharacters": 0,
+          "ttsAudioSeconds": 0.0,
+          "provider": "synthetic",
+          "model": "fixed",
+          "promptVersion": "speaking-conversation-v2",
+          "evaluationVersion": null
+        },
+        "tts": null,
+        "evaluation": null
+      }
+    },
+    "calls": 1
+  },
+  {
+    "name": "extra_field",
+    "kind": "conversation",
+    "rawRequest": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "conversationStartMode": "AI_FIRST"
+    },
+    "request": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "problemIndex": null,
+      "attemptIndex": null,
+      "readAloudGenerateNextProblem": false,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "practiceMode": "FREE",
+      "category": null,
+      "goal": null,
+      "persona": null,
+      "conversationStartMode": "AI_FIRST",
+      "topicRecommendedStartMode": null,
+      "correctionMode": "CONVERSATION",
+      "targetLevel": null,
+      "learningProfileSummary": null,
+      "selectedKeywords": [],
+      "focusSignals": [],
+      "conversationHistory": [],
+      "assistanceUsage": [],
+      "sessionSummary": null,
+      "sessionElapsedSeconds": 0.0,
+      "sessionPolicySnapshot": {
+        "maxSessionMinutes": 10,
+        "maxTurns": 20,
+        "minValidAudioSeconds": 1.0,
+        "maxTurnAudioSeconds": 60.0,
+        "maxAudioFileBytes": 10485760,
+        "automaticRetryLimitPerStage": 2,
+        "manualRetryLimitPerStage": 1
+      },
+      "audioReference": null,
+      "audioFormat": null,
+      "durationSeconds": null,
+      "voice": "marin",
+      "playbackSpeed": "NORMAL",
+      "manualRetryAttempt": 0,
+      "transcript": null,
+      "isInitialTurn": false
+    },
+    "output": {
+      "assistantText": "週末は何をしますか？",
+      "intent": "PLAN",
+      "difficulty": "A2",
+      "extra": "invalid"
+    },
+    "providerFailure": null,
+    "prompt": "Generate the next assistant turn from this session context.\nIf isInitialTurn=true, generate the first task/prompt for the selected practiceMode.\nIf correctionMode=COACHING, return coachingCorrections only when useful.\n\n{\"requestId\":\"synthetic-conversation\",\"sessionId\":\"synthetic-session\",\"turnIndex\":1,\"problemIndex\":null,\"attemptIndex\":null,\"readAloudGenerateNextProblem\":false,\"originLanguage\":\"ko\",\"learningLanguage\":\"ja\",\"topic\":\"합성 주말 계획\",\"practiceMode\":\"FREE\",\"category\":null,\"goal\":null,\"persona\":null,\"conversationStartMode\":\"AI_FIRST\",\"topicRecommendedStartMode\":null,\"correctionMode\":\"CONVERSATION\",\"targetLevel\":null,\"learningProfileSummary\":null,\"selectedKeywords\":[],\"focusSignals\":[],\"conversationHistory\":[],\"sessionSummary\":null,\"sessionElapsedSeconds\":0,\"transcript\":null,\"assistanceUsage\":[],\"assistanceLevel\":\"NONE\",\"isInitialTurn\":false,\"sessionPolicySnapshot\":{\"maxSessionMinutes\":10,\"maxTurns\":20,\"minValidAudioSeconds\":1.0,\"maxTurnAudioSeconds\":60.0,\"maxAudioFileBytes\":10485760,\"automaticRetryLimitPerStage\":2,\"manualRetryLimitPerStage\":1}}",
+    "failure": {
+      "code": "INVALID_RESPONSE_SCHEMA",
+      "stage": "CONVERSATION",
+      "retryable": true
+    },
+    "calls": 3
+  },
+  {
+    "name": "empty_assistant",
+    "kind": "conversation",
+    "rawRequest": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "conversationStartMode": "AI_FIRST"
+    },
+    "request": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "problemIndex": null,
+      "attemptIndex": null,
+      "readAloudGenerateNextProblem": false,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "practiceMode": "FREE",
+      "category": null,
+      "goal": null,
+      "persona": null,
+      "conversationStartMode": "AI_FIRST",
+      "topicRecommendedStartMode": null,
+      "correctionMode": "CONVERSATION",
+      "targetLevel": null,
+      "learningProfileSummary": null,
+      "selectedKeywords": [],
+      "focusSignals": [],
+      "conversationHistory": [],
+      "assistanceUsage": [],
+      "sessionSummary": null,
+      "sessionElapsedSeconds": 0.0,
+      "sessionPolicySnapshot": {
+        "maxSessionMinutes": 10,
+        "maxTurns": 20,
+        "minValidAudioSeconds": 1.0,
+        "maxTurnAudioSeconds": 60.0,
+        "maxAudioFileBytes": 10485760,
+        "automaticRetryLimitPerStage": 2,
+        "manualRetryLimitPerStage": 1
+      },
+      "audioReference": null,
+      "audioFormat": null,
+      "durationSeconds": null,
+      "voice": "marin",
+      "playbackSpeed": "NORMAL",
+      "manualRetryAttempt": 0,
+      "transcript": null,
+      "isInitialTurn": false
+    },
+    "output": {
+      "assistantText": " ",
+      "intent": "PLAN",
+      "difficulty": "A2"
+    },
+    "providerFailure": null,
+    "prompt": "Generate the next assistant turn from this session context.\nIf isInitialTurn=true, generate the first task/prompt for the selected practiceMode.\nIf correctionMode=COACHING, return coachingCorrections only when useful.\n\n{\"requestId\":\"synthetic-conversation\",\"sessionId\":\"synthetic-session\",\"turnIndex\":1,\"problemIndex\":null,\"attemptIndex\":null,\"readAloudGenerateNextProblem\":false,\"originLanguage\":\"ko\",\"learningLanguage\":\"ja\",\"topic\":\"합성 주말 계획\",\"practiceMode\":\"FREE\",\"category\":null,\"goal\":null,\"persona\":null,\"conversationStartMode\":\"AI_FIRST\",\"topicRecommendedStartMode\":null,\"correctionMode\":\"CONVERSATION\",\"targetLevel\":null,\"learningProfileSummary\":null,\"selectedKeywords\":[],\"focusSignals\":[],\"conversationHistory\":[],\"sessionSummary\":null,\"sessionElapsedSeconds\":0,\"transcript\":null,\"assistanceUsage\":[],\"assistanceLevel\":\"NONE\",\"isInitialTurn\":false,\"sessionPolicySnapshot\":{\"maxSessionMinutes\":10,\"maxTurns\":20,\"minValidAudioSeconds\":1.0,\"maxTurnAudioSeconds\":60.0,\"maxAudioFileBytes\":10485760,\"automaticRetryLimitPerStage\":2,\"manualRetryLimitPerStage\":1}}",
+    "failure": {
+      "code": "INVALID_RESPONSE_SCHEMA",
+      "stage": "CONVERSATION",
+      "retryable": true
+    },
+    "calls": 3
+  },
+  {
+    "name": "boolean_coercion",
+    "kind": "conversation",
+    "rawRequest": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "conversationStartMode": "AI_FIRST"
+    },
+    "request": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "problemIndex": null,
+      "attemptIndex": null,
+      "readAloudGenerateNextProblem": false,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "practiceMode": "FREE",
+      "category": null,
+      "goal": null,
+      "persona": null,
+      "conversationStartMode": "AI_FIRST",
+      "topicRecommendedStartMode": null,
+      "correctionMode": "CONVERSATION",
+      "targetLevel": null,
+      "learningProfileSummary": null,
+      "selectedKeywords": [],
+      "focusSignals": [],
+      "conversationHistory": [],
+      "assistanceUsage": [],
+      "sessionSummary": null,
+      "sessionElapsedSeconds": 0.0,
+      "sessionPolicySnapshot": {
+        "maxSessionMinutes": 10,
+        "maxTurns": 20,
+        "minValidAudioSeconds": 1.0,
+        "maxTurnAudioSeconds": 60.0,
+        "maxAudioFileBytes": 10485760,
+        "automaticRetryLimitPerStage": 2,
+        "manualRetryLimitPerStage": 1
+      },
+      "audioReference": null,
+      "audioFormat": null,
+      "durationSeconds": null,
+      "voice": "marin",
+      "playbackSpeed": "NORMAL",
+      "manualRetryAttempt": 0,
+      "transcript": null,
+      "isInitialTurn": false
+    },
+    "output": {
+      "assistantText": "週末は何をしますか？",
+      "intent": "PLAN",
+      "difficulty": "A2",
+      "shouldEnd": "true"
+    },
+    "providerFailure": null,
+    "prompt": "Generate the next assistant turn from this session context.\nIf isInitialTurn=true, generate the first task/prompt for the selected practiceMode.\nIf correctionMode=COACHING, return coachingCorrections only when useful.\n\n{\"requestId\":\"synthetic-conversation\",\"sessionId\":\"synthetic-session\",\"turnIndex\":1,\"problemIndex\":null,\"attemptIndex\":null,\"readAloudGenerateNextProblem\":false,\"originLanguage\":\"ko\",\"learningLanguage\":\"ja\",\"topic\":\"합성 주말 계획\",\"practiceMode\":\"FREE\",\"category\":null,\"goal\":null,\"persona\":null,\"conversationStartMode\":\"AI_FIRST\",\"topicRecommendedStartMode\":null,\"correctionMode\":\"CONVERSATION\",\"targetLevel\":null,\"learningProfileSummary\":null,\"selectedKeywords\":[],\"focusSignals\":[],\"conversationHistory\":[],\"sessionSummary\":null,\"sessionElapsedSeconds\":0,\"transcript\":null,\"assistanceUsage\":[],\"assistanceLevel\":\"NONE\",\"isInitialTurn\":false,\"sessionPolicySnapshot\":{\"maxSessionMinutes\":10,\"maxTurns\":20,\"minValidAudioSeconds\":1.0,\"maxTurnAudioSeconds\":60.0,\"maxAudioFileBytes\":10485760,\"automaticRetryLimitPerStage\":2,\"manualRetryLimitPerStage\":1}}",
+    "response": {
+      "requestId": "synthetic-conversation",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "assistantText": "週末は何をしますか？",
+      "conversation": {
+        "intent": "PLAN",
+        "resolvedTopic": null,
+        "scriptText": null,
+        "providedFacts": [],
+        "requiredIntents": [],
+        "responseConstraints": [],
+        "difficulty": "A2",
+        "shouldEnd": true,
+        "endReason": null,
+        "hint": null,
+        "coachingCorrections": [],
+        "sessionSummary": null,
+        "assistanceLevel": "NONE"
+      },
+      "usage": {
+        "stt": null,
+        "conversation": {
+          "latencyMs": 0,
+          "inputTokens": 7,
+          "outputTokens": 2,
+          "audioSeconds": 0.0,
+          "ttsCharacters": 0,
+          "ttsAudioSeconds": 0.0,
+          "provider": "synthetic",
+          "model": "fixed",
+          "promptVersion": "speaking-conversation-v2",
+          "evaluationVersion": null
+        },
+        "tts": null,
+        "evaluation": null
+      }
+    },
+    "replay": {
+      "requestId": "synthetic-conversation",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "assistantText": "週末は何をしますか？",
+      "conversation": {
+        "intent": "PLAN",
+        "resolvedTopic": null,
+        "scriptText": null,
+        "providedFacts": [],
+        "requiredIntents": [],
+        "responseConstraints": [],
+        "difficulty": "A2",
+        "shouldEnd": true,
+        "endReason": null,
+        "hint": null,
+        "coachingCorrections": [],
+        "sessionSummary": null,
+        "assistanceLevel": "NONE"
+      },
+      "usage": {
+        "stt": null,
+        "conversation": {
+          "latencyMs": 0,
+          "inputTokens": 7,
+          "outputTokens": 2,
+          "audioSeconds": 0.0,
+          "ttsCharacters": 0,
+          "ttsAudioSeconds": 0.0,
+          "provider": "synthetic",
+          "model": "fixed",
+          "promptVersion": "speaking-conversation-v2",
+          "evaluationVersion": null
+        },
+        "tts": null,
+        "evaluation": null
+      }
+    },
+    "calls": 1
+  },
+  {
+    "name": "free_script_forbidden",
+    "kind": "conversation",
+    "rawRequest": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "conversationStartMode": "AI_FIRST"
+    },
+    "request": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "problemIndex": null,
+      "attemptIndex": null,
+      "readAloudGenerateNextProblem": false,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "practiceMode": "FREE",
+      "category": null,
+      "goal": null,
+      "persona": null,
+      "conversationStartMode": "AI_FIRST",
+      "topicRecommendedStartMode": null,
+      "correctionMode": "CONVERSATION",
+      "targetLevel": null,
+      "learningProfileSummary": null,
+      "selectedKeywords": [],
+      "focusSignals": [],
+      "conversationHistory": [],
+      "assistanceUsage": [],
+      "sessionSummary": null,
+      "sessionElapsedSeconds": 0.0,
+      "sessionPolicySnapshot": {
+        "maxSessionMinutes": 10,
+        "maxTurns": 20,
+        "minValidAudioSeconds": 1.0,
+        "maxTurnAudioSeconds": 60.0,
+        "maxAudioFileBytes": 10485760,
+        "automaticRetryLimitPerStage": 2,
+        "manualRetryLimitPerStage": 1
+      },
+      "audioReference": null,
+      "audioFormat": null,
+      "durationSeconds": null,
+      "voice": "marin",
+      "playbackSpeed": "NORMAL",
+      "manualRetryAttempt": 0,
+      "transcript": null,
+      "isInitialTurn": false
+    },
+    "output": {
+      "assistantText": "週末は何をしますか？",
+      "intent": "PLAN",
+      "difficulty": "A2",
+      "scriptText": "invalid"
+    },
+    "providerFailure": null,
+    "prompt": "Generate the next assistant turn from this session context.\nIf isInitialTurn=true, generate the first task/prompt for the selected practiceMode.\nIf correctionMode=COACHING, return coachingCorrections only when useful.\n\n{\"requestId\":\"synthetic-conversation\",\"sessionId\":\"synthetic-session\",\"turnIndex\":1,\"problemIndex\":null,\"attemptIndex\":null,\"readAloudGenerateNextProblem\":false,\"originLanguage\":\"ko\",\"learningLanguage\":\"ja\",\"topic\":\"합성 주말 계획\",\"practiceMode\":\"FREE\",\"category\":null,\"goal\":null,\"persona\":null,\"conversationStartMode\":\"AI_FIRST\",\"topicRecommendedStartMode\":null,\"correctionMode\":\"CONVERSATION\",\"targetLevel\":null,\"learningProfileSummary\":null,\"selectedKeywords\":[],\"focusSignals\":[],\"conversationHistory\":[],\"sessionSummary\":null,\"sessionElapsedSeconds\":0,\"transcript\":null,\"assistanceUsage\":[],\"assistanceLevel\":\"NONE\",\"isInitialTurn\":false,\"sessionPolicySnapshot\":{\"maxSessionMinutes\":10,\"maxTurns\":20,\"minValidAudioSeconds\":1.0,\"maxTurnAudioSeconds\":60.0,\"maxAudioFileBytes\":10485760,\"automaticRetryLimitPerStage\":2,\"manualRetryLimitPerStage\":1}}",
+    "failure": {
+      "code": "INVALID_RESPONSE_SCHEMA",
+      "stage": "CONVERSATION",
+      "retryable": true
+    },
+    "calls": 3
+  },
+  {
+    "name": "guided_incomplete",
+    "kind": "conversation",
+    "rawRequest": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "conversationStartMode": "AI_FIRST",
+      "practiceMode": "GUIDED"
+    },
+    "request": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "problemIndex": null,
+      "attemptIndex": null,
+      "readAloudGenerateNextProblem": false,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "practiceMode": "GUIDED",
+      "category": null,
+      "goal": null,
+      "persona": null,
+      "conversationStartMode": "AI_FIRST",
+      "topicRecommendedStartMode": null,
+      "correctionMode": "CONVERSATION",
+      "targetLevel": null,
+      "learningProfileSummary": null,
+      "selectedKeywords": [],
+      "focusSignals": [],
+      "conversationHistory": [],
+      "assistanceUsage": [],
+      "sessionSummary": null,
+      "sessionElapsedSeconds": 0.0,
+      "sessionPolicySnapshot": {
+        "maxSessionMinutes": 10,
+        "maxTurns": 20,
+        "minValidAudioSeconds": 1.0,
+        "maxTurnAudioSeconds": 60.0,
+        "maxAudioFileBytes": 10485760,
+        "automaticRetryLimitPerStage": 2,
+        "manualRetryLimitPerStage": 1
+      },
+      "audioReference": null,
+      "audioFormat": null,
+      "durationSeconds": null,
+      "voice": "marin",
+      "playbackSpeed": "NORMAL",
+      "manualRetryAttempt": 0,
+      "transcript": null,
+      "isInitialTurn": false
+    },
+    "output": {
+      "assistantText": "週末は何をしますか？",
+      "intent": "PLAN",
+      "difficulty": "A2"
+    },
+    "providerFailure": null,
+    "prompt": "Generate the next assistant turn from this session context.\nIf isInitialTurn=true, generate the first task/prompt for the selected practiceMode.\nIf correctionMode=COACHING, return coachingCorrections only when useful.\n\n{\"requestId\":\"synthetic-conversation\",\"sessionId\":\"synthetic-session\",\"turnIndex\":1,\"problemIndex\":null,\"attemptIndex\":null,\"readAloudGenerateNextProblem\":false,\"originLanguage\":\"ko\",\"learningLanguage\":\"ja\",\"topic\":\"합성 주말 계획\",\"practiceMode\":\"GUIDED\",\"category\":null,\"goal\":null,\"persona\":null,\"conversationStartMode\":\"AI_FIRST\",\"topicRecommendedStartMode\":null,\"correctionMode\":\"CONVERSATION\",\"targetLevel\":null,\"learningProfileSummary\":null,\"selectedKeywords\":[],\"focusSignals\":[],\"conversationHistory\":[],\"sessionSummary\":null,\"sessionElapsedSeconds\":0,\"transcript\":null,\"assistanceUsage\":[],\"assistanceLevel\":\"NONE\",\"isInitialTurn\":false,\"sessionPolicySnapshot\":{\"maxSessionMinutes\":10,\"maxTurns\":20,\"minValidAudioSeconds\":1.0,\"maxTurnAudioSeconds\":60.0,\"maxAudioFileBytes\":10485760,\"automaticRetryLimitPerStage\":2,\"manualRetryLimitPerStage\":1}}",
+    "failure": {
+      "code": "INVALID_RESPONSE_SCHEMA",
+      "stage": "CONVERSATION",
+      "retryable": true
+    },
+    "calls": 3
+  },
+  {
+    "name": "read_aloud_mismatch",
+    "kind": "conversation",
+    "rawRequest": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 0,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "conversationStartMode": "AI_FIRST",
+      "practiceMode": "READ_ALOUD"
+    },
+    "request": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 0,
+      "problemIndex": null,
+      "attemptIndex": null,
+      "readAloudGenerateNextProblem": false,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "practiceMode": "READ_ALOUD",
+      "category": null,
+      "goal": null,
+      "persona": null,
+      "conversationStartMode": "AI_FIRST",
+      "topicRecommendedStartMode": null,
+      "correctionMode": "CONVERSATION",
+      "targetLevel": null,
+      "learningProfileSummary": null,
+      "selectedKeywords": [],
+      "focusSignals": [],
+      "conversationHistory": [],
+      "assistanceUsage": [],
+      "sessionSummary": null,
+      "sessionElapsedSeconds": 0.0,
+      "sessionPolicySnapshot": {
+        "maxSessionMinutes": 10,
+        "maxTurns": 20,
+        "minValidAudioSeconds": 1.0,
+        "maxTurnAudioSeconds": 60.0,
+        "maxAudioFileBytes": 10485760,
+        "automaticRetryLimitPerStage": 2,
+        "manualRetryLimitPerStage": 1
+      },
+      "audioReference": null,
+      "audioFormat": null,
+      "durationSeconds": null,
+      "voice": "marin",
+      "playbackSpeed": "NORMAL",
+      "manualRetryAttempt": 0,
+      "transcript": null,
+      "isInitialTurn": false
+    },
+    "output": {
+      "assistantText": "週末は何をしますか？",
+      "intent": "PLAN",
+      "difficulty": "A2",
+      "scriptText": "異なる原文"
+    },
+    "providerFailure": null,
+    "prompt": "Generate the next assistant turn from this session context.\nIf isInitialTurn=true, generate the first task/prompt for the selected practiceMode.\nIf correctionMode=COACHING, return coachingCorrections only when useful.\n\n{\"requestId\":\"synthetic-conversation\",\"sessionId\":\"synthetic-session\",\"turnIndex\":0,\"problemIndex\":null,\"attemptIndex\":null,\"readAloudGenerateNextProblem\":false,\"originLanguage\":\"ko\",\"learningLanguage\":\"ja\",\"topic\":\"합성 주말 계획\",\"practiceMode\":\"READ_ALOUD\",\"category\":null,\"goal\":null,\"persona\":null,\"conversationStartMode\":\"AI_FIRST\",\"topicRecommendedStartMode\":null,\"correctionMode\":\"CONVERSATION\",\"targetLevel\":null,\"learningProfileSummary\":null,\"selectedKeywords\":[],\"focusSignals\":[],\"conversationHistory\":[],\"sessionSummary\":null,\"sessionElapsedSeconds\":0,\"transcript\":null,\"assistanceUsage\":[],\"assistanceLevel\":\"NONE\",\"isInitialTurn\":false,\"sessionPolicySnapshot\":{\"maxSessionMinutes\":10,\"maxTurns\":20,\"minValidAudioSeconds\":1.0,\"maxTurnAudioSeconds\":60.0,\"maxAudioFileBytes\":10485760,\"automaticRetryLimitPerStage\":2,\"manualRetryLimitPerStage\":1}}",
+    "failure": {
+      "code": "INVALID_RESPONSE_SCHEMA",
+      "stage": "CONVERSATION",
+      "retryable": true
+    },
+    "calls": 3
+  },
+  {
+    "name": "sample_assisted",
+    "kind": "conversation",
+    "rawRequest": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "conversationStartMode": "AI_FIRST",
+      "assistanceUsage": [
+        {
+          "type": "SAMPLE_ANSWER"
+        }
+      ]
+    },
+    "request": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "problemIndex": null,
+      "attemptIndex": null,
+      "readAloudGenerateNextProblem": false,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "practiceMode": "FREE",
+      "category": null,
+      "goal": null,
+      "persona": null,
+      "conversationStartMode": "AI_FIRST",
+      "topicRecommendedStartMode": null,
+      "correctionMode": "CONVERSATION",
+      "targetLevel": null,
+      "learningProfileSummary": null,
+      "selectedKeywords": [],
+      "focusSignals": [],
+      "conversationHistory": [],
+      "assistanceUsage": [
+        {
+          "type": "SAMPLE_ANSWER",
+          "count": 1
+        }
+      ],
+      "sessionSummary": null,
+      "sessionElapsedSeconds": 0.0,
+      "sessionPolicySnapshot": {
+        "maxSessionMinutes": 10,
+        "maxTurns": 20,
+        "minValidAudioSeconds": 1.0,
+        "maxTurnAudioSeconds": 60.0,
+        "maxAudioFileBytes": 10485760,
+        "automaticRetryLimitPerStage": 2,
+        "manualRetryLimitPerStage": 1
+      },
+      "audioReference": null,
+      "audioFormat": null,
+      "durationSeconds": null,
+      "voice": "marin",
+      "playbackSpeed": "NORMAL",
+      "manualRetryAttempt": 0,
+      "transcript": null,
+      "isInitialTurn": false
+    },
+    "output": {
+      "assistantText": "週末は何をしますか？",
+      "intent": "PLAN",
+      "difficulty": "A2"
+    },
+    "providerFailure": null,
+    "prompt": "Generate the next assistant turn from this session context.\nIf isInitialTurn=true, generate the first task/prompt for the selected practiceMode.\nIf correctionMode=COACHING, return coachingCorrections only when useful.\n\n{\"requestId\":\"synthetic-conversation\",\"sessionId\":\"synthetic-session\",\"turnIndex\":1,\"problemIndex\":null,\"attemptIndex\":null,\"readAloudGenerateNextProblem\":false,\"originLanguage\":\"ko\",\"learningLanguage\":\"ja\",\"topic\":\"합성 주말 계획\",\"practiceMode\":\"FREE\",\"category\":null,\"goal\":null,\"persona\":null,\"conversationStartMode\":\"AI_FIRST\",\"topicRecommendedStartMode\":null,\"correctionMode\":\"CONVERSATION\",\"targetLevel\":null,\"learningProfileSummary\":null,\"selectedKeywords\":[],\"focusSignals\":[],\"conversationHistory\":[],\"sessionSummary\":null,\"sessionElapsedSeconds\":0,\"transcript\":null,\"assistanceUsage\":[{\"type\":\"SAMPLE_ANSWER\",\"count\":1}],\"assistanceLevel\":\"GUIDED\",\"isInitialTurn\":false,\"sessionPolicySnapshot\":{\"maxSessionMinutes\":10,\"maxTurns\":20,\"minValidAudioSeconds\":1.0,\"maxTurnAudioSeconds\":60.0,\"maxAudioFileBytes\":10485760,\"automaticRetryLimitPerStage\":2,\"manualRetryLimitPerStage\":1}}",
+    "response": {
+      "requestId": "synthetic-conversation",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "assistantText": "週末は何をしますか？",
+      "conversation": {
+        "intent": "PLAN",
+        "resolvedTopic": null,
+        "scriptText": null,
+        "providedFacts": [],
+        "requiredIntents": [],
+        "responseConstraints": [],
+        "difficulty": "A2",
+        "shouldEnd": false,
+        "endReason": null,
+        "hint": null,
+        "coachingCorrections": [],
+        "sessionSummary": null,
+        "assistanceLevel": "GUIDED"
+      },
+      "usage": {
+        "stt": null,
+        "conversation": {
+          "latencyMs": 0,
+          "inputTokens": 7,
+          "outputTokens": 2,
+          "audioSeconds": 0.0,
+          "ttsCharacters": 0,
+          "ttsAudioSeconds": 0.0,
+          "provider": "synthetic",
+          "model": "fixed",
+          "promptVersion": "speaking-conversation-v2",
+          "evaluationVersion": null
+        },
+        "tts": null,
+        "evaluation": null
+      }
+    },
+    "replay": {
+      "requestId": "synthetic-conversation",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "assistantText": "週末は何をしますか？",
+      "conversation": {
+        "intent": "PLAN",
+        "resolvedTopic": null,
+        "scriptText": null,
+        "providedFacts": [],
+        "requiredIntents": [],
+        "responseConstraints": [],
+        "difficulty": "A2",
+        "shouldEnd": false,
+        "endReason": null,
+        "hint": null,
+        "coachingCorrections": [],
+        "sessionSummary": null,
+        "assistanceLevel": "GUIDED"
+      },
+      "usage": {
+        "stt": null,
+        "conversation": {
+          "latencyMs": 0,
+          "inputTokens": 7,
+          "outputTokens": 2,
+          "audioSeconds": 0.0,
+          "ttsCharacters": 0,
+          "ttsAudioSeconds": 0.0,
+          "provider": "synthetic",
+          "model": "fixed",
+          "promptVersion": "speaking-conversation-v2",
+          "evaluationVersion": null
+        },
+        "tts": null,
+        "evaluation": null
+      }
+    },
+    "calls": 1
+  },
+  {
+    "name": "hint_assisted",
+    "kind": "conversation",
+    "rawRequest": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "conversationStartMode": "AI_FIRST",
+      "assistanceUsage": [
+        {
+          "type": "HINT"
+        }
+      ]
+    },
+    "request": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "problemIndex": null,
+      "attemptIndex": null,
+      "readAloudGenerateNextProblem": false,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "practiceMode": "FREE",
+      "category": null,
+      "goal": null,
+      "persona": null,
+      "conversationStartMode": "AI_FIRST",
+      "topicRecommendedStartMode": null,
+      "correctionMode": "CONVERSATION",
+      "targetLevel": null,
+      "learningProfileSummary": null,
+      "selectedKeywords": [],
+      "focusSignals": [],
+      "conversationHistory": [],
+      "assistanceUsage": [
+        {
+          "type": "HINT",
+          "count": 1
+        }
+      ],
+      "sessionSummary": null,
+      "sessionElapsedSeconds": 0.0,
+      "sessionPolicySnapshot": {
+        "maxSessionMinutes": 10,
+        "maxTurns": 20,
+        "minValidAudioSeconds": 1.0,
+        "maxTurnAudioSeconds": 60.0,
+        "maxAudioFileBytes": 10485760,
+        "automaticRetryLimitPerStage": 2,
+        "manualRetryLimitPerStage": 1
+      },
+      "audioReference": null,
+      "audioFormat": null,
+      "durationSeconds": null,
+      "voice": "marin",
+      "playbackSpeed": "NORMAL",
+      "manualRetryAttempt": 0,
+      "transcript": null,
+      "isInitialTurn": false
+    },
+    "output": {
+      "assistantText": "週末は何をしますか？",
+      "intent": "PLAN",
+      "difficulty": "A2"
+    },
+    "providerFailure": null,
+    "prompt": "Generate the next assistant turn from this session context.\nIf isInitialTurn=true, generate the first task/prompt for the selected practiceMode.\nIf correctionMode=COACHING, return coachingCorrections only when useful.\n\n{\"requestId\":\"synthetic-conversation\",\"sessionId\":\"synthetic-session\",\"turnIndex\":1,\"problemIndex\":null,\"attemptIndex\":null,\"readAloudGenerateNextProblem\":false,\"originLanguage\":\"ko\",\"learningLanguage\":\"ja\",\"topic\":\"합성 주말 계획\",\"practiceMode\":\"FREE\",\"category\":null,\"goal\":null,\"persona\":null,\"conversationStartMode\":\"AI_FIRST\",\"topicRecommendedStartMode\":null,\"correctionMode\":\"CONVERSATION\",\"targetLevel\":null,\"learningProfileSummary\":null,\"selectedKeywords\":[],\"focusSignals\":[],\"conversationHistory\":[],\"sessionSummary\":null,\"sessionElapsedSeconds\":0,\"transcript\":null,\"assistanceUsage\":[{\"type\":\"HINT\",\"count\":1}],\"assistanceLevel\":\"ASSISTED\",\"isInitialTurn\":false,\"sessionPolicySnapshot\":{\"maxSessionMinutes\":10,\"maxTurns\":20,\"minValidAudioSeconds\":1.0,\"maxTurnAudioSeconds\":60.0,\"maxAudioFileBytes\":10485760,\"automaticRetryLimitPerStage\":2,\"manualRetryLimitPerStage\":1}}",
+    "response": {
+      "requestId": "synthetic-conversation",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "assistantText": "週末は何をしますか？",
+      "conversation": {
+        "intent": "PLAN",
+        "resolvedTopic": null,
+        "scriptText": null,
+        "providedFacts": [],
+        "requiredIntents": [],
+        "responseConstraints": [],
+        "difficulty": "A2",
+        "shouldEnd": false,
+        "endReason": null,
+        "hint": null,
+        "coachingCorrections": [],
+        "sessionSummary": null,
+        "assistanceLevel": "ASSISTED"
+      },
+      "usage": {
+        "stt": null,
+        "conversation": {
+          "latencyMs": 0,
+          "inputTokens": 7,
+          "outputTokens": 2,
+          "audioSeconds": 0.0,
+          "ttsCharacters": 0,
+          "ttsAudioSeconds": 0.0,
+          "provider": "synthetic",
+          "model": "fixed",
+          "promptVersion": "speaking-conversation-v2",
+          "evaluationVersion": null
+        },
+        "tts": null,
+        "evaluation": null
+      }
+    },
+    "replay": {
+      "requestId": "synthetic-conversation",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "assistantText": "週末は何をしますか？",
+      "conversation": {
+        "intent": "PLAN",
+        "resolvedTopic": null,
+        "scriptText": null,
+        "providedFacts": [],
+        "requiredIntents": [],
+        "responseConstraints": [],
+        "difficulty": "A2",
+        "shouldEnd": false,
+        "endReason": null,
+        "hint": null,
+        "coachingCorrections": [],
+        "sessionSummary": null,
+        "assistanceLevel": "ASSISTED"
+      },
+      "usage": {
+        "stt": null,
+        "conversation": {
+          "latencyMs": 0,
+          "inputTokens": 7,
+          "outputTokens": 2,
+          "audioSeconds": 0.0,
+          "ttsCharacters": 0,
+          "ttsAudioSeconds": 0.0,
+          "provider": "synthetic",
+          "model": "fixed",
+          "promptVersion": "speaking-conversation-v2",
+          "evaluationVersion": null
+        },
+        "tts": null,
+        "evaluation": null
+      }
+    },
+    "calls": 1
+  },
+  {
+    "name": "replay_unassisted",
+    "kind": "conversation",
+    "rawRequest": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "conversationStartMode": "AI_FIRST",
+      "assistanceUsage": [
+        {
+          "type": "REPLAY"
+        }
+      ]
+    },
+    "request": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "problemIndex": null,
+      "attemptIndex": null,
+      "readAloudGenerateNextProblem": false,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "practiceMode": "FREE",
+      "category": null,
+      "goal": null,
+      "persona": null,
+      "conversationStartMode": "AI_FIRST",
+      "topicRecommendedStartMode": null,
+      "correctionMode": "CONVERSATION",
+      "targetLevel": null,
+      "learningProfileSummary": null,
+      "selectedKeywords": [],
+      "focusSignals": [],
+      "conversationHistory": [],
+      "assistanceUsage": [
+        {
+          "type": "REPLAY",
+          "count": 1
+        }
+      ],
+      "sessionSummary": null,
+      "sessionElapsedSeconds": 0.0,
+      "sessionPolicySnapshot": {
+        "maxSessionMinutes": 10,
+        "maxTurns": 20,
+        "minValidAudioSeconds": 1.0,
+        "maxTurnAudioSeconds": 60.0,
+        "maxAudioFileBytes": 10485760,
+        "automaticRetryLimitPerStage": 2,
+        "manualRetryLimitPerStage": 1
+      },
+      "audioReference": null,
+      "audioFormat": null,
+      "durationSeconds": null,
+      "voice": "marin",
+      "playbackSpeed": "NORMAL",
+      "manualRetryAttempt": 0,
+      "transcript": null,
+      "isInitialTurn": false
+    },
+    "output": {
+      "assistantText": "週末は何をしますか？",
+      "intent": "PLAN",
+      "difficulty": "A2"
+    },
+    "providerFailure": null,
+    "prompt": "Generate the next assistant turn from this session context.\nIf isInitialTurn=true, generate the first task/prompt for the selected practiceMode.\nIf correctionMode=COACHING, return coachingCorrections only when useful.\n\n{\"requestId\":\"synthetic-conversation\",\"sessionId\":\"synthetic-session\",\"turnIndex\":1,\"problemIndex\":null,\"attemptIndex\":null,\"readAloudGenerateNextProblem\":false,\"originLanguage\":\"ko\",\"learningLanguage\":\"ja\",\"topic\":\"합성 주말 계획\",\"practiceMode\":\"FREE\",\"category\":null,\"goal\":null,\"persona\":null,\"conversationStartMode\":\"AI_FIRST\",\"topicRecommendedStartMode\":null,\"correctionMode\":\"CONVERSATION\",\"targetLevel\":null,\"learningProfileSummary\":null,\"selectedKeywords\":[],\"focusSignals\":[],\"conversationHistory\":[],\"sessionSummary\":null,\"sessionElapsedSeconds\":0,\"transcript\":null,\"assistanceUsage\":[{\"type\":\"REPLAY\",\"count\":1}],\"assistanceLevel\":\"NONE\",\"isInitialTurn\":false,\"sessionPolicySnapshot\":{\"maxSessionMinutes\":10,\"maxTurns\":20,\"minValidAudioSeconds\":1.0,\"maxTurnAudioSeconds\":60.0,\"maxAudioFileBytes\":10485760,\"automaticRetryLimitPerStage\":2,\"manualRetryLimitPerStage\":1}}",
+    "response": {
+      "requestId": "synthetic-conversation",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "assistantText": "週末は何をしますか？",
+      "conversation": {
+        "intent": "PLAN",
+        "resolvedTopic": null,
+        "scriptText": null,
+        "providedFacts": [],
+        "requiredIntents": [],
+        "responseConstraints": [],
+        "difficulty": "A2",
+        "shouldEnd": false,
+        "endReason": null,
+        "hint": null,
+        "coachingCorrections": [],
+        "sessionSummary": null,
+        "assistanceLevel": "NONE"
+      },
+      "usage": {
+        "stt": null,
+        "conversation": {
+          "latencyMs": 0,
+          "inputTokens": 7,
+          "outputTokens": 2,
+          "audioSeconds": 0.0,
+          "ttsCharacters": 0,
+          "ttsAudioSeconds": 0.0,
+          "provider": "synthetic",
+          "model": "fixed",
+          "promptVersion": "speaking-conversation-v2",
+          "evaluationVersion": null
+        },
+        "tts": null,
+        "evaluation": null
+      }
+    },
+    "replay": {
+      "requestId": "synthetic-conversation",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "assistantText": "週末は何をしますか？",
+      "conversation": {
+        "intent": "PLAN",
+        "resolvedTopic": null,
+        "scriptText": null,
+        "providedFacts": [],
+        "requiredIntents": [],
+        "responseConstraints": [],
+        "difficulty": "A2",
+        "shouldEnd": false,
+        "endReason": null,
+        "hint": null,
+        "coachingCorrections": [],
+        "sessionSummary": null,
+        "assistanceLevel": "NONE"
+      },
+      "usage": {
+        "stt": null,
+        "conversation": {
+          "latencyMs": 0,
+          "inputTokens": 7,
+          "outputTokens": 2,
+          "audioSeconds": 0.0,
+          "ttsCharacters": 0,
+          "ttsAudioSeconds": 0.0,
+          "provider": "synthetic",
+          "model": "fixed",
+          "promptVersion": "speaking-conversation-v2",
+          "evaluationVersion": null
+        },
+        "tts": null,
+        "evaluation": null
+      }
+    },
+    "calls": 1
+  },
+  {
+    "name": "history_window",
+    "kind": "conversation",
+    "rawRequest": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "conversationStartMode": "AI_FIRST",
+      "conversationHistory": [
+        {
+          "role": "USER",
+          "text": "合成 0"
+        },
+        {
+          "role": "USER",
+          "text": "合成 1"
+        },
+        {
+          "role": "USER",
+          "text": "合成 2"
+        },
+        {
+          "role": "USER",
+          "text": "合成 3"
+        },
+        {
+          "role": "USER",
+          "text": "合成 4"
+        },
+        {
+          "role": "USER",
+          "text": "合成 5"
+        },
+        {
+          "role": "USER",
+          "text": "合成 6"
+        },
+        {
+          "role": "USER",
+          "text": "合成 7"
+        },
+        {
+          "role": "USER",
+          "text": "合成 8"
+        },
+        {
+          "role": "USER",
+          "text": "合成 9"
+        },
+        {
+          "role": "USER",
+          "text": "合成 10"
+        },
+        {
+          "role": "USER",
+          "text": "合成 11"
+        },
+        {
+          "role": "USER",
+          "text": "合成 12"
+        },
+        {
+          "role": "USER",
+          "text": "合成 13"
+        },
+        {
+          "role": "USER",
+          "text": "合成 14"
+        }
+      ]
+    },
+    "request": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "problemIndex": null,
+      "attemptIndex": null,
+      "readAloudGenerateNextProblem": false,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "practiceMode": "FREE",
+      "category": null,
+      "goal": null,
+      "persona": null,
+      "conversationStartMode": "AI_FIRST",
+      "topicRecommendedStartMode": null,
+      "correctionMode": "CONVERSATION",
+      "targetLevel": null,
+      "learningProfileSummary": null,
+      "selectedKeywords": [],
+      "focusSignals": [],
+      "conversationHistory": [
+        {
+          "role": "USER",
+          "text": "合成 0",
+          "turnId": null
+        },
+        {
+          "role": "USER",
+          "text": "合成 1",
+          "turnId": null
+        },
+        {
+          "role": "USER",
+          "text": "合成 2",
+          "turnId": null
+        },
+        {
+          "role": "USER",
+          "text": "合成 3",
+          "turnId": null
+        },
+        {
+          "role": "USER",
+          "text": "合成 4",
+          "turnId": null
+        },
+        {
+          "role": "USER",
+          "text": "合成 5",
+          "turnId": null
+        },
+        {
+          "role": "USER",
+          "text": "合成 6",
+          "turnId": null
+        },
+        {
+          "role": "USER",
+          "text": "合成 7",
+          "turnId": null
+        },
+        {
+          "role": "USER",
+          "text": "合成 8",
+          "turnId": null
+        },
+        {
+          "role": "USER",
+          "text": "合成 9",
+          "turnId": null
+        },
+        {
+          "role": "USER",
+          "text": "合成 10",
+          "turnId": null
+        },
+        {
+          "role": "USER",
+          "text": "合成 11",
+          "turnId": null
+        },
+        {
+          "role": "USER",
+          "text": "合成 12",
+          "turnId": null
+        },
+        {
+          "role": "USER",
+          "text": "合成 13",
+          "turnId": null
+        },
+        {
+          "role": "USER",
+          "text": "合成 14",
+          "turnId": null
+        }
+      ],
+      "assistanceUsage": [],
+      "sessionSummary": null,
+      "sessionElapsedSeconds": 0.0,
+      "sessionPolicySnapshot": {
+        "maxSessionMinutes": 10,
+        "maxTurns": 20,
+        "minValidAudioSeconds": 1.0,
+        "maxTurnAudioSeconds": 60.0,
+        "maxAudioFileBytes": 10485760,
+        "automaticRetryLimitPerStage": 2,
+        "manualRetryLimitPerStage": 1
+      },
+      "audioReference": null,
+      "audioFormat": null,
+      "durationSeconds": null,
+      "voice": "marin",
+      "playbackSpeed": "NORMAL",
+      "manualRetryAttempt": 0,
+      "transcript": null,
+      "isInitialTurn": false
+    },
+    "output": {
+      "assistantText": "週末は何をしますか？",
+      "intent": "PLAN",
+      "difficulty": "A2"
+    },
+    "providerFailure": null,
+    "prompt": "Generate the next assistant turn from this session context.\nIf isInitialTurn=true, generate the first task/prompt for the selected practiceMode.\nIf correctionMode=COACHING, return coachingCorrections only when useful.\n\n{\"requestId\":\"synthetic-conversation\",\"sessionId\":\"synthetic-session\",\"turnIndex\":1,\"problemIndex\":null,\"attemptIndex\":null,\"readAloudGenerateNextProblem\":false,\"originLanguage\":\"ko\",\"learningLanguage\":\"ja\",\"topic\":\"합성 주말 계획\",\"practiceMode\":\"FREE\",\"category\":null,\"goal\":null,\"persona\":null,\"conversationStartMode\":\"AI_FIRST\",\"topicRecommendedStartMode\":null,\"correctionMode\":\"CONVERSATION\",\"targetLevel\":null,\"learningProfileSummary\":null,\"selectedKeywords\":[],\"focusSignals\":[],\"conversationHistory\":[{\"role\":\"USER\",\"text\":\"合成 3\",\"turnId\":null},{\"role\":\"USER\",\"text\":\"合成 4\",\"turnId\":null},{\"role\":\"USER\",\"text\":\"合成 5\",\"turnId\":null},{\"role\":\"USER\",\"text\":\"合成 6\",\"turnId\":null},{\"role\":\"USER\",\"text\":\"合成 7\",\"turnId\":null},{\"role\":\"USER\",\"text\":\"合成 8\",\"turnId\":null},{\"role\":\"USER\",\"text\":\"合成 9\",\"turnId\":null},{\"role\":\"USER\",\"text\":\"合成 10\",\"turnId\":null},{\"role\":\"USER\",\"text\":\"合成 11\",\"turnId\":null},{\"role\":\"USER\",\"text\":\"合成 12\",\"turnId\":null},{\"role\":\"USER\",\"text\":\"合成 13\",\"turnId\":null},{\"role\":\"USER\",\"text\":\"合成 14\",\"turnId\":null}],\"sessionSummary\":null,\"sessionElapsedSeconds\":0,\"transcript\":null,\"assistanceUsage\":[],\"assistanceLevel\":\"NONE\",\"isInitialTurn\":false,\"sessionPolicySnapshot\":{\"maxSessionMinutes\":10,\"maxTurns\":20,\"minValidAudioSeconds\":1.0,\"maxTurnAudioSeconds\":60.0,\"maxAudioFileBytes\":10485760,\"automaticRetryLimitPerStage\":2,\"manualRetryLimitPerStage\":1}}",
+    "response": {
+      "requestId": "synthetic-conversation",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "assistantText": "週末は何をしますか？",
+      "conversation": {
+        "intent": "PLAN",
+        "resolvedTopic": null,
+        "scriptText": null,
+        "providedFacts": [],
+        "requiredIntents": [],
+        "responseConstraints": [],
+        "difficulty": "A2",
+        "shouldEnd": false,
+        "endReason": null,
+        "hint": null,
+        "coachingCorrections": [],
+        "sessionSummary": null,
+        "assistanceLevel": "NONE"
+      },
+      "usage": {
+        "stt": null,
+        "conversation": {
+          "latencyMs": 0,
+          "inputTokens": 7,
+          "outputTokens": 2,
+          "audioSeconds": 0.0,
+          "ttsCharacters": 0,
+          "ttsAudioSeconds": 0.0,
+          "provider": "synthetic",
+          "model": "fixed",
+          "promptVersion": "speaking-conversation-v2",
+          "evaluationVersion": null
+        },
+        "tts": null,
+        "evaluation": null
+      }
+    },
+    "replay": {
+      "requestId": "synthetic-conversation",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "assistantText": "週末は何をしますか？",
+      "conversation": {
+        "intent": "PLAN",
+        "resolvedTopic": null,
+        "scriptText": null,
+        "providedFacts": [],
+        "requiredIntents": [],
+        "responseConstraints": [],
+        "difficulty": "A2",
+        "shouldEnd": false,
+        "endReason": null,
+        "hint": null,
+        "coachingCorrections": [],
+        "sessionSummary": null,
+        "assistanceLevel": "NONE"
+      },
+      "usage": {
+        "stt": null,
+        "conversation": {
+          "latencyMs": 0,
+          "inputTokens": 7,
+          "outputTokens": 2,
+          "audioSeconds": 0.0,
+          "ttsCharacters": 0,
+          "ttsAudioSeconds": 0.0,
+          "provider": "synthetic",
+          "model": "fixed",
+          "promptVersion": "speaking-conversation-v2",
+          "evaluationVersion": null
+        },
+        "tts": null,
+        "evaluation": null
+      }
+    },
+    "calls": 1
+  },
+  {
+    "name": "provider_REFUSAL",
+    "kind": "conversation",
+    "rawRequest": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "conversationStartMode": "AI_FIRST"
+    },
+    "request": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "problemIndex": null,
+      "attemptIndex": null,
+      "readAloudGenerateNextProblem": false,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "practiceMode": "FREE",
+      "category": null,
+      "goal": null,
+      "persona": null,
+      "conversationStartMode": "AI_FIRST",
+      "topicRecommendedStartMode": null,
+      "correctionMode": "CONVERSATION",
+      "targetLevel": null,
+      "learningProfileSummary": null,
+      "selectedKeywords": [],
+      "focusSignals": [],
+      "conversationHistory": [],
+      "assistanceUsage": [],
+      "sessionSummary": null,
+      "sessionElapsedSeconds": 0.0,
+      "sessionPolicySnapshot": {
+        "maxSessionMinutes": 10,
+        "maxTurns": 20,
+        "minValidAudioSeconds": 1.0,
+        "maxTurnAudioSeconds": 60.0,
+        "maxAudioFileBytes": 10485760,
+        "automaticRetryLimitPerStage": 2,
+        "manualRetryLimitPerStage": 1
+      },
+      "audioReference": null,
+      "audioFormat": null,
+      "durationSeconds": null,
+      "voice": "marin",
+      "playbackSpeed": "NORMAL",
+      "manualRetryAttempt": 0,
+      "transcript": null,
+      "isInitialTurn": false
+    },
+    "output": {
+      "assistantText": "週末は何をしますか？",
+      "intent": "PLAN",
+      "difficulty": "A2"
+    },
+    "providerFailure": "REFUSAL",
+    "prompt": "Generate the next assistant turn from this session context.\nIf isInitialTurn=true, generate the first task/prompt for the selected practiceMode.\nIf correctionMode=COACHING, return coachingCorrections only when useful.\n\n{\"requestId\":\"synthetic-conversation\",\"sessionId\":\"synthetic-session\",\"turnIndex\":1,\"problemIndex\":null,\"attemptIndex\":null,\"readAloudGenerateNextProblem\":false,\"originLanguage\":\"ko\",\"learningLanguage\":\"ja\",\"topic\":\"합성 주말 계획\",\"practiceMode\":\"FREE\",\"category\":null,\"goal\":null,\"persona\":null,\"conversationStartMode\":\"AI_FIRST\",\"topicRecommendedStartMode\":null,\"correctionMode\":\"CONVERSATION\",\"targetLevel\":null,\"learningProfileSummary\":null,\"selectedKeywords\":[],\"focusSignals\":[],\"conversationHistory\":[],\"sessionSummary\":null,\"sessionElapsedSeconds\":0,\"transcript\":null,\"assistanceUsage\":[],\"assistanceLevel\":\"NONE\",\"isInitialTurn\":false,\"sessionPolicySnapshot\":{\"maxSessionMinutes\":10,\"maxTurns\":20,\"minValidAudioSeconds\":1.0,\"maxTurnAudioSeconds\":60.0,\"maxAudioFileBytes\":10485760,\"automaticRetryLimitPerStage\":2,\"manualRetryLimitPerStage\":1}}",
+    "failure": {
+      "code": "CONVERSATION_GENERATION_FAILED",
+      "stage": "CONVERSATION",
+      "retryable": true
+    },
+    "calls": 3
+  },
+  {
+    "name": "provider_TIMEOUT",
+    "kind": "conversation",
+    "rawRequest": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "conversationStartMode": "AI_FIRST"
+    },
+    "request": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "problemIndex": null,
+      "attemptIndex": null,
+      "readAloudGenerateNextProblem": false,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "practiceMode": "FREE",
+      "category": null,
+      "goal": null,
+      "persona": null,
+      "conversationStartMode": "AI_FIRST",
+      "topicRecommendedStartMode": null,
+      "correctionMode": "CONVERSATION",
+      "targetLevel": null,
+      "learningProfileSummary": null,
+      "selectedKeywords": [],
+      "focusSignals": [],
+      "conversationHistory": [],
+      "assistanceUsage": [],
+      "sessionSummary": null,
+      "sessionElapsedSeconds": 0.0,
+      "sessionPolicySnapshot": {
+        "maxSessionMinutes": 10,
+        "maxTurns": 20,
+        "minValidAudioSeconds": 1.0,
+        "maxTurnAudioSeconds": 60.0,
+        "maxAudioFileBytes": 10485760,
+        "automaticRetryLimitPerStage": 2,
+        "manualRetryLimitPerStage": 1
+      },
+      "audioReference": null,
+      "audioFormat": null,
+      "durationSeconds": null,
+      "voice": "marin",
+      "playbackSpeed": "NORMAL",
+      "manualRetryAttempt": 0,
+      "transcript": null,
+      "isInitialTurn": false
+    },
+    "output": {
+      "assistantText": "週末は何をしますか？",
+      "intent": "PLAN",
+      "difficulty": "A2"
+    },
+    "providerFailure": "TIMEOUT",
+    "prompt": "Generate the next assistant turn from this session context.\nIf isInitialTurn=true, generate the first task/prompt for the selected practiceMode.\nIf correctionMode=COACHING, return coachingCorrections only when useful.\n\n{\"requestId\":\"synthetic-conversation\",\"sessionId\":\"synthetic-session\",\"turnIndex\":1,\"problemIndex\":null,\"attemptIndex\":null,\"readAloudGenerateNextProblem\":false,\"originLanguage\":\"ko\",\"learningLanguage\":\"ja\",\"topic\":\"합성 주말 계획\",\"practiceMode\":\"FREE\",\"category\":null,\"goal\":null,\"persona\":null,\"conversationStartMode\":\"AI_FIRST\",\"topicRecommendedStartMode\":null,\"correctionMode\":\"CONVERSATION\",\"targetLevel\":null,\"learningProfileSummary\":null,\"selectedKeywords\":[],\"focusSignals\":[],\"conversationHistory\":[],\"sessionSummary\":null,\"sessionElapsedSeconds\":0,\"transcript\":null,\"assistanceUsage\":[],\"assistanceLevel\":\"NONE\",\"isInitialTurn\":false,\"sessionPolicySnapshot\":{\"maxSessionMinutes\":10,\"maxTurns\":20,\"minValidAudioSeconds\":1.0,\"maxTurnAudioSeconds\":60.0,\"maxAudioFileBytes\":10485760,\"automaticRetryLimitPerStage\":2,\"manualRetryLimitPerStage\":1}}",
+    "failure": {
+      "code": "PROVIDER_TIMEOUT",
+      "stage": "CONVERSATION",
+      "retryable": true
+    },
+    "calls": 3
+  },
+  {
+    "name": "provider_SDK_TIMEOUT",
+    "kind": "conversation",
+    "rawRequest": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "conversationStartMode": "AI_FIRST"
+    },
+    "request": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "problemIndex": null,
+      "attemptIndex": null,
+      "readAloudGenerateNextProblem": false,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "practiceMode": "FREE",
+      "category": null,
+      "goal": null,
+      "persona": null,
+      "conversationStartMode": "AI_FIRST",
+      "topicRecommendedStartMode": null,
+      "correctionMode": "CONVERSATION",
+      "targetLevel": null,
+      "learningProfileSummary": null,
+      "selectedKeywords": [],
+      "focusSignals": [],
+      "conversationHistory": [],
+      "assistanceUsage": [],
+      "sessionSummary": null,
+      "sessionElapsedSeconds": 0.0,
+      "sessionPolicySnapshot": {
+        "maxSessionMinutes": 10,
+        "maxTurns": 20,
+        "minValidAudioSeconds": 1.0,
+        "maxTurnAudioSeconds": 60.0,
+        "maxAudioFileBytes": 10485760,
+        "automaticRetryLimitPerStage": 2,
+        "manualRetryLimitPerStage": 1
+      },
+      "audioReference": null,
+      "audioFormat": null,
+      "durationSeconds": null,
+      "voice": "marin",
+      "playbackSpeed": "NORMAL",
+      "manualRetryAttempt": 0,
+      "transcript": null,
+      "isInitialTurn": false
+    },
+    "output": {
+      "assistantText": "週末は何をしますか？",
+      "intent": "PLAN",
+      "difficulty": "A2"
+    },
+    "providerFailure": "SDK_TIMEOUT",
+    "prompt": "Generate the next assistant turn from this session context.\nIf isInitialTurn=true, generate the first task/prompt for the selected practiceMode.\nIf correctionMode=COACHING, return coachingCorrections only when useful.\n\n{\"requestId\":\"synthetic-conversation\",\"sessionId\":\"synthetic-session\",\"turnIndex\":1,\"problemIndex\":null,\"attemptIndex\":null,\"readAloudGenerateNextProblem\":false,\"originLanguage\":\"ko\",\"learningLanguage\":\"ja\",\"topic\":\"합성 주말 계획\",\"practiceMode\":\"FREE\",\"category\":null,\"goal\":null,\"persona\":null,\"conversationStartMode\":\"AI_FIRST\",\"topicRecommendedStartMode\":null,\"correctionMode\":\"CONVERSATION\",\"targetLevel\":null,\"learningProfileSummary\":null,\"selectedKeywords\":[],\"focusSignals\":[],\"conversationHistory\":[],\"sessionSummary\":null,\"sessionElapsedSeconds\":0,\"transcript\":null,\"assistanceUsage\":[],\"assistanceLevel\":\"NONE\",\"isInitialTurn\":false,\"sessionPolicySnapshot\":{\"maxSessionMinutes\":10,\"maxTurns\":20,\"minValidAudioSeconds\":1.0,\"maxTurnAudioSeconds\":60.0,\"maxAudioFileBytes\":10485760,\"automaticRetryLimitPerStage\":2,\"manualRetryLimitPerStage\":1}}",
+    "failure": {
+      "code": "CONVERSATION_GENERATION_FAILED",
+      "stage": "CONVERSATION",
+      "retryable": true
+    },
+    "calls": 3
+  },
+  {
+    "name": "provider_SDK_CONNECTION",
+    "kind": "conversation",
+    "rawRequest": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "conversationStartMode": "AI_FIRST"
+    },
+    "request": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "problemIndex": null,
+      "attemptIndex": null,
+      "readAloudGenerateNextProblem": false,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "practiceMode": "FREE",
+      "category": null,
+      "goal": null,
+      "persona": null,
+      "conversationStartMode": "AI_FIRST",
+      "topicRecommendedStartMode": null,
+      "correctionMode": "CONVERSATION",
+      "targetLevel": null,
+      "learningProfileSummary": null,
+      "selectedKeywords": [],
+      "focusSignals": [],
+      "conversationHistory": [],
+      "assistanceUsage": [],
+      "sessionSummary": null,
+      "sessionElapsedSeconds": 0.0,
+      "sessionPolicySnapshot": {
+        "maxSessionMinutes": 10,
+        "maxTurns": 20,
+        "minValidAudioSeconds": 1.0,
+        "maxTurnAudioSeconds": 60.0,
+        "maxAudioFileBytes": 10485760,
+        "automaticRetryLimitPerStage": 2,
+        "manualRetryLimitPerStage": 1
+      },
+      "audioReference": null,
+      "audioFormat": null,
+      "durationSeconds": null,
+      "voice": "marin",
+      "playbackSpeed": "NORMAL",
+      "manualRetryAttempt": 0,
+      "transcript": null,
+      "isInitialTurn": false
+    },
+    "output": {
+      "assistantText": "週末は何をしますか？",
+      "intent": "PLAN",
+      "difficulty": "A2"
+    },
+    "providerFailure": "SDK_CONNECTION",
+    "prompt": "Generate the next assistant turn from this session context.\nIf isInitialTurn=true, generate the first task/prompt for the selected practiceMode.\nIf correctionMode=COACHING, return coachingCorrections only when useful.\n\n{\"requestId\":\"synthetic-conversation\",\"sessionId\":\"synthetic-session\",\"turnIndex\":1,\"problemIndex\":null,\"attemptIndex\":null,\"readAloudGenerateNextProblem\":false,\"originLanguage\":\"ko\",\"learningLanguage\":\"ja\",\"topic\":\"합성 주말 계획\",\"practiceMode\":\"FREE\",\"category\":null,\"goal\":null,\"persona\":null,\"conversationStartMode\":\"AI_FIRST\",\"topicRecommendedStartMode\":null,\"correctionMode\":\"CONVERSATION\",\"targetLevel\":null,\"learningProfileSummary\":null,\"selectedKeywords\":[],\"focusSignals\":[],\"conversationHistory\":[],\"sessionSummary\":null,\"sessionElapsedSeconds\":0,\"transcript\":null,\"assistanceUsage\":[],\"assistanceLevel\":\"NONE\",\"isInitialTurn\":false,\"sessionPolicySnapshot\":{\"maxSessionMinutes\":10,\"maxTurns\":20,\"minValidAudioSeconds\":1.0,\"maxTurnAudioSeconds\":60.0,\"maxAudioFileBytes\":10485760,\"automaticRetryLimitPerStage\":2,\"manualRetryLimitPerStage\":1}}",
+    "failure": {
+      "code": "CONVERSATION_GENERATION_FAILED",
+      "stage": "CONVERSATION",
+      "retryable": true
+    },
+    "calls": 3
+  },
+  {
+    "name": "provider_400",
+    "kind": "conversation",
+    "rawRequest": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "conversationStartMode": "AI_FIRST"
+    },
+    "request": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "problemIndex": null,
+      "attemptIndex": null,
+      "readAloudGenerateNextProblem": false,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "practiceMode": "FREE",
+      "category": null,
+      "goal": null,
+      "persona": null,
+      "conversationStartMode": "AI_FIRST",
+      "topicRecommendedStartMode": null,
+      "correctionMode": "CONVERSATION",
+      "targetLevel": null,
+      "learningProfileSummary": null,
+      "selectedKeywords": [],
+      "focusSignals": [],
+      "conversationHistory": [],
+      "assistanceUsage": [],
+      "sessionSummary": null,
+      "sessionElapsedSeconds": 0.0,
+      "sessionPolicySnapshot": {
+        "maxSessionMinutes": 10,
+        "maxTurns": 20,
+        "minValidAudioSeconds": 1.0,
+        "maxTurnAudioSeconds": 60.0,
+        "maxAudioFileBytes": 10485760,
+        "automaticRetryLimitPerStage": 2,
+        "manualRetryLimitPerStage": 1
+      },
+      "audioReference": null,
+      "audioFormat": null,
+      "durationSeconds": null,
+      "voice": "marin",
+      "playbackSpeed": "NORMAL",
+      "manualRetryAttempt": 0,
+      "transcript": null,
+      "isInitialTurn": false
+    },
+    "output": {
+      "assistantText": "週末は何をしますか？",
+      "intent": "PLAN",
+      "difficulty": "A2"
+    },
+    "providerFailure": "400",
+    "prompt": "Generate the next assistant turn from this session context.\nIf isInitialTurn=true, generate the first task/prompt for the selected practiceMode.\nIf correctionMode=COACHING, return coachingCorrections only when useful.\n\n{\"requestId\":\"synthetic-conversation\",\"sessionId\":\"synthetic-session\",\"turnIndex\":1,\"problemIndex\":null,\"attemptIndex\":null,\"readAloudGenerateNextProblem\":false,\"originLanguage\":\"ko\",\"learningLanguage\":\"ja\",\"topic\":\"합성 주말 계획\",\"practiceMode\":\"FREE\",\"category\":null,\"goal\":null,\"persona\":null,\"conversationStartMode\":\"AI_FIRST\",\"topicRecommendedStartMode\":null,\"correctionMode\":\"CONVERSATION\",\"targetLevel\":null,\"learningProfileSummary\":null,\"selectedKeywords\":[],\"focusSignals\":[],\"conversationHistory\":[],\"sessionSummary\":null,\"sessionElapsedSeconds\":0,\"transcript\":null,\"assistanceUsage\":[],\"assistanceLevel\":\"NONE\",\"isInitialTurn\":false,\"sessionPolicySnapshot\":{\"maxSessionMinutes\":10,\"maxTurns\":20,\"minValidAudioSeconds\":1.0,\"maxTurnAudioSeconds\":60.0,\"maxAudioFileBytes\":10485760,\"automaticRetryLimitPerStage\":2,\"manualRetryLimitPerStage\":1}}",
+    "failure": {
+      "code": "CONVERSATION_GENERATION_FAILED",
+      "stage": "CONVERSATION",
+      "retryable": false
+    },
+    "calls": 1
+  },
+  {
+    "name": "provider_429",
+    "kind": "conversation",
+    "rawRequest": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "conversationStartMode": "AI_FIRST"
+    },
+    "request": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "problemIndex": null,
+      "attemptIndex": null,
+      "readAloudGenerateNextProblem": false,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "practiceMode": "FREE",
+      "category": null,
+      "goal": null,
+      "persona": null,
+      "conversationStartMode": "AI_FIRST",
+      "topicRecommendedStartMode": null,
+      "correctionMode": "CONVERSATION",
+      "targetLevel": null,
+      "learningProfileSummary": null,
+      "selectedKeywords": [],
+      "focusSignals": [],
+      "conversationHistory": [],
+      "assistanceUsage": [],
+      "sessionSummary": null,
+      "sessionElapsedSeconds": 0.0,
+      "sessionPolicySnapshot": {
+        "maxSessionMinutes": 10,
+        "maxTurns": 20,
+        "minValidAudioSeconds": 1.0,
+        "maxTurnAudioSeconds": 60.0,
+        "maxAudioFileBytes": 10485760,
+        "automaticRetryLimitPerStage": 2,
+        "manualRetryLimitPerStage": 1
+      },
+      "audioReference": null,
+      "audioFormat": null,
+      "durationSeconds": null,
+      "voice": "marin",
+      "playbackSpeed": "NORMAL",
+      "manualRetryAttempt": 0,
+      "transcript": null,
+      "isInitialTurn": false
+    },
+    "output": {
+      "assistantText": "週末は何をしますか？",
+      "intent": "PLAN",
+      "difficulty": "A2"
+    },
+    "providerFailure": "429",
+    "prompt": "Generate the next assistant turn from this session context.\nIf isInitialTurn=true, generate the first task/prompt for the selected practiceMode.\nIf correctionMode=COACHING, return coachingCorrections only when useful.\n\n{\"requestId\":\"synthetic-conversation\",\"sessionId\":\"synthetic-session\",\"turnIndex\":1,\"problemIndex\":null,\"attemptIndex\":null,\"readAloudGenerateNextProblem\":false,\"originLanguage\":\"ko\",\"learningLanguage\":\"ja\",\"topic\":\"합성 주말 계획\",\"practiceMode\":\"FREE\",\"category\":null,\"goal\":null,\"persona\":null,\"conversationStartMode\":\"AI_FIRST\",\"topicRecommendedStartMode\":null,\"correctionMode\":\"CONVERSATION\",\"targetLevel\":null,\"learningProfileSummary\":null,\"selectedKeywords\":[],\"focusSignals\":[],\"conversationHistory\":[],\"sessionSummary\":null,\"sessionElapsedSeconds\":0,\"transcript\":null,\"assistanceUsage\":[],\"assistanceLevel\":\"NONE\",\"isInitialTurn\":false,\"sessionPolicySnapshot\":{\"maxSessionMinutes\":10,\"maxTurns\":20,\"minValidAudioSeconds\":1.0,\"maxTurnAudioSeconds\":60.0,\"maxAudioFileBytes\":10485760,\"automaticRetryLimitPerStage\":2,\"manualRetryLimitPerStage\":1}}",
+    "failure": {
+      "code": "PROVIDER_RATE_LIMITED",
+      "stage": "CONVERSATION",
+      "retryable": true
+    },
+    "calls": 3
+  },
+  {
+    "name": "provider_500",
+    "kind": "conversation",
+    "rawRequest": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "conversationStartMode": "AI_FIRST"
+    },
+    "request": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "problemIndex": null,
+      "attemptIndex": null,
+      "readAloudGenerateNextProblem": false,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "practiceMode": "FREE",
+      "category": null,
+      "goal": null,
+      "persona": null,
+      "conversationStartMode": "AI_FIRST",
+      "topicRecommendedStartMode": null,
+      "correctionMode": "CONVERSATION",
+      "targetLevel": null,
+      "learningProfileSummary": null,
+      "selectedKeywords": [],
+      "focusSignals": [],
+      "conversationHistory": [],
+      "assistanceUsage": [],
+      "sessionSummary": null,
+      "sessionElapsedSeconds": 0.0,
+      "sessionPolicySnapshot": {
+        "maxSessionMinutes": 10,
+        "maxTurns": 20,
+        "minValidAudioSeconds": 1.0,
+        "maxTurnAudioSeconds": 60.0,
+        "maxAudioFileBytes": 10485760,
+        "automaticRetryLimitPerStage": 2,
+        "manualRetryLimitPerStage": 1
+      },
+      "audioReference": null,
+      "audioFormat": null,
+      "durationSeconds": null,
+      "voice": "marin",
+      "playbackSpeed": "NORMAL",
+      "manualRetryAttempt": 0,
+      "transcript": null,
+      "isInitialTurn": false
+    },
+    "output": {
+      "assistantText": "週末は何をしますか？",
+      "intent": "PLAN",
+      "difficulty": "A2"
+    },
+    "providerFailure": "500",
+    "prompt": "Generate the next assistant turn from this session context.\nIf isInitialTurn=true, generate the first task/prompt for the selected practiceMode.\nIf correctionMode=COACHING, return coachingCorrections only when useful.\n\n{\"requestId\":\"synthetic-conversation\",\"sessionId\":\"synthetic-session\",\"turnIndex\":1,\"problemIndex\":null,\"attemptIndex\":null,\"readAloudGenerateNextProblem\":false,\"originLanguage\":\"ko\",\"learningLanguage\":\"ja\",\"topic\":\"합성 주말 계획\",\"practiceMode\":\"FREE\",\"category\":null,\"goal\":null,\"persona\":null,\"conversationStartMode\":\"AI_FIRST\",\"topicRecommendedStartMode\":null,\"correctionMode\":\"CONVERSATION\",\"targetLevel\":null,\"learningProfileSummary\":null,\"selectedKeywords\":[],\"focusSignals\":[],\"conversationHistory\":[],\"sessionSummary\":null,\"sessionElapsedSeconds\":0,\"transcript\":null,\"assistanceUsage\":[],\"assistanceLevel\":\"NONE\",\"isInitialTurn\":false,\"sessionPolicySnapshot\":{\"maxSessionMinutes\":10,\"maxTurns\":20,\"minValidAudioSeconds\":1.0,\"maxTurnAudioSeconds\":60.0,\"maxAudioFileBytes\":10485760,\"automaticRetryLimitPerStage\":2,\"manualRetryLimitPerStage\":1}}",
+    "failure": {
+      "code": "CONVERSATION_GENERATION_FAILED",
+      "stage": "CONVERSATION",
+      "retryable": true
+    },
+    "calls": 3
+  },
+  {
+    "name": "provider_504",
+    "kind": "conversation",
+    "rawRequest": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "conversationStartMode": "AI_FIRST"
+    },
+    "request": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "problemIndex": null,
+      "attemptIndex": null,
+      "readAloudGenerateNextProblem": false,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "practiceMode": "FREE",
+      "category": null,
+      "goal": null,
+      "persona": null,
+      "conversationStartMode": "AI_FIRST",
+      "topicRecommendedStartMode": null,
+      "correctionMode": "CONVERSATION",
+      "targetLevel": null,
+      "learningProfileSummary": null,
+      "selectedKeywords": [],
+      "focusSignals": [],
+      "conversationHistory": [],
+      "assistanceUsage": [],
+      "sessionSummary": null,
+      "sessionElapsedSeconds": 0.0,
+      "sessionPolicySnapshot": {
+        "maxSessionMinutes": 10,
+        "maxTurns": 20,
+        "minValidAudioSeconds": 1.0,
+        "maxTurnAudioSeconds": 60.0,
+        "maxAudioFileBytes": 10485760,
+        "automaticRetryLimitPerStage": 2,
+        "manualRetryLimitPerStage": 1
+      },
+      "audioReference": null,
+      "audioFormat": null,
+      "durationSeconds": null,
+      "voice": "marin",
+      "playbackSpeed": "NORMAL",
+      "manualRetryAttempt": 0,
+      "transcript": null,
+      "isInitialTurn": false
+    },
+    "output": {
+      "assistantText": "週末は何をしますか？",
+      "intent": "PLAN",
+      "difficulty": "A2"
+    },
+    "providerFailure": "504",
+    "prompt": "Generate the next assistant turn from this session context.\nIf isInitialTurn=true, generate the first task/prompt for the selected practiceMode.\nIf correctionMode=COACHING, return coachingCorrections only when useful.\n\n{\"requestId\":\"synthetic-conversation\",\"sessionId\":\"synthetic-session\",\"turnIndex\":1,\"problemIndex\":null,\"attemptIndex\":null,\"readAloudGenerateNextProblem\":false,\"originLanguage\":\"ko\",\"learningLanguage\":\"ja\",\"topic\":\"합성 주말 계획\",\"practiceMode\":\"FREE\",\"category\":null,\"goal\":null,\"persona\":null,\"conversationStartMode\":\"AI_FIRST\",\"topicRecommendedStartMode\":null,\"correctionMode\":\"CONVERSATION\",\"targetLevel\":null,\"learningProfileSummary\":null,\"selectedKeywords\":[],\"focusSignals\":[],\"conversationHistory\":[],\"sessionSummary\":null,\"sessionElapsedSeconds\":0,\"transcript\":null,\"assistanceUsage\":[],\"assistanceLevel\":\"NONE\",\"isInitialTurn\":false,\"sessionPolicySnapshot\":{\"maxSessionMinutes\":10,\"maxTurns\":20,\"minValidAudioSeconds\":1.0,\"maxTurnAudioSeconds\":60.0,\"maxAudioFileBytes\":10485760,\"automaticRetryLimitPerStage\":2,\"manualRetryLimitPerStage\":1}}",
+    "failure": {
+      "code": "PROVIDER_TIMEOUT",
+      "stage": "CONVERSATION",
+      "retryable": true
+    },
+    "calls": 3
+  },
+  {
+    "name": "provider_RATE_SIGNAL",
+    "kind": "conversation",
+    "rawRequest": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "conversationStartMode": "AI_FIRST"
+    },
+    "request": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "problemIndex": null,
+      "attemptIndex": null,
+      "readAloudGenerateNextProblem": false,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "practiceMode": "FREE",
+      "category": null,
+      "goal": null,
+      "persona": null,
+      "conversationStartMode": "AI_FIRST",
+      "topicRecommendedStartMode": null,
+      "correctionMode": "CONVERSATION",
+      "targetLevel": null,
+      "learningProfileSummary": null,
+      "selectedKeywords": [],
+      "focusSignals": [],
+      "conversationHistory": [],
+      "assistanceUsage": [],
+      "sessionSummary": null,
+      "sessionElapsedSeconds": 0.0,
+      "sessionPolicySnapshot": {
+        "maxSessionMinutes": 10,
+        "maxTurns": 20,
+        "minValidAudioSeconds": 1.0,
+        "maxTurnAudioSeconds": 60.0,
+        "maxAudioFileBytes": 10485760,
+        "automaticRetryLimitPerStage": 2,
+        "manualRetryLimitPerStage": 1
+      },
+      "audioReference": null,
+      "audioFormat": null,
+      "durationSeconds": null,
+      "voice": "marin",
+      "playbackSpeed": "NORMAL",
+      "manualRetryAttempt": 0,
+      "transcript": null,
+      "isInitialTurn": false
+    },
+    "output": {
+      "assistantText": "週末は何をしますか？",
+      "intent": "PLAN",
+      "difficulty": "A2"
+    },
+    "providerFailure": "RATE_SIGNAL",
+    "prompt": "Generate the next assistant turn from this session context.\nIf isInitialTurn=true, generate the first task/prompt for the selected practiceMode.\nIf correctionMode=COACHING, return coachingCorrections only when useful.\n\n{\"requestId\":\"synthetic-conversation\",\"sessionId\":\"synthetic-session\",\"turnIndex\":1,\"problemIndex\":null,\"attemptIndex\":null,\"readAloudGenerateNextProblem\":false,\"originLanguage\":\"ko\",\"learningLanguage\":\"ja\",\"topic\":\"합성 주말 계획\",\"practiceMode\":\"FREE\",\"category\":null,\"goal\":null,\"persona\":null,\"conversationStartMode\":\"AI_FIRST\",\"topicRecommendedStartMode\":null,\"correctionMode\":\"CONVERSATION\",\"targetLevel\":null,\"learningProfileSummary\":null,\"selectedKeywords\":[],\"focusSignals\":[],\"conversationHistory\":[],\"sessionSummary\":null,\"sessionElapsedSeconds\":0,\"transcript\":null,\"assistanceUsage\":[],\"assistanceLevel\":\"NONE\",\"isInitialTurn\":false,\"sessionPolicySnapshot\":{\"maxSessionMinutes\":10,\"maxTurns\":20,\"minValidAudioSeconds\":1.0,\"maxTurnAudioSeconds\":60.0,\"maxAudioFileBytes\":10485760,\"automaticRetryLimitPerStage\":2,\"manualRetryLimitPerStage\":1}}",
+    "failure": {
+      "code": "PROVIDER_RATE_LIMITED",
+      "stage": "CONVERSATION",
+      "retryable": true
+    },
+    "calls": 3
+  },
+  {
+    "name": "provider_DEADLINE_SIGNAL",
+    "kind": "conversation",
+    "rawRequest": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "conversationStartMode": "AI_FIRST"
+    },
+    "request": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "problemIndex": null,
+      "attemptIndex": null,
+      "readAloudGenerateNextProblem": false,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "practiceMode": "FREE",
+      "category": null,
+      "goal": null,
+      "persona": null,
+      "conversationStartMode": "AI_FIRST",
+      "topicRecommendedStartMode": null,
+      "correctionMode": "CONVERSATION",
+      "targetLevel": null,
+      "learningProfileSummary": null,
+      "selectedKeywords": [],
+      "focusSignals": [],
+      "conversationHistory": [],
+      "assistanceUsage": [],
+      "sessionSummary": null,
+      "sessionElapsedSeconds": 0.0,
+      "sessionPolicySnapshot": {
+        "maxSessionMinutes": 10,
+        "maxTurns": 20,
+        "minValidAudioSeconds": 1.0,
+        "maxTurnAudioSeconds": 60.0,
+        "maxAudioFileBytes": 10485760,
+        "automaticRetryLimitPerStage": 2,
+        "manualRetryLimitPerStage": 1
+      },
+      "audioReference": null,
+      "audioFormat": null,
+      "durationSeconds": null,
+      "voice": "marin",
+      "playbackSpeed": "NORMAL",
+      "manualRetryAttempt": 0,
+      "transcript": null,
+      "isInitialTurn": false
+    },
+    "output": {
+      "assistantText": "週末は何をしますか？",
+      "intent": "PLAN",
+      "difficulty": "A2"
+    },
+    "providerFailure": "DEADLINE_SIGNAL",
+    "prompt": "Generate the next assistant turn from this session context.\nIf isInitialTurn=true, generate the first task/prompt for the selected practiceMode.\nIf correctionMode=COACHING, return coachingCorrections only when useful.\n\n{\"requestId\":\"synthetic-conversation\",\"sessionId\":\"synthetic-session\",\"turnIndex\":1,\"problemIndex\":null,\"attemptIndex\":null,\"readAloudGenerateNextProblem\":false,\"originLanguage\":\"ko\",\"learningLanguage\":\"ja\",\"topic\":\"합성 주말 계획\",\"practiceMode\":\"FREE\",\"category\":null,\"goal\":null,\"persona\":null,\"conversationStartMode\":\"AI_FIRST\",\"topicRecommendedStartMode\":null,\"correctionMode\":\"CONVERSATION\",\"targetLevel\":null,\"learningProfileSummary\":null,\"selectedKeywords\":[],\"focusSignals\":[],\"conversationHistory\":[],\"sessionSummary\":null,\"sessionElapsedSeconds\":0,\"transcript\":null,\"assistanceUsage\":[],\"assistanceLevel\":\"NONE\",\"isInitialTurn\":false,\"sessionPolicySnapshot\":{\"maxSessionMinutes\":10,\"maxTurns\":20,\"minValidAudioSeconds\":1.0,\"maxTurnAudioSeconds\":60.0,\"maxAudioFileBytes\":10485760,\"automaticRetryLimitPerStage\":2,\"manualRetryLimitPerStage\":1}}",
+    "failure": {
+      "code": "PROVIDER_TIMEOUT",
+      "stage": "CONVERSATION",
+      "retryable": true
+    },
+    "calls": 3
+  },
+  {
+    "name": "provider_SAFETY_SIGNAL",
+    "kind": "conversation",
+    "rawRequest": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "conversationStartMode": "AI_FIRST"
+    },
+    "request": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "problemIndex": null,
+      "attemptIndex": null,
+      "readAloudGenerateNextProblem": false,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "practiceMode": "FREE",
+      "category": null,
+      "goal": null,
+      "persona": null,
+      "conversationStartMode": "AI_FIRST",
+      "topicRecommendedStartMode": null,
+      "correctionMode": "CONVERSATION",
+      "targetLevel": null,
+      "learningProfileSummary": null,
+      "selectedKeywords": [],
+      "focusSignals": [],
+      "conversationHistory": [],
+      "assistanceUsage": [],
+      "sessionSummary": null,
+      "sessionElapsedSeconds": 0.0,
+      "sessionPolicySnapshot": {
+        "maxSessionMinutes": 10,
+        "maxTurns": 20,
+        "minValidAudioSeconds": 1.0,
+        "maxTurnAudioSeconds": 60.0,
+        "maxAudioFileBytes": 10485760,
+        "automaticRetryLimitPerStage": 2,
+        "manualRetryLimitPerStage": 1
+      },
+      "audioReference": null,
+      "audioFormat": null,
+      "durationSeconds": null,
+      "voice": "marin",
+      "playbackSpeed": "NORMAL",
+      "manualRetryAttempt": 0,
+      "transcript": null,
+      "isInitialTurn": false
+    },
+    "output": {
+      "assistantText": "週末は何をしますか？",
+      "intent": "PLAN",
+      "difficulty": "A2"
+    },
+    "providerFailure": "SAFETY_SIGNAL",
+    "prompt": "Generate the next assistant turn from this session context.\nIf isInitialTurn=true, generate the first task/prompt for the selected practiceMode.\nIf correctionMode=COACHING, return coachingCorrections only when useful.\n\n{\"requestId\":\"synthetic-conversation\",\"sessionId\":\"synthetic-session\",\"turnIndex\":1,\"problemIndex\":null,\"attemptIndex\":null,\"readAloudGenerateNextProblem\":false,\"originLanguage\":\"ko\",\"learningLanguage\":\"ja\",\"topic\":\"합성 주말 계획\",\"practiceMode\":\"FREE\",\"category\":null,\"goal\":null,\"persona\":null,\"conversationStartMode\":\"AI_FIRST\",\"topicRecommendedStartMode\":null,\"correctionMode\":\"CONVERSATION\",\"targetLevel\":null,\"learningProfileSummary\":null,\"selectedKeywords\":[],\"focusSignals\":[],\"conversationHistory\":[],\"sessionSummary\":null,\"sessionElapsedSeconds\":0,\"transcript\":null,\"assistanceUsage\":[],\"assistanceLevel\":\"NONE\",\"isInitialTurn\":false,\"sessionPolicySnapshot\":{\"maxSessionMinutes\":10,\"maxTurns\":20,\"minValidAudioSeconds\":1.0,\"maxTurnAudioSeconds\":60.0,\"maxAudioFileBytes\":10485760,\"automaticRetryLimitPerStage\":2,\"manualRetryLimitPerStage\":1}}",
+    "failure": {
+      "code": "UNSAFE_TOPIC",
+      "stage": "CONVERSATION",
+      "retryable": false
+    },
+    "calls": 1
+  },
+  {
+    "name": "provider_SAFETY_400",
+    "kind": "conversation",
+    "rawRequest": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "conversationStartMode": "AI_FIRST"
+    },
+    "request": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "problemIndex": null,
+      "attemptIndex": null,
+      "readAloudGenerateNextProblem": false,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "practiceMode": "FREE",
+      "category": null,
+      "goal": null,
+      "persona": null,
+      "conversationStartMode": "AI_FIRST",
+      "topicRecommendedStartMode": null,
+      "correctionMode": "CONVERSATION",
+      "targetLevel": null,
+      "learningProfileSummary": null,
+      "selectedKeywords": [],
+      "focusSignals": [],
+      "conversationHistory": [],
+      "assistanceUsage": [],
+      "sessionSummary": null,
+      "sessionElapsedSeconds": 0.0,
+      "sessionPolicySnapshot": {
+        "maxSessionMinutes": 10,
+        "maxTurns": 20,
+        "minValidAudioSeconds": 1.0,
+        "maxTurnAudioSeconds": 60.0,
+        "maxAudioFileBytes": 10485760,
+        "automaticRetryLimitPerStage": 2,
+        "manualRetryLimitPerStage": 1
+      },
+      "audioReference": null,
+      "audioFormat": null,
+      "durationSeconds": null,
+      "voice": "marin",
+      "playbackSpeed": "NORMAL",
+      "manualRetryAttempt": 0,
+      "transcript": null,
+      "isInitialTurn": false
+    },
+    "output": {
+      "assistantText": "週末は何をしますか？",
+      "intent": "PLAN",
+      "difficulty": "A2"
+    },
+    "providerFailure": "SAFETY_400",
+    "prompt": "Generate the next assistant turn from this session context.\nIf isInitialTurn=true, generate the first task/prompt for the selected practiceMode.\nIf correctionMode=COACHING, return coachingCorrections only when useful.\n\n{\"requestId\":\"synthetic-conversation\",\"sessionId\":\"synthetic-session\",\"turnIndex\":1,\"problemIndex\":null,\"attemptIndex\":null,\"readAloudGenerateNextProblem\":false,\"originLanguage\":\"ko\",\"learningLanguage\":\"ja\",\"topic\":\"합성 주말 계획\",\"practiceMode\":\"FREE\",\"category\":null,\"goal\":null,\"persona\":null,\"conversationStartMode\":\"AI_FIRST\",\"topicRecommendedStartMode\":null,\"correctionMode\":\"CONVERSATION\",\"targetLevel\":null,\"learningProfileSummary\":null,\"selectedKeywords\":[],\"focusSignals\":[],\"conversationHistory\":[],\"sessionSummary\":null,\"sessionElapsedSeconds\":0,\"transcript\":null,\"assistanceUsage\":[],\"assistanceLevel\":\"NONE\",\"isInitialTurn\":false,\"sessionPolicySnapshot\":{\"maxSessionMinutes\":10,\"maxTurns\":20,\"minValidAudioSeconds\":1.0,\"maxTurnAudioSeconds\":60.0,\"maxAudioFileBytes\":10485760,\"automaticRetryLimitPerStage\":2,\"manualRetryLimitPerStage\":1}}",
+    "failure": {
+      "code": "CONVERSATION_GENERATION_FAILED",
+      "stage": "CONVERSATION",
+      "retryable": false
+    },
+    "calls": 1
+  },
+  {
+    "name": "provider_VALUE_ERROR",
+    "kind": "conversation",
+    "rawRequest": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "conversationStartMode": "AI_FIRST"
+    },
+    "request": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "problemIndex": null,
+      "attemptIndex": null,
+      "readAloudGenerateNextProblem": false,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "practiceMode": "FREE",
+      "category": null,
+      "goal": null,
+      "persona": null,
+      "conversationStartMode": "AI_FIRST",
+      "topicRecommendedStartMode": null,
+      "correctionMode": "CONVERSATION",
+      "targetLevel": null,
+      "learningProfileSummary": null,
+      "selectedKeywords": [],
+      "focusSignals": [],
+      "conversationHistory": [],
+      "assistanceUsage": [],
+      "sessionSummary": null,
+      "sessionElapsedSeconds": 0.0,
+      "sessionPolicySnapshot": {
+        "maxSessionMinutes": 10,
+        "maxTurns": 20,
+        "minValidAudioSeconds": 1.0,
+        "maxTurnAudioSeconds": 60.0,
+        "maxAudioFileBytes": 10485760,
+        "automaticRetryLimitPerStage": 2,
+        "manualRetryLimitPerStage": 1
+      },
+      "audioReference": null,
+      "audioFormat": null,
+      "durationSeconds": null,
+      "voice": "marin",
+      "playbackSpeed": "NORMAL",
+      "manualRetryAttempt": 0,
+      "transcript": null,
+      "isInitialTurn": false
+    },
+    "output": {
+      "assistantText": "週末は何をしますか？",
+      "intent": "PLAN",
+      "difficulty": "A2"
+    },
+    "providerFailure": "VALUE_ERROR",
+    "prompt": "Generate the next assistant turn from this session context.\nIf isInitialTurn=true, generate the first task/prompt for the selected practiceMode.\nIf correctionMode=COACHING, return coachingCorrections only when useful.\n\n{\"requestId\":\"synthetic-conversation\",\"sessionId\":\"synthetic-session\",\"turnIndex\":1,\"problemIndex\":null,\"attemptIndex\":null,\"readAloudGenerateNextProblem\":false,\"originLanguage\":\"ko\",\"learningLanguage\":\"ja\",\"topic\":\"합성 주말 계획\",\"practiceMode\":\"FREE\",\"category\":null,\"goal\":null,\"persona\":null,\"conversationStartMode\":\"AI_FIRST\",\"topicRecommendedStartMode\":null,\"correctionMode\":\"CONVERSATION\",\"targetLevel\":null,\"learningProfileSummary\":null,\"selectedKeywords\":[],\"focusSignals\":[],\"conversationHistory\":[],\"sessionSummary\":null,\"sessionElapsedSeconds\":0,\"transcript\":null,\"assistanceUsage\":[],\"assistanceLevel\":\"NONE\",\"isInitialTurn\":false,\"sessionPolicySnapshot\":{\"maxSessionMinutes\":10,\"maxTurns\":20,\"minValidAudioSeconds\":1.0,\"maxTurnAudioSeconds\":60.0,\"maxAudioFileBytes\":10485760,\"automaticRetryLimitPerStage\":2,\"manualRetryLimitPerStage\":1}}",
+    "failure": {
+      "code": "INVALID_RESPONSE_SCHEMA",
+      "stage": "CONVERSATION",
+      "retryable": true
+    },
+    "calls": 3
+  },
+  {
+    "name": "assistance_HINT",
+    "kind": "assistance",
+    "rawRequest": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "assistantText": "週末は何をしますか？",
+      "assistanceType": "HINT"
+    },
+    "request": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "assistanceType": "HINT",
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "targetLevel": null,
+      "assistantText": "週末は何をしますか？",
+      "conversationHistory": [],
+      "selectedKeywords": [],
+      "sessionSummary": null
+    },
+    "output": {
+      "type": "HINT",
+      "content": "합성 도움말"
+    },
+    "providerFailure": null,
+    "prompt": "You are TranslaCat's language speaking assistance generator.\nReturn exactly one requested assistance item and do not advance the conversation.\n\nRules by assistanceType:\n- HINT: write one concise hint primarily in originLanguage. Do not reveal a complete answer.\n  You may include 1-3 useful learningLanguage words or short phrases.\n- TRANSLATION: translate assistantText into originLanguage faithfully. Do not add commentary.\n- SAMPLE_ANSWER: write one natural learner answer in learningLanguage, usually 1-2 sentences.\n  Match the learner level and topic. Do not include explanations.\n\nKeyword rules:\n- TOPIC supplies broad context; VOCABULARY supplies a specific learning focus.\n- When both are present, keep the TOPIC context and use VOCABULARY naturally when useful.\n- SYSTEM and CUSTOM have equal priority, and an empty selectedKeywords list adds no constraint.\n\nDo not change the question, do not simulate a new assistant turn, and return only the requested structured schema.\n\nGenerate the requested assistance.\n{\"requestId\":\"synthetic-conversation\",\"sessionId\":\"synthetic-session\",\"turnIndex\":1,\"assistanceType\":\"HINT\",\"originLanguage\":\"ko\",\"learningLanguage\":\"ja\",\"topic\":\"합성 주말 계획\",\"targetLevel\":null,\"assistantText\":\"週末は何をしますか？\",\"conversationHistory\":[],\"selectedKeywords\":[],\"sessionSummary\":null}",
+    "response": {
+      "requestId": "synthetic-conversation",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "type": "HINT",
+      "content": "합성 도움말",
+      "usage": {
+        "stt": null,
+        "conversation": {
+          "latencyMs": 0,
+          "inputTokens": 7,
+          "outputTokens": 2,
+          "audioSeconds": 0.0,
+          "ttsCharacters": 0,
+          "ttsAudioSeconds": 0.0,
+          "provider": "synthetic",
+          "model": "fixed",
+          "promptVersion": "speaking-conversation-v2",
+          "evaluationVersion": null
+        },
+        "tts": null,
+        "evaluation": null
+      },
+      "idempotentReplay": false
+    },
+    "replay": {
+      "requestId": "synthetic-conversation",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "type": "HINT",
+      "content": "합성 도움말",
+      "usage": {
+        "stt": null,
+        "conversation": {
+          "latencyMs": 0,
+          "inputTokens": 7,
+          "outputTokens": 2,
+          "audioSeconds": 0.0,
+          "ttsCharacters": 0,
+          "ttsAudioSeconds": 0.0,
+          "provider": "synthetic",
+          "model": "fixed",
+          "promptVersion": "speaking-conversation-v2",
+          "evaluationVersion": null
+        },
+        "tts": null,
+        "evaluation": null
+      },
+      "idempotentReplay": true
+    },
+    "calls": 1
+  },
+  {
+    "name": "assistance_TRANSLATION",
+    "kind": "assistance",
+    "rawRequest": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "assistantText": "週末は何をしますか？",
+      "assistanceType": "TRANSLATION"
+    },
+    "request": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "assistanceType": "TRANSLATION",
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "targetLevel": null,
+      "assistantText": "週末は何をしますか？",
+      "conversationHistory": [],
+      "selectedKeywords": [],
+      "sessionSummary": null
+    },
+    "output": {
+      "type": "TRANSLATION",
+      "content": "합성 도움말"
+    },
+    "providerFailure": null,
+    "prompt": "You are TranslaCat's language speaking assistance generator.\nReturn exactly one requested assistance item and do not advance the conversation.\n\nRules by assistanceType:\n- HINT: write one concise hint primarily in originLanguage. Do not reveal a complete answer.\n  You may include 1-3 useful learningLanguage words or short phrases.\n- TRANSLATION: translate assistantText into originLanguage faithfully. Do not add commentary.\n- SAMPLE_ANSWER: write one natural learner answer in learningLanguage, usually 1-2 sentences.\n  Match the learner level and topic. Do not include explanations.\n\nKeyword rules:\n- TOPIC supplies broad context; VOCABULARY supplies a specific learning focus.\n- When both are present, keep the TOPIC context and use VOCABULARY naturally when useful.\n- SYSTEM and CUSTOM have equal priority, and an empty selectedKeywords list adds no constraint.\n\nDo not change the question, do not simulate a new assistant turn, and return only the requested structured schema.\n\nGenerate the requested assistance.\n{\"requestId\":\"synthetic-conversation\",\"sessionId\":\"synthetic-session\",\"turnIndex\":1,\"assistanceType\":\"TRANSLATION\",\"originLanguage\":\"ko\",\"learningLanguage\":\"ja\",\"topic\":\"합성 주말 계획\",\"targetLevel\":null,\"assistantText\":\"週末は何をしますか？\",\"conversationHistory\":[],\"selectedKeywords\":[],\"sessionSummary\":null}",
+    "response": {
+      "requestId": "synthetic-conversation",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "type": "TRANSLATION",
+      "content": "합성 도움말",
+      "usage": {
+        "stt": null,
+        "conversation": {
+          "latencyMs": 0,
+          "inputTokens": 7,
+          "outputTokens": 2,
+          "audioSeconds": 0.0,
+          "ttsCharacters": 0,
+          "ttsAudioSeconds": 0.0,
+          "provider": "synthetic",
+          "model": "fixed",
+          "promptVersion": "speaking-conversation-v2",
+          "evaluationVersion": null
+        },
+        "tts": null,
+        "evaluation": null
+      },
+      "idempotentReplay": false
+    },
+    "replay": {
+      "requestId": "synthetic-conversation",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "type": "TRANSLATION",
+      "content": "합성 도움말",
+      "usage": {
+        "stt": null,
+        "conversation": {
+          "latencyMs": 0,
+          "inputTokens": 7,
+          "outputTokens": 2,
+          "audioSeconds": 0.0,
+          "ttsCharacters": 0,
+          "ttsAudioSeconds": 0.0,
+          "provider": "synthetic",
+          "model": "fixed",
+          "promptVersion": "speaking-conversation-v2",
+          "evaluationVersion": null
+        },
+        "tts": null,
+        "evaluation": null
+      },
+      "idempotentReplay": true
+    },
+    "calls": 1
+  },
+  {
+    "name": "assistance_SAMPLE_ANSWER",
+    "kind": "assistance",
+    "rawRequest": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "assistantText": "週末は何をしますか？",
+      "assistanceType": "SAMPLE_ANSWER"
+    },
+    "request": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "assistanceType": "SAMPLE_ANSWER",
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "targetLevel": null,
+      "assistantText": "週末は何をしますか？",
+      "conversationHistory": [],
+      "selectedKeywords": [],
+      "sessionSummary": null
+    },
+    "output": {
+      "type": "SAMPLE_ANSWER",
+      "content": "합성 도움말"
+    },
+    "providerFailure": null,
+    "prompt": "You are TranslaCat's language speaking assistance generator.\nReturn exactly one requested assistance item and do not advance the conversation.\n\nRules by assistanceType:\n- HINT: write one concise hint primarily in originLanguage. Do not reveal a complete answer.\n  You may include 1-3 useful learningLanguage words or short phrases.\n- TRANSLATION: translate assistantText into originLanguage faithfully. Do not add commentary.\n- SAMPLE_ANSWER: write one natural learner answer in learningLanguage, usually 1-2 sentences.\n  Match the learner level and topic. Do not include explanations.\n\nKeyword rules:\n- TOPIC supplies broad context; VOCABULARY supplies a specific learning focus.\n- When both are present, keep the TOPIC context and use VOCABULARY naturally when useful.\n- SYSTEM and CUSTOM have equal priority, and an empty selectedKeywords list adds no constraint.\n\nDo not change the question, do not simulate a new assistant turn, and return only the requested structured schema.\n\nGenerate the requested assistance.\n{\"requestId\":\"synthetic-conversation\",\"sessionId\":\"synthetic-session\",\"turnIndex\":1,\"assistanceType\":\"SAMPLE_ANSWER\",\"originLanguage\":\"ko\",\"learningLanguage\":\"ja\",\"topic\":\"합성 주말 계획\",\"targetLevel\":null,\"assistantText\":\"週末は何をしますか？\",\"conversationHistory\":[],\"selectedKeywords\":[],\"sessionSummary\":null}",
+    "response": {
+      "requestId": "synthetic-conversation",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "type": "SAMPLE_ANSWER",
+      "content": "합성 도움말",
+      "usage": {
+        "stt": null,
+        "conversation": {
+          "latencyMs": 0,
+          "inputTokens": 7,
+          "outputTokens": 2,
+          "audioSeconds": 0.0,
+          "ttsCharacters": 0,
+          "ttsAudioSeconds": 0.0,
+          "provider": "synthetic",
+          "model": "fixed",
+          "promptVersion": "speaking-conversation-v2",
+          "evaluationVersion": null
+        },
+        "tts": null,
+        "evaluation": null
+      },
+      "idempotentReplay": false
+    },
+    "replay": {
+      "requestId": "synthetic-conversation",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "type": "SAMPLE_ANSWER",
+      "content": "합성 도움말",
+      "usage": {
+        "stt": null,
+        "conversation": {
+          "latencyMs": 0,
+          "inputTokens": 7,
+          "outputTokens": 2,
+          "audioSeconds": 0.0,
+          "ttsCharacters": 0,
+          "ttsAudioSeconds": 0.0,
+          "provider": "synthetic",
+          "model": "fixed",
+          "promptVersion": "speaking-conversation-v2",
+          "evaluationVersion": null
+        },
+        "tts": null,
+        "evaluation": null
+      },
+      "idempotentReplay": true
+    },
+    "calls": 1
+  },
+  {
+    "name": "assistance_REPLAY",
+    "kind": "assistance",
+    "rawRequest": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "assistantText": "週末は何をしますか？",
+      "assistanceType": "REPLAY"
+    },
+    "request": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "assistanceType": "REPLAY",
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "targetLevel": null,
+      "assistantText": "週末は何をしますか？",
+      "conversationHistory": [],
+      "selectedKeywords": [],
+      "sessionSummary": null
+    },
+    "output": {
+      "type": "REPLAY",
+      "content": "합성 도움말"
+    },
+    "providerFailure": null,
+    "prompt": "You are TranslaCat's language speaking assistance generator.\nReturn exactly one requested assistance item and do not advance the conversation.\n\nRules by assistanceType:\n- HINT: write one concise hint primarily in originLanguage. Do not reveal a complete answer.\n  You may include 1-3 useful learningLanguage words or short phrases.\n- TRANSLATION: translate assistantText into originLanguage faithfully. Do not add commentary.\n- SAMPLE_ANSWER: write one natural learner answer in learningLanguage, usually 1-2 sentences.\n  Match the learner level and topic. Do not include explanations.\n\nKeyword rules:\n- TOPIC supplies broad context; VOCABULARY supplies a specific learning focus.\n- When both are present, keep the TOPIC context and use VOCABULARY naturally when useful.\n- SYSTEM and CUSTOM have equal priority, and an empty selectedKeywords list adds no constraint.\n\nDo not change the question, do not simulate a new assistant turn, and return only the requested structured schema.\n\nGenerate the requested assistance.\n{\"requestId\":\"synthetic-conversation\",\"sessionId\":\"synthetic-session\",\"turnIndex\":1,\"assistanceType\":\"REPLAY\",\"originLanguage\":\"ko\",\"learningLanguage\":\"ja\",\"topic\":\"합성 주말 계획\",\"targetLevel\":null,\"assistantText\":\"週末は何をしますか？\",\"conversationHistory\":[],\"selectedKeywords\":[],\"sessionSummary\":null}",
+    "failure": {
+      "code": "INVALID_RESPONSE_SCHEMA",
+      "stage": "CONVERSATION",
+      "retryable": false
+    },
+    "calls": 0
+  },
+  {
+    "name": "assistance_mismatch",
+    "kind": "assistance",
+    "rawRequest": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "assistantText": "週末は何をしますか？",
+      "assistanceType": "HINT"
+    },
+    "request": {
+      "requestId": "synthetic-conversation",
+      "idempotencyKey": "synthetic-idempotency",
+      "sessionId": "synthetic-session",
+      "turnIndex": 1,
+      "assistanceType": "HINT",
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "topic": "합성 주말 계획",
+      "targetLevel": null,
+      "assistantText": "週末は何をしますか？",
+      "conversationHistory": [],
+      "selectedKeywords": [],
+      "sessionSummary": null
+    },
+    "output": {
+      "type": "TRANSLATION",
+      "content": "합성 도움말"
+    },
+    "providerFailure": null,
+    "prompt": "You are TranslaCat's language speaking assistance generator.\nReturn exactly one requested assistance item and do not advance the conversation.\n\nRules by assistanceType:\n- HINT: write one concise hint primarily in originLanguage. Do not reveal a complete answer.\n  You may include 1-3 useful learningLanguage words or short phrases.\n- TRANSLATION: translate assistantText into originLanguage faithfully. Do not add commentary.\n- SAMPLE_ANSWER: write one natural learner answer in learningLanguage, usually 1-2 sentences.\n  Match the learner level and topic. Do not include explanations.\n\nKeyword rules:\n- TOPIC supplies broad context; VOCABULARY supplies a specific learning focus.\n- When both are present, keep the TOPIC context and use VOCABULARY naturally when useful.\n- SYSTEM and CUSTOM have equal priority, and an empty selectedKeywords list adds no constraint.\n\nDo not change the question, do not simulate a new assistant turn, and return only the requested structured schema.\n\nGenerate the requested assistance.\n{\"requestId\":\"synthetic-conversation\",\"sessionId\":\"synthetic-session\",\"turnIndex\":1,\"assistanceType\":\"HINT\",\"originLanguage\":\"ko\",\"learningLanguage\":\"ja\",\"topic\":\"합성 주말 계획\",\"targetLevel\":null,\"assistantText\":\"週末は何をしますか？\",\"conversationHistory\":[],\"selectedKeywords\":[],\"sessionSummary\":null}",
+    "failure": {
+      "code": "INVALID_RESPONSE_SCHEMA",
+      "stage": "CONVERSATION",
+      "retryable": true
+    },
+    "calls": 3
+  }
+]

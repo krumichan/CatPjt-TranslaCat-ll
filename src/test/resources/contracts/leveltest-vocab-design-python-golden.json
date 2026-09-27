@@ -1,0 +1,675 @@
+{
+  "request": {
+    "requestId": "synthetic",
+    "idempotencyKey": "synthetic",
+    "sessionId": 1,
+    "questionNumber": 1,
+    "totalQuestions": 20,
+    "domain": "VOCABULARY",
+    "itemType": "VOCAB_CONTEXT_CHOICE",
+    "originLanguage": "ko",
+    "learningLanguage": "en",
+    "targetComplexityBand": 3,
+    "previousResults": [],
+    "diversityContext": {
+      "currentSession": [],
+      "sameFeatureRecent": [],
+      "crossFeatureRecent": [],
+      "exactContentHashes90d": []
+    },
+    "preferredScenarioCategories": [
+      "WORK"
+    ],
+    "policyVersion": "level-test-multiskill",
+    "modelConfigVersion": "level-test-model-config",
+    "referenceAudioUpload": null
+  },
+  "cases": [
+    {
+      "raw": {
+        "designs": [
+          {
+            "targetExpression": "first",
+            "targetMeaning": "Synthetic meaning",
+            "semanticConstraint": "Synthetic contrast",
+            "scenarioCategory": "WORK",
+            "communicativeIntent": "DESCRIBE"
+          },
+          {
+            "targetExpression": "second",
+            "targetMeaning": "Synthetic meaning",
+            "semanticConstraint": "Synthetic contrast",
+            "scenarioCategory": "WORK",
+            "communicativeIntent": "DESCRIBE"
+          }
+        ]
+      },
+      "output": [
+        {
+          "designId": "A",
+          "targetExpression": "first",
+          "targetMeaning": "Synthetic meaning",
+          "semanticConstraint": "Synthetic contrast",
+          "scenarioCategory": "WORK",
+          "communicativeIntent": "DESCRIBE"
+        },
+        {
+          "designId": "B",
+          "targetExpression": "second",
+          "targetMeaning": "Synthetic meaning",
+          "semanticConstraint": "Synthetic contrast",
+          "scenarioCategory": "WORK",
+          "communicativeIntent": "DESCRIBE"
+        }
+      ]
+    },
+    {
+      "raw": {
+        "designs": [
+          {
+            "targetExpression": "first",
+            "targetMeaning": "Synthetic meaning",
+            "semanticConstraint": "Synthetic contrast",
+            "scenarioCategory": "WORK",
+            "communicativeIntent": "DESCRIBE",
+            "extra": "noise"
+          },
+          {
+            "targetExpression": "second",
+            "targetMeaning": "Synthetic meaning",
+            "semanticConstraint": "Synthetic contrast",
+            "scenarioCategory": "WORK",
+            "communicativeIntent": "DESCRIBE",
+            "extra": "noise"
+          },
+          {
+            "targetExpression": "first",
+            "targetMeaning": "Synthetic meaning",
+            "semanticConstraint": "Synthetic contrast",
+            "scenarioCategory": "WORK",
+            "communicativeIntent": "DESCRIBE"
+          }
+        ]
+      },
+      "output": [
+        {
+          "designId": "A",
+          "targetExpression": "first",
+          "targetMeaning": "Synthetic meaning",
+          "semanticConstraint": "Synthetic contrast",
+          "scenarioCategory": "WORK",
+          "communicativeIntent": "DESCRIBE"
+        },
+        {
+          "designId": "B",
+          "targetExpression": "second",
+          "targetMeaning": "Synthetic meaning",
+          "semanticConstraint": "Synthetic contrast",
+          "scenarioCategory": "WORK",
+          "communicativeIntent": "DESCRIBE"
+        }
+      ]
+    },
+    {
+      "raw": {
+        "designs": [
+          {
+            "targetExpression": "first",
+            "targetMeaning": "Synthetic meaning",
+            "semanticConstraint": "Synthetic contrast",
+            "scenarioCategory": "WORK",
+            "communicativeIntent": "DESCRIBE"
+          }
+        ]
+      },
+      "output": null
+    },
+    {
+      "raw": {
+        "designs": [
+          null,
+          {
+            "targetExpression": "second",
+            "targetMeaning": "Synthetic meaning",
+            "semanticConstraint": "Synthetic contrast",
+            "scenarioCategory": "WORK",
+            "communicativeIntent": "DESCRIBE"
+          }
+        ]
+      },
+      "output": null
+    },
+    {
+      "raw": {
+        "designs": [
+          {},
+          {}
+        ]
+      },
+      "output": null
+    },
+    {
+      "raw": {
+        "designs": [
+          {
+            "targetExpression": "first",
+            "targetMeaning": "Synthetic meaning",
+            "semanticConstraint": "Synthetic contrast",
+            "scenarioCategory": "WORK",
+            "communicativeIntent": "DESCRIBE"
+          },
+          {
+            "targetExpression": " FIRST ",
+            "targetMeaning": "Synthetic meaning",
+            "semanticConstraint": "Synthetic contrast",
+            "scenarioCategory": "WORK",
+            "communicativeIntent": "DESCRIBE"
+          }
+        ]
+      },
+      "output": null
+    },
+    {
+      "raw": {
+        "designs": [
+          {
+            "targetExpression": "first",
+            "targetMeaning": "Synthetic meaning",
+            "semanticConstraint": "Synthetic contrast",
+            "scenarioCategory": "WORK",
+            "communicativeIntent": "DESCRIBE"
+          },
+          {
+            "targetExpression": "second",
+            "targetMeaning": "Synthetic meaning",
+            "semanticConstraint": "Synthetic contrast",
+            "scenarioCategory": "TRAVEL",
+            "communicativeIntent": "DESCRIBE"
+          }
+        ]
+      },
+      "output": null
+    },
+    {
+      "raw": {
+        "unexpected": "synthetic"
+      },
+      "output": null
+    }
+  ],
+  "designs": [
+    {
+      "designId": "A",
+      "targetExpression": "first",
+      "targetMeaning": "Synthetic meaning",
+      "semanticConstraint": "Synthetic contrast",
+      "scenarioCategory": "WORK",
+      "communicativeIntent": "DESCRIBE"
+    },
+    {
+      "designId": "B",
+      "targetExpression": "second",
+      "targetMeaning": "Synthetic meaning",
+      "semanticConstraint": "Synthetic contrast",
+      "scenarioCategory": "WORK",
+      "communicativeIntent": "DESCRIBE"
+    }
+  ],
+  "bindingCases": [
+    {
+      "candidate": {
+        "domain": "VOCABULARY",
+        "itemType": "VOCAB_CONTEXT_CHOICE",
+        "complexityBand": 3,
+        "instruction": "Choose the expression that best fits the context.",
+        "instructionLanguage": "en",
+        "answerMode": "CHOICE",
+        "answerLanguage": null,
+        "promptText": "Synthetic ____ example.",
+        "options": [
+          {
+            "key": "A",
+            "text": "first"
+          },
+          {
+            "key": "B",
+            "text": "second"
+          },
+          {
+            "key": "C",
+            "text": "third"
+          },
+          {
+            "key": "D",
+            "text": "fourth"
+          }
+        ],
+        "internalAnswerKey": {
+          "correctOptionKey": "A",
+          "correctOrder": []
+        },
+        "choiceQualityAudit": null,
+        "generationPlanId": "A",
+        "referencePayload": {
+          "sourceText": null,
+          "referenceMeanings": [],
+          "keyMeaningUnits": [],
+          "referenceText": null,
+          "translationSourceText": null,
+          "emphasisText": null,
+          "readingPassage": null,
+          "readingQuestion": null,
+          "listeningQuestion": null,
+          "providedFacts": [
+            "Synthetic fact one",
+            "Synthetic fact two"
+          ],
+          "requiredIntents": [
+            "Ask politely",
+            "Give a reason"
+          ],
+          "responseConstraints": [
+            "Use two sentences"
+          ]
+        },
+        "diversityMetadata": {
+          "scenarioCategory": "WORK",
+          "communicativeIntent": "DESCRIBE",
+          "taskArchetype": "synthetic",
+          "grammarFocusCodes": [],
+          "lexicalFocusCodes": [],
+          "semanticSummary": "Synthetic task",
+          "requiresBackgroundKnowledge": false,
+          "contentHash": null,
+          "similarityKey": null
+        },
+        "maxAnswerLength": null,
+        "maxAudioSeconds": null
+      },
+      "reason": null
+    },
+    {
+      "candidate": {
+        "domain": "VOCABULARY",
+        "itemType": "VOCAB_CONTEXT_CHOICE",
+        "complexityBand": 3,
+        "instruction": "Choose the expression that best fits the context.",
+        "instructionLanguage": "en",
+        "answerMode": "CHOICE",
+        "answerLanguage": null,
+        "promptText": "Synthetic ____ example.",
+        "options": [
+          {
+            "key": "A",
+            "text": "first"
+          },
+          {
+            "key": "B",
+            "text": "second"
+          },
+          {
+            "key": "C",
+            "text": "third"
+          },
+          {
+            "key": "D",
+            "text": "fourth"
+          }
+        ],
+        "internalAnswerKey": {
+          "correctOptionKey": "A",
+          "correctOrder": []
+        },
+        "choiceQualityAudit": null,
+        "generationPlanId": null,
+        "referencePayload": {
+          "sourceText": null,
+          "referenceMeanings": [],
+          "keyMeaningUnits": [],
+          "referenceText": null,
+          "translationSourceText": null,
+          "emphasisText": null,
+          "readingPassage": null,
+          "readingQuestion": null,
+          "listeningQuestion": null,
+          "providedFacts": [
+            "Synthetic fact one",
+            "Synthetic fact two"
+          ],
+          "requiredIntents": [
+            "Ask politely",
+            "Give a reason"
+          ],
+          "responseConstraints": [
+            "Use two sentences"
+          ]
+        },
+        "diversityMetadata": {
+          "scenarioCategory": "WORK",
+          "communicativeIntent": "DESCRIBE",
+          "taskArchetype": "synthetic",
+          "grammarFocusCodes": [],
+          "lexicalFocusCodes": [],
+          "semanticSummary": "Synthetic task",
+          "requiresBackgroundKnowledge": false,
+          "contentHash": null,
+          "similarityKey": null
+        },
+        "maxAnswerLength": null,
+        "maxAudioSeconds": null
+      },
+      "reason": "VOCAB_CONTEXT_CHOICE가 서버 승인 generationPlanId를 따르지 않았습니다."
+    },
+    {
+      "candidate": {
+        "domain": "VOCABULARY",
+        "itemType": "VOCAB_CONTEXT_CHOICE",
+        "complexityBand": 3,
+        "instruction": "Choose the expression that best fits the context.",
+        "instructionLanguage": "en",
+        "answerMode": "CHOICE",
+        "answerLanguage": null,
+        "promptText": "Synthetic ____ example.",
+        "options": [
+          {
+            "key": "A",
+            "text": "first"
+          },
+          {
+            "key": "B",
+            "text": "second"
+          },
+          {
+            "key": "C",
+            "text": "third"
+          },
+          {
+            "key": "D",
+            "text": "fourth"
+          }
+        ],
+        "internalAnswerKey": {
+          "correctOptionKey": "A",
+          "correctOrder": []
+        },
+        "choiceQualityAudit": null,
+        "generationPlanId": "B",
+        "referencePayload": {
+          "sourceText": null,
+          "referenceMeanings": [],
+          "keyMeaningUnits": [],
+          "referenceText": null,
+          "translationSourceText": null,
+          "emphasisText": null,
+          "readingPassage": null,
+          "readingQuestion": null,
+          "listeningQuestion": null,
+          "providedFacts": [
+            "Synthetic fact one",
+            "Synthetic fact two"
+          ],
+          "requiredIntents": [
+            "Ask politely",
+            "Give a reason"
+          ],
+          "responseConstraints": [
+            "Use two sentences"
+          ]
+        },
+        "diversityMetadata": {
+          "scenarioCategory": "WORK",
+          "communicativeIntent": "DESCRIBE",
+          "taskArchetype": "synthetic",
+          "grammarFocusCodes": [],
+          "lexicalFocusCodes": [],
+          "semanticSummary": "Synthetic task",
+          "requiresBackgroundKnowledge": false,
+          "contentHash": null,
+          "similarityKey": null
+        },
+        "maxAnswerLength": null,
+        "maxAudioSeconds": null
+      },
+      "reason": "VOCAB_CONTEXT_CHOICE가 서버 승인 targetExpression을 정답으로 사용하지 않았습니다."
+    },
+    {
+      "candidate": {
+        "domain": "VOCABULARY",
+        "itemType": "VOCAB_CONTEXT_CHOICE",
+        "complexityBand": 3,
+        "instruction": "Choose the expression that best fits the context.",
+        "instructionLanguage": "en",
+        "answerMode": "CHOICE",
+        "answerLanguage": null,
+        "promptText": "Synthetic ____ example.",
+        "options": [
+          {
+            "key": "A",
+            "text": "first"
+          },
+          {
+            "key": "B",
+            "text": "second"
+          },
+          {
+            "key": "C",
+            "text": "third"
+          },
+          {
+            "key": "D",
+            "text": "fourth"
+          }
+        ],
+        "internalAnswerKey": {
+          "correctOptionKey": "A",
+          "correctOrder": []
+        },
+        "choiceQualityAudit": null,
+        "generationPlanId": "A",
+        "referencePayload": {
+          "sourceText": null,
+          "referenceMeanings": [],
+          "keyMeaningUnits": [],
+          "referenceText": null,
+          "translationSourceText": null,
+          "emphasisText": null,
+          "readingPassage": null,
+          "readingQuestion": null,
+          "listeningQuestion": null,
+          "providedFacts": [
+            "Synthetic fact one",
+            "Synthetic fact two"
+          ],
+          "requiredIntents": [
+            "Ask politely",
+            "Give a reason"
+          ],
+          "responseConstraints": [
+            "Use two sentences"
+          ]
+        },
+        "diversityMetadata": {
+          "scenarioCategory": "TRAVEL",
+          "communicativeIntent": "DESCRIBE",
+          "taskArchetype": "synthetic",
+          "grammarFocusCodes": [],
+          "lexicalFocusCodes": [],
+          "semanticSummary": "Synthetic task",
+          "requiresBackgroundKnowledge": false,
+          "contentHash": null,
+          "similarityKey": null
+        },
+        "maxAnswerLength": null,
+        "maxAudioSeconds": null
+      },
+      "reason": "VOCAB_CONTEXT_CHOICE가 서버 승인 scenarioCategory를 변경했습니다."
+    },
+    {
+      "candidate": {
+        "domain": "VOCABULARY",
+        "itemType": "VOCAB_CONTEXT_CHOICE",
+        "complexityBand": 3,
+        "instruction": "Choose the expression that best fits the context.",
+        "instructionLanguage": "en",
+        "answerMode": "CHOICE",
+        "answerLanguage": null,
+        "promptText": "Synthetic ____ example.",
+        "options": [
+          {
+            "key": "A",
+            "text": "first"
+          },
+          {
+            "key": "B",
+            "text": "second"
+          },
+          {
+            "key": "C",
+            "text": "third"
+          },
+          {
+            "key": "D",
+            "text": "fourth"
+          }
+        ],
+        "internalAnswerKey": {
+          "correctOptionKey": "A",
+          "correctOrder": []
+        },
+        "choiceQualityAudit": null,
+        "generationPlanId": "A",
+        "referencePayload": {
+          "sourceText": null,
+          "referenceMeanings": [],
+          "keyMeaningUnits": [],
+          "referenceText": null,
+          "translationSourceText": null,
+          "emphasisText": null,
+          "readingPassage": null,
+          "readingQuestion": null,
+          "listeningQuestion": null,
+          "providedFacts": [
+            "Synthetic fact one",
+            "Synthetic fact two"
+          ],
+          "requiredIntents": [
+            "Ask politely",
+            "Give a reason"
+          ],
+          "responseConstraints": [
+            "Use two sentences"
+          ]
+        },
+        "diversityMetadata": {
+          "scenarioCategory": "WORK",
+          "communicativeIntent": "REQUEST",
+          "taskArchetype": "synthetic",
+          "grammarFocusCodes": [],
+          "lexicalFocusCodes": [],
+          "semanticSummary": "Synthetic task",
+          "requiresBackgroundKnowledge": false,
+          "contentHash": null,
+          "similarityKey": null
+        },
+        "maxAnswerLength": null,
+        "maxAudioSeconds": null
+      },
+      "reason": "VOCAB_CONTEXT_CHOICE가 서버 승인 communicativeIntent를 변경했습니다."
+    }
+  ],
+  "candidate": {
+    "domain": "VOCABULARY",
+    "itemType": "VOCAB_CONTEXT_CHOICE",
+    "complexityBand": 3,
+    "instruction": "Choose the expression that best fits the context.",
+    "instructionLanguage": "en",
+    "answerMode": "CHOICE",
+    "answerLanguage": null,
+    "promptText": "Synthetic ____ example.",
+    "options": [
+      {
+        "key": "A",
+        "text": "first"
+      },
+      {
+        "key": "B",
+        "text": "second"
+      },
+      {
+        "key": "C",
+        "text": "third"
+      },
+      {
+        "key": "D",
+        "text": "fourth"
+      }
+    ],
+    "internalAnswerKey": {
+      "correctOptionKey": "A",
+      "correctOrder": []
+    },
+    "choiceQualityAudit": null,
+    "generationPlanId": "A",
+    "referencePayload": {
+      "sourceText": null,
+      "referenceMeanings": [],
+      "keyMeaningUnits": [],
+      "referenceText": null,
+      "translationSourceText": null,
+      "emphasisText": null,
+      "readingPassage": null,
+      "readingQuestion": null,
+      "listeningQuestion": null,
+      "providedFacts": [
+        "Synthetic fact one",
+        "Synthetic fact two"
+      ],
+      "requiredIntents": [
+        "Ask politely",
+        "Give a reason"
+      ],
+      "responseConstraints": [
+        "Use two sentences"
+      ]
+    },
+    "diversityMetadata": {
+      "scenarioCategory": "WORK",
+      "communicativeIntent": "DESCRIBE",
+      "taskArchetype": "synthetic",
+      "grammarFocusCodes": [],
+      "lexicalFocusCodes": [],
+      "semanticSummary": "Synthetic task",
+      "requiresBackgroundKnowledge": false,
+      "contentHash": null,
+      "similarityKey": null
+    },
+    "maxAnswerLength": null,
+    "maxAudioSeconds": null
+  },
+  "verdict": {
+    "verifiable": true,
+    "plausibleOptionKeys": [
+      "A",
+      "B"
+    ],
+    "nearEquivalentOptionKeys": [],
+    "bestOptionKey": "A",
+    "bestOptionAdvantage": "CLEAR"
+  },
+  "rejected": [
+    "synthetic-0",
+    "synthetic-1",
+    "synthetic-2",
+    "synthetic-3",
+    "synthetic-4",
+    "synthetic-5",
+    "synthetic-6",
+    "synthetic-7",
+    "synthetic-8",
+    "synthetic-9",
+    "synthetic-10",
+    "synthetic-11"
+  ],
+  "planPrompt": "Design two compact target-first vocabulary semantic blueprints. Do not generate final wording, distractors, or presentation metadata.\n\n{\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"complexityBand\":3,\"preferredScenarioCategories\":[\"WORK\"],\"refillAttempt\":2,\"rejectedReasons\":[\"synthetic-4\",\"synthetic-5\",\"synthetic-6\",\"synthetic-7\",\"synthetic-8\",\"synthetic-9\",\"synthetic-10\",\"synthetic-11\"]}",
+  "repairPrompt": "Repair this rejected item once. Strengthen the context or replace distractors, but preserve the approved target and design identity.\n\n{\"selectionPolicy\":\"UNIQUE_ANSWER\",\"design\":{\"designId\":\"A\",\"targetExpression\":\"first\",\"targetMeaning\":\"Synthetic meaning\",\"semanticConstraint\":\"Synthetic contrast\",\"scenarioCategory\":\"WORK\",\"communicativeIntent\":\"DESCRIBE\"},\"candidate\":{\"domain\":\"VOCABULARY\",\"itemType\":\"VOCAB_CONTEXT_CHOICE\",\"complexityBand\":3,\"instruction\":\"Choose the expression that best fits the context.\",\"instructionLanguage\":\"en\",\"answerMode\":\"CHOICE\",\"answerLanguage\":null,\"promptText\":\"Synthetic ____ example.\",\"options\":[{\"key\":\"A\",\"text\":\"first\"},{\"key\":\"B\",\"text\":\"second\"},{\"key\":\"C\",\"text\":\"third\"},{\"key\":\"D\",\"text\":\"fourth\"}],\"internalAnswerKey\":{\"correctOptionKey\":\"A\",\"correctOrder\":[]},\"choiceQualityAudit\":null,\"generationPlanId\":\"A\",\"referencePayload\":{\"sourceText\":null,\"referenceMeanings\":[],\"keyMeaningUnits\":[],\"referenceText\":null,\"translationSourceText\":null,\"emphasisText\":null,\"readingPassage\":null,\"readingQuestion\":null,\"listeningQuestion\":null,\"providedFacts\":[\"Synthetic fact one\",\"Synthetic fact two\"],\"requiredIntents\":[\"Ask politely\",\"Give a reason\"],\"responseConstraints\":[\"Use two sentences\"]},\"diversityMetadata\":{\"scenarioCategory\":\"WORK\",\"communicativeIntent\":\"DESCRIBE\",\"taskArchetype\":\"synthetic\",\"grammarFocusCodes\":[],\"lexicalFocusCodes\":[],\"semanticSummary\":\"Synthetic task\",\"requiresBackgroundKnowledge\":false,\"contentHash\":null,\"similarityKey\":null},\"maxAnswerLength\":null,\"maxAudioSeconds\":null},\"verification\":{\"verifiable\":true,\"plausibleOptionKeys\":[\"A\",\"B\"],\"nearEquivalentOptionKeys\":[],\"bestOptionKey\":\"A\",\"bestOptionAdvantage\":\"CLEAR\"}}"
+}

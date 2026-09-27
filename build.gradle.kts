@@ -43,6 +43,10 @@ dependencies {
     implementation(libs.hikari)
     implementation(libs.mysql.connector)
 
+    // 기존 Core와 같은 고정 SDK로 Speaking의 S3 호환 저장 경계를 이행한다.
+    implementation(platform("software.amazon.awssdk:bom:2.46.21"))
+    implementation("software.amazon.awssdk:s3")
+
     implementation(libs.logback.classic)
 
     testImplementation(kotlin("test-junit"))
@@ -56,7 +60,54 @@ tasks.withType<Test>().configureEach {
 }
 
 tasks.test {
-    exclude("**/DatabaseMigrationIntegrationTest*", "**/SettingsPersistenceIntegrationTest*", "**/SettingsFeatureIntegrationTest*", "**/SettingsCutoverIntegrationTest*", "**/KeywordCatalogIntegrationTest*", "**/ResultJournalIntegrationTest*", "**/LevelTestPersistenceIntegrationTest*", "**/GrowthPersistenceIntegrationTest*")
+    exclude("**/LevelTestHttpDatabaseIntegrationTest*")
+    exclude("**/SpeakingConversationHttpIntegrationTest*")
+    exclude("**/SpeakingEvaluationHttpIntegrationTest*")
+    exclude("**/DatabaseMigrationIntegrationTest*", "**/SettingsPersistenceIntegrationTest*", "**/SettingsFeatureIntegrationTest*", "**/SettingsCutoverIntegrationTest*", "**/KeywordCatalogIntegrationTest*", "**/LevelTestPersistenceIntegrationTest*", "**/GrowthPersistenceIntegrationTest*", "**/WritingSchemaIntegrationTest*", "**/WritingSetStateIntegrationTest*", "**/PracticeStateIntegrationTest*", "**/SpeakingStateIntegrationTest*", "**/ListeningStateIntegrationTest*", "**/ModelExecutionHttpIntegrationTest*", "**/ListeningSpeechHttpIntegrationTest*", "**/LevelEvaluationHttpIntegrationTest*", "**/WritingHttpDatabaseIntegrationTest*")
+}
+
+tasks.register<Test>("aiHttpIntegrationTest") {
+    group = "verification"
+    description = "명시적으로 실행한 테스트 전용 Python AI HTTP 서버와 LL adapter 계약을 검증합니다."
+    testClassesDirs = sourceSets["test"].output.classesDirs
+    classpath = sourceSets["test"].runtimeClasspath
+    include("**/ModelExecutionHttpIntegrationTest*", "**/ListeningSpeechHttpIntegrationTest*", "**/LevelEvaluationHttpIntegrationTest*")
+    include("**/SpeakingConversationHttpIntegrationTest*")
+    include("**/SpeakingEvaluationHttpIntegrationTest*")
+    outputs.upToDateWhen { false }
+    doFirst {
+        require(!System.getenv("LL_TEST_AI_URL").isNullOrEmpty()) {
+            "LL_TEST_AI_URL must point to the local test-only Python AI server."
+        }
+    }
+}
+
+tasks.register<Test>("writingHttpDatabaseIntegrationTest") {
+    group = "verification"
+    description = "로컬 MySQL 및 테스트 전용 Python Provider를 통한 Writing 평가 상태 경로를 검증합니다."
+    testClassesDirs = sourceSets["test"].output.classesDirs
+    classpath = sourceSets["test"].runtimeClasspath
+    include("**/WritingHttpDatabaseIntegrationTest*")
+    outputs.upToDateWhen { false }
+    doFirst {
+        listOf("LL_TEST_AI_URL", "LL_TEST_MYSQL_URL", "LL_TEST_MYSQL_USERNAME", "LL_TEST_MYSQL_PASSWORD").forEach { name ->
+            require(!System.getenv(name).isNullOrEmpty()) { "$name must be set for writingHttpDatabaseIntegrationTest." }
+        }
+    }
+}
+
+tasks.register<Test>("levelTestHttpDatabaseIntegrationTest") {
+    group = "verification"
+    description = "실제 Python 범용 HTTP와 로컬 MySQL을 사용하는 Level Test 전체 업무 경로를 검증합니다."
+    testClassesDirs = sourceSets["test"].output.classesDirs
+    classpath = sourceSets["test"].runtimeClasspath
+    include("**/LevelTestHttpDatabaseIntegrationTest*")
+    outputs.upToDateWhen { false }
+    doFirst {
+        listOf("LL_TEST_AI_URL", "LL_TEST_MYSQL_URL", "LL_TEST_MYSQL_USERNAME", "LL_TEST_MYSQL_PASSWORD").forEach { name ->
+            require(!System.getenv(name).isNullOrEmpty()) { "$name must be set for levelTestHttpDatabaseIntegrationTest." }
+        }
+    }
 }
 
 // 명시적으로 실행할 때만 MySQL을 사용한다. 일반 test/check에는 포함하지 않는다.
@@ -66,7 +117,7 @@ tasks.register<Test>("databaseIntegrationTest") {
     description = "로컬 임시 DB에서 migration, Settings와 Keyword 저장·동시성을 검증합니다."
     testClassesDirs = sourceSets["test"].output.classesDirs
     classpath = sourceSets["test"].runtimeClasspath
-    include("**/DatabaseMigrationIntegrationTest*", "**/SettingsPersistenceIntegrationTest*", "**/SettingsFeatureIntegrationTest*", "**/SettingsCutoverIntegrationTest*", "**/KeywordCatalogIntegrationTest*", "**/ResultJournalIntegrationTest*", "**/LevelTestPersistenceIntegrationTest*", "**/GrowthPersistenceIntegrationTest*")
+    include("**/DatabaseMigrationIntegrationTest*", "**/SettingsPersistenceIntegrationTest*", "**/SettingsFeatureIntegrationTest*", "**/SettingsCutoverIntegrationTest*", "**/KeywordCatalogIntegrationTest*", "**/LevelTestPersistenceIntegrationTest*", "**/GrowthPersistenceIntegrationTest*", "**/WritingSchemaIntegrationTest*", "**/WritingSetStateIntegrationTest*", "**/PracticeStateIntegrationTest*", "**/SpeakingStateIntegrationTest*", "**/ListeningStateIntegrationTest*")
     shouldRunAfter(tasks.test)
     outputs.upToDateWhen { false }
     doFirst {

@@ -1,0 +1,70 @@
+{
+  "type": "object",
+  "properties": {
+    "passageId": {
+      "type": "string"
+    },
+    "passageText": {
+      "type": "string"
+    },
+    "inferenceClueQuote": {
+      "type": "string"
+    },
+    "unstatedInference": {
+      "type": "string"
+    },
+    "questionPlans": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "globalOrder": {
+            "type": "integer"
+          },
+          "skillTag": {
+            "type": "string"
+          },
+          "difficulty": {
+            "type": "string",
+            "enum": [
+              "EASIER",
+              "CURRENT",
+              "CHALLENGE"
+            ]
+          },
+          "complexityBand": {
+            "type": "integer"
+          },
+          "clueQuote": {
+            "type": "string"
+          },
+          "questionFocus": {
+            "type": "string"
+          },
+          "unstatedInference": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "globalOrder",
+          "skillTag",
+          "difficulty",
+          "complexityBand",
+          "clueQuote",
+          "questionFocus",
+          "unstatedInference"
+        ]
+      }
+    }
+  },
+  "required": [
+    "passageId",
+    "passageText",
+    "inferenceClueQuote",
+    "unstatedInference",
+    "questionPlans"
+  ]
+}

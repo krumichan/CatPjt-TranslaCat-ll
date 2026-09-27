@@ -1,0 +1,1010 @@
+[ {
+  "growth" : [ ],
+  "kind" : "trend",
+  "request" : {
+    "source" : "ALL",
+    "sampleCount" : 10,
+    "confidence" : 0.9,
+    "collectingData" : true,
+    "metrics" : { }
+  },
+  "ability" : {
+    "overall" : null,
+    "confidence" : "DATA_COLLECTING",
+    "measuredMetricCount" : 0,
+    "totalMetricCount" : 10,
+    "groups" : [ ],
+    "metrics" : [ ]
+  },
+  "name" : "metrics-0"
+}, {
+  "growth" : [ {
+    "metric" : "MEANING",
+    "source" : "ALL",
+    "taskType" : null,
+    "previousAverage" : 60.0,
+    "recentAverage" : 80.0,
+    "delta" : 20.0,
+    "previousSampleCount" : 5,
+    "recentSampleCount" : 5
+  } ],
+  "kind" : "trend",
+  "request" : {
+    "source" : "ALL",
+    "sampleCount" : 10,
+    "confidence" : 0.9,
+    "collectingData" : false,
+    "metrics" : {
+      "MEANING" : [ {
+        "date" : "2026-09-01",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-02",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-03",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-04",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-05",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-06",
+        "score" : 80.0
+      }, {
+        "date" : "2026-09-07",
+        "score" : 80.0
+      }, {
+        "date" : "2026-09-08",
+        "score" : 80.0
+      }, {
+        "date" : "2026-09-09",
+        "score" : 80.0
+      }, {
+        "date" : "2026-09-10",
+        "score" : 80.0
+      } ]
+    }
+  },
+  "ability" : {
+    "overall" : 80.0,
+    "confidence" : "LOW",
+    "measuredMetricCount" : 1,
+    "totalMetricCount" : 10,
+    "groups" : [ {
+      "group" : "COMPREHENSION",
+      "score" : 80.0,
+      "measuredMetricCount" : 1
+    } ],
+    "metrics" : [ {
+      "metric" : "MEANING",
+      "score" : 80.0,
+      "sampleCount" : 10,
+      "confidence" : "HIGH",
+      "collectingData" : false
+    } ]
+  },
+  "name" : "metrics-1"
+}, {
+  "growth" : [ {
+    "metric" : "MEANING",
+    "source" : "ALL",
+    "taskType" : null,
+    "previousAverage" : 60.0,
+    "recentAverage" : 80.0,
+    "delta" : 20.0,
+    "previousSampleCount" : 5,
+    "recentSampleCount" : 5
+  }, {
+    "metric" : "GRAMMAR",
+    "source" : "ALL",
+    "taskType" : null,
+    "previousAverage" : 60.0,
+    "recentAverage" : 80.0,
+    "delta" : 20.0,
+    "previousSampleCount" : 5,
+    "recentSampleCount" : 5
+  }, {
+    "metric" : "VOCABULARY",
+    "source" : "ALL",
+    "taskType" : null,
+    "previousAverage" : 60.0,
+    "recentAverage" : 80.0,
+    "delta" : 20.0,
+    "previousSampleCount" : 5,
+    "recentSampleCount" : 5
+  }, {
+    "metric" : "NATURALNESS",
+    "source" : "ALL",
+    "taskType" : null,
+    "previousAverage" : 60.0,
+    "recentAverage" : 80.0,
+    "delta" : 20.0,
+    "previousSampleCount" : 5,
+    "recentSampleCount" : 5
+  }, {
+    "metric" : "EXPRESSION",
+    "source" : "ALL",
+    "taskType" : null,
+    "previousAverage" : 60.0,
+    "recentAverage" : 80.0,
+    "delta" : 20.0,
+    "previousSampleCount" : 5,
+    "recentSampleCount" : 5
+  } ],
+  "kind" : "trend",
+  "request" : {
+    "source" : "ALL",
+    "sampleCount" : 10,
+    "confidence" : 0.9,
+    "collectingData" : false,
+    "metrics" : {
+      "MEANING" : [ {
+        "date" : "2026-09-01",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-02",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-03",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-04",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-05",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-06",
+        "score" : 80.0
+      }, {
+        "date" : "2026-09-07",
+        "score" : 80.0
+      }, {
+        "date" : "2026-09-08",
+        "score" : 80.0
+      }, {
+        "date" : "2026-09-09",
+        "score" : 80.0
+      }, {
+        "date" : "2026-09-10",
+        "score" : 80.0
+      } ],
+      "GRAMMAR" : [ {
+        "date" : "2026-09-01",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-02",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-03",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-04",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-05",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-06",
+        "score" : 80.0
+      }, {
+        "date" : "2026-09-07",
+        "score" : 80.0
+      }, {
+        "date" : "2026-09-08",
+        "score" : 80.0
+      }, {
+        "date" : "2026-09-09",
+        "score" : 80.0
+      }, {
+        "date" : "2026-09-10",
+        "score" : 80.0
+      } ],
+      "VOCABULARY" : [ {
+        "date" : "2026-09-01",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-02",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-03",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-04",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-05",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-06",
+        "score" : 80.0
+      }, {
+        "date" : "2026-09-07",
+        "score" : 80.0
+      }, {
+        "date" : "2026-09-08",
+        "score" : 80.0
+      }, {
+        "date" : "2026-09-09",
+        "score" : 80.0
+      }, {
+        "date" : "2026-09-10",
+        "score" : 80.0
+      } ],
+      "NATURALNESS" : [ {
+        "date" : "2026-09-01",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-02",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-03",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-04",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-05",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-06",
+        "score" : 80.0
+      }, {
+        "date" : "2026-09-07",
+        "score" : 80.0
+      }, {
+        "date" : "2026-09-08",
+        "score" : 80.0
+      }, {
+        "date" : "2026-09-09",
+        "score" : 80.0
+      }, {
+        "date" : "2026-09-10",
+        "score" : 80.0
+      } ],
+      "EXPRESSION" : [ {
+        "date" : "2026-09-01",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-02",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-03",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-04",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-05",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-06",
+        "score" : 80.0
+      }, {
+        "date" : "2026-09-07",
+        "score" : 80.0
+      }, {
+        "date" : "2026-09-08",
+        "score" : 80.0
+      }, {
+        "date" : "2026-09-09",
+        "score" : 80.0
+      }, {
+        "date" : "2026-09-10",
+        "score" : 80.0
+      } ]
+    }
+  },
+  "ability" : {
+    "overall" : 80.0,
+    "confidence" : "MEDIUM",
+    "measuredMetricCount" : 5,
+    "totalMetricCount" : 10,
+    "groups" : [ {
+      "group" : "EXPRESSION",
+      "score" : 80.0,
+      "measuredMetricCount" : 1
+    }, {
+      "group" : "ACCURACY",
+      "score" : 80.0,
+      "measuredMetricCount" : 2
+    }, {
+      "group" : "COMPREHENSION",
+      "score" : 80.0,
+      "measuredMetricCount" : 2
+    } ],
+    "metrics" : [ {
+      "metric" : "EXPRESSION",
+      "score" : 80.0,
+      "sampleCount" : 10,
+      "confidence" : "HIGH",
+      "collectingData" : false
+    }, {
+      "metric" : "GRAMMAR",
+      "score" : 80.0,
+      "sampleCount" : 10,
+      "confidence" : "HIGH",
+      "collectingData" : false
+    }, {
+      "metric" : "MEANING",
+      "score" : 80.0,
+      "sampleCount" : 10,
+      "confidence" : "HIGH",
+      "collectingData" : false
+    }, {
+      "metric" : "NATURALNESS",
+      "score" : 80.0,
+      "sampleCount" : 10,
+      "confidence" : "HIGH",
+      "collectingData" : false
+    }, {
+      "metric" : "VOCABULARY",
+      "score" : 80.0,
+      "sampleCount" : 10,
+      "confidence" : "HIGH",
+      "collectingData" : false
+    } ]
+  },
+  "name" : "metrics-5"
+}, {
+  "growth" : [ {
+    "metric" : "MEANING",
+    "source" : "ALL",
+    "taskType" : null,
+    "previousAverage" : 60.0,
+    "recentAverage" : 80.0,
+    "delta" : 20.0,
+    "previousSampleCount" : 5,
+    "recentSampleCount" : 5
+  }, {
+    "metric" : "GRAMMAR",
+    "source" : "ALL",
+    "taskType" : null,
+    "previousAverage" : 60.0,
+    "recentAverage" : 80.0,
+    "delta" : 20.0,
+    "previousSampleCount" : 5,
+    "recentSampleCount" : 5
+  }, {
+    "metric" : "VOCABULARY",
+    "source" : "ALL",
+    "taskType" : null,
+    "previousAverage" : 60.0,
+    "recentAverage" : 80.0,
+    "delta" : 20.0,
+    "previousSampleCount" : 5,
+    "recentSampleCount" : 5
+  }, {
+    "metric" : "NATURALNESS",
+    "source" : "ALL",
+    "taskType" : null,
+    "previousAverage" : 60.0,
+    "recentAverage" : 80.0,
+    "delta" : 20.0,
+    "previousSampleCount" : 5,
+    "recentSampleCount" : 5
+  }, {
+    "metric" : "EXPRESSION",
+    "source" : "ALL",
+    "taskType" : null,
+    "previousAverage" : 60.0,
+    "recentAverage" : 80.0,
+    "delta" : 20.0,
+    "previousSampleCount" : 5,
+    "recentSampleCount" : 5
+  }, {
+    "metric" : "FLUENCY",
+    "source" : "ALL",
+    "taskType" : null,
+    "previousAverage" : 60.0,
+    "recentAverage" : 80.0,
+    "delta" : 20.0,
+    "previousSampleCount" : 5,
+    "recentSampleCount" : 5
+  }, {
+    "metric" : "PRONUNCIATION",
+    "source" : "ALL",
+    "taskType" : null,
+    "previousAverage" : 60.0,
+    "recentAverage" : 80.0,
+    "delta" : 20.0,
+    "previousSampleCount" : 5,
+    "recentSampleCount" : 5
+  }, {
+    "metric" : "INTERACTION",
+    "source" : "ALL",
+    "taskType" : null,
+    "previousAverage" : 60.0,
+    "recentAverage" : 80.0,
+    "delta" : 20.0,
+    "previousSampleCount" : 5,
+    "recentSampleCount" : 5
+  } ],
+  "kind" : "trend",
+  "request" : {
+    "source" : "ALL",
+    "sampleCount" : 10,
+    "confidence" : 0.9,
+    "collectingData" : false,
+    "metrics" : {
+      "MEANING" : [ {
+        "date" : "2026-09-01",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-02",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-03",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-04",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-05",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-06",
+        "score" : 80.0
+      }, {
+        "date" : "2026-09-07",
+        "score" : 80.0
+      }, {
+        "date" : "2026-09-08",
+        "score" : 80.0
+      }, {
+        "date" : "2026-09-09",
+        "score" : 80.0
+      }, {
+        "date" : "2026-09-10",
+        "score" : 80.0
+      } ],
+      "GRAMMAR" : [ {
+        "date" : "2026-09-01",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-02",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-03",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-04",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-05",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-06",
+        "score" : 80.0
+      }, {
+        "date" : "2026-09-07",
+        "score" : 80.0
+      }, {
+        "date" : "2026-09-08",
+        "score" : 80.0
+      }, {
+        "date" : "2026-09-09",
+        "score" : 80.0
+      }, {
+        "date" : "2026-09-10",
+        "score" : 80.0
+      } ],
+      "VOCABULARY" : [ {
+        "date" : "2026-09-01",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-02",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-03",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-04",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-05",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-06",
+        "score" : 80.0
+      }, {
+        "date" : "2026-09-07",
+        "score" : 80.0
+      }, {
+        "date" : "2026-09-08",
+        "score" : 80.0
+      }, {
+        "date" : "2026-09-09",
+        "score" : 80.0
+      }, {
+        "date" : "2026-09-10",
+        "score" : 80.0
+      } ],
+      "NATURALNESS" : [ {
+        "date" : "2026-09-01",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-02",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-03",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-04",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-05",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-06",
+        "score" : 80.0
+      }, {
+        "date" : "2026-09-07",
+        "score" : 80.0
+      }, {
+        "date" : "2026-09-08",
+        "score" : 80.0
+      }, {
+        "date" : "2026-09-09",
+        "score" : 80.0
+      }, {
+        "date" : "2026-09-10",
+        "score" : 80.0
+      } ],
+      "EXPRESSION" : [ {
+        "date" : "2026-09-01",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-02",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-03",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-04",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-05",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-06",
+        "score" : 80.0
+      }, {
+        "date" : "2026-09-07",
+        "score" : 80.0
+      }, {
+        "date" : "2026-09-08",
+        "score" : 80.0
+      }, {
+        "date" : "2026-09-09",
+        "score" : 80.0
+      }, {
+        "date" : "2026-09-10",
+        "score" : 80.0
+      } ],
+      "FLUENCY" : [ {
+        "date" : "2026-09-01",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-02",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-03",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-04",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-05",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-06",
+        "score" : 80.0
+      }, {
+        "date" : "2026-09-07",
+        "score" : 80.0
+      }, {
+        "date" : "2026-09-08",
+        "score" : 80.0
+      }, {
+        "date" : "2026-09-09",
+        "score" : 80.0
+      }, {
+        "date" : "2026-09-10",
+        "score" : 80.0
+      } ],
+      "PRONUNCIATION" : [ {
+        "date" : "2026-09-01",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-02",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-03",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-04",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-05",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-06",
+        "score" : 80.0
+      }, {
+        "date" : "2026-09-07",
+        "score" : 80.0
+      }, {
+        "date" : "2026-09-08",
+        "score" : 80.0
+      }, {
+        "date" : "2026-09-09",
+        "score" : 80.0
+      }, {
+        "date" : "2026-09-10",
+        "score" : 80.0
+      } ],
+      "INTERACTION" : [ {
+        "date" : "2026-09-01",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-02",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-03",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-04",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-05",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-06",
+        "score" : 80.0
+      }, {
+        "date" : "2026-09-07",
+        "score" : 80.0
+      }, {
+        "date" : "2026-09-08",
+        "score" : 80.0
+      }, {
+        "date" : "2026-09-09",
+        "score" : 80.0
+      }, {
+        "date" : "2026-09-10",
+        "score" : 80.0
+      } ]
+    }
+  },
+  "ability" : {
+    "overall" : 80.0,
+    "confidence" : "HIGH",
+    "measuredMetricCount" : 8,
+    "totalMetricCount" : 10,
+    "groups" : [ {
+      "group" : "EXPRESSION",
+      "score" : 80.0,
+      "measuredMetricCount" : 1
+    }, {
+      "group" : "SPEECH",
+      "score" : 80.0,
+      "measuredMetricCount" : 3
+    }, {
+      "group" : "ACCURACY",
+      "score" : 80.0,
+      "measuredMetricCount" : 2
+    }, {
+      "group" : "COMPREHENSION",
+      "score" : 80.0,
+      "measuredMetricCount" : 2
+    } ],
+    "metrics" : [ {
+      "metric" : "EXPRESSION",
+      "score" : 80.0,
+      "sampleCount" : 10,
+      "confidence" : "HIGH",
+      "collectingData" : false
+    }, {
+      "metric" : "FLUENCY",
+      "score" : 80.0,
+      "sampleCount" : 10,
+      "confidence" : "HIGH",
+      "collectingData" : false
+    }, {
+      "metric" : "GRAMMAR",
+      "score" : 80.0,
+      "sampleCount" : 10,
+      "confidence" : "HIGH",
+      "collectingData" : false
+    }, {
+      "metric" : "INTERACTION",
+      "score" : 80.0,
+      "sampleCount" : 10,
+      "confidence" : "HIGH",
+      "collectingData" : false
+    }, {
+      "metric" : "MEANING",
+      "score" : 80.0,
+      "sampleCount" : 10,
+      "confidence" : "HIGH",
+      "collectingData" : false
+    }, {
+      "metric" : "NATURALNESS",
+      "score" : 80.0,
+      "sampleCount" : 10,
+      "confidence" : "HIGH",
+      "collectingData" : false
+    }, {
+      "metric" : "PRONUNCIATION",
+      "score" : 80.0,
+      "sampleCount" : 10,
+      "confidence" : "HIGH",
+      "collectingData" : false
+    }, {
+      "metric" : "VOCABULARY",
+      "score" : 80.0,
+      "sampleCount" : 10,
+      "confidence" : "HIGH",
+      "collectingData" : false
+    } ]
+  },
+  "name" : "metrics-8"
+}, {
+  "growth" : [ ],
+  "kind" : "trend",
+  "request" : {
+    "source" : "SPEAKING",
+    "sampleCount" : 5,
+    "confidence" : 0.9,
+    "collectingData" : false,
+    "metrics" : {
+      "GRAMMAR" : [ {
+        "date" : "2026-09-01",
+        "score" : 65.0
+      }, {
+        "date" : "2026-09-02",
+        "score" : 65.0
+      }, {
+        "date" : "2026-09-03",
+        "score" : 65.0
+      }, {
+        "date" : "2026-09-04",
+        "score" : 65.0
+      }, {
+        "date" : "2026-09-05",
+        "score" : 65.0
+      } ]
+    }
+  },
+  "ability" : {
+    "overall" : 65.0,
+    "confidence" : "LOW",
+    "measuredMetricCount" : 1,
+    "totalMetricCount" : 10,
+    "groups" : [ {
+      "group" : "ACCURACY",
+      "score" : 65.0,
+      "measuredMetricCount" : 1
+    } ],
+    "metrics" : [ {
+      "metric" : "GRAMMAR",
+      "score" : 65.0,
+      "sampleCount" : 5,
+      "confidence" : "MEDIUM",
+      "collectingData" : false
+    } ]
+  },
+  "name" : "growth-threshold-5"
+}, {
+  "growth" : [ ],
+  "kind" : "trend",
+  "request" : {
+    "source" : "SPEAKING",
+    "sampleCount" : 6,
+    "confidence" : 0.9,
+    "collectingData" : false,
+    "metrics" : {
+      "GRAMMAR" : [ {
+        "date" : "2026-09-01",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-02",
+        "score" : 65.0
+      }, {
+        "date" : "2026-09-03",
+        "score" : 65.0
+      }, {
+        "date" : "2026-09-04",
+        "score" : 65.0
+      }, {
+        "date" : "2026-09-05",
+        "score" : 65.0
+      }, {
+        "date" : "2026-09-06",
+        "score" : 65.0
+      } ]
+    }
+  },
+  "ability" : {
+    "overall" : 65.0,
+    "confidence" : "LOW",
+    "measuredMetricCount" : 1,
+    "totalMetricCount" : 10,
+    "groups" : [ {
+      "group" : "ACCURACY",
+      "score" : 65.0,
+      "measuredMetricCount" : 1
+    } ],
+    "metrics" : [ {
+      "metric" : "GRAMMAR",
+      "score" : 65.0,
+      "sampleCount" : 6,
+      "confidence" : "MEDIUM",
+      "collectingData" : false
+    } ]
+  },
+  "name" : "growth-threshold-6"
+}, {
+  "growth" : [ {
+    "metric" : "GRAMMAR",
+    "source" : "SPEAKING",
+    "taskType" : null,
+    "previousAverage" : 60.0,
+    "recentAverage" : 65.0,
+    "delta" : 5.0,
+    "previousSampleCount" : 3,
+    "recentSampleCount" : 5
+  } ],
+  "kind" : "trend",
+  "request" : {
+    "source" : "SPEAKING",
+    "sampleCount" : 8,
+    "confidence" : 0.9,
+    "collectingData" : false,
+    "metrics" : {
+      "GRAMMAR" : [ {
+        "date" : "2026-09-01",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-02",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-03",
+        "score" : 60.0
+      }, {
+        "date" : "2026-09-04",
+        "score" : 65.0
+      }, {
+        "date" : "2026-09-05",
+        "score" : 65.0
+      }, {
+        "date" : "2026-09-06",
+        "score" : 65.0
+      }, {
+        "date" : "2026-09-07",
+        "score" : 65.0
+      }, {
+        "date" : "2026-09-08",
+        "score" : 65.0
+      } ]
+    }
+  },
+  "ability" : {
+    "overall" : 65.0,
+    "confidence" : "LOW",
+    "measuredMetricCount" : 1,
+    "totalMetricCount" : 10,
+    "groups" : [ {
+      "group" : "ACCURACY",
+      "score" : 65.0,
+      "measuredMetricCount" : 1
+    } ],
+    "metrics" : [ {
+      "metric" : "GRAMMAR",
+      "score" : 65.0,
+      "sampleCount" : 8,
+      "confidence" : "MEDIUM",
+      "collectingData" : false
+    } ]
+  },
+  "name" : "growth-threshold-8"
+}, {
+  "name" : "listening-weighted",
+  "growth" : [ {
+    "metric" : "MEANING",
+    "source" : "LISTENING",
+    "taskType" : "DICTATION",
+    "previousAverage" : 60.0,
+    "recentAverage" : 65.0,
+    "delta" : 5.0,
+    "previousSampleCount" : 3,
+    "recentSampleCount" : 15
+  } ],
+  "profiles" : [ {
+    "metric" : "MEANING",
+    "score" : 82.255,
+    "sampleCount" : 2,
+    "confidence" : "LOW",
+    "weaknessState" : "ACTIVE",
+    "growthActive" : false,
+    "growthDelta" : null
+  }, {
+    "metric" : "FLUENCY",
+    "score" : 75.0,
+    "sampleCount" : 10,
+    "confidence" : "HIGH",
+    "weaknessState" : "RESOLVED",
+    "growthActive" : true,
+    "growthDelta" : 6.0
+  } ],
+  "ability" : {
+    "overall" : 78.63,
+    "confidence" : "LOW",
+    "measuredMetricCount" : 2,
+    "totalMetricCount" : 10,
+    "groups" : [ {
+      "group" : "SPEECH",
+      "score" : 75.0,
+      "measuredMetricCount" : 1
+    }, {
+      "group" : "COMPREHENSION",
+      "score" : 82.26,
+      "measuredMetricCount" : 1
+    } ],
+    "metrics" : [ {
+      "metric" : "FLUENCY",
+      "score" : 75.0,
+      "sampleCount" : 10,
+      "confidence" : "HIGH",
+      "collectingData" : false
+    }, {
+      "metric" : "MEANING",
+      "score" : 82.26,
+      "sampleCount" : 2,
+      "confidence" : "LOW",
+      "collectingData" : true
+    } ]
+  },
+  "kind" : "listening",
+  "trends" : [ {
+    "taskType" : "DICTATION",
+    "metric" : "MEANING",
+    "date" : "2026-09-01",
+    "averageScore" : 60.0,
+    "sampleCount" : 3
+  }, {
+    "taskType" : "DICTATION",
+    "metric" : "MEANING",
+    "date" : "2026-09-02",
+    "averageScore" : 65.0,
+    "sampleCount" : 3
+  }, {
+    "taskType" : "DICTATION",
+    "metric" : "MEANING",
+    "date" : "2026-09-03",
+    "averageScore" : 65.0,
+    "sampleCount" : 3
+  }, {
+    "taskType" : "DICTATION",
+    "metric" : "MEANING",
+    "date" : "2026-09-04",
+    "averageScore" : 65.0,
+    "sampleCount" : 3
+  }, {
+    "taskType" : "DICTATION",
+    "metric" : "MEANING",
+    "date" : "2026-09-05",
+    "averageScore" : 65.0,
+    "sampleCount" : 3
+  }, {
+    "taskType" : "DICTATION",
+    "metric" : "MEANING",
+    "date" : "2026-09-06",
+    "averageScore" : 65.0,
+    "sampleCount" : 3
+  } ]
+} ]

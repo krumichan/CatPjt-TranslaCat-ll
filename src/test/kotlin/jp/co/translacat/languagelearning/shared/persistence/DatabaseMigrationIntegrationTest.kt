@@ -16,7 +16,7 @@ class DatabaseMigrationIntegrationTest {
     @Test
     fun `fresh database has all source columns exact seeds and no learners`() = withScratchDatabase { db ->
         DatabaseFactory(db.settings()).use { factory ->
-            assertEquals(CurrentSchema.VERSION, factory.migrationReport.migrationsExecuted)
+            assertEquals(CurrentSchema.MIGRATION_COUNT, factory.migrationReport.migrationsExecuted)
             assertEquals(CurrentSchema.VERSION, factory.migrationReport.schemaVersion.toInt())
             db.connect().use { connection ->
                 assertEquals(CurrentSchema.TABLE_COUNT, countTables(connection))
@@ -59,7 +59,7 @@ class DatabaseMigrationIntegrationTest {
                 ),
             )
             assertEquals(
-                CurrentSchema.VERSION.toLong(),
+                CurrentSchema.MIGRATION_COUNT.toLong(),
                 scalar(connection, "SELECT COUNT(*) FROM flyway_schema_history WHERE success=1"),
             )
         }

@@ -1,0 +1,23 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "explanation": {
+      "maxLength": 1000,
+      "minLength": 1,
+      "title": "Explanation",
+      "type": "string"
+    },
+    "ctaLabel": {
+      "maxLength": 80,
+      "minLength": 1,
+      "title": "Ctalabel",
+      "type": "string"
+    }
+  },
+  "required": [
+    "explanation",
+    "ctaLabel"
+  ],
+  "title": "RecommendationExplanationPayload",
+  "type": "object"
+}

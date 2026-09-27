@@ -1,0 +1,1094 @@
+{
+  "FREE.B1.A1": {
+    "blueprintId": "FREE.B1.DIRECT_MESSAGE",
+    "enforcement": "Independent review of visible content; not regex, word count or generated tags.",
+    "productionAnchor": "FOUNDATION: one direct familiar statement/question; basic words and simple production.",
+    "renderingRule": "Ask for these language relationships in the learner's own or explicitly imagined content. Do not supply mandatory factual claims or turn this into guided translation. State the communicative demands visibly; sophistication the learner might voluntarily add does not count as task difficulty. Keep all guidance arrays empty.",
+    "semanticRequirements": [
+      {
+        "code": "DIRECT_PROPOSITION",
+        "demand": "Express one concrete familiar fact, preference or question directly."
+      },
+      {
+        "code": "BASIC_PRODUCTION",
+        "demand": "Do not introduce linked exceptions, nuanced stance or hidden obligations."
+      }
+    ],
+    "version": "writing-difficulty-control-v1"
+  },
+  "FREE.B1.A2": {
+    "blueprintId": "FREE.B1.DIRECT_MESSAGE",
+    "enforcement": "Independent review of visible content; not regex, word count or generated tags.",
+    "productionAnchor": "FOUNDATION: one direct familiar statement/question; basic words and simple production.",
+    "renderingRule": "Ask for these language relationships in the learner's own or explicitly imagined content. Do not supply mandatory factual claims or turn this into guided translation. State the communicative demands visibly; sophistication the learner might voluntarily add does not count as task difficulty. Keep all guidance arrays empty.",
+    "semanticRequirements": [
+      {
+        "code": "DIRECT_PROPOSITION",
+        "demand": "Express one concrete familiar fact, preference or question directly."
+      },
+      {
+        "code": "BASIC_PRODUCTION",
+        "demand": "Do not introduce linked exceptions, nuanced stance or hidden obligations."
+      }
+    ],
+    "version": "writing-difficulty-control-v1"
+  },
+  "FREE.B1.A3": {
+    "blueprintId": "FREE.B1.DIRECT_MESSAGE",
+    "enforcement": "Independent review of visible content; not regex, word count or generated tags.",
+    "productionAnchor": "FOUNDATION: one direct familiar statement/question; basic words and simple production.",
+    "renderingRule": "Ask for these language relationships in the learner's own or explicitly imagined content. Do not supply mandatory factual claims or turn this into guided translation. State the communicative demands visibly; sophistication the learner might voluntarily add does not count as task difficulty. Keep all guidance arrays empty.",
+    "semanticRequirements": [
+      {
+        "code": "DIRECT_PROPOSITION",
+        "demand": "Express one concrete familiar fact, preference or question directly."
+      },
+      {
+        "code": "BASIC_PRODUCTION",
+        "demand": "Do not introduce linked exceptions, nuanced stance or hidden obligations."
+      }
+    ],
+    "version": "writing-difficulty-control-v1"
+  },
+  "FREE.B1.A4": {
+    "blueprintId": "FREE.B1.DIRECT_MESSAGE",
+    "enforcement": "Independent review of visible content; not regex, word count or generated tags.",
+    "productionAnchor": "FOUNDATION: one direct familiar statement/question; basic words and simple production.",
+    "renderingRule": "Ask for these language relationships in the learner's own or explicitly imagined content. Do not supply mandatory factual claims or turn this into guided translation. State the communicative demands visibly; sophistication the learner might voluntarily add does not count as task difficulty. Keep all guidance arrays empty.",
+    "semanticRequirements": [
+      {
+        "code": "DIRECT_PROPOSITION",
+        "demand": "Express one concrete familiar fact, preference or question directly."
+      },
+      {
+        "code": "BASIC_PRODUCTION",
+        "demand": "Do not introduce linked exceptions, nuanced stance or hidden obligations."
+      }
+    ],
+    "version": "writing-difficulty-control-v1"
+  },
+  "FREE.B2.A1": {
+    "blueprintId": "FREE.B2.SIMPLE_LINK",
+    "enforcement": "Independent review of visible content; not regex, word count or generated tags.",
+    "productionAnchor": "BASIC: familiar communication with one simple reason, sequence or ordinary polite request; limited linking.",
+    "renderingRule": "Ask for these language relationships in the learner's own or explicitly imagined content. Do not supply mandatory factual claims or turn this into guided translation. State the communicative demands visibly; sophistication the learner might voluntarily add does not count as task difficulty. Keep all guidance arrays empty.",
+    "semanticRequirements": [
+      {
+        "code": "SINGLE_LINK",
+        "demand": "Use one simple reason or sequence around familiar information."
+      },
+      {
+        "code": "FAMILIAR_REQUEST",
+        "demand": "An ordinary polite request is enough; no indirect stance negotiation."
+      }
+    ],
+    "version": "writing-difficulty-control-v1"
+  },
+  "FREE.B2.A2": {
+    "blueprintId": "FREE.B2.SIMPLE_LINK",
+    "enforcement": "Independent review of visible content; not regex, word count or generated tags.",
+    "productionAnchor": "BASIC: familiar communication with one simple reason, sequence or ordinary polite request; limited linking.",
+    "renderingRule": "Ask for these language relationships in the learner's own or explicitly imagined content. Do not supply mandatory factual claims or turn this into guided translation. State the communicative demands visibly; sophistication the learner might voluntarily add does not count as task difficulty. Keep all guidance arrays empty.",
+    "semanticRequirements": [
+      {
+        "code": "SINGLE_LINK",
+        "demand": "Use one simple reason or sequence around familiar information."
+      },
+      {
+        "code": "FAMILIAR_REQUEST",
+        "demand": "An ordinary polite request is enough; no indirect stance negotiation."
+      }
+    ],
+    "version": "writing-difficulty-control-v1"
+  },
+  "FREE.B2.A3": {
+    "blueprintId": "FREE.B2.SIMPLE_LINK",
+    "enforcement": "Independent review of visible content; not regex, word count or generated tags.",
+    "productionAnchor": "BASIC: familiar communication with one simple reason, sequence or ordinary polite request; limited linking.",
+    "renderingRule": "Ask for these language relationships in the learner's own or explicitly imagined content. Do not supply mandatory factual claims or turn this into guided translation. State the communicative demands visibly; sophistication the learner might voluntarily add does not count as task difficulty. Keep all guidance arrays empty.",
+    "semanticRequirements": [
+      {
+        "code": "SINGLE_LINK",
+        "demand": "Use one simple reason or sequence around familiar information."
+      },
+      {
+        "code": "FAMILIAR_REQUEST",
+        "demand": "An ordinary polite request is enough; no indirect stance negotiation."
+      }
+    ],
+    "version": "writing-difficulty-control-v1"
+  },
+  "FREE.B2.A4": {
+    "blueprintId": "FREE.B2.SIMPLE_LINK",
+    "enforcement": "Independent review of visible content; not regex, word count or generated tags.",
+    "productionAnchor": "BASIC: familiar communication with one simple reason, sequence or ordinary polite request; limited linking.",
+    "renderingRule": "Ask for these language relationships in the learner's own or explicitly imagined content. Do not supply mandatory factual claims or turn this into guided translation. State the communicative demands visibly; sophistication the learner might voluntarily add does not count as task difficulty. Keep all guidance arrays empty.",
+    "semanticRequirements": [
+      {
+        "code": "SINGLE_LINK",
+        "demand": "Use one simple reason or sequence around familiar information."
+      },
+      {
+        "code": "FAMILIAR_REQUEST",
+        "demand": "An ordinary polite request is enough; no indirect stance negotiation."
+      }
+    ],
+    "version": "writing-difficulty-control-v1"
+  },
+  "FREE.B3.A1": {
+    "blueprintId": "FREE.B3.PRACTICAL_EXPLANATION",
+    "enforcement": "Independent review of visible content; not regex, word count or generated tags.",
+    "productionAnchor": "INTERMEDIATE: a connected practical reason, condition or time relation with explicit, straightforward scope and suitable everyday/work register. Ordinary politeness alone does not make this band 4; do not require layered qualifications for this band.",
+    "renderingRule": "Ask for these language relationships in the learner's own or explicitly imagined content. Do not supply mandatory factual claims or turn this into guided translation. State the communicative demands visibly; sophistication the learner might voluntarily add does not count as task difficulty. Keep all guidance arrays empty.",
+    "semanticRequirements": [
+      {
+        "code": "CONNECTED_MESSAGE",
+        "demand": "Connect a practical reason or condition to its consequence or requested action."
+      },
+      {
+        "code": "DIRECT_SCOPE",
+        "demand": "Keep who does what and the condition's scope explicit and straightforward."
+      },
+      {
+        "code": "LIMIT_NUANCE",
+        "demand": "Avoid stacking concessions, evidence limitations and indirect commitments in one task."
+      }
+    ],
+    "version": "writing-difficulty-control-v1"
+  },
+  "FREE.B3.A2": {
+    "blueprintId": "FREE.B3.PRACTICAL_SEQUENCE",
+    "enforcement": "Independent review of visible content; not regex, word count or generated tags.",
+    "productionAnchor": "INTERMEDIATE: a connected practical reason, condition or time relation with explicit, straightforward scope and suitable everyday/work register. Ordinary politeness alone does not make this band 4; do not require layered qualifications for this band.",
+    "renderingRule": "Ask for these language relationships in the learner's own or explicitly imagined content. Do not supply mandatory factual claims or turn this into guided translation. State the communicative demands visibly; sophistication the learner might voluntarily add does not count as task difficulty. Keep all guidance arrays empty.",
+    "semanticRequirements": [
+      {
+        "code": "CONNECTED_MESSAGE",
+        "demand": "Relate timing or a changed condition to a practical explanation or request."
+      },
+      {
+        "code": "DIRECT_SCOPE",
+        "demand": "Use familiar facts and suitable everyday/work politeness, without layered qualifications."
+      }
+    ],
+    "version": "writing-difficulty-control-v1"
+  },
+  "FREE.B3.A3": {
+    "blueprintId": "FREE.B3.PRACTICAL_EXPLANATION",
+    "enforcement": "Independent review of visible content; not regex, word count or generated tags.",
+    "productionAnchor": "INTERMEDIATE: a connected practical reason, condition or time relation with explicit, straightforward scope and suitable everyday/work register. Ordinary politeness alone does not make this band 4; do not require layered qualifications for this band.",
+    "renderingRule": "Ask for these language relationships in the learner's own or explicitly imagined content. Do not supply mandatory factual claims or turn this into guided translation. State the communicative demands visibly; sophistication the learner might voluntarily add does not count as task difficulty. Keep all guidance arrays empty.",
+    "semanticRequirements": [
+      {
+        "code": "CONNECTED_MESSAGE",
+        "demand": "Connect a practical reason or condition to its consequence or requested action."
+      },
+      {
+        "code": "DIRECT_SCOPE",
+        "demand": "Keep who does what and the condition's scope explicit and straightforward."
+      },
+      {
+        "code": "LIMIT_NUANCE",
+        "demand": "Avoid stacking concessions, evidence limitations and indirect commitments in one task."
+      }
+    ],
+    "version": "writing-difficulty-control-v1"
+  },
+  "FREE.B3.A4": {
+    "blueprintId": "FREE.B3.PRACTICAL_SEQUENCE",
+    "enforcement": "Independent review of visible content; not regex, word count or generated tags.",
+    "productionAnchor": "INTERMEDIATE: a connected practical reason, condition or time relation with explicit, straightforward scope and suitable everyday/work register. Ordinary politeness alone does not make this band 4; do not require layered qualifications for this band.",
+    "renderingRule": "Ask for these language relationships in the learner's own or explicitly imagined content. Do not supply mandatory factual claims or turn this into guided translation. State the communicative demands visibly; sophistication the learner might voluntarily add does not count as task difficulty. Keep all guidance arrays empty.",
+    "semanticRequirements": [
+      {
+        "code": "CONNECTED_MESSAGE",
+        "demand": "Relate timing or a changed condition to a practical explanation or request."
+      },
+      {
+        "code": "DIRECT_SCOPE",
+        "demand": "Use familiar facts and suitable everyday/work politeness, without layered qualifications."
+      }
+    ],
+    "version": "writing-difficulty-control-v1"
+  },
+  "FREE.B4.A1": {
+    "blueprintId": "FREE.B4.QUALIFIED_MESSAGE",
+    "enforcement": "Independent review of visible content; not regex, word count or generated tags.",
+    "productionAnchor": "UPPER_INTERMEDIATE: a nuanced condition/concession, indirect request or hedge that needs register-sensitive phrasing. A longer practical request or several independent steps do not by themselves reach band 5.",
+    "renderingRule": "Ask for these language relationships in the learner's own or explicitly imagined content. Do not supply mandatory factual claims or turn this into guided translation. State the communicative demands visibly; sophistication the learner might voluntarily add does not count as task difficulty. Keep all guidance arrays empty.",
+    "semanticRequirements": [
+      {
+        "code": "QUALIFIED_RELATION",
+        "demand": "Express a concession, a hedge or an indirect request with clear logical scope."
+      },
+      {
+        "code": "SUITABLE_REGISTER",
+        "demand": "The message requires context-appropriate phrasing but not specialist knowledge."
+      }
+    ],
+    "version": "writing-difficulty-control-v1"
+  },
+  "FREE.B4.A2": {
+    "blueprintId": "FREE.B4.CONCESSION_REQUEST",
+    "enforcement": "Independent review of visible content; not regex, word count or generated tags.",
+    "productionAnchor": "UPPER_INTERMEDIATE: a nuanced condition/concession, indirect request or hedge that needs register-sensitive phrasing. A longer practical request or several independent steps do not by themselves reach band 5.",
+    "renderingRule": "Ask for these language relationships in the learner's own or explicitly imagined content. Do not supply mandatory factual claims or turn this into guided translation. State the communicative demands visibly; sophistication the learner might voluntarily add does not count as task difficulty. Keep all guidance arrays empty.",
+    "semanticRequirements": [
+      {
+        "code": "QUALIFIED_RELATION",
+        "demand": "Connect a conceded fact to a carefully qualified practical request or explanation."
+      },
+      {
+        "code": "SUITABLE_REGISTER",
+        "demand": "Keep the relations interpretable and avoid relying solely on technical words."
+      }
+    ],
+    "version": "writing-difficulty-control-v1"
+  },
+  "FREE.B4.A3": {
+    "blueprintId": "FREE.B4.QUALIFIED_MESSAGE",
+    "enforcement": "Independent review of visible content; not regex, word count or generated tags.",
+    "productionAnchor": "UPPER_INTERMEDIATE: a nuanced condition/concession, indirect request or hedge that needs register-sensitive phrasing. A longer practical request or several independent steps do not by themselves reach band 5.",
+    "renderingRule": "Ask for these language relationships in the learner's own or explicitly imagined content. Do not supply mandatory factual claims or turn this into guided translation. State the communicative demands visibly; sophistication the learner might voluntarily add does not count as task difficulty. Keep all guidance arrays empty.",
+    "semanticRequirements": [
+      {
+        "code": "QUALIFIED_RELATION",
+        "demand": "Express a concession, a hedge or an indirect request with clear logical scope."
+      },
+      {
+        "code": "SUITABLE_REGISTER",
+        "demand": "The message requires context-appropriate phrasing but not specialist knowledge."
+      }
+    ],
+    "version": "writing-difficulty-control-v1"
+  },
+  "FREE.B4.A4": {
+    "blueprintId": "FREE.B4.CONCESSION_REQUEST",
+    "enforcement": "Independent review of visible content; not regex, word count or generated tags.",
+    "productionAnchor": "UPPER_INTERMEDIATE: a nuanced condition/concession, indirect request or hedge that needs register-sensitive phrasing. A longer practical request or several independent steps do not by themselves reach band 5.",
+    "renderingRule": "Ask for these language relationships in the learner's own or explicitly imagined content. Do not supply mandatory factual claims or turn this into guided translation. State the communicative demands visibly; sophistication the learner might voluntarily add does not count as task difficulty. Keep all guidance arrays empty.",
+    "semanticRequirements": [
+      {
+        "code": "QUALIFIED_RELATION",
+        "demand": "Connect a conceded fact to a carefully qualified practical request or explanation."
+      },
+      {
+        "code": "SUITABLE_REGISTER",
+        "demand": "Keep the relations interpretable and avoid relying solely on technical words."
+      }
+    ],
+    "version": "writing-difficulty-control-v1"
+  },
+  "FREE.B5.A1": {
+    "blueprintId": "FREE.B5.BOUNDED_COMMITMENT",
+    "enforcement": "Independent review of visible content; not regex, word count or generated tags.",
+    "productionAnchor": "ADVANCED: interacting relations whose scope must be preserved together, a precisely bounded stance/claim/commitment, and coherent controlled register. For example, a commitment depends on a condition but is limited by an exception, or evidence supports only a qualified conclusion that constrains a further action. All needed facts must be supplied or freely chosen by the learner as the mode allows. Removing a qualification changes the claim, not just the sentence length. Familiar vocabulary is sufficient; technical knowledge, verbosity and isolated advanced phrases are not evidence of band 5. A short message can qualify if these demands are actually present.",
+    "renderingRule": "Ask for these language relationships in the learner's own or explicitly imagined content. Do not supply mandatory factual claims or turn this into guided translation. State the communicative demands visibly; sophistication the learner might voluntarily add does not count as task difficulty. Keep all guidance arrays empty.",
+    "semanticRequirements": [
+      {
+        "code": "SCOPE_INTERACTION",
+        "demand": "Make a condition and an explicit exception interact in limiting a commitment; a flat list of steps must not preserve the same meaning."
+      },
+      {
+        "code": "PRECISE_STANCE",
+        "demand": "Distinguish what is confirmed from what can only be promised conditionally; removing the qualification must change the speaker's responsibility or claim."
+      },
+      {
+        "code": "COHERENT_REGISTER",
+        "demand": "Express the concession and limited commitment as one coherent, appropriately restrained message. Supply every fact needed; no expert judgment."
+      }
+    ],
+    "version": "writing-difficulty-control-v1"
+  },
+  "FREE.B5.A2": {
+    "blueprintId": "FREE.B5.EVIDENCE_AND_SCOPE",
+    "enforcement": "Independent review of visible content; not regex, word count or generated tags.",
+    "productionAnchor": "ADVANCED: interacting relations whose scope must be preserved together, a precisely bounded stance/claim/commitment, and coherent controlled register. For example, a commitment depends on a condition but is limited by an exception, or evidence supports only a qualified conclusion that constrains a further action. All needed facts must be supplied or freely chosen by the learner as the mode allows. Removing a qualification changes the claim, not just the sentence length. Familiar vocabulary is sufficient; technical knowledge, verbosity and isolated advanced phrases are not evidence of band 5. A short message can qualify if these demands are actually present.",
+    "renderingRule": "Ask for these language relationships in the learner's own or explicitly imagined content. Do not supply mandatory factual claims or turn this into guided translation. State the communicative demands visibly; sophistication the learner might voluntarily add does not count as task difficulty. Keep all guidance arrays empty.",
+    "semanticRequirements": [
+      {
+        "code": "SCOPE_INTERACTION",
+        "demand": "Relate an observed fact to a limited conclusion and a dependent action, while explicitly preserving an exception or limit on that inference."
+      },
+      {
+        "code": "PRECISE_STANCE",
+        "demand": "State why the observation does not justify an unrestricted conclusion; the learner must preserve the narrower claim, not solve a reasoning puzzle."
+      },
+      {
+        "code": "COHERENT_REGISTER",
+        "demand": "Use familiar content with precise qualification and controlled stance, rather than difficult technical nouns or a longer ordinary request."
+      }
+    ],
+    "version": "writing-difficulty-control-v1"
+  },
+  "FREE.B5.A3": {
+    "blueprintId": "FREE.B5.QUALIFIED_CONTRAST",
+    "enforcement": "Independent review of visible content; not regex, word count or generated tags.",
+    "productionAnchor": "ADVANCED: interacting relations whose scope must be preserved together, a precisely bounded stance/claim/commitment, and coherent controlled register. For example, a commitment depends on a condition but is limited by an exception, or evidence supports only a qualified conclusion that constrains a further action. All needed facts must be supplied or freely chosen by the learner as the mode allows. Removing a qualification changes the claim, not just the sentence length. Familiar vocabulary is sufficient; technical knowledge, verbosity and isolated advanced phrases are not evidence of band 5. A short message can qualify if these demands are actually present.",
+    "renderingRule": "Ask for these language relationships in the learner's own or explicitly imagined content. Do not supply mandatory factual claims or turn this into guided translation. State the communicative demands visibly; sophistication the learner might voluntarily add does not count as task difficulty. Keep all guidance arrays empty.",
+    "semanticRequirements": [
+      {
+        "code": "SCOPE_INTERACTION",
+        "demand": "Contrast two stated positions or obligations whose application depends on a shared condition and a clearly delimited exception."
+      },
+      {
+        "code": "PRECISE_STANCE",
+        "demand": "Keep whose commitment applies, when it applies and what remains undecided linguistically explicit; deleting a relation must change that meaning."
+      },
+      {
+        "code": "COHERENT_REGISTER",
+        "demand": "Require precise reference and stance across the connected message, not a correct business strategy, specialist facts or more verbose wording."
+      }
+    ],
+    "version": "writing-difficulty-control-v1"
+  },
+  "FREE.B5.A4": {
+    "blueprintId": "FREE.B5.BOUNDED_COMMITMENT",
+    "enforcement": "Independent review of visible content; not regex, word count or generated tags.",
+    "productionAnchor": "ADVANCED: interacting relations whose scope must be preserved together, a precisely bounded stance/claim/commitment, and coherent controlled register. For example, a commitment depends on a condition but is limited by an exception, or evidence supports only a qualified conclusion that constrains a further action. All needed facts must be supplied or freely chosen by the learner as the mode allows. Removing a qualification changes the claim, not just the sentence length. Familiar vocabulary is sufficient; technical knowledge, verbosity and isolated advanced phrases are not evidence of band 5. A short message can qualify if these demands are actually present.",
+    "renderingRule": "Ask for these language relationships in the learner's own or explicitly imagined content. Do not supply mandatory factual claims or turn this into guided translation. State the communicative demands visibly; sophistication the learner might voluntarily add does not count as task difficulty. Keep all guidance arrays empty.",
+    "semanticRequirements": [
+      {
+        "code": "SCOPE_INTERACTION",
+        "demand": "Make a condition and an explicit exception interact in limiting a commitment; a flat list of steps must not preserve the same meaning."
+      },
+      {
+        "code": "PRECISE_STANCE",
+        "demand": "Distinguish what is confirmed from what can only be promised conditionally; removing the qualification must change the speaker's responsibility or claim."
+      },
+      {
+        "code": "COHERENT_REGISTER",
+        "demand": "Express the concession and limited commitment as one coherent, appropriately restrained message. Supply every fact needed; no expert judgment."
+      }
+    ],
+    "version": "writing-difficulty-control-v1"
+  },
+  "GUIDED.B1.A1": {
+    "blueprintId": "GUIDED.B1.DIRECT_MESSAGE",
+    "enforcement": "Independent review of visible content; not regex, word count or generated tags.",
+    "productionAnchor": "FOUNDATION: one direct familiar statement/question; basic words and simple production.",
+    "renderingRule": "Supply every necessary fact in providedFacts and make the intended language relationships explicit in requiredIntents/responseConstraints. Do not increase specialist reasoning burden or count metadata entries as completed communicative intents.",
+    "semanticRequirements": [
+      {
+        "code": "DIRECT_PROPOSITION",
+        "demand": "Express one concrete familiar fact, preference or question directly."
+      },
+      {
+        "code": "BASIC_PRODUCTION",
+        "demand": "Do not introduce linked exceptions, nuanced stance or hidden obligations."
+      }
+    ],
+    "version": "writing-difficulty-control-v1"
+  },
+  "GUIDED.B1.A2": {
+    "blueprintId": "GUIDED.B1.DIRECT_MESSAGE",
+    "enforcement": "Independent review of visible content; not regex, word count or generated tags.",
+    "productionAnchor": "FOUNDATION: one direct familiar statement/question; basic words and simple production.",
+    "renderingRule": "Supply every necessary fact in providedFacts and make the intended language relationships explicit in requiredIntents/responseConstraints. Do not increase specialist reasoning burden or count metadata entries as completed communicative intents.",
+    "semanticRequirements": [
+      {
+        "code": "DIRECT_PROPOSITION",
+        "demand": "Express one concrete familiar fact, preference or question directly."
+      },
+      {
+        "code": "BASIC_PRODUCTION",
+        "demand": "Do not introduce linked exceptions, nuanced stance or hidden obligations."
+      }
+    ],
+    "version": "writing-difficulty-control-v1"
+  },
+  "GUIDED.B1.A3": {
+    "blueprintId": "GUIDED.B1.DIRECT_MESSAGE",
+    "enforcement": "Independent review of visible content; not regex, word count or generated tags.",
+    "productionAnchor": "FOUNDATION: one direct familiar statement/question; basic words and simple production.",
+    "renderingRule": "Supply every necessary fact in providedFacts and make the intended language relationships explicit in requiredIntents/responseConstraints. Do not increase specialist reasoning burden or count metadata entries as completed communicative intents.",
+    "semanticRequirements": [
+      {
+        "code": "DIRECT_PROPOSITION",
+        "demand": "Express one concrete familiar fact, preference or question directly."
+      },
+      {
+        "code": "BASIC_PRODUCTION",
+        "demand": "Do not introduce linked exceptions, nuanced stance or hidden obligations."
+      }
+    ],
+    "version": "writing-difficulty-control-v1"
+  },
+  "GUIDED.B1.A4": {
+    "blueprintId": "GUIDED.B1.DIRECT_MESSAGE",
+    "enforcement": "Independent review of visible content; not regex, word count or generated tags.",
+    "productionAnchor": "FOUNDATION: one direct familiar statement/question; basic words and simple production.",
+    "renderingRule": "Supply every necessary fact in providedFacts and make the intended language relationships explicit in requiredIntents/responseConstraints. Do not increase specialist reasoning burden or count metadata entries as completed communicative intents.",
+    "semanticRequirements": [
+      {
+        "code": "DIRECT_PROPOSITION",
+        "demand": "Express one concrete familiar fact, preference or question directly."
+      },
+      {
+        "code": "BASIC_PRODUCTION",
+        "demand": "Do not introduce linked exceptions, nuanced stance or hidden obligations."
+      }
+    ],
+    "version": "writing-difficulty-control-v1"
+  },
+  "GUIDED.B2.A1": {
+    "blueprintId": "GUIDED.B2.SIMPLE_LINK",
+    "enforcement": "Independent review of visible content; not regex, word count or generated tags.",
+    "productionAnchor": "BASIC: familiar communication with one simple reason, sequence or ordinary polite request; limited linking.",
+    "renderingRule": "Supply every necessary fact in providedFacts and make the intended language relationships explicit in requiredIntents/responseConstraints. Do not increase specialist reasoning burden or count metadata entries as completed communicative intents.",
+    "semanticRequirements": [
+      {
+        "code": "SINGLE_LINK",
+        "demand": "Use one simple reason or sequence around familiar information."
+      },
+      {
+        "code": "FAMILIAR_REQUEST",
+        "demand": "An ordinary polite request is enough; no indirect stance negotiation."
+      }
+    ],
+    "version": "writing-difficulty-control-v1"
+  },
+  "GUIDED.B2.A2": {
+    "blueprintId": "GUIDED.B2.SIMPLE_LINK",
+    "enforcement": "Independent review of visible content; not regex, word count or generated tags.",
+    "productionAnchor": "BASIC: familiar communication with one simple reason, sequence or ordinary polite request; limited linking.",
+    "renderingRule": "Supply every necessary fact in providedFacts and make the intended language relationships explicit in requiredIntents/responseConstraints. Do not increase specialist reasoning burden or count metadata entries as completed communicative intents.",
+    "semanticRequirements": [
+      {
+        "code": "SINGLE_LINK",
+        "demand": "Use one simple reason or sequence around familiar information."
+      },
+      {
+        "code": "FAMILIAR_REQUEST",
+        "demand": "An ordinary polite request is enough; no indirect stance negotiation."
+      }
+    ],
+    "version": "writing-difficulty-control-v1"
+  },
+  "GUIDED.B2.A3": {
+    "blueprintId": "GUIDED.B2.SIMPLE_LINK",
+    "enforcement": "Independent review of visible content; not regex, word count or generated tags.",
+    "productionAnchor": "BASIC: familiar communication with one simple reason, sequence or ordinary polite request; limited linking.",
+    "renderingRule": "Supply every necessary fact in providedFacts and make the intended language relationships explicit in requiredIntents/responseConstraints. Do not increase specialist reasoning burden or count metadata entries as completed communicative intents.",
+    "semanticRequirements": [
+      {
+        "code": "SINGLE_LINK",
+        "demand": "Use one simple reason or sequence around familiar information."
+      },
+      {
+        "code": "FAMILIAR_REQUEST",
+        "demand": "An ordinary polite request is enough; no indirect stance negotiation."
+      }
+    ],
+    "version": "writing-difficulty-control-v1"
+  },
+  "GUIDED.B2.A4": {
+    "blueprintId": "GUIDED.B2.SIMPLE_LINK",
+    "enforcement": "Independent review of visible content; not regex, word count or generated tags.",
+    "productionAnchor": "BASIC: familiar communication with one simple reason, sequence or ordinary polite request; limited linking.",
+    "renderingRule": "Supply every necessary fact in providedFacts and make the intended language relationships explicit in requiredIntents/responseConstraints. Do not increase specialist reasoning burden or count metadata entries as completed communicative intents.",
+    "semanticRequirements": [
+      {
+        "code": "SINGLE_LINK",
+        "demand": "Use one simple reason or sequence around familiar information."
+      },
+      {
+        "code": "FAMILIAR_REQUEST",
+        "demand": "An ordinary polite request is enough; no indirect stance negotiation."
+      }
+    ],
+    "version": "writing-difficulty-control-v1"
+  },
+  "GUIDED.B3.A1": {
+    "blueprintId": "GUIDED.B3.PRACTICAL_EXPLANATION",
+    "enforcement": "Independent review of visible content; not regex, word count or generated tags.",
+    "productionAnchor": "INTERMEDIATE: a connected practical reason, condition or time relation with explicit, straightforward scope and suitable everyday/work register. Ordinary politeness alone does not make this band 4; do not require layered qualifications for this band.",
+    "renderingRule": "Supply every necessary fact in providedFacts and make the intended language relationships explicit in requiredIntents/responseConstraints. Do not increase specialist reasoning burden or count metadata entries as completed communicative intents.",
+    "semanticRequirements": [
+      {
+        "code": "CONNECTED_MESSAGE",
+        "demand": "Connect a practical reason or condition to its consequence or requested action."
+      },
+      {
+        "code": "DIRECT_SCOPE",
+        "demand": "Keep who does what and the condition's scope explicit and straightforward."
+      },
+      {
+        "code": "LIMIT_NUANCE",
+        "demand": "Avoid stacking concessions, evidence limitations and indirect commitments in one task."
+      }
+    ],
+    "version": "writing-difficulty-control-v1"
+  },
+  "GUIDED.B3.A2": {
+    "blueprintId": "GUIDED.B3.PRACTICAL_SEQUENCE",
+    "enforcement": "Independent review of visible content; not regex, word count or generated tags.",
+    "productionAnchor": "INTERMEDIATE: a connected practical reason, condition or time relation with explicit, straightforward scope and suitable everyday/work register. Ordinary politeness alone does not make this band 4; do not require layered qualifications for this band.",
+    "renderingRule": "Supply every necessary fact in providedFacts and make the intended language relationships explicit in requiredIntents/responseConstraints. Do not increase specialist reasoning burden or count metadata entries as completed communicative intents.",
+    "semanticRequirements": [
+      {
+        "code": "CONNECTED_MESSAGE",
+        "demand": "Relate timing or a changed condition to a practical explanation or request."
+      },
+      {
+        "code": "DIRECT_SCOPE",
+        "demand": "Use familiar facts and suitable everyday/work politeness, without layered qualifications."
+      }
+    ],
+    "version": "writing-difficulty-control-v1"
+  },
+  "GUIDED.B3.A3": {
+    "blueprintId": "GUIDED.B3.PRACTICAL_EXPLANATION",
+    "enforcement": "Independent review of visible content; not regex, word count or generated tags.",
+    "productionAnchor": "INTERMEDIATE: a connected practical reason, condition or time relation with explicit, straightforward scope and suitable everyday/work register. Ordinary politeness alone does not make this band 4; do not require layered qualifications for this band.",
+    "renderingRule": "Supply every necessary fact in providedFacts and make the intended language relationships explicit in requiredIntents/responseConstraints. Do not increase specialist reasoning burden or count metadata entries as completed communicative intents.",
+    "semanticRequirements": [
+      {
+        "code": "CONNECTED_MESSAGE",
+        "demand": "Connect a practical reason or condition to its consequence or requested action."
+      },
+      {
+        "code": "DIRECT_SCOPE",
+        "demand": "Keep who does what and the condition's scope explicit and straightforward."
+      },
+      {
+        "code": "LIMIT_NUANCE",
+        "demand": "Avoid stacking concessions, evidence limitations and indirect commitments in one task."
+      }
+    ],
+    "version": "writing-difficulty-control-v1"
+  },
+  "GUIDED.B3.A4": {
+    "blueprintId": "GUIDED.B3.PRACTICAL_SEQUENCE",
+    "enforcement": "Independent review of visible content; not regex, word count or generated tags.",
+    "productionAnchor": "INTERMEDIATE: a connected practical reason, condition or time relation with explicit, straightforward scope and suitable everyday/work register. Ordinary politeness alone does not make this band 4; do not require layered qualifications for this band.",
+    "renderingRule": "Supply every necessary fact in providedFacts and make the intended language relationships explicit in requiredIntents/responseConstraints. Do not increase specialist reasoning burden or count metadata entries as completed communicative intents.",
+    "semanticRequirements": [
+      {
+        "code": "CONNECTED_MESSAGE",
+        "demand": "Relate timing or a changed condition to a practical explanation or request."
+      },
+      {
+        "code": "DIRECT_SCOPE",
+        "demand": "Use familiar facts and suitable everyday/work politeness, without layered qualifications."
+      }
+    ],
+    "version": "writing-difficulty-control-v1"
+  },
+  "GUIDED.B4.A1": {
+    "blueprintId": "GUIDED.B4.QUALIFIED_MESSAGE",
+    "enforcement": "Independent review of visible content; not regex, word count or generated tags.",
+    "productionAnchor": "UPPER_INTERMEDIATE: a nuanced condition/concession, indirect request or hedge that needs register-sensitive phrasing. A longer practical request or several independent steps do not by themselves reach band 5.",
+    "renderingRule": "Supply every necessary fact in providedFacts and make the intended language relationships explicit in requiredIntents/responseConstraints. Do not increase specialist reasoning burden or count metadata entries as completed communicative intents.",
+    "semanticRequirements": [
+      {
+        "code": "QUALIFIED_RELATION",
+        "demand": "Express a concession, a hedge or an indirect request with clear logical scope."
+      },
+      {
+        "code": "SUITABLE_REGISTER",
+        "demand": "The message requires context-appropriate phrasing but not specialist knowledge."
+      }
+    ],
+    "version": "writing-difficulty-control-v1"
+  },
+  "GUIDED.B4.A2": {
+    "blueprintId": "GUIDED.B4.CONCESSION_REQUEST",
+    "enforcement": "Independent review of visible content; not regex, word count or generated tags.",
+    "productionAnchor": "UPPER_INTERMEDIATE: a nuanced condition/concession, indirect request or hedge that needs register-sensitive phrasing. A longer practical request or several independent steps do not by themselves reach band 5.",
+    "renderingRule": "Supply every necessary fact in providedFacts and make the intended language relationships explicit in requiredIntents/responseConstraints. Do not increase specialist reasoning burden or count metadata entries as completed communicative intents.",
+    "semanticRequirements": [
+      {
+        "code": "QUALIFIED_RELATION",
+        "demand": "Connect a conceded fact to a carefully qualified practical request or explanation."
+      },
+      {
+        "code": "SUITABLE_REGISTER",
+        "demand": "Keep the relations interpretable and avoid relying solely on technical words."
+      }
+    ],
+    "version": "writing-difficulty-control-v1"
+  },
+  "GUIDED.B4.A3": {
+    "blueprintId": "GUIDED.B4.QUALIFIED_MESSAGE",
+    "enforcement": "Independent review of visible content; not regex, word count or generated tags.",
+    "productionAnchor": "UPPER_INTERMEDIATE: a nuanced condition/concession, indirect request or hedge that needs register-sensitive phrasing. A longer practical request or several independent steps do not by themselves reach band 5.",
+    "renderingRule": "Supply every necessary fact in providedFacts and make the intended language relationships explicit in requiredIntents/responseConstraints. Do not increase specialist reasoning burden or count metadata entries as completed communicative intents.",
+    "semanticRequirements": [
+      {
+        "code": "QUALIFIED_RELATION",
+        "demand": "Express a concession, a hedge or an indirect request with clear logical scope."
+      },
+      {
+        "code": "SUITABLE_REGISTER",
+        "demand": "The message requires context-appropriate phrasing but not specialist knowledge."
+      }
+    ],
+    "version": "writing-difficulty-control-v1"
+  },
+  "GUIDED.B4.A4": {
+    "blueprintId": "GUIDED.B4.CONCESSION_REQUEST",
+    "enforcement": "Independent review of visible content; not regex, word count or generated tags.",
+    "productionAnchor": "UPPER_INTERMEDIATE: a nuanced condition/concession, indirect request or hedge that needs register-sensitive phrasing. A longer practical request or several independent steps do not by themselves reach band 5.",
+    "renderingRule": "Supply every necessary fact in providedFacts and make the intended language relationships explicit in requiredIntents/responseConstraints. Do not increase specialist reasoning burden or count metadata entries as completed communicative intents.",
+    "semanticRequirements": [
+      {
+        "code": "QUALIFIED_RELATION",
+        "demand": "Connect a conceded fact to a carefully qualified practical request or explanation."
+      },
+      {
+        "code": "SUITABLE_REGISTER",
+        "demand": "Keep the relations interpretable and avoid relying solely on technical words."
+      }
+    ],
+    "version": "writing-difficulty-control-v1"
+  },
+  "GUIDED.B5.A1": {
+    "blueprintId": "GUIDED.B5.BOUNDED_COMMITMENT",
+    "enforcement": "Independent review of visible content; not regex, word count or generated tags.",
+    "productionAnchor": "ADVANCED: interacting relations whose scope must be preserved together, a precisely bounded stance/claim/commitment, and coherent controlled register. For example, a commitment depends on a condition but is limited by an exception, or evidence supports only a qualified conclusion that constrains a further action. All needed facts must be supplied or freely chosen by the learner as the mode allows. Removing a qualification changes the claim, not just the sentence length. Familiar vocabulary is sufficient; technical knowledge, verbosity and isolated advanced phrases are not evidence of band 5. A short message can qualify if these demands are actually present.",
+    "renderingRule": "Supply every necessary fact in providedFacts and make the intended language relationships explicit in requiredIntents/responseConstraints. Do not increase specialist reasoning burden or count metadata entries as completed communicative intents.",
+    "semanticRequirements": [
+      {
+        "code": "SCOPE_INTERACTION",
+        "demand": "Make a condition and an explicit exception interact in limiting a commitment; a flat list of steps must not preserve the same meaning."
+      },
+      {
+        "code": "PRECISE_STANCE",
+        "demand": "Distinguish what is confirmed from what can only be promised conditionally; removing the qualification must change the speaker's responsibility or claim."
+      },
+      {
+        "code": "COHERENT_REGISTER",
+        "demand": "Express the concession and limited commitment as one coherent, appropriately restrained message. Supply every fact needed; no expert judgment."
+      }
+    ],
+    "version": "writing-difficulty-control-v1"
+  },
+  "GUIDED.B5.A2": {
+    "blueprintId": "GUIDED.B5.EVIDENCE_AND_SCOPE",
+    "enforcement": "Independent review of visible content; not regex, word count or generated tags.",
+    "productionAnchor": "ADVANCED: interacting relations whose scope must be preserved together, a precisely bounded stance/claim/commitment, and coherent controlled register. For example, a commitment depends on a condition but is limited by an exception, or evidence supports only a qualified conclusion that constrains a further action. All needed facts must be supplied or freely chosen by the learner as the mode allows. Removing a qualification changes the claim, not just the sentence length. Familiar vocabulary is sufficient; technical knowledge, verbosity and isolated advanced phrases are not evidence of band 5. A short message can qualify if these demands are actually present.",
+    "renderingRule": "Supply every necessary fact in providedFacts and make the intended language relationships explicit in requiredIntents/responseConstraints. Do not increase specialist reasoning burden or count metadata entries as completed communicative intents.",
+    "semanticRequirements": [
+      {
+        "code": "SCOPE_INTERACTION",
+        "demand": "Relate an observed fact to a limited conclusion and a dependent action, while explicitly preserving an exception or limit on that inference."
+      },
+      {
+        "code": "PRECISE_STANCE",
+        "demand": "State why the observation does not justify an unrestricted conclusion; the learner must preserve the narrower claim, not solve a reasoning puzzle."
+      },
+      {
+        "code": "COHERENT_REGISTER",
+        "demand": "Use familiar content with precise qualification and controlled stance, rather than difficult technical nouns or a longer ordinary request."
+      }
+    ],
+    "version": "writing-difficulty-control-v1"
+  },
+  "GUIDED.B5.A3": {
+    "blueprintId": "GUIDED.B5.QUALIFIED_CONTRAST",
+    "enforcement": "Independent review of visible content; not regex, word count or generated tags.",
+    "productionAnchor": "ADVANCED: interacting relations whose scope must be preserved together, a precisely bounded stance/claim/commitment, and coherent controlled register. For example, a commitment depends on a condition but is limited by an exception, or evidence supports only a qualified conclusion that constrains a further action. All needed facts must be supplied or freely chosen by the learner as the mode allows. Removing a qualification changes the claim, not just the sentence length. Familiar vocabulary is sufficient; technical knowledge, verbosity and isolated advanced phrases are not evidence of band 5. A short message can qualify if these demands are actually present.",
+    "renderingRule": "Supply every necessary fact in providedFacts and make the intended language relationships explicit in requiredIntents/responseConstraints. Do not increase specialist reasoning burden or count metadata entries as completed communicative intents.",
+    "semanticRequirements": [
+      {
+        "code": "SCOPE_INTERACTION",
+        "demand": "Contrast two stated positions or obligations whose application depends on a shared condition and a clearly delimited exception."
+      },
+      {
+        "code": "PRECISE_STANCE",
+        "demand": "Keep whose commitment applies, when it applies and what remains undecided linguistically explicit; deleting a relation must change that meaning."
+      },
+      {
+        "code": "COHERENT_REGISTER",
+        "demand": "Require precise reference and stance across the connected message, not a correct business strategy, specialist facts or more verbose wording."
+      }
+    ],
+    "version": "writing-difficulty-control-v1"
+  },
+  "GUIDED.B5.A4": {
+    "blueprintId": "GUIDED.B5.BOUNDED_COMMITMENT",
+    "enforcement": "Independent review of visible content; not regex, word count or generated tags.",
+    "productionAnchor": "ADVANCED: interacting relations whose scope must be preserved together, a precisely bounded stance/claim/commitment, and coherent controlled register. For example, a commitment depends on a condition but is limited by an exception, or evidence supports only a qualified conclusion that constrains a further action. All needed facts must be supplied or freely chosen by the learner as the mode allows. Removing a qualification changes the claim, not just the sentence length. Familiar vocabulary is sufficient; technical knowledge, verbosity and isolated advanced phrases are not evidence of band 5. A short message can qualify if these demands are actually present.",
+    "renderingRule": "Supply every necessary fact in providedFacts and make the intended language relationships explicit in requiredIntents/responseConstraints. Do not increase specialist reasoning burden or count metadata entries as completed communicative intents.",
+    "semanticRequirements": [
+      {
+        "code": "SCOPE_INTERACTION",
+        "demand": "Make a condition and an explicit exception interact in limiting a commitment; a flat list of steps must not preserve the same meaning."
+      },
+      {
+        "code": "PRECISE_STANCE",
+        "demand": "Distinguish what is confirmed from what can only be promised conditionally; removing the qualification must change the speaker's responsibility or claim."
+      },
+      {
+        "code": "COHERENT_REGISTER",
+        "demand": "Express the concession and limited commitment as one coherent, appropriately restrained message. Supply every fact needed; no expert judgment."
+      }
+    ],
+    "version": "writing-difficulty-control-v1"
+  },
+  "TRANSLATION.B1.A1": {
+    "blueprintId": "TRANSLATION.B1.DIRECT_MESSAGE",
+    "enforcement": "Independent review of visible content; not regex, word count or generated tags.",
+    "productionAnchor": "FOUNDATION: one direct familiar statement/question; basic words and simple production.",
+    "renderingRule": "Put ALL required meanings in originText in originLanguage as the actual source message, not directions to the learner. One item may contain several connected sentences when useful. Keep all guidance arrays empty and never supply a learningLanguage model answer. The learner only translates: do not ask them to invent facts or choose a strategy.",
+    "semanticRequirements": [
+      {
+        "code": "DIRECT_PROPOSITION",
+        "demand": "Express one concrete familiar fact, preference or question directly."
+      },
+      {
+        "code": "BASIC_PRODUCTION",
+        "demand": "Do not introduce linked exceptions, nuanced stance or hidden obligations."
+      }
+    ],
+    "version": "writing-difficulty-control-v1"
+  },
+  "TRANSLATION.B1.A2": {
+    "blueprintId": "TRANSLATION.B1.DIRECT_MESSAGE",
+    "enforcement": "Independent review of visible content; not regex, word count or generated tags.",
+    "productionAnchor": "FOUNDATION: one direct familiar statement/question; basic words and simple production.",
+    "renderingRule": "Put ALL required meanings in originText in originLanguage as the actual source message, not directions to the learner. One item may contain several connected sentences when useful. Keep all guidance arrays empty and never supply a learningLanguage model answer. The learner only translates: do not ask them to invent facts or choose a strategy.",
+    "semanticRequirements": [
+      {
+        "code": "DIRECT_PROPOSITION",
+        "demand": "Express one concrete familiar fact, preference or question directly."
+      },
+      {
+        "code": "BASIC_PRODUCTION",
+        "demand": "Do not introduce linked exceptions, nuanced stance or hidden obligations."
+      }
+    ],
+    "version": "writing-difficulty-control-v1"
+  },
+  "TRANSLATION.B1.A3": {
+    "blueprintId": "TRANSLATION.B1.DIRECT_MESSAGE",
+    "enforcement": "Independent review of visible content; not regex, word count or generated tags.",
+    "productionAnchor": "FOUNDATION: one direct familiar statement/question; basic words and simple production.",
+    "renderingRule": "Put ALL required meanings in originText in originLanguage as the actual source message, not directions to the learner. One item may contain several connected sentences when useful. Keep all guidance arrays empty and never supply a learningLanguage model answer. The learner only translates: do not ask them to invent facts or choose a strategy.",
+    "semanticRequirements": [
+      {
+        "code": "DIRECT_PROPOSITION",
+        "demand": "Express one concrete familiar fact, preference or question directly."
+      },
+      {
+        "code": "BASIC_PRODUCTION",
+        "demand": "Do not introduce linked exceptions, nuanced stance or hidden obligations."
+      }
+    ],
+    "version": "writing-difficulty-control-v1"
+  },
+  "TRANSLATION.B1.A4": {
+    "blueprintId": "TRANSLATION.B1.DIRECT_MESSAGE",
+    "enforcement": "Independent review of visible content; not regex, word count or generated tags.",
+    "productionAnchor": "FOUNDATION: one direct familiar statement/question; basic words and simple production.",
+    "renderingRule": "Put ALL required meanings in originText in originLanguage as the actual source message, not directions to the learner. One item may contain several connected sentences when useful. Keep all guidance arrays empty and never supply a learningLanguage model answer. The learner only translates: do not ask them to invent facts or choose a strategy.",
+    "semanticRequirements": [
+      {
+        "code": "DIRECT_PROPOSITION",
+        "demand": "Express one concrete familiar fact, preference or question directly."
+      },
+      {
+        "code": "BASIC_PRODUCTION",
+        "demand": "Do not introduce linked exceptions, nuanced stance or hidden obligations."
+      }
+    ],
+    "version": "writing-difficulty-control-v1"
+  },
+  "TRANSLATION.B2.A1": {
+    "blueprintId": "TRANSLATION.B2.SIMPLE_LINK",
+    "enforcement": "Independent review of visible content; not regex, word count or generated tags.",
+    "productionAnchor": "BASIC: familiar communication with one simple reason, sequence or ordinary polite request; limited linking.",
+    "renderingRule": "Put ALL required meanings in originText in originLanguage as the actual source message, not directions to the learner. One item may contain several connected sentences when useful. Keep all guidance arrays empty and never supply a learningLanguage model answer. The learner only translates: do not ask them to invent facts or choose a strategy.",
+    "semanticRequirements": [
+      {
+        "code": "SINGLE_LINK",
+        "demand": "Use one simple reason or sequence around familiar information."
+      },
+      {
+        "code": "FAMILIAR_REQUEST",
+        "demand": "An ordinary polite request is enough; no indirect stance negotiation."
+      }
+    ],
+    "version": "writing-difficulty-control-v1"
+  },
+  "TRANSLATION.B2.A2": {
+    "blueprintId": "TRANSLATION.B2.SIMPLE_LINK",
+    "enforcement": "Independent review of visible content; not regex, word count or generated tags.",
+    "productionAnchor": "BASIC: familiar communication with one simple reason, sequence or ordinary polite request; limited linking.",
+    "renderingRule": "Put ALL required meanings in originText in originLanguage as the actual source message, not directions to the learner. One item may contain several connected sentences when useful. Keep all guidance arrays empty and never supply a learningLanguage model answer. The learner only translates: do not ask them to invent facts or choose a strategy.",
+    "semanticRequirements": [
+      {
+        "code": "SINGLE_LINK",
+        "demand": "Use one simple reason or sequence around familiar information."
+      },
+      {
+        "code": "FAMILIAR_REQUEST",
+        "demand": "An ordinary polite request is enough; no indirect stance negotiation."
+      }
+    ],
+    "version": "writing-difficulty-control-v1"
+  },
+  "TRANSLATION.B2.A3": {
+    "blueprintId": "TRANSLATION.B2.SIMPLE_LINK",
+    "enforcement": "Independent review of visible content; not regex, word count or generated tags.",
+    "productionAnchor": "BASIC: familiar communication with one simple reason, sequence or ordinary polite request; limited linking.",
+    "renderingRule": "Put ALL required meanings in originText in originLanguage as the actual source message, not directions to the learner. One item may contain several connected sentences when useful. Keep all guidance arrays empty and never supply a learningLanguage model answer. The learner only translates: do not ask them to invent facts or choose a strategy.",
+    "semanticRequirements": [
+      {
+        "code": "SINGLE_LINK",
+        "demand": "Use one simple reason or sequence around familiar information."
+      },
+      {
+        "code": "FAMILIAR_REQUEST",
+        "demand": "An ordinary polite request is enough; no indirect stance negotiation."
+      }
+    ],
+    "version": "writing-difficulty-control-v1"
+  },
+  "TRANSLATION.B2.A4": {
+    "blueprintId": "TRANSLATION.B2.SIMPLE_LINK",
+    "enforcement": "Independent review of visible content; not regex, word count or generated tags.",
+    "productionAnchor": "BASIC: familiar communication with one simple reason, sequence or ordinary polite request; limited linking.",
+    "renderingRule": "Put ALL required meanings in originText in originLanguage as the actual source message, not directions to the learner. One item may contain several connected sentences when useful. Keep all guidance arrays empty and never supply a learningLanguage model answer. The learner only translates: do not ask them to invent facts or choose a strategy.",
+    "semanticRequirements": [
+      {
+        "code": "SINGLE_LINK",
+        "demand": "Use one simple reason or sequence around familiar information."
+      },
+      {
+        "code": "FAMILIAR_REQUEST",
+        "demand": "An ordinary polite request is enough; no indirect stance negotiation."
+      }
+    ],
+    "version": "writing-difficulty-control-v1"
+  },
+  "TRANSLATION.B3.A1": {
+    "blueprintId": "TRANSLATION.B3.PRACTICAL_EXPLANATION",
+    "enforcement": "Independent review of visible content; not regex, word count or generated tags.",
+    "productionAnchor": "INTERMEDIATE: a connected practical reason, condition or time relation with explicit, straightforward scope and suitable everyday/work register. Ordinary politeness alone does not make this band 4; do not require layered qualifications for this band.",
+    "renderingRule": "Put ALL required meanings in originText in originLanguage as the actual source message, not directions to the learner. One item may contain several connected sentences when useful. Keep all guidance arrays empty and never supply a learningLanguage model answer. The learner only translates: do not ask them to invent facts or choose a strategy.",
+    "semanticRequirements": [
+      {
+        "code": "CONNECTED_MESSAGE",
+        "demand": "Connect a practical reason or condition to its consequence or requested action."
+      },
+      {
+        "code": "DIRECT_SCOPE",
+        "demand": "Keep who does what and the condition's scope explicit and straightforward."
+      },
+      {
+        "code": "LIMIT_NUANCE",
+        "demand": "Avoid stacking concessions, evidence limitations and indirect commitments in one task."
+      }
+    ],
+    "version": "writing-difficulty-control-v1"
+  },
+  "TRANSLATION.B3.A2": {
+    "blueprintId": "TRANSLATION.B3.PRACTICAL_SEQUENCE",
+    "enforcement": "Independent review of visible content; not regex, word count or generated tags.",
+    "productionAnchor": "INTERMEDIATE: a connected practical reason, condition or time relation with explicit, straightforward scope and suitable everyday/work register. Ordinary politeness alone does not make this band 4; do not require layered qualifications for this band.",
+    "renderingRule": "Put ALL required meanings in originText in originLanguage as the actual source message, not directions to the learner. One item may contain several connected sentences when useful. Keep all guidance arrays empty and never supply a learningLanguage model answer. The learner only translates: do not ask them to invent facts or choose a strategy.",
+    "semanticRequirements": [
+      {
+        "code": "CONNECTED_MESSAGE",
+        "demand": "Relate timing or a changed condition to a practical explanation or request."
+      },
+      {
+        "code": "DIRECT_SCOPE",
+        "demand": "Use familiar facts and suitable everyday/work politeness, without layered qualifications."
+      }
+    ],
+    "version": "writing-difficulty-control-v1"
+  },
+  "TRANSLATION.B3.A3": {
+    "blueprintId": "TRANSLATION.B3.PRACTICAL_EXPLANATION",
+    "enforcement": "Independent review of visible content; not regex, word count or generated tags.",
+    "productionAnchor": "INTERMEDIATE: a connected practical reason, condition or time relation with explicit, straightforward scope and suitable everyday/work register. Ordinary politeness alone does not make this band 4; do not require layered qualifications for this band.",
+    "renderingRule": "Put ALL required meanings in originText in originLanguage as the actual source message, not directions to the learner. One item may contain several connected sentences when useful. Keep all guidance arrays empty and never supply a learningLanguage model answer. The learner only translates: do not ask them to invent facts or choose a strategy.",
+    "semanticRequirements": [
+      {
+        "code": "CONNECTED_MESSAGE",
+        "demand": "Connect a practical reason or condition to its consequence or requested action."
+      },
+      {
+        "code": "DIRECT_SCOPE",
+        "demand": "Keep who does what and the condition's scope explicit and straightforward."
+      },
+      {
+        "code": "LIMIT_NUANCE",
+        "demand": "Avoid stacking concessions, evidence limitations and indirect commitments in one task."
+      }
+    ],
+    "version": "writing-difficulty-control-v1"
+  },
+  "TRANSLATION.B3.A4": {
+    "blueprintId": "TRANSLATION.B3.PRACTICAL_SEQUENCE",
+    "enforcement": "Independent review of visible content; not regex, word count or generated tags.",
+    "productionAnchor": "INTERMEDIATE: a connected practical reason, condition or time relation with explicit, straightforward scope and suitable everyday/work register. Ordinary politeness alone does not make this band 4; do not require layered qualifications for this band.",
+    "renderingRule": "Put ALL required meanings in originText in originLanguage as the actual source message, not directions to the learner. One item may contain several connected sentences when useful. Keep all guidance arrays empty and never supply a learningLanguage model answer. The learner only translates: do not ask them to invent facts or choose a strategy.",
+    "semanticRequirements": [
+      {
+        "code": "CONNECTED_MESSAGE",
+        "demand": "Relate timing or a changed condition to a practical explanation or request."
+      },
+      {
+        "code": "DIRECT_SCOPE",
+        "demand": "Use familiar facts and suitable everyday/work politeness, without layered qualifications."
+      }
+    ],
+    "version": "writing-difficulty-control-v1"
+  },
+  "TRANSLATION.B4.A1": {
+    "blueprintId": "TRANSLATION.B4.QUALIFIED_MESSAGE",
+    "enforcement": "Independent review of visible content; not regex, word count or generated tags.",
+    "productionAnchor": "UPPER_INTERMEDIATE: a nuanced condition/concession, indirect request or hedge that needs register-sensitive phrasing. A longer practical request or several independent steps do not by themselves reach band 5.",
+    "renderingRule": "Put ALL required meanings in originText in originLanguage as the actual source message, not directions to the learner. One item may contain several connected sentences when useful. Keep all guidance arrays empty and never supply a learningLanguage model answer. The learner only translates: do not ask them to invent facts or choose a strategy.",
+    "semanticRequirements": [
+      {
+        "code": "QUALIFIED_RELATION",
+        "demand": "Express a concession, a hedge or an indirect request with clear logical scope."
+      },
+      {
+        "code": "SUITABLE_REGISTER",
+        "demand": "The message requires context-appropriate phrasing but not specialist knowledge."
+      }
+    ],
+    "version": "writing-difficulty-control-v1"
+  },
+  "TRANSLATION.B4.A2": {
+    "blueprintId": "TRANSLATION.B4.CONCESSION_REQUEST",
+    "enforcement": "Independent review of visible content; not regex, word count or generated tags.",
+    "productionAnchor": "UPPER_INTERMEDIATE: a nuanced condition/concession, indirect request or hedge that needs register-sensitive phrasing. A longer practical request or several independent steps do not by themselves reach band 5.",
+    "renderingRule": "Put ALL required meanings in originText in originLanguage as the actual source message, not directions to the learner. One item may contain several connected sentences when useful. Keep all guidance arrays empty and never supply a learningLanguage model answer. The learner only translates: do not ask them to invent facts or choose a strategy.",
+    "semanticRequirements": [
+      {
+        "code": "QUALIFIED_RELATION",
+        "demand": "Connect a conceded fact to a carefully qualified practical request or explanation."
+      },
+      {
+        "code": "SUITABLE_REGISTER",
+        "demand": "Keep the relations interpretable and avoid relying solely on technical words."
+      }
+    ],
+    "version": "writing-difficulty-control-v1"
+  },
+  "TRANSLATION.B4.A3": {
+    "blueprintId": "TRANSLATION.B4.QUALIFIED_MESSAGE",
+    "enforcement": "Independent review of visible content; not regex, word count or generated tags.",
+    "productionAnchor": "UPPER_INTERMEDIATE: a nuanced condition/concession, indirect request or hedge that needs register-sensitive phrasing. A longer practical request or several independent steps do not by themselves reach band 5.",
+    "renderingRule": "Put ALL required meanings in originText in originLanguage as the actual source message, not directions to the learner. One item may contain several connected sentences when useful. Keep all guidance arrays empty and never supply a learningLanguage model answer. The learner only translates: do not ask them to invent facts or choose a strategy.",
+    "semanticRequirements": [
+      {
+        "code": "QUALIFIED_RELATION",
+        "demand": "Express a concession, a hedge or an indirect request with clear logical scope."
+      },
+      {
+        "code": "SUITABLE_REGISTER",
+        "demand": "The message requires context-appropriate phrasing but not specialist knowledge."
+      }
+    ],
+    "version": "writing-difficulty-control-v1"
+  },
+  "TRANSLATION.B4.A4": {
+    "blueprintId": "TRANSLATION.B4.CONCESSION_REQUEST",
+    "enforcement": "Independent review of visible content; not regex, word count or generated tags.",
+    "productionAnchor": "UPPER_INTERMEDIATE: a nuanced condition/concession, indirect request or hedge that needs register-sensitive phrasing. A longer practical request or several independent steps do not by themselves reach band 5.",
+    "renderingRule": "Put ALL required meanings in originText in originLanguage as the actual source message, not directions to the learner. One item may contain several connected sentences when useful. Keep all guidance arrays empty and never supply a learningLanguage model answer. The learner only translates: do not ask them to invent facts or choose a strategy.",
+    "semanticRequirements": [
+      {
+        "code": "QUALIFIED_RELATION",
+        "demand": "Connect a conceded fact to a carefully qualified practical request or explanation."
+      },
+      {
+        "code": "SUITABLE_REGISTER",
+        "demand": "Keep the relations interpretable and avoid relying solely on technical words."
+      }
+    ],
+    "version": "writing-difficulty-control-v1"
+  },
+  "TRANSLATION.B5.A1": {
+    "blueprintId": "TRANSLATION.B5.BOUNDED_COMMITMENT",
+    "enforcement": "Independent review of visible content; not regex, word count or generated tags.",
+    "productionAnchor": "ADVANCED: interacting relations whose scope must be preserved together, a precisely bounded stance/claim/commitment, and coherent controlled register. For example, a commitment depends on a condition but is limited by an exception, or evidence supports only a qualified conclusion that constrains a further action. All needed facts must be supplied or freely chosen by the learner as the mode allows. Removing a qualification changes the claim, not just the sentence length. Familiar vocabulary is sufficient; technical knowledge, verbosity and isolated advanced phrases are not evidence of band 5. A short message can qualify if these demands are actually present.",
+    "renderingRule": "Put ALL required meanings in originText in originLanguage as the actual source message, not directions to the learner. One item may contain several connected sentences when useful. Keep all guidance arrays empty and never supply a learningLanguage model answer. The learner only translates: do not ask them to invent facts or choose a strategy.",
+    "semanticRequirements": [
+      {
+        "code": "SCOPE_INTERACTION",
+        "demand": "Make a condition and an explicit exception interact in limiting a commitment; a flat list of steps must not preserve the same meaning."
+      },
+      {
+        "code": "PRECISE_STANCE",
+        "demand": "Distinguish what is confirmed from what can only be promised conditionally; removing the qualification must change the speaker's responsibility or claim."
+      },
+      {
+        "code": "COHERENT_REGISTER",
+        "demand": "Express the concession and limited commitment as one coherent, appropriately restrained message. Supply every fact needed; no expert judgment."
+      }
+    ],
+    "version": "writing-difficulty-control-v1"
+  },
+  "TRANSLATION.B5.A2": {
+    "blueprintId": "TRANSLATION.B5.EVIDENCE_AND_SCOPE",
+    "enforcement": "Independent review of visible content; not regex, word count or generated tags.",
+    "productionAnchor": "ADVANCED: interacting relations whose scope must be preserved together, a precisely bounded stance/claim/commitment, and coherent controlled register. For example, a commitment depends on a condition but is limited by an exception, or evidence supports only a qualified conclusion that constrains a further action. All needed facts must be supplied or freely chosen by the learner as the mode allows. Removing a qualification changes the claim, not just the sentence length. Familiar vocabulary is sufficient; technical knowledge, verbosity and isolated advanced phrases are not evidence of band 5. A short message can qualify if these demands are actually present.",
+    "renderingRule": "Put ALL required meanings in originText in originLanguage as the actual source message, not directions to the learner. One item may contain several connected sentences when useful. Keep all guidance arrays empty and never supply a learningLanguage model answer. The learner only translates: do not ask them to invent facts or choose a strategy.",
+    "semanticRequirements": [
+      {
+        "code": "SCOPE_INTERACTION",
+        "demand": "Relate an observed fact to a limited conclusion and a dependent action, while explicitly preserving an exception or limit on that inference."
+      },
+      {
+        "code": "PRECISE_STANCE",
+        "demand": "State why the observation does not justify an unrestricted conclusion; the learner must preserve the narrower claim, not solve a reasoning puzzle."
+      },
+      {
+        "code": "COHERENT_REGISTER",
+        "demand": "Use familiar content with precise qualification and controlled stance, rather than difficult technical nouns or a longer ordinary request."
+      }
+    ],
+    "version": "writing-difficulty-control-v1"
+  },
+  "TRANSLATION.B5.A3": {
+    "blueprintId": "TRANSLATION.B5.QUALIFIED_CONTRAST",
+    "enforcement": "Independent review of visible content; not regex, word count or generated tags.",
+    "productionAnchor": "ADVANCED: interacting relations whose scope must be preserved together, a precisely bounded stance/claim/commitment, and coherent controlled register. For example, a commitment depends on a condition but is limited by an exception, or evidence supports only a qualified conclusion that constrains a further action. All needed facts must be supplied or freely chosen by the learner as the mode allows. Removing a qualification changes the claim, not just the sentence length. Familiar vocabulary is sufficient; technical knowledge, verbosity and isolated advanced phrases are not evidence of band 5. A short message can qualify if these demands are actually present.",
+    "renderingRule": "Put ALL required meanings in originText in originLanguage as the actual source message, not directions to the learner. One item may contain several connected sentences when useful. Keep all guidance arrays empty and never supply a learningLanguage model answer. The learner only translates: do not ask them to invent facts or choose a strategy.",
+    "semanticRequirements": [
+      {
+        "code": "SCOPE_INTERACTION",
+        "demand": "Contrast two stated positions or obligations whose application depends on a shared condition and a clearly delimited exception."
+      },
+      {
+        "code": "PRECISE_STANCE",
+        "demand": "Keep whose commitment applies, when it applies and what remains undecided linguistically explicit; deleting a relation must change that meaning."
+      },
+      {
+        "code": "COHERENT_REGISTER",
+        "demand": "Require precise reference and stance across the connected message, not a correct business strategy, specialist facts or more verbose wording."
+      }
+    ],
+    "version": "writing-difficulty-control-v1"
+  },
+  "TRANSLATION.B5.A4": {
+    "blueprintId": "TRANSLATION.B5.BOUNDED_COMMITMENT",
+    "enforcement": "Independent review of visible content; not regex, word count or generated tags.",
+    "productionAnchor": "ADVANCED: interacting relations whose scope must be preserved together, a precisely bounded stance/claim/commitment, and coherent controlled register. For example, a commitment depends on a condition but is limited by an exception, or evidence supports only a qualified conclusion that constrains a further action. All needed facts must be supplied or freely chosen by the learner as the mode allows. Removing a qualification changes the claim, not just the sentence length. Familiar vocabulary is sufficient; technical knowledge, verbosity and isolated advanced phrases are not evidence of band 5. A short message can qualify if these demands are actually present.",
+    "renderingRule": "Put ALL required meanings in originText in originLanguage as the actual source message, not directions to the learner. One item may contain several connected sentences when useful. Keep all guidance arrays empty and never supply a learningLanguage model answer. The learner only translates: do not ask them to invent facts or choose a strategy.",
+    "semanticRequirements": [
+      {
+        "code": "SCOPE_INTERACTION",
+        "demand": "Make a condition and an explicit exception interact in limiting a commitment; a flat list of steps must not preserve the same meaning."
+      },
+      {
+        "code": "PRECISE_STANCE",
+        "demand": "Distinguish what is confirmed from what can only be promised conditionally; removing the qualification must change the speaker's responsibility or claim."
+      },
+      {
+        "code": "COHERENT_REGISTER",
+        "demand": "Express the concession and limited commitment as one coherent, appropriately restrained message. Supply every fact needed; no expert judgment."
+      }
+    ],
+    "version": "writing-difficulty-control-v1"
+  }
+}

@@ -16,5 +16,8 @@ internal object GrowthMetricsTable : Table("language_learning_metric_history") {
     val createdAt = datetime("created_at")
     val updatedAt = datetime("updated_at")
     override val primaryKey = PrimaryKey(id)
-    init { uniqueIndex(activityId, metricType) }
+
+    init {
+        uniqueIndex(activityId, metricType)
+    }
 }

@@ -1,0 +1,201 @@
+{
+  "properties": {
+    "corrections": {
+      "items": {
+        "properties": {
+          "category": {
+            "type": "string"
+          },
+          "corrected": {
+            "type": "string"
+          },
+          "explanation": {
+            "properties": {
+              "learningText": {
+                "type": "string"
+              },
+              "originText": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "originText",
+              "learningText"
+            ],
+            "type": "object"
+          },
+          "original": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "original",
+          "corrected",
+          "category",
+          "explanation"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "explanation": {
+      "properties": {
+        "learningText": {
+          "type": "string"
+        },
+        "originText": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "originText",
+        "learningText"
+      ],
+      "type": "object"
+    },
+    "profileSignals": {
+      "properties": {
+        "expressionPatterns": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "grammarPatterns": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "meaningPatterns": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "naturalnessPatterns": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "recommendedFocus": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "strengthTags": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "vocabularyPatterns": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "weaknessTags": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "strengthTags",
+        "weaknessTags",
+        "grammarPatterns",
+        "vocabularyPatterns",
+        "naturalnessPatterns",
+        "expressionPatterns",
+        "meaningPatterns",
+        "recommendedFocus"
+      ],
+      "type": "object"
+    },
+    "recommendedAnswers": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 3,
+      "minItems": 2,
+      "type": "array"
+    },
+    "scores": {
+      "properties": {
+        "expression": {
+          "type": "number"
+        },
+        "grammar": {
+          "type": "number"
+        },
+        "meaning": {
+          "type": "number"
+        },
+        "naturalness": {
+          "type": "number"
+        },
+        "vocabulary": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "meaning",
+        "grammar",
+        "vocabulary",
+        "naturalness",
+        "expression"
+      ],
+      "type": "object"
+    },
+    "strengths": {
+      "items": {
+        "properties": {
+          "learningText": {
+            "type": "string"
+          },
+          "originText": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "originText",
+          "learningText"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "weaknesses": {
+      "items": {
+        "properties": {
+          "learningText": {
+            "type": "string"
+          },
+          "originText": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "originText",
+          "learningText"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "scores",
+    "strengths",
+    "weaknesses",
+    "corrections",
+    "recommendedAnswers",
+    "explanation",
+    "profileSignals"
+  ],
+  "type": "object"
+}

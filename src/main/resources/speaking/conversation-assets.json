@@ -1,0 +1,1424 @@
+{
+  "conversationInstructions": "You are TranslaCat's turn-based language speaking partner.\nThe learner is practicing the requested learning language.\n\nRules:\n1. Respond primarily in the learning language.\n2. Preserve the topic and goal, but keep each assistant turn concise enough for a learner to answer.\n3. Adapt vocabulary, sentence length, question complexity, and speaking difficulty to targetLevel and profile signals.\n4. CONVERSATION mode prioritizes flow. Do not interrupt for ordinary mistakes.\n   Only clarify when meaning is impossible to understand.\n5. COACHING mode may return concise corrections and a more natural expression\n   after the learner turn, then continue the conversation.\n   Corrections concern recognized text, not proof of what the learner actually said.\n   When STT is uncertain, clarify instead of declaring a learner error. improvementLink\n   is an optional legacy field: return null unless a real supported linkage was supplied;\n   never invent a URL, identifier, blank placeholder or prose to satisfy that field.\n6. If the learner repeatedly struggles, simplify the follow-up question or provide a short hint.\n7. Honor assistance usage. REPLAY/SLOW_PLAYBACK/SHOW_QUESTION do not imply\n   assistance. HINT/TRANSLATION are ASSISTED. SAMPLE_ANSWER is GUIDED.\n8. Do not punish assistance with a fixed score; preserve it as evaluation context.\n9. Respect the session max turns/time context and return shouldEnd when the session should naturally finish.\n10. Never reveal provider/model information.\n11. Return only the requested structured schema.\n12. Follow practiceMode exactly:\n    - READ_ALOUD: each assistant script is one item in the learner's daily repeat set. Generate one\n      short self-contained learning-language sentence to repeat. assistantText and scriptText must\n      be identical. Do not ask an open question and leave providedFacts/requiredIntents/\n      responseConstraints empty. Keep pronunciation load appropriate to targetLevel and normally\n      under 90 characters where the language permits. Make the new script meaningfully different\n      from earlier READ_ALOUD scripts in conversationHistory while staying on the resolved topic.\n    - GUIDED: generate a concrete speaking task. providedFacts, requiredIntents, and\n      responseConstraints must all be non-empty and learner-visible. The learner must be able to\n      answer using only the supplied guidance plus ordinary personal expression; never require\n      unknown real-world facts. scriptText must be null.\n    - FREE: ask for an opinion, experience, plan, preference, or explicitly imaginary situation.\n      Guidance should be minimal or empty; do not require the learner to invent facts about a real\n      incident they cannot know. scriptText must be null.\n13. Interpret selectedKeywords by type:\n    - TOPIC defines the broad conversation context and does not need to appear literally.\n    - VOCABULARY defines a specific learning focus and should be used naturally when appropriate.\n    - When both types are present, preserve the TOPIC context while emphasizing VOCABULARY.\n    - SYSTEM and CUSTOM have equal priority; source is metadata only.\n    - An empty selectedKeywords list adds no keyword constraint.\n    Never force every selected keyword into one turn.\n14. When category is KEYWORDS, the topic field is only a keyword seed, not a fixed final topic.\n    - If isInitialTurn=true, choose one coherent, concrete session topic or situation from selectedKeywords\n      that fits targetLevel and practiceMode. Return that concise learning-language title in resolvedTopic.\n    - Prefer a natural combination of one TOPIC keyword and at most a few useful VOCABULARY keywords.\n    - Do not create an unnatural scenario just to include every keyword.\n    - On later turns, preserve the already resolved topic and resolvedTopic may be null.",
+  "assistanceInstructions": "You are TranslaCat's language speaking assistance generator.\nReturn exactly one requested assistance item and do not advance the conversation.\n\nRules by assistanceType:\n- HINT: write one concise hint primarily in originLanguage. Do not reveal a complete answer.\n  You may include 1-3 useful learningLanguage words or short phrases.\n- TRANSLATION: translate assistantText into originLanguage faithfully. Do not add commentary.\n- SAMPLE_ANSWER: write one natural learner answer in learningLanguage, usually 1-2 sentences.\n  Match the learner level and topic. Do not include explanations.\n\nKeyword rules:\n- TOPIC supplies broad context; VOCABULARY supplies a specific learning focus.\n- When both are present, keep the TOPIC context and use VOCABULARY naturally when useful.\n- SYSTEM and CUSTOM have equal priority, and an empty selectedKeywords list adds no constraint.\n\nDo not change the question, do not simulate a new assistant turn, and return only the requested structured schema.",
+  "conversationRequest": {
+    "$defs": {
+      "AssistanceType": {
+        "enum": [
+          "REPLAY",
+          "SLOW_PLAYBACK",
+          "SHOW_QUESTION",
+          "HINT",
+          "TRANSLATION",
+          "SAMPLE_ANSWER"
+        ],
+        "title": "AssistanceType",
+        "type": "string"
+      },
+      "AssistanceUsage": {
+        "additionalProperties": false,
+        "properties": {
+          "type": {
+            "$ref": "#/$defs/AssistanceType"
+          },
+          "count": {
+            "default": 1,
+            "maximum": 100,
+            "minimum": 1,
+            "title": "Count",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "type"
+        ],
+        "title": "AssistanceUsage",
+        "type": "object"
+      },
+      "AudioQualitySignals": {
+        "additionalProperties": false,
+        "properties": {
+          "rms": {
+            "minimum": 0,
+            "title": "Rms",
+            "type": "number"
+          },
+          "peak": {
+            "minimum": 0,
+            "title": "Peak",
+            "type": "number"
+          },
+          "silenceRatio": {
+            "maximum": 1,
+            "minimum": 0,
+            "title": "Silenceratio",
+            "type": "number"
+          },
+          "sampleRate": {
+            "minimum": 1,
+            "title": "Samplerate",
+            "type": "integer"
+          },
+          "channels": {
+            "minimum": 1,
+            "title": "Channels",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "rms",
+          "peak",
+          "silenceRatio",
+          "sampleRate",
+          "channels"
+        ],
+        "title": "AudioQualitySignals",
+        "type": "object"
+      },
+      "ConversationMessage": {
+        "additionalProperties": false,
+        "properties": {
+          "role": {
+            "pattern": "^(USER|ASSISTANT)$",
+            "title": "Role",
+            "type": "string"
+          },
+          "text": {
+            "maxLength": 4000,
+            "minLength": 1,
+            "title": "Text",
+            "type": "string"
+          },
+          "turnId": {
+            "anyOf": [
+              {
+                "maxLength": 100,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Turnid"
+          }
+        },
+        "required": [
+          "role",
+          "text"
+        ],
+        "title": "ConversationMessage",
+        "type": "object"
+      },
+      "ConversationStartMode": {
+        "enum": [
+          "AI_FIRST",
+          "USER_FIRST",
+          "TOPIC_RECOMMENDED"
+        ],
+        "title": "ConversationStartMode",
+        "type": "string"
+      },
+      "CorrectionMode": {
+        "enum": [
+          "CONVERSATION",
+          "COACHING"
+        ],
+        "title": "CorrectionMode",
+        "type": "string"
+      },
+      "DifficultyPerformance": {
+        "additionalProperties": false,
+        "properties": {
+          "review": {
+            "anyOf": [
+              {
+                "maximum": 100,
+                "minimum": 0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Review"
+          },
+          "normal": {
+            "anyOf": [
+              {
+                "maximum": 100,
+                "minimum": 0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Normal"
+          },
+          "challenge": {
+            "anyOf": [
+              {
+                "maximum": 100,
+                "minimum": 0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Challenge"
+          }
+        },
+        "title": "DifficultyPerformance",
+        "type": "object"
+      },
+      "KeywordMastery": {
+        "additionalProperties": false,
+        "properties": {
+          "canonicalKey": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Canonicalkey",
+            "type": "string"
+          },
+          "score": {
+            "maximum": 100,
+            "minimum": 0,
+            "title": "Score",
+            "type": "number"
+          }
+        },
+        "required": [
+          "canonicalKey",
+          "score"
+        ],
+        "title": "KeywordMastery",
+        "type": "object"
+      },
+      "KeywordSource": {
+        "enum": [
+          "SYSTEM",
+          "CUSTOM"
+        ],
+        "title": "KeywordSource",
+        "type": "string"
+      },
+      "KeywordType": {
+        "enum": [
+          "TOPIC",
+          "VOCABULARY"
+        ],
+        "title": "KeywordType",
+        "type": "string"
+      },
+      "LearningProfileSummary": {
+        "additionalProperties": false,
+        "properties": {
+          "profileVersion": {
+            "anyOf": [
+              {
+                "maxLength": 100,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Profileversion"
+          },
+          "baseLevelScore": {
+            "anyOf": [
+              {
+                "maximum": 100,
+                "minimum": 0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Baselevelscore"
+          },
+          "skillScores": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/WritingSkillScores"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "grammarWeaknesses": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 50,
+            "title": "Grammarweaknesses",
+            "type": "array"
+          },
+          "keywordMasteries": {
+            "items": {
+              "$ref": "#/$defs/KeywordMastery"
+            },
+            "maxItems": 100,
+            "title": "Keywordmasteries",
+            "type": "array"
+          },
+          "difficultyPerformance": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/DifficultyPerformance"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "errorPatterns": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 50,
+            "title": "Errorpatterns",
+            "type": "array"
+          },
+          "trend": {
+            "anyOf": [
+              {
+                "maxLength": 50,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Trend"
+          },
+          "confidence": {
+            "anyOf": [
+              {
+                "maximum": 1,
+                "minimum": 0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Confidence"
+          },
+          "strengths": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 30,
+            "title": "Strengths",
+            "type": "array"
+          },
+          "weaknesses": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 30,
+            "title": "Weaknesses",
+            "type": "array"
+          },
+          "recommendedFocus": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 30,
+            "title": "Recommendedfocus",
+            "type": "array"
+          },
+          "additionalSignals": {
+            "additionalProperties": true,
+            "title": "Additionalsignals",
+            "type": "object"
+          }
+        },
+        "title": "LearningProfileSummary",
+        "type": "object"
+      },
+      "SelectedKeyword": {
+        "additionalProperties": false,
+        "properties": {
+          "key": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Key",
+            "type": "string"
+          },
+          "text": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Text",
+            "type": "string"
+          },
+          "source": {
+            "$ref": "#/$defs/KeywordSource"
+          },
+          "type": {
+            "$ref": "#/$defs/KeywordType"
+          },
+          "canonicalKey": {
+            "anyOf": [
+              {
+                "maxLength": 200,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Canonicalkey"
+          },
+          "selectionWeight": {
+            "anyOf": [
+              {
+                "maximum": 1,
+                "minimum": 0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Selectionweight"
+          }
+        },
+        "required": [
+          "key",
+          "text",
+          "source",
+          "type"
+        ],
+        "title": "SelectedKeyword",
+        "type": "object"
+      },
+      "SessionPolicySnapshot": {
+        "additionalProperties": false,
+        "properties": {
+          "maxSessionMinutes": {
+            "default": 10,
+            "maximum": 10,
+            "minimum": 1,
+            "title": "Maxsessionminutes",
+            "type": "integer"
+          },
+          "maxTurns": {
+            "default": 20,
+            "maximum": 20,
+            "minimum": 1,
+            "title": "Maxturns",
+            "type": "integer"
+          },
+          "minValidAudioSeconds": {
+            "default": 1,
+            "maximum": 10,
+            "minimum": 0.1,
+            "title": "Minvalidaudioseconds",
+            "type": "number"
+          },
+          "maxTurnAudioSeconds": {
+            "default": 60,
+            "maximum": 60,
+            "minimum": 1,
+            "title": "Maxturnaudioseconds",
+            "type": "number"
+          },
+          "maxAudioFileBytes": {
+            "default": 10485760,
+            "maximum": 10485760,
+            "minimum": 1024,
+            "title": "Maxaudiofilebytes",
+            "type": "integer"
+          },
+          "automaticRetryLimitPerStage": {
+            "default": 2,
+            "maximum": 2,
+            "minimum": 0,
+            "title": "Automaticretrylimitperstage",
+            "type": "integer"
+          },
+          "manualRetryLimitPerStage": {
+            "default": 1,
+            "maximum": 1,
+            "minimum": 0,
+            "title": "Manualretrylimitperstage",
+            "type": "integer"
+          }
+        },
+        "title": "SessionPolicySnapshot",
+        "type": "object"
+      },
+      "SpeakingPracticeMode": {
+        "enum": [
+          "READ_ALOUD",
+          "GUIDED",
+          "FREE"
+        ],
+        "title": "SpeakingPracticeMode",
+        "type": "string"
+      },
+      "SttAnalysisMetadata": {
+        "additionalProperties": false,
+        "properties": {
+          "provider": {
+            "title": "Provider",
+            "type": "string"
+          },
+          "model": {
+            "title": "Model",
+            "type": "string"
+          },
+          "modelVersion": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Modelversion"
+          },
+          "detectedLanguage": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Detectedlanguage"
+          },
+          "requestedLanguage": {
+            "title": "Requestedlanguage",
+            "type": "string"
+          },
+          "lowConfidenceThreshold": {
+            "maximum": 1,
+            "minimum": 0,
+            "title": "Lowconfidencethreshold",
+            "type": "number"
+          },
+          "audioDuration": {
+            "minimum": 0,
+            "title": "Audioduration",
+            "type": "number"
+          },
+          "audioQualitySignals": {
+            "$ref": "#/$defs/AudioQualitySignals"
+          },
+          "normalizationVersion": {
+            "title": "Normalizationversion",
+            "type": "string"
+          },
+          "sttHintVersion": {
+            "title": "Stthintversion",
+            "type": "string"
+          }
+        },
+        "required": [
+          "provider",
+          "model",
+          "requestedLanguage",
+          "lowConfidenceThreshold",
+          "audioDuration",
+          "audioQualitySignals",
+          "normalizationVersion",
+          "sttHintVersion"
+        ],
+        "title": "SttAnalysisMetadata",
+        "type": "object"
+      },
+      "SttSegment": {
+        "additionalProperties": false,
+        "properties": {
+          "startMs": {
+            "minimum": 0,
+            "title": "Startms",
+            "type": "integer"
+          },
+          "endMs": {
+            "minimum": 0,
+            "title": "Endms",
+            "type": "integer"
+          },
+          "text": {
+            "title": "Text",
+            "type": "string"
+          },
+          "confidence": {
+            "maximum": 1,
+            "minimum": 0,
+            "title": "Confidence",
+            "type": "number"
+          }
+        },
+        "required": [
+          "startMs",
+          "endMs",
+          "text",
+          "confidence"
+        ],
+        "title": "SttSegment",
+        "type": "object"
+      },
+      "TranscriptResult": {
+        "additionalProperties": false,
+        "properties": {
+          "text": {
+            "title": "Text",
+            "type": "string"
+          },
+          "language": {
+            "title": "Language",
+            "type": "string"
+          },
+          "confidence": {
+            "maximum": 1,
+            "minimum": 0,
+            "title": "Confidence",
+            "type": "number"
+          },
+          "isLowConfidence": {
+            "default": false,
+            "title": "Islowconfidence",
+            "type": "boolean"
+          },
+          "segments": {
+            "items": {
+              "$ref": "#/$defs/SttSegment"
+            },
+            "title": "Segments",
+            "type": "array"
+          },
+          "metadata": {
+            "$ref": "#/$defs/SttAnalysisMetadata"
+          }
+        },
+        "required": [
+          "text",
+          "language",
+          "confidence",
+          "metadata"
+        ],
+        "title": "TranscriptResult",
+        "type": "object"
+      },
+      "WritingSkillScores": {
+        "additionalProperties": false,
+        "properties": {
+          "meaning": {
+            "maximum": 100,
+            "minimum": 0,
+            "title": "Meaning",
+            "type": "number"
+          },
+          "grammar": {
+            "maximum": 100,
+            "minimum": 0,
+            "title": "Grammar",
+            "type": "number"
+          },
+          "vocabulary": {
+            "maximum": 100,
+            "minimum": 0,
+            "title": "Vocabulary",
+            "type": "number"
+          },
+          "naturalness": {
+            "maximum": 100,
+            "minimum": 0,
+            "title": "Naturalness",
+            "type": "number"
+          },
+          "expression": {
+            "maximum": 100,
+            "minimum": 0,
+            "title": "Expression",
+            "type": "number"
+          }
+        },
+        "required": [
+          "meaning",
+          "grammar",
+          "vocabulary",
+          "naturalness",
+          "expression"
+        ],
+        "title": "WritingSkillScores",
+        "type": "object"
+      }
+    },
+    "additionalProperties": false,
+    "properties": {
+      "requestId": {
+        "maxLength": 100,
+        "minLength": 1,
+        "title": "Requestid",
+        "type": "string"
+      },
+      "idempotencyKey": {
+        "maxLength": 200,
+        "minLength": 1,
+        "title": "Idempotencykey",
+        "type": "string"
+      },
+      "sessionId": {
+        "maxLength": 100,
+        "minLength": 1,
+        "title": "Sessionid",
+        "type": "string"
+      },
+      "turnIndex": {
+        "maximum": 20,
+        "minimum": 0,
+        "title": "Turnindex",
+        "type": "integer"
+      },
+      "problemIndex": {
+        "anyOf": [
+          {
+            "maximum": 5,
+            "minimum": 1,
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Problemindex"
+      },
+      "attemptIndex": {
+        "anyOf": [
+          {
+            "maximum": 3,
+            "minimum": 1,
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Attemptindex"
+      },
+      "readAloudGenerateNextProblem": {
+        "default": false,
+        "title": "Readaloudgeneratenextproblem",
+        "type": "boolean"
+      },
+      "originLanguage": {
+        "maxLength": 20,
+        "minLength": 2,
+        "title": "Originlanguage",
+        "type": "string"
+      },
+      "learningLanguage": {
+        "maxLength": 20,
+        "minLength": 2,
+        "title": "Learninglanguage",
+        "type": "string"
+      },
+      "topic": {
+        "maxLength": 500,
+        "minLength": 1,
+        "title": "Topic",
+        "type": "string"
+      },
+      "practiceMode": {
+        "$ref": "#/$defs/SpeakingPracticeMode",
+        "default": "FREE"
+      },
+      "category": {
+        "anyOf": [
+          {
+            "maxLength": 100,
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Category"
+      },
+      "goal": {
+        "anyOf": [
+          {
+            "maxLength": 1000,
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Goal"
+      },
+      "persona": {
+        "anyOf": [
+          {
+            "maxLength": 1000,
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Persona"
+      },
+      "conversationStartMode": {
+        "$ref": "#/$defs/ConversationStartMode"
+      },
+      "topicRecommendedStartMode": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/ConversationStartMode"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "correctionMode": {
+        "$ref": "#/$defs/CorrectionMode",
+        "default": "CONVERSATION"
+      },
+      "targetLevel": {
+        "anyOf": [
+          {
+            "maxLength": 50,
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Targetlevel"
+      },
+      "learningProfileSummary": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/LearningProfileSummary"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "selectedKeywords": {
+        "items": {
+          "$ref": "#/$defs/SelectedKeyword"
+        },
+        "maxItems": 20,
+        "title": "Selectedkeywords",
+        "type": "array"
+      },
+      "focusSignals": {
+        "items": {
+          "type": "string"
+        },
+        "maxItems": 30,
+        "title": "Focussignals",
+        "type": "array"
+      },
+      "conversationHistory": {
+        "items": {
+          "$ref": "#/$defs/ConversationMessage"
+        },
+        "maxItems": 100,
+        "title": "Conversationhistory",
+        "type": "array"
+      },
+      "assistanceUsage": {
+        "items": {
+          "$ref": "#/$defs/AssistanceUsage"
+        },
+        "maxItems": 20,
+        "title": "Assistanceusage",
+        "type": "array"
+      },
+      "sessionSummary": {
+        "anyOf": [
+          {
+            "maxLength": 4000,
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Sessionsummary"
+      },
+      "sessionElapsedSeconds": {
+        "default": 0,
+        "maximum": 600,
+        "minimum": 0,
+        "title": "Sessionelapsedseconds",
+        "type": "number"
+      },
+      "sessionPolicySnapshot": {
+        "$ref": "#/$defs/SessionPolicySnapshot"
+      },
+      "audioReference": {
+        "anyOf": [
+          {
+            "maxLength": 500,
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Audioreference"
+      },
+      "audioFormat": {
+        "anyOf": [
+          {
+            "maxLength": 100,
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Audioformat"
+      },
+      "durationSeconds": {
+        "anyOf": [
+          {
+            "maximum": 60,
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Durationseconds"
+      },
+      "voice": {
+        "default": "marin",
+        "maxLength": 100,
+        "minLength": 1,
+        "title": "Voice",
+        "type": "string"
+      },
+      "playbackSpeed": {
+        "default": "NORMAL",
+        "pattern": "^(SLOW|NORMAL)$",
+        "title": "Playbackspeed",
+        "type": "string"
+      },
+      "manualRetryAttempt": {
+        "default": 0,
+        "maximum": 1,
+        "minimum": 0,
+        "title": "Manualretryattempt",
+        "type": "integer"
+      },
+      "transcript": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/TranscriptResult"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "isInitialTurn": {
+        "default": false,
+        "title": "Isinitialturn",
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "requestId",
+      "idempotencyKey",
+      "sessionId",
+      "turnIndex",
+      "originLanguage",
+      "learningLanguage",
+      "topic",
+      "conversationStartMode"
+    ],
+    "title": "ConversationGenerationRequest",
+    "type": "object"
+  },
+  "assistanceRequest": {
+    "$defs": {
+      "AssistanceType": {
+        "enum": [
+          "REPLAY",
+          "SLOW_PLAYBACK",
+          "SHOW_QUESTION",
+          "HINT",
+          "TRANSLATION",
+          "SAMPLE_ANSWER"
+        ],
+        "title": "AssistanceType",
+        "type": "string"
+      },
+      "ConversationMessage": {
+        "additionalProperties": false,
+        "properties": {
+          "role": {
+            "pattern": "^(USER|ASSISTANT)$",
+            "title": "Role",
+            "type": "string"
+          },
+          "text": {
+            "maxLength": 4000,
+            "minLength": 1,
+            "title": "Text",
+            "type": "string"
+          },
+          "turnId": {
+            "anyOf": [
+              {
+                "maxLength": 100,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Turnid"
+          }
+        },
+        "required": [
+          "role",
+          "text"
+        ],
+        "title": "ConversationMessage",
+        "type": "object"
+      },
+      "KeywordSource": {
+        "enum": [
+          "SYSTEM",
+          "CUSTOM"
+        ],
+        "title": "KeywordSource",
+        "type": "string"
+      },
+      "KeywordType": {
+        "enum": [
+          "TOPIC",
+          "VOCABULARY"
+        ],
+        "title": "KeywordType",
+        "type": "string"
+      },
+      "SelectedKeyword": {
+        "additionalProperties": false,
+        "properties": {
+          "key": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Key",
+            "type": "string"
+          },
+          "text": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Text",
+            "type": "string"
+          },
+          "source": {
+            "$ref": "#/$defs/KeywordSource"
+          },
+          "type": {
+            "$ref": "#/$defs/KeywordType"
+          },
+          "canonicalKey": {
+            "anyOf": [
+              {
+                "maxLength": 200,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Canonicalkey"
+          },
+          "selectionWeight": {
+            "anyOf": [
+              {
+                "maximum": 1,
+                "minimum": 0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Selectionweight"
+          }
+        },
+        "required": [
+          "key",
+          "text",
+          "source",
+          "type"
+        ],
+        "title": "SelectedKeyword",
+        "type": "object"
+      }
+    },
+    "additionalProperties": false,
+    "properties": {
+      "requestId": {
+        "maxLength": 100,
+        "minLength": 1,
+        "title": "Requestid",
+        "type": "string"
+      },
+      "idempotencyKey": {
+        "maxLength": 200,
+        "minLength": 1,
+        "title": "Idempotencykey",
+        "type": "string"
+      },
+      "sessionId": {
+        "maxLength": 100,
+        "minLength": 1,
+        "title": "Sessionid",
+        "type": "string"
+      },
+      "turnIndex": {
+        "maximum": 20,
+        "minimum": 1,
+        "title": "Turnindex",
+        "type": "integer"
+      },
+      "assistanceType": {
+        "$ref": "#/$defs/AssistanceType"
+      },
+      "originLanguage": {
+        "maxLength": 20,
+        "minLength": 2,
+        "title": "Originlanguage",
+        "type": "string"
+      },
+      "learningLanguage": {
+        "maxLength": 20,
+        "minLength": 2,
+        "title": "Learninglanguage",
+        "type": "string"
+      },
+      "topic": {
+        "maxLength": 500,
+        "minLength": 1,
+        "title": "Topic",
+        "type": "string"
+      },
+      "targetLevel": {
+        "anyOf": [
+          {
+            "maxLength": 50,
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Targetlevel"
+      },
+      "assistantText": {
+        "maxLength": 4000,
+        "minLength": 1,
+        "title": "Assistanttext",
+        "type": "string"
+      },
+      "conversationHistory": {
+        "items": {
+          "$ref": "#/$defs/ConversationMessage"
+        },
+        "maxItems": 100,
+        "title": "Conversationhistory",
+        "type": "array"
+      },
+      "selectedKeywords": {
+        "items": {
+          "$ref": "#/$defs/SelectedKeyword"
+        },
+        "maxItems": 20,
+        "title": "Selectedkeywords",
+        "type": "array"
+      },
+      "sessionSummary": {
+        "anyOf": [
+          {
+            "maxLength": 4000,
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Sessionsummary"
+      }
+    },
+    "required": [
+      "requestId",
+      "idempotencyKey",
+      "sessionId",
+      "turnIndex",
+      "assistanceType",
+      "originLanguage",
+      "learningLanguage",
+      "topic",
+      "assistantText"
+    ],
+    "title": "AssistanceRequest",
+    "type": "object"
+  },
+  "conversationPayload": {
+    "$defs": {
+      "CoachingCorrection": {
+        "additionalProperties": false,
+        "properties": {
+          "original": {
+            "maxLength": 2000,
+            "minLength": 1,
+            "title": "Original",
+            "type": "string"
+          },
+          "improved": {
+            "maxLength": 2000,
+            "minLength": 1,
+            "title": "Improved",
+            "type": "string"
+          },
+          "explanation": {
+            "maxLength": 2000,
+            "minLength": 1,
+            "title": "Explanation",
+            "type": "string"
+          },
+          "improvementLink": {
+            "anyOf": [
+              {
+                "maxLength": 100,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Improvementlink"
+          }
+        },
+        "required": [
+          "original",
+          "improved",
+          "explanation"
+        ],
+        "title": "CoachingCorrection",
+        "type": "object"
+      }
+    },
+    "additionalProperties": false,
+    "properties": {
+      "resolvedTopic": {
+        "anyOf": [
+          {
+            "maxLength": 500,
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Resolvedtopic"
+      },
+      "assistantText": {
+        "maxLength": 4000,
+        "minLength": 1,
+        "title": "Assistanttext",
+        "type": "string"
+      },
+      "scriptText": {
+        "anyOf": [
+          {
+            "maxLength": 4000,
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Scripttext"
+      },
+      "providedFacts": {
+        "items": {
+          "type": "string"
+        },
+        "maxItems": 12,
+        "title": "Providedfacts",
+        "type": "array"
+      },
+      "requiredIntents": {
+        "items": {
+          "type": "string"
+        },
+        "maxItems": 12,
+        "title": "Requiredintents",
+        "type": "array"
+      },
+      "responseConstraints": {
+        "items": {
+          "type": "string"
+        },
+        "maxItems": 12,
+        "title": "Responseconstraints",
+        "type": "array"
+      },
+      "intent": {
+        "maxLength": 200,
+        "minLength": 1,
+        "title": "Intent",
+        "type": "string"
+      },
+      "difficulty": {
+        "maxLength": 100,
+        "minLength": 1,
+        "title": "Difficulty",
+        "type": "string"
+      },
+      "shouldEnd": {
+        "default": false,
+        "title": "Shouldend",
+        "type": "boolean"
+      },
+      "endReason": {
+        "anyOf": [
+          {
+            "maxLength": 500,
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Endreason"
+      },
+      "hint": {
+        "anyOf": [
+          {
+            "maxLength": 1000,
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Hint"
+      },
+      "coachingCorrections": {
+        "items": {
+          "$ref": "#/$defs/CoachingCorrection"
+        },
+        "maxItems": 10,
+        "title": "Coachingcorrections",
+        "type": "array"
+      },
+      "sessionSummary": {
+        "anyOf": [
+          {
+            "maxLength": 4000,
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Sessionsummary"
+      }
+    },
+    "required": [
+      "assistantText",
+      "intent",
+      "difficulty"
+    ],
+    "title": "ConversationPayload",
+    "type": "object"
+  },
+  "assistancePayload": {
+    "$defs": {
+      "AssistanceType": {
+        "enum": [
+          "REPLAY",
+          "SLOW_PLAYBACK",
+          "SHOW_QUESTION",
+          "HINT",
+          "TRANSLATION",
+          "SAMPLE_ANSWER"
+        ],
+        "title": "AssistanceType",
+        "type": "string"
+      }
+    },
+    "additionalProperties": false,
+    "properties": {
+      "type": {
+        "$ref": "#/$defs/AssistanceType"
+      },
+      "content": {
+        "maxLength": 4000,
+        "minLength": 1,
+        "title": "Content",
+        "type": "string"
+      }
+    },
+    "required": [
+      "type",
+      "content"
+    ],
+    "title": "AssistancePayload",
+    "type": "object"
+  }
+}

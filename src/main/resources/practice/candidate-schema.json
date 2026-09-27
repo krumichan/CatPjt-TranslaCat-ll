@@ -1,0 +1,127 @@
+{
+  "type": "object",
+  "properties": {
+    "questions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "order": {
+            "type": "integer"
+          },
+          "questionType": {
+            "type": "string",
+            "enum": [
+              "SINGLE_CHOICE",
+              "ORDERING"
+            ]
+          },
+          "difficulty": {
+            "type": "string",
+            "enum": [
+              "EASIER",
+              "CURRENT",
+              "CHALLENGE"
+            ]
+          },
+          "complexityBand": {
+            "type": "integer"
+          },
+          "passageId": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "passageText": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "prompt": {
+            "type": "string"
+          },
+          "options": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "key": {
+                  "type": "string"
+                },
+                "text": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "key",
+                "text"
+              ]
+            }
+          },
+          "correctAnswer": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "skillTag": {
+            "type": "string"
+          },
+          "evidenceText": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "explanationLearning": {
+            "type": "string"
+          },
+          "targetExpression": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "canonicalKey": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "reviewTarget": {
+            "type": "boolean"
+          },
+          "vocabularyCandidates": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "order",
+          "questionType",
+          "difficulty",
+          "complexityBand",
+          "passageId",
+          "passageText",
+          "prompt",
+          "options",
+          "correctAnswer",
+          "skillTag",
+          "evidenceText",
+          "explanationLearning",
+          "targetExpression",
+          "canonicalKey",
+          "reviewTarget",
+          "vocabularyCandidates"
+        ]
+      }
+    }
+  },
+  "required": [
+    "questions"
+  ]
+}

@@ -459,7 +459,7 @@ internal class ExposedLevelTestRepository(private val requireTransaction: () -> 
         if (ids.isEmpty()) return emptyList()
         return LevelItemsTable.selectAll()
             .where { (LevelItemsTable.sessionId inList ids) and (LevelItemsTable.createdAt greaterEq since) }
-            .orderBy(LevelItemsTable.id, SortOrder.DESC)
+            .orderBy(LevelItemsTable.createdAt to SortOrder.DESC, LevelItemsTable.id to SortOrder.DESC)
             .limit(2000)
             .map(::item)
     }

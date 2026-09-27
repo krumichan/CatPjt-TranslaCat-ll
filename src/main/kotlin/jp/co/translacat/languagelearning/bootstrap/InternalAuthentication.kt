@@ -17,8 +17,6 @@ internal fun Application.configureInternalAuthentication(
     check(settings.enabled)
     install(Authentication) {
         configureKeywordAuthentication(settings, clock)
-        configureResultJournalAuthentication(settings, clock)
-        configureGrowthAuthentication(settings, clock)
         jwt(INTERNAL_AUTH) {
             realm = "translacat-ll-internal"
             verifier(

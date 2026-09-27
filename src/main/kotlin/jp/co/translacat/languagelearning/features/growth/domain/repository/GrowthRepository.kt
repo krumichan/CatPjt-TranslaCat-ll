@@ -17,8 +17,12 @@ internal interface GrowthRepository {
     fun evidenceList(userId: Long, source: String?, limit: Int): List<GrowthEvidence>
     fun saveEvidence(value: GrowthEvidence)
     fun activity(userId: Long, source: String, referenceId: String): GrowthActivity?
-    fun activities(userId: Long, source: String?, from: LocalDate, to: LocalDate, afterId: Long, limit: Int): List<GrowthActivity>
+    fun activities(
+        userId: Long, source: String?, from: LocalDate, to: LocalDate, afterId: Long, limit: Int,
+    ): List<GrowthActivity>
+
     fun saveActivity(value: GrowthActivity): GrowthActivity
+    fun activityRevision(userId: Long): Long
     fun metrics(activityId: Long): List<GrowthMetric>
     fun replaceMetrics(activityId: Long, metrics: List<GrowthMetric>)
 }

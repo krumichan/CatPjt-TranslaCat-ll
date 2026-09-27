@@ -32,5 +32,8 @@ internal object GrowthProfilesTable : Table("language_learning_profile") {
     val createdBy = varchar("created_by", 100)
     val updatedBy = varchar("updated_by", 100)
     override val primaryKey = PrimaryKey(id)
-    init { uniqueIndex(userId) }
+
+    init {
+        uniqueIndex(userId)
+    }
 }

@@ -1,0 +1,1420 @@
+[
+  {
+    "name": "normal",
+    "request": {
+      "requestId": "evaluation-1",
+      "idempotencyKey": "evaluation-idem-1",
+      "itemId": 301,
+      "attemptId": 401,
+      "evaluationPurpose": "OFFICIAL",
+      "answerRevealed": false,
+      "assistanceUsage": [],
+      "policyVersion": "listening-profile",
+      "modelConfigVersion": "listening-model-config",
+      "manualRetryAttempt": 0,
+      "sourceText": "hello world",
+      "sourceDurationSeconds": 2.0,
+      "learningLanguage": "en",
+      "phraseHints": [
+        "hello",
+        "world"
+      ]
+    },
+    "audioBase64": "bm9ybWFsaXplZC13YXY=",
+    "quality": {
+      "rms": 0.1,
+      "peak": 0.5,
+      "silenceRatio": 0.05,
+      "sampleRate": 16000,
+      "channels": 1
+    },
+    "duration": 2.0,
+    "transcript": {
+      "text": "hello world",
+      "language": "en",
+      "language_probability": 0.98,
+      "segments": [
+        {
+          "start_seconds": 0.0,
+          "end_seconds": 2.0,
+          "text": "hello world",
+          "avg_logprob": -0.05
+        }
+      ],
+      "provider": "fake-stt",
+      "model": "fake-stt-model",
+      "model_version": "fake-stt"
+    },
+    "sttCalls": 1,
+    "result": {
+      "taskType": "REPEAT_AFTER_AUDIO",
+      "status": "EVALUATED",
+      "evaluable": true,
+      "score": 99,
+      "confidence": 0.9839,
+      "reasonCode": null,
+      "assistanceLevel": "INDEPENDENT",
+      "metrics": [
+        {
+          "type": "PRONUNCIATION",
+          "state": "EVALUATED",
+          "score": 99.0,
+          "weight": 0.4,
+          "confidence": 0.9599,
+          "evidence": [
+            {
+              "startMs": null,
+              "endMs": null,
+              "reference": null,
+              "recognized": null,
+              "metric": "PRONUNCIATION",
+              "severity": "INFO",
+              "feedback": "Token alignment와 음향 품질(1.00)을 함께 확인했습니다."
+            }
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "PROSODY_RHYTHM",
+          "state": "EVALUATED",
+          "score": 100.0,
+          "weight": 0.25,
+          "confidence": 0.9599,
+          "evidence": [
+            {
+              "startMs": null,
+              "endMs": null,
+              "reference": null,
+              "recognized": null,
+              "metric": "PROSODY_RHYTHM",
+              "severity": "INFO",
+              "feedback": "Reference 대비 발화 길이 비율(1.00)과 음향 흐름을 확인했습니다."
+            }
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "FLUENCY",
+          "state": "EVALUATED",
+          "score": 97.0,
+          "weight": 0.2,
+          "confidence": 0.9599,
+          "evidence": [
+            {
+              "startMs": null,
+              "endMs": null,
+              "reference": null,
+              "recognized": null,
+              "metric": "FLUENCY",
+              "severity": "INFO",
+              "feedback": "발화 구간 비율(0.95)과 속도 안정성을 확인했습니다."
+            }
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "COMPLETENESS",
+          "state": "EVALUATED",
+          "score": 100.0,
+          "weight": 0.15,
+          "confidence": 0.9599,
+          "evidence": [
+            {
+              "startMs": null,
+              "endMs": null,
+              "reference": null,
+              "recognized": null,
+              "metric": "COMPLETENESS",
+              "severity": "INFO",
+              "feedback": "원문 Token Coverage(1.00)를 확인했습니다."
+            }
+          ],
+          "notEvaluableReason": null
+        }
+      ],
+      "alignment": [
+        {
+          "source": "hello",
+          "answer": "hello",
+          "status": "MATCH",
+          "sourceIndex": 0,
+          "answerIndex": 0,
+          "startMs": 0,
+          "endMs": 1000
+        },
+        {
+          "source": "world",
+          "answer": "world",
+          "status": "MATCH",
+          "sourceIndex": 1,
+          "answerIndex": 1,
+          "startMs": 1000,
+          "endMs": 2000
+        }
+      ],
+      "evidence": [
+        {
+          "startMs": null,
+          "endMs": null,
+          "reference": null,
+          "recognized": null,
+          "metric": "PRONUNCIATION",
+          "severity": "INFO",
+          "feedback": "Token alignment와 음향 품질(1.00)을 함께 확인했습니다."
+        },
+        {
+          "startMs": null,
+          "endMs": null,
+          "reference": null,
+          "recognized": null,
+          "metric": "PROSODY_RHYTHM",
+          "severity": "INFO",
+          "feedback": "Reference 대비 발화 길이 비율(1.00)과 음향 흐름을 확인했습니다."
+        },
+        {
+          "startMs": null,
+          "endMs": null,
+          "reference": null,
+          "recognized": null,
+          "metric": "FLUENCY",
+          "severity": "INFO",
+          "feedback": "발화 구간 비율(0.95)과 속도 안정성을 확인했습니다."
+        },
+        {
+          "startMs": null,
+          "endMs": null,
+          "reference": null,
+          "recognized": null,
+          "metric": "COMPLETENESS",
+          "severity": "INFO",
+          "feedback": "원문 Token Coverage(1.00)를 확인했습니다."
+        }
+      ],
+      "strengths": [
+        "원문의 핵심 Token과 흐름을 안정적으로 재현했습니다."
+      ],
+      "improvements": [
+        "다음 시도에서는 끊김 없는 발화에 집중해 보세요.",
+        "다음 시도에서는 소리의 명료도에 집중해 보세요."
+      ],
+      "recommendedInterpretations": [],
+      "deliveredMeaningUnits": [],
+      "omittedMeaningUnits": [],
+      "misunderstoodMeaningUnits": [],
+      "addedInformation": [],
+      "profileSignals": [
+        {
+          "metric": "PRONUNCIATION",
+          "score": 99.0,
+          "confidence": 0.9839,
+          "evidenceWeight": 1.0,
+          "evidenceIds": [
+            "evidence-1",
+            "evidence-2",
+            "evidence-3",
+            "evidence-4"
+          ],
+          "sourceTask": "REPEAT_AFTER_AUDIO",
+          "policyVersion": "listening-profile"
+        },
+        {
+          "metric": "FLUENCY",
+          "score": 97.0,
+          "confidence": 0.9839,
+          "evidenceWeight": 0.8,
+          "evidenceIds": [
+            "evidence-1",
+            "evidence-2",
+            "evidence-3",
+            "evidence-4"
+          ],
+          "sourceTask": "REPEAT_AFTER_AUDIO",
+          "policyVersion": "listening-profile"
+        },
+        {
+          "metric": "LISTENING_RECOGNITION",
+          "score": 99.0,
+          "confidence": 0.9839,
+          "evidenceWeight": 0.5,
+          "evidenceIds": [
+            "evidence-1",
+            "evidence-2",
+            "evidence-3",
+            "evidence-4"
+          ],
+          "sourceTask": "REPEAT_AFTER_AUDIO",
+          "policyVersion": "listening-profile"
+        }
+      ],
+      "profileEligible": true,
+      "assistanceUsage": [],
+      "debugMetadata": {
+        "repeatEvaluatorVersion": "listening-repeat-acoustic",
+        "alignmentVersion": "listening-alignment",
+        "sttHintVersion": "listening-stt-hint",
+        "supportedEvidence": [
+          "TOKEN_ALIGNMENT",
+          "STT_SEGMENT_CONFIDENCE",
+          "RMS",
+          "PEAK",
+          "SILENCE_RATIO",
+          "DURATION_RATIO"
+        ],
+        "phonemeProviderScoreAvailable": false,
+        "audioQualityScore": 1.0,
+        "durationRatio": 1.0,
+        "detectedLanguage": "en"
+      }
+    }
+  },
+  {
+    "name": "noisy",
+    "request": {
+      "requestId": "evaluation-1",
+      "idempotencyKey": "evaluation-idem-1",
+      "itemId": 301,
+      "attemptId": 401,
+      "evaluationPurpose": "OFFICIAL",
+      "answerRevealed": false,
+      "assistanceUsage": [],
+      "policyVersion": "listening-profile",
+      "modelConfigVersion": "listening-model-config",
+      "manualRetryAttempt": 0,
+      "sourceText": "hello world",
+      "sourceDurationSeconds": 2.0,
+      "learningLanguage": "en",
+      "phraseHints": [
+        "hello",
+        "world"
+      ]
+    },
+    "audioBase64": "bm9ybWFsaXplZC13YXY=",
+    "quality": {
+      "rms": 0.01,
+      "peak": 0.99,
+      "silenceRatio": 0.5,
+      "sampleRate": 16000,
+      "channels": 1
+    },
+    "duration": 2.0,
+    "transcript": {
+      "text": "hello world",
+      "language": "en",
+      "language_probability": 0.98,
+      "segments": [
+        {
+          "start_seconds": 0.0,
+          "end_seconds": 2.0,
+          "text": "hello world",
+          "avg_logprob": -0.05
+        }
+      ],
+      "provider": "fake-stt",
+      "model": "fake-stt-model",
+      "model_version": "fake-stt"
+    },
+    "sttCalls": 1,
+    "result": {
+      "taskType": "REPEAT_AFTER_AUDIO",
+      "status": "EVALUATED",
+      "evaluable": true,
+      "score": 87,
+      "confidence": 0.8758,
+      "reasonCode": null,
+      "assistanceLevel": "INDEPENDENT",
+      "metrics": [
+        {
+          "type": "PRONUNCIATION",
+          "state": "EVALUATED",
+          "score": 88.0,
+          "weight": 0.4,
+          "confidence": 0.5675,
+          "evidence": [
+            {
+              "startMs": null,
+              "endMs": null,
+              "reference": null,
+              "recognized": null,
+              "metric": "PRONUNCIATION",
+              "severity": "INFO",
+              "feedback": "Token alignment와 음향 품질(0.57)을 함께 확인했습니다."
+            }
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "PROSODY_RHYTHM",
+          "state": "EVALUATED",
+          "score": 83.0,
+          "weight": 0.25,
+          "confidence": 0.5675,
+          "evidence": [
+            {
+              "startMs": null,
+              "endMs": null,
+              "reference": null,
+              "recognized": null,
+              "metric": "PROSODY_RHYTHM",
+              "severity": "INFO",
+              "feedback": "Reference 대비 발화 길이 비율(1.00)과 음향 흐름을 확인했습니다."
+            }
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "FLUENCY",
+          "state": "EVALUATED",
+          "score": 82.0,
+          "weight": 0.2,
+          "confidence": 0.5675,
+          "evidence": [
+            {
+              "startMs": null,
+              "endMs": null,
+              "reference": null,
+              "recognized": null,
+              "metric": "FLUENCY",
+              "severity": "INFO",
+              "feedback": "발화 구간 비율(0.50)과 속도 안정성을 확인했습니다."
+            }
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "COMPLETENESS",
+          "state": "EVALUATED",
+          "score": 100.0,
+          "weight": 0.15,
+          "confidence": 0.5675,
+          "evidence": [
+            {
+              "startMs": null,
+              "endMs": null,
+              "reference": null,
+              "recognized": null,
+              "metric": "COMPLETENESS",
+              "severity": "INFO",
+              "feedback": "원문 Token Coverage(1.00)를 확인했습니다."
+            }
+          ],
+          "notEvaluableReason": null
+        }
+      ],
+      "alignment": [
+        {
+          "source": "hello",
+          "answer": "hello",
+          "status": "MATCH",
+          "sourceIndex": 0,
+          "answerIndex": 0,
+          "startMs": 0,
+          "endMs": 1000
+        },
+        {
+          "source": "world",
+          "answer": "world",
+          "status": "MATCH",
+          "sourceIndex": 1,
+          "answerIndex": 1,
+          "startMs": 1000,
+          "endMs": 2000
+        }
+      ],
+      "evidence": [
+        {
+          "startMs": null,
+          "endMs": null,
+          "reference": null,
+          "recognized": null,
+          "metric": "PRONUNCIATION",
+          "severity": "INFO",
+          "feedback": "Token alignment와 음향 품질(0.57)을 함께 확인했습니다."
+        },
+        {
+          "startMs": null,
+          "endMs": null,
+          "reference": null,
+          "recognized": null,
+          "metric": "PROSODY_RHYTHM",
+          "severity": "INFO",
+          "feedback": "Reference 대비 발화 길이 비율(1.00)과 음향 흐름을 확인했습니다."
+        },
+        {
+          "startMs": null,
+          "endMs": null,
+          "reference": null,
+          "recognized": null,
+          "metric": "FLUENCY",
+          "severity": "INFO",
+          "feedback": "발화 구간 비율(0.50)과 속도 안정성을 확인했습니다."
+        },
+        {
+          "startMs": null,
+          "endMs": null,
+          "reference": null,
+          "recognized": null,
+          "metric": "COMPLETENESS",
+          "severity": "INFO",
+          "feedback": "원문 Token Coverage(1.00)를 확인했습니다."
+        }
+      ],
+      "strengths": [
+        "원문의 핵심 Token과 흐름을 안정적으로 재현했습니다."
+      ],
+      "improvements": [
+        "다음 시도에서는 끊김 없는 발화에 집중해 보세요.",
+        "다음 시도에서는 억양과 리듬에 집중해 보세요."
+      ],
+      "recommendedInterpretations": [],
+      "deliveredMeaningUnits": [],
+      "omittedMeaningUnits": [],
+      "misunderstoodMeaningUnits": [],
+      "addedInformation": [],
+      "profileSignals": [
+        {
+          "metric": "PRONUNCIATION",
+          "score": 88.0,
+          "confidence": 0.8758,
+          "evidenceWeight": 1.0,
+          "evidenceIds": [
+            "evidence-1",
+            "evidence-2",
+            "evidence-3",
+            "evidence-4"
+          ],
+          "sourceTask": "REPEAT_AFTER_AUDIO",
+          "policyVersion": "listening-profile"
+        },
+        {
+          "metric": "FLUENCY",
+          "score": 82.0,
+          "confidence": 0.8758,
+          "evidenceWeight": 0.8,
+          "evidenceIds": [
+            "evidence-1",
+            "evidence-2",
+            "evidence-3",
+            "evidence-4"
+          ],
+          "sourceTask": "REPEAT_AFTER_AUDIO",
+          "policyVersion": "listening-profile"
+        },
+        {
+          "metric": "LISTENING_RECOGNITION",
+          "score": 87.0,
+          "confidence": 0.8758,
+          "evidenceWeight": 0.5,
+          "evidenceIds": [
+            "evidence-1",
+            "evidence-2",
+            "evidence-3",
+            "evidence-4"
+          ],
+          "sourceTask": "REPEAT_AFTER_AUDIO",
+          "policyVersion": "listening-profile"
+        }
+      ],
+      "profileEligible": true,
+      "assistanceUsage": [],
+      "debugMetadata": {
+        "repeatEvaluatorVersion": "listening-repeat-acoustic",
+        "alignmentVersion": "listening-alignment",
+        "sttHintVersion": "listening-stt-hint",
+        "supportedEvidence": [
+          "TOKEN_ALIGNMENT",
+          "STT_SEGMENT_CONFIDENCE",
+          "RMS",
+          "PEAK",
+          "SILENCE_RATIO",
+          "DURATION_RATIO"
+        ],
+        "phonemeProviderScoreAvailable": false,
+        "audioQualityScore": 0.5675,
+        "durationRatio": 1.0,
+        "detectedLanguage": "en"
+      }
+    }
+  },
+  {
+    "name": "mismatch",
+    "request": {
+      "requestId": "evaluation-1",
+      "idempotencyKey": "evaluation-idem-1",
+      "itemId": 301,
+      "attemptId": 401,
+      "evaluationPurpose": "OFFICIAL",
+      "answerRevealed": false,
+      "assistanceUsage": [],
+      "policyVersion": "listening-profile",
+      "modelConfigVersion": "listening-model-config",
+      "manualRetryAttempt": 0,
+      "sourceText": "hello world",
+      "sourceDurationSeconds": 2.0,
+      "learningLanguage": "en",
+      "phraseHints": [
+        "hello",
+        "world"
+      ]
+    },
+    "audioBase64": "bm9ybWFsaXplZC13YXY=",
+    "quality": {
+      "rms": 0.1,
+      "peak": 0.5,
+      "silenceRatio": 0.05,
+      "sampleRate": 16000,
+      "channels": 1
+    },
+    "duration": 2.0,
+    "transcript": {
+      "text": "hello world",
+      "language": "ja",
+      "language_probability": 0.95,
+      "segments": [
+        {
+          "start_seconds": 0.0,
+          "end_seconds": 2.0,
+          "text": "hello world",
+          "avg_logprob": -0.05
+        }
+      ],
+      "provider": "fake-stt",
+      "model": "fake-stt-model",
+      "model_version": "fake-stt"
+    },
+    "sttCalls": 1,
+    "result": {
+      "taskType": "REPEAT_AFTER_AUDIO",
+      "status": "NOT_EVALUABLE",
+      "evaluable": false,
+      "score": null,
+      "confidence": 0.95,
+      "reasonCode": "LANGUAGE_MISMATCH",
+      "assistanceLevel": "INDEPENDENT",
+      "metrics": [],
+      "alignment": [],
+      "evidence": [],
+      "strengths": [],
+      "improvements": [
+        "학습 언어로 원문을 다시 따라 말해 주세요."
+      ],
+      "recommendedInterpretations": [],
+      "deliveredMeaningUnits": [],
+      "omittedMeaningUnits": [],
+      "misunderstoodMeaningUnits": [],
+      "addedInformation": [],
+      "profileSignals": [],
+      "profileEligible": false,
+      "assistanceUsage": [],
+      "debugMetadata": {
+        "expectedLanguage": "en",
+        "detectedLanguage": "ja"
+      }
+    }
+  },
+  {
+    "name": "insufficient",
+    "request": {
+      "requestId": "evaluation-1",
+      "idempotencyKey": "evaluation-idem-1",
+      "itemId": 301,
+      "attemptId": 401,
+      "evaluationPurpose": "OFFICIAL",
+      "answerRevealed": false,
+      "assistanceUsage": [],
+      "policyVersion": "listening-profile",
+      "modelConfigVersion": "listening-model-config",
+      "manualRetryAttempt": 0,
+      "sourceText": "hello world",
+      "sourceDurationSeconds": 2.0,
+      "learningLanguage": "en",
+      "phraseHints": [
+        "hello",
+        "world"
+      ]
+    },
+    "audioBase64": "bm9ybWFsaXplZC13YXY=",
+    "quality": {
+      "rms": 0.1,
+      "peak": 0.5,
+      "silenceRatio": 0.05,
+      "sampleRate": 16000,
+      "channels": 1
+    },
+    "duration": 2.0,
+    "transcript": {
+      "text": "unrelated",
+      "language": "en",
+      "language_probability": 0.98,
+      "segments": [
+        {
+          "start_seconds": 0.0,
+          "end_seconds": 2.0,
+          "text": "unrelated",
+          "avg_logprob": -0.05
+        }
+      ],
+      "provider": "fake-stt",
+      "model": "fake-stt-model",
+      "model_version": "fake-stt"
+    },
+    "sttCalls": 1,
+    "result": {
+      "taskType": "REPEAT_AFTER_AUDIO",
+      "status": "NOT_EVALUABLE",
+      "evaluable": false,
+      "score": null,
+      "confidence": 0.0,
+      "reasonCode": "ALIGNMENT_INSUFFICIENT",
+      "assistanceLevel": "INDEPENDENT",
+      "metrics": [],
+      "alignment": [],
+      "evidence": [],
+      "strengths": [],
+      "improvements": [
+        "원문과 겹치는 발화가 부족합니다. 전체 문장을 다시 따라 말해 주세요."
+      ],
+      "recommendedInterpretations": [],
+      "deliveredMeaningUnits": [],
+      "omittedMeaningUnits": [],
+      "misunderstoodMeaningUnits": [],
+      "addedInformation": [],
+      "profileSignals": [],
+      "profileEligible": false,
+      "assistanceUsage": [],
+      "debugMetadata": {
+        "alignmentVersion": "listening-alignment",
+        "referenceCoverage": 0.0
+      }
+    }
+  },
+  {
+    "name": "non_speech",
+    "request": {
+      "requestId": "evaluation-1",
+      "idempotencyKey": "evaluation-idem-1",
+      "itemId": 301,
+      "attemptId": 401,
+      "evaluationPurpose": "OFFICIAL",
+      "answerRevealed": false,
+      "assistanceUsage": [],
+      "policyVersion": "listening-profile",
+      "modelConfigVersion": "listening-model-config",
+      "manualRetryAttempt": 0,
+      "sourceText": "hello world",
+      "sourceDurationSeconds": 2.0,
+      "learningLanguage": "en",
+      "phraseHints": [
+        "hello",
+        "world"
+      ]
+    },
+    "audioBase64": "bm9ybWFsaXplZC13YXY=",
+    "quality": {
+      "rms": 0.1,
+      "peak": 0.5,
+      "silenceRatio": 0.05,
+      "sampleRate": 16000,
+      "channels": 1
+    },
+    "duration": 2.0,
+    "transcript": {
+      "text": "",
+      "language": "en",
+      "language_probability": 0.98,
+      "segments": [
+        {
+          "start_seconds": 0.0,
+          "end_seconds": 2.0,
+          "text": "",
+          "avg_logprob": -0.05
+        }
+      ],
+      "provider": "fake-stt",
+      "model": "fake-stt-model",
+      "model_version": "fake-stt"
+    },
+    "sttCalls": 1,
+    "result": {
+      "taskType": "REPEAT_AFTER_AUDIO",
+      "status": "NOT_EVALUABLE",
+      "evaluable": false,
+      "score": null,
+      "confidence": null,
+      "reasonCode": "NON_SPEECH",
+      "assistanceLevel": "INDEPENDENT",
+      "metrics": [],
+      "alignment": [],
+      "evidence": [],
+      "strengths": [],
+      "improvements": [
+        "전사 가능한 발화가 확인되지 않았습니다."
+      ],
+      "recommendedInterpretations": [],
+      "deliveredMeaningUnits": [],
+      "omittedMeaningUnits": [],
+      "misunderstoodMeaningUnits": [],
+      "addedInformation": [],
+      "profileSignals": [],
+      "profileEligible": false,
+      "assistanceUsage": [],
+      "debugMetadata": {}
+    }
+  },
+  {
+    "name": "practice",
+    "request": {
+      "requestId": "evaluation-1",
+      "idempotencyKey": "evaluation-idem-1",
+      "itemId": 301,
+      "attemptId": 401,
+      "evaluationPurpose": "PRACTICE",
+      "answerRevealed": false,
+      "assistanceUsage": [],
+      "policyVersion": "listening-profile",
+      "modelConfigVersion": "listening-model-config",
+      "manualRetryAttempt": 0,
+      "sourceText": "hello world",
+      "sourceDurationSeconds": 2.0,
+      "learningLanguage": "en",
+      "phraseHints": [
+        "hello",
+        "world"
+      ]
+    },
+    "audioBase64": "bm9ybWFsaXplZC13YXY=",
+    "quality": {
+      "rms": 0.1,
+      "peak": 0.5,
+      "silenceRatio": 0.05,
+      "sampleRate": 16000,
+      "channels": 1
+    },
+    "duration": 2.0,
+    "transcript": {
+      "text": "hello world",
+      "language": "en",
+      "language_probability": 0.98,
+      "segments": [
+        {
+          "start_seconds": 0.0,
+          "end_seconds": 2.0,
+          "text": "hello world",
+          "avg_logprob": -0.05
+        }
+      ],
+      "provider": "fake-stt",
+      "model": "fake-stt-model",
+      "model_version": "fake-stt"
+    },
+    "sttCalls": 1,
+    "result": {
+      "taskType": "REPEAT_AFTER_AUDIO",
+      "status": "EVALUATED",
+      "evaluable": true,
+      "score": 99,
+      "confidence": 0.9839,
+      "reasonCode": null,
+      "assistanceLevel": "INDEPENDENT",
+      "metrics": [
+        {
+          "type": "PRONUNCIATION",
+          "state": "EVALUATED",
+          "score": 99.0,
+          "weight": 0.4,
+          "confidence": 0.9599,
+          "evidence": [
+            {
+              "startMs": null,
+              "endMs": null,
+              "reference": null,
+              "recognized": null,
+              "metric": "PRONUNCIATION",
+              "severity": "INFO",
+              "feedback": "Token alignment와 음향 품질(1.00)을 함께 확인했습니다."
+            }
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "PROSODY_RHYTHM",
+          "state": "EVALUATED",
+          "score": 100.0,
+          "weight": 0.25,
+          "confidence": 0.9599,
+          "evidence": [
+            {
+              "startMs": null,
+              "endMs": null,
+              "reference": null,
+              "recognized": null,
+              "metric": "PROSODY_RHYTHM",
+              "severity": "INFO",
+              "feedback": "Reference 대비 발화 길이 비율(1.00)과 음향 흐름을 확인했습니다."
+            }
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "FLUENCY",
+          "state": "EVALUATED",
+          "score": 97.0,
+          "weight": 0.2,
+          "confidence": 0.9599,
+          "evidence": [
+            {
+              "startMs": null,
+              "endMs": null,
+              "reference": null,
+              "recognized": null,
+              "metric": "FLUENCY",
+              "severity": "INFO",
+              "feedback": "발화 구간 비율(0.95)과 속도 안정성을 확인했습니다."
+            }
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "COMPLETENESS",
+          "state": "EVALUATED",
+          "score": 100.0,
+          "weight": 0.15,
+          "confidence": 0.9599,
+          "evidence": [
+            {
+              "startMs": null,
+              "endMs": null,
+              "reference": null,
+              "recognized": null,
+              "metric": "COMPLETENESS",
+              "severity": "INFO",
+              "feedback": "원문 Token Coverage(1.00)를 확인했습니다."
+            }
+          ],
+          "notEvaluableReason": null
+        }
+      ],
+      "alignment": [
+        {
+          "source": "hello",
+          "answer": "hello",
+          "status": "MATCH",
+          "sourceIndex": 0,
+          "answerIndex": 0,
+          "startMs": 0,
+          "endMs": 1000
+        },
+        {
+          "source": "world",
+          "answer": "world",
+          "status": "MATCH",
+          "sourceIndex": 1,
+          "answerIndex": 1,
+          "startMs": 1000,
+          "endMs": 2000
+        }
+      ],
+      "evidence": [
+        {
+          "startMs": null,
+          "endMs": null,
+          "reference": null,
+          "recognized": null,
+          "metric": "PRONUNCIATION",
+          "severity": "INFO",
+          "feedback": "Token alignment와 음향 품질(1.00)을 함께 확인했습니다."
+        },
+        {
+          "startMs": null,
+          "endMs": null,
+          "reference": null,
+          "recognized": null,
+          "metric": "PROSODY_RHYTHM",
+          "severity": "INFO",
+          "feedback": "Reference 대비 발화 길이 비율(1.00)과 음향 흐름을 확인했습니다."
+        },
+        {
+          "startMs": null,
+          "endMs": null,
+          "reference": null,
+          "recognized": null,
+          "metric": "FLUENCY",
+          "severity": "INFO",
+          "feedback": "발화 구간 비율(0.95)과 속도 안정성을 확인했습니다."
+        },
+        {
+          "startMs": null,
+          "endMs": null,
+          "reference": null,
+          "recognized": null,
+          "metric": "COMPLETENESS",
+          "severity": "INFO",
+          "feedback": "원문 Token Coverage(1.00)를 확인했습니다."
+        }
+      ],
+      "strengths": [
+        "원문의 핵심 Token과 흐름을 안정적으로 재현했습니다."
+      ],
+      "improvements": [
+        "다음 시도에서는 끊김 없는 발화에 집중해 보세요.",
+        "다음 시도에서는 소리의 명료도에 집중해 보세요."
+      ],
+      "recommendedInterpretations": [],
+      "deliveredMeaningUnits": [],
+      "omittedMeaningUnits": [],
+      "misunderstoodMeaningUnits": [],
+      "addedInformation": [],
+      "profileSignals": [],
+      "profileEligible": false,
+      "assistanceUsage": [],
+      "debugMetadata": {
+        "repeatEvaluatorVersion": "listening-repeat-acoustic",
+        "alignmentVersion": "listening-alignment",
+        "sttHintVersion": "listening-stt-hint",
+        "supportedEvidence": [
+          "TOKEN_ALIGNMENT",
+          "STT_SEGMENT_CONFIDENCE",
+          "RMS",
+          "PEAK",
+          "SILENCE_RATIO",
+          "DURATION_RATIO"
+        ],
+        "phonemeProviderScoreAvailable": false,
+        "audioQualityScore": 1.0,
+        "durationRatio": 1.0,
+        "detectedLanguage": "en"
+      }
+    }
+  },
+  {
+    "name": "revealed",
+    "request": {
+      "requestId": "evaluation-1",
+      "idempotencyKey": "evaluation-idem-1",
+      "itemId": 301,
+      "attemptId": 401,
+      "evaluationPurpose": "OFFICIAL",
+      "answerRevealed": true,
+      "assistanceUsage": [],
+      "policyVersion": "listening-profile",
+      "modelConfigVersion": "listening-model-config",
+      "manualRetryAttempt": 0,
+      "sourceText": "hello world",
+      "sourceDurationSeconds": 2.0,
+      "learningLanguage": "en",
+      "phraseHints": [
+        "hello",
+        "world"
+      ]
+    },
+    "audioBase64": "bm9ybWFsaXplZC13YXY=",
+    "quality": {
+      "rms": 0.1,
+      "peak": 0.5,
+      "silenceRatio": 0.05,
+      "sampleRate": 16000,
+      "channels": 1
+    },
+    "duration": 2.0,
+    "transcript": {
+      "text": "hello world",
+      "language": "en",
+      "language_probability": 0.98,
+      "segments": [
+        {
+          "start_seconds": 0.0,
+          "end_seconds": 2.0,
+          "text": "hello world",
+          "avg_logprob": -0.05
+        }
+      ],
+      "provider": "fake-stt",
+      "model": "fake-stt-model",
+      "model_version": "fake-stt"
+    },
+    "sttCalls": 0,
+    "result": {
+      "taskType": "REPEAT_AFTER_AUDIO",
+      "status": "NOT_EVALUABLE",
+      "evaluable": false,
+      "score": null,
+      "confidence": null,
+      "reasonCode": "ANSWER_REVEALED",
+      "assistanceLevel": "GUIDED",
+      "metrics": [],
+      "alignment": [],
+      "evidence": [],
+      "strengths": [],
+      "improvements": [
+        "정답 공개 후의 시도는 공식 평가와 Profile 반영에서 제외됩니다."
+      ],
+      "recommendedInterpretations": [],
+      "deliveredMeaningUnits": [],
+      "omittedMeaningUnits": [],
+      "misunderstoodMeaningUnits": [],
+      "addedInformation": [],
+      "profileSignals": [],
+      "profileEligible": false,
+      "assistanceUsage": [],
+      "debugMetadata": {}
+    }
+  },
+  {
+    "name": "clipped",
+    "request": {
+      "requestId": "evaluation-1",
+      "idempotencyKey": "evaluation-idem-1",
+      "itemId": 301,
+      "attemptId": 401,
+      "evaluationPurpose": "OFFICIAL",
+      "answerRevealed": false,
+      "assistanceUsage": [],
+      "policyVersion": "listening-profile",
+      "modelConfigVersion": "listening-model-config",
+      "manualRetryAttempt": 0,
+      "sourceText": "hello world",
+      "sourceDurationSeconds": 2.0,
+      "learningLanguage": "en",
+      "phraseHints": [
+        "hello",
+        "world"
+      ]
+    },
+    "audioBase64": "UklGRiR9AABXQVZFZm10IBAAAAABAAEAgD4AAAB9AAACABAAZGF0YQB9AAD/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgP9/AID/fwCA/38AgA==",
+    "quality": {
+      "rms": 0.99,
+      "peak": 1.0,
+      "silenceRatio": 0.0,
+      "sampleRate": 16000,
+      "channels": 1
+    },
+    "duration": 2.0,
+    "transcript": {
+      "text": "hello world",
+      "language": "en",
+      "language_probability": 0.98,
+      "segments": [
+        {
+          "start_seconds": 0.0,
+          "end_seconds": 2.0,
+          "text": "hello world",
+          "avg_logprob": -0.05
+        }
+      ],
+      "provider": "fake-stt",
+      "model": "fake-stt-model",
+      "model_version": "fake-stt"
+    },
+    "sttCalls": 0,
+    "result": {
+      "taskType": "REPEAT_AFTER_AUDIO",
+      "status": "NOT_EVALUABLE",
+      "evaluable": false,
+      "score": null,
+      "confidence": 0.342,
+      "reasonCode": "LOW_AUDIO_QUALITY",
+      "assistanceLevel": "INDEPENDENT",
+      "metrics": [],
+      "alignment": [],
+      "evidence": [],
+      "strengths": [],
+      "improvements": [
+        "소음이 적고 음량이 안정적인 환경에서 다시 녹음해 주세요."
+      ],
+      "recommendedInterpretations": [],
+      "deliveredMeaningUnits": [],
+      "omittedMeaningUnits": [],
+      "misunderstoodMeaningUnits": [],
+      "addedInformation": [],
+      "profileSignals": [],
+      "profileEligible": false,
+      "assistanceUsage": [],
+      "debugMetadata": {
+        "audioQualityScore": 0.342,
+        "clippingRatio": 1.0,
+        "zeroCrossingRate": 1.0,
+        "noiseScore": 0.0,
+        "clippingScore": 0.0
+      }
+    }
+  },
+  {
+    "name": "alignment",
+    "request": {
+      "requestId": "evaluation-1",
+      "idempotencyKey": "evaluation-idem-1",
+      "itemId": 301,
+      "attemptId": 401,
+      "evaluationPurpose": "OFFICIAL",
+      "answerRevealed": false,
+      "assistanceUsage": [],
+      "policyVersion": "listening-profile",
+      "modelConfigVersion": "listening-model-config",
+      "manualRetryAttempt": 0,
+      "sourceText": "hello world",
+      "sourceDurationSeconds": 2.0,
+      "learningLanguage": "en",
+      "phraseHints": [
+        "hello",
+        "world"
+      ]
+    },
+    "audioBase64": "bm9ybWFsaXplZC13YXY=",
+    "quality": {
+      "rms": 0.1,
+      "peak": 0.5,
+      "silenceRatio": 0.05,
+      "sampleRate": 16000,
+      "channels": 1
+    },
+    "duration": 2.0,
+    "transcript": {
+      "text": "hello other",
+      "language": "en",
+      "language_probability": 0.98,
+      "segments": [
+        {
+          "start_seconds": 0.0,
+          "end_seconds": 2.0,
+          "text": "hello other",
+          "avg_logprob": -0.05
+        }
+      ],
+      "provider": "fake-stt",
+      "model": "fake-stt-model",
+      "model_version": "fake-stt"
+    },
+    "sttCalls": 1,
+    "result": {
+      "taskType": "REPEAT_AFTER_AUDIO",
+      "status": "EVALUATED",
+      "evaluable": true,
+      "score": 82,
+      "confidence": 0.8089,
+      "reasonCode": null,
+      "assistanceLevel": "INDEPENDENT",
+      "metrics": [
+        {
+          "type": "PRONUNCIATION",
+          "state": "EVALUATED",
+          "score": 74.0,
+          "weight": 0.4,
+          "confidence": 0.9599,
+          "evidence": [
+            {
+              "startMs": null,
+              "endMs": null,
+              "reference": null,
+              "recognized": null,
+              "metric": "PRONUNCIATION",
+              "severity": "INFO",
+              "feedback": "Token alignment와 음향 품질(1.00)을 함께 확인했습니다."
+            }
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "PROSODY_RHYTHM",
+          "state": "EVALUATED",
+          "score": 100.0,
+          "weight": 0.25,
+          "confidence": 0.9599,
+          "evidence": [
+            {
+              "startMs": null,
+              "endMs": null,
+              "reference": null,
+              "recognized": null,
+              "metric": "PROSODY_RHYTHM",
+              "severity": "INFO",
+              "feedback": "Reference 대비 발화 길이 비율(1.00)과 음향 흐름을 확인했습니다."
+            }
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "FLUENCY",
+          "state": "EVALUATED",
+          "score": 97.0,
+          "weight": 0.2,
+          "confidence": 0.9599,
+          "evidence": [
+            {
+              "startMs": null,
+              "endMs": null,
+              "reference": null,
+              "recognized": null,
+              "metric": "FLUENCY",
+              "severity": "INFO",
+              "feedback": "발화 구간 비율(0.95)과 속도 안정성을 확인했습니다."
+            }
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "COMPLETENESS",
+          "state": "EVALUATED",
+          "score": 50.0,
+          "weight": 0.15,
+          "confidence": 0.9599,
+          "evidence": [
+            {
+              "startMs": null,
+              "endMs": null,
+              "reference": null,
+              "recognized": null,
+              "metric": "COMPLETENESS",
+              "severity": "INFO",
+              "feedback": "원문 Token Coverage(0.50)를 확인했습니다."
+            }
+          ],
+          "notEvaluableReason": null
+        }
+      ],
+      "alignment": [
+        {
+          "source": "hello",
+          "answer": "hello",
+          "status": "MATCH",
+          "sourceIndex": 0,
+          "answerIndex": 0,
+          "startMs": 0,
+          "endMs": 1000
+        },
+        {
+          "source": "world",
+          "answer": "other",
+          "status": "SUBSTITUTION",
+          "sourceIndex": 1,
+          "answerIndex": 1,
+          "startMs": 1000,
+          "endMs": 2000
+        }
+      ],
+      "evidence": [
+        {
+          "startMs": 1000,
+          "endMs": 2000,
+          "reference": "world",
+          "recognized": "other",
+          "metric": "PRONUNCIATION",
+          "severity": "HIGH",
+          "feedback": "원문과 다르게 정렬된 소리를 다시 따라 말해 보세요."
+        },
+        {
+          "startMs": null,
+          "endMs": null,
+          "reference": null,
+          "recognized": null,
+          "metric": "PRONUNCIATION",
+          "severity": "INFO",
+          "feedback": "Token alignment와 음향 품질(1.00)을 함께 확인했습니다."
+        },
+        {
+          "startMs": null,
+          "endMs": null,
+          "reference": null,
+          "recognized": null,
+          "metric": "PROSODY_RHYTHM",
+          "severity": "INFO",
+          "feedback": "Reference 대비 발화 길이 비율(1.00)과 음향 흐름을 확인했습니다."
+        },
+        {
+          "startMs": null,
+          "endMs": null,
+          "reference": null,
+          "recognized": null,
+          "metric": "FLUENCY",
+          "severity": "INFO",
+          "feedback": "발화 구간 비율(0.95)과 속도 안정성을 확인했습니다."
+        },
+        {
+          "startMs": null,
+          "endMs": null,
+          "reference": null,
+          "recognized": null,
+          "metric": "COMPLETENESS",
+          "severity": "INFO",
+          "feedback": "원문 Token Coverage(0.50)를 확인했습니다."
+        }
+      ],
+      "strengths": [
+        "원문의 핵심 Token과 흐름을 안정적으로 재현했습니다."
+      ],
+      "improvements": [
+        "다음 시도에서는 문장 완성도에 집중해 보세요.",
+        "다음 시도에서는 소리의 명료도에 집중해 보세요."
+      ],
+      "recommendedInterpretations": [],
+      "deliveredMeaningUnits": [],
+      "omittedMeaningUnits": [],
+      "misunderstoodMeaningUnits": [],
+      "addedInformation": [],
+      "profileSignals": [
+        {
+          "metric": "PRONUNCIATION",
+          "score": 74.0,
+          "confidence": 0.8089,
+          "evidenceWeight": 1.0,
+          "evidenceIds": [
+            "evidence-1",
+            "evidence-2",
+            "evidence-3",
+            "evidence-4",
+            "evidence-5"
+          ],
+          "sourceTask": "REPEAT_AFTER_AUDIO",
+          "policyVersion": "listening-profile"
+        },
+        {
+          "metric": "FLUENCY",
+          "score": 97.0,
+          "confidence": 0.8089,
+          "evidenceWeight": 0.8,
+          "evidenceIds": [
+            "evidence-1",
+            "evidence-2",
+            "evidence-3",
+            "evidence-4",
+            "evidence-5"
+          ],
+          "sourceTask": "REPEAT_AFTER_AUDIO",
+          "policyVersion": "listening-profile"
+        },
+        {
+          "metric": "LISTENING_RECOGNITION",
+          "score": 82.0,
+          "confidence": 0.8089,
+          "evidenceWeight": 0.5,
+          "evidenceIds": [
+            "evidence-1",
+            "evidence-2",
+            "evidence-3",
+            "evidence-4",
+            "evidence-5"
+          ],
+          "sourceTask": "REPEAT_AFTER_AUDIO",
+          "policyVersion": "listening-profile"
+        }
+      ],
+      "profileEligible": true,
+      "assistanceUsage": [],
+      "debugMetadata": {
+        "repeatEvaluatorVersion": "listening-repeat-acoustic",
+        "alignmentVersion": "listening-alignment",
+        "sttHintVersion": "listening-stt-hint",
+        "supportedEvidence": [
+          "TOKEN_ALIGNMENT",
+          "STT_SEGMENT_CONFIDENCE",
+          "RMS",
+          "PEAK",
+          "SILENCE_RATIO",
+          "DURATION_RATIO"
+        ],
+        "phonemeProviderScoreAvailable": false,
+        "audioQualityScore": 1.0,
+        "durationRatio": 1.0,
+        "detectedLanguage": "en"
+      }
+    }
+  }
+]

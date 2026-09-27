@@ -1,0 +1,178 @@
+{
+  "source": "보존된 현재 Python Writing 원본을 합성 Provider로 직접 실행",
+  "request": {
+    "requestId": "verified-writing",
+    "originLanguage": "ko",
+    "learningLanguage": "ja",
+    "writingType": "TRANSLATION",
+    "sentenceCount": 1,
+    "difficultyDistribution": {
+      "review": 1,
+      "normal": 0,
+      "challenge": 0
+    },
+    "selectedKeywords": [],
+    "learningProfile": null,
+    "recentEvaluationSummary": null,
+    "recentMistakes": [],
+    "recentlyLearnedExpressions": [],
+    "generationDate": "2026-09-11",
+    "snapshotId": null,
+    "languageComplexity": {
+      "baseLevelScore": 81.0,
+      "baseComplexityBand": 4,
+      "targetComplexityBand": 5,
+      "policyVersion": "language-complexity"
+    },
+    "diversityContext": {
+      "currentSession": [],
+      "sameFeatureRecent": [],
+      "crossFeatureRecent": [],
+      "exactContentHashes90d": []
+    },
+    "contentDiversityPolicyVersion": null
+  },
+  "draft": {
+    "originText": "일정이 바뀐 경우에는 출발하기 전에 다시 한번 확인해 두겠습니다.",
+    "keywords": [],
+    "focusMetrics": [
+      "MEANING",
+      "GRAMMAR"
+    ],
+    "focusReason": "조건과 시간 관계를 표현하는 연습입니다.",
+    "providedFacts": [],
+    "requiredIntents": [],
+    "responseConstraints": [],
+    "diversityMetadata": {
+      "scenarioCategory": "SCHEDULE",
+      "communicativeIntent": "CONFIRM",
+      "taskArchetype": "DEFAULT",
+      "grammarFocusCodes": [
+        "CONDITION",
+        "TIME"
+      ],
+      "lexicalFocusCodes": [],
+      "semanticSummary": "일정 변경에 따라 출발 전에 재확인합니다.",
+      "requiresBackgroundKnowledge": false
+    }
+  },
+  "cases": [
+    {
+      "case": "generator_refusal",
+      "calls": {
+        "LANGUAGE_LEARNING_DAILY_WRITING_GENERATION": 4
+      },
+      "outcome": {
+        "status": 422,
+        "detail": {
+          "code": "WRITING_GENERATION_VALIDATION_EXHAUSTED",
+          "retryable": false,
+          "message": "Writing 생성·검증 기준을 만족하는 문항이 부족합니다.",
+          "slotOrder": 1,
+          "attempts": 4,
+          "sourceRecoveryUsed": false,
+          "rejectionCounts": {
+            "GENERATOR_PROVIDER_REFUSAL": 4
+          },
+          "targetBand": 3,
+          "observedBandCounts": {},
+          "difficultyRecoveryUsed": false,
+          "difficultyRepairUsed": false,
+          "difficultyRepairFreshFallbackUsed": false
+        }
+      }
+    },
+    {
+      "case": "generator_refusal_then_valid",
+      "calls": {
+        "LANGUAGE_LEARNING_DAILY_WRITING_GENERATION": 2,
+        "LANGUAGE_LEARNING_WRITING_TASK_VERIFICATION": 1
+      },
+      "outcome": {
+        "status": 200,
+        "items": 1
+      }
+    },
+    {
+      "case": "generator_configuration",
+      "calls": {
+        "LANGUAGE_LEARNING_DAILY_WRITING_GENERATION": 1
+      },
+      "outcome": {
+        "status": 502,
+        "detail": {
+          "code": "WRITING_PROVIDER_CONFIGURATION_ERROR",
+          "retryable": false,
+          "message": "Writing 생성·검증 Provider 설정을 확인해야 합니다."
+        }
+      }
+    },
+    {
+      "case": "generator_dependency",
+      "calls": {
+        "LANGUAGE_LEARNING_DAILY_WRITING_GENERATION": 4
+      },
+      "outcome": {
+        "status": 503,
+        "detail": {
+          "code": "WRITING_GENERATION_UNAVAILABLE",
+          "retryable": true,
+          "failureCode": "GENERATOR_PROVIDER_ERROR",
+          "attempts": 4,
+          "message": "Writing 생성 서비스 호출에 실패했습니다. 잠시 후 다시 시도해 주세요."
+        }
+      }
+    },
+    {
+      "case": "review_refusal",
+      "calls": {
+        "LANGUAGE_LEARNING_DAILY_WRITING_GENERATION": 1,
+        "LANGUAGE_LEARNING_WRITING_TASK_VERIFICATION": 1
+      },
+      "outcome": {
+        "status": 503,
+        "detail": {
+          "code": "WRITING_VERIFICATION_UNAVAILABLE",
+          "retryable": false,
+          "message": "Writing 검증 서비스가 유효한 판정을 반환하지 못했습니다. 미검증 문제는 제공하지 않습니다.",
+          "task": "LANGUAGE_LEARNING_WRITING_TASK_VERIFICATION",
+          "failureCode": "VERIFIER_PROVIDER_REFUSAL",
+          "attempts": 1
+        }
+      }
+    },
+    {
+      "case": "review_configuration",
+      "calls": {
+        "LANGUAGE_LEARNING_DAILY_WRITING_GENERATION": 1,
+        "LANGUAGE_LEARNING_WRITING_TASK_VERIFICATION": 1
+      },
+      "outcome": {
+        "status": 502,
+        "detail": {
+          "code": "WRITING_PROVIDER_CONFIGURATION_ERROR",
+          "retryable": false,
+          "message": "Writing 생성·검증 Provider 설정을 확인해야 합니다."
+        }
+      }
+    },
+    {
+      "case": "review_dependency",
+      "calls": {
+        "LANGUAGE_LEARNING_DAILY_WRITING_GENERATION": 1,
+        "LANGUAGE_LEARNING_WRITING_TASK_VERIFICATION": 2
+      },
+      "outcome": {
+        "status": 503,
+        "detail": {
+          "code": "WRITING_VERIFICATION_UNAVAILABLE",
+          "retryable": true,
+          "message": "Writing 검증 서비스가 유효한 판정을 반환하지 못했습니다. 미검증 문제는 제공하지 않습니다.",
+          "task": "LANGUAGE_LEARNING_WRITING_TASK_VERIFICATION",
+          "failureCode": "VERIFIER_PROVIDER_ERROR",
+          "attempts": 2
+        }
+      }
+    }
+  ]
+}

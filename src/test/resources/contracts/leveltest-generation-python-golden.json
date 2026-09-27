@@ -1,0 +1,2333 @@
+[
+  {
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 1,
+      "totalQuestions": 20,
+      "domain": "VOCABULARY",
+      "itemType": "VOCAB_CONTEXT_CHOICE",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 1,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK",
+        "TRAVEL"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": {
+        "uploadUrl": "http://127.0.0.1/synthetic?token=synthetic-only",
+        "objectKey": "synthetic.wav",
+        "contentType": "audio/wav",
+        "voice": "marin",
+        "playbackSpeed": "NORMAL"
+      }
+    },
+    "requirePlan": false,
+    "designs": null,
+    "schemaSha256": "614f5a8c33ff6da1e81f9503ae8a36822e6e5c7336aba651fe6b5acbf69346c3",
+    "prompt": "Generate two candidate questions for question 1/20. The requested domain is VOCABULARY, itemType is VOCAB_CONTEXT_CHOICE, and complexityBand is 1. refillAttempt=1. Rejected semantic summaries from earlier attempts: [\"합성 이전 거부\", \"Synthetic rejection\"].\nServer selectionPolicy for this Choice item: UNIQUE_ANSWER.\nNo server-approved vocabContextDesigns are supplied for this generation call. Set generationPlanId to null for every candidate; never invent a plan identifier.\n\n{\"requestId\":\"synthetic\",\"idempotencyKey\":\"synthetic\",\"sessionId\":1,\"questionNumber\":1,\"totalQuestions\":20,\"domain\":\"VOCABULARY\",\"itemType\":\"VOCAB_CONTEXT_CHOICE\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"targetComplexityBand\":1,\"previousResults\":[],\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"preferredScenarioCategories\":[\"WORK\",\"TRAVEL\"],\"policyVersion\":\"level-test-multiskill\",\"modelConfigVersion\":\"level-test-model-config\"}"
+  },
+  {
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 1,
+      "totalQuestions": 20,
+      "domain": "VOCABULARY",
+      "itemType": "VOCAB_CONTEXT_CHOICE",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 1,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK",
+        "TRAVEL"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": {
+        "uploadUrl": "http://127.0.0.1/synthetic?token=synthetic-only",
+        "objectKey": "synthetic.wav",
+        "contentType": "audio/wav",
+        "voice": "marin",
+        "playbackSpeed": "NORMAL"
+      }
+    },
+    "requirePlan": true,
+    "designs": [
+      {
+        "designId": "A",
+        "targetExpression": "first",
+        "targetMeaning": "Synthetic meaning A",
+        "semanticConstraint": "Synthetic constraint A",
+        "scenarioCategory": "WORK",
+        "communicativeIntent": "CONFIRM"
+      },
+      {
+        "designId": "B",
+        "targetExpression": "second",
+        "targetMeaning": "Synthetic meaning B",
+        "semanticConstraint": "Synthetic constraint B",
+        "scenarioCategory": "WORK",
+        "communicativeIntent": "CONFIRM"
+      }
+    ],
+    "schemaSha256": "4547a4e0e8d87fa55c46366d40b776fa89cfd98ecee9d559571a4e667674bd34",
+    "prompt": "Generate two candidate questions for question 1/20. The requested domain is VOCABULARY, itemType is VOCAB_CONTEXT_CHOICE, and complexityBand is 1. refillAttempt=1. Rejected semantic summaries from earlier attempts: [\"합성 이전 거부\", \"Synthetic rejection\"].\nServer selectionPolicy for this Choice item: UNIQUE_ANSWER.\nFor VOCAB_CONTEXT_CHOICE, implement the two server-approved designs exactly: return one candidate per design, set generationPlanId to its designId, and make the correct option text exactly equal to targetExpression. The semanticConstraint must be visible in the learner-facing context.\n{\"vocabContextDesigns\":[{\"designId\":\"A\",\"targetExpression\":\"first\",\"targetMeaning\":\"Synthetic meaning A\",\"semanticConstraint\":\"Synthetic constraint A\",\"scenarioCategory\":\"WORK\",\"communicativeIntent\":\"CONFIRM\"},{\"designId\":\"B\",\"targetExpression\":\"second\",\"targetMeaning\":\"Synthetic meaning B\",\"semanticConstraint\":\"Synthetic constraint B\",\"scenarioCategory\":\"WORK\",\"communicativeIntent\":\"CONFIRM\"}]}\n\n{\"requestId\":\"synthetic\",\"idempotencyKey\":\"synthetic\",\"sessionId\":1,\"questionNumber\":1,\"totalQuestions\":20,\"domain\":\"VOCABULARY\",\"itemType\":\"VOCAB_CONTEXT_CHOICE\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"targetComplexityBand\":1,\"previousResults\":[],\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"preferredScenarioCategories\":[\"WORK\",\"TRAVEL\"],\"policyVersion\":\"level-test-multiskill\",\"modelConfigVersion\":\"level-test-model-config\"}"
+  },
+  {
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 1,
+      "totalQuestions": 20,
+      "domain": "VOCABULARY",
+      "itemType": "VOCAB_CONTEXT_CHOICE",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK",
+        "TRAVEL"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": {
+        "uploadUrl": "http://127.0.0.1/synthetic?token=synthetic-only",
+        "objectKey": "synthetic.wav",
+        "contentType": "audio/wav",
+        "voice": "marin",
+        "playbackSpeed": "NORMAL"
+      }
+    },
+    "requirePlan": false,
+    "designs": null,
+    "schemaSha256": "c94a8c91750dc9b36ad92e328c98652cde54ebfbfa8db23e2a5f0aacb07e4037",
+    "prompt": "Generate two candidate questions for question 1/20. The requested domain is VOCABULARY, itemType is VOCAB_CONTEXT_CHOICE, and complexityBand is 3. refillAttempt=1. Rejected semantic summaries from earlier attempts: [\"합성 이전 거부\", \"Synthetic rejection\"].\nServer selectionPolicy for this Choice item: UNIQUE_ANSWER.\nNo server-approved vocabContextDesigns are supplied for this generation call. Set generationPlanId to null for every candidate; never invent a plan identifier.\n\n{\"requestId\":\"synthetic\",\"idempotencyKey\":\"synthetic\",\"sessionId\":1,\"questionNumber\":1,\"totalQuestions\":20,\"domain\":\"VOCABULARY\",\"itemType\":\"VOCAB_CONTEXT_CHOICE\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"targetComplexityBand\":3,\"previousResults\":[],\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"preferredScenarioCategories\":[\"WORK\",\"TRAVEL\"],\"policyVersion\":\"level-test-multiskill\",\"modelConfigVersion\":\"level-test-model-config\"}"
+  },
+  {
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 1,
+      "totalQuestions": 20,
+      "domain": "VOCABULARY",
+      "itemType": "VOCAB_CONTEXT_CHOICE",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK",
+        "TRAVEL"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": {
+        "uploadUrl": "http://127.0.0.1/synthetic?token=synthetic-only",
+        "objectKey": "synthetic.wav",
+        "contentType": "audio/wav",
+        "voice": "marin",
+        "playbackSpeed": "NORMAL"
+      }
+    },
+    "requirePlan": true,
+    "designs": [
+      {
+        "designId": "A",
+        "targetExpression": "first",
+        "targetMeaning": "Synthetic meaning A",
+        "semanticConstraint": "Synthetic constraint A",
+        "scenarioCategory": "WORK",
+        "communicativeIntent": "CONFIRM"
+      },
+      {
+        "designId": "B",
+        "targetExpression": "second",
+        "targetMeaning": "Synthetic meaning B",
+        "semanticConstraint": "Synthetic constraint B",
+        "scenarioCategory": "WORK",
+        "communicativeIntent": "CONFIRM"
+      }
+    ],
+    "schemaSha256": "e69d40f1561526ca898e3350fafda8c742194e134a47eacd3b052ccbff109223",
+    "prompt": "Generate two candidate questions for question 1/20. The requested domain is VOCABULARY, itemType is VOCAB_CONTEXT_CHOICE, and complexityBand is 3. refillAttempt=1. Rejected semantic summaries from earlier attempts: [\"합성 이전 거부\", \"Synthetic rejection\"].\nServer selectionPolicy for this Choice item: UNIQUE_ANSWER.\nFor VOCAB_CONTEXT_CHOICE, implement the two server-approved designs exactly: return one candidate per design, set generationPlanId to its designId, and make the correct option text exactly equal to targetExpression. The semanticConstraint must be visible in the learner-facing context.\n{\"vocabContextDesigns\":[{\"designId\":\"A\",\"targetExpression\":\"first\",\"targetMeaning\":\"Synthetic meaning A\",\"semanticConstraint\":\"Synthetic constraint A\",\"scenarioCategory\":\"WORK\",\"communicativeIntent\":\"CONFIRM\"},{\"designId\":\"B\",\"targetExpression\":\"second\",\"targetMeaning\":\"Synthetic meaning B\",\"semanticConstraint\":\"Synthetic constraint B\",\"scenarioCategory\":\"WORK\",\"communicativeIntent\":\"CONFIRM\"}]}\n\n{\"requestId\":\"synthetic\",\"idempotencyKey\":\"synthetic\",\"sessionId\":1,\"questionNumber\":1,\"totalQuestions\":20,\"domain\":\"VOCABULARY\",\"itemType\":\"VOCAB_CONTEXT_CHOICE\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"targetComplexityBand\":3,\"previousResults\":[],\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"preferredScenarioCategories\":[\"WORK\",\"TRAVEL\"],\"policyVersion\":\"level-test-multiskill\",\"modelConfigVersion\":\"level-test-model-config\"}"
+  },
+  {
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 1,
+      "totalQuestions": 20,
+      "domain": "VOCABULARY",
+      "itemType": "VOCAB_CONTEXT_CHOICE",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 5,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK",
+        "TRAVEL"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": {
+        "uploadUrl": "http://127.0.0.1/synthetic?token=synthetic-only",
+        "objectKey": "synthetic.wav",
+        "contentType": "audio/wav",
+        "voice": "marin",
+        "playbackSpeed": "NORMAL"
+      }
+    },
+    "requirePlan": false,
+    "designs": null,
+    "schemaSha256": "bdb5dcc963bbb53a313baca710e1049aefdb610ec2aabc11e38698a0c11330a4",
+    "prompt": "Generate two candidate questions for question 1/20. The requested domain is VOCABULARY, itemType is VOCAB_CONTEXT_CHOICE, and complexityBand is 5. refillAttempt=1. Rejected semantic summaries from earlier attempts: [\"합성 이전 거부\", \"Synthetic rejection\"].\nServer selectionPolicy for this Choice item: BEST_ANSWER.\nNo server-approved vocabContextDesigns are supplied for this generation call. Set generationPlanId to null for every candidate; never invent a plan identifier.\n\n{\"requestId\":\"synthetic\",\"idempotencyKey\":\"synthetic\",\"sessionId\":1,\"questionNumber\":1,\"totalQuestions\":20,\"domain\":\"VOCABULARY\",\"itemType\":\"VOCAB_CONTEXT_CHOICE\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"targetComplexityBand\":5,\"previousResults\":[],\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"preferredScenarioCategories\":[\"WORK\",\"TRAVEL\"],\"policyVersion\":\"level-test-multiskill\",\"modelConfigVersion\":\"level-test-model-config\"}"
+  },
+  {
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 1,
+      "totalQuestions": 20,
+      "domain": "VOCABULARY",
+      "itemType": "VOCAB_CONTEXT_CHOICE",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 5,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK",
+        "TRAVEL"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": {
+        "uploadUrl": "http://127.0.0.1/synthetic?token=synthetic-only",
+        "objectKey": "synthetic.wav",
+        "contentType": "audio/wav",
+        "voice": "marin",
+        "playbackSpeed": "NORMAL"
+      }
+    },
+    "requirePlan": true,
+    "designs": [
+      {
+        "designId": "A",
+        "targetExpression": "first",
+        "targetMeaning": "Synthetic meaning A",
+        "semanticConstraint": "Synthetic constraint A",
+        "scenarioCategory": "WORK",
+        "communicativeIntent": "CONFIRM"
+      },
+      {
+        "designId": "B",
+        "targetExpression": "second",
+        "targetMeaning": "Synthetic meaning B",
+        "semanticConstraint": "Synthetic constraint B",
+        "scenarioCategory": "WORK",
+        "communicativeIntent": "CONFIRM"
+      }
+    ],
+    "schemaSha256": "43dea4734582874c3f26e2e7243dae0973b1ec5f01b5a9047410b001081c46af",
+    "prompt": "Generate two candidate questions for question 1/20. The requested domain is VOCABULARY, itemType is VOCAB_CONTEXT_CHOICE, and complexityBand is 5. refillAttempt=1. Rejected semantic summaries from earlier attempts: [\"합성 이전 거부\", \"Synthetic rejection\"].\nServer selectionPolicy for this Choice item: BEST_ANSWER.\nFor VOCAB_CONTEXT_CHOICE, implement the two server-approved designs exactly: return one candidate per design, set generationPlanId to its designId, and make the correct option text exactly equal to targetExpression. The semanticConstraint must be visible in the learner-facing context.\n{\"vocabContextDesigns\":[{\"designId\":\"A\",\"targetExpression\":\"first\",\"targetMeaning\":\"Synthetic meaning A\",\"semanticConstraint\":\"Synthetic constraint A\",\"scenarioCategory\":\"WORK\",\"communicativeIntent\":\"CONFIRM\"},{\"designId\":\"B\",\"targetExpression\":\"second\",\"targetMeaning\":\"Synthetic meaning B\",\"semanticConstraint\":\"Synthetic constraint B\",\"scenarioCategory\":\"WORK\",\"communicativeIntent\":\"CONFIRM\"}]}\n\n{\"requestId\":\"synthetic\",\"idempotencyKey\":\"synthetic\",\"sessionId\":1,\"questionNumber\":1,\"totalQuestions\":20,\"domain\":\"VOCABULARY\",\"itemType\":\"VOCAB_CONTEXT_CHOICE\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"targetComplexityBand\":5,\"previousResults\":[],\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"preferredScenarioCategories\":[\"WORK\",\"TRAVEL\"],\"policyVersion\":\"level-test-multiskill\",\"modelConfigVersion\":\"level-test-model-config\"}"
+  },
+  {
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 1,
+      "totalQuestions": 20,
+      "domain": "VOCABULARY",
+      "itemType": "VOCAB_PARAPHRASE_CHOICE",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 1,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK",
+        "TRAVEL"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": {
+        "uploadUrl": "http://127.0.0.1/synthetic?token=synthetic-only",
+        "objectKey": "synthetic.wav",
+        "contentType": "audio/wav",
+        "voice": "marin",
+        "playbackSpeed": "NORMAL"
+      }
+    },
+    "requirePlan": false,
+    "designs": null,
+    "schemaSha256": "aa12d2af7a61668bcf3aa3eaa2b1811b30f0dd5605a5ea0139f041c2099ca79a",
+    "prompt": "Generate two candidate questions for question 1/20. The requested domain is VOCABULARY, itemType is VOCAB_PARAPHRASE_CHOICE, and complexityBand is 1. refillAttempt=1. Rejected semantic summaries from earlier attempts: [\"합성 이전 거부\", \"Synthetic rejection\"].\nServer selectionPolicy for this Choice item: UNIQUE_ANSWER.\nNo server-approved vocabContextDesigns are supplied for this generation call. Set generationPlanId to null for every candidate; never invent a plan identifier.\n\n{\"requestId\":\"synthetic\",\"idempotencyKey\":\"synthetic\",\"sessionId\":1,\"questionNumber\":1,\"totalQuestions\":20,\"domain\":\"VOCABULARY\",\"itemType\":\"VOCAB_PARAPHRASE_CHOICE\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"targetComplexityBand\":1,\"previousResults\":[],\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"preferredScenarioCategories\":[\"WORK\",\"TRAVEL\"],\"policyVersion\":\"level-test-multiskill\",\"modelConfigVersion\":\"level-test-model-config\"}"
+  },
+  {
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 1,
+      "totalQuestions": 20,
+      "domain": "VOCABULARY",
+      "itemType": "VOCAB_PARAPHRASE_CHOICE",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK",
+        "TRAVEL"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": {
+        "uploadUrl": "http://127.0.0.1/synthetic?token=synthetic-only",
+        "objectKey": "synthetic.wav",
+        "contentType": "audio/wav",
+        "voice": "marin",
+        "playbackSpeed": "NORMAL"
+      }
+    },
+    "requirePlan": false,
+    "designs": null,
+    "schemaSha256": "8076013d0a912cb495fd6f8d3ac17d07abe43b06837401e897b39c9a1404eceb",
+    "prompt": "Generate two candidate questions for question 1/20. The requested domain is VOCABULARY, itemType is VOCAB_PARAPHRASE_CHOICE, and complexityBand is 3. refillAttempt=1. Rejected semantic summaries from earlier attempts: [\"합성 이전 거부\", \"Synthetic rejection\"].\nServer selectionPolicy for this Choice item: BEST_ANSWER.\nNo server-approved vocabContextDesigns are supplied for this generation call. Set generationPlanId to null for every candidate; never invent a plan identifier.\n\n{\"requestId\":\"synthetic\",\"idempotencyKey\":\"synthetic\",\"sessionId\":1,\"questionNumber\":1,\"totalQuestions\":20,\"domain\":\"VOCABULARY\",\"itemType\":\"VOCAB_PARAPHRASE_CHOICE\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"targetComplexityBand\":3,\"previousResults\":[],\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"preferredScenarioCategories\":[\"WORK\",\"TRAVEL\"],\"policyVersion\":\"level-test-multiskill\",\"modelConfigVersion\":\"level-test-model-config\"}"
+  },
+  {
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 1,
+      "totalQuestions": 20,
+      "domain": "VOCABULARY",
+      "itemType": "VOCAB_PARAPHRASE_CHOICE",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 5,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK",
+        "TRAVEL"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": {
+        "uploadUrl": "http://127.0.0.1/synthetic?token=synthetic-only",
+        "objectKey": "synthetic.wav",
+        "contentType": "audio/wav",
+        "voice": "marin",
+        "playbackSpeed": "NORMAL"
+      }
+    },
+    "requirePlan": false,
+    "designs": null,
+    "schemaSha256": "c91543df773390df478ff7152ad042aae48769cd25c9f85f7ce9917adaee873e",
+    "prompt": "Generate two candidate questions for question 1/20. The requested domain is VOCABULARY, itemType is VOCAB_PARAPHRASE_CHOICE, and complexityBand is 5. refillAttempt=1. Rejected semantic summaries from earlier attempts: [\"합성 이전 거부\", \"Synthetic rejection\"].\nServer selectionPolicy for this Choice item: BEST_ANSWER.\nNo server-approved vocabContextDesigns are supplied for this generation call. Set generationPlanId to null for every candidate; never invent a plan identifier.\n\n{\"requestId\":\"synthetic\",\"idempotencyKey\":\"synthetic\",\"sessionId\":1,\"questionNumber\":1,\"totalQuestions\":20,\"domain\":\"VOCABULARY\",\"itemType\":\"VOCAB_PARAPHRASE_CHOICE\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"targetComplexityBand\":5,\"previousResults\":[],\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"preferredScenarioCategories\":[\"WORK\",\"TRAVEL\"],\"policyVersion\":\"level-test-multiskill\",\"modelConfigVersion\":\"level-test-model-config\"}"
+  },
+  {
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 4,
+      "totalQuestions": 20,
+      "domain": "GRAMMAR",
+      "itemType": "GRAMMAR_FORM_CHOICE",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 1,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK",
+        "TRAVEL"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": {
+        "uploadUrl": "http://127.0.0.1/synthetic?token=synthetic-only",
+        "objectKey": "synthetic.wav",
+        "contentType": "audio/wav",
+        "voice": "marin",
+        "playbackSpeed": "NORMAL"
+      }
+    },
+    "requirePlan": false,
+    "designs": null,
+    "schemaSha256": "0462e14f79c4470c36e1144c0391a7edad405be68919e3977da4c6b227afd464",
+    "prompt": "Generate two candidate questions for question 4/20. The requested domain is GRAMMAR, itemType is GRAMMAR_FORM_CHOICE, and complexityBand is 1. refillAttempt=1. Rejected semantic summaries from earlier attempts: [\"합성 이전 거부\", \"Synthetic rejection\"].\nServer selectionPolicy for this Choice item: UNIQUE_ANSWER.\nNo server-approved vocabContextDesigns are supplied for this generation call. Set generationPlanId to null for every candidate; never invent a plan identifier.\n\n{\"requestId\":\"synthetic\",\"idempotencyKey\":\"synthetic\",\"sessionId\":1,\"questionNumber\":4,\"totalQuestions\":20,\"domain\":\"GRAMMAR\",\"itemType\":\"GRAMMAR_FORM_CHOICE\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"targetComplexityBand\":1,\"previousResults\":[],\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"preferredScenarioCategories\":[\"WORK\",\"TRAVEL\"],\"policyVersion\":\"level-test-multiskill\",\"modelConfigVersion\":\"level-test-model-config\"}"
+  },
+  {
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 4,
+      "totalQuestions": 20,
+      "domain": "GRAMMAR",
+      "itemType": "GRAMMAR_FORM_CHOICE",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK",
+        "TRAVEL"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": {
+        "uploadUrl": "http://127.0.0.1/synthetic?token=synthetic-only",
+        "objectKey": "synthetic.wav",
+        "contentType": "audio/wav",
+        "voice": "marin",
+        "playbackSpeed": "NORMAL"
+      }
+    },
+    "requirePlan": false,
+    "designs": null,
+    "schemaSha256": "02a0652d31fe0a3176cf9a60c4f96c8ff8ec617bca5546547967dc875d687a3a",
+    "prompt": "Generate two candidate questions for question 4/20. The requested domain is GRAMMAR, itemType is GRAMMAR_FORM_CHOICE, and complexityBand is 3. refillAttempt=1. Rejected semantic summaries from earlier attempts: [\"합성 이전 거부\", \"Synthetic rejection\"].\nServer selectionPolicy for this Choice item: UNIQUE_ANSWER.\nNo server-approved vocabContextDesigns are supplied for this generation call. Set generationPlanId to null for every candidate; never invent a plan identifier.\n\n{\"requestId\":\"synthetic\",\"idempotencyKey\":\"synthetic\",\"sessionId\":1,\"questionNumber\":4,\"totalQuestions\":20,\"domain\":\"GRAMMAR\",\"itemType\":\"GRAMMAR_FORM_CHOICE\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"targetComplexityBand\":3,\"previousResults\":[],\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"preferredScenarioCategories\":[\"WORK\",\"TRAVEL\"],\"policyVersion\":\"level-test-multiskill\",\"modelConfigVersion\":\"level-test-model-config\"}"
+  },
+  {
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 4,
+      "totalQuestions": 20,
+      "domain": "GRAMMAR",
+      "itemType": "GRAMMAR_FORM_CHOICE",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 5,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK",
+        "TRAVEL"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": {
+        "uploadUrl": "http://127.0.0.1/synthetic?token=synthetic-only",
+        "objectKey": "synthetic.wav",
+        "contentType": "audio/wav",
+        "voice": "marin",
+        "playbackSpeed": "NORMAL"
+      }
+    },
+    "requirePlan": false,
+    "designs": null,
+    "schemaSha256": "09b78acca7b19cc22d57babe76f33111101281a46ecc361e3c6e8317bc618764",
+    "prompt": "Generate two candidate questions for question 4/20. The requested domain is GRAMMAR, itemType is GRAMMAR_FORM_CHOICE, and complexityBand is 5. refillAttempt=1. Rejected semantic summaries from earlier attempts: [\"합성 이전 거부\", \"Synthetic rejection\"].\nServer selectionPolicy for this Choice item: BEST_ANSWER.\nNo server-approved vocabContextDesigns are supplied for this generation call. Set generationPlanId to null for every candidate; never invent a plan identifier.\n\n{\"requestId\":\"synthetic\",\"idempotencyKey\":\"synthetic\",\"sessionId\":1,\"questionNumber\":4,\"totalQuestions\":20,\"domain\":\"GRAMMAR\",\"itemType\":\"GRAMMAR_FORM_CHOICE\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"targetComplexityBand\":5,\"previousResults\":[],\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"preferredScenarioCategories\":[\"WORK\",\"TRAVEL\"],\"policyVersion\":\"level-test-multiskill\",\"modelConfigVersion\":\"level-test-model-config\"}"
+  },
+  {
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 4,
+      "totalQuestions": 20,
+      "domain": "GRAMMAR",
+      "itemType": "GRAMMAR_SENTENCE_ORDER",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 1,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK",
+        "TRAVEL"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": {
+        "uploadUrl": "http://127.0.0.1/synthetic?token=synthetic-only",
+        "objectKey": "synthetic.wav",
+        "contentType": "audio/wav",
+        "voice": "marin",
+        "playbackSpeed": "NORMAL"
+      }
+    },
+    "requirePlan": false,
+    "designs": null,
+    "schemaSha256": "c75d95d749e621f3ca5767c883cb76ebf37df770b3fa68838999ae93fc72435d",
+    "prompt": "Generate two candidate questions for question 4/20. The requested domain is GRAMMAR, itemType is GRAMMAR_SENTENCE_ORDER, and complexityBand is 1. refillAttempt=1. Rejected semantic summaries from earlier attempts: [\"합성 이전 거부\", \"Synthetic rejection\"].\nNo server-approved vocabContextDesigns are supplied for this generation call. Set generationPlanId to null for every candidate; never invent a plan identifier.\n\n{\"requestId\":\"synthetic\",\"idempotencyKey\":\"synthetic\",\"sessionId\":1,\"questionNumber\":4,\"totalQuestions\":20,\"domain\":\"GRAMMAR\",\"itemType\":\"GRAMMAR_SENTENCE_ORDER\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"targetComplexityBand\":1,\"previousResults\":[],\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"preferredScenarioCategories\":[\"WORK\",\"TRAVEL\"],\"policyVersion\":\"level-test-multiskill\",\"modelConfigVersion\":\"level-test-model-config\"}"
+  },
+  {
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 4,
+      "totalQuestions": 20,
+      "domain": "GRAMMAR",
+      "itemType": "GRAMMAR_SENTENCE_ORDER",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK",
+        "TRAVEL"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": {
+        "uploadUrl": "http://127.0.0.1/synthetic?token=synthetic-only",
+        "objectKey": "synthetic.wav",
+        "contentType": "audio/wav",
+        "voice": "marin",
+        "playbackSpeed": "NORMAL"
+      }
+    },
+    "requirePlan": false,
+    "designs": null,
+    "schemaSha256": "985662902c8eac2bb74148a6168338e2877e6cc2bc3df9e046378d91b14f2def",
+    "prompt": "Generate two candidate questions for question 4/20. The requested domain is GRAMMAR, itemType is GRAMMAR_SENTENCE_ORDER, and complexityBand is 3. refillAttempt=1. Rejected semantic summaries from earlier attempts: [\"합성 이전 거부\", \"Synthetic rejection\"].\nNo server-approved vocabContextDesigns are supplied for this generation call. Set generationPlanId to null for every candidate; never invent a plan identifier.\n\n{\"requestId\":\"synthetic\",\"idempotencyKey\":\"synthetic\",\"sessionId\":1,\"questionNumber\":4,\"totalQuestions\":20,\"domain\":\"GRAMMAR\",\"itemType\":\"GRAMMAR_SENTENCE_ORDER\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"targetComplexityBand\":3,\"previousResults\":[],\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"preferredScenarioCategories\":[\"WORK\",\"TRAVEL\"],\"policyVersion\":\"level-test-multiskill\",\"modelConfigVersion\":\"level-test-model-config\"}"
+  },
+  {
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 4,
+      "totalQuestions": 20,
+      "domain": "GRAMMAR",
+      "itemType": "GRAMMAR_SENTENCE_ORDER",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 5,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK",
+        "TRAVEL"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": {
+        "uploadUrl": "http://127.0.0.1/synthetic?token=synthetic-only",
+        "objectKey": "synthetic.wav",
+        "contentType": "audio/wav",
+        "voice": "marin",
+        "playbackSpeed": "NORMAL"
+      }
+    },
+    "requirePlan": false,
+    "designs": null,
+    "schemaSha256": "1a60fd4530920ea1f5a7404f995cbf3381b06d4f1f84ef315cad57f24a50a376",
+    "prompt": "Generate two candidate questions for question 4/20. The requested domain is GRAMMAR, itemType is GRAMMAR_SENTENCE_ORDER, and complexityBand is 5. refillAttempt=1. Rejected semantic summaries from earlier attempts: [\"합성 이전 거부\", \"Synthetic rejection\"].\nNo server-approved vocabContextDesigns are supplied for this generation call. Set generationPlanId to null for every candidate; never invent a plan identifier.\n\n{\"requestId\":\"synthetic\",\"idempotencyKey\":\"synthetic\",\"sessionId\":1,\"questionNumber\":4,\"totalQuestions\":20,\"domain\":\"GRAMMAR\",\"itemType\":\"GRAMMAR_SENTENCE_ORDER\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"targetComplexityBand\":5,\"previousResults\":[],\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"preferredScenarioCategories\":[\"WORK\",\"TRAVEL\"],\"policyVersion\":\"level-test-multiskill\",\"modelConfigVersion\":\"level-test-model-config\"}"
+  },
+  {
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 7,
+      "totalQuestions": 20,
+      "domain": "READING",
+      "itemType": "READING_GIST",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 1,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK",
+        "TRAVEL"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": {
+        "uploadUrl": "http://127.0.0.1/synthetic?token=synthetic-only",
+        "objectKey": "synthetic.wav",
+        "contentType": "audio/wav",
+        "voice": "marin",
+        "playbackSpeed": "NORMAL"
+      }
+    },
+    "requirePlan": false,
+    "designs": null,
+    "schemaSha256": "34ad1041d3faa09520f4bf48d3d1e79fad18a03e8dd1621d540a55f183028af2",
+    "prompt": "Generate two candidate questions for question 7/20. The requested domain is READING, itemType is READING_GIST, and complexityBand is 1. refillAttempt=1. Rejected semantic summaries from earlier attempts: [\"합성 이전 거부\", \"Synthetic rejection\"].\nServer selectionPolicy for this Choice item: UNIQUE_ANSWER.\nNo server-approved vocabContextDesigns are supplied for this generation call. Set generationPlanId to null for every candidate; never invent a plan identifier.\n\n{\"requestId\":\"synthetic\",\"idempotencyKey\":\"synthetic\",\"sessionId\":1,\"questionNumber\":7,\"totalQuestions\":20,\"domain\":\"READING\",\"itemType\":\"READING_GIST\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"targetComplexityBand\":1,\"previousResults\":[],\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"preferredScenarioCategories\":[\"WORK\",\"TRAVEL\"],\"policyVersion\":\"level-test-multiskill\",\"modelConfigVersion\":\"level-test-model-config\"}"
+  },
+  {
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 7,
+      "totalQuestions": 20,
+      "domain": "READING",
+      "itemType": "READING_GIST",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK",
+        "TRAVEL"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": {
+        "uploadUrl": "http://127.0.0.1/synthetic?token=synthetic-only",
+        "objectKey": "synthetic.wav",
+        "contentType": "audio/wav",
+        "voice": "marin",
+        "playbackSpeed": "NORMAL"
+      }
+    },
+    "requirePlan": false,
+    "designs": null,
+    "schemaSha256": "2252d6626bca15552d3ddacbe1ed9d13d97e2863cb686c9de2b59fc1b39bf64c",
+    "prompt": "Generate two candidate questions for question 7/20. The requested domain is READING, itemType is READING_GIST, and complexityBand is 3. refillAttempt=1. Rejected semantic summaries from earlier attempts: [\"합성 이전 거부\", \"Synthetic rejection\"].\nServer selectionPolicy for this Choice item: UNIQUE_ANSWER.\nNo server-approved vocabContextDesigns are supplied for this generation call. Set generationPlanId to null for every candidate; never invent a plan identifier.\n\n{\"requestId\":\"synthetic\",\"idempotencyKey\":\"synthetic\",\"sessionId\":1,\"questionNumber\":7,\"totalQuestions\":20,\"domain\":\"READING\",\"itemType\":\"READING_GIST\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"targetComplexityBand\":3,\"previousResults\":[],\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"preferredScenarioCategories\":[\"WORK\",\"TRAVEL\"],\"policyVersion\":\"level-test-multiskill\",\"modelConfigVersion\":\"level-test-model-config\"}"
+  },
+  {
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 7,
+      "totalQuestions": 20,
+      "domain": "READING",
+      "itemType": "READING_GIST",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 5,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK",
+        "TRAVEL"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": {
+        "uploadUrl": "http://127.0.0.1/synthetic?token=synthetic-only",
+        "objectKey": "synthetic.wav",
+        "contentType": "audio/wav",
+        "voice": "marin",
+        "playbackSpeed": "NORMAL"
+      }
+    },
+    "requirePlan": false,
+    "designs": null,
+    "schemaSha256": "6093b7ea0231c19d947e18036e0d85c79cb3cc42670ef4b6b4e355c1f19e7318",
+    "prompt": "Generate two candidate questions for question 7/20. The requested domain is READING, itemType is READING_GIST, and complexityBand is 5. refillAttempt=1. Rejected semantic summaries from earlier attempts: [\"합성 이전 거부\", \"Synthetic rejection\"].\nServer selectionPolicy for this Choice item: BEST_ANSWER.\nNo server-approved vocabContextDesigns are supplied for this generation call. Set generationPlanId to null for every candidate; never invent a plan identifier.\n\n{\"requestId\":\"synthetic\",\"idempotencyKey\":\"synthetic\",\"sessionId\":1,\"questionNumber\":7,\"totalQuestions\":20,\"domain\":\"READING\",\"itemType\":\"READING_GIST\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"targetComplexityBand\":5,\"previousResults\":[],\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"preferredScenarioCategories\":[\"WORK\",\"TRAVEL\"],\"policyVersion\":\"level-test-multiskill\",\"modelConfigVersion\":\"level-test-model-config\"}"
+  },
+  {
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 7,
+      "totalQuestions": 20,
+      "domain": "READING",
+      "itemType": "READING_DETAIL",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 1,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK",
+        "TRAVEL"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": {
+        "uploadUrl": "http://127.0.0.1/synthetic?token=synthetic-only",
+        "objectKey": "synthetic.wav",
+        "contentType": "audio/wav",
+        "voice": "marin",
+        "playbackSpeed": "NORMAL"
+      }
+    },
+    "requirePlan": false,
+    "designs": null,
+    "schemaSha256": "a2bd62646e9a17b31e40090f928d1a76cb65d13311dc40b057c687b7bc93bb89",
+    "prompt": "Generate two candidate questions for question 7/20. The requested domain is READING, itemType is READING_DETAIL, and complexityBand is 1. refillAttempt=1. Rejected semantic summaries from earlier attempts: [\"합성 이전 거부\", \"Synthetic rejection\"].\nServer selectionPolicy for this Choice item: UNIQUE_ANSWER.\nNo server-approved vocabContextDesigns are supplied for this generation call. Set generationPlanId to null for every candidate; never invent a plan identifier.\n\n{\"requestId\":\"synthetic\",\"idempotencyKey\":\"synthetic\",\"sessionId\":1,\"questionNumber\":7,\"totalQuestions\":20,\"domain\":\"READING\",\"itemType\":\"READING_DETAIL\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"targetComplexityBand\":1,\"previousResults\":[],\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"preferredScenarioCategories\":[\"WORK\",\"TRAVEL\"],\"policyVersion\":\"level-test-multiskill\",\"modelConfigVersion\":\"level-test-model-config\"}"
+  },
+  {
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 7,
+      "totalQuestions": 20,
+      "domain": "READING",
+      "itemType": "READING_DETAIL",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK",
+        "TRAVEL"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": {
+        "uploadUrl": "http://127.0.0.1/synthetic?token=synthetic-only",
+        "objectKey": "synthetic.wav",
+        "contentType": "audio/wav",
+        "voice": "marin",
+        "playbackSpeed": "NORMAL"
+      }
+    },
+    "requirePlan": false,
+    "designs": null,
+    "schemaSha256": "1daf99920df3f9afb53807349fea4c7bac16213f50cc8e3f2458d829b7695dd8",
+    "prompt": "Generate two candidate questions for question 7/20. The requested domain is READING, itemType is READING_DETAIL, and complexityBand is 3. refillAttempt=1. Rejected semantic summaries from earlier attempts: [\"합성 이전 거부\", \"Synthetic rejection\"].\nServer selectionPolicy for this Choice item: UNIQUE_ANSWER.\nNo server-approved vocabContextDesigns are supplied for this generation call. Set generationPlanId to null for every candidate; never invent a plan identifier.\n\n{\"requestId\":\"synthetic\",\"idempotencyKey\":\"synthetic\",\"sessionId\":1,\"questionNumber\":7,\"totalQuestions\":20,\"domain\":\"READING\",\"itemType\":\"READING_DETAIL\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"targetComplexityBand\":3,\"previousResults\":[],\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"preferredScenarioCategories\":[\"WORK\",\"TRAVEL\"],\"policyVersion\":\"level-test-multiskill\",\"modelConfigVersion\":\"level-test-model-config\"}"
+  },
+  {
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 7,
+      "totalQuestions": 20,
+      "domain": "READING",
+      "itemType": "READING_DETAIL",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 5,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK",
+        "TRAVEL"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": {
+        "uploadUrl": "http://127.0.0.1/synthetic?token=synthetic-only",
+        "objectKey": "synthetic.wav",
+        "contentType": "audio/wav",
+        "voice": "marin",
+        "playbackSpeed": "NORMAL"
+      }
+    },
+    "requirePlan": false,
+    "designs": null,
+    "schemaSha256": "2f59cb4a2dab06e56b844ebe5bc2455f23fb1c480143f92a8bae49665e504c56",
+    "prompt": "Generate two candidate questions for question 7/20. The requested domain is READING, itemType is READING_DETAIL, and complexityBand is 5. refillAttempt=1. Rejected semantic summaries from earlier attempts: [\"합성 이전 거부\", \"Synthetic rejection\"].\nServer selectionPolicy for this Choice item: BEST_ANSWER.\nNo server-approved vocabContextDesigns are supplied for this generation call. Set generationPlanId to null for every candidate; never invent a plan identifier.\n\n{\"requestId\":\"synthetic\",\"idempotencyKey\":\"synthetic\",\"sessionId\":1,\"questionNumber\":7,\"totalQuestions\":20,\"domain\":\"READING\",\"itemType\":\"READING_DETAIL\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"targetComplexityBand\":5,\"previousResults\":[],\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"preferredScenarioCategories\":[\"WORK\",\"TRAVEL\"],\"policyVersion\":\"level-test-multiskill\",\"modelConfigVersion\":\"level-test-model-config\"}"
+  },
+  {
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 7,
+      "totalQuestions": 20,
+      "domain": "READING",
+      "itemType": "READING_DISCOURSE_FUNCTION",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 1,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK",
+        "TRAVEL"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": {
+        "uploadUrl": "http://127.0.0.1/synthetic?token=synthetic-only",
+        "objectKey": "synthetic.wav",
+        "contentType": "audio/wav",
+        "voice": "marin",
+        "playbackSpeed": "NORMAL"
+      }
+    },
+    "requirePlan": false,
+    "designs": null,
+    "schemaSha256": "d487bef366575cdd4924e69002aafe49ed9521659501017fa6cdef09ef0d29db",
+    "prompt": "Generate two candidate questions for question 7/20. The requested domain is READING, itemType is READING_DISCOURSE_FUNCTION, and complexityBand is 1. refillAttempt=1. Rejected semantic summaries from earlier attempts: [\"합성 이전 거부\", \"Synthetic rejection\"].\nServer selectionPolicy for this Choice item: UNIQUE_ANSWER.\nNo server-approved vocabContextDesigns are supplied for this generation call. Set generationPlanId to null for every candidate; never invent a plan identifier.\n\n{\"requestId\":\"synthetic\",\"idempotencyKey\":\"synthetic\",\"sessionId\":1,\"questionNumber\":7,\"totalQuestions\":20,\"domain\":\"READING\",\"itemType\":\"READING_DISCOURSE_FUNCTION\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"targetComplexityBand\":1,\"previousResults\":[],\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"preferredScenarioCategories\":[\"WORK\",\"TRAVEL\"],\"policyVersion\":\"level-test-multiskill\",\"modelConfigVersion\":\"level-test-model-config\"}"
+  },
+  {
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 7,
+      "totalQuestions": 20,
+      "domain": "READING",
+      "itemType": "READING_DISCOURSE_FUNCTION",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK",
+        "TRAVEL"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": {
+        "uploadUrl": "http://127.0.0.1/synthetic?token=synthetic-only",
+        "objectKey": "synthetic.wav",
+        "contentType": "audio/wav",
+        "voice": "marin",
+        "playbackSpeed": "NORMAL"
+      }
+    },
+    "requirePlan": false,
+    "designs": null,
+    "schemaSha256": "d525c1ff08ba3896661eba34bd04beeb17ad6ac5a6484a3600e8725e2d3cbb49",
+    "prompt": "Generate two candidate questions for question 7/20. The requested domain is READING, itemType is READING_DISCOURSE_FUNCTION, and complexityBand is 3. refillAttempt=1. Rejected semantic summaries from earlier attempts: [\"합성 이전 거부\", \"Synthetic rejection\"].\nServer selectionPolicy for this Choice item: BEST_ANSWER.\nNo server-approved vocabContextDesigns are supplied for this generation call. Set generationPlanId to null for every candidate; never invent a plan identifier.\n\n{\"requestId\":\"synthetic\",\"idempotencyKey\":\"synthetic\",\"sessionId\":1,\"questionNumber\":7,\"totalQuestions\":20,\"domain\":\"READING\",\"itemType\":\"READING_DISCOURSE_FUNCTION\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"targetComplexityBand\":3,\"previousResults\":[],\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"preferredScenarioCategories\":[\"WORK\",\"TRAVEL\"],\"policyVersion\":\"level-test-multiskill\",\"modelConfigVersion\":\"level-test-model-config\"}"
+  },
+  {
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 7,
+      "totalQuestions": 20,
+      "domain": "READING",
+      "itemType": "READING_DISCOURSE_FUNCTION",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 5,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK",
+        "TRAVEL"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": {
+        "uploadUrl": "http://127.0.0.1/synthetic?token=synthetic-only",
+        "objectKey": "synthetic.wav",
+        "contentType": "audio/wav",
+        "voice": "marin",
+        "playbackSpeed": "NORMAL"
+      }
+    },
+    "requirePlan": false,
+    "designs": null,
+    "schemaSha256": "c599221f93f202b3875da83931a79333af6ec73ffe1379efb01a0f1928abec5d",
+    "prompt": "Generate two candidate questions for question 7/20. The requested domain is READING, itemType is READING_DISCOURSE_FUNCTION, and complexityBand is 5. refillAttempt=1. Rejected semantic summaries from earlier attempts: [\"합성 이전 거부\", \"Synthetic rejection\"].\nServer selectionPolicy for this Choice item: BEST_ANSWER.\nNo server-approved vocabContextDesigns are supplied for this generation call. Set generationPlanId to null for every candidate; never invent a plan identifier.\n\n{\"requestId\":\"synthetic\",\"idempotencyKey\":\"synthetic\",\"sessionId\":1,\"questionNumber\":7,\"totalQuestions\":20,\"domain\":\"READING\",\"itemType\":\"READING_DISCOURSE_FUNCTION\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"targetComplexityBand\":5,\"previousResults\":[],\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"preferredScenarioCategories\":[\"WORK\",\"TRAVEL\"],\"policyVersion\":\"level-test-multiskill\",\"modelConfigVersion\":\"level-test-model-config\"}"
+  },
+  {
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 7,
+      "totalQuestions": 20,
+      "domain": "READING",
+      "itemType": "READING_TEXT_INFERENCE",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 1,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK",
+        "TRAVEL"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": {
+        "uploadUrl": "http://127.0.0.1/synthetic?token=synthetic-only",
+        "objectKey": "synthetic.wav",
+        "contentType": "audio/wav",
+        "voice": "marin",
+        "playbackSpeed": "NORMAL"
+      }
+    },
+    "requirePlan": false,
+    "designs": null,
+    "schemaSha256": "f1a636e6888f0daa9a7e2f7764ef7a3dc69f31800f84ae6ba06b11321dc9298e",
+    "prompt": "Generate two candidate questions for question 7/20. The requested domain is READING, itemType is READING_TEXT_INFERENCE, and complexityBand is 1. refillAttempt=1. Rejected semantic summaries from earlier attempts: [\"합성 이전 거부\", \"Synthetic rejection\"].\nServer selectionPolicy for this Choice item: UNIQUE_ANSWER.\nNo server-approved vocabContextDesigns are supplied for this generation call. Set generationPlanId to null for every candidate; never invent a plan identifier.\n\n{\"requestId\":\"synthetic\",\"idempotencyKey\":\"synthetic\",\"sessionId\":1,\"questionNumber\":7,\"totalQuestions\":20,\"domain\":\"READING\",\"itemType\":\"READING_TEXT_INFERENCE\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"targetComplexityBand\":1,\"previousResults\":[],\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"preferredScenarioCategories\":[\"WORK\",\"TRAVEL\"],\"policyVersion\":\"level-test-multiskill\",\"modelConfigVersion\":\"level-test-model-config\"}"
+  },
+  {
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 7,
+      "totalQuestions": 20,
+      "domain": "READING",
+      "itemType": "READING_TEXT_INFERENCE",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK",
+        "TRAVEL"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": {
+        "uploadUrl": "http://127.0.0.1/synthetic?token=synthetic-only",
+        "objectKey": "synthetic.wav",
+        "contentType": "audio/wav",
+        "voice": "marin",
+        "playbackSpeed": "NORMAL"
+      }
+    },
+    "requirePlan": false,
+    "designs": null,
+    "schemaSha256": "72beed900c922fd607a8bf3a9ddcc33ccc947b8238d6ae5637690b2fc293fd83",
+    "prompt": "Generate two candidate questions for question 7/20. The requested domain is READING, itemType is READING_TEXT_INFERENCE, and complexityBand is 3. refillAttempt=1. Rejected semantic summaries from earlier attempts: [\"합성 이전 거부\", \"Synthetic rejection\"].\nServer selectionPolicy for this Choice item: BEST_ANSWER.\nNo server-approved vocabContextDesigns are supplied for this generation call. Set generationPlanId to null for every candidate; never invent a plan identifier.\n\n{\"requestId\":\"synthetic\",\"idempotencyKey\":\"synthetic\",\"sessionId\":1,\"questionNumber\":7,\"totalQuestions\":20,\"domain\":\"READING\",\"itemType\":\"READING_TEXT_INFERENCE\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"targetComplexityBand\":3,\"previousResults\":[],\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"preferredScenarioCategories\":[\"WORK\",\"TRAVEL\"],\"policyVersion\":\"level-test-multiskill\",\"modelConfigVersion\":\"level-test-model-config\"}"
+  },
+  {
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 7,
+      "totalQuestions": 20,
+      "domain": "READING",
+      "itemType": "READING_TEXT_INFERENCE",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 5,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK",
+        "TRAVEL"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": {
+        "uploadUrl": "http://127.0.0.1/synthetic?token=synthetic-only",
+        "objectKey": "synthetic.wav",
+        "contentType": "audio/wav",
+        "voice": "marin",
+        "playbackSpeed": "NORMAL"
+      }
+    },
+    "requirePlan": false,
+    "designs": null,
+    "schemaSha256": "092854e87508c11ab007e4e2d9d62da4793c0491214763f6368233d983c31955",
+    "prompt": "Generate two candidate questions for question 7/20. The requested domain is READING, itemType is READING_TEXT_INFERENCE, and complexityBand is 5. refillAttempt=1. Rejected semantic summaries from earlier attempts: [\"합성 이전 거부\", \"Synthetic rejection\"].\nServer selectionPolicy for this Choice item: BEST_ANSWER.\nNo server-approved vocabContextDesigns are supplied for this generation call. Set generationPlanId to null for every candidate; never invent a plan identifier.\n\n{\"requestId\":\"synthetic\",\"idempotencyKey\":\"synthetic\",\"sessionId\":1,\"questionNumber\":7,\"totalQuestions\":20,\"domain\":\"READING\",\"itemType\":\"READING_TEXT_INFERENCE\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"targetComplexityBand\":5,\"previousResults\":[],\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"preferredScenarioCategories\":[\"WORK\",\"TRAVEL\"],\"policyVersion\":\"level-test-multiskill\",\"modelConfigVersion\":\"level-test-model-config\"}"
+  },
+  {
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 11,
+      "totalQuestions": 20,
+      "domain": "LISTENING",
+      "itemType": "LISTENING_GIST_CHOICE",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 1,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK",
+        "TRAVEL"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": {
+        "uploadUrl": "http://127.0.0.1/synthetic?token=synthetic-only",
+        "objectKey": "synthetic.wav",
+        "contentType": "audio/wav",
+        "voice": "marin",
+        "playbackSpeed": "NORMAL"
+      }
+    },
+    "requirePlan": false,
+    "designs": null,
+    "schemaSha256": "809d783a4f8b44b3808a1a344df5b8af58df99cc5dea15cb4ffc1914b8c960bb",
+    "prompt": "Generate two candidate questions for question 11/20. The requested domain is LISTENING, itemType is LISTENING_GIST_CHOICE, and complexityBand is 1. refillAttempt=1. Rejected semantic summaries from earlier attempts: [\"합성 이전 거부\", \"Synthetic rejection\"].\nServer selectionPolicy for this Choice item: UNIQUE_ANSWER.\nNo server-approved vocabContextDesigns are supplied for this generation call. Set generationPlanId to null for every candidate; never invent a plan identifier.\n\n{\"requestId\":\"synthetic\",\"idempotencyKey\":\"synthetic\",\"sessionId\":1,\"questionNumber\":11,\"totalQuestions\":20,\"domain\":\"LISTENING\",\"itemType\":\"LISTENING_GIST_CHOICE\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"targetComplexityBand\":1,\"previousResults\":[],\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"preferredScenarioCategories\":[\"WORK\",\"TRAVEL\"],\"policyVersion\":\"level-test-multiskill\",\"modelConfigVersion\":\"level-test-model-config\"}"
+  },
+  {
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 11,
+      "totalQuestions": 20,
+      "domain": "LISTENING",
+      "itemType": "LISTENING_GIST_CHOICE",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK",
+        "TRAVEL"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": {
+        "uploadUrl": "http://127.0.0.1/synthetic?token=synthetic-only",
+        "objectKey": "synthetic.wav",
+        "contentType": "audio/wav",
+        "voice": "marin",
+        "playbackSpeed": "NORMAL"
+      }
+    },
+    "requirePlan": false,
+    "designs": null,
+    "schemaSha256": "d1f12eaac556ccc04f86b13cea6bff542fe05ec1ca07c87305591e38ad63da77",
+    "prompt": "Generate two candidate questions for question 11/20. The requested domain is LISTENING, itemType is LISTENING_GIST_CHOICE, and complexityBand is 3. refillAttempt=1. Rejected semantic summaries from earlier attempts: [\"합성 이전 거부\", \"Synthetic rejection\"].\nServer selectionPolicy for this Choice item: UNIQUE_ANSWER.\nNo server-approved vocabContextDesigns are supplied for this generation call. Set generationPlanId to null for every candidate; never invent a plan identifier.\n\n{\"requestId\":\"synthetic\",\"idempotencyKey\":\"synthetic\",\"sessionId\":1,\"questionNumber\":11,\"totalQuestions\":20,\"domain\":\"LISTENING\",\"itemType\":\"LISTENING_GIST_CHOICE\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"targetComplexityBand\":3,\"previousResults\":[],\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"preferredScenarioCategories\":[\"WORK\",\"TRAVEL\"],\"policyVersion\":\"level-test-multiskill\",\"modelConfigVersion\":\"level-test-model-config\"}"
+  },
+  {
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 11,
+      "totalQuestions": 20,
+      "domain": "LISTENING",
+      "itemType": "LISTENING_GIST_CHOICE",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 5,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK",
+        "TRAVEL"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": {
+        "uploadUrl": "http://127.0.0.1/synthetic?token=synthetic-only",
+        "objectKey": "synthetic.wav",
+        "contentType": "audio/wav",
+        "voice": "marin",
+        "playbackSpeed": "NORMAL"
+      }
+    },
+    "requirePlan": false,
+    "designs": null,
+    "schemaSha256": "11cedd3a7fb1447ae8ad7e705b97038db253eb1fb21c00afc7e99fd86f575194",
+    "prompt": "Generate two candidate questions for question 11/20. The requested domain is LISTENING, itemType is LISTENING_GIST_CHOICE, and complexityBand is 5. refillAttempt=1. Rejected semantic summaries from earlier attempts: [\"합성 이전 거부\", \"Synthetic rejection\"].\nServer selectionPolicy for this Choice item: BEST_ANSWER.\nNo server-approved vocabContextDesigns are supplied for this generation call. Set generationPlanId to null for every candidate; never invent a plan identifier.\n\n{\"requestId\":\"synthetic\",\"idempotencyKey\":\"synthetic\",\"sessionId\":1,\"questionNumber\":11,\"totalQuestions\":20,\"domain\":\"LISTENING\",\"itemType\":\"LISTENING_GIST_CHOICE\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"targetComplexityBand\":5,\"previousResults\":[],\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"preferredScenarioCategories\":[\"WORK\",\"TRAVEL\"],\"policyVersion\":\"level-test-multiskill\",\"modelConfigVersion\":\"level-test-model-config\"}"
+  },
+  {
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 11,
+      "totalQuestions": 20,
+      "domain": "LISTENING",
+      "itemType": "LISTENING_DETAIL_CHOICE",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 1,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK",
+        "TRAVEL"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": {
+        "uploadUrl": "http://127.0.0.1/synthetic?token=synthetic-only",
+        "objectKey": "synthetic.wav",
+        "contentType": "audio/wav",
+        "voice": "marin",
+        "playbackSpeed": "NORMAL"
+      }
+    },
+    "requirePlan": false,
+    "designs": null,
+    "schemaSha256": "dc4b8bed4003f8458fe79b4f31bd7021fced3eb6bd2018004f6d54719092bfd7",
+    "prompt": "Generate two candidate questions for question 11/20. The requested domain is LISTENING, itemType is LISTENING_DETAIL_CHOICE, and complexityBand is 1. refillAttempt=1. Rejected semantic summaries from earlier attempts: [\"합성 이전 거부\", \"Synthetic rejection\"].\nServer selectionPolicy for this Choice item: UNIQUE_ANSWER.\nNo server-approved vocabContextDesigns are supplied for this generation call. Set generationPlanId to null for every candidate; never invent a plan identifier.\n\n{\"requestId\":\"synthetic\",\"idempotencyKey\":\"synthetic\",\"sessionId\":1,\"questionNumber\":11,\"totalQuestions\":20,\"domain\":\"LISTENING\",\"itemType\":\"LISTENING_DETAIL_CHOICE\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"targetComplexityBand\":1,\"previousResults\":[],\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"preferredScenarioCategories\":[\"WORK\",\"TRAVEL\"],\"policyVersion\":\"level-test-multiskill\",\"modelConfigVersion\":\"level-test-model-config\"}"
+  },
+  {
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 11,
+      "totalQuestions": 20,
+      "domain": "LISTENING",
+      "itemType": "LISTENING_DETAIL_CHOICE",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK",
+        "TRAVEL"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": {
+        "uploadUrl": "http://127.0.0.1/synthetic?token=synthetic-only",
+        "objectKey": "synthetic.wav",
+        "contentType": "audio/wav",
+        "voice": "marin",
+        "playbackSpeed": "NORMAL"
+      }
+    },
+    "requirePlan": false,
+    "designs": null,
+    "schemaSha256": "b003305297f176aeda19f6ca80ca130a83bd74caf1afd25ed4a0e58c94a29710",
+    "prompt": "Generate two candidate questions for question 11/20. The requested domain is LISTENING, itemType is LISTENING_DETAIL_CHOICE, and complexityBand is 3. refillAttempt=1. Rejected semantic summaries from earlier attempts: [\"합성 이전 거부\", \"Synthetic rejection\"].\nServer selectionPolicy for this Choice item: UNIQUE_ANSWER.\nNo server-approved vocabContextDesigns are supplied for this generation call. Set generationPlanId to null for every candidate; never invent a plan identifier.\n\n{\"requestId\":\"synthetic\",\"idempotencyKey\":\"synthetic\",\"sessionId\":1,\"questionNumber\":11,\"totalQuestions\":20,\"domain\":\"LISTENING\",\"itemType\":\"LISTENING_DETAIL_CHOICE\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"targetComplexityBand\":3,\"previousResults\":[],\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"preferredScenarioCategories\":[\"WORK\",\"TRAVEL\"],\"policyVersion\":\"level-test-multiskill\",\"modelConfigVersion\":\"level-test-model-config\"}"
+  },
+  {
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 11,
+      "totalQuestions": 20,
+      "domain": "LISTENING",
+      "itemType": "LISTENING_DETAIL_CHOICE",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 5,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK",
+        "TRAVEL"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": {
+        "uploadUrl": "http://127.0.0.1/synthetic?token=synthetic-only",
+        "objectKey": "synthetic.wav",
+        "contentType": "audio/wav",
+        "voice": "marin",
+        "playbackSpeed": "NORMAL"
+      }
+    },
+    "requirePlan": false,
+    "designs": null,
+    "schemaSha256": "3d03424063b013846b1a9714d36f978b1d6ca3173a605a8e97265374ff73810a",
+    "prompt": "Generate two candidate questions for question 11/20. The requested domain is LISTENING, itemType is LISTENING_DETAIL_CHOICE, and complexityBand is 5. refillAttempt=1. Rejected semantic summaries from earlier attempts: [\"합성 이전 거부\", \"Synthetic rejection\"].\nServer selectionPolicy for this Choice item: BEST_ANSWER.\nNo server-approved vocabContextDesigns are supplied for this generation call. Set generationPlanId to null for every candidate; never invent a plan identifier.\n\n{\"requestId\":\"synthetic\",\"idempotencyKey\":\"synthetic\",\"sessionId\":1,\"questionNumber\":11,\"totalQuestions\":20,\"domain\":\"LISTENING\",\"itemType\":\"LISTENING_DETAIL_CHOICE\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"targetComplexityBand\":5,\"previousResults\":[],\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"preferredScenarioCategories\":[\"WORK\",\"TRAVEL\"],\"policyVersion\":\"level-test-multiskill\",\"modelConfigVersion\":\"level-test-model-config\"}"
+  },
+  {
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 11,
+      "totalQuestions": 20,
+      "domain": "LISTENING",
+      "itemType": "LISTENING_DICTATION",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 1,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK",
+        "TRAVEL"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": {
+        "uploadUrl": "http://127.0.0.1/synthetic?token=synthetic-only",
+        "objectKey": "synthetic.wav",
+        "contentType": "audio/wav",
+        "voice": "marin",
+        "playbackSpeed": "NORMAL"
+      }
+    },
+    "requirePlan": false,
+    "designs": null,
+    "schemaSha256": "ea1a04ba5ba33ad0e0f55cbf6b3c766643dd5e1fccad20a7ca7ee541384e7a53",
+    "prompt": "Generate two candidate questions for question 11/20. The requested domain is LISTENING, itemType is LISTENING_DICTATION, and complexityBand is 1. refillAttempt=1. Rejected semantic summaries from earlier attempts: [\"합성 이전 거부\", \"Synthetic rejection\"].\nNo server-approved vocabContextDesigns are supplied for this generation call. Set generationPlanId to null for every candidate; never invent a plan identifier.\n\n{\"requestId\":\"synthetic\",\"idempotencyKey\":\"synthetic\",\"sessionId\":1,\"questionNumber\":11,\"totalQuestions\":20,\"domain\":\"LISTENING\",\"itemType\":\"LISTENING_DICTATION\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"targetComplexityBand\":1,\"previousResults\":[],\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"preferredScenarioCategories\":[\"WORK\",\"TRAVEL\"],\"policyVersion\":\"level-test-multiskill\",\"modelConfigVersion\":\"level-test-model-config\"}"
+  },
+  {
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 11,
+      "totalQuestions": 20,
+      "domain": "LISTENING",
+      "itemType": "LISTENING_DICTATION",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK",
+        "TRAVEL"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": {
+        "uploadUrl": "http://127.0.0.1/synthetic?token=synthetic-only",
+        "objectKey": "synthetic.wav",
+        "contentType": "audio/wav",
+        "voice": "marin",
+        "playbackSpeed": "NORMAL"
+      }
+    },
+    "requirePlan": false,
+    "designs": null,
+    "schemaSha256": "cd6bec5f5b8dca760907b2f483299e2794b325e951a04164725f2b1b44abd79d",
+    "prompt": "Generate two candidate questions for question 11/20. The requested domain is LISTENING, itemType is LISTENING_DICTATION, and complexityBand is 3. refillAttempt=1. Rejected semantic summaries from earlier attempts: [\"합성 이전 거부\", \"Synthetic rejection\"].\nNo server-approved vocabContextDesigns are supplied for this generation call. Set generationPlanId to null for every candidate; never invent a plan identifier.\n\n{\"requestId\":\"synthetic\",\"idempotencyKey\":\"synthetic\",\"sessionId\":1,\"questionNumber\":11,\"totalQuestions\":20,\"domain\":\"LISTENING\",\"itemType\":\"LISTENING_DICTATION\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"targetComplexityBand\":3,\"previousResults\":[],\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"preferredScenarioCategories\":[\"WORK\",\"TRAVEL\"],\"policyVersion\":\"level-test-multiskill\",\"modelConfigVersion\":\"level-test-model-config\"}"
+  },
+  {
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 11,
+      "totalQuestions": 20,
+      "domain": "LISTENING",
+      "itemType": "LISTENING_DICTATION",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 5,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK",
+        "TRAVEL"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": {
+        "uploadUrl": "http://127.0.0.1/synthetic?token=synthetic-only",
+        "objectKey": "synthetic.wav",
+        "contentType": "audio/wav",
+        "voice": "marin",
+        "playbackSpeed": "NORMAL"
+      }
+    },
+    "requirePlan": false,
+    "designs": null,
+    "schemaSha256": "565ef7dc106d5c0abdba3dbf05f01ae8a2426b4438f532a76a647080ef6bf160",
+    "prompt": "Generate two candidate questions for question 11/20. The requested domain is LISTENING, itemType is LISTENING_DICTATION, and complexityBand is 5. refillAttempt=1. Rejected semantic summaries from earlier attempts: [\"합성 이전 거부\", \"Synthetic rejection\"].\nNo server-approved vocabContextDesigns are supplied for this generation call. Set generationPlanId to null for every candidate; never invent a plan identifier.\n\n{\"requestId\":\"synthetic\",\"idempotencyKey\":\"synthetic\",\"sessionId\":1,\"questionNumber\":11,\"totalQuestions\":20,\"domain\":\"LISTENING\",\"itemType\":\"LISTENING_DICTATION\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"targetComplexityBand\":5,\"previousResults\":[],\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"preferredScenarioCategories\":[\"WORK\",\"TRAVEL\"],\"policyVersion\":\"level-test-multiskill\",\"modelConfigVersion\":\"level-test-model-config\"}"
+  },
+  {
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 11,
+      "totalQuestions": 20,
+      "domain": "LISTENING",
+      "itemType": "LISTENING_INTERPRETATION",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 1,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK",
+        "TRAVEL"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": {
+        "uploadUrl": "http://127.0.0.1/synthetic?token=synthetic-only",
+        "objectKey": "synthetic.wav",
+        "contentType": "audio/wav",
+        "voice": "marin",
+        "playbackSpeed": "NORMAL"
+      }
+    },
+    "requirePlan": false,
+    "designs": null,
+    "schemaSha256": "6a1144017e154ff6b5b3998a60d61c668c67f8ebd853962165bea97f885313a3",
+    "prompt": "Generate two candidate questions for question 11/20. The requested domain is LISTENING, itemType is LISTENING_INTERPRETATION, and complexityBand is 1. refillAttempt=1. Rejected semantic summaries from earlier attempts: [\"합성 이전 거부\", \"Synthetic rejection\"].\nNo server-approved vocabContextDesigns are supplied for this generation call. Set generationPlanId to null for every candidate; never invent a plan identifier.\n\n{\"requestId\":\"synthetic\",\"idempotencyKey\":\"synthetic\",\"sessionId\":1,\"questionNumber\":11,\"totalQuestions\":20,\"domain\":\"LISTENING\",\"itemType\":\"LISTENING_INTERPRETATION\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"targetComplexityBand\":1,\"previousResults\":[],\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"preferredScenarioCategories\":[\"WORK\",\"TRAVEL\"],\"policyVersion\":\"level-test-multiskill\",\"modelConfigVersion\":\"level-test-model-config\"}"
+  },
+  {
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 11,
+      "totalQuestions": 20,
+      "domain": "LISTENING",
+      "itemType": "LISTENING_INTERPRETATION",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK",
+        "TRAVEL"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": {
+        "uploadUrl": "http://127.0.0.1/synthetic?token=synthetic-only",
+        "objectKey": "synthetic.wav",
+        "contentType": "audio/wav",
+        "voice": "marin",
+        "playbackSpeed": "NORMAL"
+      }
+    },
+    "requirePlan": false,
+    "designs": null,
+    "schemaSha256": "5cfad7a6af18f62e332fe408d5deee5652399e9b44f3879bf043b4ae72e4da8b",
+    "prompt": "Generate two candidate questions for question 11/20. The requested domain is LISTENING, itemType is LISTENING_INTERPRETATION, and complexityBand is 3. refillAttempt=1. Rejected semantic summaries from earlier attempts: [\"합성 이전 거부\", \"Synthetic rejection\"].\nNo server-approved vocabContextDesigns are supplied for this generation call. Set generationPlanId to null for every candidate; never invent a plan identifier.\n\n{\"requestId\":\"synthetic\",\"idempotencyKey\":\"synthetic\",\"sessionId\":1,\"questionNumber\":11,\"totalQuestions\":20,\"domain\":\"LISTENING\",\"itemType\":\"LISTENING_INTERPRETATION\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"targetComplexityBand\":3,\"previousResults\":[],\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"preferredScenarioCategories\":[\"WORK\",\"TRAVEL\"],\"policyVersion\":\"level-test-multiskill\",\"modelConfigVersion\":\"level-test-model-config\"}"
+  },
+  {
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 11,
+      "totalQuestions": 20,
+      "domain": "LISTENING",
+      "itemType": "LISTENING_INTERPRETATION",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 5,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK",
+        "TRAVEL"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": {
+        "uploadUrl": "http://127.0.0.1/synthetic?token=synthetic-only",
+        "objectKey": "synthetic.wav",
+        "contentType": "audio/wav",
+        "voice": "marin",
+        "playbackSpeed": "NORMAL"
+      }
+    },
+    "requirePlan": false,
+    "designs": null,
+    "schemaSha256": "fde7163383b862e6337bd51d93501d428a86c9c1aaa8b6e08cf5249ce0586a48",
+    "prompt": "Generate two candidate questions for question 11/20. The requested domain is LISTENING, itemType is LISTENING_INTERPRETATION, and complexityBand is 5. refillAttempt=1. Rejected semantic summaries from earlier attempts: [\"합성 이전 거부\", \"Synthetic rejection\"].\nNo server-approved vocabContextDesigns are supplied for this generation call. Set generationPlanId to null for every candidate; never invent a plan identifier.\n\n{\"requestId\":\"synthetic\",\"idempotencyKey\":\"synthetic\",\"sessionId\":1,\"questionNumber\":11,\"totalQuestions\":20,\"domain\":\"LISTENING\",\"itemType\":\"LISTENING_INTERPRETATION\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"targetComplexityBand\":5,\"previousResults\":[],\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"preferredScenarioCategories\":[\"WORK\",\"TRAVEL\"],\"policyVersion\":\"level-test-multiskill\",\"modelConfigVersion\":\"level-test-model-config\"}"
+  },
+  {
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 15,
+      "totalQuestions": 20,
+      "domain": "WRITING",
+      "itemType": "WRITING_TRANSLATION",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 1,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK",
+        "TRAVEL"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": {
+        "uploadUrl": "http://127.0.0.1/synthetic?token=synthetic-only",
+        "objectKey": "synthetic.wav",
+        "contentType": "audio/wav",
+        "voice": "marin",
+        "playbackSpeed": "NORMAL"
+      }
+    },
+    "requirePlan": false,
+    "designs": null,
+    "schemaSha256": "45e328e3595d84cd1241ac153b2c4ba967cd99da866bbc195b964e6e4192ffab",
+    "prompt": "Generate two candidate questions for question 15/20. The requested domain is WRITING, itemType is WRITING_TRANSLATION, and complexityBand is 1. refillAttempt=1. Rejected semantic summaries from earlier attempts: [\"합성 이전 거부\", \"Synthetic rejection\"].\nNo server-approved vocabContextDesigns are supplied for this generation call. Set generationPlanId to null for every candidate; never invent a plan identifier.\n\n{\"requestId\":\"synthetic\",\"idempotencyKey\":\"synthetic\",\"sessionId\":1,\"questionNumber\":15,\"totalQuestions\":20,\"domain\":\"WRITING\",\"itemType\":\"WRITING_TRANSLATION\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"targetComplexityBand\":1,\"previousResults\":[],\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"preferredScenarioCategories\":[\"WORK\",\"TRAVEL\"],\"policyVersion\":\"level-test-multiskill\",\"modelConfigVersion\":\"level-test-model-config\"}"
+  },
+  {
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 15,
+      "totalQuestions": 20,
+      "domain": "WRITING",
+      "itemType": "WRITING_TRANSLATION",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK",
+        "TRAVEL"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": {
+        "uploadUrl": "http://127.0.0.1/synthetic?token=synthetic-only",
+        "objectKey": "synthetic.wav",
+        "contentType": "audio/wav",
+        "voice": "marin",
+        "playbackSpeed": "NORMAL"
+      }
+    },
+    "requirePlan": false,
+    "designs": null,
+    "schemaSha256": "d11ea08eba38bb2931711c91f309a1924bbe7511656e59d88e222055943bec2c",
+    "prompt": "Generate two candidate questions for question 15/20. The requested domain is WRITING, itemType is WRITING_TRANSLATION, and complexityBand is 3. refillAttempt=1. Rejected semantic summaries from earlier attempts: [\"합성 이전 거부\", \"Synthetic rejection\"].\nNo server-approved vocabContextDesigns are supplied for this generation call. Set generationPlanId to null for every candidate; never invent a plan identifier.\n\n{\"requestId\":\"synthetic\",\"idempotencyKey\":\"synthetic\",\"sessionId\":1,\"questionNumber\":15,\"totalQuestions\":20,\"domain\":\"WRITING\",\"itemType\":\"WRITING_TRANSLATION\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"targetComplexityBand\":3,\"previousResults\":[],\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"preferredScenarioCategories\":[\"WORK\",\"TRAVEL\"],\"policyVersion\":\"level-test-multiskill\",\"modelConfigVersion\":\"level-test-model-config\"}"
+  },
+  {
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 15,
+      "totalQuestions": 20,
+      "domain": "WRITING",
+      "itemType": "WRITING_TRANSLATION",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 5,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK",
+        "TRAVEL"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": {
+        "uploadUrl": "http://127.0.0.1/synthetic?token=synthetic-only",
+        "objectKey": "synthetic.wav",
+        "contentType": "audio/wav",
+        "voice": "marin",
+        "playbackSpeed": "NORMAL"
+      }
+    },
+    "requirePlan": false,
+    "designs": null,
+    "schemaSha256": "3d2c381b38e017704be0c506bba73c01fff5828d713ffaa96a94a92c3e69e46e",
+    "prompt": "Generate two candidate questions for question 15/20. The requested domain is WRITING, itemType is WRITING_TRANSLATION, and complexityBand is 5. refillAttempt=1. Rejected semantic summaries from earlier attempts: [\"합성 이전 거부\", \"Synthetic rejection\"].\nNo server-approved vocabContextDesigns are supplied for this generation call. Set generationPlanId to null for every candidate; never invent a plan identifier.\n\n{\"requestId\":\"synthetic\",\"idempotencyKey\":\"synthetic\",\"sessionId\":1,\"questionNumber\":15,\"totalQuestions\":20,\"domain\":\"WRITING\",\"itemType\":\"WRITING_TRANSLATION\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"targetComplexityBand\":5,\"previousResults\":[],\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"preferredScenarioCategories\":[\"WORK\",\"TRAVEL\"],\"policyVersion\":\"level-test-multiskill\",\"modelConfigVersion\":\"level-test-model-config\"}"
+  },
+  {
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 15,
+      "totalQuestions": 20,
+      "domain": "WRITING",
+      "itemType": "WRITING_GUIDED_SENTENCE",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 1,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK",
+        "TRAVEL"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": {
+        "uploadUrl": "http://127.0.0.1/synthetic?token=synthetic-only",
+        "objectKey": "synthetic.wav",
+        "contentType": "audio/wav",
+        "voice": "marin",
+        "playbackSpeed": "NORMAL"
+      }
+    },
+    "requirePlan": false,
+    "designs": null,
+    "schemaSha256": "3e6bf499fef2551c1dccb68f3be0dde6e98a372b259dc254ed2d7a510f03bd21",
+    "prompt": "Generate two candidate questions for question 15/20. The requested domain is WRITING, itemType is WRITING_GUIDED_SENTENCE, and complexityBand is 1. refillAttempt=1. Rejected semantic summaries from earlier attempts: [\"합성 이전 거부\", \"Synthetic rejection\"].\nNo server-approved vocabContextDesigns are supplied for this generation call. Set generationPlanId to null for every candidate; never invent a plan identifier.\n\n{\"requestId\":\"synthetic\",\"idempotencyKey\":\"synthetic\",\"sessionId\":1,\"questionNumber\":15,\"totalQuestions\":20,\"domain\":\"WRITING\",\"itemType\":\"WRITING_GUIDED_SENTENCE\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"targetComplexityBand\":1,\"previousResults\":[],\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"preferredScenarioCategories\":[\"WORK\",\"TRAVEL\"],\"policyVersion\":\"level-test-multiskill\",\"modelConfigVersion\":\"level-test-model-config\"}"
+  },
+  {
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 15,
+      "totalQuestions": 20,
+      "domain": "WRITING",
+      "itemType": "WRITING_GUIDED_SENTENCE",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK",
+        "TRAVEL"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": {
+        "uploadUrl": "http://127.0.0.1/synthetic?token=synthetic-only",
+        "objectKey": "synthetic.wav",
+        "contentType": "audio/wav",
+        "voice": "marin",
+        "playbackSpeed": "NORMAL"
+      }
+    },
+    "requirePlan": false,
+    "designs": null,
+    "schemaSha256": "ec8affe7caa1b186a1c2aff68d8b516af0321565d98f25597ab6b4591091f0e5",
+    "prompt": "Generate two candidate questions for question 15/20. The requested domain is WRITING, itemType is WRITING_GUIDED_SENTENCE, and complexityBand is 3. refillAttempt=1. Rejected semantic summaries from earlier attempts: [\"합성 이전 거부\", \"Synthetic rejection\"].\nNo server-approved vocabContextDesigns are supplied for this generation call. Set generationPlanId to null for every candidate; never invent a plan identifier.\n\n{\"requestId\":\"synthetic\",\"idempotencyKey\":\"synthetic\",\"sessionId\":1,\"questionNumber\":15,\"totalQuestions\":20,\"domain\":\"WRITING\",\"itemType\":\"WRITING_GUIDED_SENTENCE\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"targetComplexityBand\":3,\"previousResults\":[],\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"preferredScenarioCategories\":[\"WORK\",\"TRAVEL\"],\"policyVersion\":\"level-test-multiskill\",\"modelConfigVersion\":\"level-test-model-config\"}"
+  },
+  {
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 15,
+      "totalQuestions": 20,
+      "domain": "WRITING",
+      "itemType": "WRITING_GUIDED_SENTENCE",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 5,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK",
+        "TRAVEL"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": {
+        "uploadUrl": "http://127.0.0.1/synthetic?token=synthetic-only",
+        "objectKey": "synthetic.wav",
+        "contentType": "audio/wav",
+        "voice": "marin",
+        "playbackSpeed": "NORMAL"
+      }
+    },
+    "requirePlan": false,
+    "designs": null,
+    "schemaSha256": "ff37e03ef642d3af29a4bc44d0e4f83429968725560c1beaf38b79d89cfa39b7",
+    "prompt": "Generate two candidate questions for question 15/20. The requested domain is WRITING, itemType is WRITING_GUIDED_SENTENCE, and complexityBand is 5. refillAttempt=1. Rejected semantic summaries from earlier attempts: [\"합성 이전 거부\", \"Synthetic rejection\"].\nNo server-approved vocabContextDesigns are supplied for this generation call. Set generationPlanId to null for every candidate; never invent a plan identifier.\n\n{\"requestId\":\"synthetic\",\"idempotencyKey\":\"synthetic\",\"sessionId\":1,\"questionNumber\":15,\"totalQuestions\":20,\"domain\":\"WRITING\",\"itemType\":\"WRITING_GUIDED_SENTENCE\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"targetComplexityBand\":5,\"previousResults\":[],\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"preferredScenarioCategories\":[\"WORK\",\"TRAVEL\"],\"policyVersion\":\"level-test-multiskill\",\"modelConfigVersion\":\"level-test-model-config\"}"
+  },
+  {
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 15,
+      "totalQuestions": 20,
+      "domain": "WRITING",
+      "itemType": "WRITING_SCENARIO_RESPONSE",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 1,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK",
+        "TRAVEL"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": {
+        "uploadUrl": "http://127.0.0.1/synthetic?token=synthetic-only",
+        "objectKey": "synthetic.wav",
+        "contentType": "audio/wav",
+        "voice": "marin",
+        "playbackSpeed": "NORMAL"
+      }
+    },
+    "requirePlan": false,
+    "designs": null,
+    "schemaSha256": "c64ae6e03dc62a209bed39eda12a9879d06813ac5e562e4214d0c923ef8632b7",
+    "prompt": "Generate two candidate questions for question 15/20. The requested domain is WRITING, itemType is WRITING_SCENARIO_RESPONSE, and complexityBand is 1. refillAttempt=1. Rejected semantic summaries from earlier attempts: [\"합성 이전 거부\", \"Synthetic rejection\"].\nNo server-approved vocabContextDesigns are supplied for this generation call. Set generationPlanId to null for every candidate; never invent a plan identifier.\n\n{\"requestId\":\"synthetic\",\"idempotencyKey\":\"synthetic\",\"sessionId\":1,\"questionNumber\":15,\"totalQuestions\":20,\"domain\":\"WRITING\",\"itemType\":\"WRITING_SCENARIO_RESPONSE\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"targetComplexityBand\":1,\"previousResults\":[],\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"preferredScenarioCategories\":[\"WORK\",\"TRAVEL\"],\"policyVersion\":\"level-test-multiskill\",\"modelConfigVersion\":\"level-test-model-config\"}"
+  },
+  {
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 15,
+      "totalQuestions": 20,
+      "domain": "WRITING",
+      "itemType": "WRITING_SCENARIO_RESPONSE",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK",
+        "TRAVEL"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": {
+        "uploadUrl": "http://127.0.0.1/synthetic?token=synthetic-only",
+        "objectKey": "synthetic.wav",
+        "contentType": "audio/wav",
+        "voice": "marin",
+        "playbackSpeed": "NORMAL"
+      }
+    },
+    "requirePlan": false,
+    "designs": null,
+    "schemaSha256": "20370e2e3e196405695d91af726b0906d9f127b94d3e32e05a6401295b9355da",
+    "prompt": "Generate two candidate questions for question 15/20. The requested domain is WRITING, itemType is WRITING_SCENARIO_RESPONSE, and complexityBand is 3. refillAttempt=1. Rejected semantic summaries from earlier attempts: [\"합성 이전 거부\", \"Synthetic rejection\"].\nNo server-approved vocabContextDesigns are supplied for this generation call. Set generationPlanId to null for every candidate; never invent a plan identifier.\n\n{\"requestId\":\"synthetic\",\"idempotencyKey\":\"synthetic\",\"sessionId\":1,\"questionNumber\":15,\"totalQuestions\":20,\"domain\":\"WRITING\",\"itemType\":\"WRITING_SCENARIO_RESPONSE\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"targetComplexityBand\":3,\"previousResults\":[],\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"preferredScenarioCategories\":[\"WORK\",\"TRAVEL\"],\"policyVersion\":\"level-test-multiskill\",\"modelConfigVersion\":\"level-test-model-config\"}"
+  },
+  {
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 15,
+      "totalQuestions": 20,
+      "domain": "WRITING",
+      "itemType": "WRITING_SCENARIO_RESPONSE",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 5,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK",
+        "TRAVEL"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": {
+        "uploadUrl": "http://127.0.0.1/synthetic?token=synthetic-only",
+        "objectKey": "synthetic.wav",
+        "contentType": "audio/wav",
+        "voice": "marin",
+        "playbackSpeed": "NORMAL"
+      }
+    },
+    "requirePlan": false,
+    "designs": null,
+    "schemaSha256": "f83b6736398d2b754327c136d10383fd7690bbb258ecaed67092bf697a3f8481",
+    "prompt": "Generate two candidate questions for question 15/20. The requested domain is WRITING, itemType is WRITING_SCENARIO_RESPONSE, and complexityBand is 5. refillAttempt=1. Rejected semantic summaries from earlier attempts: [\"합성 이전 거부\", \"Synthetic rejection\"].\nNo server-approved vocabContextDesigns are supplied for this generation call. Set generationPlanId to null for every candidate; never invent a plan identifier.\n\n{\"requestId\":\"synthetic\",\"idempotencyKey\":\"synthetic\",\"sessionId\":1,\"questionNumber\":15,\"totalQuestions\":20,\"domain\":\"WRITING\",\"itemType\":\"WRITING_SCENARIO_RESPONSE\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"targetComplexityBand\":5,\"previousResults\":[],\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"preferredScenarioCategories\":[\"WORK\",\"TRAVEL\"],\"policyVersion\":\"level-test-multiskill\",\"modelConfigVersion\":\"level-test-model-config\"}"
+  },
+  {
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 15,
+      "totalQuestions": 20,
+      "domain": "WRITING",
+      "itemType": "WRITING_SHORT_PARAGRAPH",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 1,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK",
+        "TRAVEL"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": {
+        "uploadUrl": "http://127.0.0.1/synthetic?token=synthetic-only",
+        "objectKey": "synthetic.wav",
+        "contentType": "audio/wav",
+        "voice": "marin",
+        "playbackSpeed": "NORMAL"
+      }
+    },
+    "requirePlan": false,
+    "designs": null,
+    "schemaSha256": "44361b745c4aed863a58c973c207ac95715835e645a05dd1c5da3892f2175dcc",
+    "prompt": "Generate two candidate questions for question 15/20. The requested domain is WRITING, itemType is WRITING_SHORT_PARAGRAPH, and complexityBand is 1. refillAttempt=1. Rejected semantic summaries from earlier attempts: [\"합성 이전 거부\", \"Synthetic rejection\"].\nNo server-approved vocabContextDesigns are supplied for this generation call. Set generationPlanId to null for every candidate; never invent a plan identifier.\n\n{\"requestId\":\"synthetic\",\"idempotencyKey\":\"synthetic\",\"sessionId\":1,\"questionNumber\":15,\"totalQuestions\":20,\"domain\":\"WRITING\",\"itemType\":\"WRITING_SHORT_PARAGRAPH\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"targetComplexityBand\":1,\"previousResults\":[],\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"preferredScenarioCategories\":[\"WORK\",\"TRAVEL\"],\"policyVersion\":\"level-test-multiskill\",\"modelConfigVersion\":\"level-test-model-config\"}"
+  },
+  {
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 15,
+      "totalQuestions": 20,
+      "domain": "WRITING",
+      "itemType": "WRITING_SHORT_PARAGRAPH",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK",
+        "TRAVEL"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": {
+        "uploadUrl": "http://127.0.0.1/synthetic?token=synthetic-only",
+        "objectKey": "synthetic.wav",
+        "contentType": "audio/wav",
+        "voice": "marin",
+        "playbackSpeed": "NORMAL"
+      }
+    },
+    "requirePlan": false,
+    "designs": null,
+    "schemaSha256": "c900dfbf815df4ab22654b2c78427ca5b948423cdff53cd4aac648127c642dbf",
+    "prompt": "Generate two candidate questions for question 15/20. The requested domain is WRITING, itemType is WRITING_SHORT_PARAGRAPH, and complexityBand is 3. refillAttempt=1. Rejected semantic summaries from earlier attempts: [\"합성 이전 거부\", \"Synthetic rejection\"].\nNo server-approved vocabContextDesigns are supplied for this generation call. Set generationPlanId to null for every candidate; never invent a plan identifier.\n\n{\"requestId\":\"synthetic\",\"idempotencyKey\":\"synthetic\",\"sessionId\":1,\"questionNumber\":15,\"totalQuestions\":20,\"domain\":\"WRITING\",\"itemType\":\"WRITING_SHORT_PARAGRAPH\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"targetComplexityBand\":3,\"previousResults\":[],\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"preferredScenarioCategories\":[\"WORK\",\"TRAVEL\"],\"policyVersion\":\"level-test-multiskill\",\"modelConfigVersion\":\"level-test-model-config\"}"
+  },
+  {
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 15,
+      "totalQuestions": 20,
+      "domain": "WRITING",
+      "itemType": "WRITING_SHORT_PARAGRAPH",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 5,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK",
+        "TRAVEL"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": {
+        "uploadUrl": "http://127.0.0.1/synthetic?token=synthetic-only",
+        "objectKey": "synthetic.wav",
+        "contentType": "audio/wav",
+        "voice": "marin",
+        "playbackSpeed": "NORMAL"
+      }
+    },
+    "requirePlan": false,
+    "designs": null,
+    "schemaSha256": "10718e9dcf645a63eb98f184a85864f9aa2255a6562a6a66fdd6088c2f04889a",
+    "prompt": "Generate two candidate questions for question 15/20. The requested domain is WRITING, itemType is WRITING_SHORT_PARAGRAPH, and complexityBand is 5. refillAttempt=1. Rejected semantic summaries from earlier attempts: [\"합성 이전 거부\", \"Synthetic rejection\"].\nNo server-approved vocabContextDesigns are supplied for this generation call. Set generationPlanId to null for every candidate; never invent a plan identifier.\n\n{\"requestId\":\"synthetic\",\"idempotencyKey\":\"synthetic\",\"sessionId\":1,\"questionNumber\":15,\"totalQuestions\":20,\"domain\":\"WRITING\",\"itemType\":\"WRITING_SHORT_PARAGRAPH\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"targetComplexityBand\":5,\"previousResults\":[],\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"preferredScenarioCategories\":[\"WORK\",\"TRAVEL\"],\"policyVersion\":\"level-test-multiskill\",\"modelConfigVersion\":\"level-test-model-config\"}"
+  },
+  {
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 18,
+      "totalQuestions": 20,
+      "domain": "SPEAKING",
+      "itemType": "SPEAKING_REPEAT",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 1,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK",
+        "TRAVEL"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": {
+        "uploadUrl": "http://127.0.0.1/synthetic?token=synthetic-only",
+        "objectKey": "synthetic.wav",
+        "contentType": "audio/wav",
+        "voice": "marin",
+        "playbackSpeed": "NORMAL"
+      }
+    },
+    "requirePlan": false,
+    "designs": null,
+    "schemaSha256": "c416216e824b286528f506413adcdb97adbf28cee7c9e81f10eff4fdb9fb3582",
+    "prompt": "Generate two candidate questions for question 18/20. The requested domain is SPEAKING, itemType is SPEAKING_REPEAT, and complexityBand is 1. refillAttempt=1. Rejected semantic summaries from earlier attempts: [\"합성 이전 거부\", \"Synthetic rejection\"].\nNo server-approved vocabContextDesigns are supplied for this generation call. Set generationPlanId to null for every candidate; never invent a plan identifier.\nSpeaking mode=TEXT_ASSISTED_REPEAT. referenceText will be visible during the test. Generate one short natural pronunciation-focused sentence (one sentence, <=90 characters where practical); avoid nested clauses/lists and set maxAudioSeconds<=20.\n\n{\"requestId\":\"synthetic\",\"idempotencyKey\":\"synthetic\",\"sessionId\":1,\"questionNumber\":18,\"totalQuestions\":20,\"domain\":\"SPEAKING\",\"itemType\":\"SPEAKING_REPEAT\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"targetComplexityBand\":1,\"previousResults\":[],\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"preferredScenarioCategories\":[\"WORK\",\"TRAVEL\"],\"policyVersion\":\"level-test-multiskill\",\"modelConfigVersion\":\"level-test-model-config\"}"
+  },
+  {
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 18,
+      "totalQuestions": 20,
+      "domain": "SPEAKING",
+      "itemType": "SPEAKING_REPEAT",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK",
+        "TRAVEL"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": {
+        "uploadUrl": "http://127.0.0.1/synthetic?token=synthetic-only",
+        "objectKey": "synthetic.wav",
+        "contentType": "audio/wav",
+        "voice": "marin",
+        "playbackSpeed": "NORMAL"
+      }
+    },
+    "requirePlan": false,
+    "designs": null,
+    "schemaSha256": "9ce7131286a917d599849d84dda786399eefa68e9eb2f41f7251d0161230cfe5",
+    "prompt": "Generate two candidate questions for question 18/20. The requested domain is SPEAKING, itemType is SPEAKING_REPEAT, and complexityBand is 3. refillAttempt=1. Rejected semantic summaries from earlier attempts: [\"합성 이전 거부\", \"Synthetic rejection\"].\nNo server-approved vocabContextDesigns are supplied for this generation call. Set generationPlanId to null for every candidate; never invent a plan identifier.\nSpeaking mode=TEXT_ASSISTED_REPEAT. referenceText will be visible during the test. Generate one short natural pronunciation-focused sentence (one sentence, <=90 characters where practical); avoid nested clauses/lists and set maxAudioSeconds<=20.\n\n{\"requestId\":\"synthetic\",\"idempotencyKey\":\"synthetic\",\"sessionId\":1,\"questionNumber\":18,\"totalQuestions\":20,\"domain\":\"SPEAKING\",\"itemType\":\"SPEAKING_REPEAT\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"targetComplexityBand\":3,\"previousResults\":[],\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"preferredScenarioCategories\":[\"WORK\",\"TRAVEL\"],\"policyVersion\":\"level-test-multiskill\",\"modelConfigVersion\":\"level-test-model-config\"}"
+  },
+  {
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 18,
+      "totalQuestions": 20,
+      "domain": "SPEAKING",
+      "itemType": "SPEAKING_REPEAT",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 5,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK",
+        "TRAVEL"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": {
+        "uploadUrl": "http://127.0.0.1/synthetic?token=synthetic-only",
+        "objectKey": "synthetic.wav",
+        "contentType": "audio/wav",
+        "voice": "marin",
+        "playbackSpeed": "NORMAL"
+      }
+    },
+    "requirePlan": false,
+    "designs": null,
+    "schemaSha256": "3c0828657dac7bace3e18da1b7dab3ba85f0386e3cc0cf1ec01085b3946d274d",
+    "prompt": "Generate two candidate questions for question 18/20. The requested domain is SPEAKING, itemType is SPEAKING_REPEAT, and complexityBand is 5. refillAttempt=1. Rejected semantic summaries from earlier attempts: [\"합성 이전 거부\", \"Synthetic rejection\"].\nNo server-approved vocabContextDesigns are supplied for this generation call. Set generationPlanId to null for every candidate; never invent a plan identifier.\nSpeaking mode=TEXT_ASSISTED_REPEAT. referenceText will be visible during the test. Generate one short natural pronunciation-focused sentence (one sentence, <=90 characters where practical); avoid nested clauses/lists and set maxAudioSeconds<=20.\n\n{\"requestId\":\"synthetic\",\"idempotencyKey\":\"synthetic\",\"sessionId\":1,\"questionNumber\":18,\"totalQuestions\":20,\"domain\":\"SPEAKING\",\"itemType\":\"SPEAKING_REPEAT\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"targetComplexityBand\":5,\"previousResults\":[],\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"preferredScenarioCategories\":[\"WORK\",\"TRAVEL\"],\"policyVersion\":\"level-test-multiskill\",\"modelConfigVersion\":\"level-test-model-config\"}"
+  },
+  {
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 18,
+      "totalQuestions": 20,
+      "domain": "SPEAKING",
+      "itemType": "SPEAKING_GUIDED_RESPONSE",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 1,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK",
+        "TRAVEL"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": {
+        "uploadUrl": "http://127.0.0.1/synthetic?token=synthetic-only",
+        "objectKey": "synthetic.wav",
+        "contentType": "audio/wav",
+        "voice": "marin",
+        "playbackSpeed": "NORMAL"
+      }
+    },
+    "requirePlan": false,
+    "designs": null,
+    "schemaSha256": "3193c30a1dfda76986965123af71e2c894a6b54095357073ae1d9f9cefe04750",
+    "prompt": "Generate two candidate questions for question 18/20. The requested domain is SPEAKING, itemType is SPEAKING_GUIDED_RESPONSE, and complexityBand is 1. refillAttempt=1. Rejected semantic summaries from earlier attempts: [\"합성 이전 거부\", \"Synthetic rejection\"].\nNo server-approved vocabContextDesigns are supplied for this generation call. Set generationPlanId to null for every candidate; never invent a plan identifier.\n\n{\"requestId\":\"synthetic\",\"idempotencyKey\":\"synthetic\",\"sessionId\":1,\"questionNumber\":18,\"totalQuestions\":20,\"domain\":\"SPEAKING\",\"itemType\":\"SPEAKING_GUIDED_RESPONSE\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"targetComplexityBand\":1,\"previousResults\":[],\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"preferredScenarioCategories\":[\"WORK\",\"TRAVEL\"],\"policyVersion\":\"level-test-multiskill\",\"modelConfigVersion\":\"level-test-model-config\"}"
+  },
+  {
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 18,
+      "totalQuestions": 20,
+      "domain": "SPEAKING",
+      "itemType": "SPEAKING_GUIDED_RESPONSE",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK",
+        "TRAVEL"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": {
+        "uploadUrl": "http://127.0.0.1/synthetic?token=synthetic-only",
+        "objectKey": "synthetic.wav",
+        "contentType": "audio/wav",
+        "voice": "marin",
+        "playbackSpeed": "NORMAL"
+      }
+    },
+    "requirePlan": false,
+    "designs": null,
+    "schemaSha256": "6fd8bf4f7dbc21985f3f02958331ebf70020bed8562005a197e8de949dca0ddf",
+    "prompt": "Generate two candidate questions for question 18/20. The requested domain is SPEAKING, itemType is SPEAKING_GUIDED_RESPONSE, and complexityBand is 3. refillAttempt=1. Rejected semantic summaries from earlier attempts: [\"합성 이전 거부\", \"Synthetic rejection\"].\nNo server-approved vocabContextDesigns are supplied for this generation call. Set generationPlanId to null for every candidate; never invent a plan identifier.\n\n{\"requestId\":\"synthetic\",\"idempotencyKey\":\"synthetic\",\"sessionId\":1,\"questionNumber\":18,\"totalQuestions\":20,\"domain\":\"SPEAKING\",\"itemType\":\"SPEAKING_GUIDED_RESPONSE\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"targetComplexityBand\":3,\"previousResults\":[],\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"preferredScenarioCategories\":[\"WORK\",\"TRAVEL\"],\"policyVersion\":\"level-test-multiskill\",\"modelConfigVersion\":\"level-test-model-config\"}"
+  },
+  {
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 18,
+      "totalQuestions": 20,
+      "domain": "SPEAKING",
+      "itemType": "SPEAKING_GUIDED_RESPONSE",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 5,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK",
+        "TRAVEL"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": {
+        "uploadUrl": "http://127.0.0.1/synthetic?token=synthetic-only",
+        "objectKey": "synthetic.wav",
+        "contentType": "audio/wav",
+        "voice": "marin",
+        "playbackSpeed": "NORMAL"
+      }
+    },
+    "requirePlan": false,
+    "designs": null,
+    "schemaSha256": "b8094d2478986e8ab75abee0dbff8700c2081370ccc95c98d23d4e5dcac3f6e6",
+    "prompt": "Generate two candidate questions for question 18/20. The requested domain is SPEAKING, itemType is SPEAKING_GUIDED_RESPONSE, and complexityBand is 5. refillAttempt=1. Rejected semantic summaries from earlier attempts: [\"합성 이전 거부\", \"Synthetic rejection\"].\nNo server-approved vocabContextDesigns are supplied for this generation call. Set generationPlanId to null for every candidate; never invent a plan identifier.\n\n{\"requestId\":\"synthetic\",\"idempotencyKey\":\"synthetic\",\"sessionId\":1,\"questionNumber\":18,\"totalQuestions\":20,\"domain\":\"SPEAKING\",\"itemType\":\"SPEAKING_GUIDED_RESPONSE\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"targetComplexityBand\":5,\"previousResults\":[],\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"preferredScenarioCategories\":[\"WORK\",\"TRAVEL\"],\"policyVersion\":\"level-test-multiskill\",\"modelConfigVersion\":\"level-test-model-config\"}"
+  },
+  {
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 18,
+      "totalQuestions": 20,
+      "domain": "SPEAKING",
+      "itemType": "SPEAKING_SHORT_RESPONSE",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 1,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK",
+        "TRAVEL"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": {
+        "uploadUrl": "http://127.0.0.1/synthetic?token=synthetic-only",
+        "objectKey": "synthetic.wav",
+        "contentType": "audio/wav",
+        "voice": "marin",
+        "playbackSpeed": "NORMAL"
+      }
+    },
+    "requirePlan": false,
+    "designs": null,
+    "schemaSha256": "3e2ea79cc30d69cf153a396f6cf748aa25607559b6a98516d328e30dff02ece1",
+    "prompt": "Generate two candidate questions for question 18/20. The requested domain is SPEAKING, itemType is SPEAKING_SHORT_RESPONSE, and complexityBand is 1. refillAttempt=1. Rejected semantic summaries from earlier attempts: [\"합성 이전 거부\", \"Synthetic rejection\"].\nNo server-approved vocabContextDesigns are supplied for this generation call. Set generationPlanId to null for every candidate; never invent a plan identifier.\n\n{\"requestId\":\"synthetic\",\"idempotencyKey\":\"synthetic\",\"sessionId\":1,\"questionNumber\":18,\"totalQuestions\":20,\"domain\":\"SPEAKING\",\"itemType\":\"SPEAKING_SHORT_RESPONSE\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"targetComplexityBand\":1,\"previousResults\":[],\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"preferredScenarioCategories\":[\"WORK\",\"TRAVEL\"],\"policyVersion\":\"level-test-multiskill\",\"modelConfigVersion\":\"level-test-model-config\"}"
+  },
+  {
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 18,
+      "totalQuestions": 20,
+      "domain": "SPEAKING",
+      "itemType": "SPEAKING_SHORT_RESPONSE",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK",
+        "TRAVEL"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": {
+        "uploadUrl": "http://127.0.0.1/synthetic?token=synthetic-only",
+        "objectKey": "synthetic.wav",
+        "contentType": "audio/wav",
+        "voice": "marin",
+        "playbackSpeed": "NORMAL"
+      }
+    },
+    "requirePlan": false,
+    "designs": null,
+    "schemaSha256": "18ece1868195fa9255564fd603f8df1ba95543249cd05f30567f3ab42e0d23fa",
+    "prompt": "Generate two candidate questions for question 18/20. The requested domain is SPEAKING, itemType is SPEAKING_SHORT_RESPONSE, and complexityBand is 3. refillAttempt=1. Rejected semantic summaries from earlier attempts: [\"합성 이전 거부\", \"Synthetic rejection\"].\nNo server-approved vocabContextDesigns are supplied for this generation call. Set generationPlanId to null for every candidate; never invent a plan identifier.\n\n{\"requestId\":\"synthetic\",\"idempotencyKey\":\"synthetic\",\"sessionId\":1,\"questionNumber\":18,\"totalQuestions\":20,\"domain\":\"SPEAKING\",\"itemType\":\"SPEAKING_SHORT_RESPONSE\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"targetComplexityBand\":3,\"previousResults\":[],\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"preferredScenarioCategories\":[\"WORK\",\"TRAVEL\"],\"policyVersion\":\"level-test-multiskill\",\"modelConfigVersion\":\"level-test-model-config\"}"
+  },
+  {
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 18,
+      "totalQuestions": 20,
+      "domain": "SPEAKING",
+      "itemType": "SPEAKING_SHORT_RESPONSE",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 5,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK",
+        "TRAVEL"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": {
+        "uploadUrl": "http://127.0.0.1/synthetic?token=synthetic-only",
+        "objectKey": "synthetic.wav",
+        "contentType": "audio/wav",
+        "voice": "marin",
+        "playbackSpeed": "NORMAL"
+      }
+    },
+    "requirePlan": false,
+    "designs": null,
+    "schemaSha256": "75e20721d580af17c633e2fcdae3e9dda05e8e0b0255924ab212269267e6309a",
+    "prompt": "Generate two candidate questions for question 18/20. The requested domain is SPEAKING, itemType is SPEAKING_SHORT_RESPONSE, and complexityBand is 5. refillAttempt=1. Rejected semantic summaries from earlier attempts: [\"합성 이전 거부\", \"Synthetic rejection\"].\nNo server-approved vocabContextDesigns are supplied for this generation call. Set generationPlanId to null for every candidate; never invent a plan identifier.\n\n{\"requestId\":\"synthetic\",\"idempotencyKey\":\"synthetic\",\"sessionId\":1,\"questionNumber\":18,\"totalQuestions\":20,\"domain\":\"SPEAKING\",\"itemType\":\"SPEAKING_SHORT_RESPONSE\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"targetComplexityBand\":5,\"previousResults\":[],\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"preferredScenarioCategories\":[\"WORK\",\"TRAVEL\"],\"policyVersion\":\"level-test-multiskill\",\"modelConfigVersion\":\"level-test-model-config\"}"
+  }
+]

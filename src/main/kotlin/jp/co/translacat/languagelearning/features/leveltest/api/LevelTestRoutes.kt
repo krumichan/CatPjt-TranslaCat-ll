@@ -8,8 +8,6 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.utils.io.*
 import jp.co.translacat.languagelearning.features.leveltest.api.dto.LevelAnswerRequestDto
-import jp.co.translacat.languagelearning.features.leveltest.api.dto.LevelBaselineResponseDto
-import jp.co.translacat.languagelearning.features.leveltest.api.dto.LevelCompletionsResponseDto
 import jp.co.translacat.languagelearning.features.leveltest.api.dto.LevelTestStartRequestDto
 import jp.co.translacat.languagelearning.features.leveltest.application.*
 import jp.co.translacat.languagelearning.features.leveltest.domain.exception.LevelTestException
@@ -109,16 +107,6 @@ internal fun Route.levelTestRoutes(
         get("$ROOT/items/{itemId}/model-answer-audio") {
             call.respondAudio(
                 reads.model(call.userId(), call.id("itemId")),
-            )
-        }
-        get("$ROOT/baseline") {
-            call.respond(
-                LevelBaselineResponseDto(sessions.baseline(call.userId())?.let(LevelResponseMapper::baseline)),
-            )
-        }
-        get("$ROOT/completions") {
-            call.respond(
-                LevelCompletionsResponseDto(sessions.history(call.userId()).map(LevelResponseMapper::completion)),
             )
         }
     }

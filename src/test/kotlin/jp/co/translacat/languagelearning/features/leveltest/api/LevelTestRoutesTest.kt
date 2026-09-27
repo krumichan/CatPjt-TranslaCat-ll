@@ -71,6 +71,20 @@ class LevelTestRoutesTest {
     }
 
     @Test
+    fun `옛 Core 기준점 전달 경로 없이 현재 초기 상태를 조회한다`() {
+        app { work ->
+            // 준비 및 실행
+            val status = client.get("$root/status") { bearerAuth(token()) }
+
+            // 검증: 현재 초기 흐름은 유지하며 옛 동기화 wrapper는 노출하지 않는다.
+            assertEquals(HttpStatusCode.OK, status.status)
+            assertEquals(HttpStatusCode.NotFound, client.get("$root/baseline") { bearerAuth(token()) }.status)
+            assertEquals(HttpStatusCode.NotFound, client.get("$root/completions") { bearerAuth(token()) }.status)
+            assertTrue(work.repo.sessions.isEmpty())
+        }
+    }
+
+    @Test
     fun `start current answer의 외부 body 계약과 정답 비노출을 확인한다`() {
         app { work ->
             val start = client.post("$root/sessions") {

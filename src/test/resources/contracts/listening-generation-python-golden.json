@@ -1,0 +1,252 @@
+{
+  "request": {
+    "requestId": "generation-1",
+    "idempotencyKey": "generation-idem-1",
+    "userContext": {
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "level": "MY_LEVEL",
+      "profileFocus": [
+        "LISTENING_RECOGNITION",
+        "VOCABULARY"
+      ]
+    },
+    "setContext": {
+      "learningDate": "2026-08-23",
+      "learningMode": "DICTATION",
+      "topic": {
+        "id": 10,
+        "title": "여행"
+      },
+      "selectedKeywords": [
+        {
+          "key": "travel",
+          "text": "旅行",
+          "source": "SYSTEM",
+          "type": "TOPIC",
+          "canonicalKey": null,
+          "selectionWeight": null
+        },
+        {
+          "key": "reservation",
+          "text": "予約",
+          "source": "CUSTOM",
+          "type": "VOCABULARY",
+          "canonicalKey": null,
+          "selectionWeight": null
+        }
+      ],
+      "itemCount": 2,
+      "difficulty": "MY_LEVEL"
+    },
+    "constraints": {
+      "audioSecondsMin": 8.0,
+      "audioSecondsMax": 20.0,
+      "recentContentHashes": [],
+      "recentSimilaritySummaries": []
+    },
+    "policyVersion": "listening",
+    "modelConfigVersion": "model",
+    "manualRetryAttempt": 0,
+    "languageComplexity": {
+      "baseLevelScore": null,
+      "baseComplexityBand": 3,
+      "targetComplexityBand": null,
+      "policyVersion": "language-complexity"
+    },
+    "diversityContext": {
+      "currentSession": [],
+      "sameFeatureRecent": [],
+      "crossFeatureRecent": [],
+      "exactContentHashes90d": []
+    },
+    "contentDiversityPolicyVersion": "language-learning-diversity",
+    "durationCorrection": null,
+    "referenceVoice": null
+  },
+  "response": {
+    "items": [
+      {
+        "itemIndex": 1,
+        "sourceText": "京都で静かな寺を見学したいです。",
+        "referenceMeanings": [
+          "교토에서 조용한 절을 구경하고 싶습니다.",
+          "교토의 한적한 사찰을 둘러보고 싶어요."
+        ],
+        "keyMeaningUnits": [
+          "교토에서",
+          "조용한 절",
+          "구경하고 싶다"
+        ],
+        "targetKeywords": [
+          "京都",
+          "寺"
+        ],
+        "estimatedAudioSeconds": 9.6,
+        "safety": {
+          "passed": true,
+          "categories": []
+        },
+        "languageComplexityBand": 3,
+        "diversityMetadata": {
+          "scenarioCategory": "TRAVEL",
+          "communicativeIntent": "DESCRIBE",
+          "taskArchetype": "TRAVEL_PLAN",
+          "grammarFocusCodes": [
+            "DESIRE"
+          ],
+          "lexicalFocusCodes": [
+            "TRAVEL"
+          ],
+          "semanticSummary": "교토의 조용한 절을 방문하고 싶다는 여행 계획",
+          "requiresBackgroundKnowledge": false
+        }
+      },
+      {
+        "itemIndex": 2,
+        "sourceText": "旅行の前にホテルを予約しておきました。",
+        "referenceMeanings": [
+          "여행 전에 호텔을 예약해 두었습니다.",
+          "여행을 떠나기 전 호텔 예약을 마쳤어요."
+        ],
+        "keyMeaningUnits": [
+          "여행 전",
+          "호텔",
+          "예약 완료"
+        ],
+        "targetKeywords": [
+          "旅行",
+          "予約"
+        ],
+        "estimatedAudioSeconds": 8.5,
+        "safety": {
+          "passed": true,
+          "categories": []
+        },
+        "languageComplexityBand": 3,
+        "diversityMetadata": {
+          "scenarioCategory": "TRAVEL",
+          "communicativeIntent": "REPORT",
+          "taskArchetype": "RESERVATION_STATUS",
+          "grammarFocusCodes": [
+            "PREPARATION"
+          ],
+          "lexicalFocusCodes": [
+            "RESERVATION"
+          ],
+          "semanticSummary": "여행 전에 호텔 예약을 완료했다는 보고",
+          "requiresBackgroundKnowledge": false
+        }
+      }
+    ]
+  },
+  "prompt": "Generate exactly 4 listening items. itemIndex MUST be 1-based and contain each integer from 1 through 4 exactly once; never return itemIndex=0. sourceText MUST be written only in learningLanguage (ja). referenceMeanings and keyMeaningUnits MUST be written only in originLanguage (ko); never default them to English unless originLanguage is English. The requested learningMode is DICTATION; apply that mode contract exactly. Plan for the interior duration target; the final waveform, not your estimate, must satisfy the effective duration range.\n\n{\"requestId\":\"generation-1\",\"idempotencyKey\":\"generation-idem-1\",\"userContext\":{\"originLanguage\":\"ko\",\"learningLanguage\":\"ja\",\"level\":\"MY_LEVEL\",\"profileFocus\":[\"LISTENING_RECOGNITION\",\"VOCABULARY\"]},\"setContext\":{\"learningDate\":\"2026-08-23\",\"learningMode\":\"DICTATION\",\"topic\":{\"id\":10,\"title\":\"여행\"},\"selectedKeywords\":[{\"key\":\"travel\",\"text\":\"旅行\",\"source\":\"SYSTEM\",\"type\":\"TOPIC\",\"canonicalKey\":null,\"selectionWeight\":null},{\"key\":\"reservation\",\"text\":\"予約\",\"source\":\"CUSTOM\",\"type\":\"VOCABULARY\",\"canonicalKey\":null,\"selectionWeight\":null}],\"itemCount\":4,\"difficulty\":\"MY_LEVEL\"},\"constraints\":{\"audioSecondsMin\":8.0,\"audioSecondsMax\":20.0,\"recentContentHashes\":[],\"recentSimilaritySummaries\":[]},\"policyVersion\":\"listening\",\"modelConfigVersion\":\"model\",\"manualRetryAttempt\":0,\"languageComplexity\":{\"baseLevelScore\":null,\"baseComplexityBand\":3,\"targetComplexityBand\":null,\"policyVersion\":\"language-complexity\"},\"diversityContext\":{\"currentSession\":[],\"sameFeatureRecent\":[],\"crossFeatureRecent\":[],\"exactContentHashes90d\":[]},\"contentDiversityPolicyVersion\":\"language-learning-diversity\",\"durationCorrection\":null,\"referenceVoice\":null,\"generationDurationGuidance\":{\"durationDemand\":{\"minSeconds\":8.0,\"maxSeconds\":20.0,\"policyVersion\":\"listening-audio-duration-v1\",\"playbackSpeed\":\"NORMAL\"},\"interiorTargetSeconds\":14.0,\"estimatedAudioSecondsIsDiagnosticOnly\":true,\"acceptanceAuthority\":\"decoded NORMAL audio frames, not text length or estimated seconds\"}}",
+  "items": [
+    {
+      "itemIndex": 1,
+      "sourceText": "京都で静かな寺を見学したいです。",
+      "normalizedSourceText": "京都で静かな寺を見学したいです",
+      "referenceMeanings": [
+        "교토에서 조용한 절을 구경하고 싶습니다.",
+        "교토의 한적한 사찰을 둘러보고 싶어요."
+      ],
+      "keyMeaningUnits": [
+        "교토에서",
+        "조용한 절",
+        "구경하고 싶다"
+      ],
+      "targetKeywords": [
+        "京都",
+        "寺"
+      ],
+      "estimatedAudioSeconds": 9.6,
+      "contentHash": "2df3a3d7bb8fb58735612efef87471b47b36c9d9f52268b2913218491916bc84",
+      "similarityKey": "2df3a3d7bb8fb58735612efef87471b47b36c9d9f52268b2913218491916bc84",
+      "safety": {
+        "passed": true,
+        "categories": []
+      },
+      "languageComplexityBand": 3,
+      "diversityMetadata": {
+        "scenarioCategory": "TRAVEL",
+        "communicativeIntent": "DESCRIBE",
+        "taskArchetype": "TRAVEL_PLAN",
+        "grammarFocusCodes": [
+          "DESIRE"
+        ],
+        "lexicalFocusCodes": [
+          "TRAVEL"
+        ],
+        "semanticSummary": "교토의 조용한 절을 방문하고 싶다는 여행 계획",
+        "requiresBackgroundKnowledge": false,
+        "contentHash": "2df3a3d7bb8fb58735612efef87471b47b36c9d9f52268b2913218491916bc84",
+        "similarityKey": "2df3a3d7bb8fb58735612efef87471b47b36c9d9f52268b2913218491916bc84"
+      },
+      "question": null,
+      "options": [],
+      "correctOptionKey": null,
+      "comprehensionFocus": null,
+      "summaryKeyPoints": [],
+      "durationDemand": {
+        "minSeconds": 8.0,
+        "maxSeconds": 20.0,
+        "policyVersion": "listening-audio-duration-v1",
+        "playbackSpeed": "NORMAL"
+      },
+      "qualityCorrectionCount": 0
+    },
+    {
+      "itemIndex": 2,
+      "sourceText": "旅行の前にホテルを予約しておきました。",
+      "normalizedSourceText": "旅行の前にホテルを予約しておきました",
+      "referenceMeanings": [
+        "여행 전에 호텔을 예약해 두었습니다.",
+        "여행을 떠나기 전 호텔 예약을 마쳤어요."
+      ],
+      "keyMeaningUnits": [
+        "여행 전",
+        "호텔",
+        "예약 완료"
+      ],
+      "targetKeywords": [
+        "旅行",
+        "予約"
+      ],
+      "estimatedAudioSeconds": 8.5,
+      "contentHash": "68bc80f8d1ce1da4b3480a8308a55aaf350d7bc0ca66eff70ae82964f13e5329",
+      "similarityKey": "68bc80f8d1ce1da4b3480a8308a55aaf350d7bc0ca66eff70ae82964f13e5329",
+      "safety": {
+        "passed": true,
+        "categories": []
+      },
+      "languageComplexityBand": 3,
+      "diversityMetadata": {
+        "scenarioCategory": "TRAVEL",
+        "communicativeIntent": "REPORT",
+        "taskArchetype": "RESERVATION_STATUS",
+        "grammarFocusCodes": [
+          "PREPARATION"
+        ],
+        "lexicalFocusCodes": [
+          "RESERVATION"
+        ],
+        "semanticSummary": "여행 전에 호텔 예약을 완료했다는 보고",
+        "requiresBackgroundKnowledge": false,
+        "contentHash": "68bc80f8d1ce1da4b3480a8308a55aaf350d7bc0ca66eff70ae82964f13e5329",
+        "similarityKey": "68bc80f8d1ce1da4b3480a8308a55aaf350d7bc0ca66eff70ae82964f13e5329"
+      },
+      "question": null,
+      "options": [],
+      "correctOptionKey": null,
+      "comprehensionFocus": null,
+      "summaryKeyPoints": [],
+      "durationDemand": {
+        "minSeconds": 8.0,
+        "maxSeconds": 20.0,
+        "policyVersion": "listening-audio-duration-v1",
+        "playbackSpeed": "NORMAL"
+      },
+      "qualityCorrectionCount": 0
+    }
+  ]
+}

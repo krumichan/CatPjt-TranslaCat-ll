@@ -33,18 +33,28 @@ internal suspend fun Application.configureLevelTest() {
     val timeout = value("levelTest.aiTimeoutSeconds")?.toLong() ?: 180L
     val concurrency = value("levelTest.aiConcurrency")?.toInt() ?: 2
     require(timeout in 10..300 && concurrency in 1..8) { "레벨 테스트 AI 제한 설정을 확인해 주세요." }
-    dependencies { provide<HttpLevelTestAi> { HttpLevelTestAi(aiUrl, apiKey, timeout, concurrency) } }
-    val ai = dependencies.resolve<HttpLevelTestAi>()
     val transactions = dependencies.resolve<JdbcTransactionRunner>()
     val context = SettingsLevelTestContext(dependencies.resolve<SettingsServiceOperations>())
     val work = ExposedLevelTestUnitOfWork(transactions)
     val store = LocalLevelTestAudioStore(Path.of(value("levelTest.audioRoot") ?: "data/level-test-audio"))
     val audio = LevelAudioService(work, store, callback)
+    dependencies {
+        provide<HttpLevelTestAi> {
+            HttpLevelTestAi(
+                aiUrl, apiKey, timeout, concurrency, audio::publishReference,
+            )
+        }
+    }
+    val ai = dependencies.resolve<HttpLevelTestAi>()
     val sessions = LevelSessionService(work, context)
     val questions =
         LevelQuestionService(work, context, ai, audio, timeout + 30, flag("levelTest.prefetchEnabled", true))
     val answers = LevelAnswerService(work, context, ai, audio, timeout + 30)
     val reads = LevelReadService(work, audio, ai, context)
+    dependencies {
+        provide<LevelSessionService> { sessions }
+        provide<LevelReadService> { reads }
+    }
     val pool = LevelPoolMaintenance(work, context, ai, audio, timeout + 30)
     routing { levelTestRoutes(work, sessions, questions, answers, reads, audio) }
     val logger = environment.log

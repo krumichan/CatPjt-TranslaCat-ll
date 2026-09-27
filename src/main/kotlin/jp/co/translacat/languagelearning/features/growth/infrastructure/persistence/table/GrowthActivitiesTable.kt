@@ -24,5 +24,8 @@ internal object GrowthActivitiesTable : Table("language_learning_activity") {
     val createdBy = varchar("created_by", 100)
     val updatedBy = varchar("updated_by", 100)
     override val primaryKey = PrimaryKey(id)
-    init { uniqueIndex(userId, activitySource, referenceId) }
+
+    init {
+        uniqueIndex(userId, activitySource, referenceId)
+    }
 }

@@ -1,0 +1,1793 @@
+[
+  {
+    "language": "en",
+    "source": "I can't visit the library today.",
+    "answer": "I cannot visit the library today",
+    "acceptedVariants": {},
+    "sourceNormalized": "i cannot visit the library today",
+    "task": {
+      "taskType": "DICTATION",
+      "status": "EVALUATED",
+      "evaluable": true,
+      "score": 100,
+      "confidence": 1.0,
+      "reasonCode": null,
+      "assistanceLevel": "INDEPENDENT",
+      "metrics": [
+        {
+          "type": "TOKEN_RECOGNITION",
+          "state": "EVALUATED",
+          "score": 100.0,
+          "weight": 0.6,
+          "confidence": 1.0,
+          "evidence": [
+            {
+              "startMs": null,
+              "endMs": null,
+              "reference": null,
+              "recognized": null,
+              "metric": "TOKEN_RECOGNITION",
+              "severity": "INFO",
+              "feedback": "들은 Token의 인식 정확도를 확인했습니다."
+            }
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "OMISSION_ADDITION_ORDER",
+          "state": "EVALUATED",
+          "score": 100.0,
+          "weight": 0.25,
+          "confidence": 1.0,
+          "evidence": [
+            {
+              "startMs": null,
+              "endMs": null,
+              "reference": null,
+              "recognized": null,
+              "metric": "OMISSION_ADDITION_ORDER",
+              "severity": "INFO",
+              "feedback": "누락·추가·어순 Alignment를 확인했습니다."
+            }
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "ORTHOGRAPHY",
+          "state": "EVALUATED",
+          "score": 100.0,
+          "weight": 0.15,
+          "confidence": 1.0,
+          "evidence": [
+            {
+              "startMs": null,
+              "endMs": null,
+              "reference": null,
+              "recognized": null,
+              "metric": "ORTHOGRAPHY",
+              "severity": "INFO",
+              "feedback": "Locale 정규화 후 표기 정확도를 확인했습니다."
+            }
+          ],
+          "notEvaluableReason": null
+        }
+      ],
+      "alignment": [
+        {
+          "source": "i",
+          "answer": "i",
+          "status": "MATCH",
+          "sourceIndex": 0,
+          "answerIndex": 0,
+          "startMs": null,
+          "endMs": null
+        },
+        {
+          "source": "cannot",
+          "answer": "cannot",
+          "status": "MATCH",
+          "sourceIndex": 1,
+          "answerIndex": 1,
+          "startMs": null,
+          "endMs": null
+        },
+        {
+          "source": "visit",
+          "answer": "visit",
+          "status": "MATCH",
+          "sourceIndex": 2,
+          "answerIndex": 2,
+          "startMs": null,
+          "endMs": null
+        },
+        {
+          "source": "the",
+          "answer": "the",
+          "status": "MATCH",
+          "sourceIndex": 3,
+          "answerIndex": 3,
+          "startMs": null,
+          "endMs": null
+        },
+        {
+          "source": "library",
+          "answer": "library",
+          "status": "MATCH",
+          "sourceIndex": 4,
+          "answerIndex": 4,
+          "startMs": null,
+          "endMs": null
+        },
+        {
+          "source": "today",
+          "answer": "today",
+          "status": "MATCH",
+          "sourceIndex": 5,
+          "answerIndex": 5,
+          "startMs": null,
+          "endMs": null
+        }
+      ],
+      "evidence": [],
+      "strengths": [
+        "원문의 Token과 순서를 정확히 받아썼습니다."
+      ],
+      "improvements": [],
+      "recommendedInterpretations": [],
+      "deliveredMeaningUnits": [],
+      "omittedMeaningUnits": [],
+      "misunderstoodMeaningUnits": [],
+      "addedInformation": [],
+      "profileSignals": [
+        {
+          "metric": "LISTENING_RECOGNITION",
+          "score": 100.0,
+          "confidence": 1.0,
+          "evidenceWeight": 1.0,
+          "evidenceIds": [],
+          "sourceTask": "DICTATION",
+          "policyVersion": "listening-profile"
+        },
+        {
+          "metric": "VOCABULARY",
+          "score": 100.0,
+          "confidence": 1.0,
+          "evidenceWeight": 0.6,
+          "evidenceIds": [],
+          "sourceTask": "DICTATION",
+          "policyVersion": "listening-profile"
+        },
+        {
+          "metric": "ORTHOGRAPHY",
+          "score": 100.0,
+          "confidence": 1.0,
+          "evidenceWeight": 0.8,
+          "evidenceIds": [],
+          "sourceTask": "DICTATION",
+          "policyVersion": "listening-profile"
+        }
+      ],
+      "profileEligible": true,
+      "assistanceUsage": [],
+      "debugMetadata": {
+        "normalizationVersion": "listening-normalization",
+        "alignmentVersion": "listening-alignment",
+        "normalizedSourceHash": "64108d3f3775733f292c4e10226ca6f160a03f683bc983330da5f98c87e7abc1",
+        "normalizedAnswerHash": "64108d3f3775733f292c4e10226ca6f160a03f683bc983330da5f98c87e7abc1",
+        "sourceTokenCount": 6,
+        "answerTokenCount": 6,
+        "operationCounts": {
+          "omission": 0,
+          "addition": 0,
+          "substitution": 0,
+          "order": 0
+        }
+      }
+    }
+  },
+  {
+    "language": "en",
+    "source": "The blue cat waits near the door",
+    "answer": "The cat waits the blue door",
+    "acceptedVariants": {},
+    "sourceNormalized": "the blue cat waits near the door",
+    "task": {
+      "taskType": "DICTATION",
+      "status": "EVALUATED",
+      "evaluable": true,
+      "score": 67,
+      "confidence": 1.0,
+      "reasonCode": null,
+      "assistanceLevel": "INDEPENDENT",
+      "metrics": [
+        {
+          "type": "TOKEN_RECOGNITION",
+          "state": "EVALUATED",
+          "score": 57.0,
+          "weight": 0.6,
+          "confidence": 1.0,
+          "evidence": [
+            {
+              "startMs": null,
+              "endMs": null,
+              "reference": null,
+              "recognized": null,
+              "metric": "TOKEN_RECOGNITION",
+              "severity": "INFO",
+              "feedback": "들은 Token의 인식 정확도를 확인했습니다."
+            }
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "OMISSION_ADDITION_ORDER",
+          "state": "EVALUATED",
+          "score": 86.0,
+          "weight": 0.25,
+          "confidence": 1.0,
+          "evidence": [
+            {
+              "startMs": null,
+              "endMs": null,
+              "reference": null,
+              "recognized": null,
+              "metric": "OMISSION_ADDITION_ORDER",
+              "severity": "INFO",
+              "feedback": "누락·추가·어순 Alignment를 확인했습니다."
+            }
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "ORTHOGRAPHY",
+          "state": "EVALUATED",
+          "score": 75.0,
+          "weight": 0.15,
+          "confidence": 1.0,
+          "evidence": [
+            {
+              "startMs": null,
+              "endMs": null,
+              "reference": null,
+              "recognized": null,
+              "metric": "ORTHOGRAPHY",
+              "severity": "INFO",
+              "feedback": "Locale 정규화 후 표기 정확도를 확인했습니다."
+            }
+          ],
+          "notEvaluableReason": null
+        }
+      ],
+      "alignment": [
+        {
+          "source": "the",
+          "answer": "the",
+          "status": "MATCH",
+          "sourceIndex": 0,
+          "answerIndex": 0,
+          "startMs": null,
+          "endMs": null
+        },
+        {
+          "source": "blue",
+          "answer": null,
+          "status": "OMISSION",
+          "sourceIndex": 1,
+          "answerIndex": null,
+          "startMs": null,
+          "endMs": null
+        },
+        {
+          "source": "cat",
+          "answer": "cat",
+          "status": "MATCH",
+          "sourceIndex": 2,
+          "answerIndex": 1,
+          "startMs": null,
+          "endMs": null
+        },
+        {
+          "source": "waits",
+          "answer": "waits",
+          "status": "MATCH",
+          "sourceIndex": 3,
+          "answerIndex": 2,
+          "startMs": null,
+          "endMs": null
+        },
+        {
+          "source": "near",
+          "answer": "the",
+          "status": "SUBSTITUTION",
+          "sourceIndex": 4,
+          "answerIndex": 3,
+          "startMs": null,
+          "endMs": null
+        },
+        {
+          "source": "the",
+          "answer": "blue",
+          "status": "SUBSTITUTION",
+          "sourceIndex": 5,
+          "answerIndex": 4,
+          "startMs": null,
+          "endMs": null
+        },
+        {
+          "source": "door",
+          "answer": "door",
+          "status": "MATCH",
+          "sourceIndex": 6,
+          "answerIndex": 5,
+          "startMs": null,
+          "endMs": null
+        }
+      ],
+      "evidence": [
+        {
+          "startMs": null,
+          "endMs": null,
+          "reference": "blue",
+          "recognized": null,
+          "metric": "TOKEN_RECOGNITION",
+          "severity": "HIGH",
+          "feedback": "원문 「blue」가 답변에서 누락되었습니다."
+        },
+        {
+          "startMs": null,
+          "endMs": null,
+          "reference": "near",
+          "recognized": "the",
+          "metric": "TOKEN_RECOGNITION",
+          "severity": "HIGH",
+          "feedback": "원문 「near」를 「the」로 다르게 받아썼습니다."
+        },
+        {
+          "startMs": null,
+          "endMs": null,
+          "reference": "the",
+          "recognized": "blue",
+          "metric": "TOKEN_RECOGNITION",
+          "severity": "HIGH",
+          "feedback": "원문 「the」를 「blue」로 다르게 받아썼습니다."
+        }
+      ],
+      "strengths": [
+        "정확히 인식한 Token을 기준으로 문장을 재구성했습니다."
+      ],
+      "improvements": [
+        "누락: 「blue」. 원문 구간 「the blue cat waits near the」 / 내 답변 구간 「the cat waits the blue」. 짧게 발음되는 표현이 빠지지 않았는지 해당 구간을 다시 들어 보세요.",
+        "다르게 받아씀: 원문 「near」 / 내 답변 「the」、원문 「the」 / 내 답변 「blue」. 원문 구간 「the blue cat waits near the door」 / 내 답변 구간 「the cat waits the blue door」. 비슷하게 들린 소리를 원문과 비교하며 해당 구간을 다시 확인해 보세요."
+      ],
+      "recommendedInterpretations": [],
+      "deliveredMeaningUnits": [],
+      "omittedMeaningUnits": [],
+      "misunderstoodMeaningUnits": [],
+      "addedInformation": [],
+      "profileSignals": [
+        {
+          "metric": "LISTENING_RECOGNITION",
+          "score": 67.0,
+          "confidence": 1.0,
+          "evidenceWeight": 1.0,
+          "evidenceIds": [
+            "evidence-1",
+            "evidence-2",
+            "evidence-3"
+          ],
+          "sourceTask": "DICTATION",
+          "policyVersion": "listening-profile"
+        },
+        {
+          "metric": "VOCABULARY",
+          "score": 57.0,
+          "confidence": 1.0,
+          "evidenceWeight": 0.6,
+          "evidenceIds": [
+            "evidence-1",
+            "evidence-2",
+            "evidence-3"
+          ],
+          "sourceTask": "DICTATION",
+          "policyVersion": "listening-profile"
+        },
+        {
+          "metric": "ORTHOGRAPHY",
+          "score": 75.0,
+          "confidence": 1.0,
+          "evidenceWeight": 0.8,
+          "evidenceIds": [
+            "evidence-1",
+            "evidence-2",
+            "evidence-3"
+          ],
+          "sourceTask": "DICTATION",
+          "policyVersion": "listening-profile"
+        }
+      ],
+      "profileEligible": true,
+      "assistanceUsage": [],
+      "debugMetadata": {
+        "normalizationVersion": "listening-normalization",
+        "alignmentVersion": "listening-alignment",
+        "normalizedSourceHash": "5d2800e443e2a12aeb06689857e4114f1d30088baa88b5d524103f6f11f9cb3c",
+        "normalizedAnswerHash": "66cbadf54bb99be3978a0d961071face2f2582a9668ab366242f957c36d629b5",
+        "sourceTokenCount": 7,
+        "answerTokenCount": 6,
+        "operationCounts": {
+          "omission": 1,
+          "addition": 0,
+          "substitution": 2,
+          "order": 0
+        }
+      }
+    }
+  },
+  {
+    "language": "en",
+    "source": "A quiet morning by the river",
+    "answer": "A quiet morning near river",
+    "acceptedVariants": {},
+    "sourceNormalized": "a quiet morning by the river",
+    "task": {
+      "taskType": "DICTATION",
+      "status": "EVALUATED",
+      "evaluable": true,
+      "score": 74,
+      "confidence": 1.0,
+      "reasonCode": null,
+      "assistanceLevel": "INDEPENDENT",
+      "metrics": [
+        {
+          "type": "TOKEN_RECOGNITION",
+          "state": "EVALUATED",
+          "score": 67.0,
+          "weight": 0.6,
+          "confidence": 1.0,
+          "evidence": [
+            {
+              "startMs": null,
+              "endMs": null,
+              "reference": null,
+              "recognized": null,
+              "metric": "TOKEN_RECOGNITION",
+              "severity": "INFO",
+              "feedback": "들은 Token의 인식 정확도를 확인했습니다."
+            }
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "OMISSION_ADDITION_ORDER",
+          "state": "EVALUATED",
+          "score": 83.0,
+          "weight": 0.25,
+          "confidence": 1.0,
+          "evidence": [
+            {
+              "startMs": null,
+              "endMs": null,
+              "reference": null,
+              "recognized": null,
+              "metric": "OMISSION_ADDITION_ORDER",
+              "severity": "INFO",
+              "feedback": "누락·추가·어순 Alignment를 확인했습니다."
+            }
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "ORTHOGRAPHY",
+          "state": "EVALUATED",
+          "score": 85.0,
+          "weight": 0.15,
+          "confidence": 1.0,
+          "evidence": [
+            {
+              "startMs": null,
+              "endMs": null,
+              "reference": null,
+              "recognized": null,
+              "metric": "ORTHOGRAPHY",
+              "severity": "INFO",
+              "feedback": "Locale 정규화 후 표기 정확도를 확인했습니다."
+            }
+          ],
+          "notEvaluableReason": null
+        }
+      ],
+      "alignment": [
+        {
+          "source": "a",
+          "answer": "a",
+          "status": "MATCH",
+          "sourceIndex": 0,
+          "answerIndex": 0,
+          "startMs": null,
+          "endMs": null
+        },
+        {
+          "source": "quiet",
+          "answer": "quiet",
+          "status": "MATCH",
+          "sourceIndex": 1,
+          "answerIndex": 1,
+          "startMs": null,
+          "endMs": null
+        },
+        {
+          "source": "morning",
+          "answer": "morning",
+          "status": "MATCH",
+          "sourceIndex": 2,
+          "answerIndex": 2,
+          "startMs": null,
+          "endMs": null
+        },
+        {
+          "source": "by",
+          "answer": null,
+          "status": "OMISSION",
+          "sourceIndex": 3,
+          "answerIndex": null,
+          "startMs": null,
+          "endMs": null
+        },
+        {
+          "source": "the",
+          "answer": "near",
+          "status": "SUBSTITUTION",
+          "sourceIndex": 4,
+          "answerIndex": 3,
+          "startMs": null,
+          "endMs": null
+        },
+        {
+          "source": "river",
+          "answer": "river",
+          "status": "MATCH",
+          "sourceIndex": 5,
+          "answerIndex": 4,
+          "startMs": null,
+          "endMs": null
+        }
+      ],
+      "evidence": [
+        {
+          "startMs": null,
+          "endMs": null,
+          "reference": "by",
+          "recognized": null,
+          "metric": "TOKEN_RECOGNITION",
+          "severity": "HIGH",
+          "feedback": "원문 「by」가 답변에서 누락되었습니다."
+        },
+        {
+          "startMs": null,
+          "endMs": null,
+          "reference": "the",
+          "recognized": "near",
+          "metric": "TOKEN_RECOGNITION",
+          "severity": "HIGH",
+          "feedback": "원문 「the」를 「near」로 다르게 받아썼습니다."
+        }
+      ],
+      "strengths": [
+        "정확히 인식한 Token을 기준으로 문장을 재구성했습니다."
+      ],
+      "improvements": [
+        "누락: 「by」. 원문 구간 「a quiet morning by the river」 / 내 답변 구간 「a quiet morning near river」. 짧게 발음되는 표현이 빠지지 않았는지 해당 구간을 다시 들어 보세요.",
+        "다르게 받아씀: 원문 「the」 / 내 답변 「near」. 원문 구간 「a quiet morning by the river」 / 내 답변 구간 「a quiet morning near river」. 비슷하게 들린 소리를 원문과 비교하며 해당 구간을 다시 확인해 보세요."
+      ],
+      "recommendedInterpretations": [],
+      "deliveredMeaningUnits": [],
+      "omittedMeaningUnits": [],
+      "misunderstoodMeaningUnits": [],
+      "addedInformation": [],
+      "profileSignals": [
+        {
+          "metric": "LISTENING_RECOGNITION",
+          "score": 74.0,
+          "confidence": 1.0,
+          "evidenceWeight": 1.0,
+          "evidenceIds": [
+            "evidence-1",
+            "evidence-2"
+          ],
+          "sourceTask": "DICTATION",
+          "policyVersion": "listening-profile"
+        },
+        {
+          "metric": "VOCABULARY",
+          "score": 67.0,
+          "confidence": 1.0,
+          "evidenceWeight": 0.6,
+          "evidenceIds": [
+            "evidence-1",
+            "evidence-2"
+          ],
+          "sourceTask": "DICTATION",
+          "policyVersion": "listening-profile"
+        },
+        {
+          "metric": "ORTHOGRAPHY",
+          "score": 85.0,
+          "confidence": 1.0,
+          "evidenceWeight": 0.8,
+          "evidenceIds": [
+            "evidence-1",
+            "evidence-2"
+          ],
+          "sourceTask": "DICTATION",
+          "policyVersion": "listening-profile"
+        }
+      ],
+      "profileEligible": true,
+      "assistanceUsage": [],
+      "debugMetadata": {
+        "normalizationVersion": "listening-normalization",
+        "alignmentVersion": "listening-alignment",
+        "normalizedSourceHash": "844f946b63931d6cfbeb3f228d4d84f56dd0e8ac0b690ad39784c154f889bc03",
+        "normalizedAnswerHash": "555883a99562bf299644c9c05877b987a00841d538105955906d0c80421cbb6a",
+        "sourceTokenCount": 6,
+        "answerTokenCount": 5,
+        "operationCounts": {
+          "omission": 1,
+          "addition": 0,
+          "substitution": 1,
+          "order": 0
+        }
+      }
+    }
+  },
+  {
+    "language": "en",
+    "source": "The colour is blue",
+    "answer": "The color is blue",
+    "acceptedVariants": {
+      "colour": [
+        "color"
+      ]
+    },
+    "sourceNormalized": "the colour is blue",
+    "task": {
+      "taskType": "DICTATION",
+      "status": "EVALUATED",
+      "evaluable": true,
+      "score": 100,
+      "confidence": 1.0,
+      "reasonCode": null,
+      "assistanceLevel": "INDEPENDENT",
+      "metrics": [
+        {
+          "type": "TOKEN_RECOGNITION",
+          "state": "EVALUATED",
+          "score": 100.0,
+          "weight": 0.6,
+          "confidence": 1.0,
+          "evidence": [
+            {
+              "startMs": null,
+              "endMs": null,
+              "reference": null,
+              "recognized": null,
+              "metric": "TOKEN_RECOGNITION",
+              "severity": "INFO",
+              "feedback": "들은 Token의 인식 정확도를 확인했습니다."
+            }
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "OMISSION_ADDITION_ORDER",
+          "state": "EVALUATED",
+          "score": 100.0,
+          "weight": 0.25,
+          "confidence": 1.0,
+          "evidence": [
+            {
+              "startMs": null,
+              "endMs": null,
+              "reference": null,
+              "recognized": null,
+              "metric": "OMISSION_ADDITION_ORDER",
+              "severity": "INFO",
+              "feedback": "누락·추가·어순 Alignment를 확인했습니다."
+            }
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "ORTHOGRAPHY",
+          "state": "EVALUATED",
+          "score": 100.0,
+          "weight": 0.15,
+          "confidence": 1.0,
+          "evidence": [
+            {
+              "startMs": null,
+              "endMs": null,
+              "reference": null,
+              "recognized": null,
+              "metric": "ORTHOGRAPHY",
+              "severity": "INFO",
+              "feedback": "Locale 정규화 후 표기 정확도를 확인했습니다."
+            }
+          ],
+          "notEvaluableReason": null
+        }
+      ],
+      "alignment": [
+        {
+          "source": "the",
+          "answer": "the",
+          "status": "MATCH",
+          "sourceIndex": 0,
+          "answerIndex": 0,
+          "startMs": null,
+          "endMs": null
+        },
+        {
+          "source": "colour",
+          "answer": "colour",
+          "status": "ACCEPTED_VARIANT",
+          "sourceIndex": 1,
+          "answerIndex": 1,
+          "startMs": null,
+          "endMs": null
+        },
+        {
+          "source": "is",
+          "answer": "is",
+          "status": "MATCH",
+          "sourceIndex": 2,
+          "answerIndex": 2,
+          "startMs": null,
+          "endMs": null
+        },
+        {
+          "source": "blue",
+          "answer": "blue",
+          "status": "MATCH",
+          "sourceIndex": 3,
+          "answerIndex": 3,
+          "startMs": null,
+          "endMs": null
+        }
+      ],
+      "evidence": [],
+      "strengths": [
+        "원문의 Token과 순서를 정확히 받아썼습니다."
+      ],
+      "improvements": [],
+      "recommendedInterpretations": [],
+      "deliveredMeaningUnits": [],
+      "omittedMeaningUnits": [],
+      "misunderstoodMeaningUnits": [],
+      "addedInformation": [],
+      "profileSignals": [
+        {
+          "metric": "LISTENING_RECOGNITION",
+          "score": 100.0,
+          "confidence": 1.0,
+          "evidenceWeight": 1.0,
+          "evidenceIds": [],
+          "sourceTask": "DICTATION",
+          "policyVersion": "listening-profile"
+        },
+        {
+          "metric": "VOCABULARY",
+          "score": 100.0,
+          "confidence": 1.0,
+          "evidenceWeight": 0.6,
+          "evidenceIds": [],
+          "sourceTask": "DICTATION",
+          "policyVersion": "listening-profile"
+        },
+        {
+          "metric": "ORTHOGRAPHY",
+          "score": 100.0,
+          "confidence": 1.0,
+          "evidenceWeight": 0.8,
+          "evidenceIds": [],
+          "sourceTask": "DICTATION",
+          "policyVersion": "listening-profile"
+        }
+      ],
+      "profileEligible": true,
+      "assistanceUsage": [],
+      "debugMetadata": {
+        "normalizationVersion": "listening-normalization",
+        "alignmentVersion": "listening-alignment",
+        "normalizedSourceHash": "7a7f4e9223f2f9cc12d532dc69a5eabf7d5d2c3f380e7c938197b173438c0b46",
+        "normalizedAnswerHash": "7a7f4e9223f2f9cc12d532dc69a5eabf7d5d2c3f380e7c938197b173438c0b46",
+        "sourceTokenCount": 4,
+        "answerTokenCount": 4,
+        "operationCounts": {
+          "omission": 0,
+          "addition": 0,
+          "substitution": 0,
+          "order": 0
+        }
+      }
+    }
+  },
+  {
+    "language": "ja",
+    "source": "明日は図書館で本を読みます。",
+    "answer": "明日は図書館本を読みます",
+    "acceptedVariants": {},
+    "sourceNormalized": "明日は図書館で本を読みます",
+    "task": {
+      "taskType": "DICTATION",
+      "status": "EVALUATED",
+      "evaluable": true,
+      "score": 93,
+      "confidence": 1.0,
+      "reasonCode": null,
+      "assistanceLevel": "INDEPENDENT",
+      "metrics": [
+        {
+          "type": "TOKEN_RECOGNITION",
+          "state": "EVALUATED",
+          "score": 92.0,
+          "weight": 0.6,
+          "confidence": 1.0,
+          "evidence": [
+            {
+              "startMs": null,
+              "endMs": null,
+              "reference": null,
+              "recognized": null,
+              "metric": "TOKEN_RECOGNITION",
+              "severity": "INFO",
+              "feedback": "들은 Token의 인식 정확도를 확인했습니다."
+            }
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "OMISSION_ADDITION_ORDER",
+          "state": "EVALUATED",
+          "score": 92.0,
+          "weight": 0.25,
+          "confidence": 1.0,
+          "evidence": [
+            {
+              "startMs": null,
+              "endMs": null,
+              "reference": null,
+              "recognized": null,
+              "metric": "OMISSION_ADDITION_ORDER",
+              "severity": "INFO",
+              "feedback": "누락·추가·어순 Alignment를 확인했습니다."
+            }
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "ORTHOGRAPHY",
+          "state": "EVALUATED",
+          "score": 96.0,
+          "weight": 0.15,
+          "confidence": 1.0,
+          "evidence": [
+            {
+              "startMs": null,
+              "endMs": null,
+              "reference": null,
+              "recognized": null,
+              "metric": "ORTHOGRAPHY",
+              "severity": "INFO",
+              "feedback": "Locale 정규화 후 표기 정확도를 확인했습니다."
+            }
+          ],
+          "notEvaluableReason": null
+        }
+      ],
+      "alignment": [
+        {
+          "source": "明",
+          "answer": "明",
+          "status": "MATCH",
+          "sourceIndex": 0,
+          "answerIndex": 0,
+          "startMs": null,
+          "endMs": null
+        },
+        {
+          "source": "日",
+          "answer": "日",
+          "status": "MATCH",
+          "sourceIndex": 1,
+          "answerIndex": 1,
+          "startMs": null,
+          "endMs": null
+        },
+        {
+          "source": "は",
+          "answer": "は",
+          "status": "MATCH",
+          "sourceIndex": 2,
+          "answerIndex": 2,
+          "startMs": null,
+          "endMs": null
+        },
+        {
+          "source": "図",
+          "answer": "図",
+          "status": "MATCH",
+          "sourceIndex": 3,
+          "answerIndex": 3,
+          "startMs": null,
+          "endMs": null
+        },
+        {
+          "source": "書",
+          "answer": "書",
+          "status": "MATCH",
+          "sourceIndex": 4,
+          "answerIndex": 4,
+          "startMs": null,
+          "endMs": null
+        },
+        {
+          "source": "館",
+          "answer": "館",
+          "status": "MATCH",
+          "sourceIndex": 5,
+          "answerIndex": 5,
+          "startMs": null,
+          "endMs": null
+        },
+        {
+          "source": "で",
+          "answer": null,
+          "status": "OMISSION",
+          "sourceIndex": 6,
+          "answerIndex": null,
+          "startMs": null,
+          "endMs": null
+        },
+        {
+          "source": "本",
+          "answer": "本",
+          "status": "MATCH",
+          "sourceIndex": 7,
+          "answerIndex": 6,
+          "startMs": null,
+          "endMs": null
+        },
+        {
+          "source": "を",
+          "answer": "を",
+          "status": "MATCH",
+          "sourceIndex": 8,
+          "answerIndex": 7,
+          "startMs": null,
+          "endMs": null
+        },
+        {
+          "source": "読",
+          "answer": "読",
+          "status": "MATCH",
+          "sourceIndex": 9,
+          "answerIndex": 8,
+          "startMs": null,
+          "endMs": null
+        },
+        {
+          "source": "み",
+          "answer": "み",
+          "status": "MATCH",
+          "sourceIndex": 10,
+          "answerIndex": 9,
+          "startMs": null,
+          "endMs": null
+        },
+        {
+          "source": "ま",
+          "answer": "ま",
+          "status": "MATCH",
+          "sourceIndex": 11,
+          "answerIndex": 10,
+          "startMs": null,
+          "endMs": null
+        },
+        {
+          "source": "す",
+          "answer": "す",
+          "status": "MATCH",
+          "sourceIndex": 12,
+          "answerIndex": 11,
+          "startMs": null,
+          "endMs": null
+        }
+      ],
+      "evidence": [
+        {
+          "startMs": null,
+          "endMs": null,
+          "reference": "で",
+          "recognized": null,
+          "metric": "TOKEN_RECOGNITION",
+          "severity": "HIGH",
+          "feedback": "원문 「で」가 답변에서 누락되었습니다."
+        }
+      ],
+      "strengths": [
+        "대부분의 Token과 어순을 정확히 받아썼습니다."
+      ],
+      "improvements": [
+        "누락: 「で」. 원문 구간 「は図書館で本を読み」 / 내 답변 구간 「は図書館本を読み」. 짧게 발음되는 표현이 빠지지 않았는지 해당 구간을 다시 들어 보세요."
+      ],
+      "recommendedInterpretations": [],
+      "deliveredMeaningUnits": [],
+      "omittedMeaningUnits": [],
+      "misunderstoodMeaningUnits": [],
+      "addedInformation": [],
+      "profileSignals": [
+        {
+          "metric": "LISTENING_RECOGNITION",
+          "score": 93.0,
+          "confidence": 1.0,
+          "evidenceWeight": 1.0,
+          "evidenceIds": [
+            "evidence-1"
+          ],
+          "sourceTask": "DICTATION",
+          "policyVersion": "listening-profile"
+        },
+        {
+          "metric": "VOCABULARY",
+          "score": 92.0,
+          "confidence": 1.0,
+          "evidenceWeight": 0.6,
+          "evidenceIds": [
+            "evidence-1"
+          ],
+          "sourceTask": "DICTATION",
+          "policyVersion": "listening-profile"
+        },
+        {
+          "metric": "ORTHOGRAPHY",
+          "score": 96.0,
+          "confidence": 1.0,
+          "evidenceWeight": 0.8,
+          "evidenceIds": [
+            "evidence-1"
+          ],
+          "sourceTask": "DICTATION",
+          "policyVersion": "listening-profile"
+        }
+      ],
+      "profileEligible": true,
+      "assistanceUsage": [],
+      "debugMetadata": {
+        "normalizationVersion": "listening-normalization",
+        "alignmentVersion": "listening-alignment",
+        "normalizedSourceHash": "b970848a51d0004271c94d075f4b41c97777663ccaa903951f256e9b5ec512df",
+        "normalizedAnswerHash": "cd83323b7d50c4327cce142286a2b06fce06cc14f32536bc6ce83063d2e269da",
+        "sourceTokenCount": 13,
+        "answerTokenCount": 12,
+        "operationCounts": {
+          "omission": 1,
+          "addition": 0,
+          "substitution": 0,
+          "order": 0
+        }
+      }
+    }
+  },
+  {
+    "language": "ko",
+    "source": "오늘 도서관에서 새 책을 읽어요.",
+    "answer": "오늘 도서관에서 책을 읽어요",
+    "acceptedVariants": {},
+    "sourceNormalized": "오늘 도서관에서 새 책을 읽어요",
+    "task": {
+      "taskType": "DICTATION",
+      "status": "EVALUATED",
+      "evaluable": true,
+      "score": 82,
+      "confidence": 1.0,
+      "reasonCode": null,
+      "assistanceLevel": "INDEPENDENT",
+      "metrics": [
+        {
+          "type": "TOKEN_RECOGNITION",
+          "state": "EVALUATED",
+          "score": 80.0,
+          "weight": 0.6,
+          "confidence": 1.0,
+          "evidence": [
+            {
+              "startMs": null,
+              "endMs": null,
+              "reference": null,
+              "recognized": null,
+              "metric": "TOKEN_RECOGNITION",
+              "severity": "INFO",
+              "feedback": "들은 Token의 인식 정확도를 확인했습니다."
+            }
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "OMISSION_ADDITION_ORDER",
+          "state": "EVALUATED",
+          "score": 80.0,
+          "weight": 0.25,
+          "confidence": 1.0,
+          "evidence": [
+            {
+              "startMs": null,
+              "endMs": null,
+              "reference": null,
+              "recognized": null,
+              "metric": "OMISSION_ADDITION_ORDER",
+              "severity": "INFO",
+              "feedback": "누락·추가·어순 Alignment를 확인했습니다."
+            }
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "ORTHOGRAPHY",
+          "state": "EVALUATED",
+          "score": 94.0,
+          "weight": 0.15,
+          "confidence": 1.0,
+          "evidence": [
+            {
+              "startMs": null,
+              "endMs": null,
+              "reference": null,
+              "recognized": null,
+              "metric": "ORTHOGRAPHY",
+              "severity": "INFO",
+              "feedback": "Locale 정규화 후 표기 정확도를 확인했습니다."
+            }
+          ],
+          "notEvaluableReason": null
+        }
+      ],
+      "alignment": [
+        {
+          "source": "오늘",
+          "answer": "오늘",
+          "status": "MATCH",
+          "sourceIndex": 0,
+          "answerIndex": 0,
+          "startMs": null,
+          "endMs": null
+        },
+        {
+          "source": "도서관에서",
+          "answer": "도서관에서",
+          "status": "MATCH",
+          "sourceIndex": 1,
+          "answerIndex": 1,
+          "startMs": null,
+          "endMs": null
+        },
+        {
+          "source": "새",
+          "answer": null,
+          "status": "OMISSION",
+          "sourceIndex": 2,
+          "answerIndex": null,
+          "startMs": null,
+          "endMs": null
+        },
+        {
+          "source": "책을",
+          "answer": "책을",
+          "status": "MATCH",
+          "sourceIndex": 3,
+          "answerIndex": 2,
+          "startMs": null,
+          "endMs": null
+        },
+        {
+          "source": "읽어요",
+          "answer": "읽어요",
+          "status": "MATCH",
+          "sourceIndex": 4,
+          "answerIndex": 3,
+          "startMs": null,
+          "endMs": null
+        }
+      ],
+      "evidence": [
+        {
+          "startMs": null,
+          "endMs": null,
+          "reference": "새",
+          "recognized": null,
+          "metric": "TOKEN_RECOGNITION",
+          "severity": "HIGH",
+          "feedback": "원문 「새」가 답변에서 누락되었습니다."
+        }
+      ],
+      "strengths": [
+        "정확히 인식한 Token을 기준으로 문장을 재구성했습니다."
+      ],
+      "improvements": [
+        "누락: 「새」. 원문 구간 「오늘 도서관에서 새 책을 읽어요」 / 내 답변 구간 「오늘 도서관에서 책을 읽어요」. 짧게 발음되는 표현이 빠지지 않았는지 해당 구간을 다시 들어 보세요."
+      ],
+      "recommendedInterpretations": [],
+      "deliveredMeaningUnits": [],
+      "omittedMeaningUnits": [],
+      "misunderstoodMeaningUnits": [],
+      "addedInformation": [],
+      "profileSignals": [
+        {
+          "metric": "LISTENING_RECOGNITION",
+          "score": 82.0,
+          "confidence": 1.0,
+          "evidenceWeight": 1.0,
+          "evidenceIds": [
+            "evidence-1"
+          ],
+          "sourceTask": "DICTATION",
+          "policyVersion": "listening-profile"
+        },
+        {
+          "metric": "VOCABULARY",
+          "score": 80.0,
+          "confidence": 1.0,
+          "evidenceWeight": 0.6,
+          "evidenceIds": [
+            "evidence-1"
+          ],
+          "sourceTask": "DICTATION",
+          "policyVersion": "listening-profile"
+        },
+        {
+          "metric": "ORTHOGRAPHY",
+          "score": 94.0,
+          "confidence": 1.0,
+          "evidenceWeight": 0.8,
+          "evidenceIds": [
+            "evidence-1"
+          ],
+          "sourceTask": "DICTATION",
+          "policyVersion": "listening-profile"
+        }
+      ],
+      "profileEligible": true,
+      "assistanceUsage": [],
+      "debugMetadata": {
+        "normalizationVersion": "listening-normalization",
+        "alignmentVersion": "listening-alignment",
+        "normalizedSourceHash": "97f337e84ce09b2b6c62214427075c17bd0a4eaedc6891d12012402e18a49839",
+        "normalizedAnswerHash": "7347c04e8ef7b8036008f6e20357596b4a6e8bcf0c50e351c6364ba582e950c3",
+        "sourceTokenCount": 5,
+        "answerTokenCount": 4,
+        "operationCounts": {
+          "omission": 1,
+          "addition": 0,
+          "substitution": 0,
+          "order": 0
+        }
+      }
+    }
+  },
+  {
+    "language": "de",
+    "source": "Die Straße ist ruhig.",
+    "answer": "Die STRASSE ist ruhig",
+    "acceptedVariants": {},
+    "sourceNormalized": "die strasse ist ruhig",
+    "task": {
+      "taskType": "DICTATION",
+      "status": "EVALUATED",
+      "evaluable": true,
+      "score": 100,
+      "confidence": 1.0,
+      "reasonCode": null,
+      "assistanceLevel": "INDEPENDENT",
+      "metrics": [
+        {
+          "type": "TOKEN_RECOGNITION",
+          "state": "EVALUATED",
+          "score": 100.0,
+          "weight": 0.6,
+          "confidence": 1.0,
+          "evidence": [
+            {
+              "startMs": null,
+              "endMs": null,
+              "reference": null,
+              "recognized": null,
+              "metric": "TOKEN_RECOGNITION",
+              "severity": "INFO",
+              "feedback": "들은 Token의 인식 정확도를 확인했습니다."
+            }
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "OMISSION_ADDITION_ORDER",
+          "state": "EVALUATED",
+          "score": 100.0,
+          "weight": 0.25,
+          "confidence": 1.0,
+          "evidence": [
+            {
+              "startMs": null,
+              "endMs": null,
+              "reference": null,
+              "recognized": null,
+              "metric": "OMISSION_ADDITION_ORDER",
+              "severity": "INFO",
+              "feedback": "누락·추가·어순 Alignment를 확인했습니다."
+            }
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "ORTHOGRAPHY",
+          "state": "EVALUATED",
+          "score": 100.0,
+          "weight": 0.15,
+          "confidence": 1.0,
+          "evidence": [
+            {
+              "startMs": null,
+              "endMs": null,
+              "reference": null,
+              "recognized": null,
+              "metric": "ORTHOGRAPHY",
+              "severity": "INFO",
+              "feedback": "Locale 정규화 후 표기 정확도를 확인했습니다."
+            }
+          ],
+          "notEvaluableReason": null
+        }
+      ],
+      "alignment": [
+        {
+          "source": "die",
+          "answer": "die",
+          "status": "MATCH",
+          "sourceIndex": 0,
+          "answerIndex": 0,
+          "startMs": null,
+          "endMs": null
+        },
+        {
+          "source": "strasse",
+          "answer": "strasse",
+          "status": "MATCH",
+          "sourceIndex": 1,
+          "answerIndex": 1,
+          "startMs": null,
+          "endMs": null
+        },
+        {
+          "source": "ist",
+          "answer": "ist",
+          "status": "MATCH",
+          "sourceIndex": 2,
+          "answerIndex": 2,
+          "startMs": null,
+          "endMs": null
+        },
+        {
+          "source": "ruhig",
+          "answer": "ruhig",
+          "status": "MATCH",
+          "sourceIndex": 3,
+          "answerIndex": 3,
+          "startMs": null,
+          "endMs": null
+        }
+      ],
+      "evidence": [],
+      "strengths": [
+        "원문의 Token과 순서를 정확히 받아썼습니다."
+      ],
+      "improvements": [],
+      "recommendedInterpretations": [],
+      "deliveredMeaningUnits": [],
+      "omittedMeaningUnits": [],
+      "misunderstoodMeaningUnits": [],
+      "addedInformation": [],
+      "profileSignals": [
+        {
+          "metric": "LISTENING_RECOGNITION",
+          "score": 100.0,
+          "confidence": 1.0,
+          "evidenceWeight": 1.0,
+          "evidenceIds": [],
+          "sourceTask": "DICTATION",
+          "policyVersion": "listening-profile"
+        },
+        {
+          "metric": "VOCABULARY",
+          "score": 100.0,
+          "confidence": 1.0,
+          "evidenceWeight": 0.6,
+          "evidenceIds": [],
+          "sourceTask": "DICTATION",
+          "policyVersion": "listening-profile"
+        },
+        {
+          "metric": "ORTHOGRAPHY",
+          "score": 100.0,
+          "confidence": 1.0,
+          "evidenceWeight": 0.8,
+          "evidenceIds": [],
+          "sourceTask": "DICTATION",
+          "policyVersion": "listening-profile"
+        }
+      ],
+      "profileEligible": true,
+      "assistanceUsage": [],
+      "debugMetadata": {
+        "normalizationVersion": "listening-normalization",
+        "alignmentVersion": "listening-alignment",
+        "normalizedSourceHash": "c13d3a778080578a1ea95c2c320ed51cec83382856a21ae783f74b41b04b813b",
+        "normalizedAnswerHash": "c13d3a778080578a1ea95c2c320ed51cec83382856a21ae783f74b41b04b813b",
+        "sourceTokenCount": 4,
+        "answerTokenCount": 4,
+        "operationCounts": {
+          "omission": 0,
+          "addition": 0,
+          "substitution": 0,
+          "order": 0
+        }
+      }
+    }
+  },
+  {
+    "language": "en",
+    "source": "red blue green",
+    "answer": "green blue red",
+    "acceptedVariants": {},
+    "sourceNormalized": "red blue green",
+    "task": {
+      "taskType": "DICTATION",
+      "status": "EVALUATED",
+      "evaluable": true,
+      "score": 79,
+      "confidence": 1.0,
+      "reasonCode": null,
+      "assistanceLevel": "INDEPENDENT",
+      "metrics": [
+        {
+          "type": "TOKEN_RECOGNITION",
+          "state": "EVALUATED",
+          "score": 100.0,
+          "weight": 0.6,
+          "confidence": 1.0,
+          "evidence": [
+            {
+              "startMs": null,
+              "endMs": null,
+              "reference": null,
+              "recognized": null,
+              "metric": "TOKEN_RECOGNITION",
+              "severity": "INFO",
+              "feedback": "들은 Token의 인식 정확도를 확인했습니다."
+            }
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "OMISSION_ADDITION_ORDER",
+          "state": "EVALUATED",
+          "score": 33.0,
+          "weight": 0.25,
+          "confidence": 1.0,
+          "evidence": [
+            {
+              "startMs": null,
+              "endMs": null,
+              "reference": null,
+              "recognized": null,
+              "metric": "OMISSION_ADDITION_ORDER",
+              "severity": "INFO",
+              "feedback": "누락·추가·어순 Alignment를 확인했습니다."
+            }
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "ORTHOGRAPHY",
+          "state": "EVALUATED",
+          "score": 71.0,
+          "weight": 0.15,
+          "confidence": 1.0,
+          "evidence": [
+            {
+              "startMs": null,
+              "endMs": null,
+              "reference": null,
+              "recognized": null,
+              "metric": "ORTHOGRAPHY",
+              "severity": "INFO",
+              "feedback": "Locale 정규화 후 표기 정확도를 확인했습니다."
+            }
+          ],
+          "notEvaluableReason": null
+        }
+      ],
+      "alignment": [
+        {
+          "source": "red",
+          "answer": "green",
+          "status": "ORDER",
+          "sourceIndex": 0,
+          "answerIndex": 0,
+          "startMs": null,
+          "endMs": null
+        },
+        {
+          "source": "blue",
+          "answer": "blue",
+          "status": "MATCH",
+          "sourceIndex": 1,
+          "answerIndex": 1,
+          "startMs": null,
+          "endMs": null
+        },
+        {
+          "source": "green",
+          "answer": "red",
+          "status": "ORDER",
+          "sourceIndex": 2,
+          "answerIndex": 2,
+          "startMs": null,
+          "endMs": null
+        }
+      ],
+      "evidence": [
+        {
+          "startMs": null,
+          "endMs": null,
+          "reference": "red",
+          "recognized": "green",
+          "metric": "TOKEN_RECOGNITION",
+          "severity": "MEDIUM",
+          "feedback": "원문 「red」와 답변 「green」의 순서가 다릅니다."
+        },
+        {
+          "startMs": null,
+          "endMs": null,
+          "reference": "green",
+          "recognized": "red",
+          "metric": "TOKEN_RECOGNITION",
+          "severity": "MEDIUM",
+          "feedback": "원문 「green」와 답변 「red」의 순서가 다릅니다."
+        }
+      ],
+      "strengths": [
+        "정확히 인식한 Token을 기준으로 문장을 재구성했습니다."
+      ],
+      "improvements": [
+        "어순: 「red」→「green」、「green」→「red」. 원문 구간 「red blue green」 / 내 답변 구간 「green blue red」. 각 단어를 따로 맞히기보다 앞뒤 표현을 한 덩어리로 다시 들어 보세요."
+      ],
+      "recommendedInterpretations": [],
+      "deliveredMeaningUnits": [],
+      "omittedMeaningUnits": [],
+      "misunderstoodMeaningUnits": [],
+      "addedInformation": [],
+      "profileSignals": [
+        {
+          "metric": "LISTENING_RECOGNITION",
+          "score": 79.0,
+          "confidence": 1.0,
+          "evidenceWeight": 1.0,
+          "evidenceIds": [
+            "evidence-1",
+            "evidence-2"
+          ],
+          "sourceTask": "DICTATION",
+          "policyVersion": "listening-profile"
+        },
+        {
+          "metric": "VOCABULARY",
+          "score": 100.0,
+          "confidence": 1.0,
+          "evidenceWeight": 0.6,
+          "evidenceIds": [
+            "evidence-1",
+            "evidence-2"
+          ],
+          "sourceTask": "DICTATION",
+          "policyVersion": "listening-profile"
+        },
+        {
+          "metric": "ORTHOGRAPHY",
+          "score": 71.0,
+          "confidence": 1.0,
+          "evidenceWeight": 0.8,
+          "evidenceIds": [
+            "evidence-1",
+            "evidence-2"
+          ],
+          "sourceTask": "DICTATION",
+          "policyVersion": "listening-profile"
+        }
+      ],
+      "profileEligible": true,
+      "assistanceUsage": [],
+      "debugMetadata": {
+        "normalizationVersion": "listening-normalization",
+        "alignmentVersion": "listening-alignment",
+        "normalizedSourceHash": "1d913be3de2de3e750df483b21e40dc63f6a31bed5b3419ff7cac906ca573186",
+        "normalizedAnswerHash": "9f63a8c8801cfb2ad5189c6482dbdb5e9b61766c28faab2e1a39b63fb58518e6",
+        "sourceTokenCount": 3,
+        "answerTokenCount": 3,
+        "operationCounts": {
+          "omission": 0,
+          "addition": 0,
+          "substitution": 0,
+          "order": 2
+        }
+      }
+    }
+  },
+  {
+    "language": "en",
+    "source": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabc",
+    "answer": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacb",
+    "acceptedVariants": {},
+    "sourceNormalized": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabc",
+    "task": {
+      "taskType": "DICTATION",
+      "status": "EVALUATED",
+      "evaluable": true,
+      "score": 40,
+      "confidence": 1.0,
+      "reasonCode": null,
+      "assistanceLevel": "INDEPENDENT",
+      "metrics": [
+        {
+          "type": "TOKEN_RECOGNITION",
+          "state": "EVALUATED",
+          "score": 0.0,
+          "weight": 0.6,
+          "confidence": 1.0,
+          "evidence": [
+            {
+              "startMs": null,
+              "endMs": null,
+              "reference": null,
+              "recognized": null,
+              "metric": "TOKEN_RECOGNITION",
+              "severity": "INFO",
+              "feedback": "들은 Token의 인식 정확도를 확인했습니다."
+            }
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "OMISSION_ADDITION_ORDER",
+          "state": "EVALUATED",
+          "score": 100.0,
+          "weight": 0.25,
+          "confidence": 1.0,
+          "evidence": [
+            {
+              "startMs": null,
+              "endMs": null,
+              "reference": null,
+              "recognized": null,
+              "metric": "OMISSION_ADDITION_ORDER",
+              "severity": "INFO",
+              "feedback": "누락·추가·어순 Alignment를 확인했습니다."
+            }
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "ORTHOGRAPHY",
+          "state": "EVALUATED",
+          "score": 100.0,
+          "weight": 0.15,
+          "confidence": 1.0,
+          "evidence": [
+            {
+              "startMs": null,
+              "endMs": null,
+              "reference": null,
+              "recognized": null,
+              "metric": "ORTHOGRAPHY",
+              "severity": "INFO",
+              "feedback": "Locale 정규화 후 표기 정확도를 확인했습니다."
+            }
+          ],
+          "notEvaluableReason": null
+        }
+      ],
+      "alignment": [
+        {
+          "source": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabc",
+          "answer": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacb",
+          "status": "SUBSTITUTION",
+          "sourceIndex": 0,
+          "answerIndex": 0,
+          "startMs": null,
+          "endMs": null
+        }
+      ],
+      "evidence": [
+        {
+          "startMs": null,
+          "endMs": null,
+          "reference": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabc",
+          "recognized": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacb",
+          "metric": "TOKEN_RECOGNITION",
+          "severity": "HIGH",
+          "feedback": "원문 「aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabc」를 「aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacb」로 다르게 받아썼습니다."
+        }
+      ],
+      "strengths": [
+        "정확히 인식한 Token을 기준으로 문장을 재구성했습니다."
+      ],
+      "improvements": [
+        "다르게 받아씀: 원문 「aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabc」 / 내 답변 「aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacb」. 원문 구간 「aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabc」 / 내 답변 구간 「aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacb」. 비슷하게 들린 소리를 원문과 비교하며 해당 구간을 다시 확인해 보세요."
+      ],
+      "recommendedInterpretations": [],
+      "deliveredMeaningUnits": [],
+      "omittedMeaningUnits": [],
+      "misunderstoodMeaningUnits": [],
+      "addedInformation": [],
+      "profileSignals": [
+        {
+          "metric": "LISTENING_RECOGNITION",
+          "score": 40.0,
+          "confidence": 1.0,
+          "evidenceWeight": 1.0,
+          "evidenceIds": [
+            "evidence-1"
+          ],
+          "sourceTask": "DICTATION",
+          "policyVersion": "listening-profile"
+        },
+        {
+          "metric": "VOCABULARY",
+          "score": 0.0,
+          "confidence": 1.0,
+          "evidenceWeight": 0.6,
+          "evidenceIds": [
+            "evidence-1"
+          ],
+          "sourceTask": "DICTATION",
+          "policyVersion": "listening-profile"
+        },
+        {
+          "metric": "ORTHOGRAPHY",
+          "score": 100.0,
+          "confidence": 1.0,
+          "evidenceWeight": 0.8,
+          "evidenceIds": [
+            "evidence-1"
+          ],
+          "sourceTask": "DICTATION",
+          "policyVersion": "listening-profile"
+        }
+      ],
+      "profileEligible": true,
+      "assistanceUsage": [],
+      "debugMetadata": {
+        "normalizationVersion": "listening-normalization",
+        "alignmentVersion": "listening-alignment",
+        "normalizedSourceHash": "41d697158e40aebfe17c2267063a2e4d8aa6c12f984024aefaa580fc1a310652",
+        "normalizedAnswerHash": "ac1db6355b25a73a914c86ab2255f8c890c1a39896f8b3e908388747084bdc05",
+        "sourceTokenCount": 1,
+        "answerTokenCount": 1,
+        "operationCounts": {
+          "omission": 0,
+          "addition": 0,
+          "substitution": 1,
+          "order": 0
+        }
+      }
+    }
+  }
+]

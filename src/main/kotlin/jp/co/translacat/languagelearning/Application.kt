@@ -13,11 +13,16 @@ suspend fun Application.module() {
 
     configureDependencyInjection()
     configurePersistence()
+    configureModelExecution()
 
     configureRouting()
     configureSettingsHttp()
     configureKeywordHttp()
-    configureResultJournal()
     configureGrowth()
     configureLevelTest()
+    configureWriting()
+    configurePractice()
+    configureListening()
+    configureSpeaking()
+    configureOverview()
 }

@@ -1,0 +1,1196 @@
+{
+  "source": "Python assessment_contract.py 2026-09-26 working tree",
+  "cases": [
+    {
+      "name": "exact-pass",
+      "review": {
+        "candidateId": "synthetic-candidate",
+        "contentHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "confidence": null,
+        "verdict": "PASS",
+        "observedWritingType": "FREE",
+        "difficultyStatus": "ASSESSED",
+        "estimatedBand": 5,
+        "alternativeBand": null,
+        "difficultyConfidence": null,
+        "difficultyEvidenceSegmentIds": [
+          "O1"
+        ],
+        "checks": [
+          {
+            "criterion": "ORIGIN_LANGUAGE",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1"
+            ]
+          },
+          {
+            "criterion": "TASK_VALIDITY",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1"
+            ]
+          },
+          {
+            "criterion": "ANSWER_LEAK",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1",
+              "N1"
+            ]
+          },
+          {
+            "criterion": "NATURALNESS",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1"
+            ]
+          },
+          {
+            "criterion": "NOTE_QUALITY",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "N1"
+            ]
+          }
+        ],
+        "issues": [],
+        "productionDemandChecks": null
+      },
+      "targetBand": 5,
+      "writingType": "FREE",
+      "adjudicated": false,
+      "allowAdjacentRecheck": true,
+      "repaired": false,
+      "action": "ACCEPT",
+      "reason": "VERIFIED"
+    },
+    {
+      "name": "hard-issue",
+      "review": {
+        "candidateId": "synthetic-candidate",
+        "contentHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "confidence": null,
+        "verdict": "REJECT",
+        "observedWritingType": "FREE",
+        "difficultyStatus": "ASSESSED",
+        "estimatedBand": 5,
+        "alternativeBand": null,
+        "difficultyConfidence": null,
+        "difficultyEvidenceSegmentIds": [
+          "O1"
+        ],
+        "checks": [
+          {
+            "criterion": "ORIGIN_LANGUAGE",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1"
+            ]
+          },
+          {
+            "criterion": "TASK_VALIDITY",
+            "status": "FAIL",
+            "evidenceSegmentIds": [
+              "O1"
+            ]
+          },
+          {
+            "criterion": "ANSWER_LEAK",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1",
+              "N1"
+            ]
+          },
+          {
+            "criterion": "NATURALNESS",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1"
+            ]
+          },
+          {
+            "criterion": "NOTE_QUALITY",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "N1"
+            ]
+          }
+        ],
+        "issues": [
+          "TASK_TYPE"
+        ],
+        "productionDemandChecks": null
+      },
+      "targetBand": 5,
+      "writingType": "FREE",
+      "adjudicated": false,
+      "allowAdjacentRecheck": true,
+      "repaired": false,
+      "action": "REJECT",
+      "reason": "QUALITY_TASK_TYPE"
+    },
+    {
+      "name": "wrong-type",
+      "review": {
+        "candidateId": "synthetic-candidate",
+        "contentHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "confidence": null,
+        "verdict": "PASS",
+        "observedWritingType": "GUIDED",
+        "difficultyStatus": "ASSESSED",
+        "estimatedBand": 5,
+        "alternativeBand": null,
+        "difficultyConfidence": null,
+        "difficultyEvidenceSegmentIds": [
+          "O1"
+        ],
+        "checks": [
+          {
+            "criterion": "ORIGIN_LANGUAGE",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1"
+            ]
+          },
+          {
+            "criterion": "TASK_VALIDITY",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1"
+            ]
+          },
+          {
+            "criterion": "ANSWER_LEAK",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1",
+              "N1"
+            ]
+          },
+          {
+            "criterion": "NATURALNESS",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1"
+            ]
+          },
+          {
+            "criterion": "NOTE_QUALITY",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "N1"
+            ]
+          }
+        ],
+        "issues": [],
+        "productionDemandChecks": null
+      },
+      "targetBand": 5,
+      "writingType": "FREE",
+      "adjudicated": false,
+      "allowAdjacentRecheck": true,
+      "repaired": false,
+      "action": "REJECT",
+      "reason": "QUALITY_TASK_TYPE"
+    },
+    {
+      "name": "adjacent-first",
+      "review": {
+        "candidateId": "synthetic-candidate",
+        "contentHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "confidence": null,
+        "verdict": "PASS",
+        "observedWritingType": "FREE",
+        "difficultyStatus": "ASSESSED",
+        "estimatedBand": 4,
+        "alternativeBand": null,
+        "difficultyConfidence": null,
+        "difficultyEvidenceSegmentIds": [
+          "O1"
+        ],
+        "checks": [
+          {
+            "criterion": "ORIGIN_LANGUAGE",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1"
+            ]
+          },
+          {
+            "criterion": "TASK_VALIDITY",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1"
+            ]
+          },
+          {
+            "criterion": "ANSWER_LEAK",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1",
+              "N1"
+            ]
+          },
+          {
+            "criterion": "NATURALNESS",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1"
+            ]
+          },
+          {
+            "criterion": "NOTE_QUALITY",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "N1"
+            ]
+          }
+        ],
+        "issues": [],
+        "productionDemandChecks": null
+      },
+      "targetBand": 5,
+      "writingType": "FREE",
+      "adjudicated": false,
+      "allowAdjacentRecheck": true,
+      "repaired": false,
+      "action": "ADJUDICATE",
+      "reason": "ADJACENT_BAND_RECHECK"
+    },
+    {
+      "name": "adjacent-final",
+      "review": {
+        "candidateId": "synthetic-candidate",
+        "contentHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "confidence": null,
+        "verdict": "PASS",
+        "observedWritingType": "FREE",
+        "difficultyStatus": "ASSESSED",
+        "estimatedBand": 4,
+        "alternativeBand": null,
+        "difficultyConfidence": null,
+        "difficultyEvidenceSegmentIds": [
+          "O1"
+        ],
+        "checks": [
+          {
+            "criterion": "ORIGIN_LANGUAGE",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1"
+            ]
+          },
+          {
+            "criterion": "TASK_VALIDITY",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1"
+            ]
+          },
+          {
+            "criterion": "ANSWER_LEAK",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1",
+              "N1"
+            ]
+          },
+          {
+            "criterion": "NATURALNESS",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1"
+            ]
+          },
+          {
+            "criterion": "NOTE_QUALITY",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "N1"
+            ]
+          }
+        ],
+        "issues": [],
+        "productionDemandChecks": null
+      },
+      "targetBand": 5,
+      "writingType": "FREE",
+      "adjudicated": true,
+      "allowAdjacentRecheck": true,
+      "repaired": false,
+      "action": "REJECT",
+      "reason": "VERIFIED_BAND_MISMATCH"
+    },
+    {
+      "name": "adjacent-disabled",
+      "review": {
+        "candidateId": "synthetic-candidate",
+        "contentHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "confidence": null,
+        "verdict": "PASS",
+        "observedWritingType": "FREE",
+        "difficultyStatus": "ASSESSED",
+        "estimatedBand": 4,
+        "alternativeBand": null,
+        "difficultyConfidence": null,
+        "difficultyEvidenceSegmentIds": [
+          "O1"
+        ],
+        "checks": [
+          {
+            "criterion": "ORIGIN_LANGUAGE",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1"
+            ]
+          },
+          {
+            "criterion": "TASK_VALIDITY",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1"
+            ]
+          },
+          {
+            "criterion": "ANSWER_LEAK",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1",
+              "N1"
+            ]
+          },
+          {
+            "criterion": "NATURALNESS",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1"
+            ]
+          },
+          {
+            "criterion": "NOTE_QUALITY",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "N1"
+            ]
+          }
+        ],
+        "issues": [],
+        "productionDemandChecks": null
+      },
+      "targetBand": 5,
+      "writingType": "FREE",
+      "adjudicated": false,
+      "allowAdjacentRecheck": false,
+      "repaired": false,
+      "action": "REJECT",
+      "reason": "VERIFIED_BAND_MISMATCH"
+    },
+    {
+      "name": "far-band",
+      "review": {
+        "candidateId": "synthetic-candidate",
+        "contentHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "confidence": null,
+        "verdict": "PASS",
+        "observedWritingType": "FREE",
+        "difficultyStatus": "ASSESSED",
+        "estimatedBand": 3,
+        "alternativeBand": null,
+        "difficultyConfidence": null,
+        "difficultyEvidenceSegmentIds": [
+          "O1"
+        ],
+        "checks": [
+          {
+            "criterion": "ORIGIN_LANGUAGE",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1"
+            ]
+          },
+          {
+            "criterion": "TASK_VALIDITY",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1"
+            ]
+          },
+          {
+            "criterion": "ANSWER_LEAK",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1",
+              "N1"
+            ]
+          },
+          {
+            "criterion": "NATURALNESS",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1"
+            ]
+          },
+          {
+            "criterion": "NOTE_QUALITY",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "N1"
+            ]
+          }
+        ],
+        "issues": [],
+        "productionDemandChecks": null
+      },
+      "targetBand": 5,
+      "writingType": "FREE",
+      "adjudicated": false,
+      "allowAdjacentRecheck": true,
+      "repaired": false,
+      "action": "REJECT",
+      "reason": "VERIFIED_BAND_MISMATCH"
+    },
+    {
+      "name": "borderline",
+      "review": {
+        "candidateId": "synthetic-candidate",
+        "contentHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "confidence": null,
+        "verdict": "UNSURE",
+        "observedWritingType": "FREE",
+        "difficultyStatus": "BORDERLINE",
+        "estimatedBand": 4,
+        "alternativeBand": 5,
+        "difficultyConfidence": null,
+        "difficultyEvidenceSegmentIds": [
+          "O1"
+        ],
+        "checks": [
+          {
+            "criterion": "ORIGIN_LANGUAGE",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1"
+            ]
+          },
+          {
+            "criterion": "TASK_VALIDITY",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1"
+            ]
+          },
+          {
+            "criterion": "ANSWER_LEAK",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1",
+              "N1"
+            ]
+          },
+          {
+            "criterion": "NATURALNESS",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1"
+            ]
+          },
+          {
+            "criterion": "NOTE_QUALITY",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "N1"
+            ]
+          }
+        ],
+        "issues": [],
+        "productionDemandChecks": null
+      },
+      "targetBand": 5,
+      "writingType": "FREE",
+      "adjudicated": false,
+      "allowAdjacentRecheck": true,
+      "repaired": false,
+      "action": "ADJUDICATE",
+      "reason": "EXPLICIT_UNCERTAINTY"
+    },
+    {
+      "name": "uncertain-type",
+      "review": {
+        "candidateId": "synthetic-candidate",
+        "contentHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "confidence": null,
+        "verdict": "UNSURE",
+        "observedWritingType": "UNSURE",
+        "difficultyStatus": "ASSESSED",
+        "estimatedBand": 5,
+        "alternativeBand": null,
+        "difficultyConfidence": null,
+        "difficultyEvidenceSegmentIds": [
+          "O1"
+        ],
+        "checks": [
+          {
+            "criterion": "ORIGIN_LANGUAGE",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1"
+            ]
+          },
+          {
+            "criterion": "TASK_VALIDITY",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1"
+            ]
+          },
+          {
+            "criterion": "ANSWER_LEAK",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1",
+              "N1"
+            ]
+          },
+          {
+            "criterion": "NATURALNESS",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1"
+            ]
+          },
+          {
+            "criterion": "NOTE_QUALITY",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "N1"
+            ]
+          }
+        ],
+        "issues": [],
+        "productionDemandChecks": null
+      },
+      "targetBand": 5,
+      "writingType": "FREE",
+      "adjudicated": false,
+      "allowAdjacentRecheck": true,
+      "repaired": false,
+      "action": "ADJUDICATE",
+      "reason": "EXPLICIT_UNCERTAINTY"
+    },
+    {
+      "name": "uncertain-final",
+      "review": {
+        "candidateId": "synthetic-candidate",
+        "contentHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "confidence": null,
+        "verdict": "UNSURE",
+        "observedWritingType": "UNSURE",
+        "difficultyStatus": "ASSESSED",
+        "estimatedBand": 5,
+        "alternativeBand": null,
+        "difficultyConfidence": null,
+        "difficultyEvidenceSegmentIds": [
+          "O1"
+        ],
+        "checks": [
+          {
+            "criterion": "ORIGIN_LANGUAGE",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1"
+            ]
+          },
+          {
+            "criterion": "TASK_VALIDITY",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1"
+            ]
+          },
+          {
+            "criterion": "ANSWER_LEAK",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1",
+              "N1"
+            ]
+          },
+          {
+            "criterion": "NATURALNESS",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1"
+            ]
+          },
+          {
+            "criterion": "NOTE_QUALITY",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "N1"
+            ]
+          }
+        ],
+        "issues": [],
+        "productionDemandChecks": null
+      },
+      "targetBand": 5,
+      "writingType": "FREE",
+      "adjudicated": true,
+      "allowAdjacentRecheck": true,
+      "repaired": false,
+      "action": "REJECT",
+      "reason": "SEMANTIC_UNRESOLVED"
+    },
+    {
+      "name": "gap-conflict",
+      "review": {
+        "candidateId": "synthetic-candidate",
+        "contentHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "confidence": null,
+        "verdict": "PASS",
+        "observedWritingType": "FREE",
+        "difficultyStatus": "ASSESSED",
+        "estimatedBand": 5,
+        "alternativeBand": null,
+        "difficultyConfidence": null,
+        "difficultyEvidenceSegmentIds": [
+          "O1"
+        ],
+        "checks": [
+          {
+            "criterion": "ORIGIN_LANGUAGE",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1"
+            ]
+          },
+          {
+            "criterion": "TASK_VALIDITY",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1"
+            ]
+          },
+          {
+            "criterion": "ANSWER_LEAK",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1",
+              "N1"
+            ]
+          },
+          {
+            "criterion": "NATURALNESS",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1"
+            ]
+          },
+          {
+            "criterion": "NOTE_QUALITY",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "N1"
+            ]
+          }
+        ],
+        "issues": [],
+        "productionDemandChecks": [
+          {
+            "code": "SCOPE_INTERACTION",
+            "status": "PRESENT",
+            "evidenceSegmentIds": [
+              "O1"
+            ],
+            "gapCode": "RELATIONS_NOT_INTERDEPENDENT"
+          },
+          {
+            "code": "PRECISE_STANCE",
+            "status": "PRESENT",
+            "evidenceSegmentIds": [
+              "O1"
+            ],
+            "gapCode": null
+          },
+          {
+            "code": "COHERENT_REGISTER",
+            "status": "PRESENT",
+            "evidenceSegmentIds": [
+              "O1"
+            ],
+            "gapCode": null
+          }
+        ]
+      },
+      "targetBand": 5,
+      "writingType": "FREE",
+      "adjudicated": false,
+      "allowAdjacentRecheck": true,
+      "repaired": false,
+      "action": "REJECT",
+      "reason": "DIFFICULTY_EVIDENCE_CONFLICT"
+    },
+    {
+      "name": "note-localize",
+      "review": {
+        "candidateId": "synthetic-candidate",
+        "contentHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "confidence": null,
+        "verdict": "REJECT",
+        "observedWritingType": "FREE",
+        "difficultyStatus": "ASSESSED",
+        "estimatedBand": 5,
+        "alternativeBand": null,
+        "difficultyConfidence": null,
+        "difficultyEvidenceSegmentIds": [
+          "O1"
+        ],
+        "checks": [
+          {
+            "criterion": "ORIGIN_LANGUAGE",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1"
+            ]
+          },
+          {
+            "criterion": "TASK_VALIDITY",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1"
+            ]
+          },
+          {
+            "criterion": "ANSWER_LEAK",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1",
+              "N1"
+            ]
+          },
+          {
+            "criterion": "NATURALNESS",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1"
+            ]
+          },
+          {
+            "criterion": "NOTE_QUALITY",
+            "status": "FAIL",
+            "evidenceSegmentIds": [
+              "N1"
+            ]
+          }
+        ],
+        "issues": [
+          "NOTE_ORIGIN_LANGUAGE"
+        ],
+        "productionDemandChecks": null
+      },
+      "targetBand": 5,
+      "writingType": "FREE",
+      "adjudicated": false,
+      "allowAdjacentRecheck": true,
+      "repaired": false,
+      "action": "LOCALIZE_NOTE",
+      "reason": "NOTE_ORIGIN_LANGUAGE"
+    },
+    {
+      "name": "repair-pass",
+      "review": {
+        "candidateId": "synthetic-candidate",
+        "contentHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "confidence": null,
+        "verdict": "PASS",
+        "observedWritingType": "FREE",
+        "difficultyStatus": "ASSESSED",
+        "estimatedBand": 5,
+        "alternativeBand": null,
+        "difficultyConfidence": null,
+        "difficultyEvidenceSegmentIds": [
+          "O1"
+        ],
+        "checks": [
+          {
+            "criterion": "ORIGIN_LANGUAGE",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1"
+            ]
+          },
+          {
+            "criterion": "TASK_VALIDITY",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1"
+            ]
+          },
+          {
+            "criterion": "ANSWER_LEAK",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1",
+              "N1"
+            ]
+          },
+          {
+            "criterion": "NATURALNESS",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1"
+            ]
+          },
+          {
+            "criterion": "NOTE_QUALITY",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "N1"
+            ]
+          }
+        ],
+        "issues": [],
+        "productionDemandChecks": [
+          {
+            "code": "SCOPE_INTERACTION",
+            "status": "PRESENT",
+            "evidenceSegmentIds": [
+              "O1"
+            ],
+            "gapCode": null
+          },
+          {
+            "code": "PRECISE_STANCE",
+            "status": "PRESENT",
+            "evidenceSegmentIds": [
+              "O1"
+            ],
+            "gapCode": null
+          },
+          {
+            "code": "COHERENT_REGISTER",
+            "status": "PRESENT",
+            "evidenceSegmentIds": [
+              "O1"
+            ],
+            "gapCode": null
+          }
+        ],
+        "revisionHash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "revisionPreservation": {
+          "status": "PASS",
+          "issues": [],
+          "evidenceSegmentIds": [
+            "B0",
+            "O1"
+          ]
+        }
+      },
+      "targetBand": 5,
+      "writingType": "FREE",
+      "adjudicated": false,
+      "allowAdjacentRecheck": true,
+      "repaired": true,
+      "action": "ACCEPT",
+      "reason": "VERIFIED"
+    },
+    {
+      "name": "repair-fact-changed",
+      "review": {
+        "candidateId": "synthetic-candidate",
+        "contentHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "confidence": null,
+        "verdict": "PASS",
+        "observedWritingType": "FREE",
+        "difficultyStatus": "ASSESSED",
+        "estimatedBand": 5,
+        "alternativeBand": null,
+        "difficultyConfidence": null,
+        "difficultyEvidenceSegmentIds": [
+          "O1"
+        ],
+        "checks": [
+          {
+            "criterion": "ORIGIN_LANGUAGE",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1"
+            ]
+          },
+          {
+            "criterion": "TASK_VALIDITY",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1"
+            ]
+          },
+          {
+            "criterion": "ANSWER_LEAK",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1",
+              "N1"
+            ]
+          },
+          {
+            "criterion": "NATURALNESS",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1"
+            ]
+          },
+          {
+            "criterion": "NOTE_QUALITY",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "N1"
+            ]
+          }
+        ],
+        "issues": [],
+        "productionDemandChecks": [
+          {
+            "code": "SCOPE_INTERACTION",
+            "status": "PRESENT",
+            "evidenceSegmentIds": [
+              "O1"
+            ],
+            "gapCode": null
+          },
+          {
+            "code": "PRECISE_STANCE",
+            "status": "PRESENT",
+            "evidenceSegmentIds": [
+              "O1"
+            ],
+            "gapCode": null
+          },
+          {
+            "code": "COHERENT_REGISTER",
+            "status": "PRESENT",
+            "evidenceSegmentIds": [
+              "O1"
+            ],
+            "gapCode": null
+          }
+        ],
+        "revisionHash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "revisionPreservation": {
+          "status": "FAIL",
+          "issues": [
+            "FACT_CHANGED"
+          ],
+          "evidenceSegmentIds": [
+            "B0",
+            "O1"
+          ]
+        }
+      },
+      "targetBand": 5,
+      "writingType": "FREE",
+      "adjudicated": false,
+      "allowAdjacentRecheck": true,
+      "repaired": true,
+      "action": "REJECT",
+      "reason": "DIFFICULTY_REPAIR_FACT_CHANGED"
+    },
+    {
+      "name": "repair-preservation-unknown",
+      "review": {
+        "candidateId": "synthetic-candidate",
+        "contentHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "confidence": null,
+        "verdict": "PASS",
+        "observedWritingType": "FREE",
+        "difficultyStatus": "ASSESSED",
+        "estimatedBand": 5,
+        "alternativeBand": null,
+        "difficultyConfidence": null,
+        "difficultyEvidenceSegmentIds": [
+          "O1"
+        ],
+        "checks": [
+          {
+            "criterion": "ORIGIN_LANGUAGE",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1"
+            ]
+          },
+          {
+            "criterion": "TASK_VALIDITY",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1"
+            ]
+          },
+          {
+            "criterion": "ANSWER_LEAK",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1",
+              "N1"
+            ]
+          },
+          {
+            "criterion": "NATURALNESS",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1"
+            ]
+          },
+          {
+            "criterion": "NOTE_QUALITY",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "N1"
+            ]
+          }
+        ],
+        "issues": [],
+        "productionDemandChecks": [
+          {
+            "code": "SCOPE_INTERACTION",
+            "status": "PRESENT",
+            "evidenceSegmentIds": [
+              "O1"
+            ],
+            "gapCode": null
+          },
+          {
+            "code": "PRECISE_STANCE",
+            "status": "PRESENT",
+            "evidenceSegmentIds": [
+              "O1"
+            ],
+            "gapCode": null
+          },
+          {
+            "code": "COHERENT_REGISTER",
+            "status": "PRESENT",
+            "evidenceSegmentIds": [
+              "O1"
+            ],
+            "gapCode": null
+          }
+        ],
+        "revisionHash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "revisionPreservation": {
+          "status": "UNSURE",
+          "issues": [],
+          "evidenceSegmentIds": [
+            "B0",
+            "O1"
+          ]
+        }
+      },
+      "targetBand": 5,
+      "writingType": "FREE",
+      "adjudicated": false,
+      "allowAdjacentRecheck": true,
+      "repaired": true,
+      "action": "REJECT",
+      "reason": "DIFFICULTY_REPAIR_PRESERVATION_UNRESOLVED"
+    },
+    {
+      "name": "repair-depth-gap",
+      "review": {
+        "candidateId": "synthetic-candidate",
+        "contentHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "confidence": null,
+        "verdict": "PASS",
+        "observedWritingType": "FREE",
+        "difficultyStatus": "ASSESSED",
+        "estimatedBand": 5,
+        "alternativeBand": null,
+        "difficultyConfidence": null,
+        "difficultyEvidenceSegmentIds": [
+          "O1"
+        ],
+        "checks": [
+          {
+            "criterion": "ORIGIN_LANGUAGE",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1"
+            ]
+          },
+          {
+            "criterion": "TASK_VALIDITY",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1"
+            ]
+          },
+          {
+            "criterion": "ANSWER_LEAK",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1",
+              "N1"
+            ]
+          },
+          {
+            "criterion": "NATURALNESS",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "O1"
+            ]
+          },
+          {
+            "criterion": "NOTE_QUALITY",
+            "status": "PASS",
+            "evidenceSegmentIds": [
+              "N1"
+            ]
+          }
+        ],
+        "issues": [],
+        "productionDemandChecks": [
+          {
+            "code": "SCOPE_INTERACTION",
+            "status": "PRESENT",
+            "evidenceSegmentIds": [
+              "O1"
+            ],
+            "gapCode": "RELATIONS_NOT_INTERDEPENDENT"
+          },
+          {
+            "code": "PRECISE_STANCE",
+            "status": "PRESENT",
+            "evidenceSegmentIds": [
+              "O1"
+            ],
+            "gapCode": null
+          },
+          {
+            "code": "COHERENT_REGISTER",
+            "status": "PRESENT",
+            "evidenceSegmentIds": [
+              "O1"
+            ],
+            "gapCode": null
+          }
+        ],
+        "revisionHash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "revisionPreservation": {
+          "status": "PASS",
+          "issues": [],
+          "evidenceSegmentIds": [
+            "B0",
+            "O1"
+          ]
+        }
+      },
+      "targetBand": 5,
+      "writingType": "FREE",
+      "adjudicated": false,
+      "allowAdjacentRecheck": true,
+      "repaired": true,
+      "action": "REJECT",
+      "reason": "DIFFICULTY_EVIDENCE_CONFLICT"
+    }
+  ]
+}

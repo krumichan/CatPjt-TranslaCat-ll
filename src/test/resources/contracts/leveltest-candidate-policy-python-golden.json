@@ -1,0 +1,4132 @@
+[
+  {
+    "name": "VOCAB_CONTEXT_CHOICE",
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 1,
+      "totalQuestions": 20,
+      "domain": "VOCABULARY",
+      "itemType": "VOCAB_CONTEXT_CHOICE",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": null
+    },
+    "candidate": {
+      "domain": "VOCABULARY",
+      "itemType": "VOCAB_CONTEXT_CHOICE",
+      "complexityBand": 3,
+      "instruction": "Choose the expression that best fits the context.",
+      "instructionLanguage": "en",
+      "answerMode": "CHOICE",
+      "answerLanguage": null,
+      "promptText": "Synthetic ____ example.",
+      "options": [
+        {
+          "key": "A",
+          "text": "first"
+        },
+        {
+          "key": "B",
+          "text": "second"
+        },
+        {
+          "key": "C",
+          "text": "third"
+        },
+        {
+          "key": "D",
+          "text": "fourth"
+        }
+      ],
+      "internalAnswerKey": {
+        "correctOptionKey": "A",
+        "correctOrder": []
+      },
+      "choiceQualityAudit": null,
+      "generationPlanId": null,
+      "referencePayload": {
+        "sourceText": null,
+        "referenceMeanings": [],
+        "keyMeaningUnits": [],
+        "referenceText": null,
+        "translationSourceText": null,
+        "emphasisText": null,
+        "readingPassage": null,
+        "readingQuestion": null,
+        "listeningQuestion": null,
+        "providedFacts": [
+          "Synthetic fact one",
+          "Synthetic fact two"
+        ],
+        "requiredIntents": [
+          "Ask politely",
+          "Give a reason"
+        ],
+        "responseConstraints": [
+          "Use two sentences"
+        ]
+      },
+      "diversityMetadata": {
+        "scenarioCategory": "WORK",
+        "communicativeIntent": "DESCRIBE",
+        "taskArchetype": "synthetic",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "semanticSummary": "Synthetic task",
+        "requiresBackgroundKnowledge": false,
+        "contentHash": null,
+        "similarityKey": null
+      },
+      "maxAnswerLength": null,
+      "maxAudioSeconds": null
+    },
+    "reason": null
+  },
+  {
+    "name": "VOCAB_PARAPHRASE_CHOICE",
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 1,
+      "totalQuestions": 20,
+      "domain": "VOCABULARY",
+      "itemType": "VOCAB_PARAPHRASE_CHOICE",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": null
+    },
+    "candidate": {
+      "domain": "VOCABULARY",
+      "itemType": "VOCAB_PARAPHRASE_CHOICE",
+      "complexityBand": 3,
+      "instruction": "Choose the expression closest in meaning to the given expression.",
+      "instructionLanguage": "en",
+      "answerMode": "CHOICE",
+      "answerLanguage": null,
+      "promptText": "A synthetic target expression is shown.",
+      "options": [
+        {
+          "key": "A",
+          "text": "first"
+        },
+        {
+          "key": "B",
+          "text": "second"
+        },
+        {
+          "key": "C",
+          "text": "third"
+        },
+        {
+          "key": "D",
+          "text": "fourth"
+        }
+      ],
+      "internalAnswerKey": {
+        "correctOptionKey": "A",
+        "correctOrder": []
+      },
+      "choiceQualityAudit": null,
+      "generationPlanId": null,
+      "referencePayload": {
+        "sourceText": null,
+        "referenceMeanings": [],
+        "keyMeaningUnits": [],
+        "referenceText": null,
+        "translationSourceText": null,
+        "emphasisText": "target expression",
+        "readingPassage": null,
+        "readingQuestion": null,
+        "listeningQuestion": null,
+        "providedFacts": [
+          "Synthetic fact one",
+          "Synthetic fact two"
+        ],
+        "requiredIntents": [
+          "Ask politely",
+          "Give a reason"
+        ],
+        "responseConstraints": [
+          "Use two sentences"
+        ]
+      },
+      "diversityMetadata": {
+        "scenarioCategory": "WORK",
+        "communicativeIntent": "DESCRIBE",
+        "taskArchetype": "synthetic",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "semanticSummary": "Synthetic task",
+        "requiresBackgroundKnowledge": false,
+        "contentHash": null,
+        "similarityKey": null
+      },
+      "maxAnswerLength": null,
+      "maxAudioSeconds": null
+    },
+    "reason": null
+  },
+  {
+    "name": "GRAMMAR_FORM_CHOICE",
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 4,
+      "totalQuestions": 20,
+      "domain": "GRAMMAR",
+      "itemType": "GRAMMAR_FORM_CHOICE",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": null
+    },
+    "candidate": {
+      "domain": "GRAMMAR",
+      "itemType": "GRAMMAR_FORM_CHOICE",
+      "complexityBand": 3,
+      "instruction": "Choose the expression that best completes the blank.",
+      "instructionLanguage": "en",
+      "answerMode": "CHOICE",
+      "answerLanguage": null,
+      "promptText": "Synthetic ____ example.",
+      "options": [
+        {
+          "key": "A",
+          "text": "first"
+        },
+        {
+          "key": "B",
+          "text": "second"
+        },
+        {
+          "key": "C",
+          "text": "third"
+        },
+        {
+          "key": "D",
+          "text": "fourth"
+        }
+      ],
+      "internalAnswerKey": {
+        "correctOptionKey": "A",
+        "correctOrder": []
+      },
+      "choiceQualityAudit": null,
+      "generationPlanId": null,
+      "referencePayload": {
+        "sourceText": null,
+        "referenceMeanings": [],
+        "keyMeaningUnits": [],
+        "referenceText": null,
+        "translationSourceText": null,
+        "emphasisText": null,
+        "readingPassage": null,
+        "readingQuestion": null,
+        "listeningQuestion": null,
+        "providedFacts": [
+          "Synthetic fact one",
+          "Synthetic fact two"
+        ],
+        "requiredIntents": [
+          "Ask politely",
+          "Give a reason"
+        ],
+        "responseConstraints": [
+          "Use two sentences"
+        ]
+      },
+      "diversityMetadata": {
+        "scenarioCategory": "WORK",
+        "communicativeIntent": "DESCRIBE",
+        "taskArchetype": "synthetic",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "semanticSummary": "Synthetic task",
+        "requiresBackgroundKnowledge": false,
+        "contentHash": null,
+        "similarityKey": null
+      },
+      "maxAnswerLength": null,
+      "maxAudioSeconds": null
+    },
+    "reason": null
+  },
+  {
+    "name": "GRAMMAR_SENTENCE_ORDER",
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 4,
+      "totalQuestions": 20,
+      "domain": "GRAMMAR",
+      "itemType": "GRAMMAR_SENTENCE_ORDER",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": null
+    },
+    "candidate": {
+      "domain": "GRAMMAR",
+      "itemType": "GRAMMAR_SENTENCE_ORDER",
+      "complexityBand": 3,
+      "instruction": "Arrange the given elements in the correct order.",
+      "instructionLanguage": "en",
+      "answerMode": "CHOICE",
+      "answerLanguage": null,
+      "promptText": "Synthetic ____ example.",
+      "options": [
+        {
+          "key": "A",
+          "text": "first"
+        },
+        {
+          "key": "B",
+          "text": "second"
+        },
+        {
+          "key": "C",
+          "text": "third"
+        },
+        {
+          "key": "D",
+          "text": "fourth"
+        }
+      ],
+      "internalAnswerKey": {
+        "correctOptionKey": null,
+        "correctOrder": [
+          "B",
+          "A",
+          "C",
+          "D"
+        ]
+      },
+      "choiceQualityAudit": null,
+      "generationPlanId": null,
+      "referencePayload": {
+        "sourceText": null,
+        "referenceMeanings": [],
+        "keyMeaningUnits": [],
+        "referenceText": null,
+        "translationSourceText": null,
+        "emphasisText": null,
+        "readingPassage": null,
+        "readingQuestion": null,
+        "listeningQuestion": null,
+        "providedFacts": [
+          "Synthetic fact one",
+          "Synthetic fact two"
+        ],
+        "requiredIntents": [
+          "Ask politely",
+          "Give a reason"
+        ],
+        "responseConstraints": [
+          "Use two sentences"
+        ]
+      },
+      "diversityMetadata": {
+        "scenarioCategory": "WORK",
+        "communicativeIntent": "DESCRIBE",
+        "taskArchetype": "synthetic",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "semanticSummary": "Synthetic task",
+        "requiresBackgroundKnowledge": false,
+        "contentHash": null,
+        "similarityKey": null
+      },
+      "maxAnswerLength": null,
+      "maxAudioSeconds": null
+    },
+    "reason": null
+  },
+  {
+    "name": "READING_GIST",
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 7,
+      "totalQuestions": 20,
+      "domain": "READING",
+      "itemType": "READING_GIST",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": null
+    },
+    "candidate": {
+      "domain": "READING",
+      "itemType": "READING_GIST",
+      "complexityBand": 3,
+      "instruction": "Read the passage and choose the best answer.",
+      "instructionLanguage": "en",
+      "answerMode": "CHOICE",
+      "answerLanguage": null,
+      "promptText": "A synthetic person arrived at the station.\n\nWhat happened first?",
+      "options": [
+        {
+          "key": "A",
+          "text": "first"
+        },
+        {
+          "key": "B",
+          "text": "second"
+        },
+        {
+          "key": "C",
+          "text": "third"
+        },
+        {
+          "key": "D",
+          "text": "fourth"
+        }
+      ],
+      "internalAnswerKey": {
+        "correctOptionKey": "A",
+        "correctOrder": []
+      },
+      "choiceQualityAudit": null,
+      "generationPlanId": null,
+      "referencePayload": {
+        "sourceText": null,
+        "referenceMeanings": [],
+        "keyMeaningUnits": [],
+        "referenceText": null,
+        "translationSourceText": null,
+        "emphasisText": "synthetic person",
+        "readingPassage": "A synthetic person arrived at the station.",
+        "readingQuestion": "What happened first?",
+        "listeningQuestion": null,
+        "providedFacts": [
+          "Synthetic fact one",
+          "Synthetic fact two"
+        ],
+        "requiredIntents": [
+          "Ask politely",
+          "Give a reason"
+        ],
+        "responseConstraints": [
+          "Use two sentences"
+        ]
+      },
+      "diversityMetadata": {
+        "scenarioCategory": "WORK",
+        "communicativeIntent": "DESCRIBE",
+        "taskArchetype": "synthetic",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "semanticSummary": "Synthetic task",
+        "requiresBackgroundKnowledge": false,
+        "contentHash": null,
+        "similarityKey": null
+      },
+      "maxAnswerLength": null,
+      "maxAudioSeconds": null
+    },
+    "reason": null
+  },
+  {
+    "name": "READING_DETAIL",
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 7,
+      "totalQuestions": 20,
+      "domain": "READING",
+      "itemType": "READING_DETAIL",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": null
+    },
+    "candidate": {
+      "domain": "READING",
+      "itemType": "READING_DETAIL",
+      "complexityBand": 3,
+      "instruction": "Read the passage and choose the best answer.",
+      "instructionLanguage": "en",
+      "answerMode": "CHOICE",
+      "answerLanguage": null,
+      "promptText": "A synthetic person arrived at the station.\n\nWhat happened first?",
+      "options": [
+        {
+          "key": "A",
+          "text": "first"
+        },
+        {
+          "key": "B",
+          "text": "second"
+        },
+        {
+          "key": "C",
+          "text": "third"
+        },
+        {
+          "key": "D",
+          "text": "fourth"
+        }
+      ],
+      "internalAnswerKey": {
+        "correctOptionKey": "A",
+        "correctOrder": []
+      },
+      "choiceQualityAudit": null,
+      "generationPlanId": null,
+      "referencePayload": {
+        "sourceText": null,
+        "referenceMeanings": [],
+        "keyMeaningUnits": [],
+        "referenceText": null,
+        "translationSourceText": null,
+        "emphasisText": "synthetic person",
+        "readingPassage": "A synthetic person arrived at the station.",
+        "readingQuestion": "What happened first?",
+        "listeningQuestion": null,
+        "providedFacts": [
+          "Synthetic fact one",
+          "Synthetic fact two"
+        ],
+        "requiredIntents": [
+          "Ask politely",
+          "Give a reason"
+        ],
+        "responseConstraints": [
+          "Use two sentences"
+        ]
+      },
+      "diversityMetadata": {
+        "scenarioCategory": "WORK",
+        "communicativeIntent": "DESCRIBE",
+        "taskArchetype": "synthetic",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "semanticSummary": "Synthetic task",
+        "requiresBackgroundKnowledge": false,
+        "contentHash": null,
+        "similarityKey": null
+      },
+      "maxAnswerLength": null,
+      "maxAudioSeconds": null
+    },
+    "reason": null
+  },
+  {
+    "name": "READING_DISCOURSE_FUNCTION",
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 7,
+      "totalQuestions": 20,
+      "domain": "READING",
+      "itemType": "READING_DISCOURSE_FUNCTION",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": null
+    },
+    "candidate": {
+      "domain": "READING",
+      "itemType": "READING_DISCOURSE_FUNCTION",
+      "complexityBand": 3,
+      "instruction": "Read the passage and choose the best answer.",
+      "instructionLanguage": "en",
+      "answerMode": "CHOICE",
+      "answerLanguage": null,
+      "promptText": "A synthetic person arrived at the station.\n\nWhat happened first?",
+      "options": [
+        {
+          "key": "A",
+          "text": "first"
+        },
+        {
+          "key": "B",
+          "text": "second"
+        },
+        {
+          "key": "C",
+          "text": "third"
+        },
+        {
+          "key": "D",
+          "text": "fourth"
+        }
+      ],
+      "internalAnswerKey": {
+        "correctOptionKey": "A",
+        "correctOrder": []
+      },
+      "choiceQualityAudit": null,
+      "generationPlanId": null,
+      "referencePayload": {
+        "sourceText": null,
+        "referenceMeanings": [],
+        "keyMeaningUnits": [],
+        "referenceText": null,
+        "translationSourceText": null,
+        "emphasisText": "synthetic person",
+        "readingPassage": "A synthetic person arrived at the station.",
+        "readingQuestion": "What happened first?",
+        "listeningQuestion": null,
+        "providedFacts": [
+          "Synthetic fact one",
+          "Synthetic fact two"
+        ],
+        "requiredIntents": [
+          "Ask politely",
+          "Give a reason"
+        ],
+        "responseConstraints": [
+          "Use two sentences"
+        ]
+      },
+      "diversityMetadata": {
+        "scenarioCategory": "WORK",
+        "communicativeIntent": "DESCRIBE",
+        "taskArchetype": "synthetic",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "semanticSummary": "Synthetic task",
+        "requiresBackgroundKnowledge": false,
+        "contentHash": null,
+        "similarityKey": null
+      },
+      "maxAnswerLength": null,
+      "maxAudioSeconds": null
+    },
+    "reason": null
+  },
+  {
+    "name": "READING_TEXT_INFERENCE",
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 7,
+      "totalQuestions": 20,
+      "domain": "READING",
+      "itemType": "READING_TEXT_INFERENCE",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": null
+    },
+    "candidate": {
+      "domain": "READING",
+      "itemType": "READING_TEXT_INFERENCE",
+      "complexityBand": 3,
+      "instruction": "Read the passage and choose the best answer.",
+      "instructionLanguage": "en",
+      "answerMode": "CHOICE",
+      "answerLanguage": null,
+      "promptText": "A synthetic person arrived at the station.\n\nWhat happened first?",
+      "options": [
+        {
+          "key": "A",
+          "text": "first"
+        },
+        {
+          "key": "B",
+          "text": "second"
+        },
+        {
+          "key": "C",
+          "text": "third"
+        },
+        {
+          "key": "D",
+          "text": "fourth"
+        }
+      ],
+      "internalAnswerKey": {
+        "correctOptionKey": "A",
+        "correctOrder": []
+      },
+      "choiceQualityAudit": null,
+      "generationPlanId": null,
+      "referencePayload": {
+        "sourceText": null,
+        "referenceMeanings": [],
+        "keyMeaningUnits": [],
+        "referenceText": null,
+        "translationSourceText": null,
+        "emphasisText": "synthetic person",
+        "readingPassage": "A synthetic person arrived at the station.",
+        "readingQuestion": "What happened first?",
+        "listeningQuestion": null,
+        "providedFacts": [
+          "Synthetic fact one",
+          "Synthetic fact two"
+        ],
+        "requiredIntents": [
+          "Ask politely",
+          "Give a reason"
+        ],
+        "responseConstraints": [
+          "Use two sentences"
+        ]
+      },
+      "diversityMetadata": {
+        "scenarioCategory": "WORK",
+        "communicativeIntent": "DESCRIBE",
+        "taskArchetype": "synthetic",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "semanticSummary": "Synthetic task",
+        "requiresBackgroundKnowledge": false,
+        "contentHash": null,
+        "similarityKey": null
+      },
+      "maxAnswerLength": null,
+      "maxAudioSeconds": null
+    },
+    "reason": null
+  },
+  {
+    "name": "LISTENING_GIST_CHOICE",
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 11,
+      "totalQuestions": 20,
+      "domain": "LISTENING",
+      "itemType": "LISTENING_GIST_CHOICE",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": null
+    },
+    "candidate": {
+      "domain": "LISTENING",
+      "itemType": "LISTENING_GIST_CHOICE",
+      "complexityBand": 3,
+      "instruction": "Listen to the audio and choose the best answer.",
+      "instructionLanguage": "en",
+      "answerMode": "CHOICE",
+      "answerLanguage": null,
+      "promptText": "What did the speaker say?",
+      "options": [
+        {
+          "key": "A",
+          "text": "first"
+        },
+        {
+          "key": "B",
+          "text": "second"
+        },
+        {
+          "key": "C",
+          "text": "third"
+        },
+        {
+          "key": "D",
+          "text": "fourth"
+        }
+      ],
+      "internalAnswerKey": {
+        "correctOptionKey": "A",
+        "correctOrder": []
+      },
+      "choiceQualityAudit": null,
+      "generationPlanId": null,
+      "referencePayload": {
+        "sourceText": "The synthetic train arrived at the station.",
+        "referenceMeanings": [
+          "합성 의미 하나",
+          "합성 의미 둘"
+        ],
+        "keyMeaningUnits": [
+          "합성 요소 하나",
+          "합성 요소 둘"
+        ],
+        "referenceText": null,
+        "translationSourceText": null,
+        "emphasisText": null,
+        "readingPassage": null,
+        "readingQuestion": null,
+        "listeningQuestion": "What did the speaker say?",
+        "providedFacts": [
+          "Synthetic fact one",
+          "Synthetic fact two"
+        ],
+        "requiredIntents": [
+          "Ask politely",
+          "Give a reason"
+        ],
+        "responseConstraints": [
+          "Use two sentences"
+        ]
+      },
+      "diversityMetadata": {
+        "scenarioCategory": "WORK",
+        "communicativeIntent": "DESCRIBE",
+        "taskArchetype": "synthetic",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "semanticSummary": "Synthetic task",
+        "requiresBackgroundKnowledge": false,
+        "contentHash": null,
+        "similarityKey": null
+      },
+      "maxAnswerLength": null,
+      "maxAudioSeconds": null
+    },
+    "reason": null
+  },
+  {
+    "name": "LISTENING_DETAIL_CHOICE",
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 11,
+      "totalQuestions": 20,
+      "domain": "LISTENING",
+      "itemType": "LISTENING_DETAIL_CHOICE",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": null
+    },
+    "candidate": {
+      "domain": "LISTENING",
+      "itemType": "LISTENING_DETAIL_CHOICE",
+      "complexityBand": 3,
+      "instruction": "Listen to the audio and choose the best answer.",
+      "instructionLanguage": "en",
+      "answerMode": "CHOICE",
+      "answerLanguage": null,
+      "promptText": "What did the speaker say?",
+      "options": [
+        {
+          "key": "A",
+          "text": "first"
+        },
+        {
+          "key": "B",
+          "text": "second"
+        },
+        {
+          "key": "C",
+          "text": "third"
+        },
+        {
+          "key": "D",
+          "text": "fourth"
+        }
+      ],
+      "internalAnswerKey": {
+        "correctOptionKey": "A",
+        "correctOrder": []
+      },
+      "choiceQualityAudit": null,
+      "generationPlanId": null,
+      "referencePayload": {
+        "sourceText": "The synthetic train arrived at the station.",
+        "referenceMeanings": [
+          "합성 의미 하나",
+          "합성 의미 둘"
+        ],
+        "keyMeaningUnits": [
+          "합성 요소 하나",
+          "합성 요소 둘"
+        ],
+        "referenceText": null,
+        "translationSourceText": null,
+        "emphasisText": null,
+        "readingPassage": null,
+        "readingQuestion": null,
+        "listeningQuestion": "What did the speaker say?",
+        "providedFacts": [
+          "Synthetic fact one",
+          "Synthetic fact two"
+        ],
+        "requiredIntents": [
+          "Ask politely",
+          "Give a reason"
+        ],
+        "responseConstraints": [
+          "Use two sentences"
+        ]
+      },
+      "diversityMetadata": {
+        "scenarioCategory": "WORK",
+        "communicativeIntent": "DESCRIBE",
+        "taskArchetype": "synthetic",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "semanticSummary": "Synthetic task",
+        "requiresBackgroundKnowledge": false,
+        "contentHash": null,
+        "similarityKey": null
+      },
+      "maxAnswerLength": null,
+      "maxAudioSeconds": null
+    },
+    "reason": null
+  },
+  {
+    "name": "LISTENING_DICTATION",
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 11,
+      "totalQuestions": 20,
+      "domain": "LISTENING",
+      "itemType": "LISTENING_DICTATION",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": null
+    },
+    "candidate": {
+      "domain": "LISTENING",
+      "itemType": "LISTENING_DICTATION",
+      "complexityBand": 3,
+      "instruction": "Listen to the audio and write down exactly what you hear.",
+      "instructionLanguage": "en",
+      "answerMode": "TEXT",
+      "answerLanguage": "en",
+      "promptText": "What did the speaker say?",
+      "options": [],
+      "internalAnswerKey": {
+        "correctOptionKey": null,
+        "correctOrder": []
+      },
+      "choiceQualityAudit": null,
+      "generationPlanId": null,
+      "referencePayload": {
+        "sourceText": "The synthetic train arrived at the station.",
+        "referenceMeanings": [
+          "합성 의미 하나",
+          "합성 의미 둘"
+        ],
+        "keyMeaningUnits": [
+          "합성 요소 하나",
+          "합성 요소 둘"
+        ],
+        "referenceText": null,
+        "translationSourceText": null,
+        "emphasisText": null,
+        "readingPassage": null,
+        "readingQuestion": null,
+        "listeningQuestion": "What did the speaker say?",
+        "providedFacts": [
+          "Synthetic fact one",
+          "Synthetic fact two"
+        ],
+        "requiredIntents": [
+          "Ask politely",
+          "Give a reason"
+        ],
+        "responseConstraints": [
+          "Use two sentences"
+        ]
+      },
+      "diversityMetadata": {
+        "scenarioCategory": "WORK",
+        "communicativeIntent": "DESCRIBE",
+        "taskArchetype": "synthetic",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "semanticSummary": "Synthetic task",
+        "requiresBackgroundKnowledge": false,
+        "contentHash": null,
+        "similarityKey": null
+      },
+      "maxAnswerLength": null,
+      "maxAudioSeconds": null
+    },
+    "reason": null
+  },
+  {
+    "name": "LISTENING_INTERPRETATION",
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 11,
+      "totalQuestions": 20,
+      "domain": "LISTENING",
+      "itemType": "LISTENING_INTERPRETATION",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": null
+    },
+    "candidate": {
+      "domain": "LISTENING",
+      "itemType": "LISTENING_INTERPRETATION",
+      "complexityBand": 3,
+      "instruction": "Listen to the audio and explain its meaning.",
+      "instructionLanguage": "en",
+      "answerMode": "TEXT",
+      "answerLanguage": "ko",
+      "promptText": "What did the speaker say?",
+      "options": [],
+      "internalAnswerKey": {
+        "correctOptionKey": null,
+        "correctOrder": []
+      },
+      "choiceQualityAudit": null,
+      "generationPlanId": null,
+      "referencePayload": {
+        "sourceText": "The synthetic train arrived at the station.",
+        "referenceMeanings": [
+          "합성 의미 하나",
+          "합성 의미 둘"
+        ],
+        "keyMeaningUnits": [
+          "합성 요소 하나",
+          "합성 요소 둘"
+        ],
+        "referenceText": null,
+        "translationSourceText": null,
+        "emphasisText": null,
+        "readingPassage": null,
+        "readingQuestion": null,
+        "listeningQuestion": "What did the speaker say?",
+        "providedFacts": [
+          "Synthetic fact one",
+          "Synthetic fact two"
+        ],
+        "requiredIntents": [
+          "Ask politely",
+          "Give a reason"
+        ],
+        "responseConstraints": [
+          "Use two sentences"
+        ]
+      },
+      "diversityMetadata": {
+        "scenarioCategory": "WORK",
+        "communicativeIntent": "DESCRIBE",
+        "taskArchetype": "synthetic",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "semanticSummary": "Synthetic task",
+        "requiresBackgroundKnowledge": false,
+        "contentHash": null,
+        "similarityKey": null
+      },
+      "maxAnswerLength": null,
+      "maxAudioSeconds": null
+    },
+    "reason": null
+  },
+  {
+    "name": "WRITING_TRANSLATION",
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 15,
+      "totalQuestions": 20,
+      "domain": "WRITING",
+      "itemType": "WRITING_TRANSLATION",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": null
+    },
+    "candidate": {
+      "domain": "WRITING",
+      "itemType": "WRITING_TRANSLATION",
+      "complexityBand": 3,
+      "instruction": "Translate the following content into the learning language.",
+      "instructionLanguage": "en",
+      "answerMode": "TEXT",
+      "answerLanguage": "en",
+      "promptText": "합성 원문입니다.",
+      "options": [],
+      "internalAnswerKey": {
+        "correctOptionKey": null,
+        "correctOrder": []
+      },
+      "choiceQualityAudit": null,
+      "generationPlanId": null,
+      "referencePayload": {
+        "sourceText": null,
+        "referenceMeanings": [],
+        "keyMeaningUnits": [],
+        "referenceText": null,
+        "translationSourceText": "합성 원문입니다.",
+        "emphasisText": null,
+        "readingPassage": null,
+        "readingQuestion": null,
+        "listeningQuestion": null,
+        "providedFacts": [
+          "Synthetic fact one",
+          "Synthetic fact two"
+        ],
+        "requiredIntents": [
+          "Ask politely",
+          "Give a reason"
+        ],
+        "responseConstraints": [
+          "Use two sentences"
+        ]
+      },
+      "diversityMetadata": {
+        "scenarioCategory": "WORK",
+        "communicativeIntent": "DESCRIBE",
+        "taskArchetype": "synthetic",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "semanticSummary": "Synthetic task",
+        "requiresBackgroundKnowledge": false,
+        "contentHash": null,
+        "similarityKey": null
+      },
+      "maxAnswerLength": null,
+      "maxAudioSeconds": null
+    },
+    "reason": null
+  },
+  {
+    "name": "WRITING_GUIDED_SENTENCE",
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 15,
+      "totalQuestions": 20,
+      "domain": "WRITING",
+      "itemType": "WRITING_GUIDED_SENTENCE",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": null
+    },
+    "candidate": {
+      "domain": "WRITING",
+      "itemType": "WRITING_GUIDED_SENTENCE",
+      "complexityBand": 3,
+      "instruction": "Write a sentence in the learning language using the given conditions.",
+      "instructionLanguage": "en",
+      "answerMode": "TEXT",
+      "answerLanguage": "en",
+      "promptText": "Synthetic ____ example.",
+      "options": [],
+      "internalAnswerKey": {
+        "correctOptionKey": null,
+        "correctOrder": []
+      },
+      "choiceQualityAudit": null,
+      "generationPlanId": null,
+      "referencePayload": {
+        "sourceText": null,
+        "referenceMeanings": [],
+        "keyMeaningUnits": [],
+        "referenceText": null,
+        "translationSourceText": null,
+        "emphasisText": null,
+        "readingPassage": null,
+        "readingQuestion": null,
+        "listeningQuestion": null,
+        "providedFacts": [
+          "Synthetic fact one",
+          "Synthetic fact two"
+        ],
+        "requiredIntents": [
+          "Ask politely",
+          "Give a reason"
+        ],
+        "responseConstraints": [
+          "Use two sentences"
+        ]
+      },
+      "diversityMetadata": {
+        "scenarioCategory": "WORK",
+        "communicativeIntent": "DESCRIBE",
+        "taskArchetype": "synthetic",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "semanticSummary": "Synthetic task",
+        "requiresBackgroundKnowledge": false,
+        "contentHash": null,
+        "similarityKey": null
+      },
+      "maxAnswerLength": null,
+      "maxAudioSeconds": null
+    },
+    "reason": null
+  },
+  {
+    "name": "WRITING_SCENARIO_RESPONSE",
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 15,
+      "totalQuestions": 20,
+      "domain": "WRITING",
+      "itemType": "WRITING_SCENARIO_RESPONSE",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": null
+    },
+    "candidate": {
+      "domain": "WRITING",
+      "itemType": "WRITING_SCENARIO_RESPONSE",
+      "complexityBand": 3,
+      "instruction": "Respond in the learning language to the given situation.",
+      "instructionLanguage": "en",
+      "answerMode": "TEXT",
+      "answerLanguage": "en",
+      "promptText": "Synthetic ____ example.",
+      "options": [],
+      "internalAnswerKey": {
+        "correctOptionKey": null,
+        "correctOrder": []
+      },
+      "choiceQualityAudit": null,
+      "generationPlanId": null,
+      "referencePayload": {
+        "sourceText": null,
+        "referenceMeanings": [],
+        "keyMeaningUnits": [],
+        "referenceText": null,
+        "translationSourceText": null,
+        "emphasisText": null,
+        "readingPassage": null,
+        "readingQuestion": null,
+        "listeningQuestion": null,
+        "providedFacts": [
+          "Synthetic fact one",
+          "Synthetic fact two"
+        ],
+        "requiredIntents": [
+          "Ask politely",
+          "Give a reason"
+        ],
+        "responseConstraints": [
+          "Use two sentences"
+        ]
+      },
+      "diversityMetadata": {
+        "scenarioCategory": "WORK",
+        "communicativeIntent": "DESCRIBE",
+        "taskArchetype": "synthetic",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "semanticSummary": "Synthetic task",
+        "requiresBackgroundKnowledge": false,
+        "contentHash": null,
+        "similarityKey": null
+      },
+      "maxAnswerLength": null,
+      "maxAudioSeconds": null
+    },
+    "reason": null
+  },
+  {
+    "name": "WRITING_SHORT_PARAGRAPH",
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 15,
+      "totalQuestions": 20,
+      "domain": "WRITING",
+      "itemType": "WRITING_SHORT_PARAGRAPH",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": null
+    },
+    "candidate": {
+      "domain": "WRITING",
+      "itemType": "WRITING_SHORT_PARAGRAPH",
+      "complexityBand": 3,
+      "instruction": "Write a short paragraph in the learning language about the given topic.",
+      "instructionLanguage": "en",
+      "answerMode": "TEXT",
+      "answerLanguage": "en",
+      "promptText": "Synthetic ____ example.",
+      "options": [],
+      "internalAnswerKey": {
+        "correctOptionKey": null,
+        "correctOrder": []
+      },
+      "choiceQualityAudit": null,
+      "generationPlanId": null,
+      "referencePayload": {
+        "sourceText": null,
+        "referenceMeanings": [],
+        "keyMeaningUnits": [],
+        "referenceText": null,
+        "translationSourceText": null,
+        "emphasisText": null,
+        "readingPassage": null,
+        "readingQuestion": null,
+        "listeningQuestion": null,
+        "providedFacts": [
+          "Synthetic fact one",
+          "Synthetic fact two"
+        ],
+        "requiredIntents": [
+          "Ask politely",
+          "Give a reason"
+        ],
+        "responseConstraints": [
+          "Use two sentences"
+        ]
+      },
+      "diversityMetadata": {
+        "scenarioCategory": "WORK",
+        "communicativeIntent": "DESCRIBE",
+        "taskArchetype": "synthetic",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "semanticSummary": "Synthetic task",
+        "requiresBackgroundKnowledge": false,
+        "contentHash": null,
+        "similarityKey": null
+      },
+      "maxAnswerLength": null,
+      "maxAudioSeconds": null
+    },
+    "reason": null
+  },
+  {
+    "name": "SPEAKING_REPEAT",
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 18,
+      "totalQuestions": 20,
+      "domain": "SPEAKING",
+      "itemType": "SPEAKING_REPEAT",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": null
+    },
+    "candidate": {
+      "domain": "SPEAKING",
+      "itemType": "SPEAKING_REPEAT",
+      "complexityBand": 3,
+      "instruction": "Listen to the audio and repeat it exactly.",
+      "instructionLanguage": "en",
+      "answerMode": "AUDIO",
+      "answerLanguage": "en",
+      "promptText": "Repeat the synthetic sentence.",
+      "options": [],
+      "internalAnswerKey": {
+        "correctOptionKey": null,
+        "correctOrder": []
+      },
+      "choiceQualityAudit": null,
+      "generationPlanId": null,
+      "referencePayload": {
+        "sourceText": null,
+        "referenceMeanings": [],
+        "keyMeaningUnits": [],
+        "referenceText": "Synthetic people arrived.",
+        "translationSourceText": null,
+        "emphasisText": null,
+        "readingPassage": null,
+        "readingQuestion": null,
+        "listeningQuestion": null,
+        "providedFacts": [
+          "Synthetic fact one",
+          "Synthetic fact two"
+        ],
+        "requiredIntents": [
+          "Ask politely",
+          "Give a reason"
+        ],
+        "responseConstraints": [
+          "Use two sentences"
+        ]
+      },
+      "diversityMetadata": {
+        "scenarioCategory": "WORK",
+        "communicativeIntent": "DESCRIBE",
+        "taskArchetype": "synthetic",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "semanticSummary": "Synthetic task",
+        "requiresBackgroundKnowledge": false,
+        "contentHash": null,
+        "similarityKey": null
+      },
+      "maxAnswerLength": null,
+      "maxAudioSeconds": 20
+    },
+    "reason": null
+  },
+  {
+    "name": "SPEAKING_GUIDED_RESPONSE",
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 18,
+      "totalQuestions": 20,
+      "domain": "SPEAKING",
+      "itemType": "SPEAKING_GUIDED_RESPONSE",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": null
+    },
+    "candidate": {
+      "domain": "SPEAKING",
+      "itemType": "SPEAKING_GUIDED_RESPONSE",
+      "complexityBand": 3,
+      "instruction": "Speak in the learning language using the given conditions.",
+      "instructionLanguage": "en",
+      "answerMode": "AUDIO",
+      "answerLanguage": "en",
+      "promptText": "Synthetic ____ example.",
+      "options": [],
+      "internalAnswerKey": {
+        "correctOptionKey": null,
+        "correctOrder": []
+      },
+      "choiceQualityAudit": null,
+      "generationPlanId": null,
+      "referencePayload": {
+        "sourceText": null,
+        "referenceMeanings": [],
+        "keyMeaningUnits": [],
+        "referenceText": null,
+        "translationSourceText": null,
+        "emphasisText": null,
+        "readingPassage": null,
+        "readingQuestion": null,
+        "listeningQuestion": null,
+        "providedFacts": [
+          "Synthetic fact one",
+          "Synthetic fact two"
+        ],
+        "requiredIntents": [
+          "Ask politely",
+          "Give a reason"
+        ],
+        "responseConstraints": [
+          "Use two sentences"
+        ]
+      },
+      "diversityMetadata": {
+        "scenarioCategory": "WORK",
+        "communicativeIntent": "DESCRIBE",
+        "taskArchetype": "synthetic",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "semanticSummary": "Synthetic task",
+        "requiresBackgroundKnowledge": false,
+        "contentHash": null,
+        "similarityKey": null
+      },
+      "maxAnswerLength": null,
+      "maxAudioSeconds": 20
+    },
+    "reason": null
+  },
+  {
+    "name": "SPEAKING_SHORT_RESPONSE",
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 18,
+      "totalQuestions": 20,
+      "domain": "SPEAKING",
+      "itemType": "SPEAKING_SHORT_RESPONSE",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": null
+    },
+    "candidate": {
+      "domain": "SPEAKING",
+      "itemType": "SPEAKING_SHORT_RESPONSE",
+      "complexityBand": 3,
+      "instruction": "Give a short answer to the question in the learning language.",
+      "instructionLanguage": "en",
+      "answerMode": "AUDIO",
+      "answerLanguage": "en",
+      "promptText": "Synthetic ____ example.",
+      "options": [],
+      "internalAnswerKey": {
+        "correctOptionKey": null,
+        "correctOrder": []
+      },
+      "choiceQualityAudit": null,
+      "generationPlanId": null,
+      "referencePayload": {
+        "sourceText": null,
+        "referenceMeanings": [],
+        "keyMeaningUnits": [],
+        "referenceText": null,
+        "translationSourceText": null,
+        "emphasisText": null,
+        "readingPassage": null,
+        "readingQuestion": null,
+        "listeningQuestion": null,
+        "providedFacts": [
+          "Synthetic fact one",
+          "Synthetic fact two"
+        ],
+        "requiredIntents": [
+          "Ask politely",
+          "Give a reason"
+        ],
+        "responseConstraints": [
+          "Use two sentences"
+        ]
+      },
+      "diversityMetadata": {
+        "scenarioCategory": "WORK",
+        "communicativeIntent": "DESCRIBE",
+        "taskArchetype": "synthetic",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "semanticSummary": "Synthetic task",
+        "requiresBackgroundKnowledge": false,
+        "contentHash": null,
+        "similarityKey": null
+      },
+      "maxAnswerLength": null,
+      "maxAudioSeconds": 20
+    },
+    "reason": null
+  },
+  {
+    "name": "wrong_domain",
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 1,
+      "totalQuestions": 20,
+      "domain": "VOCABULARY",
+      "itemType": "VOCAB_CONTEXT_CHOICE",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": null
+    },
+    "candidate": {
+      "domain": "GRAMMAR",
+      "itemType": "VOCAB_CONTEXT_CHOICE",
+      "complexityBand": 3,
+      "instruction": "Choose the expression that best fits the context.",
+      "instructionLanguage": "en",
+      "answerMode": "CHOICE",
+      "answerLanguage": null,
+      "promptText": "Synthetic ____ example.",
+      "options": [
+        {
+          "key": "A",
+          "text": "first"
+        },
+        {
+          "key": "B",
+          "text": "second"
+        },
+        {
+          "key": "C",
+          "text": "third"
+        },
+        {
+          "key": "D",
+          "text": "fourth"
+        }
+      ],
+      "internalAnswerKey": {
+        "correctOptionKey": "A",
+        "correctOrder": []
+      },
+      "choiceQualityAudit": null,
+      "generationPlanId": null,
+      "referencePayload": {
+        "sourceText": null,
+        "referenceMeanings": [],
+        "keyMeaningUnits": [],
+        "referenceText": null,
+        "translationSourceText": null,
+        "emphasisText": null,
+        "readingPassage": null,
+        "readingQuestion": null,
+        "listeningQuestion": null,
+        "providedFacts": [
+          "Synthetic fact one",
+          "Synthetic fact two"
+        ],
+        "requiredIntents": [
+          "Ask politely",
+          "Give a reason"
+        ],
+        "responseConstraints": [
+          "Use two sentences"
+        ]
+      },
+      "diversityMetadata": {
+        "scenarioCategory": "WORK",
+        "communicativeIntent": "DESCRIBE",
+        "taskArchetype": "synthetic",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "semanticSummary": "Synthetic task",
+        "requiresBackgroundKnowledge": false,
+        "contentHash": null,
+        "similarityKey": null
+      },
+      "maxAnswerLength": null,
+      "maxAudioSeconds": null
+    },
+    "reason": "Provider가 요청과 다른 Domain/ItemType을 반환했습니다."
+  },
+  {
+    "name": "wrong_band",
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 1,
+      "totalQuestions": 20,
+      "domain": "VOCABULARY",
+      "itemType": "VOCAB_CONTEXT_CHOICE",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": null
+    },
+    "candidate": {
+      "domain": "VOCABULARY",
+      "itemType": "VOCAB_CONTEXT_CHOICE",
+      "complexityBand": 4,
+      "instruction": "Choose the expression that best fits the context.",
+      "instructionLanguage": "en",
+      "answerMode": "CHOICE",
+      "answerLanguage": null,
+      "promptText": "Synthetic ____ example.",
+      "options": [
+        {
+          "key": "A",
+          "text": "first"
+        },
+        {
+          "key": "B",
+          "text": "second"
+        },
+        {
+          "key": "C",
+          "text": "third"
+        },
+        {
+          "key": "D",
+          "text": "fourth"
+        }
+      ],
+      "internalAnswerKey": {
+        "correctOptionKey": "A",
+        "correctOrder": []
+      },
+      "choiceQualityAudit": null,
+      "generationPlanId": null,
+      "referencePayload": {
+        "sourceText": null,
+        "referenceMeanings": [],
+        "keyMeaningUnits": [],
+        "referenceText": null,
+        "translationSourceText": null,
+        "emphasisText": null,
+        "readingPassage": null,
+        "readingQuestion": null,
+        "listeningQuestion": null,
+        "providedFacts": [
+          "Synthetic fact one",
+          "Synthetic fact two"
+        ],
+        "requiredIntents": [
+          "Ask politely",
+          "Give a reason"
+        ],
+        "responseConstraints": [
+          "Use two sentences"
+        ]
+      },
+      "diversityMetadata": {
+        "scenarioCategory": "WORK",
+        "communicativeIntent": "DESCRIBE",
+        "taskArchetype": "synthetic",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "semanticSummary": "Synthetic task",
+        "requiresBackgroundKnowledge": false,
+        "contentHash": null,
+        "similarityKey": null
+      },
+      "maxAnswerLength": null,
+      "maxAudioSeconds": null
+    },
+    "reason": "Provider가 요청과 다른 complexityBand를 반환했습니다."
+  },
+  {
+    "name": "wrong_instruction_tag",
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 1,
+      "totalQuestions": 20,
+      "domain": "VOCABULARY",
+      "itemType": "VOCAB_CONTEXT_CHOICE",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": null
+    },
+    "candidate": {
+      "domain": "VOCABULARY",
+      "itemType": "VOCAB_CONTEXT_CHOICE",
+      "complexityBand": 3,
+      "instruction": "Choose the expression that best fits the context.",
+      "instructionLanguage": "ko",
+      "answerMode": "CHOICE",
+      "answerLanguage": null,
+      "promptText": "Synthetic ____ example.",
+      "options": [
+        {
+          "key": "A",
+          "text": "first"
+        },
+        {
+          "key": "B",
+          "text": "second"
+        },
+        {
+          "key": "C",
+          "text": "third"
+        },
+        {
+          "key": "D",
+          "text": "fourth"
+        }
+      ],
+      "internalAnswerKey": {
+        "correctOptionKey": "A",
+        "correctOrder": []
+      },
+      "choiceQualityAudit": null,
+      "generationPlanId": null,
+      "referencePayload": {
+        "sourceText": null,
+        "referenceMeanings": [],
+        "keyMeaningUnits": [],
+        "referenceText": null,
+        "translationSourceText": null,
+        "emphasisText": null,
+        "readingPassage": null,
+        "readingQuestion": null,
+        "listeningQuestion": null,
+        "providedFacts": [
+          "Synthetic fact one",
+          "Synthetic fact two"
+        ],
+        "requiredIntents": [
+          "Ask politely",
+          "Give a reason"
+        ],
+        "responseConstraints": [
+          "Use two sentences"
+        ]
+      },
+      "diversityMetadata": {
+        "scenarioCategory": "WORK",
+        "communicativeIntent": "DESCRIBE",
+        "taskArchetype": "synthetic",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "semanticSummary": "Synthetic task",
+        "requiresBackgroundKnowledge": false,
+        "contentHash": null,
+        "similarityKey": null
+      },
+      "maxAnswerLength": null,
+      "maxAudioSeconds": null
+    },
+    "reason": "instructionLanguage는 learningLanguage여야 합니다."
+  },
+  {
+    "name": "scenario",
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 1,
+      "totalQuestions": 20,
+      "domain": "VOCABULARY",
+      "itemType": "VOCAB_CONTEXT_CHOICE",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": null
+    },
+    "candidate": {
+      "domain": "VOCABULARY",
+      "itemType": "VOCAB_CONTEXT_CHOICE",
+      "complexityBand": 3,
+      "instruction": "Choose the expression that best fits the context.",
+      "instructionLanguage": "en",
+      "answerMode": "CHOICE",
+      "answerLanguage": null,
+      "promptText": "Synthetic ____ example.",
+      "options": [
+        {
+          "key": "A",
+          "text": "first"
+        },
+        {
+          "key": "B",
+          "text": "second"
+        },
+        {
+          "key": "C",
+          "text": "third"
+        },
+        {
+          "key": "D",
+          "text": "fourth"
+        }
+      ],
+      "internalAnswerKey": {
+        "correctOptionKey": "A",
+        "correctOrder": []
+      },
+      "choiceQualityAudit": null,
+      "generationPlanId": null,
+      "referencePayload": {
+        "sourceText": null,
+        "referenceMeanings": [],
+        "keyMeaningUnits": [],
+        "referenceText": null,
+        "translationSourceText": null,
+        "emphasisText": null,
+        "readingPassage": null,
+        "readingQuestion": null,
+        "listeningQuestion": null,
+        "providedFacts": [
+          "Synthetic fact one",
+          "Synthetic fact two"
+        ],
+        "requiredIntents": [
+          "Ask politely",
+          "Give a reason"
+        ],
+        "responseConstraints": [
+          "Use two sentences"
+        ]
+      },
+      "diversityMetadata": {
+        "scenarioCategory": "TRAVEL",
+        "communicativeIntent": "DESCRIBE",
+        "taskArchetype": "synthetic",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "semanticSummary": "Synthetic task",
+        "requiresBackgroundKnowledge": false,
+        "contentHash": null,
+        "similarityKey": null
+      },
+      "maxAnswerLength": null,
+      "maxAudioSeconds": null
+    },
+    "reason": "scenarioCategory가 서버의 세션 균형 계획을 따르지 않았습니다. allowed=WORK"
+  },
+  {
+    "name": "bold",
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 1,
+      "totalQuestions": 20,
+      "domain": "VOCABULARY",
+      "itemType": "VOCAB_CONTEXT_CHOICE",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": null
+    },
+    "candidate": {
+      "domain": "VOCABULARY",
+      "itemType": "VOCAB_CONTEXT_CHOICE",
+      "complexityBand": 3,
+      "instruction": "Choose the expression that best fits the context.",
+      "instructionLanguage": "en",
+      "answerMode": "CHOICE",
+      "answerLanguage": null,
+      "promptText": "Synthetic **bold** example.",
+      "options": [
+        {
+          "key": "A",
+          "text": "first"
+        },
+        {
+          "key": "B",
+          "text": "second"
+        },
+        {
+          "key": "C",
+          "text": "third"
+        },
+        {
+          "key": "D",
+          "text": "fourth"
+        }
+      ],
+      "internalAnswerKey": {
+        "correctOptionKey": "A",
+        "correctOrder": []
+      },
+      "choiceQualityAudit": null,
+      "generationPlanId": null,
+      "referencePayload": {
+        "sourceText": null,
+        "referenceMeanings": [],
+        "keyMeaningUnits": [],
+        "referenceText": null,
+        "translationSourceText": null,
+        "emphasisText": null,
+        "readingPassage": null,
+        "readingQuestion": null,
+        "listeningQuestion": null,
+        "providedFacts": [
+          "Synthetic fact one",
+          "Synthetic fact two"
+        ],
+        "requiredIntents": [
+          "Ask politely",
+          "Give a reason"
+        ],
+        "responseConstraints": [
+          "Use two sentences"
+        ]
+      },
+      "diversityMetadata": {
+        "scenarioCategory": "WORK",
+        "communicativeIntent": "DESCRIBE",
+        "taskArchetype": "synthetic",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "semanticSummary": "Synthetic task",
+        "requiresBackgroundKnowledge": false,
+        "contentHash": null,
+        "similarityKey": null
+      },
+      "maxAnswerLength": null,
+      "maxAudioSeconds": null
+    },
+    "reason": "promptText에는 Markdown 굵은 글씨를 사용할 수 없습니다."
+  },
+  {
+    "name": "html",
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 1,
+      "totalQuestions": 20,
+      "domain": "VOCABULARY",
+      "itemType": "VOCAB_CONTEXT_CHOICE",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": null
+    },
+    "candidate": {
+      "domain": "VOCABULARY",
+      "itemType": "VOCAB_CONTEXT_CHOICE",
+      "complexityBand": 3,
+      "instruction": "Choose the expression that best fits the context.",
+      "instructionLanguage": "en",
+      "answerMode": "CHOICE",
+      "answerLanguage": null,
+      "promptText": "Synthetic <b>html</b> example.",
+      "options": [
+        {
+          "key": "A",
+          "text": "first"
+        },
+        {
+          "key": "B",
+          "text": "second"
+        },
+        {
+          "key": "C",
+          "text": "third"
+        },
+        {
+          "key": "D",
+          "text": "fourth"
+        }
+      ],
+      "internalAnswerKey": {
+        "correctOptionKey": "A",
+        "correctOrder": []
+      },
+      "choiceQualityAudit": null,
+      "generationPlanId": null,
+      "referencePayload": {
+        "sourceText": null,
+        "referenceMeanings": [],
+        "keyMeaningUnits": [],
+        "referenceText": null,
+        "translationSourceText": null,
+        "emphasisText": null,
+        "readingPassage": null,
+        "readingQuestion": null,
+        "listeningQuestion": null,
+        "providedFacts": [
+          "Synthetic fact one",
+          "Synthetic fact two"
+        ],
+        "requiredIntents": [
+          "Ask politely",
+          "Give a reason"
+        ],
+        "responseConstraints": [
+          "Use two sentences"
+        ]
+      },
+      "diversityMetadata": {
+        "scenarioCategory": "WORK",
+        "communicativeIntent": "DESCRIBE",
+        "taskArchetype": "synthetic",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "semanticSummary": "Synthetic task",
+        "requiresBackgroundKnowledge": false,
+        "contentHash": null,
+        "similarityKey": null
+      },
+      "maxAnswerLength": null,
+      "maxAudioSeconds": null
+    },
+    "reason": "promptText에는 HTML/XML 마크업을 사용할 수 없습니다."
+  },
+  {
+    "name": "duplicate_option",
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 1,
+      "totalQuestions": 20,
+      "domain": "VOCABULARY",
+      "itemType": "VOCAB_CONTEXT_CHOICE",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": null
+    },
+    "candidate": {
+      "domain": "VOCABULARY",
+      "itemType": "VOCAB_CONTEXT_CHOICE",
+      "complexityBand": 3,
+      "instruction": "Choose the expression that best fits the context.",
+      "instructionLanguage": "en",
+      "answerMode": "CHOICE",
+      "answerLanguage": null,
+      "promptText": "Synthetic ____ example.",
+      "options": [
+        {
+          "key": "A",
+          "text": "first"
+        },
+        {
+          "key": "B",
+          "text": "ＦＩＲＳＴ"
+        },
+        {
+          "key": "C",
+          "text": "third"
+        },
+        {
+          "key": "D",
+          "text": "fourth"
+        }
+      ],
+      "internalAnswerKey": {
+        "correctOptionKey": "A",
+        "correctOrder": []
+      },
+      "choiceQualityAudit": null,
+      "generationPlanId": null,
+      "referencePayload": {
+        "sourceText": null,
+        "referenceMeanings": [],
+        "keyMeaningUnits": [],
+        "referenceText": null,
+        "translationSourceText": null,
+        "emphasisText": null,
+        "readingPassage": null,
+        "readingQuestion": null,
+        "listeningQuestion": null,
+        "providedFacts": [
+          "Synthetic fact one",
+          "Synthetic fact two"
+        ],
+        "requiredIntents": [
+          "Ask politely",
+          "Give a reason"
+        ],
+        "responseConstraints": [
+          "Use two sentences"
+        ]
+      },
+      "diversityMetadata": {
+        "scenarioCategory": "WORK",
+        "communicativeIntent": "DESCRIBE",
+        "taskArchetype": "synthetic",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "semanticSummary": "Synthetic task",
+        "requiresBackgroundKnowledge": false,
+        "contentHash": null,
+        "similarityKey": null
+      },
+      "maxAnswerLength": null,
+      "maxAudioSeconds": null
+    },
+    "reason": "VOCAB_CONTEXT_CHOICE Option에 실질적으로 동일한 표현이 중복되어 있습니다."
+  },
+  {
+    "name": "answer_exposed",
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 1,
+      "totalQuestions": 20,
+      "domain": "VOCABULARY",
+      "itemType": "VOCAB_CONTEXT_CHOICE",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": null
+    },
+    "candidate": {
+      "domain": "VOCABULARY",
+      "itemType": "VOCAB_CONTEXT_CHOICE",
+      "complexityBand": 3,
+      "instruction": "Choose the expression that best fits the context.",
+      "instructionLanguage": "en",
+      "answerMode": "CHOICE",
+      "answerLanguage": null,
+      "promptText": "Synthetic first example.",
+      "options": [
+        {
+          "key": "A",
+          "text": "first"
+        },
+        {
+          "key": "B",
+          "text": "second"
+        },
+        {
+          "key": "C",
+          "text": "third"
+        },
+        {
+          "key": "D",
+          "text": "fourth"
+        }
+      ],
+      "internalAnswerKey": {
+        "correctOptionKey": "A",
+        "correctOrder": []
+      },
+      "choiceQualityAudit": null,
+      "generationPlanId": null,
+      "referencePayload": {
+        "sourceText": null,
+        "referenceMeanings": [],
+        "keyMeaningUnits": [],
+        "referenceText": null,
+        "translationSourceText": null,
+        "emphasisText": null,
+        "readingPassage": null,
+        "readingQuestion": null,
+        "listeningQuestion": null,
+        "providedFacts": [
+          "Synthetic fact one",
+          "Synthetic fact two"
+        ],
+        "requiredIntents": [
+          "Ask politely",
+          "Give a reason"
+        ],
+        "responseConstraints": [
+          "Use two sentences"
+        ]
+      },
+      "diversityMetadata": {
+        "scenarioCategory": "WORK",
+        "communicativeIntent": "DESCRIBE",
+        "taskArchetype": "synthetic",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "semanticSummary": "Synthetic task",
+        "requiresBackgroundKnowledge": false,
+        "contentHash": null,
+        "similarityKey": null
+      },
+      "maxAnswerLength": null,
+      "maxAudioSeconds": null
+    },
+    "reason": "VOCAB_CONTEXT_CHOICE promptText에 정답 표현이 직접 노출되어 있습니다."
+  },
+  {
+    "name": "wrong_emphasis",
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 1,
+      "totalQuestions": 20,
+      "domain": "VOCABULARY",
+      "itemType": "VOCAB_PARAPHRASE_CHOICE",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": null
+    },
+    "candidate": {
+      "domain": "VOCABULARY",
+      "itemType": "VOCAB_PARAPHRASE_CHOICE",
+      "complexityBand": 3,
+      "instruction": "Choose the expression closest in meaning to the given expression.",
+      "instructionLanguage": "en",
+      "answerMode": "CHOICE",
+      "answerLanguage": null,
+      "promptText": "A synthetic target expression is shown.",
+      "options": [
+        {
+          "key": "A",
+          "text": "first"
+        },
+        {
+          "key": "B",
+          "text": "second"
+        },
+        {
+          "key": "C",
+          "text": "third"
+        },
+        {
+          "key": "D",
+          "text": "fourth"
+        }
+      ],
+      "internalAnswerKey": {
+        "correctOptionKey": "A",
+        "correctOrder": []
+      },
+      "choiceQualityAudit": null,
+      "generationPlanId": null,
+      "referencePayload": {
+        "sourceText": null,
+        "referenceMeanings": [],
+        "keyMeaningUnits": [],
+        "referenceText": null,
+        "translationSourceText": null,
+        "emphasisText": "missing",
+        "readingPassage": null,
+        "readingQuestion": null,
+        "listeningQuestion": null,
+        "providedFacts": [
+          "Synthetic fact one",
+          "Synthetic fact two"
+        ],
+        "requiredIntents": [
+          "Ask politely",
+          "Give a reason"
+        ],
+        "responseConstraints": [
+          "Use two sentences"
+        ]
+      },
+      "diversityMetadata": {
+        "scenarioCategory": "WORK",
+        "communicativeIntent": "DESCRIBE",
+        "taskArchetype": "synthetic",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "semanticSummary": "Synthetic task",
+        "requiresBackgroundKnowledge": false,
+        "contentHash": null,
+        "similarityKey": null
+      },
+      "maxAnswerLength": null,
+      "maxAudioSeconds": null
+    },
+    "reason": "VOCAB_PARAPHRASE_CHOICE emphasisText는 promptText에 정확히 한 번 존재해야 합니다."
+  },
+  {
+    "name": "no_blank",
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 4,
+      "totalQuestions": 20,
+      "domain": "GRAMMAR",
+      "itemType": "GRAMMAR_FORM_CHOICE",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": null
+    },
+    "candidate": {
+      "domain": "GRAMMAR",
+      "itemType": "GRAMMAR_FORM_CHOICE",
+      "complexityBand": 3,
+      "instruction": "Choose the expression that best completes the blank.",
+      "instructionLanguage": "en",
+      "answerMode": "CHOICE",
+      "answerLanguage": null,
+      "promptText": "Synthetic example.",
+      "options": [
+        {
+          "key": "A",
+          "text": "first"
+        },
+        {
+          "key": "B",
+          "text": "second"
+        },
+        {
+          "key": "C",
+          "text": "third"
+        },
+        {
+          "key": "D",
+          "text": "fourth"
+        }
+      ],
+      "internalAnswerKey": {
+        "correctOptionKey": "A",
+        "correctOrder": []
+      },
+      "choiceQualityAudit": null,
+      "generationPlanId": null,
+      "referencePayload": {
+        "sourceText": null,
+        "referenceMeanings": [],
+        "keyMeaningUnits": [],
+        "referenceText": null,
+        "translationSourceText": null,
+        "emphasisText": null,
+        "readingPassage": null,
+        "readingQuestion": null,
+        "listeningQuestion": null,
+        "providedFacts": [
+          "Synthetic fact one",
+          "Synthetic fact two"
+        ],
+        "requiredIntents": [
+          "Ask politely",
+          "Give a reason"
+        ],
+        "responseConstraints": [
+          "Use two sentences"
+        ]
+      },
+      "diversityMetadata": {
+        "scenarioCategory": "WORK",
+        "communicativeIntent": "DESCRIBE",
+        "taskArchetype": "synthetic",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "semanticSummary": "Synthetic task",
+        "requiresBackgroundKnowledge": false,
+        "contentHash": null,
+        "similarityKey": null
+      },
+      "maxAnswerLength": null,
+      "maxAudioSeconds": null
+    },
+    "reason": "GRAMMAR_FORM_CHOICE에는 정확히 하나의 빈칸이 필요합니다."
+  },
+  {
+    "name": "double_blank",
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 4,
+      "totalQuestions": 20,
+      "domain": "GRAMMAR",
+      "itemType": "GRAMMAR_FORM_CHOICE",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": null
+    },
+    "candidate": {
+      "domain": "GRAMMAR",
+      "itemType": "GRAMMAR_FORM_CHOICE",
+      "complexityBand": 3,
+      "instruction": "Choose the expression that best completes the blank.",
+      "instructionLanguage": "en",
+      "answerMode": "CHOICE",
+      "answerLanguage": null,
+      "promptText": "Synthetic ____ and ____ example.",
+      "options": [
+        {
+          "key": "A",
+          "text": "first"
+        },
+        {
+          "key": "B",
+          "text": "second"
+        },
+        {
+          "key": "C",
+          "text": "third"
+        },
+        {
+          "key": "D",
+          "text": "fourth"
+        }
+      ],
+      "internalAnswerKey": {
+        "correctOptionKey": "A",
+        "correctOrder": []
+      },
+      "choiceQualityAudit": null,
+      "generationPlanId": null,
+      "referencePayload": {
+        "sourceText": null,
+        "referenceMeanings": [],
+        "keyMeaningUnits": [],
+        "referenceText": null,
+        "translationSourceText": null,
+        "emphasisText": null,
+        "readingPassage": null,
+        "readingQuestion": null,
+        "listeningQuestion": null,
+        "providedFacts": [
+          "Synthetic fact one",
+          "Synthetic fact two"
+        ],
+        "requiredIntents": [
+          "Ask politely",
+          "Give a reason"
+        ],
+        "responseConstraints": [
+          "Use two sentences"
+        ]
+      },
+      "diversityMetadata": {
+        "scenarioCategory": "WORK",
+        "communicativeIntent": "DESCRIBE",
+        "taskArchetype": "synthetic",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "semanticSummary": "Synthetic task",
+        "requiresBackgroundKnowledge": false,
+        "contentHash": null,
+        "similarityKey": null
+      },
+      "maxAnswerLength": null,
+      "maxAudioSeconds": null
+    },
+    "reason": "GRAMMAR_FORM_CHOICE에는 정확히 하나의 빈칸이 필요합니다."
+  },
+  {
+    "name": "duplicate_boundary",
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 4,
+      "totalQuestions": 20,
+      "domain": "GRAMMAR",
+      "itemType": "GRAMMAR_FORM_CHOICE",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": null
+    },
+    "candidate": {
+      "domain": "GRAMMAR",
+      "itemType": "GRAMMAR_FORM_CHOICE",
+      "complexityBand": 3,
+      "instruction": "Choose the expression that best completes the blank.",
+      "instructionLanguage": "en",
+      "answerMode": "CHOICE",
+      "answerLanguage": null,
+      "promptText": "Synthetic ____ task.",
+      "options": [
+        {
+          "key": "A",
+          "text": "first"
+        },
+        {
+          "key": "B",
+          "text": "second"
+        },
+        {
+          "key": "C",
+          "text": "third"
+        },
+        {
+          "key": "D",
+          "text": "fourth"
+        }
+      ],
+      "internalAnswerKey": {
+        "correctOptionKey": "A",
+        "correctOrder": []
+      },
+      "choiceQualityAudit": null,
+      "generationPlanId": null,
+      "referencePayload": {
+        "sourceText": null,
+        "referenceMeanings": [],
+        "keyMeaningUnits": [],
+        "referenceText": null,
+        "translationSourceText": null,
+        "emphasisText": null,
+        "readingPassage": null,
+        "readingQuestion": null,
+        "listeningQuestion": null,
+        "providedFacts": [
+          "Synthetic fact one",
+          "Synthetic fact two"
+        ],
+        "requiredIntents": [
+          "Ask politely",
+          "Give a reason"
+        ],
+        "responseConstraints": [
+          "Use two sentences"
+        ]
+      },
+      "diversityMetadata": {
+        "scenarioCategory": "WORK",
+        "communicativeIntent": "DESCRIBE",
+        "taskArchetype": "synthetic",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "semanticSummary": "Synthetic task",
+        "requiresBackgroundKnowledge": false,
+        "contentHash": null,
+        "similarityKey": null
+      },
+      "maxAnswerLength": null,
+      "maxAudioSeconds": null
+    },
+    "reason": "GRAMMAR_FORM_CHOICE 정답을 빈칸에 삽입했을 때 활용 형태가 중복됩니다."
+  },
+  {
+    "name": "ordered",
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 4,
+      "totalQuestions": 20,
+      "domain": "GRAMMAR",
+      "itemType": "GRAMMAR_SENTENCE_ORDER",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": null
+    },
+    "candidate": {
+      "domain": "GRAMMAR",
+      "itemType": "GRAMMAR_SENTENCE_ORDER",
+      "complexityBand": 3,
+      "instruction": "Arrange the given elements in the correct order.",
+      "instructionLanguage": "en",
+      "answerMode": "CHOICE",
+      "answerLanguage": null,
+      "promptText": "Synthetic ____ example.",
+      "options": [
+        {
+          "key": "A",
+          "text": "first"
+        },
+        {
+          "key": "B",
+          "text": "second"
+        },
+        {
+          "key": "C",
+          "text": "third"
+        },
+        {
+          "key": "D",
+          "text": "fourth"
+        }
+      ],
+      "internalAnswerKey": {
+        "correctOptionKey": null,
+        "correctOrder": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      "choiceQualityAudit": null,
+      "generationPlanId": null,
+      "referencePayload": {
+        "sourceText": null,
+        "referenceMeanings": [],
+        "keyMeaningUnits": [],
+        "referenceText": null,
+        "translationSourceText": null,
+        "emphasisText": null,
+        "readingPassage": null,
+        "readingQuestion": null,
+        "listeningQuestion": null,
+        "providedFacts": [
+          "Synthetic fact one",
+          "Synthetic fact two"
+        ],
+        "requiredIntents": [
+          "Ask politely",
+          "Give a reason"
+        ],
+        "responseConstraints": [
+          "Use two sentences"
+        ]
+      },
+      "diversityMetadata": {
+        "scenarioCategory": "WORK",
+        "communicativeIntent": "DESCRIBE",
+        "taskArchetype": "synthetic",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "semanticSummary": "Synthetic task",
+        "requiresBackgroundKnowledge": false,
+        "contentHash": null,
+        "similarityKey": null
+      },
+      "maxAnswerLength": null,
+      "maxAudioSeconds": null
+    },
+    "reason": "Sentence Order Option은 정답 순서 그대로 노출될 수 없습니다."
+  },
+  {
+    "name": "reading_shape",
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 7,
+      "totalQuestions": 20,
+      "domain": "READING",
+      "itemType": "READING_GIST",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": null
+    },
+    "candidate": {
+      "domain": "READING",
+      "itemType": "READING_GIST",
+      "complexityBand": 3,
+      "instruction": "Read the passage and choose the best answer.",
+      "instructionLanguage": "en",
+      "answerMode": "CHOICE",
+      "answerLanguage": null,
+      "promptText": "Synthetic incomplete prompt.",
+      "options": [
+        {
+          "key": "A",
+          "text": "first"
+        },
+        {
+          "key": "B",
+          "text": "second"
+        },
+        {
+          "key": "C",
+          "text": "third"
+        },
+        {
+          "key": "D",
+          "text": "fourth"
+        }
+      ],
+      "internalAnswerKey": {
+        "correctOptionKey": "A",
+        "correctOrder": []
+      },
+      "choiceQualityAudit": null,
+      "generationPlanId": null,
+      "referencePayload": {
+        "sourceText": null,
+        "referenceMeanings": [],
+        "keyMeaningUnits": [],
+        "referenceText": null,
+        "translationSourceText": null,
+        "emphasisText": "synthetic person",
+        "readingPassage": "A synthetic person arrived at the station.",
+        "readingQuestion": "What happened first?",
+        "listeningQuestion": null,
+        "providedFacts": [
+          "Synthetic fact one",
+          "Synthetic fact two"
+        ],
+        "requiredIntents": [
+          "Ask politely",
+          "Give a reason"
+        ],
+        "responseConstraints": [
+          "Use two sentences"
+        ]
+      },
+      "diversityMetadata": {
+        "scenarioCategory": "WORK",
+        "communicativeIntent": "DESCRIBE",
+        "taskArchetype": "synthetic",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "semanticSummary": "Synthetic task",
+        "requiresBackgroundKnowledge": false,
+        "contentHash": null,
+        "similarityKey": null
+      },
+      "maxAnswerLength": null,
+      "maxAudioSeconds": null
+    },
+    "reason": "Reading Item promptText는 passage/question의 canonical 조합이어야 합니다."
+  },
+  {
+    "name": "reading_emphasis",
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 7,
+      "totalQuestions": 20,
+      "domain": "READING",
+      "itemType": "READING_DISCOURSE_FUNCTION",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": null
+    },
+    "candidate": {
+      "domain": "READING",
+      "itemType": "READING_DISCOURSE_FUNCTION",
+      "complexityBand": 3,
+      "instruction": "Read the passage and choose the best answer.",
+      "instructionLanguage": "en",
+      "answerMode": "CHOICE",
+      "answerLanguage": null,
+      "promptText": "A synthetic person arrived at the station.\n\nWhat happened first?",
+      "options": [
+        {
+          "key": "A",
+          "text": "first"
+        },
+        {
+          "key": "B",
+          "text": "second"
+        },
+        {
+          "key": "C",
+          "text": "third"
+        },
+        {
+          "key": "D",
+          "text": "fourth"
+        }
+      ],
+      "internalAnswerKey": {
+        "correctOptionKey": "A",
+        "correctOrder": []
+      },
+      "choiceQualityAudit": null,
+      "generationPlanId": null,
+      "referencePayload": {
+        "sourceText": null,
+        "referenceMeanings": [],
+        "keyMeaningUnits": [],
+        "referenceText": null,
+        "translationSourceText": null,
+        "emphasisText": "missing",
+        "readingPassage": "A synthetic person arrived at the station.",
+        "readingQuestion": "What happened first?",
+        "listeningQuestion": null,
+        "providedFacts": [
+          "Synthetic fact one",
+          "Synthetic fact two"
+        ],
+        "requiredIntents": [
+          "Ask politely",
+          "Give a reason"
+        ],
+        "responseConstraints": [
+          "Use two sentences"
+        ]
+      },
+      "diversityMetadata": {
+        "scenarioCategory": "WORK",
+        "communicativeIntent": "DESCRIBE",
+        "taskArchetype": "synthetic",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "semanticSummary": "Synthetic task",
+        "requiresBackgroundKnowledge": false,
+        "contentHash": null,
+        "similarityKey": null
+      },
+      "maxAnswerLength": null,
+      "maxAudioSeconds": null
+    },
+    "reason": "READING_DISCOURSE_FUNCTION emphasisText는 readingPassage에 정확히 한 번 존재해야 합니다."
+  },
+  {
+    "name": "translation_source",
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 15,
+      "totalQuestions": 20,
+      "domain": "WRITING",
+      "itemType": "WRITING_TRANSLATION",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": null
+    },
+    "candidate": {
+      "domain": "WRITING",
+      "itemType": "WRITING_TRANSLATION",
+      "complexityBand": 3,
+      "instruction": "Translate the following content into the learning language.",
+      "instructionLanguage": "en",
+      "answerMode": "TEXT",
+      "answerLanguage": "en",
+      "promptText": "합성 원문입니다.",
+      "options": [],
+      "internalAnswerKey": {
+        "correctOptionKey": null,
+        "correctOrder": []
+      },
+      "choiceQualityAudit": null,
+      "generationPlanId": null,
+      "referencePayload": {
+        "sourceText": null,
+        "referenceMeanings": [],
+        "keyMeaningUnits": [],
+        "referenceText": null,
+        "translationSourceText": "다른 합성 원문",
+        "emphasisText": null,
+        "readingPassage": null,
+        "readingQuestion": null,
+        "listeningQuestion": null,
+        "providedFacts": [
+          "Synthetic fact one",
+          "Synthetic fact two"
+        ],
+        "requiredIntents": [
+          "Ask politely",
+          "Give a reason"
+        ],
+        "responseConstraints": [
+          "Use two sentences"
+        ]
+      },
+      "diversityMetadata": {
+        "scenarioCategory": "WORK",
+        "communicativeIntent": "DESCRIBE",
+        "taskArchetype": "synthetic",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "semanticSummary": "Synthetic task",
+        "requiresBackgroundKnowledge": false,
+        "contentHash": null,
+        "similarityKey": null
+      },
+      "maxAnswerLength": null,
+      "maxAudioSeconds": null
+    },
+    "reason": "WRITING_TRANSLATION promptText는 translationSourceText와 정확히 일치해야 합니다."
+  },
+  {
+    "name": "missing_facts",
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 15,
+      "totalQuestions": 20,
+      "domain": "WRITING",
+      "itemType": "WRITING_SHORT_PARAGRAPH",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": null
+    },
+    "candidate": {
+      "domain": "WRITING",
+      "itemType": "WRITING_SHORT_PARAGRAPH",
+      "complexityBand": 3,
+      "instruction": "Write a short paragraph in the learning language about the given topic.",
+      "instructionLanguage": "en",
+      "answerMode": "TEXT",
+      "answerLanguage": "en",
+      "promptText": "Synthetic ____ example.",
+      "options": [],
+      "internalAnswerKey": {
+        "correctOptionKey": null,
+        "correctOrder": []
+      },
+      "choiceQualityAudit": null,
+      "generationPlanId": null,
+      "referencePayload": {
+        "sourceText": null,
+        "referenceMeanings": [],
+        "keyMeaningUnits": [],
+        "referenceText": null,
+        "translationSourceText": null,
+        "emphasisText": null,
+        "readingPassage": null,
+        "readingQuestion": null,
+        "listeningQuestion": null,
+        "providedFacts": [],
+        "requiredIntents": [
+          "Ask politely",
+          "Give a reason"
+        ],
+        "responseConstraints": [
+          "Use two sentences"
+        ]
+      },
+      "diversityMetadata": {
+        "scenarioCategory": "WORK",
+        "communicativeIntent": "DESCRIBE",
+        "taskArchetype": "synthetic",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "semanticSummary": "Synthetic task",
+        "requiresBackgroundKnowledge": false,
+        "contentHash": null,
+        "similarityKey": null
+      },
+      "maxAnswerLength": null,
+      "maxAudioSeconds": null
+    },
+    "reason": "WRITING_SHORT_PARAGRAPH에는 최소 2개의 제공 사실이 필요합니다."
+  },
+  {
+    "name": "intent_enum",
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 15,
+      "totalQuestions": 20,
+      "domain": "WRITING",
+      "itemType": "WRITING_SHORT_PARAGRAPH",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": null
+    },
+    "candidate": {
+      "domain": "WRITING",
+      "itemType": "WRITING_SHORT_PARAGRAPH",
+      "complexityBand": 3,
+      "instruction": "Write a short paragraph in the learning language about the given topic.",
+      "instructionLanguage": "en",
+      "answerMode": "TEXT",
+      "answerLanguage": "en",
+      "promptText": "Synthetic ____ example.",
+      "options": [],
+      "internalAnswerKey": {
+        "correctOptionKey": null,
+        "correctOrder": []
+      },
+      "choiceQualityAudit": null,
+      "generationPlanId": null,
+      "referencePayload": {
+        "sourceText": null,
+        "referenceMeanings": [],
+        "keyMeaningUnits": [],
+        "referenceText": null,
+        "translationSourceText": null,
+        "emphasisText": null,
+        "readingPassage": null,
+        "readingQuestion": null,
+        "listeningQuestion": null,
+        "providedFacts": [
+          "Synthetic fact one",
+          "Synthetic fact two"
+        ],
+        "requiredIntents": [
+          "REQUEST",
+          "CONFIRM"
+        ],
+        "responseConstraints": [
+          "Use two sentences"
+        ]
+      },
+      "diversityMetadata": {
+        "scenarioCategory": "WORK",
+        "communicativeIntent": "DESCRIBE",
+        "taskArchetype": "synthetic",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "semanticSummary": "Synthetic task",
+        "requiresBackgroundKnowledge": false,
+        "contentHash": null,
+        "similarityKey": null
+      },
+      "maxAnswerLength": null,
+      "maxAudioSeconds": null
+    },
+    "reason": "WRITING_SHORT_PARAGRAPH requiredIntents에 내부 enum token을 노출할 수 없습니다."
+  },
+  {
+    "name": "listening_missing_source",
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 11,
+      "totalQuestions": 20,
+      "domain": "LISTENING",
+      "itemType": "LISTENING_DICTATION",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": null
+    },
+    "candidate": {
+      "domain": "LISTENING",
+      "itemType": "LISTENING_DICTATION",
+      "complexityBand": 3,
+      "instruction": "Listen to the audio and write down exactly what you hear.",
+      "instructionLanguage": "en",
+      "answerMode": "TEXT",
+      "answerLanguage": "en",
+      "promptText": "What did the speaker say?",
+      "options": [],
+      "internalAnswerKey": {
+        "correctOptionKey": null,
+        "correctOrder": []
+      },
+      "choiceQualityAudit": null,
+      "generationPlanId": null,
+      "referencePayload": {
+        "sourceText": null,
+        "referenceMeanings": [
+          "합성 의미 하나",
+          "합성 의미 둘"
+        ],
+        "keyMeaningUnits": [
+          "합성 요소 하나",
+          "합성 요소 둘"
+        ],
+        "referenceText": null,
+        "translationSourceText": null,
+        "emphasisText": null,
+        "readingPassage": null,
+        "readingQuestion": null,
+        "listeningQuestion": "What did the speaker say?",
+        "providedFacts": [
+          "Synthetic fact one",
+          "Synthetic fact two"
+        ],
+        "requiredIntents": [
+          "Ask politely",
+          "Give a reason"
+        ],
+        "responseConstraints": [
+          "Use two sentences"
+        ]
+      },
+      "diversityMetadata": {
+        "scenarioCategory": "WORK",
+        "communicativeIntent": "DESCRIBE",
+        "taskArchetype": "synthetic",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "semanticSummary": "Synthetic task",
+        "requiresBackgroundKnowledge": false,
+        "contentHash": null,
+        "similarityKey": null
+      },
+      "maxAnswerLength": null,
+      "maxAudioSeconds": null
+    },
+    "reason": "Listening Item에는 referencePayload.sourceText가 필요합니다."
+  },
+  {
+    "name": "listening_prompt",
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 11,
+      "totalQuestions": 20,
+      "domain": "LISTENING",
+      "itemType": "LISTENING_DICTATION",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": null
+    },
+    "candidate": {
+      "domain": "LISTENING",
+      "itemType": "LISTENING_DICTATION",
+      "complexityBand": 3,
+      "instruction": "Listen to the audio and write down exactly what you hear.",
+      "instructionLanguage": "en",
+      "answerMode": "TEXT",
+      "answerLanguage": "en",
+      "promptText": "Different synthetic question.",
+      "options": [],
+      "internalAnswerKey": {
+        "correctOptionKey": null,
+        "correctOrder": []
+      },
+      "choiceQualityAudit": null,
+      "generationPlanId": null,
+      "referencePayload": {
+        "sourceText": "The synthetic train arrived at the station.",
+        "referenceMeanings": [
+          "합성 의미 하나",
+          "합성 의미 둘"
+        ],
+        "keyMeaningUnits": [
+          "합성 요소 하나",
+          "합성 요소 둘"
+        ],
+        "referenceText": null,
+        "translationSourceText": null,
+        "emphasisText": null,
+        "readingPassage": null,
+        "readingQuestion": null,
+        "listeningQuestion": "What did the speaker say?",
+        "providedFacts": [
+          "Synthetic fact one",
+          "Synthetic fact two"
+        ],
+        "requiredIntents": [
+          "Ask politely",
+          "Give a reason"
+        ],
+        "responseConstraints": [
+          "Use two sentences"
+        ]
+      },
+      "diversityMetadata": {
+        "scenarioCategory": "WORK",
+        "communicativeIntent": "DESCRIBE",
+        "taskArchetype": "synthetic",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "semanticSummary": "Synthetic task",
+        "requiresBackgroundKnowledge": false,
+        "contentHash": null,
+        "similarityKey": null
+      },
+      "maxAnswerLength": null,
+      "maxAudioSeconds": null
+    },
+    "reason": "Listening Item promptText는 listeningQuestion과 정확히 일치해야 합니다."
+  },
+  {
+    "name": "source_leak",
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 11,
+      "totalQuestions": 20,
+      "domain": "LISTENING",
+      "itemType": "LISTENING_DICTATION",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": null
+    },
+    "candidate": {
+      "domain": "LISTENING",
+      "itemType": "LISTENING_DICTATION",
+      "complexityBand": 3,
+      "instruction": "Listen to the audio and write down exactly what you hear.",
+      "instructionLanguage": "en",
+      "answerMode": "TEXT",
+      "answerLanguage": "en",
+      "promptText": "The synthetic train arrived at the station.",
+      "options": [],
+      "internalAnswerKey": {
+        "correctOptionKey": null,
+        "correctOrder": []
+      },
+      "choiceQualityAudit": null,
+      "generationPlanId": null,
+      "referencePayload": {
+        "sourceText": "The synthetic train arrived at the station.",
+        "referenceMeanings": [
+          "합성 의미 하나",
+          "합성 의미 둘"
+        ],
+        "keyMeaningUnits": [
+          "합성 요소 하나",
+          "합성 요소 둘"
+        ],
+        "referenceText": null,
+        "translationSourceText": null,
+        "emphasisText": null,
+        "readingPassage": null,
+        "readingQuestion": null,
+        "listeningQuestion": "The synthetic train arrived at the station.",
+        "providedFacts": [
+          "Synthetic fact one",
+          "Synthetic fact two"
+        ],
+        "requiredIntents": [
+          "Ask politely",
+          "Give a reason"
+        ],
+        "responseConstraints": [
+          "Use two sentences"
+        ]
+      },
+      "diversityMetadata": {
+        "scenarioCategory": "WORK",
+        "communicativeIntent": "DESCRIBE",
+        "taskArchetype": "synthetic",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "semanticSummary": "Synthetic task",
+        "requiresBackgroundKnowledge": false,
+        "contentHash": null,
+        "similarityKey": null
+      },
+      "maxAnswerLength": null,
+      "maxAudioSeconds": null
+    },
+    "reason": "Listening Item promptText에 음성 sourceText가 노출되어 있습니다."
+  },
+  {
+    "name": "wrong_origin_lane",
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 11,
+      "totalQuestions": 20,
+      "domain": "LISTENING",
+      "itemType": "LISTENING_INTERPRETATION",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": null
+    },
+    "candidate": {
+      "domain": "LISTENING",
+      "itemType": "LISTENING_INTERPRETATION",
+      "complexityBand": 3,
+      "instruction": "Listen to the audio and explain its meaning.",
+      "instructionLanguage": "en",
+      "answerMode": "TEXT",
+      "answerLanguage": "ko",
+      "promptText": "What did the speaker say?",
+      "options": [],
+      "internalAnswerKey": {
+        "correctOptionKey": null,
+        "correctOrder": []
+      },
+      "choiceQualityAudit": null,
+      "generationPlanId": null,
+      "referencePayload": {
+        "sourceText": "The synthetic train arrived at the station.",
+        "referenceMeanings": [
+          "English",
+          "English"
+        ],
+        "keyMeaningUnits": [
+          "English",
+          "English"
+        ],
+        "referenceText": null,
+        "translationSourceText": null,
+        "emphasisText": null,
+        "readingPassage": null,
+        "readingQuestion": null,
+        "listeningQuestion": "What did the speaker say?",
+        "providedFacts": [
+          "Synthetic fact one",
+          "Synthetic fact two"
+        ],
+        "requiredIntents": [
+          "Ask politely",
+          "Give a reason"
+        ],
+        "responseConstraints": [
+          "Use two sentences"
+        ]
+      },
+      "diversityMetadata": {
+        "scenarioCategory": "WORK",
+        "communicativeIntent": "DESCRIBE",
+        "taskArchetype": "synthetic",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "semanticSummary": "Synthetic task",
+        "requiresBackgroundKnowledge": false,
+        "contentHash": null,
+        "similarityKey": null
+      },
+      "maxAnswerLength": null,
+      "maxAudioSeconds": null
+    },
+    "reason": "LISTENING_INTERPRETATION 평가 기준 언어가 originLanguage와 일치하지 않습니다."
+  },
+  {
+    "name": "short_reference_meanings",
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 11,
+      "totalQuestions": 20,
+      "domain": "LISTENING",
+      "itemType": "LISTENING_INTERPRETATION",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": null
+    },
+    "candidate": {
+      "domain": "LISTENING",
+      "itemType": "LISTENING_INTERPRETATION",
+      "complexityBand": 3,
+      "instruction": "Listen to the audio and explain its meaning.",
+      "instructionLanguage": "en",
+      "answerMode": "TEXT",
+      "answerLanguage": "ko",
+      "promptText": "What did the speaker say?",
+      "options": [],
+      "internalAnswerKey": {
+        "correctOptionKey": null,
+        "correctOrder": []
+      },
+      "choiceQualityAudit": null,
+      "generationPlanId": null,
+      "referencePayload": {
+        "sourceText": "The synthetic train arrived at the station.",
+        "referenceMeanings": [
+          "합성"
+        ],
+        "keyMeaningUnits": [
+          "합성 요소 하나",
+          "합성 요소 둘"
+        ],
+        "referenceText": null,
+        "translationSourceText": null,
+        "emphasisText": null,
+        "readingPassage": null,
+        "readingQuestion": null,
+        "listeningQuestion": "What did the speaker say?",
+        "providedFacts": [
+          "Synthetic fact one",
+          "Synthetic fact two"
+        ],
+        "requiredIntents": [
+          "Ask politely",
+          "Give a reason"
+        ],
+        "responseConstraints": [
+          "Use two sentences"
+        ]
+      },
+      "diversityMetadata": {
+        "scenarioCategory": "WORK",
+        "communicativeIntent": "DESCRIBE",
+        "taskArchetype": "synthetic",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "semanticSummary": "Synthetic task",
+        "requiresBackgroundKnowledge": false,
+        "contentHash": null,
+        "similarityKey": null
+      },
+      "maxAnswerLength": null,
+      "maxAudioSeconds": null
+    },
+    "reason": "Interpretation referenceMeanings는 2~3개여야 합니다."
+  },
+  {
+    "name": "long_repeat",
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 18,
+      "totalQuestions": 20,
+      "domain": "SPEAKING",
+      "itemType": "SPEAKING_REPEAT",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": null
+    },
+    "candidate": {
+      "domain": "SPEAKING",
+      "itemType": "SPEAKING_REPEAT",
+      "complexityBand": 3,
+      "instruction": "Listen to the audio and repeat it exactly.",
+      "instructionLanguage": "en",
+      "answerMode": "AUDIO",
+      "answerLanguage": "en",
+      "promptText": "Repeat the synthetic sentence.",
+      "options": [],
+      "internalAnswerKey": {
+        "correctOptionKey": null,
+        "correctOrder": []
+      },
+      "choiceQualityAudit": null,
+      "generationPlanId": null,
+      "referencePayload": {
+        "sourceText": null,
+        "referenceMeanings": [],
+        "keyMeaningUnits": [],
+        "referenceText": "Synthetic Synthetic Synthetic Synthetic Synthetic Synthetic Synthetic Synthetic Synthetic Synthetic Synthetic Synthetic Synthetic Synthetic Synthetic",
+        "translationSourceText": null,
+        "emphasisText": null,
+        "readingPassage": null,
+        "readingQuestion": null,
+        "listeningQuestion": null,
+        "providedFacts": [
+          "Synthetic fact one",
+          "Synthetic fact two"
+        ],
+        "requiredIntents": [
+          "Ask politely",
+          "Give a reason"
+        ],
+        "responseConstraints": [
+          "Use two sentences"
+        ]
+      },
+      "diversityMetadata": {
+        "scenarioCategory": "WORK",
+        "communicativeIntent": "DESCRIBE",
+        "taskArchetype": "synthetic",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "semanticSummary": "Synthetic task",
+        "requiresBackgroundKnowledge": false,
+        "contentHash": null,
+        "similarityKey": null
+      },
+      "maxAnswerLength": null,
+      "maxAudioSeconds": 20
+    },
+    "reason": "SPEAKING_REPEAT referenceText가 지나치게 깁니다."
+  },
+  {
+    "name": "two_repeat_sentences",
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 18,
+      "totalQuestions": 20,
+      "domain": "SPEAKING",
+      "itemType": "SPEAKING_REPEAT",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": null
+    },
+    "candidate": {
+      "domain": "SPEAKING",
+      "itemType": "SPEAKING_REPEAT",
+      "complexityBand": 3,
+      "instruction": "Listen to the audio and repeat it exactly.",
+      "instructionLanguage": "en",
+      "answerMode": "AUDIO",
+      "answerLanguage": "en",
+      "promptText": "Repeat the synthetic sentence.",
+      "options": [],
+      "internalAnswerKey": {
+        "correctOptionKey": null,
+        "correctOrder": []
+      },
+      "choiceQualityAudit": null,
+      "generationPlanId": null,
+      "referencePayload": {
+        "sourceText": null,
+        "referenceMeanings": [],
+        "keyMeaningUnits": [],
+        "referenceText": "Synthetic one. Synthetic two.",
+        "translationSourceText": null,
+        "emphasisText": null,
+        "readingPassage": null,
+        "readingQuestion": null,
+        "listeningQuestion": null,
+        "providedFacts": [
+          "Synthetic fact one",
+          "Synthetic fact two"
+        ],
+        "requiredIntents": [
+          "Ask politely",
+          "Give a reason"
+        ],
+        "responseConstraints": [
+          "Use two sentences"
+        ]
+      },
+      "diversityMetadata": {
+        "scenarioCategory": "WORK",
+        "communicativeIntent": "DESCRIBE",
+        "taskArchetype": "synthetic",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "semanticSummary": "Synthetic task",
+        "requiresBackgroundKnowledge": false,
+        "contentHash": null,
+        "similarityKey": null
+      },
+      "maxAnswerLength": null,
+      "maxAudioSeconds": 20
+    },
+    "reason": "SPEAKING_REPEAT는 한 문장으로 구성해야 합니다."
+  },
+  {
+    "name": "repeat_duration",
+    "request": {
+      "requestId": "synthetic",
+      "idempotencyKey": "synthetic",
+      "sessionId": 1,
+      "questionNumber": 18,
+      "totalQuestions": 20,
+      "domain": "SPEAKING",
+      "itemType": "SPEAKING_REPEAT",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "targetComplexityBand": 3,
+      "previousResults": [],
+      "diversityContext": {
+        "currentSession": [],
+        "sameFeatureRecent": [],
+        "crossFeatureRecent": [],
+        "exactContentHashes90d": []
+      },
+      "preferredScenarioCategories": [
+        "WORK"
+      ],
+      "policyVersion": "level-test-multiskill",
+      "modelConfigVersion": "level-test-model-config",
+      "referenceAudioUpload": null
+    },
+    "candidate": {
+      "domain": "SPEAKING",
+      "itemType": "SPEAKING_REPEAT",
+      "complexityBand": 3,
+      "instruction": "Listen to the audio and repeat it exactly.",
+      "instructionLanguage": "en",
+      "answerMode": "AUDIO",
+      "answerLanguage": "en",
+      "promptText": "Repeat the synthetic sentence.",
+      "options": [],
+      "internalAnswerKey": {
+        "correctOptionKey": null,
+        "correctOrder": []
+      },
+      "choiceQualityAudit": null,
+      "generationPlanId": null,
+      "referencePayload": {
+        "sourceText": null,
+        "referenceMeanings": [],
+        "keyMeaningUnits": [],
+        "referenceText": "Synthetic people arrived.",
+        "translationSourceText": null,
+        "emphasisText": null,
+        "readingPassage": null,
+        "readingQuestion": null,
+        "listeningQuestion": null,
+        "providedFacts": [
+          "Synthetic fact one",
+          "Synthetic fact two"
+        ],
+        "requiredIntents": [
+          "Ask politely",
+          "Give a reason"
+        ],
+        "responseConstraints": [
+          "Use two sentences"
+        ]
+      },
+      "diversityMetadata": {
+        "scenarioCategory": "WORK",
+        "communicativeIntent": "DESCRIBE",
+        "taskArchetype": "synthetic",
+        "grammarFocusCodes": [],
+        "lexicalFocusCodes": [],
+        "semanticSummary": "Synthetic task",
+        "requiresBackgroundKnowledge": false,
+        "contentHash": null,
+        "similarityKey": null
+      },
+      "maxAnswerLength": null,
+      "maxAudioSeconds": 21
+    },
+    "reason": "SPEAKING_REPEAT maxAudioSeconds는 20초 이하여야 합니다."
+  }
+]

@@ -1,0 +1,1151 @@
+[
+  {
+    "itemType": "SPEAKING_REPEAT",
+    "request": {
+      "requestId": "lt:synthetic:eval:2:v1:r0",
+      "idempotencyKey": "lt:synthetic:eval:2:v1:r0",
+      "sessionId": 1,
+      "itemId": 2,
+      "itemType": "SPEAKING_REPEAT",
+      "promptText": "Synthetic task",
+      "referenceText": "Synthetic reference",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "complexityBand": 3,
+      "maxDurationSeconds": 20,
+      "phraseHints": [
+        "Synthetic"
+      ],
+      "providedFacts": [
+        "Synthetic fact"
+      ],
+      "requiredIntents": [
+        "Synthetic intent"
+      ],
+      "responseConstraints": [
+        "One sentence"
+      ],
+      "manualRetryAttempt": 0
+    },
+    "providerOutput": {
+      "evaluationConfidence": 4,
+      "taskResponseStatus": "COMPLETED",
+      "metrics": [
+        {
+          "type": "pronunciation",
+          "state": "EVALUABLE",
+          "score": 0.8,
+          "confidence": 80,
+          "summary": "합성 요약",
+          "evidence": [
+            {
+              "message": "합성 근거"
+            }
+          ]
+        },
+        {
+          "type": "fluency",
+          "state": "EVALUABLE",
+          "score": 0.7,
+          "confidence": 80,
+          "summary": "합성 요약",
+          "evidence": [
+            {
+              "message": "합성 근거"
+            }
+          ]
+        },
+        {
+          "type": "grammar",
+          "state": "EVALUABLE",
+          "score": 0.6,
+          "confidence": 80,
+          "summary": "합성 요약",
+          "evidence": [
+            {
+              "message": "합성 근거"
+            }
+          ]
+        },
+        {
+          "type": "vocabulary",
+          "state": "EVALUABLE",
+          "score": 0.65,
+          "confidence": 80,
+          "summary": "합성 요약",
+          "evidence": [
+            {
+              "message": "합성 근거"
+            }
+          ]
+        },
+        {
+          "type": "taskfulfillment",
+          "state": "EVALUABLE",
+          "score": 0.75,
+          "confidence": 80,
+          "summary": "합성 요약",
+          "evidence": [
+            {
+              "message": "합성 근거"
+            }
+          ]
+        }
+      ],
+      "strengths": "합성 강점",
+      "improvements": [
+        {
+          "message": "합성 개선"
+        }
+      ],
+      "recommendedAnswers": "Synthetic improved answer"
+    },
+    "canonical": {
+      "evaluationConfidence": 0.8,
+      "taskResponseStatus": "FULFILLED",
+      "metrics": [
+        {
+          "type": "PRONUNCIATION",
+          "state": "EVALUATED",
+          "score": 80.0,
+          "confidence": 0.8,
+          "summary": "합성 요약",
+          "evidence": [
+            "합성 근거"
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "FLUENCY",
+          "state": "EVALUATED",
+          "score": 70.0,
+          "confidence": 0.8,
+          "summary": "합성 요약",
+          "evidence": [
+            "합성 근거"
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "GRAMMAR",
+          "state": "EVALUATED",
+          "score": 60.0,
+          "confidence": 0.8,
+          "summary": "합성 요약",
+          "evidence": [
+            "합성 근거"
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "VOCABULARY",
+          "state": "EVALUATED",
+          "score": 65.0,
+          "confidence": 0.8,
+          "summary": "합성 요약",
+          "evidence": [
+            "합성 근거"
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "TASK_FULFILLMENT",
+          "state": "EVALUATED",
+          "score": 75.0,
+          "confidence": 0.8,
+          "summary": "합성 요약",
+          "evidence": [
+            "합성 근거"
+          ],
+          "notEvaluableReason": null
+        }
+      ],
+      "strengths": [
+        "합성 강점"
+      ],
+      "improvements": [
+        "합성 개선"
+      ],
+      "recommendedAnswers": [
+        "Synthetic improved answer"
+      ]
+    },
+    "prompt": "Evaluate this single Level Test speaking response. Do not calculate a cross-item/domain score.\n\n{\"requestId\":\"lt:synthetic:eval:2:v1:r0\",\"idempotencyKey\":\"lt:synthetic:eval:2:v1:r0\",\"sessionId\":1,\"itemId\":2,\"itemType\":\"SPEAKING_REPEAT\",\"promptText\":\"Synthetic task\",\"referenceText\":\"Synthetic reference\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"complexityBand\":3,\"maxDurationSeconds\":20,\"phraseHints\":[\"Synthetic\"],\"providedFacts\":[\"Synthetic fact\"],\"requiredIntents\":[\"Synthetic intent\"],\"responseConstraints\":[\"One sentence\"],\"manualRetryAttempt\":0,\"transcript\":{\"text\":\"Synthetic spoken answer\",\"language\":\"en\",\"confidence\":0.8187,\"isLowConfidence\":false,\"segments\":[{\"startMs\":0,\"endMs\":2000,\"text\":\"Synthetic spoken answer\",\"confidence\":0.8187307530779818}],\"metadata\":{\"provider\":\"synthetic-stt\",\"model\":\"synthetic-stt\",\"modelVersion\":\"synthetic-v1\",\"detectedLanguage\":\"en\",\"requestedLanguage\":\"en\",\"lowConfidenceThreshold\":0.55,\"audioDuration\":2.0,\"audioQualitySignals\":{\"rms\":0.1,\"peak\":0.2,\"silenceRatio\":0.0,\"sampleRate\":16000,\"channels\":1},\"normalizationVersion\":\"speaking-audio-normalization\",\"sttHintVersion\":\"speaking-stt-hint\"}},\"acousticQuality\":{\"rms\":0.1,\"peak\":0.2,\"silenceRatio\":0.0,\"sampleRate\":16000,\"channels\":1}}",
+    "response": {
+      "requestId": "lt:synthetic:eval:2:v1:r0",
+      "sessionId": 1,
+      "itemId": 2,
+      "domain": "SPEAKING",
+      "itemType": "SPEAKING_REPEAT",
+      "evaluable": true,
+      "score": 76,
+      "confidence": 0.8,
+      "transcript": "Synthetic spoken answer",
+      "metrics": [
+        {
+          "type": "PRONUNCIATION",
+          "state": "EVALUATED",
+          "score": 80.0,
+          "confidence": 0.8,
+          "summary": "합성 요약",
+          "evidence": [
+            {
+              "message": "합성 근거"
+            }
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "FLUENCY",
+          "state": "EVALUATED",
+          "score": 70.0,
+          "confidence": 0.8,
+          "summary": "합성 요약",
+          "evidence": [
+            {
+              "message": "합성 근거"
+            }
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "GRAMMAR",
+          "state": "EVALUATED",
+          "score": 60.0,
+          "confidence": 0.8,
+          "summary": "합성 요약",
+          "evidence": [
+            {
+              "message": "합성 근거"
+            }
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "VOCABULARY",
+          "state": "EVALUATED",
+          "score": 65.0,
+          "confidence": 0.8,
+          "summary": "합성 요약",
+          "evidence": [
+            {
+              "message": "합성 근거"
+            }
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "TASK_FULFILLMENT",
+          "state": "EVALUATED",
+          "score": 75.0,
+          "confidence": 0.8,
+          "summary": "합성 요약",
+          "evidence": [
+            {
+              "message": "합성 근거"
+            }
+          ],
+          "notEvaluableReason": null
+        }
+      ],
+      "strengths": [
+        "합성 강점"
+      ],
+      "improvements": [
+        "합성 개선"
+      ],
+      "recommendedAnswers": [
+        "Synthetic reference"
+      ],
+      "detailedFeedback": [
+        {
+          "category": "PRONUNCIATION",
+          "severity": "IMPROVEMENT",
+          "original": null,
+          "corrected": null,
+          "explanation": "합성 요약"
+        },
+        {
+          "category": "PRONUNCIATION",
+          "severity": "IMPROVEMENT",
+          "original": null,
+          "corrected": null,
+          "explanation": "합성 근거"
+        },
+        {
+          "category": "FLUENCY",
+          "severity": "IMPROVEMENT",
+          "original": null,
+          "corrected": null,
+          "explanation": "합성 요약"
+        },
+        {
+          "category": "FLUENCY",
+          "severity": "IMPROVEMENT",
+          "original": null,
+          "corrected": null,
+          "explanation": "합성 근거"
+        },
+        {
+          "category": "GRAMMAR",
+          "severity": "IMPROVEMENT",
+          "original": null,
+          "corrected": null,
+          "explanation": "합성 요약"
+        },
+        {
+          "category": "GRAMMAR",
+          "severity": "IMPROVEMENT",
+          "original": null,
+          "corrected": null,
+          "explanation": "합성 근거"
+        },
+        {
+          "category": "VOCABULARY",
+          "severity": "IMPROVEMENT",
+          "original": null,
+          "corrected": null,
+          "explanation": "합성 요약"
+        },
+        {
+          "category": "VOCABULARY",
+          "severity": "IMPROVEMENT",
+          "original": null,
+          "corrected": null,
+          "explanation": "합성 근거"
+        },
+        {
+          "category": "TASK_FULFILLMENT",
+          "severity": "IMPROVEMENT",
+          "original": null,
+          "corrected": null,
+          "explanation": "합성 요약"
+        },
+        {
+          "category": "TASK_FULFILLMENT",
+          "severity": "IMPROVEMENT",
+          "original": null,
+          "corrected": null,
+          "explanation": "합성 근거"
+        },
+        {
+          "category": "TASK",
+          "severity": "IMPROVEMENT",
+          "original": null,
+          "corrected": null,
+          "explanation": "합성 개선"
+        }
+      ],
+      "assessmentSignals": [
+        {
+          "domain": "SPEAKING",
+          "metric": "PRONUNCIATION",
+          "score": 80.0,
+          "confidence": 0.8
+        },
+        {
+          "domain": "SPEAKING",
+          "metric": "FLUENCY",
+          "score": 70.0,
+          "confidence": 0.8
+        },
+        {
+          "domain": "SPEAKING",
+          "metric": "GRAMMAR",
+          "score": 60.0,
+          "confidence": 0.8
+        },
+        {
+          "domain": "SPEAKING",
+          "metric": "VOCABULARY",
+          "score": 65.0,
+          "confidence": 0.8
+        },
+        {
+          "domain": "SPEAKING",
+          "metric": "TASK_FULFILLMENT",
+          "score": 75.0,
+          "confidence": 0.8
+        }
+      ],
+      "reasonCode": null,
+      "evaluationVersion": "level-test-speaking-evaluation",
+      "promptVersion": "level-test-speaking-evaluation-prompt",
+      "usage": {
+        "latencyMs": 0,
+        "inputTokens": 17,
+        "outputTokens": 11,
+        "provider": "synthetic",
+        "model": "synthetic",
+        "promptVersion": "level-test-speaking-evaluation-prompt",
+        "evaluationVersion": "level-test-speaking-evaluation"
+      }
+    }
+  },
+  {
+    "itemType": "SPEAKING_GUIDED_RESPONSE",
+    "request": {
+      "requestId": "lt:synthetic:eval:2:v1:r0",
+      "idempotencyKey": "lt:synthetic:eval:2:v1:r0",
+      "sessionId": 1,
+      "itemId": 2,
+      "itemType": "SPEAKING_GUIDED_RESPONSE",
+      "promptText": "Synthetic task",
+      "referenceText": "Synthetic reference",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "complexityBand": 3,
+      "maxDurationSeconds": 20,
+      "phraseHints": [
+        "Synthetic"
+      ],
+      "providedFacts": [
+        "Synthetic fact"
+      ],
+      "requiredIntents": [
+        "Synthetic intent"
+      ],
+      "responseConstraints": [
+        "One sentence"
+      ],
+      "manualRetryAttempt": 0
+    },
+    "providerOutput": {
+      "evaluationConfidence": 4,
+      "taskResponseStatus": "PARTIALLY_FULFILLED",
+      "metrics": [
+        {
+          "type": "pronunciation",
+          "state": "EVALUABLE",
+          "score": 0.8,
+          "confidence": 80,
+          "summary": "합성 요약",
+          "evidence": [
+            {
+              "message": "합성 근거"
+            }
+          ]
+        },
+        {
+          "type": "fluency",
+          "state": "EVALUABLE",
+          "score": 0.7,
+          "confidence": 80,
+          "summary": "합성 요약",
+          "evidence": [
+            {
+              "message": "합성 근거"
+            }
+          ]
+        },
+        {
+          "type": "grammar",
+          "state": "EVALUABLE",
+          "score": 0.6,
+          "confidence": 80,
+          "summary": "합성 요약",
+          "evidence": [
+            {
+              "message": "합성 근거"
+            }
+          ]
+        },
+        {
+          "type": "vocabulary",
+          "state": "EVALUABLE",
+          "score": 0.65,
+          "confidence": 80,
+          "summary": "합성 요약",
+          "evidence": [
+            {
+              "message": "합성 근거"
+            }
+          ]
+        },
+        {
+          "type": "taskfulfillment",
+          "state": "EVALUABLE",
+          "score": 0.75,
+          "confidence": 80,
+          "summary": "합성 요약",
+          "evidence": [
+            {
+              "message": "합성 근거"
+            }
+          ]
+        }
+      ],
+      "strengths": "합성 강점",
+      "improvements": [
+        {
+          "message": "합성 개선"
+        }
+      ],
+      "recommendedAnswers": "Synthetic improved answer"
+    },
+    "canonical": {
+      "evaluationConfidence": 0.8,
+      "taskResponseStatus": "PARTIAL",
+      "metrics": [
+        {
+          "type": "PRONUNCIATION",
+          "state": "EVALUATED",
+          "score": 80.0,
+          "confidence": 0.8,
+          "summary": "합성 요약",
+          "evidence": [
+            "합성 근거"
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "FLUENCY",
+          "state": "EVALUATED",
+          "score": 70.0,
+          "confidence": 0.8,
+          "summary": "합성 요약",
+          "evidence": [
+            "합성 근거"
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "GRAMMAR",
+          "state": "EVALUATED",
+          "score": 60.0,
+          "confidence": 0.8,
+          "summary": "합성 요약",
+          "evidence": [
+            "합성 근거"
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "VOCABULARY",
+          "state": "EVALUATED",
+          "score": 65.0,
+          "confidence": 0.8,
+          "summary": "합성 요약",
+          "evidence": [
+            "합성 근거"
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "TASK_FULFILLMENT",
+          "state": "EVALUATED",
+          "score": 75.0,
+          "confidence": 0.8,
+          "summary": "합성 요약",
+          "evidence": [
+            "합성 근거"
+          ],
+          "notEvaluableReason": null
+        }
+      ],
+      "strengths": [
+        "합성 강점"
+      ],
+      "improvements": [
+        "합성 개선"
+      ],
+      "recommendedAnswers": [
+        "Synthetic improved answer"
+      ]
+    },
+    "prompt": "Evaluate this single Level Test speaking response. Do not calculate a cross-item/domain score.\n\n{\"requestId\":\"lt:synthetic:eval:2:v1:r0\",\"idempotencyKey\":\"lt:synthetic:eval:2:v1:r0\",\"sessionId\":1,\"itemId\":2,\"itemType\":\"SPEAKING_GUIDED_RESPONSE\",\"promptText\":\"Synthetic task\",\"referenceText\":\"Synthetic reference\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"complexityBand\":3,\"maxDurationSeconds\":20,\"phraseHints\":[\"Synthetic\"],\"providedFacts\":[\"Synthetic fact\"],\"requiredIntents\":[\"Synthetic intent\"],\"responseConstraints\":[\"One sentence\"],\"manualRetryAttempt\":0,\"transcript\":{\"text\":\"Synthetic spoken answer\",\"language\":\"en\",\"confidence\":0.8187,\"isLowConfidence\":false,\"segments\":[{\"startMs\":0,\"endMs\":2000,\"text\":\"Synthetic spoken answer\",\"confidence\":0.8187307530779818}],\"metadata\":{\"provider\":\"synthetic-stt\",\"model\":\"synthetic-stt\",\"modelVersion\":\"synthetic-v1\",\"detectedLanguage\":\"en\",\"requestedLanguage\":\"en\",\"lowConfidenceThreshold\":0.55,\"audioDuration\":2.0,\"audioQualitySignals\":{\"rms\":0.1,\"peak\":0.2,\"silenceRatio\":0.0,\"sampleRate\":16000,\"channels\":1},\"normalizationVersion\":\"speaking-audio-normalization\",\"sttHintVersion\":\"speaking-stt-hint\"}},\"acousticQuality\":{\"rms\":0.1,\"peak\":0.2,\"silenceRatio\":0.0,\"sampleRate\":16000,\"channels\":1}}",
+    "response": {
+      "requestId": "lt:synthetic:eval:2:v1:r0",
+      "sessionId": 1,
+      "itemId": 2,
+      "domain": "SPEAKING",
+      "itemType": "SPEAKING_GUIDED_RESPONSE",
+      "evaluable": true,
+      "score": 71,
+      "confidence": 0.8,
+      "transcript": "Synthetic spoken answer",
+      "metrics": [
+        {
+          "type": "PRONUNCIATION",
+          "state": "EVALUATED",
+          "score": 80.0,
+          "confidence": 0.8,
+          "summary": "합성 요약",
+          "evidence": [
+            {
+              "message": "합성 근거"
+            }
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "FLUENCY",
+          "state": "EVALUATED",
+          "score": 70.0,
+          "confidence": 0.8,
+          "summary": "합성 요약",
+          "evidence": [
+            {
+              "message": "합성 근거"
+            }
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "GRAMMAR",
+          "state": "EVALUATED",
+          "score": 60.0,
+          "confidence": 0.8,
+          "summary": "합성 요약",
+          "evidence": [
+            {
+              "message": "합성 근거"
+            }
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "VOCABULARY",
+          "state": "EVALUATED",
+          "score": 65.0,
+          "confidence": 0.8,
+          "summary": "합성 요약",
+          "evidence": [
+            {
+              "message": "합성 근거"
+            }
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "TASK_FULFILLMENT",
+          "state": "EVALUATED",
+          "score": 75.0,
+          "confidence": 0.8,
+          "summary": "합성 요약",
+          "evidence": [
+            {
+              "message": "합성 근거"
+            }
+          ],
+          "notEvaluableReason": null
+        }
+      ],
+      "strengths": [
+        "합성 강점"
+      ],
+      "improvements": [
+        "합성 개선"
+      ],
+      "recommendedAnswers": [
+        "Synthetic improved answer"
+      ],
+      "detailedFeedback": [
+        {
+          "category": "PRONUNCIATION",
+          "severity": "IMPROVEMENT",
+          "original": null,
+          "corrected": null,
+          "explanation": "합성 요약"
+        },
+        {
+          "category": "PRONUNCIATION",
+          "severity": "IMPROVEMENT",
+          "original": null,
+          "corrected": null,
+          "explanation": "합성 근거"
+        },
+        {
+          "category": "FLUENCY",
+          "severity": "IMPROVEMENT",
+          "original": null,
+          "corrected": null,
+          "explanation": "합성 요약"
+        },
+        {
+          "category": "FLUENCY",
+          "severity": "IMPROVEMENT",
+          "original": null,
+          "corrected": null,
+          "explanation": "합성 근거"
+        },
+        {
+          "category": "GRAMMAR",
+          "severity": "IMPROVEMENT",
+          "original": null,
+          "corrected": null,
+          "explanation": "합성 요약"
+        },
+        {
+          "category": "GRAMMAR",
+          "severity": "IMPROVEMENT",
+          "original": null,
+          "corrected": null,
+          "explanation": "합성 근거"
+        },
+        {
+          "category": "VOCABULARY",
+          "severity": "IMPROVEMENT",
+          "original": null,
+          "corrected": null,
+          "explanation": "합성 요약"
+        },
+        {
+          "category": "VOCABULARY",
+          "severity": "IMPROVEMENT",
+          "original": null,
+          "corrected": null,
+          "explanation": "합성 근거"
+        },
+        {
+          "category": "TASK_FULFILLMENT",
+          "severity": "IMPROVEMENT",
+          "original": null,
+          "corrected": null,
+          "explanation": "합성 요약"
+        },
+        {
+          "category": "TASK_FULFILLMENT",
+          "severity": "IMPROVEMENT",
+          "original": null,
+          "corrected": null,
+          "explanation": "합성 근거"
+        },
+        {
+          "category": "TASK",
+          "severity": "IMPROVEMENT",
+          "original": null,
+          "corrected": null,
+          "explanation": "합성 개선"
+        }
+      ],
+      "assessmentSignals": [
+        {
+          "domain": "SPEAKING",
+          "metric": "PRONUNCIATION",
+          "score": 80.0,
+          "confidence": 0.8
+        },
+        {
+          "domain": "SPEAKING",
+          "metric": "FLUENCY",
+          "score": 70.0,
+          "confidence": 0.8
+        },
+        {
+          "domain": "SPEAKING",
+          "metric": "GRAMMAR",
+          "score": 60.0,
+          "confidence": 0.8
+        },
+        {
+          "domain": "SPEAKING",
+          "metric": "VOCABULARY",
+          "score": 65.0,
+          "confidence": 0.8
+        },
+        {
+          "domain": "SPEAKING",
+          "metric": "TASK_FULFILLMENT",
+          "score": 75.0,
+          "confidence": 0.8
+        }
+      ],
+      "reasonCode": null,
+      "evaluationVersion": "level-test-speaking-evaluation",
+      "promptVersion": "level-test-speaking-evaluation-prompt",
+      "usage": {
+        "latencyMs": 0,
+        "inputTokens": 17,
+        "outputTokens": 11,
+        "provider": "synthetic",
+        "model": "synthetic",
+        "promptVersion": "level-test-speaking-evaluation-prompt",
+        "evaluationVersion": "level-test-speaking-evaluation"
+      }
+    }
+  },
+  {
+    "itemType": "SPEAKING_SHORT_RESPONSE",
+    "request": {
+      "requestId": "lt:synthetic:eval:2:v1:r0",
+      "idempotencyKey": "lt:synthetic:eval:2:v1:r0",
+      "sessionId": 1,
+      "itemId": 2,
+      "itemType": "SPEAKING_SHORT_RESPONSE",
+      "promptText": "Synthetic task",
+      "referenceText": "Synthetic reference",
+      "originLanguage": "ko",
+      "learningLanguage": "en",
+      "complexityBand": 3,
+      "maxDurationSeconds": 20,
+      "phraseHints": [
+        "Synthetic"
+      ],
+      "providedFacts": [
+        "Synthetic fact"
+      ],
+      "requiredIntents": [
+        "Synthetic intent"
+      ],
+      "responseConstraints": [
+        "One sentence"
+      ],
+      "manualRetryAttempt": 0
+    },
+    "providerOutput": {
+      "evaluationConfidence": 4,
+      "taskResponseStatus": "REFUSAL",
+      "metrics": [
+        {
+          "type": "pronunciation",
+          "state": "EVALUABLE",
+          "score": 0.8,
+          "confidence": 80,
+          "summary": "합성 요약",
+          "evidence": [
+            {
+              "message": "합성 근거"
+            }
+          ]
+        },
+        {
+          "type": "fluency",
+          "state": "EVALUABLE",
+          "score": 0.7,
+          "confidence": 80,
+          "summary": "합성 요약",
+          "evidence": [
+            {
+              "message": "합성 근거"
+            }
+          ]
+        },
+        {
+          "type": "grammar",
+          "state": "EVALUABLE",
+          "score": 0.6,
+          "confidence": 80,
+          "summary": "합성 요약",
+          "evidence": [
+            {
+              "message": "합성 근거"
+            }
+          ]
+        },
+        {
+          "type": "vocabulary",
+          "state": "EVALUABLE",
+          "score": 0.65,
+          "confidence": 80,
+          "summary": "합성 요약",
+          "evidence": [
+            {
+              "message": "합성 근거"
+            }
+          ]
+        },
+        {
+          "type": "taskfulfillment",
+          "state": "EVALUABLE",
+          "score": 0.0,
+          "confidence": 80,
+          "summary": "합성 요약",
+          "evidence": [
+            {
+              "message": "합성 근거"
+            }
+          ]
+        }
+      ],
+      "strengths": "합성 강점",
+      "improvements": [
+        {
+          "message": "합성 개선"
+        }
+      ],
+      "recommendedAnswers": "Synthetic improved answer"
+    },
+    "canonical": {
+      "evaluationConfidence": 0.8,
+      "taskResponseStatus": "META_REFUSAL",
+      "metrics": [
+        {
+          "type": "PRONUNCIATION",
+          "state": "EVALUATED",
+          "score": 80.0,
+          "confidence": 0.8,
+          "summary": "합성 요약",
+          "evidence": [
+            "합성 근거"
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "FLUENCY",
+          "state": "EVALUATED",
+          "score": 70.0,
+          "confidence": 0.8,
+          "summary": "합성 요약",
+          "evidence": [
+            "합성 근거"
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "GRAMMAR",
+          "state": "EVALUATED",
+          "score": 60.0,
+          "confidence": 0.8,
+          "summary": "합성 요약",
+          "evidence": [
+            "합성 근거"
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "VOCABULARY",
+          "state": "EVALUATED",
+          "score": 65.0,
+          "confidence": 0.8,
+          "summary": "합성 요약",
+          "evidence": [
+            "합성 근거"
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "TASK_FULFILLMENT",
+          "state": "EVALUATED",
+          "score": 0.0,
+          "confidence": 0.8,
+          "summary": "합성 요약",
+          "evidence": [
+            "합성 근거"
+          ],
+          "notEvaluableReason": null
+        }
+      ],
+      "strengths": [
+        "합성 강점"
+      ],
+      "improvements": [
+        "합성 개선"
+      ],
+      "recommendedAnswers": [
+        "Synthetic improved answer"
+      ]
+    },
+    "prompt": "Evaluate this single Level Test speaking response. Do not calculate a cross-item/domain score.\n\n{\"requestId\":\"lt:synthetic:eval:2:v1:r0\",\"idempotencyKey\":\"lt:synthetic:eval:2:v1:r0\",\"sessionId\":1,\"itemId\":2,\"itemType\":\"SPEAKING_SHORT_RESPONSE\",\"promptText\":\"Synthetic task\",\"referenceText\":\"Synthetic reference\",\"originLanguage\":\"ko\",\"learningLanguage\":\"en\",\"complexityBand\":3,\"maxDurationSeconds\":20,\"phraseHints\":[\"Synthetic\"],\"providedFacts\":[\"Synthetic fact\"],\"requiredIntents\":[\"Synthetic intent\"],\"responseConstraints\":[\"One sentence\"],\"manualRetryAttempt\":0,\"transcript\":{\"text\":\"Synthetic spoken answer\",\"language\":\"en\",\"confidence\":0.8187,\"isLowConfidence\":false,\"segments\":[{\"startMs\":0,\"endMs\":2000,\"text\":\"Synthetic spoken answer\",\"confidence\":0.8187307530779818}],\"metadata\":{\"provider\":\"synthetic-stt\",\"model\":\"synthetic-stt\",\"modelVersion\":\"synthetic-v1\",\"detectedLanguage\":\"en\",\"requestedLanguage\":\"en\",\"lowConfidenceThreshold\":0.55,\"audioDuration\":2.0,\"audioQualitySignals\":{\"rms\":0.1,\"peak\":0.2,\"silenceRatio\":0.0,\"sampleRate\":16000,\"channels\":1},\"normalizationVersion\":\"speaking-audio-normalization\",\"sttHintVersion\":\"speaking-stt-hint\"}},\"acousticQuality\":{\"rms\":0.1,\"peak\":0.2,\"silenceRatio\":0.0,\"sampleRate\":16000,\"channels\":1}}",
+    "response": {
+      "requestId": "lt:synthetic:eval:2:v1:r0",
+      "sessionId": 1,
+      "itemId": 2,
+      "domain": "SPEAKING",
+      "itemType": "SPEAKING_SHORT_RESPONSE",
+      "evaluable": true,
+      "score": 10,
+      "confidence": 0.8,
+      "transcript": "Synthetic spoken answer",
+      "metrics": [
+        {
+          "type": "PRONUNCIATION",
+          "state": "EVALUATED",
+          "score": 80.0,
+          "confidence": 0.8,
+          "summary": "합성 요약",
+          "evidence": [
+            {
+              "message": "합성 근거"
+            }
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "FLUENCY",
+          "state": "EVALUATED",
+          "score": 70.0,
+          "confidence": 0.8,
+          "summary": "합성 요약",
+          "evidence": [
+            {
+              "message": "합성 근거"
+            }
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "GRAMMAR",
+          "state": "EVALUATED",
+          "score": 60.0,
+          "confidence": 0.8,
+          "summary": "합성 요약",
+          "evidence": [
+            {
+              "message": "합성 근거"
+            }
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "VOCABULARY",
+          "state": "EVALUATED",
+          "score": 65.0,
+          "confidence": 0.8,
+          "summary": "합성 요약",
+          "evidence": [
+            {
+              "message": "합성 근거"
+            }
+          ],
+          "notEvaluableReason": null
+        },
+        {
+          "type": "TASK_FULFILLMENT",
+          "state": "EVALUATED",
+          "score": 0.0,
+          "confidence": 0.8,
+          "summary": "합성 요약",
+          "evidence": [
+            {
+              "message": "합성 근거"
+            }
+          ],
+          "notEvaluableReason": null
+        }
+      ],
+      "strengths": [
+        "합성 강점"
+      ],
+      "improvements": [
+        "합성 개선"
+      ],
+      "recommendedAnswers": [
+        "Synthetic improved answer"
+      ],
+      "detailedFeedback": [
+        {
+          "category": "PRONUNCIATION",
+          "severity": "IMPROVEMENT",
+          "original": null,
+          "corrected": null,
+          "explanation": "합성 요약"
+        },
+        {
+          "category": "PRONUNCIATION",
+          "severity": "IMPROVEMENT",
+          "original": null,
+          "corrected": null,
+          "explanation": "합성 근거"
+        },
+        {
+          "category": "FLUENCY",
+          "severity": "IMPROVEMENT",
+          "original": null,
+          "corrected": null,
+          "explanation": "합성 요약"
+        },
+        {
+          "category": "FLUENCY",
+          "severity": "IMPROVEMENT",
+          "original": null,
+          "corrected": null,
+          "explanation": "합성 근거"
+        },
+        {
+          "category": "GRAMMAR",
+          "severity": "IMPROVEMENT",
+          "original": null,
+          "corrected": null,
+          "explanation": "합성 요약"
+        },
+        {
+          "category": "GRAMMAR",
+          "severity": "IMPROVEMENT",
+          "original": null,
+          "corrected": null,
+          "explanation": "합성 근거"
+        },
+        {
+          "category": "VOCABULARY",
+          "severity": "IMPROVEMENT",
+          "original": null,
+          "corrected": null,
+          "explanation": "합성 요약"
+        },
+        {
+          "category": "VOCABULARY",
+          "severity": "IMPROVEMENT",
+          "original": null,
+          "corrected": null,
+          "explanation": "합성 근거"
+        },
+        {
+          "category": "TASK_FULFILLMENT",
+          "severity": "IMPROVEMENT",
+          "original": null,
+          "corrected": null,
+          "explanation": "합성 요약"
+        },
+        {
+          "category": "TASK_FULFILLMENT",
+          "severity": "IMPROVEMENT",
+          "original": null,
+          "corrected": null,
+          "explanation": "합성 근거"
+        },
+        {
+          "category": "TASK",
+          "severity": "IMPROVEMENT",
+          "original": null,
+          "corrected": null,
+          "explanation": "합성 개선"
+        }
+      ],
+      "assessmentSignals": [
+        {
+          "domain": "SPEAKING",
+          "metric": "PRONUNCIATION",
+          "score": 80.0,
+          "confidence": 0.8
+        },
+        {
+          "domain": "SPEAKING",
+          "metric": "FLUENCY",
+          "score": 70.0,
+          "confidence": 0.8
+        },
+        {
+          "domain": "SPEAKING",
+          "metric": "GRAMMAR",
+          "score": 60.0,
+          "confidence": 0.8
+        },
+        {
+          "domain": "SPEAKING",
+          "metric": "VOCABULARY",
+          "score": 65.0,
+          "confidence": 0.8
+        },
+        {
+          "domain": "SPEAKING",
+          "metric": "TASK_FULFILLMENT",
+          "score": 0.0,
+          "confidence": 0.8
+        }
+      ],
+      "reasonCode": null,
+      "evaluationVersion": "level-test-speaking-evaluation",
+      "promptVersion": "level-test-speaking-evaluation-prompt",
+      "usage": {
+        "latencyMs": 0,
+        "inputTokens": 17,
+        "outputTokens": 11,
+        "provider": "synthetic",
+        "model": "synthetic",
+        "promptVersion": "level-test-speaking-evaluation-prompt",
+        "evaluationVersion": "level-test-speaking-evaluation"
+      }
+    }
+  }
+]

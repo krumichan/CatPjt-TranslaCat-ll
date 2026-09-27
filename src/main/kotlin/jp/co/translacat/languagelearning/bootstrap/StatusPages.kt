@@ -10,6 +10,7 @@ import jp.co.translacat.languagelearning.features.leveltest.domain.exception.Lev
 import jp.co.translacat.languagelearning.features.settings.domain.exception.SettingsPolicyNotInitializedException
 import jp.co.translacat.languagelearning.shared.error.LearningBusinessException
 import jp.co.translacat.languagelearning.shared.http.InternalApiError
+import jp.co.translacat.languagelearning.shared.identity.InvalidLearningPublicId
 import jp.co.translacat.languagelearning.shared.security.InternalAuthorizationException
 import kotlinx.coroutines.CancellationException
 
@@ -17,6 +18,15 @@ fun Application.configureStatusPages() {
     val logger = environment.log
 
     install(StatusPages) {
+        exception<InvalidLearningPublicId> { call, _ ->
+            call.respond(
+                HttpStatusCode.BadRequest,
+                InternalApiError(
+                    "LEARNING_ID_INVALID", "학습 식별자를 확인해 주세요.",
+                ),
+            )
+        }
+
         exception<LevelTestException> { call, cause ->
             call.respond(
                 HttpStatusCode.fromValue(cause.httpStatus),
@@ -90,9 +100,14 @@ fun Application.configureStatusPages() {
             }
 
             // SQL, 토큰, 연결 문자열, 사용자 본문 등 민감한 원문을 로그와 응답에 노출하지 않는다.
+            val source = cause.stackTrace.firstOrNull {
+                it.className.startsWith("jp.co.translacat.languagelearning")
+            }
             logger.error(
-                "Unhandled settings request failure. type={}",
+                "Unhandled settings request failure. type={} source={} line={}",
                 cause.javaClass.name,
+                source?.className?.substringAfterLast('.'),
+                source?.lineNumber,
             )
 
             call.respond(

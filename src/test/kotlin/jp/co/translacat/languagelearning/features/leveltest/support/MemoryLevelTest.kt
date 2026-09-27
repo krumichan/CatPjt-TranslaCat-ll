@@ -29,6 +29,15 @@ internal class MemoryLevelTest : LevelTestUnitOfWork {
     override suspend fun <T> read(block: LevelTestTransaction.() -> T): T = mutex.withLock { block(scope()) }
     private fun scope() = object : LevelTestTransaction {
         override val records = repo;
+        override val history = object : LevelGenerationHistoryRepository {
+            override fun context(
+                userId: Long, learningLanguage: String, current: List<LevelItem>, recent: List<LevelItem>,
+                now: LocalDateTime,
+            ) =
+                LevelGenerationHistory.context(current, recent, emptyList(), now)
+
+            override fun register(session: LevelSession, item: LevelItem, now: LocalDateTime) = Unit
+        }
         override val nowUtc get() = now
     }
 

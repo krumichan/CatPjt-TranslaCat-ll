@@ -7,6 +7,7 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import jp.co.translacat.languagelearning.features.keyword.api.dto.*
+import jp.co.translacat.languagelearning.features.keyword.application.KeywordLearningFacts
 import jp.co.translacat.languagelearning.features.keyword.application.KeywordOperations
 import jp.co.translacat.languagelearning.shared.error.LearningBusinessException
 import jp.co.translacat.languagelearning.shared.security.InternalAuthorizationException
@@ -15,14 +16,15 @@ import jp.co.translacat.languagelearning.shared.security.KeywordPrincipal
 import java.time.LocalDate
 import java.time.format.DateTimeParseException
 
-internal fun Route.keywordRoutes(operations: KeywordOperations) {
+internal fun Route.keywordRoutes(operations: KeywordOperations, facts: KeywordLearningFacts) {
     authenticate(KEYWORD_AUTH) {
         route("/internal/v1/language-learning/keywords") {
             get {
                 val caller = call.caller()
                 call.respond(
                     operations.list(
-                        caller.user.userId, caller.hasStartedLearning, call.request.header("X-TranslaCat-Locale"),
+                        caller.user.userId, facts.hasStartedLearning(caller.user.userId),
+                        call.request.header("X-TranslaCat-Locale"),
                     ).toResponse(),
                 )
             }
@@ -31,7 +33,9 @@ internal fun Route.keywordRoutes(operations: KeywordOperations) {
                 val request = call.receive<KeywordCreateRequestDto>()
                 call.respond(
                     HttpStatusCode.Created,
-                    operations.createCustom(caller.user.userId, caller.hasStartedLearning, request.toChange())
+                    operations.createCustom(
+                        caller.user.userId, facts.hasStartedLearning(caller.user.userId), request.toChange(),
+                    )
                         .toResponse(),
                 )
             }
@@ -41,13 +45,15 @@ internal fun Route.keywordRoutes(operations: KeywordOperations) {
                 val request = call.receive<KeywordUpdateRequestDto>()
                 call.respond(
                     operations.updateCustom(
-                        caller.user.userId, caller.hasStartedLearning, id, request.toChange(),
+                        caller.user.userId, facts.hasStartedLearning(caller.user.userId), id, request.toChange(),
                     ).toResponse(),
                 )
             }
             delete("/custom/{keywordId}") {
                 val caller = call.caller()
-                operations.deleteCustom(caller.user.userId, caller.hasStartedLearning, call.keywordId())
+                operations.deleteCustom(
+                    caller.user.userId, facts.hasStartedLearning(caller.user.userId), call.keywordId(),
+                )
                 call.respond(true)
             }
             put("/system/{keywordId}/selection") {
@@ -56,7 +62,7 @@ internal fun Route.keywordRoutes(operations: KeywordOperations) {
                 val request = call.receive<SystemKeywordSelectionRequestDto>()
                 call.respond(
                     operations.selectSystem(
-                        caller.user.userId, caller.hasStartedLearning, id, request.selected,
+                        caller.user.userId, facts.hasStartedLearning(caller.user.userId), id, request.selected,
                     ).toResponse(),
                 )
             }
@@ -70,7 +76,7 @@ internal fun Route.keywordRoutes(operations: KeywordOperations) {
                 call.respond(
                     KeywordCandidatesDto(
                         operations.candidates(
-                            caller.user.userId, caller.hasStartedLearning, date,
+                            caller.user.userId, facts.hasStartedLearning(caller.user.userId), date,
                         ).map { it.toResponse() },
                     ),
                 )
