@@ -46,6 +46,13 @@ class DatabaseFactory(settings: DatabaseSettings) : AutoCloseable {
         }
     }
 
+    /** 배포 readiness는 파일/설정 존재가 아니라 현재 DB 연결을 확인한다. */
+    fun isReady(): Boolean = try {
+        dataSource.connection.use { it.isValid(2) }
+    } catch (_: Exception) {
+        false
+    }
+
     override fun close() {
         if (closed.compareAndSet(false, true)) {
             dataSource.close()

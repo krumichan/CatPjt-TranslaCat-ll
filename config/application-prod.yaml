@@ -6,13 +6,13 @@ database:
   username: ${DB_USERNAME}
   password: ${DB_PASSWORD}
 
-  maximumPoolSize: ${DB_MAX_POOL_SIZE:10}
-  minimumIdle: ${DB_MIN_IDLE:2}
+  maximumPoolSize: ${DB_MAX_POOL_SIZE:4}
+  minimumIdle: ${DB_MIN_IDLE:0}
   connectionTimeoutMs: ${DB_CONNECTION_TIMEOUT_MS:5000}
 
   # 별도 배포 migration 작업을 두는 경우, 적용 후 DB_MIGRATION_MODE=validate로 운용한다.
   migrations:
-    mode: ${DB_MIGRATION_MODE:migrate}
+    mode: ${DB_MIGRATION_MODE:validate}
 
 internalApi:
   enabled: ${LL_INTERNAL_API_ENABLED:true}
@@ -34,3 +34,22 @@ levelTest:
   aiTimeoutSeconds: ${LL_LEVEL_TEST_AI_TIMEOUT_SECONDS:180}
   aiConcurrency: ${LL_LEVEL_TEST_AI_CONCURRENCY:2}
   prefetchEnabled: ${LL_LEVEL_TEST_PREFETCH_ENABLED:true}
+
+# 운영 기능을 명시적으로 연결한다. LL은 DB 작업 상태를 사용하며 Redis를 만들지 않는다.
+growth:
+  enabled: true
+writing:
+  enabled: true
+practice:
+  enabled: true
+  generationTier: SOL
+listening:
+  enabled: true
+speaking:
+  enabled: true
+  ttsModel: ${LL_SPEAKING_TTS_MODEL}
+  audio:
+    storage: local
+    directory: /app/data/speaking
+overview:
+  enabled: true

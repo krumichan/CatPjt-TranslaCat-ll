@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "service": "ll",
+  "public_url": "https://150.230.61.24:8443",
+  "timezone": "REPLACE_VERIFIED_RUNTIME_TIME_ZONE",
+  "database": {
+    "host": "10.0.2.10",
+    "port": 3306,
+    "name": "translacat_ll",
+    "username": "translacat_ll_app",
+    "password": "REPLACE_RUNTIME_DB_PASSWORD",
+    "migration_username": "translacat_ll_migrator",
+    "migration_password": "REPLACE_MIGRATION_DB_PASSWORD"
+  },
+  "ai_url": "https://161.33.34.50:8443",
+  "ai_api_key": "REPLACE_AI_KEY_MATCHING_AI_SERVER",
+  "mysql_ca_pem": "FILLED_BY_COMPLETE_RUNTIME_CONFIG_TOOL",
+  "service_ca_pem": "FILLED_BY_COMPLETE_RUNTIME_CONFIG_TOOL",
+  "expected_mysql_ca_sha256": "FILLED_BY_COMPLETE_RUNTIME_CONFIG_TOOL",
+  "allow_app_rollback_after_migration": false,
+  "internal_jwt_key_base64": "REPLACE_BE_LL_SHARED_BASE64_KEY",
+  "audio_base_url": "https://150.230.61.24:8443",
+  "tts_model": "REPLACE_EXISTING_AI_TTS_MODEL",
+  "expected_vm_private_ip": "10.0.1.10"
+}
