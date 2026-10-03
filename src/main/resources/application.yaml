@@ -4,3 +4,4 @@ ktor:
   application:
     modules:
       - jp.co.translacat.languagelearning.ApplicationKt.module
+    startupTimeoutMillis: 60000
