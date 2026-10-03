@@ -236,6 +236,17 @@ def wait_ready(service, seconds=300):
         time.sleep(3)
     return False
 
+def migration_failure_diagnostic(name):
+    """Return only MigrationMain's allowlisted exception class; never forward raw container logs."""
+    try:
+        p=subprocess.run(['docker','logs',name],stdout=subprocess.PIPE,stderr=subprocess.PIPE,
+            timeout=15,text=True)
+    except (subprocess.TimeoutExpired,OSError):
+        return None
+    combined=(p.stdout or '')+'\n'+(p.stderr or '')
+    matches=re.findall(r'(?m)^LL_MIGRATION_FAILED:\s*([A-Za-z][A-Za-z0-9_.$]{0,127})\s*$',combined)
+    return matches[-1] if matches else None
+
 def assert_vm_role(c):
     # IMDS read only; abort before migrations if Secrets select the wrong OCI VM.
     try:
@@ -294,7 +305,12 @@ def deploy(c, image, sha, release_id, token_path):
             try: code=run(['docker','wait',migration_name],timeout=960).strip()
             except DeployError:
                 run(['docker','stop','-t','15',migration_name]); raise
-            need(code=='0','MIGRATION_FAILED:CHECK_PRIVILEGES_OR_SCHEMA;NO_DATABASE_ROLLBACK')
+            if code!='0':
+                if c['service']=='ll':
+                    diagnostic=migration_failure_diagnostic(migration_name)
+                    if diagnostic:
+                        print('LL_MIGRATION_FAILED: '+diagnostic,file=sys.stderr)
+                raise DeployError('MIGRATION_FAILED:CHECK_PRIVILEGES_OR_SCHEMA;NO_DATABASE_ROLLBACK')
             migration_done=True
             run(['docker','rm',migration_name])
             shutil.rmtree(mig)

@@ -161,7 +161,21 @@ class ReleaseTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as td,patch.object(d.os,'geteuid',return_value=0):
             with self.assertRaises(d.DeployError): d.deploy(config(),'image:latest',SHA,RID,Path(td)/'token')
 
+    def test_failed_ll_migration_emits_only_allowlisted_diagnostic(self):
+        with patch.object(d,'migration_failure_diagnostic',return_value='PoolInitializationException') as diagnostic,\
+             patch('builtins.print') as output:
+            self.exercise(db_exit='1')
+        diagnostic.assert_called_once()
+        rendered=[' '.join(str(a) for a in call.args) for call in output.call_args_list]
+        self.assertIn('LL_MIGRATION_FAILED: PoolInitializationException',rendered)
+
 class SourceContracts(unittest.TestCase):
+    def test_migration_diagnostic_does_not_forward_raw_logs(self):
+        raw='password=DO_NOT_PRINT\nLL_MIGRATION_FAILED: FlywayException\njdbc:mysql://secret.internal'
+        result=subprocess.CompletedProcess(['docker','logs'],1,stdout=raw,stderr='token=DO_NOT_PRINT')
+        with patch.object(d.subprocess,'run',return_value=result):
+            self.assertEqual(d.migration_failure_diagnostic('migration'),'FlywayException')
+
     def test_entrypoint_no_eval(self):
         s=(HERE/'entrypoint.sh').read_text();self.assertNotIn('eval ',s);self.assertNotIn('source /run',s)
     def test_transport_strict_host_and_no_agent_forwarding(self):
