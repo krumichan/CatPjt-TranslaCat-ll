@@ -3,7 +3,28 @@ package jp.co.translacat.languagelearning.bootstrap
 import jp.co.translacat.languagelearning.shared.persistence.DatabaseFactory
 import jp.co.translacat.languagelearning.shared.persistence.DatabaseSettings
 import jp.co.translacat.languagelearning.shared.persistence.MigrationMode
+import java.sql.SQLException
 import kotlin.system.exitProcess
+
+private val safeSqlStatePattern = Regex("[A-Za-z0-9]{5}")
+
+/** 실패 메시지/URL/비밀번호는 노출하지 않고 예외 타입과 JDBC 메타데이터만 진단한다. */
+internal fun migrationFailureDiagnosticLines(failure: Throwable): List<String> {
+    val lines = mutableListOf("LL_MIGRATION_FAILED: ${failure.javaClass.simpleName}")
+    var cause = failure.cause
+    var index = 1
+    while (cause != null && index <= 8) {
+        lines += "LL_MIGRATION_CAUSE_$index: ${cause.javaClass.simpleName}"
+        if (cause is SQLException) {
+            val sqlState = cause.sqlState?.takeIf { safeSqlStatePattern.matches(it) } ?: "UNKNOWN"
+            lines += "LL_MIGRATION_SQLSTATE_$index: $sqlState"
+            lines += "LL_MIGRATION_SQLCODE_$index: ${cause.errorCode}"
+        }
+        cause = cause.cause
+        index++
+    }
+    return lines
+}
 
 /** 승인된 배포 작업 전용. API와 AI 작업자를 시작하지 않는다. */
 fun main() {
@@ -22,8 +43,7 @@ fun main() {
         )
         DatabaseFactory(settings).use { println("LL_MIGRATION_COMPLETE") }
     } catch (failure: Exception) {
-        // SQL/비밀번호를 포함할 수 있는 예외 메시지를 외부 로그에 전달하지 않는다.
-        System.err.println("LL_MIGRATION_FAILED: ${failure.javaClass.simpleName}")
+        migrationFailureDiagnosticLines(failure).forEach(System.err::println)
         exitProcess(1)
     }
 }

@@ -162,19 +162,29 @@ class ReleaseTests(unittest.TestCase):
             with self.assertRaises(d.DeployError): d.deploy(config(),'image:latest',SHA,RID,Path(td)/'token')
 
     def test_failed_ll_migration_emits_only_allowlisted_diagnostic(self):
-        with patch.object(d,'migration_failure_diagnostic',return_value='PoolInitializationException') as diagnostic,\
+        safe=['LL_MIGRATION_FAILED: PoolInitializationException',
+            'LL_MIGRATION_CAUSE_1: CommunicationsException','LL_MIGRATION_SQLSTATE_1: 08S01']
+        with patch.object(d,'migration_failure_diagnostics',return_value=safe) as diagnostic,\
              patch('builtins.print') as output:
             self.exercise(db_exit='1')
         diagnostic.assert_called_once()
         rendered=[' '.join(str(a) for a in call.args) for call in output.call_args_list]
-        self.assertIn('LL_MIGRATION_FAILED: PoolInitializationException',rendered)
+        for line in safe: self.assertIn(line,rendered)
 
 class SourceContracts(unittest.TestCase):
     def test_migration_diagnostic_does_not_forward_raw_logs(self):
-        raw='password=DO_NOT_PRINT\nLL_MIGRATION_FAILED: FlywayException\njdbc:mysql://secret.internal'
+        raw=('password=DO_NOT_PRINT\nLL_MIGRATION_FAILED: PoolInitializationException\n'
+            'LL_MIGRATION_CAUSE_1: SQLException\nLL_MIGRATION_SQLSTATE_1: 28000\n'
+            'LL_MIGRATION_SQLCODE_1: 1045\njdbc:mysql://secret.internal\n'
+            'LL_MIGRATION_CAUSE_9: ShouldNotPass\nLL_MIGRATION_SQLSTATE_2: TOO_LONG')
         result=subprocess.CompletedProcess(['docker','logs'],1,stdout=raw,stderr='token=DO_NOT_PRINT')
         with patch.object(d.subprocess,'run',return_value=result):
-            self.assertEqual(d.migration_failure_diagnostic('migration'),'FlywayException')
+            self.assertEqual(d.migration_failure_diagnostics('migration'),[
+                'LL_MIGRATION_FAILED: PoolInitializationException',
+                'LL_MIGRATION_CAUSE_1: SQLException',
+                'LL_MIGRATION_SQLSTATE_1: 28000',
+                'LL_MIGRATION_SQLCODE_1: 1045',
+            ])
 
     def test_entrypoint_no_eval(self):
         s=(HERE/'entrypoint.sh').read_text();self.assertNotIn('eval ',s);self.assertNotIn('source /run',s)

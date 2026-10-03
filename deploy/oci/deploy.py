@@ -236,16 +236,28 @@ def wait_ready(service, seconds=300):
         time.sleep(3)
     return False
 
-def migration_failure_diagnostic(name):
-    """Return only MigrationMain's allowlisted exception class; never forward raw container logs."""
+def migration_failure_diagnostics(name):
+    """Return only allowlisted MigrationMain diagnostics; never forward raw container logs."""
     try:
         p=subprocess.run(['docker','logs',name],stdout=subprocess.PIPE,stderr=subprocess.PIPE,
             timeout=15,text=True)
     except (subprocess.TimeoutExpired,OSError):
-        return None
+        return []
     combined=(p.stdout or '')+'\n'+(p.stderr or '')
-    matches=re.findall(r'(?m)^LL_MIGRATION_FAILED:\s*([A-Za-z][A-Za-z0-9_.$]{0,127})\s*$',combined)
-    return matches[-1] if matches else None
+    patterns=(
+        r'LL_MIGRATION_FAILED: [A-Za-z][A-Za-z0-9_.$]{0,127}',
+        r'LL_MIGRATION_CAUSE_[1-8]: [A-Za-z][A-Za-z0-9_.$]{0,127}',
+        r'LL_MIGRATION_SQLSTATE_[1-8]: (?:[A-Za-z0-9]{5}|UNKNOWN)',
+        r'LL_MIGRATION_SQLCODE_[1-8]: -?[0-9]{1,10}',
+    )
+    diagnostics=[]
+    for raw in combined.splitlines():
+        line=raw.strip()
+        if any(re.fullmatch(pattern,line) for pattern in patterns):
+            diagnostics.append(line)
+            if len(diagnostics)>=25:
+                break
+    return diagnostics
 
 def assert_vm_role(c):
     # IMDS read only; abort before migrations if Secrets select the wrong OCI VM.
@@ -307,9 +319,8 @@ def deploy(c, image, sha, release_id, token_path):
                 run(['docker','stop','-t','15',migration_name]); raise
             if code!='0':
                 if c['service']=='ll':
-                    diagnostic=migration_failure_diagnostic(migration_name)
-                    if diagnostic:
-                        print('LL_MIGRATION_FAILED: '+diagnostic,file=sys.stderr)
+                    for diagnostic in migration_failure_diagnostics(migration_name):
+                        print(diagnostic,file=sys.stderr)
                 raise DeployError('MIGRATION_FAILED:CHECK_PRIVILEGES_OR_SCHEMA;NO_DATABASE_ROLLBACK')
             migration_done=True
             run(['docker','rm',migration_name])
