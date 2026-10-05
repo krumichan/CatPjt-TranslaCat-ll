@@ -1,6 +1,7 @@
 package jp.co.translacat.languagelearning.features.writing.infrastructure.persistence.repository
 
 import jp.co.translacat.languagelearning.features.writing.domain.model.WritingAnswer
+import jp.co.translacat.languagelearning.features.writing.domain.model.WritingAnswerEvidence
 import jp.co.translacat.languagelearning.features.writing.domain.model.WritingAttemptView
 import jp.co.translacat.languagelearning.features.writing.domain.model.WritingEvaluationStatus
 import jp.co.translacat.languagelearning.features.writing.domain.model.WritingEvaluationView
@@ -24,9 +25,10 @@ internal class ExposedWritingAnswerRepository(private val requireTransaction: ()
         }.orderBy(Answers.attemptDate).map { answer ->
             val evaluation = Evaluations.selectAll().where {
                 (Evaluations.userId eq userId) and (Evaluations.answerId eq answer[Answers.id])
-            }.singleOrNull() ?: error("WRITING_EVALUATION_MISSING")
-            val status = WritingEvaluationStatus.valueOf(evaluation[Evaluations.status])
-            val result = if (status == WritingEvaluationStatus.SUCCESS) WritingEvaluationView(
+            }.singleOrNull()
+            // 평가 행이 없는 조회는 원문과 null 상태로 표시한다. 쓰기 경로의 필수 평가 계약은 바꾸지 않는다.
+            val status = evaluation?.let { WritingEvaluationStatus.valueOf(it[Evaluations.status]) }
+            val result = if (evaluation != null && status == WritingEvaluationStatus.SUCCESS) WritingEvaluationView(
                 evaluation[Evaluations.id], evaluation[Evaluations.evaluationContext],
                 checkNotNull(evaluation[Evaluations.overallScore]),
                 checkNotNull(evaluation[Evaluations.meaningScore]),
@@ -45,11 +47,13 @@ internal class ExposedWritingAnswerRepository(private val requireTransaction: ()
                 checkNotNull(evaluation[Evaluations.evaluatedAt]),
             ) else null
             WritingAttemptView(
-                WritingAnswer(
+                WritingAnswerEvidence(
                     answer[Answers.id], itemId, userId,
                     answer[Answers.attemptDate], answer[Answers.answerText], status,
                 ),
-                answer[Answers.submittedAt], evaluation[Evaluations.failureMessage], result,
+                answer[Answers.submittedAt],
+                evaluation?.get(Evaluations.failureMessage) ?: if (evaluation == null) "WRITING_EVALUATION_MISSING" else null,
+                result,
             )
         }
     }

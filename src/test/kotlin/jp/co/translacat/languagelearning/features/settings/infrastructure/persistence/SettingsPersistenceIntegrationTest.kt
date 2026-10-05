@@ -12,6 +12,8 @@ import jp.co.translacat.languagelearning.support.LocalScratchMysql
 import kotlinx.coroutines.*
 import java.sql.SQLException
 import java.time.*
+import java.util.concurrent.CountDownLatch
+import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.test.*
 
@@ -228,6 +230,67 @@ class SettingsPersistenceIntegrationTest {
             assertEquals(16, results.map { it.id }.distinct().size)
         }
         assertEquals(16L, scalar(db, "SELECT COUNT(*) FROM language_learning_user_setting"))
+    }
+
+    @Test
+    fun newOwnersCreateWithoutMissingRowGapDeadlock() = withDatabase { db, factory, _ ->
+        // 준비: 서로 다른 owner의 빈 설정 조회가 모두 끝난 뒤 동시에 INSERT한다.
+        // 테스트에서는 첫 시도만 관측하여 교착이 재시도로 우연히 숨겨지지 않게 한다.
+        val work = ExposedSettingsUnitOfWork(
+            JdbcTransactionRunner(factory.database, 2, maximumLockAttempts = 1), clock,
+        )
+        val missingRowsObserved = CountDownLatch(2)
+
+        // 실행: 실제 MySQL의 동일한 비어 있는 unique-index 구간을 두 owner가 사용한다.
+        val results = runBlocking {
+            withTimeout(30_000) {
+                listOf(101L, 102L).map { userId ->
+                    async {
+                        work.execute {
+                            learners.ensureAndLock(userId, nowUtc).requireActive()
+                            assertNull(userSettings.findForUser(userId))
+                            missingRowsObserved.countDown()
+                            check(missingRowsObserved.await(10, TimeUnit.SECONDS))
+                            userSettings.create(NewUserSettings.fromPolicy(userId, policies.loadInitialPolicy(), nowUtc))
+                        }
+                    }
+                }.awaitAll()
+            }
+        }
+
+        // 검증: owner·생성 ID를 섞지 않고 두 행을 각각 한 번 저장한다.
+        assertEquals(setOf(101L, 102L), results.map { it.userId }.toSet())
+        assertEquals(2, results.map { it.id }.toSet().size)
+        assertEquals(2L, scalar(db, "SELECT COUNT(*) FROM language_learning_user_setting"))
+    }
+
+    @Test
+    fun sameOwnerUpdatesRemainSerializedWithoutLostChanges() = withDatabase { db, _, work ->
+        // 준비: 같은 owner의 기존 설정을 두 요청이 갱신한다.
+        runBlocking { GetOrCreateUserSettings(work).execute(123) }
+        val start = CompletableDeferred<Unit>()
+
+        // 실행: learner 행 잠금을 유지한 상태에서 최신 값을 읽고 변경한다.
+        val results = runBlocking {
+            val calls = (1..2).map {
+                async {
+                    start.await()
+                    work.execute {
+                        learners.ensureAndLock(123, nowUtc).requireActive()
+                        val current = checkNotNull(userSettings.findForUser(123))
+                        userSettings.save(current.copy(dailySentenceCount = current.dailySentenceCount + 1))
+                    }
+                }
+            }
+            start.complete(Unit)
+            withTimeout(30_000) { calls.awaitAll() }
+        }
+
+        // 검증: 두 변경 모두 반영되며 같은 설정 ID/owner가 보존된다.
+        assertEquals(setOf(6, 7), results.map { it.dailySentenceCount }.toSet())
+        assertEquals(1, results.map { it.id }.toSet().size)
+        assertTrue(results.all { it.userId == 123L })
+        assertEquals(7L, scalar(db, "SELECT daily_sentence_count FROM language_learning_user_setting WHERE user_id=123"))
     }
 
     @Test

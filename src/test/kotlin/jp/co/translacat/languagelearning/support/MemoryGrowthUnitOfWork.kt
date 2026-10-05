@@ -12,6 +12,20 @@ import java.time.LocalDate
 /** 저장소만 대체한다. projector와 트랜잭션 정책은 실제 코드를 실행한다. */
 internal class MemoryGrowthUnitOfWork : GrowthUnitOfWork {
     class State : GrowthRepository {
+        val learningEvidenceRows = linkedMapOf<Long, List<LearningEvidenceRecord>>()
+        override fun learningEvidence(filter: LearningEvidenceFilter): List<LearningEvidenceRecord> =
+            learningEvidenceRows[filter.userId].orEmpty().filter { row ->
+                row.learningDate in filter.from..filter.to &&
+                    (filter.source == null || row.source == filter.source) &&
+                    (filter.learningLanguage == null || row.learningLanguage == filter.learningLanguage) &&
+                    (filter.resultKind == null || row.resultKind == filter.resultKind) &&
+                    (filter.policyVersion == null || row.policyVersion == filter.policyVersion) &&
+                    (filter.after == null || row.learningDate < filter.after.date ||
+                        row.learningDate == filter.after.date && (row.source > filter.after.source ||
+                            row.source == filter.after.source && row.id < filter.after.id))
+            }.sortedWith(compareByDescending<LearningEvidenceRecord> { it.learningDate }
+                .thenBy { it.source }.thenByDescending { it.id }).take(filter.limit)
+
         val profiles = linkedMapOf<Long, GrowthProfile>()
         val masteries = linkedMapOf<Pair<Long, String>, KeywordMastery>()
         val signals = linkedMapOf<Triple<Long, String, String>, GrowthSignal>()
@@ -22,6 +36,7 @@ internal class MemoryGrowthUnitOfWork : GrowthUnitOfWork {
         val inactive = mutableSetOf<Long>()
         var nextId = 1L
         fun copy(): State = State().also {
+            it.learningEvidenceRows.putAll(learningEvidenceRows)
             it.profiles.putAll(profiles); it.masteries.putAll(masteries); it.signals.putAll(signals)
             it.evidence.putAll(evidence); it.activities.putAll(activities); it.metricRows.putAll(metricRows)
             it.revisions.putAll(revisions)

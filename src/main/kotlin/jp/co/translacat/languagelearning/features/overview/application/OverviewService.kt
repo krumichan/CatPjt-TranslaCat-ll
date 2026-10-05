@@ -26,6 +26,8 @@ internal class OverviewService(
     private val levelDetail: suspend (Long, Long) -> JsonElement,
     private val writingDetail: suspend (Long, Long) -> JsonElement,
 ) {
+    val evidenceQuery = LearningEvidenceQuery(growth)
+
     suspend fun dashboard(
         userId: Long, from: LocalDate?, to: LocalDate?, rawSource: String?, task: ListeningTaskType?,
     ): JsonObject {

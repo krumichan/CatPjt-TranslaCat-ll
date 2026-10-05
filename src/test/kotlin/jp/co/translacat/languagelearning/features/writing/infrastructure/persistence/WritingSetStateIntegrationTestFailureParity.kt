@@ -37,7 +37,8 @@ class WritingSetStateIntegrationTestFailureParity {
                     val set = generation.getOrCreate(
                         NewWritingSet(
                             userId, today, WritingType.FREE,
-                            "evaluation-failure-$name", 1, "{}",
+                            "evaluation-failure-$name", 1,
+                            """{"originLanguage":"ko","learningLanguage":"en"}""",
                         ),
                     )
                     val claim = assertNotNull(generation.claimNext(userId, set.id))

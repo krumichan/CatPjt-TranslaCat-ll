@@ -70,8 +70,15 @@ internal fun Route.writingPreparedRoutes(
                 )
                 return@post
             }
-            // 같은 날짜·유형의 요청은 먼저 저장된 snapshot을 유지하고 중복 dispatch는 lease가 막는다.
-            val set = createSet(userId, type)
+            // 기존 세트의 재요청은 snapshot을 유지하고, 신규 경로가 선점한 날짜·유형은 충돌로 돌려준다.
+            val set = try {
+                createSet(userId, type)
+            } catch (failure: IllegalArgumentException) {
+                if (failure.message != "WRITING_POLICY_CONFLICT") throw failure
+                call.respond(HttpStatusCode.Conflict,
+                    InternalApiError("WRITING_POLICY_CONFLICT", "같은 날짜와 유형의 Writing 세트가 이미 있습니다."))
+                return@post
+            }
             if (set.status == WritingSetStatus.GENERATING) {
                 val stored = Json.parseToJsonElement(set.snapshotJson).jsonObject
                 val app = call.application

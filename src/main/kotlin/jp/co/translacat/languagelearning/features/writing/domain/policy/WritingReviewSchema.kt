@@ -1,5 +1,6 @@
 package jp.co.translacat.languagelearning.features.writing.domain.policy
 
+import jp.co.translacat.languagelearning.features.writing.domain.model.WritingType
 import kotlinx.serialization.json.*
 
 /** 현재 Python Pydantic 계약을 LL 리소스와 문항별 근거 ID로 구성한다. */
@@ -10,6 +11,7 @@ internal object WritingReviewSchema {
         contentHash: String,
         revisionHash: String? = null,
         recoveryHash: String? = null,
+        writingType: WritingType = WritingType.TRANSLATION,
     ): JsonObject {
         require(candidateId.length in 1..100)
         require(Regex("[a-f0-9]{64}").matches(contentHash))
@@ -37,6 +39,38 @@ internal object WritingReviewSchema {
         schema = schema.putAt(
             listOf("\$defs", "ProductionDemandCheck", "properties", "evidenceSegmentIds", "items", "enum"),
             enum(taskIds),
+        )
+        // 파서의 기존 code/status/gap 결합과 확정 상태의 근거 요구를 Provider Schema에도 표현한다.
+        val demand = schema.jsonObject.getValue("\$defs").jsonObject.getValue("ProductionDemandCheck").jsonObject
+        val demandVariants = listOf(
+            "SCOPE_INTERACTION" to "RELATIONS_NOT_INTERDEPENDENT",
+            "PRECISE_STANCE" to "SCOPE_TOO_ROUTINE",
+            "COHERENT_REGISTER" to "REGISTER_NOT_INTEGRATED",
+        ).flatMap { (code, gap) ->
+            listOf("PRESENT", "MISSING", "UNSURE").map { status ->
+                var properties: JsonElement = demand.getValue("properties")
+                properties = properties.putAt(listOf("code", "enum"), enum(code))
+                properties = properties.putAt(listOf("status", "enum"), enum(status))
+                properties = properties.putAt(listOf("gapCode"), if (status == "PRESENT") buildJsonObject {
+                    put("anyOf", buildJsonArray {
+                        add(buildJsonObject { put("type", "string"); put("enum", enum(gap)) })
+                        add(buildJsonObject { put("type", "null") })
+                    })
+                } else buildJsonObject { put("type", "null") })
+                properties = properties.putAt(
+                    listOf("evidenceSegmentIds", "minItems"), JsonPrimitive(if (status == "UNSURE") 0 else 1),
+                )
+                buildJsonObject {
+                    put("type", "object")
+                    put("properties", properties)
+                    put("required", demand.getValue("required"))
+                    put("additionalProperties", false)
+                }
+            }
+        }
+        schema = schema.putAt(
+            listOf("\$defs", "ProductionDemandCheck"),
+            buildJsonObject { put("anyOf", JsonArray(demandVariants)) },
         )
 
         // 보정본과 원문 복구본의 추가 증거는 각각 별도 결합값으로 제한한다.
@@ -80,7 +114,56 @@ internal object WritingReviewSchema {
                 buildJsonObject { put("anyOf", JsonArray(variants)) },
             )
         }
+        // 유형별 실제 과제 관측을 band 앞에 요구한다. 기존 판정·보정·복구 Schema는 그대로 결합한다.
+        val observation = when (writingType) {
+            WritingType.FREE -> "contentChoiceObservation" to buildJsonObject {
+                put("status", buildJsonObject {
+                    put("type", "string")
+                    put("enum", enum(listOf("SUBSTANTIVE_CHOICE", "EXPRESSION_ONLY", "UNSURE")))
+                })
+                put("choiceDescription", observedText())
+                put("evidenceSegmentIds", observationIds(taskIds))
+            }
+            WritingType.GUIDED -> "productionObservation" to buildJsonObject {
+                put("minimumRequiredMeaning", observedText())
+                put("necessaryRelations", observedText())
+                put("evidenceSegmentIds", observationIds(taskIds))
+            }
+            WritingType.TRANSLATION -> null
+        }
+        if (observation != null) {
+            val properties = schema.jsonObject.getValue("properties").jsonObject
+            val observedSchema = buildJsonObject {
+                put("type", "object")
+                put("properties", observation.second)
+                put("required", enum(observation.second.keys.toList()))
+                put("additionalProperties", false)
+            }
+            schema = schema.putAt(
+                listOf("properties"),
+                JsonObject(linkedMapOf(observation.first to observedSchema) + properties),
+            )
+            schema = schema.putAt(
+                listOf("required"),
+                JsonArray(listOf(JsonPrimitive(observation.first)) + schema.jsonObject.getValue("required").jsonArray),
+            )
+        }
         return schema.jsonObject
+    }
+
+    private fun observedText() = buildJsonObject {
+        put("type", "string")
+        put("minLength", 1)
+    }
+
+    private fun observationIds(taskIds: List<String>) = buildJsonObject {
+        put("type", "array")
+        put("minItems", 1)
+        put("maxItems", 12)
+        put("items", buildJsonObject {
+            put("type", "string")
+            put("enum", enum(taskIds))
+        })
     }
 
     private fun enum(value: String): JsonArray = enum(listOf(value))

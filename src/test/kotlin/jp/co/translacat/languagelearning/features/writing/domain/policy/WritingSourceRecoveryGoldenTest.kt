@@ -80,7 +80,7 @@ class WritingSourceRecoveryGoldenTest {
 
         // 검증: 독립 검증의 입력과 의미 보존 판정이 Python 계약과 같다.
         assertEquals(golden.getValue("recoveryHash").jsonPrimitive.content, recoveryHash)
-        assertEquals(golden.getValue("reviewSchema"), schema)
+        assertEquals(WritingDemandSchemaContract.upgrade(golden.getValue("reviewSchema")), schema)
         val expectedPrompt = golden.getValue("reviewPrompt").jsonPrimitive.content
         assertEquals(payload(expectedPrompt), payload(prompt))
         assertEquals(frame(expectedPrompt), frame(prompt))

@@ -2,6 +2,7 @@ package jp.co.translacat.languagelearning.features.writing.infrastructure.persis
 
 import jp.co.translacat.languagelearning.features.writing.domain.model.*
 import jp.co.translacat.languagelearning.features.writing.domain.repository.WritingSetRepository
+import jp.co.translacat.languagelearning.features.writing.infrastructure.persistence.table.CuratedSetsTable
 import org.jetbrains.exposed.v1.core.*
 import org.jetbrains.exposed.v1.jdbc.insert
 import org.jetbrains.exposed.v1.jdbc.selectAll
@@ -39,6 +40,13 @@ internal class ExposedWritingSetRepository(private val requireTransaction: () ->
 
     override fun create(value: NewWritingSet, nowUtc: LocalDateTime): WritingSet {
         requireTransaction()
+        // 두 Writing 경로가 같은 owner 잠금을 공유한다. 새 경로의 날짜·유형이 이미 있으면 중복 생성하지 않는다.
+        require(CuratedSetsTable.selectAll().where {
+            (CuratedSetsTable.userId eq value.userId) and
+                (CuratedSetsTable.learningDate eq value.learningDate) and
+                (CuratedSetsTable.writingType eq value.writingType.name)
+        }.empty()) { "WRITING_POLICY_CONFLICT" }
+
         val id = Sets.insert {
             it[userId] = value.userId
             it[learningDate] = value.learningDate

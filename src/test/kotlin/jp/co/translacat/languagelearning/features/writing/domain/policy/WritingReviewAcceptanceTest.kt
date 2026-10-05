@@ -134,7 +134,7 @@ class WritingReviewAcceptanceTest {
     }
 
     @Test
-    fun `업무 Schema는 Python Pydantic 원본의 합성 golden과 정확히 같다`() {
+    fun `업무 Schema는 원본 golden에 승인된 demand 교차 제약만 더한다`() {
         val expected =
             checkNotNull(javaClass.getResourceAsStream("/contracts/writing-review-schema-python-golden.json"))
                 .bufferedReader().use { Json.parseToJsonElement(it.readText()).jsonObject }
@@ -143,13 +143,13 @@ class WritingReviewAcceptanceTest {
             listOf("Synthetic limit"), "Synthetic focus",
         )
         assertEquals(
-            expected.getValue("task"),
+            WritingDemandSchemaContract.upgrade(expected.getValue("task")),
             WritingReviewSchema.build(
                 draft, "synthetic-candidate", "a".repeat(64),
             ),
         )
         assertEquals(
-            expected.getValue("repaired"),
+            WritingDemandSchemaContract.upgrade(expected.getValue("repaired")),
             WritingReviewSchema.build(
                 draft, "synthetic-candidate", "a".repeat(64), "b".repeat(64),
             ),

@@ -4,28 +4,34 @@
       "items": {
         "properties": {
           "category": {
-            "type": "string"
+            "type": "string",
+            "pattern": "\\S"
           },
           "corrected": {
-            "type": "string"
+            "type": "string",
+            "pattern": "\\S"
           },
           "explanation": {
             "properties": {
               "learningText": {
-                "type": "string"
+                "type": "string",
+                "pattern": "\\S"
               },
               "originText": {
-                "type": "string"
+                "type": "string",
+                "pattern": "\\S"
               }
             },
             "required": [
               "originText",
               "learningText"
             ],
-            "type": "object"
+            "type": "object",
+            "additionalProperties": false
           },
           "original": {
-            "type": "string"
+            "type": "string",
+            "pattern": "\\S"
           }
         },
         "required": [
@@ -34,24 +40,29 @@
           "category",
           "explanation"
         ],
-        "type": "object"
+        "type": "object",
+        "additionalProperties": false
       },
-      "type": "array"
+      "type": "array",
+      "maxItems": 30
     },
     "explanation": {
       "properties": {
         "learningText": {
-          "type": "string"
+          "type": "string",
+          "pattern": "\\S"
         },
         "originText": {
-          "type": "string"
+          "type": "string",
+          "pattern": "\\S"
         }
       },
       "required": [
         "originText",
         "learningText"
       ],
-      "type": "object"
+      "type": "object",
+      "additionalProperties": false
     },
     "profileSignals": {
       "properties": {
@@ -59,49 +70,57 @@
           "items": {
             "type": "string"
           },
-          "type": "array"
+          "type": "array",
+          "maxItems": 30
         },
         "grammarPatterns": {
           "items": {
             "type": "string"
           },
-          "type": "array"
+          "type": "array",
+          "maxItems": 30
         },
         "meaningPatterns": {
           "items": {
             "type": "string"
           },
-          "type": "array"
+          "type": "array",
+          "maxItems": 30
         },
         "naturalnessPatterns": {
           "items": {
             "type": "string"
           },
-          "type": "array"
+          "type": "array",
+          "maxItems": 30
         },
         "recommendedFocus": {
           "items": {
             "type": "string"
           },
-          "type": "array"
+          "type": "array",
+          "maxItems": 30
         },
         "strengthTags": {
           "items": {
             "type": "string"
           },
-          "type": "array"
+          "type": "array",
+          "maxItems": 30
         },
         "vocabularyPatterns": {
           "items": {
             "type": "string"
           },
-          "type": "array"
+          "type": "array",
+          "maxItems": 30
         },
         "weaknessTags": {
           "items": {
             "type": "string"
           },
-          "type": "array"
+          "type": "array",
+          "maxItems": 30
         }
       },
       "required": [
@@ -114,7 +133,8 @@
         "meaningPatterns",
         "recommendedFocus"
       ],
-      "type": "object"
+      "type": "object",
+      "additionalProperties": false
     },
     "recommendedAnswers": {
       "items": {
@@ -127,19 +147,29 @@
     "scores": {
       "properties": {
         "expression": {
-          "type": "number"
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
         },
         "grammar": {
-          "type": "number"
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
         },
         "meaning": {
-          "type": "number"
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
         },
         "naturalness": {
-          "type": "number"
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
         },
         "vocabulary": {
-          "type": "number"
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
         }
       },
       "required": [
@@ -149,43 +179,52 @@
         "naturalness",
         "expression"
       ],
-      "type": "object"
+      "type": "object",
+      "additionalProperties": false
     },
     "strengths": {
       "items": {
         "properties": {
           "learningText": {
-            "type": "string"
+            "type": "string",
+            "pattern": "\\S"
           },
           "originText": {
-            "type": "string"
+            "type": "string",
+            "pattern": "\\S"
           }
         },
         "required": [
           "originText",
           "learningText"
         ],
-        "type": "object"
+        "type": "object",
+        "additionalProperties": false
       },
-      "type": "array"
+      "type": "array",
+      "maxItems": 20
     },
     "weaknesses": {
       "items": {
         "properties": {
           "learningText": {
-            "type": "string"
+            "type": "string",
+            "pattern": "\\S"
           },
           "originText": {
-            "type": "string"
+            "type": "string",
+            "pattern": "\\S"
           }
         },
         "required": [
           "originText",
           "learningText"
         ],
-        "type": "object"
+        "type": "object",
+        "additionalProperties": false
       },
-      "type": "array"
+      "type": "array",
+      "maxItems": 20
     }
   },
   "required": [
@@ -197,5 +236,6 @@
     "explanation",
     "profileSignals"
   ],
-  "type": "object"
+  "type": "object",
+  "additionalProperties": false
 }

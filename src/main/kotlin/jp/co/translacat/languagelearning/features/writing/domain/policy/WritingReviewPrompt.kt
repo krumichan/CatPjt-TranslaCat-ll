@@ -39,15 +39,7 @@ internal object WritingReviewPrompt {
                 put("type", value.getValue("type"))
             }
         }
-        val context = (request["diversityContext"] as? JsonObject ?: JsonObject(emptyMap()))
-        val retained = (context["currentSession"] as? JsonArray ?: JsonArray(emptyList()))
-            .filter { it.jsonObject["sourceType"]?.jsonPrimitive?.content == "WRITING" }.takeLast(4)
-            .map { item ->
-                buildJsonObject {
-                    put("content", item.jsonObject.getValue("content"))
-                    put("semanticSummary", item.jsonObject["semanticSummary"] ?: JsonNull)
-                }
-            }
+        val retained = WritingDiversityPolicy.retainedTasks(request)
 
         // 보정·원문 복구 증거는 별도 감사 필드에 넣어 일반 난이도 근거와 분리한다.
         val data = buildJsonObject {
@@ -85,7 +77,23 @@ internal object WritingReviewPrompt {
             sourceRecovery != null -> recoveredPrefix
             else -> prefix
         }
-        return selectedPrefix + "<writing-review-data>\n" + data.toString()
+        // 비교별 실제 의미를 확인하도록 요구하되 기존 TASK_VALIDITY와 거부 코드만 사용한다.
+        val comparison = if (retained.isEmpty()) "" else """
+            Before deciding TASK_VALIDITY, compare the candidate against EVERY R-numbered retainedCurrentItems entry.
+            For each pair, identify the core facts, communicative purpose and minimum required production from
+            visible content plus providedFacts, requiredIntents and responseConstraints. Compare the actual
+            required messages, not proposed intent/archetype labels or the generator's semanticSummary.
+            A changed label such as reporting versus explaining does not make the same core message distinct.
+            Different names, objects, wording or minor timing details alone do not establish a new task.
+            If the same core situation/purpose and required meaning recur, TASK_VALIDITY must FAIL with the
+            existing DIVERSITY_SCENE_REPETITION issue. If the distinction is uncertain, use TASK_VALIDITY UNSURE.
+            Sharing a topic or grammar pattern alone is valid when the required message or purpose is different.
+            Null retained guidance is unavailable information: do not reconstruct it or claim missing facts.
+            R IDs anchor comparisons only; evidenceSegmentIds must still cite the candidate's actual task segments.
+            Keep the existing response schema and difficulty rubric. Do not add comparison fields or infer a band from history.
+
+        """.trimIndent().trimEnd() + "\n"
+        return selectedPrefix + comparison + "<writing-review-data>\n" + data.toString()
             .replace("<", "\\u003c").replace(">", "\\u003e") + "\n</writing-review-data>"
     }
 

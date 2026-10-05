@@ -12,6 +12,7 @@ import jp.co.translacat.languagelearning.features.writing.domain.model.NewWritin
 import jp.co.translacat.languagelearning.features.writing.domain.model.WritingRecentScore
 import jp.co.translacat.languagelearning.features.writing.domain.model.WritingSet
 import jp.co.translacat.languagelearning.features.writing.domain.model.WritingType
+import jp.co.translacat.languagelearning.features.writing.domain.policy.WritingScoring
 import jp.co.translacat.languagelearning.shared.error.LearningBusinessException
 import kotlinx.serialization.json.*
 import java.util.*
@@ -82,9 +83,11 @@ internal class WritingContextService(
                     ),
                 )
                 put("learningProfile", summary)
-                put("recentEvaluationSummary", recentSummary(userId))
-                put("recentMistakes", summary.getValue("grammarWeaknesses"))
-                put("recentlyLearnedExpressions", summary.getValue("recommendedFocus"))
+                put("recentEvaluationSummary", recentSummary(userId, checkNotNull(user.learningLanguage), type))
+                // 기존 누적 signal은 언어 provenance가 없어 현재 학습 언어의 실수로 단정하지 않는다.
+                put("recentMistakes", JsonArray(emptyList()))
+                // 추천 초점은 관찰된 학습 표현이 아니다. 실제 표현 근거가 없으면 비워 둔다.
+                put("recentlyLearnedExpressions", JsonArray(emptyList()))
                 put("generationDate", date.toString())
                 put("snapshotId", id)
                 put(
@@ -118,9 +121,12 @@ internal class WritingContextService(
             profile.naturalnessScore, profile.expressionScore,
         )
         return buildJsonObject {
+            // 현재 user 단위 성장 snapshot은 언어 귀속이 없어 생성기에서 성취 근거로 쓰지 않는다.
+            put("languageScope", "UNKNOWN")
+            put("learningLanguage", JsonNull)
             put("profileVersion", profile.profileVersion)
             put("baseLevelScore", profile.baseLevelScore.asJson())
-            put("skillScores", if (scores.all { it == null }) JsonNull else skills(scores.map { it ?: 0.0 }))
+            put("skillScores", if (scores.all { it == null }) JsonNull else skills(scores))
             put("grammarWeaknesses", signalKeys(userId, "GRAMMAR_WEAKNESS"))
             put(
                 "keywordMasteries",
@@ -151,15 +157,22 @@ internal class WritingContextService(
         }
     }
 
-    private fun WritingSetTransaction.recentSummary(userId: Long): JsonObject {
-        val scores = evaluations.recentDailyScores(userId)
-        fun average(value: (WritingRecentScore) -> Int?): Double {
+    private fun WritingSetTransaction.recentSummary(
+        userId: Long, learningLanguage: String, type: WritingType,
+    ): JsonObject {
+        // 현재 언어·유형·평가 정책이 같은 저장 결과만 문맥으로 사용한다.
+        val scores = evaluations.recentDailyScores(userId, learningLanguage, type)
+        fun average(value: (WritingRecentScore) -> Int?): Double? {
             val values = scores.mapNotNull(value)
-            return Math.round((if (values.isEmpty()) 0.0 else values.average()) * 100.0) / 100.0
+            return if (values.isEmpty()) null else Math.round(values.average() * 100.0) / 100.0
         }
         return buildJsonObject {
+            put("learningLanguage", learningLanguage)
+            put("writingType", type.name)
+            put("scoringPolicyVersion", WritingScoring.policyVersion)
+            put("evaluationRubricVersion", WritingScoring.rubricVersion)
             put("sampleCount", scores.size)
-            put("overallAverage", if (scores.isEmpty()) JsonNull else JsonPrimitive(average { it.overall }))
+            put("overallAverage", average { it.overall }.asJson())
             put(
                 "skillScores",
                 if (scores.isEmpty()) JsonNull else skills(
@@ -169,20 +182,16 @@ internal class WritingContextService(
                     ),
                 ),
             )
-            put(
-                "recentFocus",
-                if (scores.isEmpty()) JsonArray(emptyList())
-                else signalKeys(userId, "RECOMMENDED_FOCUS"),
-            )
+            put("recentFocus", JsonArray(emptyList()))
         }
     }
 
     private fun WritingSetTransaction.signalKeys(userId: Long, type: String): JsonArray =
         JsonArray(growth.signals(userId, type, 10).map { JsonPrimitive(it.key) })
 
-    private fun skills(values: List<Double>): JsonObject = buildJsonObject {
+    private fun skills(values: List<Double?>): JsonObject = buildJsonObject {
         listOf("meaning", "grammar", "vocabulary", "naturalness", "expression").zip(values).forEach { (key, value) ->
-            put(key, value)
+            put(key, value.asJson())
         }
     }
 

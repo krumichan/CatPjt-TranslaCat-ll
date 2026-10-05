@@ -68,11 +68,9 @@ internal class WritingReadService(
                     detail.items.map { value ->
                         val attempts = value.attempts
                         val todayAnswer = attempts.firstOrNull { it.answer.attemptDate == today }
+                        // 현재 날짜의 평가 누락 답안을 재제출 가능 상태로 표시하지 않는다.
                         val canSubmit = reviewAvailable && !regenerating &&
-                            todayAnswer?.answer?.evaluationStatus !in setOf(
-                            WritingEvaluationStatus.PENDING,
-                            WritingEvaluationStatus.SUCCESS,
-                        )
+                            (todayAnswer == null || todayAnswer.answer.evaluationStatus == WritingEvaluationStatus.FAILED)
                         buildJsonObject {
                             put("itemId", LearningPublicId.encode(value.item.id))
                             put("order", value.item.order)
@@ -104,7 +102,7 @@ internal class WritingReadService(
         put("attemptDate", answer.attemptDate.toString())
         put("answer", answer.text)
         put("submittedAt", submittedAt.toString())
-        put("evaluationStatus", answer.evaluationStatus.name)
+        put("evaluationStatus", answer.evaluationStatus?.name?.let(::JsonPrimitive) ?: JsonNull)
         put("evaluationFailureMessage", failureMessage?.let(::JsonPrimitive) ?: JsonNull)
         put("evaluation", evaluation?.response() ?: JsonNull)
     }
@@ -113,7 +111,7 @@ internal class WritingReadService(
         put("answerId", LearningPublicId.encode(answer.id))
         put("itemId", LearningPublicId.encode(answer.itemId))
         put("attemptDate", answer.attemptDate.toString())
-        put("evaluationStatus", answer.evaluationStatus.name)
+        put("evaluationStatus", answer.evaluationStatus?.name?.let(::JsonPrimitive) ?: JsonNull)
         put("evaluationFailureMessage", failureMessage?.let(::JsonPrimitive) ?: JsonNull)
         put("evaluation", evaluation?.response() ?: JsonNull)
     }

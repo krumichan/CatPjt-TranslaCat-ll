@@ -1,0 +1,55 @@
+ktor:
+  deployment:
+    host: 127.0.0.1
+    port: ${LL_PORT:8081}
+
+database:
+  enabled: true
+  jdbcUrl: ${DB_JDBC_URL}
+  expectedCatalog: translacat_ll
+  username: ${DB_USERNAME}
+  password: ${DB_PASSWORD}
+  maximumPoolSize: 4
+  minimumIdle: 0
+  connectionTimeoutMs: 5000
+  migrations:
+    mode: validate
+
+internalApi:
+  enabled: true
+  issuer: translacat-be
+  audience: translacat-ll
+  callerService: translacat-be
+  secretBase64: ${LL_INTERNAL_JWT_SECRET_BASE64}
+  maxTtlSeconds: 120
+  clockSkewSeconds: 5
+
+aiServer:
+  url: ${AI_SERVER_URL}
+  apiKey: ${AI_SERVER_API_KEY}
+
+levelTest:
+  enabled: true
+  audioUploadBaseUrl: ${LL_LEVEL_TEST_AUDIO_UPLOAD_BASE_URL}
+  audioRoot: data/level-test-audio
+  aiTimeoutSeconds: 180
+  aiConcurrency: 2
+  prefetchEnabled: ${LL_LEVEL_TEST_PREFETCH_ENABLED:false}
+
+growth:
+  enabled: true
+writing:
+  enabled: true
+practice:
+  enabled: true
+  generationTier: SOL
+listening:
+  enabled: true
+speaking:
+  enabled: true
+  ttsModel: ${LL_SPEAKING_TTS_MODEL}
+  audio:
+    storage: local
+    directory: .local/speaking-audio
+overview:
+  enabled: true

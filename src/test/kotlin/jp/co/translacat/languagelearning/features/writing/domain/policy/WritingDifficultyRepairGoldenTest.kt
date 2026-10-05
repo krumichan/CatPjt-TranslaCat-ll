@@ -54,7 +54,7 @@ class WritingDifficultyRepairGoldenTest {
             revised.requiredIntents, revised.responseConstraints, revised.focusReason,
         )
         assertEquals(
-            golden.getValue("reviewSchema"),
+            WritingDemandSchemaContract.upgrade(golden.getValue("reviewSchema")),
             WritingReviewSchema.build(
                 evidence, "synthetic-repaired",
                 golden.getValue("revisedContentHash").jsonPrimitive.content,

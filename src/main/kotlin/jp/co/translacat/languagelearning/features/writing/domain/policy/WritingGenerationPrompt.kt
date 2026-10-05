@@ -32,6 +32,26 @@ internal object WritingGenerationPrompt {
                     "recentlyLearnedExpressions", "recentEvaluationSummary",
                 ))
         }.toMutableMap()
+        // 언어가 확인되지 않는 누적 profile은 현재 언어의 성취·약점 근거로 모델에 전달하지 않는다.
+        // 기존 기준 점수와 서버의 목표 band 정책은 그대로 두고 실제 언어별 최근 평가 문맥을 보존한다.
+        val profile = payload["learningProfile"] as? JsonObject
+        if (profile != null) {
+            payload["learningProfile"] = JsonObject(profile.filterKeys {
+                it in setOf("profileVersion", "baseLevelScore")
+            } + mapOf("languageScope" to JsonPrimitive("UNKNOWN"), "learningLanguage" to JsonNull))
+        }
+        for (field in listOf("recentMistakes", "recentlyLearnedExpressions")) {
+            if (field in payload) payload[field] = JsonArray(emptyList())
+        }
+        val recent = payload["recentEvaluationSummary"] as? JsonObject
+        if (recent != null && (recent["learningLanguage"] != request["learningLanguage"] ||
+                recent["writingType"] != JsonPrimitive(writingType.name) ||
+                recent["scoringPolicyVersion"] != JsonPrimitive(WritingScoring.policyVersion) ||
+                recent["evaluationRubricVersion"] != JsonPrimitive(WritingScoring.rubricVersion))
+        ) {
+            // 옛 snapshot의 언어·정책이 불명확한 평균은 없는 점수나 현재 언어 점수로 바꾸지 않는다.
+            payload.remove("recentEvaluationSummary")
+        }
         if (difficultyRecovery != null) payload["difficultyRecovery"] = difficultyRecovery
         payload["writingDiversityPlan"] = WritingDiversityPolicy.plan(request).payload()
         payload["scenarioClassificationRule"] = JsonPrimitive(scenarioRule)
@@ -68,6 +88,9 @@ internal object WritingGenerationPrompt {
             )
             payload["sourceRecoveryMode"] = JsonPrimitive("REDUCED_CONTEXT_REGENERATION_ONCE")
         }
+        // 원문 복구의 축소 문맥은 보존한다. 일반 생성은 이미 게시한 과제 전체와 의미 차이를 확인한다.
+        val retained = if (sourceRecoveryMode) emptyList() else WritingDiversityPolicy.retainedTasks(request)
+        if (retained.isNotEmpty()) payload["retainedCurrentWritingTasks"] = JsonArray(retained)
         payload["languageProductionRubric"] = rubric
         payload["difficultySpec"] = specPayload(originLanguage, writingType, targetBand)
         payload["failedChecks"] = JsonObject(
@@ -75,7 +98,7 @@ internal object WritingGenerationPrompt {
                 .associate { it.key to JsonPrimitive(it.value) },
         )
         val payloadJson = JsonObject(payload).toString().replace("<", "\\u003c").replace(">", "\\u003e")
-        return """
+        val frame = """
             # Current task
             Generate up to 2 distinct content candidates for ONE Writing slot.
             Do not fill server-owned order/difficulty/band fields and do not provide an answer.
@@ -88,6 +111,18 @@ internal object WritingGenerationPrompt {
             $payloadJson
             </learning-data>
         """.trimIndent()
+        if (retained.isEmpty()) return frame
+        return frame.replace("<learning-data>", """
+            Compare each candidate with EVERY R-numbered retainedCurrentWritingTasks entry before choosing it.
+            Use the visible content, providedFacts, requiredIntents and responseConstraints to identify the
+            core facts, communicative purpose and minimum production required for a valid answer.
+            Change the actual situation/purpose or required meaning; changing metadata labels, objects,
+            names, wording, or a minor timing detail alone does not make the same core task distinct.
+            A shared selected topic or grammar pattern is allowed when the required message is different.
+            Null guidance means unavailable history, not permission to invent facts or learner weaknesses.
+
+            <learning-data>
+        """.trimIndent())
     }
 
     internal fun sourceLanguageContract(originLanguage: String, learningLanguage: String): JsonObject {

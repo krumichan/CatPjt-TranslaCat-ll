@@ -15,7 +15,8 @@ database:
     mode: ${DB_MIGRATION_MODE:validate}
 
 internalApi:
-  enabled: ${LL_INTERNAL_API_ENABLED:true}
+  # 운영 내부 인증은 환경변수로 끄지 않는다.
+  enabled: true
   issuer: ${LL_INTERNAL_JWT_ISSUER:translacat-be}
   audience: ${LL_INTERNAL_JWT_AUDIENCE:translacat-ll}
   callerService: ${LL_INTERNAL_CALLER_SERVICE:translacat-be}
@@ -28,7 +29,8 @@ aiServer:
   apiKey: ${AI_SERVER_API_KEY}
 
 levelTest:
-  enabled: ${LL_LEVEL_TEST_ENABLED:true}
+  # 제공 중인 레벨 테스트는 운영 설정에서 항상 연결한다.
+  enabled: true
   audioUploadBaseUrl: ${LL_LEVEL_TEST_AUDIO_UPLOAD_BASE_URL}
   audioRoot: ${LL_LEVEL_TEST_AUDIO_ROOT:data/level-test-audio}
   aiTimeoutSeconds: ${LL_LEVEL_TEST_AI_TIMEOUT_SECONDS:180}

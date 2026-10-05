@@ -1,9 +1,6 @@
 package jp.co.translacat.languagelearning.features.writing.domain.policy
 
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.jsonArray
-import kotlinx.serialization.json.jsonObject
-import kotlinx.serialization.json.jsonPrimitive
+import kotlinx.serialization.json.*
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -17,7 +14,7 @@ class WritingReviewPromptGoldenTest {
     ).jsonArray
 
     @Test
-    fun `ordinary reviewer sees current Python rules and exactly bound task context`() {
+    fun `ordinary reviewer preserves baseline with approved semantic comparison and calibration additions`() {
         for (entry in cases) {
             val row = entry.jsonObject
             val request = row.getValue("request").jsonObject
@@ -25,15 +22,31 @@ class WritingReviewPromptGoldenTest {
             val name = row.getValue("name").jsonPrimitive.content
             val expectedHash = row.getValue("contentHash").jsonPrimitive.content
             assertEquals(expectedHash, WritingCandidatePolicy.contentHash(request, draft), name)
-            assertEquals(row.getValue("instructions").jsonPrimitive.content, WritingReviewPrompt.instructions, name)
+            assertEquals(WritingDiversityPromptContract.calibratedInstructions(
+                row.getValue("instructions").jsonPrimitive.content,
+            ), WritingReviewPrompt.instructions, name)
             assertEquals(
-                row.getValue("adjudicatorInstructions").jsonPrimitive.content,
+                WritingDiversityPromptContract.calibratedInstructions(
+                    row.getValue("adjudicatorInstructions").jsonPrimitive.content,
+                ),
                 WritingReviewPrompt.adjudicatorInstructions, name,
             )
             val expected = row.getValue("prompt").jsonPrimitive.content
             val actual = WritingReviewPrompt.build(request, draft, "synthetic-candidate", expectedHash)
-            assertEquals(payload(expected), payload(actual), name)
-            assertEquals(frame(expected), frame(actual), name)
+            // 과거 원문은 그대로 두고 R 비교 ID와 알려지지 않은 안내 null만 명시적으로 추가한다.
+            val original = payload(expected).jsonObject
+            val audit = original.getValue("diversityAudit").jsonObject
+            val retained = audit.getValue("retainedCurrentItems").jsonArray
+            val expectedPayload = if (retained.isEmpty()) original else JsonObject(original + (
+                "diversityAudit" to JsonObject(audit + (
+                    "retainedCurrentItems" to WritingDiversityPromptContract.historicalRows(retained)
+                ))
+            ))
+            val expectedFrame = if (retained.isEmpty()) frame(expected) else frame(expected).replace(
+                "<writing-review-data>", WritingDiversityPromptContract.review + "\n<writing-review-data>",
+            )
+            assertEquals(expectedPayload, payload(actual), name)
+            assertEquals(expectedFrame, frame(actual), name)
         }
     }
 

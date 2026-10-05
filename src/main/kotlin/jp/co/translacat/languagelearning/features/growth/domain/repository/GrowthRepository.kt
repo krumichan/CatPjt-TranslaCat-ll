@@ -5,6 +5,7 @@ import java.time.LocalDate
 
 /** 호출 트랜잭션 소유 repository. 구현 객체를 suspend/HTTP 경계 밖으로 내보내지 않는다. */
 internal interface GrowthRepository {
+    fun learningEvidence(filter: LearningEvidenceFilter): List<LearningEvidenceRecord>
     fun profile(userId: Long): GrowthProfile?
     fun saveProfile(value: GrowthProfile)
     fun mastery(userId: Long, key: String): KeywordMastery?

@@ -18,17 +18,47 @@ jobs:
   verify:
     runs-on: ubuntu-24.04
     timeout-minutes: 45
+    services:
+      # 일반 이미지 테스트에서 분리한 큐레이션 검증은 격리 MySQL로 계속 실행한다.
+      mysql:
+        image: mysql:8.4
+        env:
+          MYSQL_ROOT_PASSWORD: synthetic-ci-only
+          MYSQL_ROOT_HOST: '%'
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 --silent"
+          --health-interval=10s --health-timeout=5s --health-retries=12
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           persist-credentials: false
       - name: Deployment contract tests (offline fixtures)
         run: python3 -m unittest discover -s deploy/oci/tests -v
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Curated Writing isolated MySQL tests
+        env:
+          JAVA_TOOL_OPTIONS: -Duser.timezone=UTC
+          LL_TEST_MYSQL_URL: jdbc:mysql://127.0.0.1:3306/?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
+          LL_TEST_MYSQL_USERNAME: root
+          LL_TEST_MYSQL_PASSWORD: synthetic-ci-only
+          # 선택된 HTTP 테스트는 내부 fixture만 사용하며 Provider를 호출하지 않는다.
+          LL_TEST_AI_URL: http://127.0.0.1:9
+        run: |
+          chmod +x gradlew
+          ./gradlew --no-daemon --max-workers=1 \
+            databaseIntegrationTest --tests '*CuratedWritingStoreIntegrationTest*' \
+            writingHttpDatabaseIntegrationTest --tests '*CuratedWritingHttpDatabaseIntegrationTest*'
       - name: Compile, isolated application tests, and build runtime
         run: docker build --platform linux/amd64 --target runtime -f deploy/oci/Dockerfile -t local/verified:${GITHUB_SHA} .
   release:
     needs: verify
-    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    # V020+ 운영 migration은 백업·별도 승인 후 명시적 dispatch에서만 실행한다.
+    if: github.ref == 'refs/heads/main' && github.event_name == 'workflow_dispatch'
     environment: production
     runs-on: ubuntu-24.04
     timeout-minutes: 90

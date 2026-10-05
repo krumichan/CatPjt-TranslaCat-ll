@@ -2,7 +2,8 @@ package jp.co.translacat.languagelearning.features.writing.domain.policy
 
 import kotlinx.serialization.json.*
 
-internal class WritingEvaluationProtocolException(val code: String) : RuntimeException(code)
+internal class WritingEvaluationProtocolException(val code: String, val validationPath: String = "output") :
+    RuntimeException(code)
 internal data class WritingEvaluationResult(val scores: WritingScores, val payload: JsonObject)
 
 /** Python AiWritingEvaluationPayload의 필수 필드와 범위를 업무 경계에서 검사한다. */
@@ -16,40 +17,59 @@ internal object WritingEvaluationParser {
     )
 
     fun parse(output: JsonElement): WritingEvaluationResult {
+        // 원문 대신 검사 중인 고정 필드 경로만 보존해 Provider 계약 실패를 진단한다.
+        var path = "output"
         try {
             val root = output as? JsonObject ?: invalid()
             require(root.keys.all { it in rootKeys })
+            path = "scores"
             val values = requiredObject(root, "scores", scoreKeys)
             require(values.keys == scoreKeys)
             val raw = WritingRawScores(
                 number(values, "meaning"), number(values, "grammar"), number(values, "vocabulary"),
                 number(values, "naturalness"), number(values, "expression"),
             )
-            array(root, "strengths", 20).forEach { bilingual(it, 4000) }
-            array(root, "weaknesses", 20).forEach { bilingual(it, 4000) }
-            array(root, "corrections", 30).forEach { element ->
+            path = "strengths"
+            array(root, "strengths", 20).forEachIndexed { index, value ->
+                path = "strengths[$index]"
+                bilingual(value, 4000)
+            }
+            path = "weaknesses"
+            array(root, "weaknesses", 20).forEachIndexed { index, value ->
+                path = "weaknesses[$index]"
+                bilingual(value, 4000)
+            }
+            path = "corrections"
+            array(root, "corrections", 30).forEachIndexed { index, element ->
+                path = "corrections[$index]"
                 val correction = element as? JsonObject ?: invalid()
                 require(correction.keys == setOf("original", "corrected", "category", "explanation"))
+                path = "corrections[$index].original"
                 string(correction, "original", 1000)
+                path = "corrections[$index].corrected"
                 string(correction, "corrected", 1000)
+                path = "corrections[$index].category"
                 string(correction, "category", 100)
+                path = "corrections[$index].explanation"
                 bilingual(correction.getValue("explanation"), 4000)
             }
+            path = "recommendedAnswers"
             val recommended = array(root, "recommendedAnswers", 3, required = true)
             require(recommended.size >= 2)
             recommended.forEach { require(it is JsonPrimitive && it.isString) }
+            path = "explanation"
             bilingual(root["explanation"] ?: invalid(), 4000)
+            path = "profileSignals"
             val signals = requiredObject(root, "profileSignals", signalKeys)
             signalKeys.forEach { key ->
+                path = "profileSignals.$key"
                 array(signals, key, 30).forEach {
                     require(it is JsonPrimitive && it.isString)
                 }
             }
             return WritingEvaluationResult(WritingScoring.score(raw), root)
-        } catch (_: WritingEvaluationProtocolException) {
-            throw WritingEvaluationProtocolException("WRITING_EVALUATION_SCHEMA_INVALID")
         } catch (_: Exception) {
-            throw WritingEvaluationProtocolException("WRITING_EVALUATION_SCHEMA_INVALID")
+            throw WritingEvaluationProtocolException("WRITING_EVALUATION_SCHEMA_INVALID", path)
         }
     }
 

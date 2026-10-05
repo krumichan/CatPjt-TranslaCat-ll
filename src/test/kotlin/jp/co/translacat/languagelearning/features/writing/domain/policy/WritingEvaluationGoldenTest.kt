@@ -46,7 +46,7 @@ class WritingEvaluationGoldenTest {
         val date = LocalDate.parse("2026-09-26")
         val set = WritingSet(
             1, 101, date, WritingType.FREE, "synthetic", 1, WritingSetStatus.READY,
-            "{}", "v1", 0, null, null, null,
+            """{"originLanguage":"ko","learningLanguage":"en"}""", "v1", 0, null, null, null,
         )
         val item = WritingItem(2, 1, 101, 1, WritingDifficulty.NORMAL, "합성 질문", "[]", "[]", "합성 포커스", "[]", "[]", "[]")
         val answer = WritingAnswer(3, 2, 101, date, "A synthetic answer.", WritingEvaluationStatus.PENDING)
@@ -55,7 +55,11 @@ class WritingEvaluationGoldenTest {
         assertEquals(golden.getValue("compactPayload").jsonPrimitive.content, context.compactRequestJson)
         val rich = WritingEvaluationContextBuilder.build(
             "synthetic-writing-eval",
-            set.copy(snapshotJson = golden.getValue("richSnapshotJson").jsonPrimitive.content),
+            // 원본 golden payload는 바꾸지 않고 기존 합성 과제의 알려진 언어를 snapshot에 명시한다.
+            set.copy(snapshotJson = JsonObject(
+                Json.parseToJsonElement(golden.getValue("richSnapshotJson").jsonPrimitive.content).jsonObject +
+                    mapOf("originLanguage" to JsonPrimitive("ko"), "learningLanguage" to JsonPrimitive("en")),
+            ).toString()),
             item.copy(keywordsJson = "[\"travel\"]"), answer, "ko", "en", date,
         )
         assertEquals(golden.getValue("richCompactPayload").jsonPrimitive.content, rich.compactRequestJson)

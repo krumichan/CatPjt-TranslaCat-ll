@@ -16,10 +16,10 @@ import org.jetbrains.exposed.v1.jdbc.update
 internal class ExposedUserSettingsRepository(private val requireTransaction: () -> Unit) : UserSettingsRepository {
     override fun findForUser(userId: Long): UserSettings? {
         requireTransaction()
-        // learner 잠금을 먼저 잡은 뒤 호출한다. RR에서도 기다린 상대의 최신 commit을 읽는다.
+        // 모든 호출자는 같은 트랜잭션에서 learner 행을 먼저 잠근다. 그 뒤 시작한 RR snapshot은
+        // 이전 owner 요청의 commit을 보며, 없는 설정에 gap lock을 잡아 다른 owner의 INSERT를 막지 않는다.
         return UserSettingsTable.selectAll()
             .where { UserSettingsTable.userId eq userId }
-            .forUpdate()
             .singleOrNull()
             ?.let(::toModel)
     }

@@ -50,7 +50,8 @@ internal class WritingRegenerationState(private val work: WritingSetUnitOfWork) 
 
     suspend fun publish(claim: Claim, replacements: List<NewWritingItem>): Boolean = work.write(claim.userId) {
         val set = sets.findById(claim.userId, claim.setId) ?: return@write false
-        if (set.generationToken != claim.token || set.status !in setOf(
+        // 토큰이 아직 같아도 만료된 생성 결과는 원래 문항·답변·횟수를 바꾸지 않는다.
+        if (set.generationToken != claim.token || set.generationLeaseUntil?.isAfter(nowUtc) != true || set.status !in setOf(
                 WritingSetStatus.READY, WritingSetStatus.COMPLETED,
             )
         )

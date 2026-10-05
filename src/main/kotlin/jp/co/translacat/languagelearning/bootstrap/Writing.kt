@@ -103,4 +103,5 @@ internal suspend fun Application.configureWriting() {
         }
     }
     logger.info("Writing recovery workers initialized")
+    configureCuratedWriting()
 }

@@ -55,6 +55,10 @@ internal class WritingEvaluationWorker(
             return false
         } catch (cancelled: CancellationException) {
             throw cancelled
+        } catch (failure: WritingEvaluationContextException) {
+            // 원본 언어가 불명인 과제는 모델 호출과 공식 성장 반영 전에 명시적 실패로 보존한다.
+            state.fail(claim, failure.code)
+            return false
         } catch (failure: RuntimeException) {
             state.fail(claim, "WRITING_EVALUATION_FAILED")
             throw failure

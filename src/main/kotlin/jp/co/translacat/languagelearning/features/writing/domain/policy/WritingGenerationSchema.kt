@@ -54,6 +54,16 @@ internal object WritingGenerationSchema {
         fields["keywords"] = JsonObject(keywords)
         for (name in listOf("providedFacts", "requiredIntents", "responseConstraints")) {
             val guidance = fields.getValue(name).jsonObject.toMutableMap()
+            // 안내는 원어로, 답안은 학습 언어로 작성한다는 기존 검증 계약을 생성 경계에도 명시한다.
+            if (type == WritingType.GUIDED) {
+                val learningLanguage = request.getValue("learningLanguage").jsonPrimitive.content
+                guidance["description"] = JsonPrimitive(
+                    "$name is learner-visible guidance in originLanguage ($originLanguage). " +
+                        "Write the guidance in that language. Do not provide a model answer in " +
+                        "learningLanguage ($learningLanguage).",
+                )
+            }
+
             guidance["minItems"] = JsonPrimitive(spec.guidanceMinEntries)
             guidance["maxItems"] = JsonPrimitive(spec.guidanceMaxEntries)
             guidance["items"] = patch(

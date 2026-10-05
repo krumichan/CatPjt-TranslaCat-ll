@@ -10,6 +10,11 @@ import java.time.LocalDate
 
 internal class ExposedGrowthRepository(private val guard: () -> Unit) : GrowthRepository {
 
+    override fun learningEvidence(filter: LearningEvidenceFilter): List<LearningEvidenceRecord> {
+        guard()
+        return ExposedLearningEvidenceQuery.read(filter)
+    }
+
     private fun toGrowthProfile(row: ResultRow) = GrowthProfile(
         userId = row[GrowthProfilesTable.userId],
         profileVersion = row[GrowthProfilesTable.profileVersion],

@@ -1,6 +1,7 @@
 package jp.co.translacat.languagelearning.features.writing.infrastructure.persistence
 
 import jp.co.translacat.languagelearning.features.growth.domain.model.GrowthProfile
+import jp.co.translacat.languagelearning.features.growth.domain.model.GrowthSignal
 import jp.co.translacat.languagelearning.features.keyword.application.DefaultKeywordOperations
 import jp.co.translacat.languagelearning.features.keyword.application.KeywordLearningDate
 import jp.co.translacat.languagelearning.features.keyword.domain.model.KeywordChange
@@ -33,6 +34,61 @@ import kotlin.test.*
 class WritingSetStateIntegrationTest {
     private val firstClock = Clock.fixed(Instant.parse("2026-09-26T04:00:00Z"), ZoneOffset.UTC)
     private val nextClock = Clock.offset(firstClock, Duration.ofMinutes(21))
+
+    @Test
+    fun `재획득 전 lease 경계에 도착한 생성과 재생성은 기존 상태를 보존한다`() = LocalScratchMysql.use { db ->
+        DatabaseFactory(db.settings()).use { factory ->
+            runBlocking {
+                // 준비: 실제 DB에 생성 lease를 만들고 정확한 만료 시각의 별도 작업자를 구성한다.
+                val work = ExposedWritingSetUnitOfWork(JdbcTransactionRunner(factory.database, 4), firstClock)
+                val generation = WritingGenerationState(work)
+                val setId = generation.getOrCreate(
+                    NewWritingSet(909, LocalDate.parse("2026-09-26"), WritingType.FREE, "lease-boundary", 1, "{}"),
+                ).id
+                val expiredClaim = assertNotNull(generation.claimNext(909, setId))
+                val expiredGeneration = state(factory, Clock.offset(firstClock, Duration.ofMinutes(20)))
+
+                // 실행·검증: token이 바뀌지 않았어도 만료 시각부터 성공과 실패 모두 반영하지 않는다.
+                assertFalse(expiredGeneration.publishItem(909, setId, expiredClaim, item(1), "v1"))
+                assertFalse(expiredGeneration.fail(909, setId, expiredClaim.token, "LATE_TIMEOUT"))
+                assertEquals(WritingSetStatus.GENERATING, generation.find(909, setId)?.status)
+                work.read { assertTrue(items.list(909, setId).isEmpty()) }
+
+                // 실행: 만료 직전 응답은 게시 가능하며 재생성은 기존 공개 문항을 유지한 채 시작한다.
+                val beforeExpiry = state(factory, Clock.offset(firstClock, Duration.ofMinutes(20).minusMillis(1)))
+                assertTrue(beforeExpiry.publishItem(909, setId, expiredClaim, item(1), "v1"))
+                val regenerationClock = Clock.offset(firstClock, Duration.ofMinutes(20))
+                val regeneration = WritingRegenerationState(
+                    ExposedWritingSetUnitOfWork(JdbcTransactionRunner(factory.database, 4), regenerationClock),
+                )
+                val regenerationClaim = regeneration.claim(909, setId)
+                val oldItem = work.read { items.list(909, setId).single() }
+                val expiredRegeneration = WritingRegenerationState(
+                    ExposedWritingSetUnitOfWork(
+                        JdbcTransactionRunner(factory.database, 4),
+                        Clock.offset(regenerationClock, Duration.ofMinutes(10)),
+                    ),
+                )
+
+                // 검증: 만료된 교체를 거절하고 본문·revision·답변·재생성 횟수와 READY 상태를 보존한다.
+                assertFalse(expiredRegeneration.publish(
+                    regenerationClaim, listOf(item(1).copy(originText = "Late replacement")),
+                ))
+                work.read {
+                    assertEquals(oldItem, items.list(909, setId).single())
+                    assertFalse(items.hasAnswer(909, oldItem.id))
+                }
+                assertEquals(0, generation.find(909, setId)?.regenerationCount)
+                assertEquals(WritingSetStatus.READY, generation.find(909, setId)?.status)
+
+                // 실행·검증: 새 claim은 정상 교체하고 이전 작업자는 새 token을 해제할 수 없다.
+                val fresh = expiredRegeneration.claim(909, setId)
+                assertFalse(regeneration.release(regenerationClaim))
+                assertTrue(expiredRegeneration.publish(fresh, listOf(item(1).copy(originText = "Fresh replacement"))))
+                assertEquals(1, generation.find(909, setId)?.regenerationCount)
+            }
+        }
+    }
 
     @Test
     fun `중복 최초 요청은 한 세트이고 다른 사용자와 이전 lease 결과는 격리된다`() = LocalScratchMysql.use { db ->
@@ -351,8 +407,12 @@ class WritingSetStateIntegrationTest {
                     growth.saveProfile(
                         GrowthProfile(
                             707, state = "ACTIVE", baseLevelScore = 60.0,
+                            meaningScore = 75.0,
                             createdAt = nowUtc, updatedAt = nowUtc,
                         ),
+                    )
+                    growth.saveSignal(
+                        GrowthSignal(707, "RECOMMENDED_FOCUS", "Try a conditional next time", 1, nowUtc, nowUtc, nowUtc),
                     )
                 }
 
@@ -371,6 +431,13 @@ class WritingSetStateIntegrationTest {
                     snapshot["difficultyDistribution"],
                 )
                 assertEquals("ko", snapshot.getValue("originLanguage").jsonPrimitive.content)
+                val profile = snapshot.getValue("learningProfile").jsonObject
+                assertEquals(75.0, profile.getValue("skillScores").jsonObject.getValue("meaning").jsonPrimitive.double)
+                assertEquals(JsonNull, profile.getValue("skillScores").jsonObject["grammar"])
+                assertEquals(
+                    JsonArray(listOf(JsonPrimitive("Try a conditional next time"))), profile["recommendedFocus"],
+                )
+                assertEquals(JsonArray(emptyList()), snapshot["recentlyLearnedExpressions"])
                 assertEquals(
                     "language-learning-diversity",
                     snapshot.getValue("contentDiversityPolicyVersion").jsonPrimitive.content,

@@ -3,6 +3,7 @@ package jp.co.translacat.languagelearning.features.writing.infrastructure.persis
 import jp.co.translacat.languagelearning.features.writing.domain.model.WritingEvaluationJob
 import jp.co.translacat.languagelearning.features.writing.domain.model.WritingEvaluationStatus
 import jp.co.translacat.languagelearning.features.writing.domain.model.WritingRecentScore
+import jp.co.translacat.languagelearning.features.writing.domain.model.WritingType
 import jp.co.translacat.languagelearning.features.writing.domain.policy.WritingEvaluationAssets
 import jp.co.translacat.languagelearning.features.writing.domain.policy.WritingEvaluationResult
 import jp.co.translacat.languagelearning.features.writing.domain.policy.WritingScoring
@@ -13,15 +14,39 @@ import org.jetbrains.exposed.v1.jdbc.update
 import java.time.LocalDateTime
 import jp.co.translacat.languagelearning.features.writing.infrastructure.persistence.table.WritingAnswersTable as Answers
 import jp.co.translacat.languagelearning.features.writing.infrastructure.persistence.table.WritingEvaluationsTable as Evaluations
+import jp.co.translacat.languagelearning.features.writing.infrastructure.persistence.table.WritingItemsTable as Items
+import jp.co.translacat.languagelearning.features.writing.infrastructure.persistence.table.WritingSetsTable as Sets
 
 internal class ExposedWritingEvaluationRepository(private val requireTransaction: () -> Unit) :
     WritingEvaluationRepository {
-    override fun recentDailyScores(userId: Long): List<WritingRecentScore> {
+    override fun recentDailyScores(
+        userId: Long, learningLanguage: String, writingType: WritingType,
+    ): List<WritingRecentScore> {
         requireTransaction()
-        return Evaluations.selectAll().where {
-            (Evaluations.userId eq userId) and (Evaluations.evaluationContext eq "DAILY") and
-                (Evaluations.status eq WritingEvaluationStatus.SUCCESS.name)
-        }.orderBy(Evaluations.evaluatedAt, SortOrder.DESC).limit(20).map {
+
+        // 원본 관계가 남아 있는 동일 owner·유형·언어의 평가만 제한된 최근 문맥에 포함한다.
+        // 정책을 알 수 없는 legacy 결과를 현재 점수 평균에 섞지 않는다.
+        val validSnapshot = CustomFunction<String>(
+            "IF", TextColumnType(), CustomFunction<Boolean>("JSON_VALID", BooleanColumnType(), Sets.snapshotJson),
+            Sets.snapshotJson, stringLiteral("{}"),
+        )
+        val snapshotLanguage = CustomFunction<String>(
+            "JSON_UNQUOTE", TextColumnType(),
+            CustomFunction<String>(
+                "JSON_EXTRACT", TextColumnType(), validSnapshot, stringLiteral("$.learningLanguage"),
+            ),
+        )
+        return Evaluations.join(Answers, JoinType.INNER, Evaluations.answerId, Answers.id)
+            .join(Items, JoinType.INNER, Answers.dailyItemId, Items.id)
+            .join(Sets, JoinType.INNER, Items.dailySetId, Sets.id)
+            .selectAll().where {
+                (Evaluations.userId eq userId) and (Evaluations.evaluationContext eq "DAILY") and
+                    (Evaluations.status eq WritingEvaluationStatus.SUCCESS.name) and
+                    (Answers.userId eq userId) and (Items.userId eq userId) and (Sets.userId eq userId) and
+                    (Sets.writingType eq writingType.name) and (snapshotLanguage eq learningLanguage) and
+                    (Evaluations.scoringPolicyVersion eq WritingScoring.policyVersion) and
+                    (Evaluations.evaluationRubricVersion eq WritingScoring.rubricVersion)
+            }.orderBy(Evaluations.evaluatedAt to SortOrder.DESC, Evaluations.id to SortOrder.DESC).limit(20).map {
             WritingRecentScore(
                 it[Evaluations.overallScore], it[Evaluations.meaningScore],
                 it[Evaluations.grammarScore], it[Evaluations.vocabularyScore],

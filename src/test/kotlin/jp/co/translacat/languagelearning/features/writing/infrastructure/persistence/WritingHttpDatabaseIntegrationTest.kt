@@ -851,7 +851,7 @@ class WritingHttpDatabaseIntegrationTest {
         val fixture = Json.parseToJsonElement(
             requireNotNull(
                 javaClass.getResource(
-                    "/contracts/writing-repair-python-golden.json",
+                    "/contracts/writing-repair-choice-http.json",
                 ),
             ).readText(),
         ).jsonObject
@@ -893,7 +893,7 @@ class WritingHttpDatabaseIntegrationTest {
         val fixture = Json.parseToJsonElement(
             requireNotNull(
                 javaClass.getResource(
-                    "/contracts/writing-repair-python-golden.json",
+                    "/contracts/writing-repair-choice-http.json",
                 ),
             ).readText(),
         ).jsonObject
@@ -1125,7 +1125,8 @@ class WritingHttpDatabaseIntegrationTest {
         val set = generation.getOrCreate(
             NewWritingSet(
                 userId, date, WritingType.FREE,
-                "synthetic-http-$userId", 1, "{\"selectedKeywords\":[],\"learningProfile\":null}",
+                "synthetic-http-$userId", 1,
+                "{\"selectedKeywords\":[],\"learningProfile\":null,\"originLanguage\":\"ko\",\"learningLanguage\":\"en\"}",
             ),
         )
         val claim = assertNotNull(generation.claimNext(userId, set.id))

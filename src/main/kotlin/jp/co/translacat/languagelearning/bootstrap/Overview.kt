@@ -5,6 +5,7 @@ import io.ktor.server.plugins.di.*
 import io.ktor.server.routing.*
 import jp.co.translacat.languagelearning.features.growth.infrastructure.persistence.ExposedGrowthUnitOfWork
 import jp.co.translacat.languagelearning.features.leveltest.api.LevelResponseMapper
+import jp.co.translacat.languagelearning.features.leveltest.api.dto.LevelTestHistoryDetailResponseDto
 import jp.co.translacat.languagelearning.features.leveltest.application.LevelReadService
 import jp.co.translacat.languagelearning.features.leveltest.application.LevelSessionService
 import jp.co.translacat.languagelearning.features.listening.application.ListeningReadService
@@ -25,6 +26,7 @@ import jp.co.translacat.languagelearning.features.writing.infrastructure.persist
 import jp.co.translacat.languagelearning.shared.error.LearningBusinessException
 import jp.co.translacat.languagelearning.shared.persistence.transaction.JdbcTransactionRunner
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.encodeToJsonElement
 
@@ -53,7 +55,7 @@ internal suspend fun Application.configureOverview() {
         PracticeReadService(ExposedPracticeUnitOfWork(runner)),
         ExposedGrowthUnitOfWork(runner), levelSessions,
         { user, session ->
-            Json.encodeToJsonElement(LevelResponseMapper.detail(levelSessions.detail(user, session), levelReads))
+            encodeOverviewLevelHistory(LevelResponseMapper.detail(levelSessions.detail(user, session), levelReads))
         },
     ) { user, set ->
         writingReads.byId(user, set, settings.learningDate(user), settings.adminPolicy().reviewAvailableDays)
@@ -63,3 +65,13 @@ internal suspend fun Application.configureOverview() {
     }
     routing { overviewRoutes(service) }
 }
+
+// JsonElement로 만든 뒤에는 HTTP 직렬화가 빠진 기본값을 복원하지 못한다.
+// 일반 레벨 이력과 같은 빈 배열/null 계약을 이 변환 경계에서 유지한다.
+private val overviewHistoryJson = Json {
+    encodeDefaults = true
+    explicitNulls = true
+}
+
+internal fun encodeOverviewLevelHistory(detail: LevelTestHistoryDetailResponseDto): JsonElement =
+    overviewHistoryJson.encodeToJsonElement(detail)

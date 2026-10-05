@@ -11,6 +11,12 @@ internal data class WritingDemand(
 )
 
 internal data class WritingPreservation(val status: String, val issues: List<String>, val evidenceIds: List<String>)
+internal data class WritingContentChoice(
+    val status: String, val description: String, val evidenceIds: List<String>,
+)
+internal data class WritingProductionObservation(
+    val minimumRequiredMeaning: String, val necessaryRelations: String, val evidenceIds: List<String>,
+)
 internal data class WritingReview(
     val candidateId: String,
     val contentHash: String,
@@ -27,6 +33,8 @@ internal data class WritingReview(
     val preservation: WritingPreservation?,
     val recoveryHash: String?,
     val sourcePreservation: WritingPreservation?,
+    val contentChoice: WritingContentChoice? = null,
+    val productionObservation: WritingProductionObservation? = null,
 )
 
 internal data class WritingAcceptance(val action: String, val reason: String)
@@ -57,7 +65,10 @@ internal object WritingReviewParser {
         "MEANING_CHANGED", "FACT_CHANGED", "POLARITY_CHANGED", "REGISTER_CHANGED", "UNSUPPORTED_ADDITION",
     )
 
-    fun parse(raw: JsonObject, repaired: Boolean = false, recovered: Boolean = false): WritingReview {
+    fun parse(
+        raw: JsonObject, repaired: Boolean = false, recovered: Boolean = false,
+        writingType: WritingType = WritingType.TRANSLATION,
+    ): WritingReview {
         require(!repaired || !recovered)
         // 응답 종류별 필드 집합을 닫고 기본 판정·근거의 교차 조건을 검사한다.
         val baseKeys = setOf(
@@ -65,7 +76,12 @@ internal object WritingReviewParser {
             "difficultyStatus", "estimatedBand", "alternativeBand", "difficultyConfidence",
             "difficultyEvidenceSegmentIds", "checks", "issues", "productionDemandChecks",
         )
-        val expectedKeys = when {
+        val observationKeys = when (writingType) {
+            WritingType.FREE -> setOf("contentChoiceObservation")
+            WritingType.GUIDED -> setOf("productionObservation")
+            WritingType.TRANSLATION -> emptySet()
+        }
+        val expectedKeys = observationKeys + when {
             repaired -> baseKeys + setOf("revisionHash", "revisionPreservation")
             recovered -> baseKeys + setOf("recoveryHash", "sourcePreservation")
             else -> baseKeys
@@ -94,6 +110,27 @@ internal object WritingReviewParser {
         if (checks.map { it.criterion }.toSet() != criteria) invalid("CRITERION_SET_INVALID")
         val issues = strings(raw, "issues", 12, issueCriterion.keys)
         if (issues.size != issues.toSet().size) invalid("ISSUE_DUPLICATE")
+
+        // 새 관측은 기존 TASK_TYPE 판정과 모순되지 않아야 한다. 설명의 의미나 band를 코드로 추정하지 않는다.
+        val contentChoice = if (writingType == WritingType.FREE) {
+            val value = raw["contentChoiceObservation"] as? JsonObject ?: invalid("CONTENT_CHOICE_INVALID")
+            exact(value, setOf("status", "choiceDescription", "evidenceSegmentIds"))
+            val choiceStatus = choice(value, "status", setOf("SUBSTANTIVE_CHOICE", "EXPRESSION_ONLY", "UNSURE"))
+            val description = text(value, "choiceDescription")
+            val evidence = observationIds(value)
+            val validity = checks.single { it.criterion == "TASK_VALIDITY" }.status
+            if (choiceStatus == "EXPRESSION_ONLY" && (validity != "FAIL" || "TASK_TYPE" !in issues) ||
+                choiceStatus == "UNSURE" && validity != "UNSURE"
+            ) invalid("CONTENT_CHOICE_STATUS_MISMATCH")
+            WritingContentChoice(choiceStatus, description, evidence)
+        } else null
+        val productionObservation = if (writingType == WritingType.GUIDED) {
+            val value = raw["productionObservation"] as? JsonObject ?: invalid("PRODUCTION_OBSERVATION_INVALID")
+            exact(value, setOf("minimumRequiredMeaning", "necessaryRelations", "evidenceSegmentIds"))
+            WritingProductionObservation(
+                text(value, "minimumRequiredMeaning"), text(value, "necessaryRelations"), observationIds(value),
+            )
+        } else null
 
         val demands = if (raw["productionDemandChecks"] == JsonNull) null else
             array(raw, "productionDemandChecks", 3, 3).map { element ->
@@ -164,7 +201,12 @@ internal object WritingReviewParser {
         return WritingReview(
             candidateId, contentHash, revisionHash, verdict, observed, status, difficultyIds,
             estimated, alternative, checks, issues, demands, preservation, recoveryHash, sourcePreservation,
+            contentChoice, productionObservation,
         )
+    }
+
+    private fun observationIds(value: JsonObject): List<String> = ids(value, "evidenceSegmentIds").also {
+        if (it.isEmpty()) invalid("OBSERVATION_EVIDENCE_MISSING")
     }
 
     private fun exact(value: JsonObject, keys: Set<String>) {
@@ -257,6 +299,10 @@ internal object WritingReviewBinding {
         if (review.candidateId != candidateId) return "VERIFIER_IDENTITY_MISMATCH"
         if (review.contentHash != contentHash) return "VERIFIER_CONTENT_HASH_MISMATCH"
         val ids = draft.segmentIds
+        // 유형 관측은 현재 최종 과제만 근거로 삼는다. note·이력·보정 전 원문 ID는 허용하지 않는다.
+        val observationIds = review.contentChoice?.evidenceIds.orEmpty() +
+            review.productionObservation?.evidenceIds.orEmpty()
+        if (observationIds.any { it !in ids || it == "N1" }) return "VERIFIER_OBSERVATION_EVIDENCE_INVALID"
         if ((review.difficultyEvidenceIds + review.checks.flatMap { it.evidenceIds }).any { it !in ids }) {
             return "VERIFIER_EVIDENCE_SEGMENT_INVALID"
         }

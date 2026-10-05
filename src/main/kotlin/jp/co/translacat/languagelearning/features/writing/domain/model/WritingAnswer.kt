@@ -13,6 +13,16 @@ internal data class WritingAnswer(
     val evaluationStatus: WritingEvaluationStatus,
 )
 
+/** 조회는 삭제된 평가 없이 남은 답안도 보존하며, 제출용 WritingAnswer의 상태 계약은 유지한다. */
+internal data class WritingAnswerEvidence(
+    val id: Long,
+    val itemId: Long,
+    val userId: Long,
+    val attemptDate: LocalDate,
+    val text: String,
+    val evaluationStatus: WritingEvaluationStatus?,
+)
+
 internal data class WritingEvaluationView(
     val id: Long,
     val context: String,
@@ -34,7 +44,7 @@ internal data class WritingEvaluationView(
 )
 
 internal data class WritingAttemptView(
-    val answer: WritingAnswer,
+    val answer: WritingAnswerEvidence,
     val submittedAt: LocalDateTime,
     val failureMessage: String?,
     val evaluation: WritingEvaluationView?,

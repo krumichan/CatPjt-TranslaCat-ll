@@ -578,11 +578,19 @@ internal class WritingGenerationWorker(
         val context = request["diversityContext"] as? JsonObject ?: JsonObject(emptyMap())
         val existing = (context["currentSession"] as? JsonArray).orEmpty().toMutableList()
         for (item in accepted) {
-            if (existing.any { it.jsonObject["content"]?.jsonPrimitive?.content == item.originText }) continue
+            val index = existing.indexOfFirst {
+                it.jsonObject["sourceType"]?.jsonPrimitive?.content == "WRITING" &&
+                    it.jsonObject["content"]?.jsonPrimitive?.content == item.originText
+            }
             val metadata = item.diversityMetadataJson?.let { Json.parseToJsonElement(it).jsonObject }
-            existing += buildJsonObject {
+            // 같은 원문이 fingerprint 문맥에 있어도 현재 저장 문항의 실제 안내로 보완한다.
+            // 신규 생성과 재생성에서 승인된 문항의 사실·의도·제약을 함께 비교한다.
+            val current = buildJsonObject {
                 put("sourceType", "WRITING")
                 put("content", item.originText)
+                put("providedFacts", item.providedFactsJson?.let(Json::parseToJsonElement) ?: JsonNull)
+                put("requiredIntents", item.requiredIntentsJson?.let(Json::parseToJsonElement) ?: JsonNull)
+                put("responseConstraints", item.responseConstraintsJson?.let(Json::parseToJsonElement) ?: JsonNull)
                 put("contentHash", metadata?.get("contentHash") ?: JsonNull)
                 put("scenarioCategory", metadata?.get("scenarioCategory") ?: JsonNull)
                 put("communicativeIntent", metadata?.get("communicativeIntent") ?: JsonNull)
@@ -591,6 +599,8 @@ internal class WritingGenerationWorker(
                 put("semanticSummary", metadata?.get("semanticSummary") ?: JsonNull)
                 put("ageDays", 0)
             }
+            if (index >= 0) existing[index] = JsonObject(existing[index].jsonObject + current)
+            else existing += current
         }
         return JsonObject(
             request + ("diversityContext" to JsonObject(

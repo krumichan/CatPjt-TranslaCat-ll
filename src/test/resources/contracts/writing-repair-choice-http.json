@@ -1,0 +1,75 @@
+{
+  "request": {
+    "contentDiversityPolicyVersion": null,
+    "difficultyDistribution": {
+      "challenge": 1,
+      "normal": 0,
+      "review": 0
+    },
+    "diversityContext": {
+      "crossFeatureRecent": [],
+      "currentSession": [],
+      "exactContentHashes90d": [],
+      "sameFeatureRecent": []
+    },
+    "generationDate": "2026-09-26",
+    "languageComplexity": {
+      "baseComplexityBand": 4,
+      "baseLevelScore": null,
+      "policyVersion": "language-complexity",
+      "targetComplexityBand": null
+    },
+    "learningLanguage": "en",
+    "learningProfile": null,
+    "originLanguage": "ko",
+    "recentEvaluationSummary": null,
+    "recentMistakes": [],
+    "recentlyLearnedExpressions": [],
+    "requestId": "synthetic-repair-choice",
+    "snapshotId": "synthetic-repair",
+    "selectedKeywords": [],
+    "sentenceCount": 1,
+    "writingType": "FREE"
+  },
+  "original": {
+    "diversityMetadata": {
+      "communicativeIntent": "REPORT",
+      "grammarFocusCodes": [],
+      "lexicalFocusCodes": [],
+      "requiresBackgroundKnowledge": false,
+      "scenarioCategory": "WORK",
+      "semanticSummary": "스스로 고른 일정의 조건부 변경 보고",
+      "taskArchetype": "schedule report"
+    },
+    "focusMetrics": [
+      "MEANING"
+    ],
+    "focusReason": "조건을 표현합니다.",
+    "keywords": [],
+    "originText": "스스로 정한 업무 일정을 조정해야 하는 상황을 떠올리세요. 변경할 일정과 이유를 골라, 조건이 맞으면 바꿀 수 있다고 상대방에게 알려 주세요.",
+    "providedFacts": [],
+    "requiredIntents": [],
+    "responseConstraints": []
+  },
+  "revised": {
+    "diversityMetadata": {
+      "communicativeIntent": "REPORT",
+      "grammarFocusCodes": [],
+      "lexicalFocusCodes": [],
+      "requiresBackgroundKnowledge": false,
+      "scenarioCategory": "WORK",
+      "semanticSummary": "스스로 고른 일정의 조건부 변경 보고",
+      "taskArchetype": "schedule report"
+    },
+    "focusMetrics": [
+      "MEANING"
+    ],
+    "focusReason": "조건과 예외의 범위를 함께 표현합니다.",
+    "keywords": [],
+    "originText": "스스로 정한 업무 일정을 조정해야 하는 상황을 떠올리세요. 변경할 일정과 이유를 골라, 조건이 맞으면 일정을 바꿀 수 있지만 이미 확정된 약속은 그대로 유지한다는 범위를 상대방에게 알려 주세요.",
+    "providedFacts": [],
+    "requiredIntents": [],
+    "responseConstraints": []
+  },
+  "fixturePurpose": "Substantive-choice synthetic FREE positive; historical fixed-message fixture stays negative."
+}

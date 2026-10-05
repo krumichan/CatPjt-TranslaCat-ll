@@ -41,6 +41,7 @@ Spelling and punctuation should be reflected in relevant detailed feedback rathe
 - Explain concrete strengths and weaknesses tied to the learner's actual answer. Do not merely repeat the source prompt.
 - When a metric is below 90, identify at least one specific error, omission, awkward expression, or unmet task constraint that explains the lost points when evidence exists.
 - Return corrections whenever there is a concrete grammar, vocabulary, spelling, register, or naturalness issue. Each correction must quote the learner's original fragment, provide a corrected learningLanguage fragment, and explain why.
+- Both original and corrected must be non-empty text. For an insertion or deletion, include enough surrounding text to express the change as a non-empty replacement. If no such replacement is appropriate, explain the issue in weaknesses instead of returning an empty correction fragment.
 - For DAILY/GUIDED and LEVEL_TEST guided tasks, explicitly say which providedFacts / requiredIntents / responseConstraints were satisfied or missed.
 - For DAILY/TRANSLATION and LEVEL_TEST translation, explicitly identify meaning omissions/additions and notable mistranslations instead of echoing the source sentence as a weakness.
 - Return exactly 2 or 3 natural recommended answers in learningLanguage. They are examples, not absolute answers.

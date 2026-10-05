@@ -60,6 +60,8 @@ tasks.withType<Test>().configureEach {
 }
 
 tasks.test {
+    // 큐레이션의 실제 MySQL 검증도 전용 task에서 실행한다. 이미지의 일반 test에는 DB를 주입하지 않는다.
+    exclude("**/CuratedWritingStoreIntegrationTest*", "**/CuratedWritingHttpDatabaseIntegrationTest*")
     exclude("**/LevelTestHttpDatabaseIntegrationTest*")
     exclude("**/SpeakingConversationHttpIntegrationTest*")
     exclude("**/SpeakingEvaluationHttpIntegrationTest*")
@@ -88,6 +90,7 @@ tasks.register<Test>("writingHttpDatabaseIntegrationTest") {
     testClassesDirs = sourceSets["test"].output.classesDirs
     classpath = sourceSets["test"].runtimeClasspath
     include("**/WritingHttpDatabaseIntegrationTest*")
+    include("**/CuratedWritingHttpDatabaseIntegrationTest*")
     outputs.upToDateWhen { false }
     doFirst {
         listOf("LL_TEST_AI_URL", "LL_TEST_MYSQL_URL", "LL_TEST_MYSQL_USERNAME", "LL_TEST_MYSQL_PASSWORD").forEach { name ->
@@ -117,6 +120,7 @@ tasks.register<Test>("databaseIntegrationTest") {
     description = "로컬 임시 DB에서 migration, Settings와 Keyword 저장·동시성을 검증합니다."
     testClassesDirs = sourceSets["test"].output.classesDirs
     classpath = sourceSets["test"].runtimeClasspath
+    include("**/CuratedWritingStoreIntegrationTest*")
     include("**/DatabaseMigrationIntegrationTest*", "**/SettingsPersistenceIntegrationTest*", "**/SettingsFeatureIntegrationTest*", "**/SettingsCutoverIntegrationTest*", "**/KeywordCatalogIntegrationTest*", "**/LevelTestPersistenceIntegrationTest*", "**/GrowthPersistenceIntegrationTest*", "**/WritingSchemaIntegrationTest*", "**/WritingSetStateIntegrationTest*", "**/PracticeStateIntegrationTest*", "**/SpeakingStateIntegrationTest*", "**/ListeningStateIntegrationTest*")
     shouldRunAfter(tasks.test)
     outputs.upToDateWhen { false }

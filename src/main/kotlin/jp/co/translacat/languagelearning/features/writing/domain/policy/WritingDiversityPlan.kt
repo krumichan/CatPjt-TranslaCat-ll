@@ -39,6 +39,25 @@ internal object WritingDiversityPolicy {
         "COMPARE", "EXPLAIN_REASON", "ASK_INFORMATION", "GIVE_INSTRUCTION", "EXPRESS_PREFERENCE", "SUMMARIZE",
     )
 
+    /** 현재 세트의 실제 표시 내용을 비교한다. 옛 이력에 없는 안내는 모델이 추측하지 않게 null로 둔다. */
+    fun retainedTasks(request: JsonObject): List<JsonObject> {
+        val context = request["diversityContext"] as? JsonObject ?: return emptyList()
+        return (context["currentSession"] as? JsonArray).orEmpty()
+            .map { it.jsonObject }
+            .filter { it["sourceType"]?.jsonPrimitive?.content == "WRITING" }
+            .takeLast(4)
+            .mapIndexed { index, item ->
+                buildJsonObject {
+                    put("id", "R${index + 1}")
+                    put("content", item.getValue("content"))
+                    for (field in listOf("providedFacts", "requiredIntents", "responseConstraints")) {
+                        put(field, item[field] ?: JsonNull)
+                    }
+                    put("semanticSummary", item["semanticSummary"] ?: JsonNull)
+                }
+            }
+    }
+
     fun plan(request: JsonObject): WritingDiversityPlan {
         val context = request["diversityContext"] as? JsonObject ?: JsonObject(emptyMap())
         fun entries(name: String) = (context[name] as? JsonArray ?: JsonArray(emptyList()))

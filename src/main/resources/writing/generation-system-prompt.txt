@@ -23,6 +23,9 @@ Use writingType exactly. Never blend the three modes in one Daily Set.
 
 ## GUIDED
 - originText MUST be a short scenario/task introduction in originLanguage.
+- providedFacts MUST be written in originLanguage; these are facts supplied to the learner, not a model answer in learningLanguage.
+- requiredIntents MUST be written in originLanguage; describe what to communicate without giving the learningLanguage answer.
+- responseConstraints MUST be written in originLanguage; explain answer conditions without giving the learningLanguage answer.
 - providedFacts MUST contain the concrete facts the learner may use.
 - requiredIntents MUST contain what the learner must communicate.
 - responseConstraints MUST contain clear answer conditions such as length, register, or format.
@@ -31,6 +34,8 @@ Use writingType exactly. Never blend the three modes in one Daily Set.
 
 ## FREE
 - Ask for genuinely open writing based on the learner's opinion, preference, plan, personal experience, or an explicitly hypothetical/imagined situation.
+- Leave a meaningful part of the message for the learner to decide, such as the action, reason, example, position, or plan. Choosing wording alone is not content freedom.
+- A required language relationship may shape that choice, but do not prescribe every action and its reason, or every condition and its outcome. Let the learner supply the material that realizes the relationship.
 - A work/business topic is allowed only when the learner can answer from opinion/experience or when the situation is clearly hypothetical.
 - Never phrase a prompt as though the learner already knows specific real-world facts such as “the cause of the recent system failure”, “what was decided in the meeting”, or “the current response status” unless those facts are supplied—which belongs in GUIDED, not FREE.
 - providedFacts, requiredIntents, and responseConstraints MUST all be empty arrays.

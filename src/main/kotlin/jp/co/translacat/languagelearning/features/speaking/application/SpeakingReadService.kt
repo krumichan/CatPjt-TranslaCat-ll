@@ -10,7 +10,11 @@ internal class SpeakingReadService(
     private val work: SpeakingUnitOfWork, private val settings: SettingsServiceOperations,
 ) {
     suspend fun session(userId: Long, sessionId: Long): JsonObject = work.read {
-        sessionView(owned(userId, sessionId))
+        val session = owned(userId, sessionId)
+        val turns = records.turns(sessionId)
+        val coaching = if (session.snapshot.resultKind == SpeakingResultKind.SESSION_COACHING)
+            coachingView(session, turns) else JsonNull
+        sessionView(session, coaching, turns)
     }
 
     suspend fun detail(userId: Long, sessionId: Long): JsonObject {
@@ -22,9 +26,10 @@ internal class SpeakingReadService(
             val value = stored.expireIfNeeded(nowUtc)
             if (stored != value) records.saveSession(value)
             val turns = records.turns(sessionId)
+            val coaching = coachingView(value, turns)
             val today = records.sessions(userId, current.learningDate, current.learningDate)
             buildJsonObject {
-                put("session", sessionView(value))
+                put("session", sessionView(value, coaching, turns))
                 put(
                     "dailyUsage",
                     buildJsonObject {
@@ -45,7 +50,7 @@ internal class SpeakingReadService(
                         ),
                     ),
                 )
-                put("coachingResult", coachingView(value))
+                put("coachingResult", coaching)
                 put(
                     "resumable",
                     SpeakingSessionPolicy.resumable(value.active, value.lastActivityAt, nowUtc, value.snapshot.policy),
@@ -109,10 +114,12 @@ internal class SpeakingReadService(
     suspend fun historyPayload(userId: Long, sessionId: Long): JsonObject = work.read {
         // 과거 이력 조회는 원본처럼 상태를 변경하지 않고 현재 보관 중인 세션·턴·코칭 snapshot을 반환한다.
         val session = owned(userId, sessionId)
+        val turns = records.turns(sessionId)
+        val coaching = coachingView(session, turns)
         buildJsonObject {
-            put("session", sessionView(session))
-            put("turns", JsonArray(records.turns(sessionId).map { turnView(it) }))
-            put("coachingResult", coachingView(session))
+            put("session", sessionView(session, coaching, turns))
+            put("turns", JsonArray(turns.map { turnView(it) }))
+            put("coachingResult", coaching)
         }
     }
 
@@ -123,8 +130,23 @@ internal class SpeakingReadService(
         if (value.snapshot.resultKind == SpeakingResultKind.SESSION_COACHING)
             records.job(value.id, 0)?.status?.name ?: "NOT_REQUESTED" else value.evaluationStatus.name
 
-    private fun SpeakingTransaction.sessionView(value: SpeakingSessionRecord): JsonObject {
+    private fun SpeakingTransaction.sessionView(
+        value: SpeakingSessionRecord, coaching: JsonElement, turns: List<SpeakingTurnRecord>,
+    ): JsonObject {
         val snapshot = value.snapshot
+        val scored = snapshot.resultKind == SpeakingResultKind.SCORED_EVALUATION &&
+            snapshot.resultPolicyVersion == "speaking-evaluation-policy-v2"
+        val coachingPolicy = snapshot.resultKind == SpeakingResultKind.SESSION_COACHING &&
+            snapshot.resultPolicyVersion == "free-session-coaching-v1"
+        val sourceAvailability = when {
+            !scored && !coachingPolicy -> "UNAVAILABLE"
+            scored -> scoredSummaryAvailability(value, turns)
+            else -> (coaching as? JsonObject)?.get("evidenceAvailability")
+                ?.jsonPrimitive?.contentOrNull ?: "UNVERIFIED"
+        }
+        // 대화 요약과 코칭 근거는 서로 다른 계약이다. 알려진 점수형 세션은 코칭 부재만으로 숨기지 않는다.
+        val restricted = sourceAvailability in setOf("LIMITED", "UNAVAILABLE") ||
+            (sourceAvailability == "UNVERIFIED" && !value.active && !scored)
         return buildJsonObject {
             put("id", LearningPublicId.encode(value.id))
             put("learningDate", value.learningDate.toString())
@@ -156,14 +178,58 @@ internal class SpeakingReadService(
             put("openingPromptGuide", promptGuide(value.opening["conversation"] as? JsonObject))
             put(
                 "openingAssistantAudioUrl",
-                if (records.audio(value.id, null, "OPENING") == null) JsonNull
+                if (!audioAvailable(value.id, null, "OPENING")) JsonNull
                 else JsonPrimitive("${sessionPath(value.id)}/audio/opening"),
             )
-            put("sessionSummary", value.sessionSummary?.let(::JsonPrimitive) ?: JsonNull)
+            // 현재 원본과 달라진 코칭의 요약에는 삭제된 발화가 남을 수 있어 세 조회 경로에서 함께 숨긴다.
+            put("sessionSummary", if (restricted) JsonNull else value.sessionSummary?.let(::JsonPrimitive) ?: JsonNull)
+            put("summaryEvidenceAvailability", sourceAvailability)
+            put("summaryEvidenceLimitations", when {
+                !scored && !coachingPolicy -> JsonArray(listOf(JsonPrimitive("UNKNOWN_RESULT_POLICY")))
+                sourceAvailability == "UNVERIFIED" -> JsonArray(listOf(JsonPrimitive("SUMMARY_SOURCE_PROVENANCE_UNAVAILABLE")))
+                scored && restricted -> JsonArray(listOf(JsonPrimitive("SOURCE_EVIDENCE_CHANGED_OR_UNAVAILABLE")))
+                restricted -> (coaching as JsonObject).getValue("evidenceLimitations")
+                else -> JsonArray(emptyList())
+            })
             put("startedAt", value.startedAt.toString())
             put("completedAt", value.completedAt?.toString()?.let(::JsonPrimitive) ?: JsonNull)
             put("lastActivityAt", value.lastActivityAt.toString())
         }
+    }
+
+    private fun SpeakingTransaction.scoredSummaryAvailability(
+        session: SpeakingSessionRecord, turns: List<SpeakingTurnRecord>,
+    ): String {
+        val job = records.job(session.id, 0)
+        if (job == null) {
+            // 과거 점수형 요약의 표시 계약을 보존하되, 남은 원본조차 없거나 제외된 요약은 노출하지 않는다.
+            // 저장 요청이 없으면 현재 transcript의 완전한 provenance를 새로 인증하지 않는다.
+            if (session.active) return "UNVERIFIED"
+            val retained = turns.isNotEmpty() && session.completedTurns > 0 &&
+                turns.size == session.completedTurns && turns.all {
+                    it.sessionId == session.id && !it.excludedFromEvaluation &&
+                        !it.content.transcript.isNullOrBlank() && it.status == SpeakingTurnStatus.READY
+                }
+            return if (retained) "UNVERIFIED" else "UNAVAILABLE"
+        }
+
+        // 저장된 전체 세션 요청을 현재 원본과 대조한다. 점수·평가 성공 여부를 다시 판정하지 않는다.
+        val snapshot = session.snapshot
+        val request = job.request
+        val sourceMatches = runCatching {
+            job.sessionId == session.id && job.problemIndex == 0 &&
+                job.resultKind == SpeakingResultKind.SCORED_EVALUATION &&
+                job.resultPolicyVersion == snapshot.resultPolicyVersion &&
+                request["sessionId"] == JsonPrimitive(session.id.toString()) &&
+                request["evaluationScope"] == JsonPrimitive("SESSION") &&
+                request["evaluationPolicyVersion"] == JsonPrimitive(snapshot.resultPolicyVersion) &&
+                request["practiceMode"] == JsonPrimitive(snapshot.practiceMode.name) &&
+                request["originLanguage"] == JsonPrimitive(snapshot.originLanguage) &&
+                request["learningLanguage"] == JsonPrimitive(snapshot.learningLanguage) &&
+                request["sessionSummary"] == (session.sessionSummary?.let(::JsonPrimitive) ?: JsonNull) &&
+                SpeakingCoachingReadPolicy.sourceMatches(session, request, turns)
+        }.getOrDefault(false)
+        return if (sourceMatches) "AVAILABLE" else "UNAVAILABLE"
     }
 
     private fun SpeakingTransaction.turnView(value: SpeakingTurnRecord): JsonObject = buildJsonObject {
@@ -178,14 +244,14 @@ internal class SpeakingReadService(
         put("sttConfidence", value.content.sttConfidence?.let(::JsonPrimitive) ?: JsonNull)
         put(
             "userAudioUrl",
-            if (records.audio(value.sessionId, value.id, "USER") == null) JsonNull
+            if (!audioAvailable(value.sessionId, value.id, "USER", value.recordingRevision)) JsonNull
             else JsonPrimitive("${sessionPath(value.sessionId)}/turns/${LearningPublicId.encode(value.id)}/audio/user"),
         )
         put("assistantText", value.content.assistantText?.let(::JsonPrimitive) ?: JsonNull)
         put("promptGuide", promptGuide(value.content.conversation))
         put(
             "assistantAudioUrl",
-            if (records.audio(value.sessionId, value.id, "ASSISTANT") == null) JsonNull
+            if (!audioAvailable(value.sessionId, value.id, "ASSISTANT", value.recordingRevision)) JsonNull
             else JsonPrimitive("${sessionPath(value.sessionId)}/turns/${LearningPublicId.encode(value.id)}/audio"),
         )
         put("assistanceUsage", JsonArray(value.content.assistanceUsage.map { JsonPrimitive(it.name) }))
@@ -215,18 +281,30 @@ internal class SpeakingReadService(
             },
         )
 
-    private fun SpeakingTransaction.coachingView(session: SpeakingSessionRecord): JsonElement {
+    private fun SpeakingTransaction.coachingView(
+        session: SpeakingSessionRecord, turns: List<SpeakingTurnRecord>,
+    ): JsonElement {
         if (session.snapshot.resultKind != SpeakingResultKind.SESSION_COACHING) return JsonNull
         val result = records.result(session.id, 0) ?: return JsonNull
+        val response = SpeakingCoachingReadPolicy.project(session, result, records.job(session.id, 0), turns)
         return buildJsonObject {
             put("id", LearningPublicId.encode(result.id))
             listOf(
                 "resultKind", "resultPolicyVersion", "schemaVersion", "sourceSnapshotHash", "contentStatus",
-                "limitationReasons", "items", "promptVersion",
+                "limitationReasons", "items", "promptVersion", "evidenceAvailability", "evidenceLimitations",
             )
-                .forEach { key -> put(key, result.response[key] ?: JsonNull) }
+                .forEach { key -> put(key, response[key] ?: JsonNull) }
             put("createdAt", result.updatedAt.toString())
         }
+    }
+
+    private fun SpeakingTransaction.audioAvailable(
+        sessionId: Long, turnId: Long?, role: String, revision: Int? = null,
+    ): Boolean {
+        // 보존 작업이 아직 삭제 표시를 쓰지 않았어도 만료된 음성을 재생 가능한 링크로 내보내지 않는다.
+        val audio = records.audio(sessionId, turnId, role) ?: return false
+        return audio.deletedAt == null && audio.physicalDeletedAt == null && audio.retentionUntil.isAfter(nowUtc) &&
+            (revision == null || audio.recordingRevision == revision)
     }
 
     private fun promptGuide(value: JsonObject?) = buildJsonObject {

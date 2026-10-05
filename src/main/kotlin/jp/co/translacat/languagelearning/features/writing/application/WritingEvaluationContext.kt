@@ -16,6 +16,8 @@ internal data class WritingEvaluationContext(
     val canonicalKeys: List<String>,
 )
 
+internal class WritingEvaluationContextException(val code: String) : RuntimeException(code)
+
 /** BE WritingEvaluationRequestFactory의 snapshot/사용 문항 keyword 선택과 Pydantic field order. */
 internal object WritingEvaluationContextBuilder {
     fun build(
@@ -29,6 +31,9 @@ internal object WritingEvaluationContextBuilder {
     ): WritingEvaluationContext {
         require(set.id == item.setId && item.id == answer.itemId && set.userId == answer.userId)
         val snapshot = Json.parseToJsonElement(set.snapshotJson).jsonObject
+        // 설정 변경·재시작 후에도 평가 언어는 저장 과제에 결합한다. 현재 언어로 옛 과제를 추정하지 않는다.
+        val sourceOriginLanguage = storedLanguage(snapshot, "originLanguage")
+        val sourceLearningLanguage = storedLanguage(snapshot, "learningLanguage")
         val selected = snapshot["selectedKeywords"] as? JsonArray ?: JsonArray(emptyList())
         val used =
             Json.parseToJsonElement(item.keywordsJson).jsonArray.map { it.jsonPrimitive.content.lowercase(Locale.ROOT) }
@@ -51,8 +56,8 @@ internal object WritingEvaluationContextBuilder {
             put("requestId", requestId)
             put("context", "DAILY")
             put("writingType", set.writingType.name)
-            put("originLanguage", originLanguage)
-            put("learningLanguage", learningLanguage)
+            put("originLanguage", sourceOriginLanguage)
+            put("learningLanguage", sourceLearningLanguage)
             put("originSentence", item.originText)
             put("userAnswer", answer.text)
             put("difficulty", item.difficulty.name)
@@ -66,8 +71,16 @@ internal object WritingEvaluationContextBuilder {
             put("responseConstraints", list(item.responseConstraintsJson))
         }
         return WritingEvaluationContext(
-            requestId, request.toString(), originLanguage, learningLanguage, learningDate, canonical,
+            requestId, request.toString(), sourceOriginLanguage, sourceLearningLanguage, learningDate, canonical,
         )
+    }
+
+    private fun storedLanguage(snapshot: JsonObject, key: String): String {
+        val value = snapshot[key] as? JsonPrimitive
+        if (value == null || !value.isString || value.content.isBlank() || value.content.equals("UNKNOWN", true)) {
+            throw WritingEvaluationContextException("WRITING_EVALUATION_LANGUAGE_UNKNOWN")
+        }
+        return value.content
     }
 
     private fun list(json: String?): JsonArray =

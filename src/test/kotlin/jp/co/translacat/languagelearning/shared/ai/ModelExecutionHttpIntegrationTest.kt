@@ -47,11 +47,12 @@ class ModelExecutionHttpIntegrationTest {
 
     @Test
     fun `TARGETED_REPAIR 수정본은 실제 HTTP에서 보존 교차 필드를 재검증하고 B4를 승격하지 않는다`() {
+        // 준비: 일정과 이유를 직접 고르는 FREE 입력으로 기존 보정 검증 경계를 유지한다.
         val url = requireNotNull(System.getenv("LL_TEST_AI_URL"))
         val golden = Json.parseToJsonElement(
             requireNotNull(
                 javaClass.getResource(
-                    "/contracts/writing-repair-python-golden.json",
+                    "/contracts/writing-repair-choice-http.json",
                 ),
             ).readText(),
         ).jsonObject
@@ -59,10 +60,11 @@ class ModelExecutionHttpIntegrationTest {
         val original = WritingCandidatePolicy.parse(golden.getValue("original").jsonObject)
         val revised = WritingCandidatePolicy.parse(golden.getValue("revised").jsonObject)
         val plan = WritingDifficultyRepairPlan(
-            original, golden.getValue("baseContentHash").jsonPrimitive.content, 1, WritingType.FREE,
+            original, WritingCandidatePolicy.contentHash(request, original), 1, WritingType.FREE,
             listOf(WritingRepairObservation("SCOPE_INTERACTION", listOf("O1"))),
             listOf(WritingRepairObservation("SCOPE_TOO_ROUTINE", listOf("O1"))),
         )
+        // 실행 / 검증: 정상 보존·잘못된 교차 필드·B4 불일치를 각각 같은 HTTP 경로로 확인한다.
         HttpModelExecution(url, "synthetic-local-model-key").use { client ->
             val repairedBatch = runBlocking {
                 WritingGenerationExecution(client).repair(
@@ -102,6 +104,38 @@ class ModelExecutionHttpIntegrationTest {
                     b4.review, 5, WritingType.FREE, repaired = true,
                 ).reason,
             )
+        }
+    }
+
+    @Test
+    fun `선택 없이 의미가 고정된 과거 FREE repair fixture는 현재 계약에서 거부한다`() {
+        // 준비: 기존 원문은 수정하지 않고, 현재의 명시적 내용 선택 계약에 대조한다.
+        val url = requireNotNull(System.getenv("LL_TEST_AI_URL"))
+        val historical = Json.parseToJsonElement(
+            requireNotNull(javaClass.getResource("/contracts/writing-repair-python-golden.json")).readText(),
+        ).jsonObject
+        val request = historical.getValue("request").jsonObject
+        val original = WritingCandidatePolicy.parse(historical.getValue("original").jsonObject)
+        val revised = WritingCandidatePolicy.parse(historical.getValue("revised").jsonObject)
+        val plan = WritingDifficultyRepairPlan(
+            original, historical.getValue("baseContentHash").jsonPrimitive.content, 1, WritingType.FREE,
+            listOf(WritingRepairObservation("SCOPE_INTERACTION", listOf("O1"))),
+            listOf(WritingRepairObservation("SCOPE_TOO_ROUTINE", listOf("O1"))),
+        )
+
+        // 실행: 실제 HTTP와 typed parser를 거치며, 구 fixture의 양성 판정을 재사용하지 않는다.
+        HttpModelExecution(url, "synthetic-local-model-key").use { client ->
+            val result = runBlocking {
+                WritingReviewExecution(client).assess(
+                    request, revised, "synthetic-repaired", Instant.now().plusSeconds(15), plan,
+                )
+            }
+
+            // 검증: 의미 선택이 없는 과제는 band와 관계없이 TASK_TYPE으로 거부한다.
+            assertEquals("EXPRESSION_ONLY", result.review.contentChoice?.status)
+            val acceptance = WritingReviewAcceptance.decide(result.review, 5, WritingType.FREE, repaired = true)
+            assertEquals("REJECT", acceptance.action)
+            assertEquals("QUALITY_TASK_TYPE", acceptance.reason)
         }
     }
 

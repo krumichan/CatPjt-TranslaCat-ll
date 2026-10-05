@@ -49,7 +49,9 @@ internal class WritingGenerationState(private val work: WritingSetUnitOfWork) {
         require(promptVersion.length <= 100)
         return work.write(userId) {
             val set = sets.findById(userId, setId) ?: return@write false
+            // 재획득 전이라도 만료된 lease의 늦은 응답은 새 문항을 게시할 권한이 없다.
             if (set.status != WritingSetStatus.GENERATING || set.generationToken != claim.token ||
+                set.generationLeaseUntil?.isAfter(nowUtc) != true ||
                 claim.order != item.order || items.firstMissingOrder(userId, setId, set.sentenceCount) != claim.order
             ) return@write false
             item.validateFor(set.writingType)
@@ -81,6 +83,9 @@ internal class WritingGenerationState(private val work: WritingSetUnitOfWork) {
     suspend fun fail(userId: Long, setId: Long, token: String, failureCode: String): Boolean {
         require(Regex("[A-Z][A-Z0-9_]{0,79}").matches(failureCode))
         return work.write(userId) {
+            // 만료 작업의 실패도 재시작 가능한 현재 상태를 덮어쓰지 않는다.
+            val set = sets.findById(userId, setId) ?: return@write false
+            if (set.generationLeaseUntil?.isAfter(nowUtc) != true) return@write false
             sets.failGeneration(userId, setId, token, failureCode, items.count(userId, setId) > 0, nowUtc)
         }
     }

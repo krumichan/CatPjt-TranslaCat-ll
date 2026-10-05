@@ -1,9 +1,11 @@
 package jp.co.translacat.languagelearning.features.writing.application
 
 import jp.co.translacat.languagelearning.features.writing.domain.policy.*
+import jp.co.translacat.languagelearning.features.writing.domain.model.WritingType
 import jp.co.translacat.languagelearning.shared.ai.*
 import kotlinx.coroutines.delay
 import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.jsonPrimitive
 import java.time.Clock
 import java.time.Duration
 import java.time.Instant
@@ -26,6 +28,7 @@ internal class WritingReviewExecution(
         onModelCall: () -> Unit = {},
     ): Result {
         require(repairPlan == null || sourceRecovery == null)
+        val writingType = WritingType.valueOf(request.getValue("writingType").jsonPrimitive.content)
         if (repairPlan != null) require(repairPlan.changeReason(request, draft) == null) {
             "DIFFICULTY_REPAIR_CHANGED_OUTSIDE_SCOPE"
         }
@@ -53,7 +56,9 @@ internal class WritingReviewExecution(
             tier = ModelTier.MINI,
             maxOutputTokens = if (adjudicator) 2048 else 4096,
             deadlineUtc = deadlineUtc,
-            responseSchema = WritingReviewSchema.build(evidence, candidateId, contentHash, revisionHash, recoveryHash),
+            responseSchema = WritingReviewSchema.build(
+                evidence, candidateId, contentHash, revisionHash, recoveryHash, writingType,
+            ),
             schemaName = "writing_task_review",
             strict = true,
             taskName = if (adjudicator) "LANGUAGE_LEARNING_WRITING_DIFFICULTY_VERIFICATION"
@@ -71,6 +76,7 @@ internal class WritingReviewExecution(
                 val review = WritingReviewParser.parse(
                     raw, repaired = repairPlan != null,
                     recovered = sourceRecovery != null,
+                    writingType = writingType,
                 )
                 WritingReviewBinding.failure(
                     review, evidence, candidateId, contentHash,
