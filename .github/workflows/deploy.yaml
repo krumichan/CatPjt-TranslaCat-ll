@@ -10,12 +10,11 @@ on:
 permissions:
   contents: read
 
-concurrency:
-  group: ll-oci-${{ github.ref }}
-  cancel-in-progress: false
-
 jobs:
   verify:
+    # push/PR에서는 검증만 수행한다.
+    # 수동 production dispatch는 기존 push 검증을 다시 기다리지 않는다.
+    if: github.event_name != 'workflow_dispatch'
     runs-on: ubuntu-24.04
     timeout-minutes: 45
     services:
@@ -40,6 +39,7 @@ jobs:
         with:
           distribution: temurin
           java-version: '21'
+          cache: gradle
       - name: Curated Writing isolated MySQL tests
         env:
           JAVA_TOOL_OPTIONS: -Duser.timezone=UTC
@@ -56,9 +56,12 @@ jobs:
       - name: Compile, isolated application tests, and build runtime
         run: docker build --platform linux/amd64 --target runtime -f deploy/oci/Dockerfile -t local/verified:${GITHUB_SHA} .
   release:
-    needs: verify
     # V020+ 운영 migration은 백업·별도 승인 후 명시적 dispatch에서만 실행한다.
+    # push verify와 독립적으로 시작할 수 있지만 production release끼리는 직렬화한다.
     if: github.ref == 'refs/heads/main' && github.event_name == 'workflow_dispatch'
+    concurrency:
+      group: translacat-ll-production
+      cancel-in-progress: false
     environment: production
     runs-on: ubuntu-24.04
     timeout-minutes: 90
