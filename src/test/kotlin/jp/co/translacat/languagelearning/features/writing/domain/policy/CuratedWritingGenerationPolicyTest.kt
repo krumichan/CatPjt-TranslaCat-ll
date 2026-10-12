@@ -119,6 +119,106 @@ class CuratedWritingGenerationPolicyTest {
         }
     }
 
+    @Test
+    fun `B2 고정 골격의 스무 변형은 날짜와 핵심 사실을 보존한 DRAFT로 조립된다`() {
+        // 준비: 기존 다섯 골격과 이유·요청·조건·대조를 더한 다섯 골격을 각각 검사한다.
+        val topics = listOf("home-task", "library-use", "public-transport", "community-meeting", "weekend-plan",
+            "reading-group-change", "clinic-appointment", "rainy-day-choice", "group-presentation", "gym-repair-notice")
+        val prompts = mutableSetOf<String>()
+
+        // 실행 / 검증: 서버가 모든 변형을 조립하고 서로 다른 원문을 내는지 확인한다.
+        topics.forEach { topic ->
+            val ids = CuratedWritingB2Core.ids(topic)
+            assertEquals(2, ids.size)
+            val input = CuratedWritingGenerationPolicy.input(WritingType.TRANSLATION, 2, topic, emptyList())
+            assertEquals(ids, input.getValue("allowedCoreIds").jsonArray.map { it.jsonPrimitive.content })
+            assertEquals(setOf("coreId"), CuratedWritingGenerationPolicy.schema(input).getValue("properties").jsonObject.keys)
+            ids.forEach { id ->
+                val manifest = CuratedWritingGenerationPolicy.assemble(buildJsonObject { put("coreId", id) },
+                    "gen-${id}", "qa-generation-v1", WritingType.TRANSLATION, 2, topic, input)
+                val item = CuratedWritingManifestCodec.parse(manifest.toString()).items.single()
+                assertEquals(CuratedReviewStatus.DRAFT, item.status)
+                assertEquals(2, item.band)
+                assertTrue(prompts.add(item.prompt), "중복 B2 원문: $id")
+                assertEquals(2, item.referenceAnswers.size)
+                assertEquals(item.checklist, item.visibleRequirements)
+                assertFalse(item.prompt.contains("{{"))
+                assertTrue(item.referenceAnswers.none { "{{" in it || "妹" in it || "弟" in it })
+                assertFalse("十分間" in item.referenceAnswers.joinToString())
+            }
+        }
+        assertEquals(20, prompts.size)
+    }
+
+    @Test
+    fun `새 B2 골격은 요청과 조건의 구별을 답안과 오답 사례에 유지한다`() {
+        // 준비
+        val reading = CuratedWritingB2Core.content("reading-group-change-tue", "reading-group-change")
+        val clinic = CuratedWritingB2Core.content("clinic-appointment-mon", "clinic-appointment")
+        val group = CuratedWritingB2Core.content("group-presentation-thu", "group-presentation")
+        val gym = CuratedWritingB2Core.content("gym-repair-notice-mon", "gym-repair-notice")
+
+        // 검증: 이전/새 시간, 조건절과 대조의 핵심 구분이 한 가지 오류 사례에서만 뒤집힌다.
+        assertTrue(reading.getValue("prompt").jsonPrimitive.content.contains("두 시 삼십 분"))
+        assertTrue(reading.getValue("clearError").jsonObject.getValue("answer").jsonPrimitive.content.contains("午後3時"))
+        assertTrue(clinic.getValue("referenceAnswers").jsonArray.all { it.jsonPrimitive.content.contains("午後") })
+        assertTrue(clinic.getValue("boundaryAnswer").jsonObject.getValue("answer").jsonPrimitive.content.contains("難しければ、午前中に"))
+        assertTrue(group.getValue("referenceAnswers").jsonArray.all { it.jsonPrimitive.content.contains("空") })
+        assertTrue(group.getValue("clearError").jsonObject.getValue("answer").jsonPrimitive.content.contains("推測で埋め"))
+        assertTrue(gym.getValue("referenceAnswers").jsonArray.all { it.jsonPrimitive.content.contains("2階") && it.jsonPrimitive.content.contains("1階") })
+        assertTrue(gym.getValue("boundaryAnswer").jsonObject.getValue("answer").jsonPrimitive.content.contains("利用しにくく"))
+    }
+
+    @Test
+    fun `B2 선택은 허용된 ID만 받아들이고 사용한 두 변형 뒤에는 종료한다`() {
+        val topic = "library-use"
+        val input = CuratedWritingGenerationPolicy.input(WritingType.TRANSLATION, 2, topic, emptyList())
+        val ids = input.getValue("allowedCoreIds").jsonArray.map { it.jsonPrimitive.content }
+        listOf(
+            buildJsonObject { put("coreId", "home-task-sat") },
+            buildJsonObject { put("coreId", ids.first()); put("prompt", "주입") },
+            CuratedWritingB2Core.content(ids.first(), topic),
+        ).forEach { invalid ->
+            assertFailsWith<IllegalArgumentException> {
+                CuratedWritingGenerationPolicy.assemble(invalid, "gen-invalid", "qa-generation-v1",
+                    WritingType.TRANSLATION, 2, topic, input)
+            }
+        }
+        val second = CuratedWritingGenerationPolicy.input(WritingType.TRANSLATION, 2, topic, emptyList(),
+            recentCoreIds = setOf(ids.first()))
+        assertEquals(listOf(ids.last()), second.getValue("allowedCoreIds").jsonArray.map { it.jsonPrimitive.content })
+        val repair = CuratedWritingGenerationPolicy.input(WritingType.TRANSLATION, 2, topic, emptyList(),
+            buildJsonObject { put("coreId", ids.first()) }, "날짜 표현을 더 명확하게 선택하세요.")
+        assertEquals(listOf(ids.last()), repair.getValue("allowedCoreIds").jsonArray.map { it.jsonPrimitive.content })
+        assertEquals("날짜 표현을 더 명확하게 선택하세요.", repair.getValue("repairNotes").jsonPrimitive.content)
+        val exhausted = assertFailsWith<IllegalArgumentException> {
+            CuratedWritingGenerationPolicy.input(WritingType.TRANSLATION, 2, topic, emptyList(),
+                recentCoreIds = ids.toSet())
+        }
+        assertEquals("WRITING_CONTENT_NOT_AVAILABLE", exhausted.message)
+        val unsupported = assertFailsWith<IllegalArgumentException> {
+            CuratedWritingGenerationPolicy.input(WritingType.TRANSLATION, 2, "unknown-topic", emptyList())
+        }
+        assertEquals("WRITING_REQUEST_INVALID", unsupported.message)
+    }
+
+    @Test
+    fun `B2 편집 검토에서 찾은 결제 장소와 경계 사례의 독립 결함은 재발하지 않는다`() {
+        val home = CuratedWritingB2Core.content("home-task-sat", "home-task")
+        assertTrue(home.getValue("clearError").jsonObject.getValue("answer").jsonPrimitive.content.contains("一緒にお茶"))
+        val transport = CuratedWritingB2Core.content("public-transport-mon", "public-transport")
+        assertTrue(transport.getValue("boundaryAnswer").jsonObject.getValue("answer").jsonPrimitive.content.contains("車内で"))
+        assertTrue(transport.getValue("boundaryAnswer").jsonObject.getValue("explanation").jsonPrimitive.content.contains("정류장"))
+        val library = CuratedWritingB2Core.content("library-use-wed", "library-use")
+        assertTrue(library.getValue("boundaryAnswer").jsonObject.getValue("answer").jsonPrimitive.content.contains("一時間ぐらい"))
+        val community = CuratedWritingB2Core.content("community-meeting-fri", "community-meeting")
+        assertTrue(community.getValue("boundaryAnswer").jsonObject.getValue("answer").jsonPrimitive.content.contains("公園について"))
+        assertTrue(community.getValue("boundaryAnswer").jsonObject.getValue("answer").jsonPrimitive.content.contains("地域の会議"))
+        val weekend = CuratedWritingB2Core.content("weekend-plan-sat", "weekend-plan")
+        assertTrue(weekend.getValue("referenceAnswers").jsonArray.none { it.jsonPrimitive.content.contains("歩きながら写真") })
+        assertTrue(weekend.getValue("boundaryAnswer").jsonObject.getValue("answer").jsonPrimitive.content.contains("近くの食堂"))
+    }
+
     private fun withKoreanField(content: JsonObject, field: String, value: String): JsonObject {
         val replacement = when (field) {
             "providedFacts", "requiredIntents", "responseConstraints", "requirements" -> buildJsonArray { add(value) }

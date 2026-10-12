@@ -186,6 +186,70 @@ class CuratedWritingStoreIntegrationTestGeneration {
         assertEquals(1, calls)
     }
 
+    @Test
+    fun `B2 선택은 저장 후 재시작해도 재과금하지 않고 소유자별 변형을 소진한다`() = withDatabase { runner ->
+        val snapshots = CuratedWritingStore(runner, manifest, clock)
+        val store = CuratedWritingGenerationStore(runner, snapshots, manifest.releaseId, clock)
+        val chosen = mutableListOf<String>()
+        val service = CuratedWritingGenerationService(store, ModelExecutionPort { command ->
+            assertEquals(ModelTier.LUNA, command.tier)
+            assertEquals(512, command.maxOutputTokens)
+            val input = Json.parseToJsonElement(command.messages.single().content).jsonObject
+            val allowed = input.getValue("allowedCoreIds").jsonArray.map { it.jsonPrimitive.content }
+            val id = allowed.first()
+            chosen += id
+            ModelExecutionResult(buildJsonObject { put("coreId", id) }, 20, 10, "openai", "gpt-5.6-luna")
+        }, clock)
+
+        val first = service.prepare(71020, "b2-first", WritingType.TRANSLATION, 2, "library-use")
+        val restarted = CuratedWritingGenerationService(
+            CuratedWritingGenerationStore(runner, snapshots, manifest.releaseId, clock),
+            ModelExecutionPort { error("조회와 재시작은 모델을 호출하면 안 됩니다") }, clock)
+        assertEquals(first, restarted.get(71020, "b2-first"))
+        assertEquals(first, restarted.prepare(71020, "b2-first", WritingType.TRANSLATION, 2, "library-use"))
+        val second = service.prepare(71020, "b2-second", WritingType.TRANSLATION, 2, "library-use")
+        assertEquals(2, chosen.distinct().size)
+        assertNotEquals(first.getValue("catalogId"), second.getValue("catalogId"))
+        assertEquals("SUCCEEDED", second.getValue("status").jsonPrimitive.content)
+        assertFailsWith<IllegalArgumentException> {
+            service.prepare(71020, "b2-third", WritingType.TRANSLATION, 2, "library-use")
+        }.also { assertEquals("WRITING_CONTENT_NOT_AVAILABLE", it.message) }
+        assertFailsWith<IllegalStateException> { restarted.get(71021, "b2-first") }
+        val otherOwner = service.prepare(71021, "b2-other", WritingType.TRANSLATION, 2, "library-use")
+        assertEquals("SUCCEEDED", otherOwner.getValue("status").jsonPrimitive.content)
+        assertEquals(3, chosen.size)
+        runner.read {
+            assertEquals(3L, CuratedCatalogTable.selectAll().count())
+            assertEquals(3L, CuratedGenerationTable.selectAll().count())
+        }
+    }
+
+    @Test
+    fun `다른 유형 준비 기록이 끼어도 이미 사용한 B2 코어를 다시 제공하지 않는다`() = withDatabase { runner ->
+        val snapshots = CuratedWritingStore(runner, manifest, clock)
+        val store = CuratedWritingGenerationStore(runner, snapshots, manifest.releaseId, clock)
+        val chosen = mutableListOf<String>()
+        val service = CuratedWritingGenerationService(store, ModelExecutionPort { command ->
+            val input = Json.parseToJsonElement(command.messages.single().content).jsonObject
+            val id = input.getValue("allowedCoreIds").jsonArray.first().jsonPrimitive.content
+            chosen += id
+            ModelExecutionResult(buildJsonObject { put("coreId", id) }, 20, 10, "openai", "gpt-5.6-luna")
+        }, clock)
+        service.prepare(71022, "b2-old", WritingType.TRANSLATION, 2, "home-task")
+        repeat(13) { index ->
+            val key = "unrelated-$index"
+            store.prepare(71022, key, WritingType.FREE, 3, "library-plan")
+            store.saveOutput(71022, key, result(WritingType.FREE))
+        }
+        service.prepare(71022, "b2-new", WritingType.TRANSLATION, 2, "home-task")
+        assertEquals(2, chosen.distinct().size)
+        val failure = assertFailsWith<IllegalArgumentException> {
+            service.prepare(71022, "b2-exhausted", WritingType.TRANSLATION, 2, "home-task")
+        }
+        assertEquals("WRITING_CONTENT_NOT_AVAILABLE", failure.message)
+        assertEquals(2, chosen.size)
+    }
+
     private fun withDatabase(block: suspend (JdbcTransactionRunner) -> Unit) = LocalScratchMysql.use { db ->
         DatabaseFactory(db.settings()).use { factory -> runBlocking { block(JdbcTransactionRunner(factory.database, 4)) } }
     }

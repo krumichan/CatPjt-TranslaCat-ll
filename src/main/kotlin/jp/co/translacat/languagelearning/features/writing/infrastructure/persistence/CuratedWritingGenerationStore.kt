@@ -53,13 +53,15 @@ internal class CuratedWritingGenerationStore(
             original[CuratedGenerationTable.outputJson]?.let { Json.parseToJsonElement(it) as? JsonObject }
                 ?: error("WRITING_PREPARATION_CONFLICT")
         } else null
-        val recent = CuratedGenerationTable.selectAll().where { CuratedGenerationTable.userId eq user }
-            .orderBy(CuratedGenerationTable.createdAt, SortOrder.DESC).limit(12).mapNotNull {
-                it[CuratedGenerationTable.outputJson]?.let { raw ->
-                    (Json.parseToJsonElement(raw) as? JsonObject)?.get("prompt")?.jsonPrimitive?.contentOrNull
-                }
+        val storedOutputs = CuratedGenerationTable.selectAll().where { CuratedGenerationTable.userId eq user }
+            .orderBy(CuratedGenerationTable.createdAt, SortOrder.DESC).map {
+                it[CuratedGenerationTable.outputJson]?.let { raw -> Json.parseToJsonElement(raw) as? JsonObject }
             }
-        val contentInput = CuratedWritingGenerationPolicy.input(type, band, topic, recent, repairContent, repairNotes)
+        // 일반 생성의 최근 12개 문맥은 유지하되, 유한 B2 코어 선택은 오래된 결과까지 중복 사용하지 않는다.
+        val recentPrompts = storedOutputs.take(12).mapNotNull { it?.get("prompt")?.jsonPrimitive?.contentOrNull }
+        val recentCoreIds = storedOutputs.mapNotNull { it?.get("coreId")?.jsonPrimitive?.contentOrNull }.toSet()
+        val contentInput = CuratedWritingGenerationPolicy.input(type, band, topic, recentPrompts,
+            repairContent, repairNotes, recentCoreIds)
         val input = if (repairOf == null) contentInput else JsonObject(contentInput +
             ("repairOfRequestKey" to JsonPrimitive(repairOf)))
         val id = UUID.randomUUID().toString()
@@ -99,7 +101,7 @@ internal class CuratedWritingGenerationStore(
             CuratedWritingGenerationPolicy.assemble(Json.parseToJsonElement(checkNotNull(row[CuratedGenerationTable.outputJson])),
                 row[CuratedGenerationTable.catalogId], row[CuratedGenerationTable.releaseId],
                 WritingType.valueOf(input.getValue("writingType").jsonPrimitive.content),
-                input.getValue("targetBand").jsonPrimitive.int, input.getValue("topic").jsonPrimitive.content)
+                input.getValue("targetBand").jsonPrimitive.int, input.getValue("topic").jsonPrimitive.content, input)
         } catch (failure: IllegalArgumentException) {
             reject(row, failure.message?.takeIf { it.matches(Regex("WRITING_[A-Z_]+")) } ?: "WRITING_GENERATION_CONTENT_INVALID")
             return@write render(checkNotNull(find(user, key)))

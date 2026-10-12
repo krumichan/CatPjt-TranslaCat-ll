@@ -65,17 +65,8 @@ class CuratedWritingHttpDatabaseIntegrationTestFeedback {
             val model = ModelExecutionPort { command ->
                 calls++
                 val input = Json.parseToJsonElement(command.messages.single().content).jsonObject
-                val requirements = input.getValue("task").jsonObject.getValue("requirements").jsonArray
-                ModelExecutionResult(buildJsonObject {
-                    put("observations", buildJsonArray {
-                        if (calls > 1) requirements.forEach { requirement -> add(buildJsonObject {
-                            CuratedWritingFeedbackTestPayload.observation(input, requirement.jsonObject).forEach { (key, value) -> put(key, value) }
-                        }) }
-                    })
-                    put("necessaryCorrections", buildJsonArray {})
-                    put("optionalAlternatives", buildJsonArray {})
-                    put("uncertainties", buildJsonArray {})
-                }, 100, 50, "openai", "gpt-5-mini")
+                ModelExecutionResult(CuratedWritingFeedbackTestPayload.v8Response(input, invalid = calls == 1),
+                    100, 50, "openai", "gpt-5-mini")
             }
             val feedback = CuratedWritingFeedbackWorker(runner, snapshots, manifest.releaseId, model, clock)
             val plans = CuratedWritingPlanStore(runner, snapshots, manifest.releaseId, clock = clock, feedback = feedback)
@@ -146,18 +137,9 @@ class CuratedWritingHttpDatabaseIntegrationTestFeedback {
                 calls++
                 val input = Json.parseToJsonElement(command.messages.single().content).jsonObject
                 val answer = input.getValue("learnerAnswer").jsonObject.getValue("text").jsonPrimitive.content
-                val requirements = input.getValue("task").jsonObject.getValue("requirements").jsonArray
                 val inject = answer in failures && failedOnce.add(answer)
-                ModelExecutionResult(buildJsonObject {
-                    put("observations", buildJsonArray {
-                        if (!inject) requirements.forEach { requirement -> add(buildJsonObject {
-                            CuratedWritingFeedbackTestPayload.observation(input, requirement.jsonObject).forEach { (key, value) -> put(key, value) }
-                        }) }
-                    })
-                    put("necessaryCorrections", buildJsonArray {})
-                    put("optionalAlternatives", buildJsonArray {})
-                    put("uncertainties", buildJsonArray {})
-                }, 100, 50, "openai", "gpt-5-mini-2025-08-07")
+                ModelExecutionResult(CuratedWritingFeedbackTestPayload.v8Response(input, invalid = inject),
+                    100, 50, "openai", "gpt-5-mini-2025-08-07")
             }
             val feedback = CuratedWritingFeedbackWorker(runner, snapshots, manifest.releaseId, model, clock)
             val plans = CuratedWritingPlanStore(runner, snapshots, manifest.releaseId, clock = clock, feedback = feedback)

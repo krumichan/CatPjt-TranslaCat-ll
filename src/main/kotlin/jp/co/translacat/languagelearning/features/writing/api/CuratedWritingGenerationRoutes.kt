@@ -59,7 +59,8 @@ private suspend fun ApplicationCall.generationResult(action: suspend () -> JsonO
         val status = when (code) {
             "WRITING_REQUEST_INVALID", "WRITING_LANGUAGE_UNSUPPORTED" -> HttpStatusCode.BadRequest
             "WRITING_PREPARATION_NOT_FOUND" -> HttpStatusCode.NotFound
-            "WRITING_PREPARATION_CONFLICT", "WRITING_PREPARATION_REPAIR_LIMIT" -> HttpStatusCode.Conflict
+            "WRITING_PREPARATION_CONFLICT", "WRITING_PREPARATION_REPAIR_LIMIT",
+            "WRITING_CONTENT_NOT_AVAILABLE" -> HttpStatusCode.Conflict
             else -> throw failure
         }
         respond(status, InternalApiError(code, "Writing 후보 준비 요청을 처리할 수 없습니다."))

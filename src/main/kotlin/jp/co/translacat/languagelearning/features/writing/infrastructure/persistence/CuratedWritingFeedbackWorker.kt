@@ -5,6 +5,8 @@ import jp.co.translacat.languagelearning.features.writing.domain.policy.CuratedW
 import jp.co.translacat.languagelearning.features.writing.domain.policy.CuratedWritingFeedbackV4Policy
 import jp.co.translacat.languagelearning.features.writing.domain.policy.CuratedWritingFeedbackV5Policy
 import jp.co.translacat.languagelearning.features.writing.domain.policy.CuratedWritingFeedbackV6Policy
+import jp.co.translacat.languagelearning.features.writing.domain.policy.CuratedWritingFeedbackV7Policy
+import jp.co.translacat.languagelearning.features.writing.domain.policy.CuratedWritingFeedbackV9Policy
 import jp.co.translacat.languagelearning.features.writing.domain.policy.CuratedWritingManifestCodec
 import jp.co.translacat.languagelearning.features.writing.domain.model.WritingType
 import jp.co.translacat.languagelearning.features.learner.domain.exception.LearnerUnavailableException
@@ -93,6 +95,8 @@ internal class CuratedWritingFeedbackWorker(
                 claim.originLanguage, claim.learningLanguage)
             val v6Context = CuratedWritingFeedbackV6Policy.Context(claim.writingType, claim.public,
                 claim.originLanguage, claim.learningLanguage)
+            val v7Context = CuratedWritingFeedbackV7Policy.Context(claim.writingType, claim.public,
+                claim.originLanguage, claim.learningLanguage)
             val (prompt, instructions, schema) = when (claim.policyVersion) {
                 CuratedWritingFeedbackV3Policy.version -> Triple(
                     CuratedWritingFeedbackV3Policy.prompt(claim.writingType, claim.public, claim.reference,
@@ -115,11 +119,22 @@ internal class CuratedWritingFeedbackWorker(
                     CuratedWritingFeedbackV6Policy.instructions,
                     CuratedWritingFeedbackV6Policy.schema(v6Context, claim.requirements, claim.segments),
                 )
-                else -> Triple(
+                CuratedWritingFeedbackV7Policy.version -> Triple(
+                    CuratedWritingFeedbackV7Policy.prompt(v7Context, claim.reference, claim.answer, claim.requirements, claim.segments),
+                    CuratedWritingFeedbackV7Policy.instructions,
+                    CuratedWritingFeedbackV7Policy.schema(v7Context, claim.requirements, claim.segments),
+                )
+                CuratedWritingFeedbackPolicy.version -> Triple(
                     CuratedWritingFeedbackPolicy.prompt(context, claim.reference, claim.answer, claim.requirements, claim.segments),
                     CuratedWritingFeedbackPolicy.instructions,
                     CuratedWritingFeedbackPolicy.schema(context, claim.requirements, claim.segments),
                 )
+                CuratedWritingFeedbackV9Policy.version -> Triple(
+                    CuratedWritingFeedbackV9Policy.prompt(context, claim.reference, claim.answer, claim.requirements, claim.segments),
+                    CuratedWritingFeedbackV9Policy.instructions,
+                    CuratedWritingFeedbackV9Policy.schema(context, claim.requirements, claim.segments),
+                )
+                else -> error("WRITING_FEEDBACK_POLICY_UNSUPPORTED")
             }
             val output = model.execute(ModelExecutionCommand(
                 traceId = "curated-feedback-$answerId-${claim.attempt}",
@@ -143,7 +158,10 @@ internal class CuratedWritingFeedbackWorker(
                 CuratedWritingFeedbackV4Policy.version -> CuratedWritingFeedbackV4Policy.validate(output.output, v4Context, claim.requirements, claim.segments)
                 CuratedWritingFeedbackV5Policy.version -> CuratedWritingFeedbackV5Policy.validate(output.output, v5Context, claim.requirements, claim.segments)
                 CuratedWritingFeedbackV6Policy.version -> CuratedWritingFeedbackV6Policy.validate(output.output, v6Context, claim.requirements, claim.segments)
-                else -> CuratedWritingFeedbackPolicy.validate(output.output, context, claim.requirements, claim.segments)
+                CuratedWritingFeedbackV7Policy.version -> CuratedWritingFeedbackV7Policy.validate(output.output, v7Context, claim.requirements, claim.segments)
+                CuratedWritingFeedbackPolicy.version -> CuratedWritingFeedbackPolicy.validate(output.output, context, claim.requirements, claim.segments)
+                CuratedWritingFeedbackV9Policy.version -> CuratedWritingFeedbackV9Policy.validate(output.output, context, claim.requirements, claim.segments)
+                else -> error("WRITING_FEEDBACK_POLICY_UNSUPPORTED")
             }
             Validated(claim.token, feedback, output.provider, output.model,
                 output.inputTokens, output.outputTokens)
@@ -340,5 +358,6 @@ internal class CuratedWritingFeedbackWorker(
         .truncatedTo(ChronoUnit.MICROS)
 
     private val supportedPolicies = setOf(CuratedWritingFeedbackV3Policy.version, CuratedWritingFeedbackV4Policy.version,
-        CuratedWritingFeedbackV5Policy.version, CuratedWritingFeedbackV6Policy.version, CuratedWritingFeedbackPolicy.version)
+        CuratedWritingFeedbackV5Policy.version, CuratedWritingFeedbackV6Policy.version, CuratedWritingFeedbackV7Policy.version,
+        CuratedWritingFeedbackPolicy.version, CuratedWritingFeedbackV9Policy.version)
 }

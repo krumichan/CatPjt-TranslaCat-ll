@@ -28,12 +28,12 @@ internal class CuratedWritingGenerationService(
         val result = try {
             model.execute(ModelExecutionCommand(
                 traceId = claim.id,
-                instructions = CuratedWritingGenerationPolicy.instructions,
+                instructions = CuratedWritingGenerationPolicy.instructions(claim.input),
                 messages = listOf(ModelMessage("user", claim.input.toString())),
                 tier = ModelTier.LUNA,
-                maxOutputTokens = 8192,
+                maxOutputTokens = if ("coreVersion" in claim.input) 512 else 8192,
                 deadlineUtc = clock.instant().plusSeconds(180),
-                responseSchema = CuratedWritingGenerationPolicy.schema(),
+                responseSchema = CuratedWritingGenerationPolicy.schema(claim.input),
                 schemaName = "curated_writing_content",
                 strict = true,
                 taskName = "LANGUAGE_LEARNING_CURATED_WRITING_GENERATION",

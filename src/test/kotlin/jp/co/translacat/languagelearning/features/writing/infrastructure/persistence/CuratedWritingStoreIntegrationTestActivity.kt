@@ -194,18 +194,8 @@ class CuratedWritingStoreIntegrationTestActivity {
                 val input = Json.parseToJsonElement(command.messages.single().content).jsonObject
                 answerId = runner.read { CuratedAnswersTable.selectAll().single()[CuratedAnswersTable.id] }
                 plans.delete(req, setId, 1)
-                ModelExecutionResult(buildJsonObject {
-                    put("observations", buildJsonArray {
-                        input.getValue("task").jsonObject.getValue("requirements").jsonArray.forEach { requirement ->
-                            add(buildJsonObject {
-                                CuratedWritingFeedbackTestPayload.observation(input, requirement.jsonObject).forEach { (key, value) -> put(key, value) }
-                            })
-                        }
-                    })
-                    put("necessaryCorrections", buildJsonArray {})
-                    put("optionalAlternatives", buildJsonArray {})
-                    put("uncertainties", buildJsonArray {})
-                }, 100, 50, "openai", "gpt-5-mini")
+                ModelExecutionResult(CuratedWritingFeedbackTestPayload.v8Response(input),
+                    100, 50, "openai", "gpt-5-mini")
             }
             val worker = CuratedWritingFeedbackWorker(runner, snapshots, manifest.releaseId, model, clock)
             plans = CuratedWritingPlanStore(runner, snapshots, manifest.releaseId, clock = clock, feedback = worker)

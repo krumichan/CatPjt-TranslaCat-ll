@@ -127,6 +127,59 @@ class CuratedWritingHttpDatabaseIntegrationTestGeneration {
         }
     }
 
+    @Test
+    fun `B2 HTTP 준비는 선택 ID만 저장하고 소진 시 충돌로 응답한다`() = LocalScratchMysql.use { db ->
+        DatabaseFactory(db.settings()).use { factory ->
+            val runner = JdbcTransactionRunner(factory.database, 4)
+            val manifest = CuratedWritingPlanFixtures.manifest(3)
+            val snapshots = CuratedWritingStore(runner, manifest, clock)
+            var calls = 0
+            val service = CuratedWritingGenerationService(
+                CuratedWritingGenerationStore(runner, snapshots, manifest.releaseId, clock),
+                ModelExecutionPort { command ->
+                    calls++
+                    val input = Json.parseToJsonElement(command.messages.single().content).jsonObject
+                    assertEquals(setOf("coreId"), checkNotNull(command.responseSchema).getValue("properties").jsonObject.keys)
+                    ModelExecutionResult(buildJsonObject {
+                        put("coreId", input.getValue("allowedCoreIds").jsonArray.first().jsonPrimitive.content)
+                    }, 20, 10, "openai", "gpt-5.6-luna")
+                }, clock)
+            testApplication {
+                environment { config = MapApplicationConfig() }
+                application {
+                    configureSerialization(); configureStatusPages(); configureInternalAuthentication(auth)
+                    routing { curatedWritingGenerationRoutes(service, settings) }
+                }
+                suspend fun prepare(requestKey: String, topic: String = "home-task") = client.post("$base/preparations") {
+                    bearerAuth(token(71030)); contentType(ContentType.Application.Json)
+                    setBody(buildJsonObject {
+                        put("requestKey", requestKey); put("writingType", "TRANSLATION")
+                        put("targetBand", 2); put("topicKey", topic)
+                    }.toString())
+                }
+                val first = prepare("first")
+                assertEquals(HttpStatusCode.OK, first.status, first.bodyAsText())
+                val firstBody = first.bodyAsText()
+                assertEquals(firstBody, prepare("first").bodyAsText())
+                assertEquals(firstBody, client.get("$base/preparations/first") { bearerAuth(token(71030)) }.bodyAsText())
+                assertEquals(HttpStatusCode.NotFound,
+                    client.get("$base/preparations/first") { bearerAuth(token(71031)) }.status)
+                assertEquals(HttpStatusCode.OK, prepare("second").status)
+                val exhausted = prepare("third")
+                assertEquals(HttpStatusCode.Conflict, exhausted.status)
+                assertTrue(exhausted.bodyAsText().contains("WRITING_CONTENT_NOT_AVAILABLE"))
+                // 새 의미 골격도 같은 소유자·저장·소진 계약을 따르며 기존 골격의 소진과는 분리된다.
+                assertEquals(HttpStatusCode.OK, prepare("new-first", "reading-group-change").status)
+                assertEquals(HttpStatusCode.OK, prepare("new-second", "reading-group-change").status)
+                val newExhausted = prepare("new-third", "reading-group-change")
+                assertEquals(HttpStatusCode.Conflict, newExhausted.status)
+                assertTrue(newExhausted.bodyAsText().contains("WRITING_CONTENT_NOT_AVAILABLE"))
+                assertEquals(HttpStatusCode.BadRequest, prepare("unsupported", "unreviewed-topic").status)
+                assertEquals(4, calls)
+            }
+        }
+    }
+
     private fun token(user: Long): String {
         val now = Instant.now()
         return JWT.create().withIssuer("translacat-be").withAudience("translacat-ll")

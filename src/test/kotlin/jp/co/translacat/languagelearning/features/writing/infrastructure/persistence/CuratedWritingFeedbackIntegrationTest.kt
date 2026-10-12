@@ -48,6 +48,16 @@ class CuratedWritingStoreIntegrationTestFeedback {
         assertLegacyFailurePreserved("curated-writing-feedback-v6", supportedRetry = true)
     }
 
+    @Test
+    fun `지원하는 v7 실패는 source unit을 강제하지 않는 당시 계약으로 재시도한다`() {
+        assertLegacyFailurePreserved("curated-writing-feedback-v7", supportedRetry = true)
+    }
+
+    @Test
+    fun `지원하는 v8 실패도 원래 source unit 계약으로만 재시도한다`() {
+        assertLegacyFailurePreserved("curated-writing-feedback-v8", supportedRetry = true)
+    }
+
     private fun assertLegacyFailurePreserved(legacyPolicy: String) = assertLegacyFailurePreserved(legacyPolicy, false)
 
     private fun assertLegacyFailurePreserved(legacyPolicy: String, supportedRetry: Boolean) = LocalScratchMysql.use { db ->
@@ -73,20 +83,27 @@ class CuratedWritingStoreIntegrationTestFeedback {
                     ModelExecutionResult(buildJsonObject {}, 1, 1, "openai", "gpt-5-mini")
                 } else {
                     assertTrue(supportedRetry)
-                    val typed = legacyPolicy in setOf("curated-writing-feedback-v4", "curated-writing-feedback-v5", "curated-writing-feedback-v6")
+                    val typed = legacyPolicy in setOf("curated-writing-feedback-v4", "curated-writing-feedback-v5", "curated-writing-feedback-v6", "curated-writing-feedback-v7", "curated-writing-feedback-v8")
                     assertEquals(typed, "originLanguage" in input.getValue("task").jsonObject)
                     val schema = checkNotNull(command.responseSchema).getValue("properties").jsonObject
                         .getValue("observations").jsonObject.getValue("items").jsonObject.getValue("properties").jsonObject
                     assertEquals(typed, "relationChecks" in schema)
                     assertEquals(!typed, "originText" in schema)
-                    assertEquals(legacyPolicy == "curated-writing-feedback-v6", "requirementParts" in schema)
+                    val structured = legacyPolicy in setOf("curated-writing-feedback-v6", "curated-writing-feedback-v7", "curated-writing-feedback-v8")
+                    assertEquals(structured, "requirementParts" in schema)
+                    if (structured) {
+                        val partSchema = schema.getValue("requirementParts").jsonObject.getValue("items").jsonObject.getValue("properties").jsonObject
+                        assertEquals(legacyPolicy != "curated-writing-feedback-v8", "requirementQuote" in partSchema)
+                        assertEquals(legacyPolicy == "curated-writing-feedback-v8", "startUnitId" in partSchema)
+                        assertEquals(legacyPolicy == "curated-writing-feedback-v8", "taskConditionIds" in partSchema)
+                    }
                     val optionalSchema = checkNotNull(command.responseSchema).getValue("properties").jsonObject
                         .getValue("optionalAlternatives").jsonObject.getValue("items").jsonObject.getValue("properties").jsonObject
-                    assertEquals(legacyPolicy in setOf("curated-writing-feedback-v5", "curated-writing-feedback-v6"), "relationChecks" in optionalSchema)
+                    assertEquals(legacyPolicy in setOf("curated-writing-feedback-v5", "curated-writing-feedback-v6", "curated-writing-feedback-v7", "curated-writing-feedback-v8"), "relationChecks" in optionalSchema)
                     ModelExecutionResult(buildJsonObject {
                         put("observations", buildJsonArray {
                             input.getValue("task").jsonObject.getValue("requirements").jsonArray.forEach { required ->
-                                if (legacyPolicy == "curated-writing-feedback-v6") {
+                                if (structured) {
                                     add(CuratedWritingFeedbackTestPayload.observation(input, required.jsonObject))
                                 } else add(buildJsonObject {
                                     put("requirementId", required.jsonObject.getValue("id"))
@@ -154,7 +171,7 @@ class CuratedWritingStoreIntegrationTestFeedback {
                 if (supportedRetry) {
                     val result = Json.parseToJsonElement(checkNotNull(row[CuratedWritingFeedbackTable.resultJson])).jsonObject
                     assertEquals(legacyPolicy, result.getValue("policyVersion").jsonPrimitive.content)
-                    assertEquals(legacyPolicy in setOf("curated-writing-feedback-v4", "curated-writing-feedback-v5", "curated-writing-feedback-v6"),
+                    assertEquals(legacyPolicy in setOf("curated-writing-feedback-v4", "curated-writing-feedback-v5", "curated-writing-feedback-v6", "curated-writing-feedback-v7", "curated-writing-feedback-v8"),
                         "relationChecks" in result.getValue("observations").jsonArray.first().jsonObject)
                 } else assertNull(row[CuratedWritingFeedbackTable.resultJson])
             }
@@ -164,7 +181,7 @@ class CuratedWritingStoreIntegrationTestFeedback {
     @Test
     fun `세 답안 중 실패한 두 답안만 재시도하고 과거 성공 결과와 공식 평가를 보존한다`() {
         listOf("curated-writing-feedback-v1", "curated-writing-feedback-v2", "curated-writing-feedback-v3",
-            "curated-writing-feedback-v4", "curated-writing-feedback-v5", "curated-writing-feedback-v6").forEach(::assertSavedPolicyPreserved)
+            "curated-writing-feedback-v4", "curated-writing-feedback-v5", "curated-writing-feedback-v6", "curated-writing-feedback-v7", "curated-writing-feedback-v8").forEach(::assertSavedPolicyPreserved)
     }
 
     private fun assertSavedPolicyPreserved(legacyPolicy: String) = LocalScratchMysql.use { db ->
@@ -186,17 +203,8 @@ class CuratedWritingStoreIntegrationTestFeedback {
                 val answer = input.getValue("learnerAnswer").jsonObject.getValue("text").jsonPrimitive.content
                 calls[answer] = (calls[answer] ?: 0) + 1
                 val failure = answer.startsWith("失敗") && calls.getValue(answer) == 1
-                val observations = if (failure) buildJsonArray {} else buildJsonArray {
-                    input.getValue("task").jsonObject.getValue("requirements").jsonArray.forEach { requirement -> add(buildJsonObject {
-                        CuratedWritingFeedbackTestPayload.observation(input, requirement.jsonObject).forEach { (key, value) -> put(key, value) }
-                    }) }
-                }
-                ModelExecutionResult(buildJsonObject {
-                    put("observations", observations)
-                    put("necessaryCorrections", buildJsonArray {})
-                    put("optionalAlternatives", buildJsonArray {})
-                    put("uncertainties", buildJsonArray {})
-                }, 200, 100, "openai", "gpt-5-mini-2025-08-07")
+                ModelExecutionResult(CuratedWritingFeedbackTestPayload.v8Response(input, failure),
+                    200, 100, "openai", "gpt-5-mini-2025-08-07")
             }
             val worker = CuratedWritingFeedbackWorker(runner, snapshots, manifest.releaseId, model, clock)
             val plans = CuratedWritingPlanStore(runner, snapshots, manifest.releaseId, clock = clock, feedback = worker)
@@ -227,8 +235,11 @@ class CuratedWritingStoreIntegrationTestFeedback {
                 val legacy = JsonObject(current + mapOf(
                     "policyVersion" to JsonPrimitive(legacyPolicy),
                     "observations" to JsonArray(current.getValue("observations").jsonArray.map {
-                        val old = if (legacyPolicy == "curated-writing-feedback-v6") it.jsonObject else it.jsonObject - "requirementParts"
-                        val oldFields = if (legacyPolicy in setOf("curated-writing-feedback-v4", "curated-writing-feedback-v5", "curated-writing-feedback-v6")) old else old - "relationChecks"
+                        val old = if (legacyPolicy in setOf("curated-writing-feedback-v6", "curated-writing-feedback-v7")) JsonObject(it.jsonObject +
+                            ("requirementParts" to JsonArray(it.jsonObject.getValue("requirementParts").jsonArray.map { part ->
+                                JsonObject(part.jsonObject - "taskConditionIds")
+                            }))) else if (legacyPolicy == "curated-writing-feedback-v8") it.jsonObject else it.jsonObject - "requirementParts"
+                        val oldFields = if (legacyPolicy in setOf("curated-writing-feedback-v4", "curated-writing-feedback-v5", "curated-writing-feedback-v6", "curated-writing-feedback-v7", "curated-writing-feedback-v8")) old else old - "relationChecks"
                         JsonObject(if (legacyPolicy == "curated-writing-feedback-v1") oldFields - "evidenceKind" else oldFields)
                     }),
                 ))

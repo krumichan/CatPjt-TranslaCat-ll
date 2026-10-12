@@ -6,7 +6,7 @@ import kotlin.test.*
 
 class CuratedWritingFeedbackV7PolicyTest {
     private val answer = "毎晩本を読んでいます。"
-    private val context = CuratedWritingFeedbackPolicy.Context(WritingType.FREE, buildJsonObject {}, "ko", "ja")
+    private val context = CuratedWritingFeedbackV7Policy.Context(WritingType.FREE, buildJsonObject {}, "ko", "ja")
 
     @Test
     fun `실제 출장 정상 응답은 원문 경계 공백만 복원한 뒤 전달한다`() {
@@ -24,10 +24,10 @@ class CuratedWritingFeedbackV7PolicyTest {
         val input = fixture.getValue("input").jsonObject
         val task = input.getValue("task").jsonObject
         val requirements = task.getValue("requirements").jsonArray.map { it.jsonObject.string("id") to it.jsonObject.string("text") }
-        val ctx = CuratedWritingFeedbackPolicy.Context(WritingType.valueOf(task.string("writingType")),
+        val ctx = CuratedWritingFeedbackV7Policy.Context(WritingType.valueOf(task.string("writingType")),
             task.getValue("publicPromptAndConditions").jsonObject, task.string("originLanguage"), task.string("learningLanguage"))
         val text = input.getValue("learnerAnswer").jsonObject.string("text")
-        val segments = CuratedWritingFeedbackPolicy.segments(text)
+        val segments = CuratedWritingFeedbackV7Policy.segments(text)
         val raw = fixture.getValue("outputText").jsonObject
         val rawBefore = raw.toString()
 
@@ -35,7 +35,7 @@ class CuratedWritingFeedbackV7PolicyTest {
         assertFailsWith<IllegalArgumentException> {
             CuratedWritingFeedbackV6Policy.validate(raw, ctx.previous(), requirements, segments)
         }
-        val saved = CuratedWritingFeedbackPolicy.validate(raw, ctx, requirements, segments)
+        val saved = CuratedWritingFeedbackV7Policy.validate(raw, ctx, requirements, segments)
 
         // 검증: raw의 다른 필드·배열·인용은 그대로이며 바뀐 것은 원문에 실제 있던 경계 공백뿐이다.
         assertEquals(rawBefore, raw.toString())
@@ -69,18 +69,18 @@ class CuratedWritingFeedbackV7PolicyTest {
     fun `instructions schema prompt와 이미 정확한 응답은 v6와 동일하다`() {
         // 준비
         val required = listOf("C1" to "상황과 이유")
-        val segments = CuratedWritingFeedbackPolicy.segments(answer)
+        val segments = CuratedWritingFeedbackV7Policy.segments(answer)
         val reference = buildJsonObject {}
         val output = result(listOf("상황과 이유"))
 
         // 실행 / 검증
-        assertEquals(CuratedWritingFeedbackV6Policy.instructions, CuratedWritingFeedbackPolicy.instructions)
+        assertEquals(CuratedWritingFeedbackV6Policy.instructions, CuratedWritingFeedbackV7Policy.instructions)
         assertEquals(CuratedWritingFeedbackV6Policy.schema(context.previous(), required, segments),
-            CuratedWritingFeedbackPolicy.schema(context, required, segments))
+            CuratedWritingFeedbackV7Policy.schema(context, required, segments))
         assertEquals(CuratedWritingFeedbackV6Policy.prompt(context.previous(), reference, answer, required, segments),
-            CuratedWritingFeedbackPolicy.prompt(context, reference, answer, required, segments))
+            CuratedWritingFeedbackV7Policy.prompt(context, reference, answer, required, segments))
         val old = CuratedWritingFeedbackV6Policy.validate(output, context.previous(), required, segments)
-        val current = CuratedWritingFeedbackPolicy.validate(output, context, required, segments)
+        val current = CuratedWritingFeedbackV7Policy.validate(output, context, required, segments)
         assertEquals(old - "policyVersion", current - "policyVersion")
         assertEquals("curated-writing-feedback-v6", old.string("policyVersion"))
     }
@@ -128,12 +128,12 @@ class CuratedWritingFeedbackV7PolicyTest {
         fixtures().filter { it.string("caseId") in ids }.forEach { fixture ->
             val input = fixture.getValue("input").jsonObject
             val task = input.getValue("task").jsonObject
-            val ctx = CuratedWritingFeedbackPolicy.Context(WritingType.valueOf(task.string("writingType")),
+            val ctx = CuratedWritingFeedbackV7Policy.Context(WritingType.valueOf(task.string("writingType")),
                 task.getValue("publicPromptAndConditions").jsonObject, task.string("originLanguage"), task.string("learningLanguage"))
             val req = task.getValue("requirements").jsonArray.map { it.jsonObject.string("id") to it.jsonObject.string("text") }
             assertFailsWith<IllegalArgumentException> {
-                CuratedWritingFeedbackPolicy.validate(fixture.getValue("outputText"), ctx, req,
-                    CuratedWritingFeedbackPolicy.segments(input.getValue("learnerAnswer").jsonObject.string("text")))
+                CuratedWritingFeedbackV7Policy.validate(fixture.getValue("outputText"), ctx, req,
+                    CuratedWritingFeedbackV7Policy.segments(input.getValue("learnerAnswer").jsonObject.string("text")))
             }
         }
     }
@@ -173,7 +173,7 @@ class CuratedWritingFeedbackV7PolicyTest {
         }) })
         put("necessaryCorrections", buildJsonArray {}); put("optionalAlternatives", buildJsonArray {}); put("uncertainties", buildJsonArray {})
     }
-    private fun save(output: JsonObject, requirement: String) = CuratedWritingFeedbackPolicy.validate(output, context,
-        listOf("C1" to requirement), CuratedWritingFeedbackPolicy.segments(answer))
+    private fun save(output: JsonObject, requirement: String) = CuratedWritingFeedbackV7Policy.validate(output, context,
+        listOf("C1" to requirement), CuratedWritingFeedbackV7Policy.segments(answer))
     private fun JsonObject.string(key: String) = getValue(key).jsonPrimitive.content
 }
