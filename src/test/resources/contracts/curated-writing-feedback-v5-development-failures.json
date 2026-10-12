@@ -1,0 +1,991 @@
+[
+  {
+    "caseId": "reg-f03-actual-futtemashita-typo",
+    "provenance": {
+      "policy": "curated-writing-feedback-v5",
+      "sourceRequestPath": "C:\\workspace\\project-cat\\.codex-workspace\\verification\\shared\\2026-10-04-ll-finish-live-writing\\provider-attempts\\a2db851e050443bba7d15cb098328a38.request.json",
+      "sourceRequestSha256": "c30c896aa0ad9f31e1a3dc892e2f23ee5f1face2a944a031d41288adc17295ef",
+      "sourceResponsePath": "C:\\workspace\\project-cat\\.codex-workspace\\verification\\shared\\2026-10-04-ll-finish-live-writing\\provider-attempts\\a2db851e050443bba7d15cb098328a38.response.json",
+      "sourceResponseSha256": "b7c5c063a9a960cccfe4fdff238da2f9035783903cb3cad8b98256723c7cadd3",
+      "traceId": "curated-feedback-132-1",
+      "labelSource": "Actual provider output; no human gold implied",
+      "model": "gpt-5-mini",
+      "effort": "low",
+      "maxOutputTokens": 4096
+    },
+    "input": {
+      "task": {
+        "writingType": "GUIDED",
+        "publicPromptAndConditions": {
+          "topicKey": "canteen_waste",
+          "originText": "급식 담당자에게 잔반 측정 결과를 해석해 보고하십시오. 소량 배식 주간에 잔반은 줄었지만 결석 학생도 늘었다는 사실을 포함하고, 배식 방식만으로 잔반 감소를 설명할 수 없다고 밝히십시오. 출석 인원당 잔반을 비교하고 추가 배식 횟수도 함께 기록하자고 제안하십시오. 계측 시간을 확보하지 못하면 총량 수치만으로 새 방식을 확정하지 않으며, 이 결과를 학생이 덜 먹어도 된다는 주장으로 바꾸지 않는다는 점도 나타내십시오. 일반적인 어휘와 정중체를 사용하십시오.",
+          "providedFacts": [
+            "급식 담당자에게 잔반 측정의 해석을 보고한다.",
+            "소량 배식 주간에 잔반은 줄었지만 결석 학생도 늘었다."
+          ],
+          "requiredIntents": [
+            "배식 방식만으로 잔반 감소를 설명할 수 없음을 밝힌다.",
+            "출석 인원당 잔반을 비교하고 추가 배식 횟수도 함께 기록하자고 제안한다.",
+            "계측 시간을 확보하지 못하면 총량 수치만으로 새 방식을 확정하지 않는다.",
+            "결과를 학생이 덜 먹어도 된다는 주장으로 바꾸지 않는다."
+          ],
+          "responseConstraints": [
+            "급식 담당자에게 보고하는 정중한 표현을 사용한다.",
+            "소량 배식 주간의 잔반 감소와 결석 학생 증가를 모두 포함한다.",
+            "제시된 조건과 해석의 제한을 유지한다."
+          ]
+        },
+        "requirements": [
+          {
+            "id": "C1",
+            "text": "급식 담당자에게 잔반 측정 결과를 보고하는가?"
+          },
+          {
+            "id": "C2",
+            "text": "소량 배식 주간에 잔반은 줄었지만 결석 학생도 늘었다는 사실을 포함하는가?"
+          },
+          {
+            "id": "C3",
+            "text": "배식 방식만으로 잔반 감소를 설명할 수 없다고 밝히는가?"
+          },
+          {
+            "id": "C4",
+            "text": "출석 인원당 잔반을 비교하고 추가 배식 횟수도 함께 기록하자고 제안하는가?"
+          },
+          {
+            "id": "C5",
+            "text": "계측 시간을 확보하지 못하면 총량 수치만으로 새 방식을 확정하지 않는가?"
+          },
+          {
+            "id": "C6",
+            "text": "결과를 학생이 덜 먹어도 된다는 주장으로 바꾸지 않는가?"
+          },
+          {
+            "id": "C7",
+            "text": "정중체와 일반적인 어휘를 사용하는가?"
+          }
+        ],
+        "originLanguage": "ko",
+        "learningLanguage": "ja",
+        "explicitTaskFacts": [
+          {
+            "id": "T1",
+            "text": "급식 담당자에게 잔반 측정의 해석을 보고한다."
+          },
+          {
+            "id": "T2",
+            "text": "소량 배식 주간에 잔반은 줄었지만 결석 학생도 늘었다."
+          }
+        ]
+      },
+      "learnerAnswer": {
+        "text": "給食担当者に、残食量の測定結果について報告いたします。少量配食週間は残食が減りましたが、欠席した生徒も増っていました。そのため、配食方法だけで残食の減少を説明することはできません。出席者一人当たりの残食量を比較し、追加配食の回数も一緒に記録することを提案します。測定の時間を確保できない場合は、総量の数値だけで新しい方法を決定しないようにします。また、この結果から、生徒の食べる量が今より少なくてもよいとは言えません。",
+        "segments": [
+          {
+            "id": "S1",
+            "text": "給食担当者に、残食量の測定結果について報告いたします。"
+          },
+          {
+            "id": "S2",
+            "text": "少量配食週間は残食が減りましたが、欠席した生徒も増っていました。"
+          },
+          {
+            "id": "S3",
+            "text": "そのため、配食方法だけで残食の減少を説明することはできません。"
+          },
+          {
+            "id": "S4",
+            "text": "出席者一人当たりの残食量を比較し、追加配食の回数も一緒に記録することを提案します。"
+          },
+          {
+            "id": "S5",
+            "text": "測定の時間を確保できない場合は、総量の数値だけで新しい方法を決定しないようにします。"
+          },
+          {
+            "id": "S6",
+            "text": "また、この結果から、生徒の食べる量が今より少なくてもよいとは言えません。"
+          }
+        ]
+      },
+      "referenceExamples": {
+        "role": "NON_AUTHORITATIVE_EXAMPLES_NOT_LEARNER_FACTS",
+        "answers": [
+          "給食担当者に、残食量の測定結果について報告いたします。少量配食週間は残食が減りましたが、欠席した生徒も増えていました。そのため、配食方法だけで残食の減少を説明することはできません。出席者一人当たりの残食量を比較し、追加配食の回数も一緒に記録することを提案します。測定の時間を確保できない場合は、総量の数値だけで新しい方法を決定しないようにします。また、この結果から、生徒の食べる量が今より少なくてもよいとは言えません。",
+          "給食担当者に残食測定の解釈をお伝えします。少量配食の週には残食は少なくなりましたが、欠席者数も増加しました。したがって、減少の原因を配食方法だけに求めることはできません。出席人数で割った残食量を比較するとともに、おかわりの回数も記録しましょう。測定時間を確保できなければ、全体量だけを根拠に新方式を確定しません。この結果から、生徒が少なく食べればよいという結論を導くこともしません。"
+        ],
+        "alternativeNote": "「追加配食」は「おかわり」、「出席者一人当たり」は「出席人数で割った」と表現してもよい。"
+      }
+    },
+    "outputText": "{\n  \"observations\": [\n    {\n      \"requirementId\": \"C1\",\n      \"status\": \"MET\",\n      \"evidenceKind\": \"LEARNER_TEXT\",\n      \"segmentIds\": [\n        \"S1\"\n      ],\n      \"relationChecks\": {\n        \"causality\": \"NOT_APPLICABLE\",\n        \"chronology\": \"NOT_APPLICABLE\",\n        \"specificity\": \"PRESERVED\",\n        \"stance\": \"NOT_APPLICABLE\"\n      }\n    },\n    {\n      \"requirementId\": \"C2\",\n      \"status\": \"MET\",\n      \"evidenceKind\": \"LEARNER_TEXT\",\n      \"segmentIds\": [\n        \"S2\"\n      ],\n      \"relationChecks\": {\n        \"causality\": \"NOT_APPLICABLE\",\n        \"chronology\": \"PRESERVED\",\n        \"specificity\": \"PRESERVED\",\n        \"stance\": \"NOT_APPLICABLE\"\n      }\n    },\n    {\n      \"requirementId\": \"C3\",\n      \"status\": \"MET\",\n      \"evidenceKind\": \"LEARNER_TEXT\",\n      \"segmentIds\": [\n        \"S3\"\n      ],\n      \"relationChecks\": {\n        \"causality\": \"PRESERVED\",\n        \"chronology\": \"NOT_APPLICABLE\",\n        \"specificity\": \"PRESERVED\",\n        \"stance\": \"PRESERVED\"\n      }\n    },\n    {\n      \"requirementId\": \"C4\",\n      \"status\": \"MET\",\n      \"evidenceKind\": \"LEARNER_TEXT\",\n      \"segmentIds\": [\n        \"S4\"\n      ],\n      \"relationChecks\": {\n        \"causality\": \"NOT_APPLICABLE\",\n        \"chronology\": \"PRESERVED\",\n        \"specificity\": \"PRESERVED\",\n        \"stance\": \"PRESERVED\"\n      }\n    },\n    {\n      \"requirementId\": \"C5\",\n      \"status\": \"MET\",\n      \"evidenceKind\": \"LEARNER_TEXT\",\n      \"segmentIds\": [\n        \"S5\"\n      ],\n      \"relationChecks\": {\n        \"causality\": \"PRESERVED\",\n        \"chronology\": \"PRESERVED\",\n        \"specificity\": \"PRESERVED\",\n        \"stance\": \"PRESERVED\"\n      }\n    },\n    {\n      \"requirementId\": \"C6\",\n      \"status\": \"MET\",\n      \"evidenceKind\": \"LEARNER_TEXT\",\n      \"segmentIds\": [\n        \"S6\"\n      ],\n      \"relationChecks\": {\n        \"causality\": \"NOT_APPLICABLE\",\n        \"chronology\": \"NOT_APPLICABLE\",\n        \"specificity\": \"PRESERVED\",\n        \"stance\": \"PRESERVED\"\n      }\n    },\n    {\n      \"requirementId\": \"C7\",\n      \"status\": \"MET\",\n      \"evidenceKind\": \"LEARNER_TEXT\",\n      \"segmentIds\": [\n        \"S1\",\n        \"S2\",\n        \"S3\",\n        \"S4\",\n        \"S5\",\n        \"S6\"\n      ],\n      \"relationChecks\": {\n        \"causality\": \"NOT_APPLICABLE\",\n        \"chronology\": \"NOT_APPLICABLE\",\n        \"specificity\": \"NOT_APPLICABLE\",\n        \"stance\": \"PRESERVED\"\n      }\n    }\n  ],\n  \"necessaryCorrections\": [\n    {\n      \"requirementId\": \"C2\",\n      \"segmentId\": \"S2\",\n      \"replacement\": \"少量配食週間は残食が減りましたが、欠席した生徒も増えていました。\",\n      \"issueType\": \"LANGUAGE_FORM\",\n      \"sourceFactId\": \"\",\n      \"formReason\": \"SPELLING\",\n      \"originText\": \"‘増っていました’는 잘못된 표기입니다.\",\n      \"learningText\": \"「増っていました」は誤記で、「増えていました」に直す必要があります。動詞「増える」の連用形「増え」＋助動詞「ていました」が正しい表記です。\"\n    }\n  ],\n  \"optionalAlternatives\": [\n    {\n      \"suggestionKind\": \"EXPRESSION_ONLY\",\n      \"segmentId\": \"S4\",\n      \"replacement\": \"出席人数で割った残食量を比較し、おかわりの回数も記録することを提案します。\",\n      \"relationChecks\": {\n        \"causality\": \"NOT_APPLICABLE\",\n        \"chronology\": \"PRESERVED\",\n        \"specificity\": \"PRESERVED\",\n        \"stance\": \"PRESERVED\"\n      },\n      \"originText\": \"「追加配食」は「おかわり」、「出席者一人当たり」は「出席人数で割った」と表現してもよい。\",\n      \"learningText\": \"「出席者一人当たり」を「出席人数で割った」と言い換え、「追加配食」を「おかわり」と表現するとより自然です。\"\n    },\n    {\n      \"suggestionKind\": \"EXPRESSION_ONLY\",\n      \"segmentId\": \"S2\",\n      \"replacement\": \"少量配食週間は残食が減少しましたが、欠席者数も増加していました。\",\n      \"relationChecks\": {\n        \"causality\": \"NOT_APPLICABLE\",\n        \"chronology\": \"PRESERVED\",\n        \"specificity\": \"PRESERVED\",\n        \"stance\": \"NOT_APPLICABLE\"\n      },\n      \"originText\": \"좀 더 격식 있는 표현으로 '残食が減りましたが、欠席した生徒も増っていました'를 다듬을 수 있습니다.\",\n      \"learningText\": \"より正式な語調にするなら「残食が減少しましたが、欠席者数も増加していました」と表現できます。\"\n    }\n  ],\n  \"uncertainties\": []\n}",
+    "output": {
+      "observations": [
+        {
+          "requirementId": "C1",
+          "status": "MET",
+          "evidenceKind": "LEARNER_TEXT",
+          "segmentIds": [
+            "S1"
+          ],
+          "relationChecks": {
+            "causality": "NOT_APPLICABLE",
+            "chronology": "NOT_APPLICABLE",
+            "specificity": "PRESERVED",
+            "stance": "NOT_APPLICABLE"
+          }
+        },
+        {
+          "requirementId": "C2",
+          "status": "MET",
+          "evidenceKind": "LEARNER_TEXT",
+          "segmentIds": [
+            "S2"
+          ],
+          "relationChecks": {
+            "causality": "NOT_APPLICABLE",
+            "chronology": "PRESERVED",
+            "specificity": "PRESERVED",
+            "stance": "NOT_APPLICABLE"
+          }
+        },
+        {
+          "requirementId": "C3",
+          "status": "MET",
+          "evidenceKind": "LEARNER_TEXT",
+          "segmentIds": [
+            "S3"
+          ],
+          "relationChecks": {
+            "causality": "PRESERVED",
+            "chronology": "NOT_APPLICABLE",
+            "specificity": "PRESERVED",
+            "stance": "PRESERVED"
+          }
+        },
+        {
+          "requirementId": "C4",
+          "status": "MET",
+          "evidenceKind": "LEARNER_TEXT",
+          "segmentIds": [
+            "S4"
+          ],
+          "relationChecks": {
+            "causality": "NOT_APPLICABLE",
+            "chronology": "PRESERVED",
+            "specificity": "PRESERVED",
+            "stance": "PRESERVED"
+          }
+        },
+        {
+          "requirementId": "C5",
+          "status": "MET",
+          "evidenceKind": "LEARNER_TEXT",
+          "segmentIds": [
+            "S5"
+          ],
+          "relationChecks": {
+            "causality": "PRESERVED",
+            "chronology": "PRESERVED",
+            "specificity": "PRESERVED",
+            "stance": "PRESERVED"
+          }
+        },
+        {
+          "requirementId": "C6",
+          "status": "MET",
+          "evidenceKind": "LEARNER_TEXT",
+          "segmentIds": [
+            "S6"
+          ],
+          "relationChecks": {
+            "causality": "NOT_APPLICABLE",
+            "chronology": "NOT_APPLICABLE",
+            "specificity": "PRESERVED",
+            "stance": "PRESERVED"
+          }
+        },
+        {
+          "requirementId": "C7",
+          "status": "MET",
+          "evidenceKind": "LEARNER_TEXT",
+          "segmentIds": [
+            "S1",
+            "S2",
+            "S3",
+            "S4",
+            "S5",
+            "S6"
+          ],
+          "relationChecks": {
+            "causality": "NOT_APPLICABLE",
+            "chronology": "NOT_APPLICABLE",
+            "specificity": "NOT_APPLICABLE",
+            "stance": "PRESERVED"
+          }
+        }
+      ],
+      "necessaryCorrections": [
+        {
+          "requirementId": "C2",
+          "segmentId": "S2",
+          "replacement": "少量配食週間は残食が減りましたが、欠席した生徒も増えていました。",
+          "issueType": "LANGUAGE_FORM",
+          "sourceFactId": "",
+          "formReason": "SPELLING",
+          "originText": "‘増っていました’는 잘못된 표기입니다.",
+          "learningText": "「増っていました」は誤記で、「増えていました」に直す必要があります。動詞「増える」の連用形「増え」＋助動詞「ていました」が正しい表記です。"
+        }
+      ],
+      "optionalAlternatives": [
+        {
+          "suggestionKind": "EXPRESSION_ONLY",
+          "segmentId": "S4",
+          "replacement": "出席人数で割った残食量を比較し、おかわりの回数も記録することを提案します。",
+          "relationChecks": {
+            "causality": "NOT_APPLICABLE",
+            "chronology": "PRESERVED",
+            "specificity": "PRESERVED",
+            "stance": "PRESERVED"
+          },
+          "originText": "「追加配食」は「おかわり」、「出席者一人当たり」は「出席人数で割った」と表現してもよい。",
+          "learningText": "「出席者一人当たり」を「出席人数で割った」と言い換え、「追加配食」を「おかわり」と表現するとより自然です。"
+        },
+        {
+          "suggestionKind": "EXPRESSION_ONLY",
+          "segmentId": "S2",
+          "replacement": "少量配食週間は残食が減少しましたが、欠席者数も増加していました。",
+          "relationChecks": {
+            "causality": "NOT_APPLICABLE",
+            "chronology": "PRESERVED",
+            "specificity": "PRESERVED",
+            "stance": "NOT_APPLICABLE"
+          },
+          "originText": "좀 더 격식 있는 표현으로 '残食が減りましたが、欠席した生徒も増っていました'를 다듬을 수 있습니다.",
+          "learningText": "より正式な語調にするなら「残食が減少しましたが、欠席者数も増加していました」と表現できます。"
+        }
+      ],
+      "uncertainties": []
+    },
+    "fixtureSourceSha256": "beea87324a9809c34a4b17ad89e0f718b7cef2539d7dc33beb7d642304d53c51"
+  },
+  {
+    "caseId": "reg-f03-original-b4-missing-required-circumstance",
+    "provenance": {
+      "policy": "curated-writing-feedback-v5",
+      "sourceRequestPath": "C:\\workspace\\project-cat\\.codex-workspace\\verification\\shared\\2026-10-04-ll-finish-live-writing\\provider-attempts\\370b867ce1074b45a425210407627b8c.request.json",
+      "sourceRequestSha256": "bd2bdf95f74dd3a1d082ca2ab8f980c9d17e850b618fc868335e5a1058abd2f2",
+      "sourceResponsePath": "C:\\workspace\\project-cat\\.codex-workspace\\verification\\shared\\2026-10-04-ll-finish-live-writing\\provider-attempts\\370b867ce1074b45a425210407627b8c.response.json",
+      "sourceResponseSha256": "975dc53cc152e25da80e97b33dc9c1dd6c0ebb040565b565b0748e8b385bbcec",
+      "traceId": "curated-feedback-125-1",
+      "labelSource": "Actual provider output; no human gold implied",
+      "model": "gpt-5-mini",
+      "effort": "low",
+      "maxOutputTokens": 4096
+    },
+    "input": {
+      "task": {
+        "writingType": "FREE",
+        "publicPromptAndConditions": {
+          "topicKey": "schedule_adjustment",
+          "originText": "학교, 직장 또는 동아리의 담당자에게 일본어로 일정 조정이나 협조를 요청하세요. 원래 상황을 인정하면서도 자신의 사정을 완곡하게 설명하고, 가능한 대안이나 조건을 제시하세요. 상대와 상황에 맞는 정중한 어조를 선택하세요.",
+          "providedFacts": [],
+          "requiredIntents": [],
+          "responseConstraints": []
+        },
+        "requirements": [
+          {
+            "id": "C1",
+            "text": "상대의 사정이나 기존 계획을 먼저 인정했는가?"
+          },
+          {
+            "id": "C2",
+            "text": "자신의 사정을 설명하며 요청을 지나치게 단정하지 않고 완곡하게 표현했는가?"
+          },
+          {
+            "id": "C3",
+            "text": "가능한 대안이나 조건의 범위를 제시했는가?"
+          },
+          {
+            "id": "C4",
+            "text": "수신자에 맞는 정중한 어조를 사용했는가?"
+          }
+        ],
+        "originLanguage": "ko",
+        "learningLanguage": "ja",
+        "explicitTaskFacts": []
+      },
+      "learnerAnswer": {
+        "text": "すでに会場を予約されていることは承知しておりますが、もし可能でしたら面談の時間を少し遅らせていただけないでしょうか。難しければ、別の日でも構いません。",
+        "segments": [
+          {
+            "id": "S1",
+            "text": "すでに会場を予約されていることは承知しておりますが、もし可能でしたら面談の時間を少し遅らせていただけないでしょうか。"
+          },
+          {
+            "id": "S2",
+            "text": "難しければ、別の日でも構いません。"
+          }
+        ]
+      }
+    },
+    "outputText": "{\n  \"observations\": [\n    {\n      \"requirementId\": \"C1\",\n      \"status\": \"MET\",\n      \"evidenceKind\": \"LEARNER_TEXT\",\n      \"segmentIds\": [\n        \"S1\"\n      ],\n      \"relationChecks\": {\n        \"causality\": \"PRESERVED\",\n        \"chronology\": \"PRESERVED\",\n        \"specificity\": \"PRESERVED\",\n        \"stance\": \"PRESERVED\"\n      }\n    },\n    {\n      \"requirementId\": \"C2\",\n      \"status\": \"UNMET\",\n      \"evidenceKind\": \"LEARNER_TEXT\",\n      \"segmentIds\": [\n        \"S1\",\n        \"S2\"\n      ],\n      \"relationChecks\": {\n        \"causality\": \"CONFLICT\",\n        \"chronology\": \"NOT_APPLICABLE\",\n        \"specificity\": \"CONFLICT\",\n        \"stance\": \"PRESERVED\"\n      }\n    },\n    {\n      \"requirementId\": \"C3\",\n      \"status\": \"MET\",\n      \"evidenceKind\": \"LEARNER_TEXT\",\n      \"segmentIds\": [\n        \"S2\"\n      ],\n      \"relationChecks\": {\n        \"causality\": \"NOT_APPLICABLE\",\n        \"chronology\": \"PRESERVED\",\n        \"specificity\": \"PRESERVED\",\n        \"stance\": \"PRESERVED\"\n      }\n    },\n    {\n      \"requirementId\": \"C4\",\n      \"status\": \"MET\",\n      \"evidenceKind\": \"LEARNER_TEXT\",\n      \"segmentIds\": [\n        \"S1\",\n        \"S2\"\n      ],\n      \"relationChecks\": {\n        \"causality\": \"NOT_APPLICABLE\",\n        \"chronology\": \"NOT_APPLICABLE\",\n        \"specificity\": \"NOT_APPLICABLE\",\n        \"stance\": \"PRESERVED\"\n      }\n    }\n  ],\n  \"necessaryCorrections\": [],\n  \"optionalAlternatives\": [\n    {\n      \"suggestionKind\": \"EXPRESSION_ONLY\",\n      \"segmentId\": \"S1\",\n      \"replacement\": \"すでに会場をご予約いただいていることは承知しておりますが、差し支えなければ面談の開始時刻を少し遅らせていただけないでしょうか。\",\n      \"relationChecks\": {\n        \"causality\": \"PRESERVED\",\n        \"chronology\": \"PRESERVED\",\n        \"specificity\": \"PRESERVED\",\n        \"stance\": \"PRESERVED\"\n      },\n      \"originText\": \"보다 공손한 표현과 자연스러운 경어 사용을 제안합니다. 원래 의미(회장 예약을 인정하고 시간을 늦춰달라는 요청)를 유지하세요.\",\n      \"learningText\": \"より丁寧で自然な敬語表現です。「ご予約いただいている」「差し支えなければ」を使い、相手への配慮を強めています。\"\n    }\n  ],\n  \"uncertainties\": []\n}",
+    "output": {
+      "observations": [
+        {
+          "requirementId": "C1",
+          "status": "MET",
+          "evidenceKind": "LEARNER_TEXT",
+          "segmentIds": [
+            "S1"
+          ],
+          "relationChecks": {
+            "causality": "PRESERVED",
+            "chronology": "PRESERVED",
+            "specificity": "PRESERVED",
+            "stance": "PRESERVED"
+          }
+        },
+        {
+          "requirementId": "C2",
+          "status": "UNMET",
+          "evidenceKind": "LEARNER_TEXT",
+          "segmentIds": [
+            "S1",
+            "S2"
+          ],
+          "relationChecks": {
+            "causality": "CONFLICT",
+            "chronology": "NOT_APPLICABLE",
+            "specificity": "CONFLICT",
+            "stance": "PRESERVED"
+          }
+        },
+        {
+          "requirementId": "C3",
+          "status": "MET",
+          "evidenceKind": "LEARNER_TEXT",
+          "segmentIds": [
+            "S2"
+          ],
+          "relationChecks": {
+            "causality": "NOT_APPLICABLE",
+            "chronology": "PRESERVED",
+            "specificity": "PRESERVED",
+            "stance": "PRESERVED"
+          }
+        },
+        {
+          "requirementId": "C4",
+          "status": "MET",
+          "evidenceKind": "LEARNER_TEXT",
+          "segmentIds": [
+            "S1",
+            "S2"
+          ],
+          "relationChecks": {
+            "causality": "NOT_APPLICABLE",
+            "chronology": "NOT_APPLICABLE",
+            "specificity": "NOT_APPLICABLE",
+            "stance": "PRESERVED"
+          }
+        }
+      ],
+      "necessaryCorrections": [],
+      "optionalAlternatives": [
+        {
+          "suggestionKind": "EXPRESSION_ONLY",
+          "segmentId": "S1",
+          "replacement": "すでに会場をご予約いただいていることは承知しておりますが、差し支えなければ面談の開始時刻を少し遅らせていただけないでしょうか。",
+          "relationChecks": {
+            "causality": "PRESERVED",
+            "chronology": "PRESERVED",
+            "specificity": "PRESERVED",
+            "stance": "PRESERVED"
+          },
+          "originText": "보다 공손한 표현과 자연스러운 경어 사용을 제안합니다. 원래 의미(회장 예약을 인정하고 시간을 늦춰달라는 요청)를 유지하세요.",
+          "learningText": "より丁寧で自然な敬語表現です。「ご予約いただいている」「差し支えなければ」を使い、相手への配慮を強めています。"
+        }
+      ],
+      "uncertainties": []
+    },
+    "fixtureSourceSha256": "448cf7cc32df4bcbdf504c2636935e0133bb2081c6030a23ba624d2fa83053fd"
+  },
+  {
+    "caseId": "reg-gen-g-f1a",
+    "provenance": {
+      "policy": "curated-writing-feedback-v5",
+      "sourceRequestPath": "C:\\workspace\\project-cat\\.codex-workspace\\verification\\shared\\2026-10-04-ll-finish-live-writing\\provider-attempts\\1bf57be9c4524075afc43e3f6d166fce.request.json",
+      "sourceRequestSha256": "9a76a75c698b4433f1f634495b3415b2717485a92ccb026ad815044fdce9d3be",
+      "sourceResponsePath": "C:\\workspace\\project-cat\\.codex-workspace\\verification\\shared\\2026-10-04-ll-finish-live-writing\\provider-attempts\\1bf57be9c4524075afc43e3f6d166fce.response.json",
+      "sourceResponseSha256": "75e7e5b2b09cae2b3dc95477a43ee85748e9e1ad8b75455672b12e6e61c23a23",
+      "traceId": "curated-feedback-127-1",
+      "labelSource": "Actual provider output; no human gold implied",
+      "model": "gpt-5-mini",
+      "effort": "low",
+      "maxOutputTokens": 4096
+    },
+    "input": {
+      "task": {
+        "writingType": "FREE",
+        "publicPromptAndConditions": {
+          "topicKey": "learning-routine",
+          "originText": "최근 시작한 공부 습관에 대해 일본어로 한 문단을 써 보세요. 무엇을 공부하는지, 언제 또는 얼마나 자주 공부하는지, 계속하기 위해 어떤 방법을 실천하는지, 그리고 앞으로의 목표를 포함하세요.",
+          "providedFacts": [],
+          "requiredIntents": [],
+          "taskRequirements": [
+            "최근 시작한 공부 습관을 소개할 것",
+            "공부하는 내용을 포함할 것",
+            "언제, 얼마나 자주 또는 얼마나 오래 공부하는지 포함할 것",
+            "계속하기 위해 실천하는 방법을 포함할 것",
+            "앞으로의 목표를 포함할 것",
+            "일본어로 한 문단으로 작성할 것"
+          ],
+          "responseConstraints": []
+        },
+        "requirements": [
+          {
+            "id": "C1",
+            "text": "최근 시작한 공부 습관을 소개할 것"
+          },
+          {
+            "id": "C2",
+            "text": "공부하는 내용을 포함할 것"
+          },
+          {
+            "id": "C3",
+            "text": "언제, 얼마나 자주 또는 얼마나 오래 공부하는지 포함할 것"
+          },
+          {
+            "id": "C4",
+            "text": "계속하기 위해 실천하는 방법을 포함할 것"
+          },
+          {
+            "id": "C5",
+            "text": "앞으로의 목표를 포함할 것"
+          },
+          {
+            "id": "C6",
+            "text": "일본어로 한 문단으로 작성할 것"
+          }
+        ],
+        "originLanguage": "ko",
+        "learningLanguage": "ja",
+        "explicitTaskFacts": []
+      },
+      "learnerAnswer": {
+        "text": "最近、毎晩二十分料理の本を読んで勉強しています。忙しい日でも続けられるように、寝る前に必ず一つのレシピを読み、週末には実際に作ってみます。これからは家族のために新しい料理を作れるようになりたいです。",
+        "segments": [
+          {
+            "id": "S1",
+            "text": "最近、毎晩二十分料理の本を読んで勉強しています。"
+          },
+          {
+            "id": "S2",
+            "text": "忙しい日でも続けられるように、寝る前に必ず一つのレシピを読み、週末には実際に作ってみます。"
+          },
+          {
+            "id": "S3",
+            "text": "これからは家族のために新しい料理を作れるようになりたいです。"
+          }
+        ]
+      }
+    },
+    "outputText": "{\n  \"observations\": [\n    {\n      \"requirementId\": \"C1\",\n      \"status\": \"MET\",\n      \"evidenceKind\": \"LEARNER_TEXT\",\n      \"segmentIds\": [\n        \"S1\"\n      ],\n      \"relationChecks\": {\n        \"causality\": \"NOT_APPLICABLE\",\n        \"chronology\": \"PRESERVED\",\n        \"specificity\": \"PRESERVED\",\n        \"stance\": \"PRESERVED\"\n      }\n    },\n    {\n      \"requirementId\": \"C2\",\n      \"status\": \"MET\",\n      \"evidenceKind\": \"LEARNER_TEXT\",\n      \"segmentIds\": [\n        \"S1\",\n        \"S2\"\n      ],\n      \"relationChecks\": {\n        \"causality\": \"NOT_APPLICABLE\",\n        \"chronology\": \"NOT_APPLICABLE\",\n        \"specificity\": \"PRESERVED\",\n        \"stance\": \"PRESERVED\"\n      }\n    },\n    {\n      \"requirementId\": \"C3\",\n      \"status\": \"MET\",\n      \"evidenceKind\": \"LEARNER_TEXT\",\n      \"segmentIds\": [\n        \"S1\",\n        \"S2\"\n      ],\n      \"relationChecks\": {\n        \"causality\": \"NOT_APPLICABLE\",\n        \"chronology\": \"PRESERVED\",\n        \"specificity\": \"PRESERVED\",\n        \"stance\": \"PRESERVED\"\n      }\n    },\n    {\n      \"requirementId\": \"C4\",\n      \"status\": \"MET\",\n      \"evidenceKind\": \"LEARNER_TEXT\",\n      \"segmentIds\": [\n        \"S2\"\n      ],\n      \"relationChecks\": {\n        \"causality\": \"PRESERVED\",\n        \"chronology\": \"PRESERVED\",\n        \"specificity\": \"PRESERVED\",\n        \"stance\": \"PRESERVED\"\n      }\n    },\n    {\n      \"requirementId\": \"C5\",\n      \"status\": \"MET\",\n      \"evidenceKind\": \"LEARNER_TEXT\",\n      \"segmentIds\": [\n        \"S3\"\n      ],\n      \"relationChecks\": {\n        \"causality\": \"NOT_APPLICABLE\",\n        \"chronology\": \"PRESERVED\",\n        \"specificity\": \"PRESERVED\",\n        \"stance\": \"PRESERVED\"\n      }\n    },\n    {\n      \"requirementId\": \"C6\",\n      \"status\": \"MET\",\n      \"evidenceKind\": \"LEARNER_TEXT\",\n      \"segmentIds\": [\n        \"S1\",\n        \"S2\",\n        \"S3\"\n      ],\n      \"relationChecks\": {\n        \"causality\": \"NOT_APPLICABLE\",\n        \"chronology\": \"NOT_APPLICABLE\",\n        \"specificity\": \"NOT_APPLICABLE\",\n        \"stance\": \"NOT_APPLICABLE\"\n      }\n    }\n  ],\n  \"necessaryCorrections\": [\n    {\n      \"requirementId\": \"C1\",\n      \"segmentId\": \"S1\",\n      \"replacement\": \"最近、毎晩二十分間、料理の本を読んで勉強しています。\",\n      \"issueType\": \"LANGUAGE_FORM\",\n      \"sourceFactId\": \"\",\n      \"formReason\": \"INFLECTION\",\n      \"originText\": \"시간의 지속을 나타낼 때 일본어에서는 보통 ‘二十分間’처럼 기간표현에 ‘間’를 붙이거나 쉼표로 문장 요소를 분리합니다. 현재 문장은 읽을 때 시간과 목적어가 바로 이어져 약간 어색하게 느껴질 수 있습니다.\",\n      \"learningText\": \"「二十分間」や読点を入れることで、\" \n        \n}  , \n  {\n    \"requirementId\": \"C1\",\n    \"segmentId\": \"S1\",\n    \"replacement\": \"最近、毎晩20分、料理の本を読んで勉強しています。\",\n    \"issueType\": \"LANGUAGE_FORM\",\n    \"sourceFactId\": \"\",\n    \"formReason\": \"SYNTAX\",\n    \"originText\": \"일본어에서는 숫자 표기나 쉼표를 사용하여 시간 표현을 명확히 하는 것이 자연스럽습니다. 원문은 '二十分料理の本'처럼 연결되어 읽힐 수 있어 가독성을 높이는 수정이 도움이 됩니다.\",\n    \"learningText\": \"数字をアラビア数字にし読点を入れることで視覚的に時間表現が明確になり、自然な日本語になります。\"\n  }\n],\n  \"optionalAlternatives\": [\n    {\n      \"suggestionKind\": \"EXPRESSION_ONLY\",\n      \"segmentId\": \"S1\",\n      \"replacement\": \"最近、毎晩20分、料理の本を読んで勉強しています。\",\n      \"relationChecks\": {\n        \"causality\": \"NOT_APPLICABLE\",\n        \"chronology\": \"PRESERVED\",\n        \"specificity\": \"PRESERVED\",\n        \"stance\": \"PRESERVED\"\n      },\n      \"originText\": \"숫자를 아라비아숫자로 바꾸고 읽기 쉬운 위치에 쉼표를 넣는 표현 대안입니다. 의미나 사실은 변경하지 않습니다.\",\n      \"learningText\": \"アラビア数字と読点を使うと時間の情報が視覚的に分かりやすくなります。\"\n    },\n    {\n      \"suggestionKind\": \"EXPRESSION_ONLY\",\n      \"segmentId\": \"S3\",\n      \"replacement\": \"これからは家族のために新しい料理を作れるようになりたいです。\",\n      \"relationChecks\": {\n        \"causality\": \"NOT_APPLICABLE\",\n        \"chronology\": \"PRESERVED\",\n        \"specificity\": \"PRESERVED\",\n        \"stance\": \"PRESERVED\"\n      },\n      \"originText\": \"현재 문장 자체는 자연스럽지만, 동일 문장을 다른 표기(변경 없음)로 예시로 제시합니다.\",\n      \"learningText\": \"表現自体は適切ですが、願望の強さを変えたい場合は「〜できるようにしたいです」などの微調整が可能です。\"\n    }\n  ],\n  \"uncertainties\": []\n}",
+    "output": {
+      "observations": [
+        {
+          "requirementId": "C1",
+          "status": "MET",
+          "evidenceKind": "LEARNER_TEXT",
+          "segmentIds": [
+            "S1"
+          ],
+          "relationChecks": {
+            "causality": "NOT_APPLICABLE",
+            "chronology": "PRESERVED",
+            "specificity": "PRESERVED",
+            "stance": "PRESERVED"
+          }
+        },
+        {
+          "requirementId": "C2",
+          "status": "MET",
+          "evidenceKind": "LEARNER_TEXT",
+          "segmentIds": [
+            "S1",
+            "S2"
+          ],
+          "relationChecks": {
+            "causality": "NOT_APPLICABLE",
+            "chronology": "NOT_APPLICABLE",
+            "specificity": "PRESERVED",
+            "stance": "PRESERVED"
+          }
+        },
+        {
+          "requirementId": "C3",
+          "status": "MET",
+          "evidenceKind": "LEARNER_TEXT",
+          "segmentIds": [
+            "S1",
+            "S2"
+          ],
+          "relationChecks": {
+            "causality": "NOT_APPLICABLE",
+            "chronology": "PRESERVED",
+            "specificity": "PRESERVED",
+            "stance": "PRESERVED"
+          }
+        },
+        {
+          "requirementId": "C4",
+          "status": "MET",
+          "evidenceKind": "LEARNER_TEXT",
+          "segmentIds": [
+            "S2"
+          ],
+          "relationChecks": {
+            "causality": "PRESERVED",
+            "chronology": "PRESERVED",
+            "specificity": "PRESERVED",
+            "stance": "PRESERVED"
+          }
+        },
+        {
+          "requirementId": "C5",
+          "status": "MET",
+          "evidenceKind": "LEARNER_TEXT",
+          "segmentIds": [
+            "S3"
+          ],
+          "relationChecks": {
+            "causality": "NOT_APPLICABLE",
+            "chronology": "PRESERVED",
+            "specificity": "PRESERVED",
+            "stance": "PRESERVED"
+          }
+        },
+        {
+          "requirementId": "C6",
+          "status": "MET",
+          "evidenceKind": "LEARNER_TEXT",
+          "segmentIds": [
+            "S1",
+            "S2",
+            "S3"
+          ],
+          "relationChecks": {
+            "causality": "NOT_APPLICABLE",
+            "chronology": "NOT_APPLICABLE",
+            "specificity": "NOT_APPLICABLE",
+            "stance": "NOT_APPLICABLE"
+          }
+        }
+      ],
+      "necessaryCorrections": [
+        {
+          "requirementId": "C1",
+          "segmentId": "S1",
+          "replacement": "最近、毎晩二十分間、料理の本を読んで勉強しています。",
+          "issueType": "LANGUAGE_FORM",
+          "sourceFactId": "",
+          "formReason": "INFLECTION",
+          "originText": "시간의 지속을 나타낼 때 일본어에서는 보통 ‘二十分間’처럼 기간표현에 ‘間’를 붙이거나 쉼표로 문장 요소를 분리합니다. 현재 문장은 읽을 때 시간과 목적어가 바로 이어져 약간 어색하게 느껴질 수 있습니다.",
+          "learningText": "「二十分間」や読点を入れることで、"
+        },
+        {
+          "requirementId": "C1",
+          "segmentId": "S1",
+          "replacement": "最近、毎晩20分、料理の本を読んで勉強しています。",
+          "issueType": "LANGUAGE_FORM",
+          "sourceFactId": "",
+          "formReason": "SYNTAX",
+          "originText": "일본어에서는 숫자 표기나 쉼표를 사용하여 시간 표현을 명확히 하는 것이 자연스럽습니다. 원문은 '二十分料理の本'처럼 연결되어 읽힐 수 있어 가독성을 높이는 수정이 도움이 됩니다.",
+          "learningText": "数字をアラビア数字にし読点を入れることで視覚的に時間表現が明確になり、自然な日本語になります。"
+        }
+      ],
+      "optionalAlternatives": [
+        {
+          "suggestionKind": "EXPRESSION_ONLY",
+          "segmentId": "S1",
+          "replacement": "最近、毎晩20分、料理の本を読んで勉強しています。",
+          "relationChecks": {
+            "causality": "NOT_APPLICABLE",
+            "chronology": "PRESERVED",
+            "specificity": "PRESERVED",
+            "stance": "PRESERVED"
+          },
+          "originText": "숫자를 아라비아숫자로 바꾸고 읽기 쉬운 위치에 쉼표를 넣는 표현 대안입니다. 의미나 사실은 변경하지 않습니다.",
+          "learningText": "アラビア数字と読点を使うと時間の情報が視覚的に分かりやすくなります。"
+        },
+        {
+          "suggestionKind": "EXPRESSION_ONLY",
+          "segmentId": "S3",
+          "replacement": "これからは家族のために新しい料理を作れるようになりたいです。",
+          "relationChecks": {
+            "causality": "NOT_APPLICABLE",
+            "chronology": "PRESERVED",
+            "specificity": "PRESERVED",
+            "stance": "PRESERVED"
+          },
+          "originText": "현재 문장 자체는 자연스럽지만, 동일 문장을 다른 표기(변경 없음)로 예시로 제시합니다.",
+          "learningText": "表現自体は適切ですが、願望の強さを変えたい場合は「〜できるようにしたいです」などの微調整が可能です。"
+        }
+      ],
+      "uncertainties": []
+    },
+    "fixtureSourceSha256": "9fd5150efe5a2dbdcb66f5e269183c297983df1cee20b81a18c87ceead4b0cf8"
+  },
+  {
+    "caseId": "reg-gen-g-f2e",
+    "provenance": {
+      "policy": "curated-writing-feedback-v5",
+      "sourceRequestPath": "C:\\workspace\\project-cat\\.codex-workspace\\verification\\shared\\2026-10-04-ll-finish-live-writing\\provider-attempts\\cf56c58390154887ae0a2387d1f2473b.request.json",
+      "sourceRequestSha256": "7b75b8ff7877052b38a4341f2491b8954f6f2cd43930e47c26d76a1eeab59611",
+      "sourceResponsePath": "C:\\workspace\\project-cat\\.codex-workspace\\verification\\shared\\2026-10-04-ll-finish-live-writing\\provider-attempts\\cf56c58390154887ae0a2387d1f2473b.response.json",
+      "sourceResponseSha256": "1a81d6220f59155c5e97e81980ccd1fb7819909391bb300926eaafec894e8ddd",
+      "traceId": "curated-feedback-129-1",
+      "labelSource": "Actual provider output; no human gold implied",
+      "model": "gpt-5-mini",
+      "effort": "low",
+      "maxOutputTokens": 4096
+    },
+    "input": {
+      "task": {
+        "writingType": "FREE",
+        "publicPromptAndConditions": {
+          "topicKey": "information-source-choice",
+          "originText": "인터넷이나 책, 주변 사람 등에서 정보를 얻을 때 무엇을 가장 믿는지 자신의 의견을 쓰세요. 그 정보원을 선택하는 이유를 설명하고, 실제로 정보를 확인하거나 활용한 경험을 하나 포함하세요.",
+          "providedFacts": [],
+          "requiredIntents": [],
+          "taskRequirements": [
+            "가장 믿는 정보원을 하나 이상 분명히 밝힐 것",
+            "그 정보원을 믿는 이유를 설명할 것",
+            "그 정보원을 통해 정보를 확인하거나 활용한 실제 경험을 하나 포함할 것",
+            "자신의 의견과 경험이 연결된 하나의 자연스러운 단락을 만들 것"
+          ],
+          "responseConstraints": []
+        },
+        "requirements": [
+          {
+            "id": "C1",
+            "text": "가장 믿는 정보원을 하나 이상 분명히 밝힐 것"
+          },
+          {
+            "id": "C2",
+            "text": "그 정보원을 믿는 이유를 설명할 것"
+          },
+          {
+            "id": "C3",
+            "text": "그 정보원을 통해 정보를 확인하거나 활용한 실제 경험을 하나 포함할 것"
+          },
+          {
+            "id": "C4",
+            "text": "자신의 의견과 경험이 연결된 하나의 자연스러운 단락을 만들 것"
+          }
+        ],
+        "originLanguage": "ko",
+        "learningLanguage": "ja",
+        "explicitTaskFacts": []
+      },
+      "learnerAnswer": {
+        "text": "私は情報を得るとき、インターネットが一番便利だと思います。",
+        "segments": [
+          {
+            "id": "S1",
+            "text": "私は情報を得るとき、インターネットが一番便利だと思います。"
+          }
+        ]
+      }
+    },
+    "outputText": "{\n  \"observations\": [\n    {\n      \"requirementId\": \"C1\",\n      \"status\": \"UNMET\",\n      \"evidenceKind\": \"LEARNER_TEXT\",\n      \"segmentIds\": [\n        \"S1\"\n      ],\n      \"relationChecks\": {\n        \"causality\": \"CONFLICT\",\n        \"chronology\": \"NOT_APPLICABLE\",\n        \"specificity\": \"PRESERVED\",\n        \"stance\": \"CONFLICT\"\n      }\n    },\n    {\n      \"requirementId\": \"C2\",\n      \"status\": \"UNMET\",\n      \"evidenceKind\": \"MISSING_REQUIREMENT\",\n      \"segmentIds\": [],\n      \"relationChecks\": {\n        \"causality\": \"NOT_APPLICABLE\",\n        \"chronology\": \"NOT_APPLICABLE\",\n        \"specificity\": \"NOT_APPLICABLE\",\n        \"stance\": \"NOT_APPLICABLE\"\n      }\n    },\n    {\n      \"requirementId\": \"C3\",\n      \"status\": \"UNMET\",\n      \"evidenceKind\": \"MISSING_REQUIREMENT\",\n      \"segmentIds\": [],\n      \"relationChecks\": {\n        \"causality\": \"NOT_APPLICABLE\",\n        \"chronology\": \"NOT_APPLICABLE\",\n        \"specificity\": \"NOT_APPLICABLE\",\n        \"stance\": \"NOT_APPLICABLE\"\n      }\n    },\n    {\n      \"requirementId\": \"C4\",\n      \"status\": \"UNMET\",\n      \"evidenceKind\": \"LEARNER_TEXT\",\n      \"segmentIds\": [\n        \"S1\"\n      ],\n      \"relationChecks\": {\n        \"causality\": \"CONFLICT\",\n        \"chronology\": \"NOT_APPLICABLE\",\n        \"specificity\": \"PRESERVED\",\n        \"stance\": \"PRESERVED\"\n      }\n    }\n  ],\n  \"necessaryCorrections\": [],\n  \"optionalAlternatives\": [\n    {\n      \"suggestionKind\": \"EXPRESSION_ONLY\",\n      \"segmentId\": \"S1\",\n      \"replacement\": \"私は情報を得るとき、インターネットをもっとも信頼しています。なぜなら、多くの専門サイトや公的機関の情報をすぐに比較できるからです。例えば、最近ワクチンの副反応について調べたときに、厚生労働省のページと複数の医学系サイトを照らし合わせて安全性を確認し、その情報をもとに受診の判断をしました。\",\n      \"relationChecks\": {\n        \"causality\": \"PRESERVED\",\n        \"chronology\": \"NOT_APPLICABLE\",\n        \"specificity\": \"PRESERVED\",\n        \"stance\": \"PRESERVED\"\n      },\n      \"originText\": \"학습자가 쓴 일본어 문장은 ‘인터넷이 가장 편리하다’라고만 말합니다. 요구사항은 '신뢰하는 정보원'과 그 이유, 실제 경험을 한 단락으로 요구합니다. 아래 대체 문장은 원래 태도를 유지하면서 '신뢰한다'고 명확히 밝히고 이유와 구체적 경험을 덧붙였습니다.\",\n      \"learningText\": \"この提案は、元の「インターネットが一番便利だ」という表現を尊重しつつ、「最も信頼している」と明示し、理由（専門サイトや公的機関の情報を比較できる）と具体例（ワクチン副反応を調べて公的機関のページと照合した）を加えて、要求される要素を一つの自然な段落にまとめたものです。\"\n    }\n  ],\n  \"uncertainties\": []\n}",
+    "output": {
+      "observations": [
+        {
+          "requirementId": "C1",
+          "status": "UNMET",
+          "evidenceKind": "LEARNER_TEXT",
+          "segmentIds": [
+            "S1"
+          ],
+          "relationChecks": {
+            "causality": "CONFLICT",
+            "chronology": "NOT_APPLICABLE",
+            "specificity": "PRESERVED",
+            "stance": "CONFLICT"
+          }
+        },
+        {
+          "requirementId": "C2",
+          "status": "UNMET",
+          "evidenceKind": "MISSING_REQUIREMENT",
+          "segmentIds": [],
+          "relationChecks": {
+            "causality": "NOT_APPLICABLE",
+            "chronology": "NOT_APPLICABLE",
+            "specificity": "NOT_APPLICABLE",
+            "stance": "NOT_APPLICABLE"
+          }
+        },
+        {
+          "requirementId": "C3",
+          "status": "UNMET",
+          "evidenceKind": "MISSING_REQUIREMENT",
+          "segmentIds": [],
+          "relationChecks": {
+            "causality": "NOT_APPLICABLE",
+            "chronology": "NOT_APPLICABLE",
+            "specificity": "NOT_APPLICABLE",
+            "stance": "NOT_APPLICABLE"
+          }
+        },
+        {
+          "requirementId": "C4",
+          "status": "UNMET",
+          "evidenceKind": "LEARNER_TEXT",
+          "segmentIds": [
+            "S1"
+          ],
+          "relationChecks": {
+            "causality": "CONFLICT",
+            "chronology": "NOT_APPLICABLE",
+            "specificity": "PRESERVED",
+            "stance": "PRESERVED"
+          }
+        }
+      ],
+      "necessaryCorrections": [],
+      "optionalAlternatives": [
+        {
+          "suggestionKind": "EXPRESSION_ONLY",
+          "segmentId": "S1",
+          "replacement": "私は情報を得るとき、インターネットをもっとも信頼しています。なぜなら、多くの専門サイトや公的機関の情報をすぐに比較できるからです。例えば、最近ワクチンの副反応について調べたときに、厚生労働省のページと複数の医学系サイトを照らし合わせて安全性を確認し、その情報をもとに受診の判断をしました。",
+          "relationChecks": {
+            "causality": "PRESERVED",
+            "chronology": "NOT_APPLICABLE",
+            "specificity": "PRESERVED",
+            "stance": "PRESERVED"
+          },
+          "originText": "학습자가 쓴 일본어 문장은 ‘인터넷이 가장 편리하다’라고만 말합니다. 요구사항은 '신뢰하는 정보원'과 그 이유, 실제 경험을 한 단락으로 요구합니다. 아래 대체 문장은 원래 태도를 유지하면서 '신뢰한다'고 명확히 밝히고 이유와 구체적 경험을 덧붙였습니다.",
+          "learningText": "この提案は、元の「インターネットが一番便利だ」という表現を尊重しつつ、「最も信頼している」と明示し、理由（専門サイトや公的機関の情報を比較できる）と具体例（ワクチン副反応を調べて公的機関のページと照合した）を加えて、要求される要素を一つの自然な段落にまとめたものです。"
+        }
+      ],
+      "uncertainties": []
+    },
+    "fixtureSourceSha256": "12d1ea2d9a4f1c3177aa6ad27b40e10f68029a21f27a80bf443beb30e289f372"
+  },
+  {
+    "caseId": "reg-gen-g-g1e",
+    "provenance": {
+      "policy": "curated-writing-feedback-v5",
+      "sourceRequestPath": "C:\\workspace\\project-cat\\.codex-workspace\\verification\\shared\\2026-10-04-ll-finish-live-writing\\provider-attempts\\0da7904f3a4e4df287d0ebb68e8fbff6.request.json",
+      "sourceRequestSha256": "ab235eb74d151ca0172bf14e2c7164a2baf40040a93ebf26346db6c873e38a29",
+      "sourceResponsePath": "C:\\workspace\\project-cat\\.codex-workspace\\verification\\shared\\2026-10-04-ll-finish-live-writing\\provider-attempts\\0da7904f3a4e4df287d0ebb68e8fbff6.response.json",
+      "sourceResponseSha256": "6086249f07e02f081e2c04e06787d9abf462adee827395ad79ea18812491c402",
+      "traceId": "curated-feedback-126-1",
+      "labelSource": "Actual provider output; no human gold implied",
+      "model": "gpt-5-mini",
+      "effort": "low",
+      "maxOutputTokens": 4096
+    },
+    "input": {
+      "task": {
+        "writingType": "GUIDED",
+        "publicPromptAndConditions": {
+          "topicKey": "community-event-change",
+          "originText": "지역 도서관 회원에게 보내는 안내문을 일본어로 작성하세요. 예정된 벼룩시장의 원래 일정과 장소, 변경된 일정과 장소, 변경 이유, 참가자의 접수 방법, 회원들에게 전할 요청을 연결된 문단으로 안내하세요.",
+          "providedFacts": [
+            "벼룩시장은 원래 토요일 오전 10시에 중앙도서관 앞 광장에서 열릴 예정이었다.",
+            "비가 올 가능성이 있어 장소를 체육관으로 변경한다.",
+            "시간은 토요일 오후 2시로 변경한다.",
+            "참가자는 입구에서 접수해야 한다.",
+            "회원들에게 변경 내용을 확인해 달라고 요청한다."
+          ],
+          "requiredIntents": [
+            "벼룩시장 장소와 시간이 변경되었음을 알린다.",
+            "변경 이유를 설명한다.",
+            "참가자가 입구에서 접수해야 한다고 안내한다.",
+            "회원들에게 변경 내용을 확인해 달라고 요청한다."
+          ],
+          "taskRequirements": [
+            "원래 벼룩시장은 토요일 오전 10시에 중앙도서관 앞 광장에서 열릴 예정이었다는 내용을 포함할 것.",
+            "비가 올 가능성 때문에 장소를 체육관으로, 시간은 토요일 오후 2시로 변경한다는 내용을 포함할 것.",
+            "참가자는 입구에서 접수해야 한다는 내용을 포함할 것.",
+            "회원들에게 변경 내용을 확인해 달라고 요청할 것."
+          ],
+          "responseConstraints": [
+            "지역 도서관 회원에게 보내는 안내문 형식으로 작성한다.",
+            "원래 장소와 시간, 변경된 장소와 시간을 모두 포함한다.",
+            "요구된 전달 내용을 담은 연결된 문단으로 작성한다."
+          ]
+        },
+        "requirements": [
+          {
+            "id": "C1",
+            "text": "원래 벼룩시장은 토요일 오전 10시에 중앙도서관 앞 광장에서 열릴 예정이었다는 내용을 포함할 것."
+          },
+          {
+            "id": "C2",
+            "text": "비가 올 가능성 때문에 장소를 체육관으로, 시간은 토요일 오후 2시로 변경한다는 내용을 포함할 것."
+          },
+          {
+            "id": "C3",
+            "text": "참가자는 입구에서 접수해야 한다는 내용을 포함할 것."
+          },
+          {
+            "id": "C4",
+            "text": "회원들에게 변경 내용을 확인해 달라고 요청할 것."
+          }
+        ],
+        "originLanguage": "ko",
+        "learningLanguage": "ja",
+        "explicitTaskFacts": [
+          {
+            "id": "T1",
+            "text": "벼룩시장은 원래 토요일 오전 10시에 중앙도서관 앞 광장에서 열릴 예정이었다."
+          },
+          {
+            "id": "T2",
+            "text": "비가 올 가능성이 있어 장소를 체육관으로 변경한다."
+          },
+          {
+            "id": "T3",
+            "text": "시간은 토요일 오후 2시로 변경한다."
+          },
+          {
+            "id": "T4",
+            "text": "참가자는 입구에서 접수해야 한다."
+          },
+          {
+            "id": "T5",
+            "text": "회원들에게 변경 내용을 확인해 달라고 요청한다."
+          }
+        ]
+      },
+      "learnerAnswer": {
+        "text": "図書館会員の皆さまへ。フリーマーケットは土曜日の午前10時に中央図書館前の広場で行います。雨の可能性があるため、参加者は入口で受付をしてください。変更内容を確認してください。",
+        "segments": [
+          {
+            "id": "S1",
+            "text": "図書館会員の皆さまへ。"
+          },
+          {
+            "id": "S2",
+            "text": "フリーマーケットは土曜日の午前10時に中央図書館前の広場で行います。"
+          },
+          {
+            "id": "S3",
+            "text": "雨の可能性があるため、参加者は入口で受付をしてください。"
+          },
+          {
+            "id": "S4",
+            "text": "変更内容を確認してください。"
+          }
+        ]
+      },
+      "referenceExamples": {
+        "role": "NON_AUTHORITATIVE_EXAMPLES_NOT_LEARNER_FACTS",
+        "answers": [
+          "図書館会員の皆さまへ。フリーマーケットは、もともと土曜日の午前10時に中央図書館前の広場で行う予定でした。しかし、雨が降る可能性があるため、会場を体育館に変更し、時間も土曜日の午後2時に変更します。参加する方は入口で受付をしてください。会員の皆さまは変更内容を確認してください。",
+          "図書館の会員の皆さまにお知らせします。予定していたフリーマーケットは、土曜日の午前10時から中央図書館前の広場で開催する予定でしたが、雨の可能性があるため、体育館で午後2時から行います。参加者は体育館の入口で受付をお願いします。変更された場所と時間をご確認ください。"
+        ],
+        "alternativeNote": "원래 일정과 장소, 변경된 일정과 장소, 변경 이유, 입구 접수 방법, 변경 내용 확인 요청을 모두 포함하면 표현과 문장 구성은 달라도 됩니다."
+      }
+    },
+    "outputText": "{\n  \"observations\": [\n    {\n      \"requirementId\": \"C1\",\n      \"status\": \"UNMET\",\n      \"evidenceKind\": \"LEARNER_TEXT\",\n      \"segmentIds\": [\n        \"S2\"\n      ],\n      \"relationChecks\": {\n        \"causality\": \"NOT_APPLICABLE\",\n        \"chronology\": \"CONFLICT\",\n        \"specificity\": \"PRESERVED\",\n        \"stance\": \"NOT_APPLICABLE\"\n      }\n    },\n    {\n      \"requirementId\": \"C2\",\n      \"status\": \"MET\",\n      \"evidenceKind\": \"LEARNER_TEXT\",\n      \"segmentIds\": [\n        \"S3\"\n      ],\n      \"relationChecks\": {\n        \"causality\": \"PRESERVED\",\n        \"chronology\": \"PRESERVED\",\n        \"specificity\": \"PRESERVED\",\n        \"stance\": \"PRESERVED\"\n      }\n    },\n    {\n      \"requirementId\": \"C3\",\n      \"status\": \"MET\",\n      \"evidenceKind\": \"LEARNER_TEXT\",\n      \"segmentIds\": [\n        \"S3\"\n      ],\n      \"relationChecks\": {\n        \"causality\": \"NOT_APPLICABLE\",\n        \"chronology\": \"NOT_APPLICABLE\",\n        \"specificity\": \"PRESERVED\",\n        \"stance\": \"PRESERVED\"\n      }\n    },\n    {\n      \"requirementId\": \"C4\",\n      \"status\": \"MET\",\n      \"evidenceKind\": \"LEARNER_TEXT\",\n      \"segmentIds\": [\n        \"S4\"\n      ],\n      \"relationChecks\": {\n        \"causality\": \"NOT_APPLICABLE\",\n        \"chronology\": \"NOT_APPLICABLE\",\n        \"specificity\": \"PRESERVED\",\n        \"stance\": \"PRESERVED\"\n      }\n    }\n  ],\n  \"necessaryCorrections\": [\n    {\n      \"requirementId\": \"C1\",\n      \"segmentId\": \"S2\",\n      \"replacement\": \"フリーマーケットは、もともと土曜日の午前10時に中央図書館前の広場で開催する予定でした。\",\n      \"issueType\": \"TASK_FACT_CONFLICT\",\n      \"sourceFactId\": \"T1\",\n      \"formReason\": \"NONE\",\n      \"originText\": \"원래 일정임을 분명히 해야 합니다. 학습자의 문장은 현재형으로 쓰여 있어 '원래 예정이었다'는 의미가 빠져 있습니다. 원래 예정이었다는 사실(T1)을 복원해야 합니다.\",\n      \"learningText\": \"学習文は現在形で「行います」と書かれており、もともと予定されていたことを明確に伝えていません。ここでは「もともと～予定でした」と過去の予定を示す表現に直すことで、元の予定が変更されたことを明確に伝えます。\"\n    }\n  ],\n  \"optionalAlternatives\": [\n    {\n      \"suggestionKind\": \"EXPRESSION_ONLY\",\n      \"segmentId\": \"S2\",\n      \"replacement\": \"当初、フリーマーケットは土曜日の午前10時に中央図書館前の広場で開催する予定でした。\",\n      \"relationChecks\": {\n        \"causality\": \"NOT_APPLICABLE\",\n        \"chronology\": \"PRESERVED\",\n        \"specificity\": \"PRESERVED\",\n        \"stance\": \"NOT_APPLICABLE\"\n      },\n      \"originText\": \"보다 공손하고 안내문에 어울리는 서술로 바꿀 수 있습니다.\",\n      \"learningText\": \"より丁寧な表現で、過去の予定であったことを明確に示します。\"\n    }\n  ],\n  \"uncertainties\": [\n    {\n      \"requirementId\": \"C3\",\n      \"originText\": \"참가자 접수와 변경 사유(비)가 관련 있는지 불분명합니다; 학습자는 '비 때문에'라는 이유 뒤에 곧바로 '접수'를 안내했습니다.\",\n      \"learningText\": \"「雨の可能性があるため、参加者は入口で受付をしてください。」と書かれていますが、ここで雨が受付方法の理由であるのか不明確です。受付の案内自体は問題ありませんが、原因と結果の関係を明確にする必要があるかもしれません。\"\n    }\n  ]\n}",
+    "output": {
+      "observations": [
+        {
+          "requirementId": "C1",
+          "status": "UNMET",
+          "evidenceKind": "LEARNER_TEXT",
+          "segmentIds": [
+            "S2"
+          ],
+          "relationChecks": {
+            "causality": "NOT_APPLICABLE",
+            "chronology": "CONFLICT",
+            "specificity": "PRESERVED",
+            "stance": "NOT_APPLICABLE"
+          }
+        },
+        {
+          "requirementId": "C2",
+          "status": "MET",
+          "evidenceKind": "LEARNER_TEXT",
+          "segmentIds": [
+            "S3"
+          ],
+          "relationChecks": {
+            "causality": "PRESERVED",
+            "chronology": "PRESERVED",
+            "specificity": "PRESERVED",
+            "stance": "PRESERVED"
+          }
+        },
+        {
+          "requirementId": "C3",
+          "status": "MET",
+          "evidenceKind": "LEARNER_TEXT",
+          "segmentIds": [
+            "S3"
+          ],
+          "relationChecks": {
+            "causality": "NOT_APPLICABLE",
+            "chronology": "NOT_APPLICABLE",
+            "specificity": "PRESERVED",
+            "stance": "PRESERVED"
+          }
+        },
+        {
+          "requirementId": "C4",
+          "status": "MET",
+          "evidenceKind": "LEARNER_TEXT",
+          "segmentIds": [
+            "S4"
+          ],
+          "relationChecks": {
+            "causality": "NOT_APPLICABLE",
+            "chronology": "NOT_APPLICABLE",
+            "specificity": "PRESERVED",
+            "stance": "PRESERVED"
+          }
+        }
+      ],
+      "necessaryCorrections": [
+        {
+          "requirementId": "C1",
+          "segmentId": "S2",
+          "replacement": "フリーマーケットは、もともと土曜日の午前10時に中央図書館前の広場で開催する予定でした。",
+          "issueType": "TASK_FACT_CONFLICT",
+          "sourceFactId": "T1",
+          "formReason": "NONE",
+          "originText": "원래 일정임을 분명히 해야 합니다. 학습자의 문장은 현재형으로 쓰여 있어 '원래 예정이었다'는 의미가 빠져 있습니다. 원래 예정이었다는 사실(T1)을 복원해야 합니다.",
+          "learningText": "学習文は現在形で「行います」と書かれており、もともと予定されていたことを明確に伝えていません。ここでは「もともと～予定でした」と過去の予定を示す表現に直すことで、元の予定が変更されたことを明確に伝えます。"
+        }
+      ],
+      "optionalAlternatives": [
+        {
+          "suggestionKind": "EXPRESSION_ONLY",
+          "segmentId": "S2",
+          "replacement": "当初、フリーマーケットは土曜日の午前10時に中央図書館前の広場で開催する予定でした。",
+          "relationChecks": {
+            "causality": "NOT_APPLICABLE",
+            "chronology": "PRESERVED",
+            "specificity": "PRESERVED",
+            "stance": "NOT_APPLICABLE"
+          },
+          "originText": "보다 공손하고 안내문에 어울리는 서술로 바꿀 수 있습니다.",
+          "learningText": "より丁寧な表現で、過去の予定であったことを明確に示します。"
+        }
+      ],
+      "uncertainties": [
+        {
+          "requirementId": "C3",
+          "originText": "참가자 접수와 변경 사유(비)가 관련 있는지 불분명합니다; 학습자는 '비 때문에'라는 이유 뒤에 곧바로 '접수'를 안내했습니다.",
+          "learningText": "「雨の可能性があるため、参加者は入口で受付をしてください。」と書かれていますが、ここで雨が受付方法の理由であるのか不明確です。受付の案内自体は問題ありませんが、原因と結果の関係を明確にする必要があるかもしれません。"
+        }
+      ]
+    },
+    "fixtureSourceSha256": "44cf8d59437acd784a1d1bb0ff4f9d2278af5ccd8f14ef7e1158d083bf55da02"
+  }
+]

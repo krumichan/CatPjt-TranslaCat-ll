@@ -1,0 +1,47 @@
+{
+  "observations": [
+    {
+      "requirementId": "C1",
+      "status": "MET",
+      "evidenceKind": "LEARNER_TEXT",
+      "segmentIds": [
+        "S1"
+      ],
+      "originText": "이미 회장(회場) 예약이 되어 있는 사실을 먼저 인정하고 있습니다.",
+      "learningText": "既に会場の予約があることを先に認めています。"
+    },
+    {
+      "requirementId": "C2",
+      "status": "UNMET",
+      "evidenceKind": "MISSING_REQUIREMENT",
+      "segmentIds": [],
+      "originText": "자신의 개인 사정(이유 설명)이 문장에 포함되어 있지 않습니다.",
+      "learningText": "ご事情の具体的な説明（なぜ時間変更が必要か）が書かれていません。簡潔な理由を教えてください。"
+    },
+    {
+      "requirementId": "C3",
+      "status": "MET",
+      "evidenceKind": "LEARNER_TEXT",
+      "segmentIds": [
+        "S1",
+        "S2"
+      ],
+      "originText": "시간을 조금 늦추는 것과, 불가능하면 다른 날짜도 괜찮다는 대안을 제시했습니다.",
+      "learningText": "時間を遅らせる案と、難しければ別日でも構わないという代案を提示しています。"
+    },
+    {
+      "requirementId": "C4",
+      "status": "MET",
+      "evidenceKind": "LEARNER_TEXT",
+      "segmentIds": [
+        "S1",
+        "S2"
+      ],
+      "originText": "敬語の丁寧な表現（〜いただけないでしょうか、〜でも構いません）を使用しています.",
+      "learningText": "丁寧な敬語表現を用いており、受信者にふさわしい語調です。"
+    }
+  ],
+  "necessaryCorrections": [],
+  "optionalAlternatives": [],
+  "uncertainties": []
+}

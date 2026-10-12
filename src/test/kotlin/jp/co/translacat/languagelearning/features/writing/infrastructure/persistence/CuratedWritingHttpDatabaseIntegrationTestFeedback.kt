@@ -65,15 +65,11 @@ class CuratedWritingHttpDatabaseIntegrationTestFeedback {
             val model = ModelExecutionPort { command ->
                 calls++
                 val input = Json.parseToJsonElement(command.messages.single().content).jsonObject
-                val requirements = input.getValue("requirements").jsonArray
+                val requirements = input.getValue("task").jsonObject.getValue("requirements").jsonArray
                 ModelExecutionResult(buildJsonObject {
                     put("observations", buildJsonArray {
                         if (calls > 1) requirements.forEach { requirement -> add(buildJsonObject {
-                            put("requirementId", requirement.jsonObject.getValue("id"))
-                            put("status", "MET")
-                            put("segmentIds", buildJsonArray { add("S1") })
-                            put("originText", "요구 내용을 전달했습니다.")
-                            put("learningText", "必要な内容を伝えています。")
+                            CuratedWritingFeedbackTestPayload.observation(input, requirement.jsonObject).forEach { (key, value) -> put(key, value) }
                         }) }
                     })
                     put("necessaryCorrections", buildJsonArray {})
@@ -149,17 +145,13 @@ class CuratedWritingHttpDatabaseIntegrationTestFeedback {
             val model = ModelExecutionPort { command ->
                 calls++
                 val input = Json.parseToJsonElement(command.messages.single().content).jsonObject
-                val answer = input.getValue("answer").jsonPrimitive.content
-                val requirements = input.getValue("requirements").jsonArray
+                val answer = input.getValue("learnerAnswer").jsonObject.getValue("text").jsonPrimitive.content
+                val requirements = input.getValue("task").jsonObject.getValue("requirements").jsonArray
                 val inject = answer in failures && failedOnce.add(answer)
                 ModelExecutionResult(buildJsonObject {
                     put("observations", buildJsonArray {
                         if (!inject) requirements.forEach { requirement -> add(buildJsonObject {
-                            put("requirementId", requirement.jsonObject.getValue("id"))
-                            put("status", "MET")
-                            put("segmentIds", buildJsonArray { add("S1") })
-                            put("originText", "답안의 근거 구간을 확인했습니다.")
-                            put("learningText", "回答の根拠を確認しました。")
+                            CuratedWritingFeedbackTestPayload.observation(input, requirement.jsonObject).forEach { (key, value) -> put(key, value) }
                         }) }
                     })
                     put("necessaryCorrections", buildJsonArray {})

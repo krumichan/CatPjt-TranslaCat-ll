@@ -1,0 +1,676 @@
+[
+  {
+    "caseId": "C1",
+    "input": {
+      "task": {
+        "writingType": "FREE",
+        "publicPromptAndConditions": {
+          "topicKey": "schedule_adjustment",
+          "originText": "학교, 직장 또는 동아리의 담당자에게 일본어로 일정 조정이나 협조를 요청하세요. 원래 상황을 인정하면서도 자신의 사정을 완곡하게 설명하고, 가능한 대안이나 조건을 제시하세요. 상대와 상황에 맞는 정중한 어조를 선택하세요.",
+          "providedFacts": [],
+          "requiredIntents": [],
+          "responseConstraints": []
+        },
+        "requirements": [
+          {
+            "id": "C1",
+            "text": "상대의 사정이나 기존 계획을 먼저 인정했는가?"
+          },
+          {
+            "id": "C2",
+            "text": "자신의 사정을 설명하며 요청을 지나치게 단정하지 않고 완곡하게 표현했는가?"
+          },
+          {
+            "id": "C3",
+            "text": "가능한 대안이나 조건의 범위를 제시했는가?"
+          },
+          {
+            "id": "C4",
+            "text": "수신자에 맞는 정중한 어조를 사용했는가?"
+          }
+        ]
+      },
+      "learnerAnswer": {
+        "text": "すでに会場を予約されていることは承知しておりますが、前の会議が延びる見込みですので、もし可能でしたら面談の時間を少し遅らせていただけないでしょうか。難しければ、別の日でも構いません。",
+        "segments": [
+          {
+            "id": "S1",
+            "text": "すでに会場を予約されていることは承知しておりますが、前の会議が延びる見込みですので、もし可能でしたら面談の時間を少し遅らせていただけないでしょうか。"
+          },
+          {
+            "id": "S2",
+            "text": "難しければ、別の日でも構いません。"
+          }
+        ]
+      }
+    },
+    "output": {
+      "observations": [
+        {
+          "requirementId": "C1",
+          "status": "MET",
+          "evidenceKind": "LEARNER_TEXT",
+          "segmentIds": [
+            "S1"
+          ],
+          "originText": "이미 회의 때문에 장소 예약이 되어 있음을 먼저 인정했습니다.",
+          "learningText": "会場予約が既にあることを最初に認めています。"
+        },
+        {
+          "requirementId": "C2",
+          "status": "MET",
+          "evidenceKind": "LEARNER_TEXT",
+          "segmentIds": [
+            "S1"
+          ],
+          "originText": "자신의 사정(전 회의 연장 가능성)을 완곡하게 설명했습니다.",
+          "learningText": "前の会議が延びる見込みであることを婉曲に説明しています。"
+        },
+        {
+          "requirementId": "C3",
+          "status": "MET",
+          "evidenceKind": "LEARNER_TEXT",
+          "segmentIds": [
+            "S1",
+            "S2"
+          ],
+          "originText": "시간을 늦추는 것과 별도의 날짜 제시라는 두 가지 대안을 제시했습니다.",
+          "learningText": "面談時間を遅らせる案と、別日を提案するという選択肢を示しています。"
+        },
+        {
+          "requirementId": "C4",
+          "status": "MET",
+          "evidenceKind": "LEARNER_TEXT",
+          "segmentIds": [
+            "S1",
+            "S2"
+          ],
+          "originText": "공손한 표현(〜いただけないでしょうか、〜でも構いません)을 사용했습니다.",
+          "learningText": "「〜いただけないでしょうか」「〜でも構いません」などの丁寧な語調を用いています。"
+        }
+      ],
+      "necessaryCorrections": [],
+      "optionalAlternatives": [],
+      "uncertainties": []
+    },
+    "legacyValidatorExpected": "ACCEPT_STRUCTURE_ONLY",
+    "semanticAcceptance": "FAIL"
+  },
+  {
+    "caseId": "C2",
+    "input": {
+      "task": {
+        "writingType": "FREE",
+        "publicPromptAndConditions": {
+          "topicKey": "schedule_adjustment",
+          "originText": "학교, 직장 또는 동아리의 담당자에게 일본어로 일정 조정이나 협조를 요청하세요. 원래 상황을 인정하면서도 자신의 사정을 완곡하게 설명하고, 가능한 대안이나 조건을 제시하세요. 상대와 상황에 맞는 정중한 어조를 선택하세요.",
+          "providedFacts": [],
+          "requiredIntents": [],
+          "responseConstraints": []
+        },
+        "requirements": [
+          {
+            "id": "C1",
+            "text": "상대의 사정이나 기존 계획을 먼저 인정했는가?"
+          },
+          {
+            "id": "C2",
+            "text": "자신의 사정을 설명하며 요청을 지나치게 단정하지 않고 완곡하게 표현했는가?"
+          },
+          {
+            "id": "C3",
+            "text": "가능한 대안이나 조건의 범위를 제시했는가?"
+          },
+          {
+            "id": "C4",
+            "text": "수신자에 맞는 정중한 어조를 사용했는가?"
+          }
+        ]
+      },
+      "learnerAnswer": {
+        "text": "すでに会場を予約されていることは承知しておりますが、もし可能でしたら面談の時間を少し遅らせていただけないでしょうか。難しければ、別の日でも構いません。",
+        "segments": [
+          {
+            "id": "S1",
+            "text": "すでに会場を予約されていることは承知しておりますが、もし可能でしたら面談の時間を少し遅らせていただけないでしょうか。"
+          },
+          {
+            "id": "S2",
+            "text": "難しければ、別の日でも構いません。"
+          }
+        ]
+      }
+    },
+    "output": {
+      "observations": [
+        {
+          "requirementId": "C1",
+          "status": "MET",
+          "evidenceKind": "LEARNER_TEXT",
+          "segmentIds": [
+            "S1"
+          ],
+          "originText": "이미 회장(회場) 예약이 되어 있는 사실을 먼저 인정하고 있습니다.",
+          "learningText": "既に会場の予約があることを先に認めています。"
+        },
+        {
+          "requirementId": "C2",
+          "status": "UNMET",
+          "evidenceKind": "MISSING_REQUIREMENT",
+          "segmentIds": [],
+          "originText": "자신의 개인 사정(이유 설명)이 문장에 포함되어 있지 않습니다.",
+          "learningText": "ご事情の具体的な説明（なぜ時間変更が必要か）が書かれていません。簡潔な理由を教えてください。"
+        },
+        {
+          "requirementId": "C3",
+          "status": "MET",
+          "evidenceKind": "LEARNER_TEXT",
+          "segmentIds": [
+            "S1",
+            "S2"
+          ],
+          "originText": "시간을 조금 늦추는 것과, 불가능하면 다른 날짜도 괜찮다는 대안을 제시했습니다.",
+          "learningText": "時間を遅らせる案と、難しければ別日でも構わないという代案を提示しています。"
+        },
+        {
+          "requirementId": "C4",
+          "status": "MET",
+          "evidenceKind": "LEARNER_TEXT",
+          "segmentIds": [
+            "S1",
+            "S2"
+          ],
+          "originText": "敬語の丁寧な表現（〜いただけないでしょうか、〜でも構いません）を使用しています.",
+          "learningText": "丁寧な敬語表現を用いており、受信者にふさわしい語調です。"
+        }
+      ],
+      "necessaryCorrections": [],
+      "optionalAlternatives": [],
+      "uncertainties": []
+    },
+    "legacyValidatorExpected": "REJECT_LANGUAGE",
+    "semanticAcceptance": "FAIL"
+  },
+  {
+    "caseId": "C3",
+    "input": {
+      "task": {
+        "writingType": "GUIDED",
+        "publicPromptAndConditions": {
+          "topicKey": "community-event-change",
+          "originText": "지역 도서관 회원에게 보내는 안내문을 일본어로 작성하세요. 예정된 벼룩시장의 원래 일정과 장소, 변경된 일정과 장소, 변경 이유, 참가자의 접수 방법, 회원들에게 전할 요청을 연결된 문단으로 안내하세요.",
+          "providedFacts": [
+            "벼룩시장은 원래 토요일 오전 10시에 중앙도서관 앞 광장에서 열릴 예정이었다.",
+            "비가 올 가능성이 있어 장소를 체육관으로 변경한다.",
+            "시간은 토요일 오후 2시로 변경한다.",
+            "참가자는 입구에서 접수해야 한다.",
+            "회원들에게 변경 내용을 확인해 달라고 요청한다."
+          ],
+          "requiredIntents": [
+            "벼룩시장 장소와 시간이 변경되었음을 알린다.",
+            "변경 이유를 설명한다.",
+            "참가자가 입구에서 접수해야 한다고 안내한다.",
+            "회원들에게 변경 내용을 확인해 달라고 요청한다."
+          ],
+          "taskRequirements": [
+            "원래 벼룩시장은 토요일 오전 10시에 중앙도서관 앞 광장에서 열릴 예정이었다는 내용을 포함할 것.",
+            "비가 올 가능성 때문에 장소를 체육관으로, 시간은 토요일 오후 2시로 변경한다는 내용을 포함할 것.",
+            "참가자는 입구에서 접수해야 한다는 내용을 포함할 것.",
+            "회원들에게 변경 내용을 확인해 달라고 요청할 것."
+          ],
+          "responseConstraints": [
+            "지역 도서관 회원에게 보내는 안내문 형식으로 작성한다.",
+            "원래 장소와 시간, 변경된 장소와 시간을 모두 포함한다.",
+            "요구된 전달 내용을 담은 연결된 문단으로 작성한다."
+          ]
+        },
+        "requirements": [
+          {
+            "id": "C1",
+            "text": "원래 벼룩시장은 토요일 오전 10시에 중앙도서관 앞 광장에서 열릴 예정이었다는 내용을 포함할 것."
+          },
+          {
+            "id": "C2",
+            "text": "비가 올 가능성 때문에 장소를 체육관으로, 시간은 토요일 오후 2시로 변경한다는 내용을 포함할 것."
+          },
+          {
+            "id": "C3",
+            "text": "참가자는 입구에서 접수해야 한다는 내용을 포함할 것."
+          },
+          {
+            "id": "C4",
+            "text": "회원들에게 변경 내용을 확인해 달라고 요청할 것."
+          }
+        ]
+      },
+      "learnerAnswer": {
+        "text": "図書館会員の皆さまへ。フリーマーケットは土曜日の午前10時に中央図書館前の広場で行います。雨の可能性があるため、参加者は入口で受付をしてください。変更内容を確認してください。",
+        "segments": [
+          {
+            "id": "S1",
+            "text": "図書館会員の皆さまへ。"
+          },
+          {
+            "id": "S2",
+            "text": "フリーマーケットは土曜日の午前10時に中央図書館前の広場で行います。"
+          },
+          {
+            "id": "S3",
+            "text": "雨の可能性があるため、参加者は入口で受付をしてください。"
+          },
+          {
+            "id": "S4",
+            "text": "変更内容を確認してください。"
+          }
+        ]
+      },
+      "referenceExamples": {
+        "role": "NON_AUTHORITATIVE_EXAMPLES_NOT_LEARNER_FACTS",
+        "answers": [
+          "図書館会員の皆さまへ。フリーマーケットは、もともと土曜日の午前10時に中央図書館前の広場で行う予定でした。しかし、雨が降る可能性があるため、会場を体育館に変更し、時間も土曜日の午後2時に変更します。参加する方は入口で受付をしてください。会員の皆さまは変更内容を確認してください。",
+          "図書館の会員の皆さまにお知らせします。予定していたフリーマーケットは、土曜日の午前10時から中央図書館前の広場で開催する予定でしたが、雨の可能性があるため、体育館で午後2時から行います。参加者は体育館の入口で受付をお願いします。変更された場所と時間をご確認ください。"
+        ],
+        "alternativeNote": "원래 일정과 장소, 변경된 일정과 장소, 변경 이유, 입구 접수 방법, 변경 내용 확인 요청을 모두 포함하면 표현과 문장 구성은 달라도 됩니다."
+      }
+    },
+    "output": {
+      "observations": [
+        {
+          "requirementId": "C1",
+          "status": "MET",
+          "evidenceKind": "LEARNER_TEXT",
+          "segmentIds": [
+            "S2"
+          ],
+          "originText": "원래 일정과 장소를 명시한 문장을 썼습니다.",
+          "learningText": "もともとの予定日時と場所（土曜日の午前10時、中央図書館前の広場）を示しています。"
+        },
+        {
+          "requirementId": "C2",
+          "status": "UNMET",
+          "evidenceKind": "MISSING_REQUIREMENT",
+          "segmentIds": [],
+          "originText": "장소와 시간이 변경된 사실(체육관으로 장소 변경, 시간 오후2시)을 쓰지 않았습니다.",
+          "learningText": "雨の可能性による「会場を体育館に変更し、時間を土曜日の午後2時に変更する」という明確な記述がありません。変更後の場所と時間を具体的に追記してください。"
+        },
+        {
+          "requirementId": "C3",
+          "status": "MET",
+          "evidenceKind": "LEARNER_TEXT",
+          "segmentIds": [
+            "S3"
+          ],
+          "originText": "참가자는 입구에서 접수해야 한다고 썼습니다.",
+          "learningText": "参加者が入口で受付を行うよう案内しています。"
+        },
+        {
+          "requirementId": "C4",
+          "status": "MET",
+          "evidenceKind": "LEARNER_TEXT",
+          "segmentIds": [
+            "S4"
+          ],
+          "originText": "회원들에게 변경 내용을 확인해 달라고 요청하는 문장을 썼습니다.",
+          "learningText": "会員に変更内容の確認を促す表現があります。"
+        }
+      ],
+      "necessaryCorrections": [],
+      "optionalAlternatives": [],
+      "uncertainties": []
+    },
+    "legacyValidatorExpected": "ACCEPT_STRUCTURE_ONLY",
+    "semanticAcceptance": "FAIL"
+  },
+  {
+    "caseId": "C4",
+    "input": {
+      "task": {
+        "writingType": "FREE",
+        "publicPromptAndConditions": {
+          "topicKey": "learning-routine",
+          "originText": "최근 시작한 공부 습관에 대해 일본어로 한 문단을 써 보세요. 무엇을 공부하는지, 언제 또는 얼마나 자주 공부하는지, 계속하기 위해 어떤 방법을 실천하는지, 그리고 앞으로의 목표를 포함하세요.",
+          "providedFacts": [],
+          "requiredIntents": [],
+          "taskRequirements": [
+            "최근 시작한 공부 습관을 소개할 것",
+            "공부하는 내용을 포함할 것",
+            "언제, 얼마나 자주 또는 얼마나 오래 공부하는지 포함할 것",
+            "계속하기 위해 실천하는 방법을 포함할 것",
+            "앞으로의 목표를 포함할 것",
+            "일본어로 한 문단으로 작성할 것"
+          ],
+          "responseConstraints": []
+        },
+        "requirements": [
+          {
+            "id": "C1",
+            "text": "최근 시작한 공부 습관을 소개할 것"
+          },
+          {
+            "id": "C2",
+            "text": "공부하는 내용을 포함할 것"
+          },
+          {
+            "id": "C3",
+            "text": "언제, 얼마나 자주 또는 얼마나 오래 공부하는지 포함할 것"
+          },
+          {
+            "id": "C4",
+            "text": "계속하기 위해 실천하는 방법을 포함할 것"
+          },
+          {
+            "id": "C5",
+            "text": "앞으로의 목표를 포함할 것"
+          },
+          {
+            "id": "C6",
+            "text": "일본어로 한 문단으로 작성할 것"
+          }
+        ]
+      },
+      "learnerAnswer": {
+        "text": "最近、毎晩二十分料理の本を読んで勉強しています。忙しい日でも続けられるように、寝る前に必ず一つのレシピを読み、週末には実際に作ってみます。これからは家族のために新しい料理を作れるようになりたいです。",
+        "segments": [
+          {
+            "id": "S1",
+            "text": "最近、毎晩二十分料理の本を読んで勉強しています。"
+          },
+          {
+            "id": "S2",
+            "text": "忙しい日でも続けられるように、寝る前に必ず一つのレシピを読み、週末には実際に作ってみます。"
+          },
+          {
+            "id": "S3",
+            "text": "これからは家族のために新しい料理を作れるようになりたいです。"
+          }
+        ]
+      }
+    },
+    "output": {
+      "observations": [
+        {
+          "requirementId": "C1",
+          "status": "MET",
+          "evidenceKind": "LEARNER_TEXT",
+          "segmentIds": [
+            "S1"
+          ],
+          "originText": "최근 시작했다는 표현으로 '最近'를 썼고 습관을 소개하고 있습니다.",
+          "learningText": "「最近」で最近始めた習慣を紹介しています。"
+        },
+        {
+          "requirementId": "C2",
+          "status": "MET",
+          "evidenceKind": "LEARNER_TEXT",
+          "segmentIds": [
+            "S1",
+            "S2"
+          ],
+          "originText": "공부하는 내용으로 요리(料理)와 요리책을 언급하고 있습니다.",
+          "learningText": "勉強している内容として料理や料理の本を含めています。"
+        },
+        {
+          "requirementId": "C3",
+          "status": "MET",
+          "evidenceKind": "LEARNER_TEXT",
+          "segmentIds": [
+            "S1"
+          ],
+          "originText": "언제, 얼마나 자주, 얼마나 오래인지에 대해 '毎晩二十分'으로 빈도와 시간을 썼습니다.",
+          "learningText": "いつどれくらい勉強するかを「毎晩二十分」として示しています。"
+        },
+        {
+          "requirementId": "C4",
+          "status": "MET",
+          "evidenceKind": "LEARNER_TEXT",
+          "segmentIds": [
+            "S2"
+          ],
+          "originText": "계속하기 위한 방법으로 잠들기 전 레시피 읽기와 주말에 실제로 만들어 보는 계획을 적었습니다.",
+          "learningText": "続けるための工夫として就寝前に必ず一つのレシピを読むことや週末に作ることを挙げています。"
+        },
+        {
+          "requirementId": "C5",
+          "status": "MET",
+          "evidenceKind": "LEARNER_TEXT",
+          "segmentIds": [
+            "S3"
+          ],
+          "originText": "앞으로의 목표로 가족을 위해 새로운 요리를 만들 수 있게 되고 싶다고 적었습니다.",
+          "learningText": "将来の目標として家族のために新しい料理を作れるようになりたいと述べています。"
+        },
+        {
+          "requirementId": "C6",
+          "status": "MET",
+          "evidenceKind": "LEARNER_TEXT",
+          "segmentIds": [
+            "S1",
+            "S2",
+            "S3"
+          ],
+          "originText": "세 문장은 하나의 단락으로 일본어로 작성되어 있습니다.",
+          "learningText": "三つの文が一つの段落として日本語で書かれています。"
+        }
+      ],
+      "necessaryCorrections": [
+        {
+          "requirementId": "C3",
+          "segmentId": "S1",
+          "replacement": "最近、毎晩二十分、料理の本を読んで勉強しています。",
+          "originText": "시간 표현과 명사 연결에서 읽기 쉬운 표기를 사용하도록 쉼표나 시간을 나타내는 표현이 필요합니다.",
+          "learningText": "「毎晩二十分料理の本」と続けると「二十分料理の本＝20分で作る料理本」と解釈されやすいので、区切るか「二十分間」とするのが自然です。"
+        }
+      ],
+      "optionalAlternatives": [],
+      "uncertainties": []
+    },
+    "legacyValidatorExpected": "ACCEPT_STRUCTURE_ONLY",
+    "semanticAcceptance": "FAIL"
+  },
+  {
+    "caseId": "C5",
+    "input": {
+      "task": {
+        "writingType": "FREE",
+        "publicPromptAndConditions": {
+          "topicKey": "information-source-choice",
+          "originText": "인터넷이나 책, 주변 사람 등에서 정보를 얻을 때 무엇을 가장 믿는지 자신의 의견을 쓰세요. 그 정보원을 선택하는 이유를 설명하고, 실제로 정보를 확인하거나 활용한 경험을 하나 포함하세요.",
+          "providedFacts": [],
+          "requiredIntents": [],
+          "taskRequirements": [
+            "가장 믿는 정보원을 하나 이상 분명히 밝힐 것",
+            "그 정보원을 믿는 이유를 설명할 것",
+            "그 정보원을 통해 정보를 확인하거나 활용한 실제 경험을 하나 포함할 것",
+            "자신의 의견과 경험이 연결된 하나의 자연스러운 단락을 만들 것"
+          ],
+          "responseConstraints": []
+        },
+        "requirements": [
+          {
+            "id": "C1",
+            "text": "가장 믿는 정보원을 하나 이상 분명히 밝힐 것"
+          },
+          {
+            "id": "C2",
+            "text": "그 정보원을 믿는 이유를 설명할 것"
+          },
+          {
+            "id": "C3",
+            "text": "그 정보원을 통해 정보를 확인하거나 활용한 실제 경험을 하나 포함할 것"
+          },
+          {
+            "id": "C4",
+            "text": "자신의 의견과 경험이 연결된 하나의 자연스러운 단락을 만들 것"
+          }
+        ]
+      },
+      "learnerAnswer": {
+        "text": "私は家族や友人から聞く情報を一番信じます。自分の状況をよく知っている人から、必要なことを具体的に教えてもらえるからです。先日、パソコンを買うとき、詳しい友人に相談しておすすめの商品を教えてもらい、その情報を参考にして選びました。",
+        "segments": [
+          {
+            "id": "S1",
+            "text": "私は家族や友人から聞く情報を一番信じます。"
+          },
+          {
+            "id": "S2",
+            "text": "自分の状況をよく知っている人から、必要なことを具体的に教えてもらえるからです。"
+          },
+          {
+            "id": "S3",
+            "text": "先日、パソコンを買うとき、詳しい友人に相談しておすすめの商品を教えてもらい、その情報を参考にして選びました。"
+          }
+        ]
+      }
+    },
+    "output": {
+      "observations": [
+        {
+          "requirementId": "C1",
+          "status": "MET",
+          "evidenceKind": "LEARNER_TEXT",
+          "segmentIds": [
+            "S1"
+          ],
+          "originText": "정보원을 '가족이나 친구'로 분명히 밝혔습니다.",
+          "learningText": "「家族や友人」を信頼する情報源として明確に示しています。"
+        },
+        {
+          "requirementId": "C2",
+          "status": "MET",
+          "evidenceKind": "LEARNER_TEXT",
+          "segmentIds": [
+            "S2"
+          ],
+          "originText": "그 사람이 상황을 잘 알고 필요사항을 구체적으로 알려준다고 이유를 썼습니다.",
+          "learningText": "状況をよく知る人が具体的に教えてくれるという理由を説明しています。"
+        },
+        {
+          "requirementId": "C3",
+          "status": "MET",
+          "evidenceKind": "LEARNER_TEXT",
+          "segmentIds": [
+            "S3"
+          ],
+          "originText": "실제로 친구에게 상담하여 추천을 받아 그 정보를 참고해 노트북을 선택한 경험을 썼습니다.",
+          "learningText": "友人に相談しておすすめを教えてもらい、その情報を参考に購入した具体的な経験を含んでいます。"
+        },
+        {
+          "requirementId": "C4",
+          "status": "MET",
+          "evidenceKind": "LEARNER_TEXT",
+          "segmentIds": [
+            "S1",
+            "S2",
+            "S3"
+          ],
+          "originText": "의견과 경험을 연결한 하나의 자연스러운 단락으로 작성했습니다.",
+          "learningText": "意見と経験がつながった自然な一段落になっています。"
+        }
+      ],
+      "necessaryCorrections": [],
+      "optionalAlternatives": [],
+      "uncertainties": []
+    },
+    "legacyValidatorExpected": "ACCEPT_STRUCTURE_ONLY",
+    "semanticAcceptance": "FAIL"
+  },
+  {
+    "caseId": "C6",
+    "input": {
+      "task": {
+        "writingType": "FREE",
+        "publicPromptAndConditions": {
+          "topicKey": "information-source-choice",
+          "originText": "인터넷이나 책, 주변 사람 등에서 정보를 얻을 때 무엇을 가장 믿는지 자신의 의견을 쓰세요. 그 정보원을 선택하는 이유를 설명하고, 실제로 정보를 확인하거나 활용한 경험을 하나 포함하세요.",
+          "providedFacts": [],
+          "requiredIntents": [],
+          "taskRequirements": [
+            "가장 믿는 정보원을 하나 이상 분명히 밝힐 것",
+            "그 정보원을 믿는 이유를 설명할 것",
+            "그 정보원을 통해 정보를 확인하거나 활용한 실제 경험을 하나 포함할 것",
+            "자신의 의견과 경험이 연결된 하나의 자연스러운 단락을 만들 것"
+          ],
+          "responseConstraints": []
+        },
+        "requirements": [
+          {
+            "id": "C1",
+            "text": "가장 믿는 정보원을 하나 이상 분명히 밝힐 것"
+          },
+          {
+            "id": "C2",
+            "text": "그 정보원을 믿는 이유를 설명할 것"
+          },
+          {
+            "id": "C3",
+            "text": "그 정보원을 통해 정보를 확인하거나 활용한 실제 경험을 하나 포함할 것"
+          },
+          {
+            "id": "C4",
+            "text": "자신의 의견과 경험이 연결된 하나의 자연스러운 단락을 만들 것"
+          }
+        ]
+      },
+      "learnerAnswer": {
+        "text": "私は情報を得るとき、インターネットが一番便利だと思います。",
+        "segments": [
+          {
+            "id": "S1",
+            "text": "私は情報を得るとき、インターネットが一番便利だと思います。"
+          }
+        ]
+      }
+    },
+    "output": {
+      "observations": [
+        {
+          "requirementId": "C1",
+          "status": "UNMET",
+          "evidenceKind": "LEARNER_TEXT",
+          "segmentIds": [
+            "S1"
+          ],
+          "originText": "답변에서 '인터넷'을 언급했으나 \"가장 믿는\" 대신 \"가장 편리하다\"고 썼습니다. 과제 요구와 표현이 일치하지 않습니다.",
+          "learningText": "「インターネット」を挙げていますが、課題は「最も信頼する情報源」を問うており、記述は「便利だと思います」です。信頼すると明確に書いてください。"
+        },
+        {
+          "requirementId": "C2",
+          "status": "UNMET",
+          "evidenceKind": "MISSING_REQUIREMENT",
+          "segmentIds": [],
+          "originText": "정보원을 믿는 이유(근거)가 전혀 제시되지 않았습니다. 이유를 본인이 써야 합니다.",
+          "learningText": "なぜその情報源を信頼するのか（理由・根拠）が書かれていません。ご自身の具体的な理由を示してください。"
+        },
+        {
+          "requirementId": "C3",
+          "status": "UNMET",
+          "evidenceKind": "MISSING_REQUIREMENT",
+          "segmentIds": [],
+          "originText": "그 정보원을 통해 확인하거나 활용한 실제 경험이 전혀 포함되어 있지 않습니다. 구체적 경험을 하나 써 주세요.",
+          "learningText": "その情報源を使って情報を確認したり活用した具体的な経験が書かれていません。実際の一例を挙げてください。"
+        },
+        {
+          "requirementId": "C4",
+          "status": "UNMET",
+          "evidenceKind": "MISSING_REQUIREMENT",
+          "segmentIds": [],
+          "originText": "의견과 경험이 연결된 자연스러운 단락을 만들려면 의견(선택)과 그 근거 및 경험이 함께 있어야 합니다. 현재는 경험과 근거가 빠져 있어 단락으로 완성되지 않았습니다.",
+          "learningText": "意見と経験がつながった自然な一段落にするには、選択した情報源・理由・具体的経験が一緒に書かれている必要があります。現状は経験と理由が欠けているため段落として不十分です。"
+        }
+      ],
+      "necessaryCorrections": [
+        {
+          "requirementId": "C1",
+          "segmentId": "S1",
+          "replacement": "私は情報を得るとき、インターネットを最も信頼しています。",
+          "originText": "답변은 인터넷을 선택했으나 '믿는다'가 아니라 '편리하다'고 표현했습니다. 과제 요구와 맞추려면 표현을 바꿔야 합니다.",
+          "learningText": "表現は「便利だ」になっており、課題が求める「信頼する」を満たしていません。該当文を「インターネットを最も信頼しています」とすれば要件に合います。"
+        }
+      ],
+      "optionalAlternatives": [],
+      "uncertainties": []
+    },
+    "legacyValidatorExpected": "ACCEPT_STRUCTURE_ONLY",
+    "semanticAcceptance": "FAIL"
+  }
+]

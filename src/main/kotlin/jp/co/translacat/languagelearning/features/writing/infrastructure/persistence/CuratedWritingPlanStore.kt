@@ -112,6 +112,7 @@ internal class CuratedWritingPlanStore(
         }
 
     suspend fun byId(userId: Long, id: Long, today: LocalDate, reviewDays: Int): JsonObject? = transactions.read {
+        CuratedWritingActivity.requireActive(userId)
         snapshots.findSetById(userId, id)?.let {
             requirePlan(it)
             render(it, userId, today, reviewDays)
@@ -120,6 +121,7 @@ internal class CuratedWritingPlanStore(
 
     suspend fun byDate(userId: Long, date: LocalDate, type: WritingType, today: LocalDate, reviewDays: Int): JsonObject? =
         transactions.read {
+            CuratedWritingActivity.requireActive(userId)
             snapshots.findSet(userId, date, type)?.let {
                 requirePlan(it)
                 render(it, userId, today, reviewDays)
@@ -160,8 +162,9 @@ internal class CuratedWritingPlanStore(
             if (selected.slots.isNotEmpty()) {
                 ExposedWritingSetUnitOfWork.markLearningPrepared(request.userId, request.date, nowUtc())
             }
-            render(checkNotNull(snapshots.findSetById(request.userId, id)), request.userId,
-                request.date, request.reviewDays)
+            val saved = checkNotNull(snapshots.findSetById(request.userId, id))
+            CuratedWritingActivity.synchronize(saved, nowUtc())
+            render(saved, request.userId, request.date, request.reviewDays)
         }
 
     suspend fun claimSupply(request: CuratedWritingStore.Start, id: Long, revision: Int): SupplyClaim =
@@ -217,8 +220,9 @@ internal class CuratedWritingPlanStore(
             if (selected.slots.isNotEmpty()) {
                 ExposedWritingSetUnitOfWork.markLearningPrepared(request.userId, request.date, now)
             }
-            render(checkNotNull(snapshots.findSetById(request.userId, claim.setId)), request.userId,
-                request.date, request.reviewDays)
+            val saved = checkNotNull(snapshots.findSetById(request.userId, claim.setId))
+            CuratedWritingActivity.synchronize(saved, now)
+            render(saved, request.userId, request.date, request.reviewDays)
         }
 
     suspend fun stopSupply(request: CuratedWritingStore.Start, claim: SupplyClaim, reason: String) = transactions.write {
@@ -238,6 +242,33 @@ internal class CuratedWritingPlanStore(
 
     suspend fun restore(request: CuratedWritingStore.Start, id: Long, revision: Int): JsonObject =
         completeSupply(request, claimSupply(request, id, revision))
+
+    suspend fun delete(request: CuratedWritingStore.Start, id: Long, revision: Int): JsonObject = transactions.write {
+        ExposedWritingSetUnitOfWork.lockCurrentOwner(request.userId, nowUtc())
+        val set = snapshots.findSetById(request.userId, id) ?: error("WRITING_SET_NOT_FOUND")
+        requirePlan(set)
+        require(set[CuratedSetsTable.planRevision] == revision) { "WRITING_PLAN_STALE" }
+
+        // 학습자는 자신의 계획만 삭제한다. FK의 자식부터 같은 트랜잭션에서 제거해 늦은 결과가 붙을 대상을 없앤다.
+        val itemIds = snapshots.setItems(request.userId, id).map { it[CuratedItemsTable.id] }
+        CuratedWritingFeedbackTable.deleteWhere {
+            (CuratedWritingFeedbackTable.userId eq request.userId) and (CuratedWritingFeedbackTable.setId eq id)
+        }
+        if (itemIds.isNotEmpty()) {
+            CuratedAnswersTable.deleteWhere {
+                (CuratedAnswersTable.userId eq request.userId) and (CuratedAnswersTable.itemId inList itemIds)
+            }
+        }
+        CuratedItemsTable.deleteWhere {
+            (CuratedItemsTable.userId eq request.userId) and (CuratedItemsTable.setId eq id)
+        }
+        CuratedWritingActivity.delete(request.userId, id)
+        CuratedSetsTable.deleteWhere { (CuratedSetsTable.userId eq request.userId) and (CuratedSetsTable.id eq id) }
+        buildJsonObject {
+            put("dailySetId", LearningPublicId.encode(id))
+            put("deleted", true)
+        }
+    }
 
     suspend fun submit(request: CuratedWritingStore.Start, itemId: Long, answer: String, revision: String): JsonObject {
         // 저장 언어와 설정을 대조해 설정 변경 후 다른 언어 세션에 쓰는 것을 막는다.
@@ -297,7 +328,8 @@ internal class CuratedWritingPlanStore(
         val seenKeys = seen.map { it[CuratedItemsTable.semanticKey] }.toSet()
         val retainedIds = entries.map { it[CuratedItemsTable.catalogId] }.toSet()
         val retainedKeys = entries.map { it[CuratedItemsTable.semanticKey] }.toSet()
-        val candidates = snapshots.eligible(request.originLanguage, request.learningLanguage, request.type).filter {
+        val candidates = snapshots.eligible(request.originLanguage, request.learningLanguage, request.type, request.userId)
+            .filter { request.candidateIds.isEmpty() || (request.qaOnly && it.id in request.candidateIds) }.filter {
             it.releaseId == releaseId && it.id !in retainedIds && it.semanticKey !in retainedKeys &&
                 (request.rePractice || it.id !in seenIds && it.semanticKey !in seenKeys) &&
                 (it.status == CuratedReviewStatus.APPROVED || request.qaOnly &&
@@ -336,6 +368,7 @@ internal class CuratedWritingPlanStore(
         }
         return JsonObject(original + measures(set[CuratedSetsTable.targetItemCount], decodeSlots(set), actual) + mapOf(
             "planRevision" to JsonPrimitive(set[CuratedSetsTable.planRevision]),
+            "activity" to CuratedWritingActivity.publicState(userId, set[CuratedSetsTable.id]),
             "submittedItemCount" to JsonPrimitive(entries.count { it.jsonObject.getValue("answered").jsonPrimitive.boolean }),
             "feedbackCompletedItemCount" to JsonPrimitive(feedbackCompleted),
             "personalizedFeedbackStatus" to JsonPrimitive(if (feedback == null) "DISABLED_PENDING_QUALITY_GATE" else "ACTIVE_QA"),

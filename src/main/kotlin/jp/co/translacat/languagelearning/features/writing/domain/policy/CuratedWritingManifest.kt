@@ -25,7 +25,7 @@ internal object CuratedWritingManifestCodec {
         require(values.isNotEmpty()) { "WRITING_MANIFEST_EMPTY" }
         val items = values.map { raw ->
             val obj = raw.jsonObject
-            require(obj.keys == itemKeys) { "WRITING_ITEM_SCHEMA_INVALID" }
+            require(obj.keys == itemKeys || obj.keys == itemKeys + "visibleRequirements") { "WRITING_ITEM_SCHEMA_INVALID" }
             val hash = obj.getValue("contentHash").jsonPrimitive.content
             val withoutHash = JsonObject(obj.filterKeys { it != "contentHash" && it != "status" })
             require(hash == sha256(canonical(withoutHash))) { "WRITING_CONTENT_HASH_MISMATCH" }
@@ -42,6 +42,7 @@ internal object CuratedWritingManifestCodec {
                 referenceAnswers = obj.strings("referenceAnswers"), alternativeNote = obj.string("alternativeNote"),
                 levelEvidence = obj.string("levelEvidence"), validAlternative = obj.string("validAlternative"),
                 clearError = obj.string("clearError"), boundaryAnswer = obj.string("boundaryAnswer"),
+                visibleRequirements = if ("visibleRequirements" in obj) obj.strings("visibleRequirements") else emptyList(),
             )
             require(item.releaseId == releaseId) { "WRITING_RELEASE_MISMATCH" }
             require(item.originLanguage == "ko" && item.learningLanguage == "ja") { "WRITING_LANGUAGE_UNSUPPORTED" }

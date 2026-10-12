@@ -1,0 +1,27 @@
+-- 후보 생성 요청과 콘텐츠 결과를 분리하여 응답 유실 뒤 동일 요청의 재과금을 막는다.
+CREATE TABLE language_learning_curated_writing_generation (
+    id VARCHAR(36) NOT NULL,
+    user_id BIGINT NOT NULL,
+    request_key VARCHAR(80) NOT NULL,
+    request_hash CHAR(64) NOT NULL,
+    request_json JSON NOT NULL,
+    release_id VARCHAR(80) NOT NULL,
+    policy_version VARCHAR(50) NOT NULL,
+    catalog_id VARCHAR(80) NOT NULL,
+    status VARCHAR(20) NOT NULL,
+    output_json JSON NULL,
+    manifest_json JSON NULL,
+    failure_code VARCHAR(80) NULL,
+    provider VARCHAR(30) NULL,
+    model VARCHAR(80) NULL,
+    input_tokens INT NULL,
+    output_tokens INT NULL,
+    created_at DATETIME(6) NOT NULL,
+    updated_at DATETIME(6) NOT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT uk_ll_cwg_request UNIQUE (user_id, request_key),
+    CONSTRAINT uk_ll_cwg_catalog UNIQUE (catalog_id),
+    CONSTRAINT fk_ll_cwg_owner FOREIGN KEY (user_id) REFERENCES language_learning_learner (user_id) ON DELETE RESTRICT ON UPDATE RESTRICT,
+    CONSTRAINT ck_ll_cwg_status CHECK (status IN ('RUNNING','GENERATED','SUCCEEDED','FAILED','UNCERTAIN')),
+    CONSTRAINT ck_ll_cwg_policy CHECK (policy_version = 'curated-writing-generation-v1')
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

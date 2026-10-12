@@ -42,7 +42,8 @@ internal fun Route.curatedWritingPlanRoutes(
                 call.planResult {
                     val body = call.planBody()
                     val allowed = setOf("writingType", "targetItemCount", "rePractice") +
-                        if (preview) emptySet() else setOf("allowPartial")
+                        (if (preview) emptySet() else setOf("allowPartial")) +
+                        (if (qaOnly) setOf("catalogIds") else emptySet())
                     require(body.keys.all { it in allowed } && body.keys.containsAll(setOf("writingType", "targetItemCount"))) {
                         "WRITING_REQUEST_INVALID"
                     }
@@ -50,7 +51,16 @@ internal fun Route.curatedWritingPlanRoutes(
                         ?: error("WRITING_REQUEST_INVALID")
                     val target = body.integer("targetItemCount")
                     store.limits.requireTarget(target)
-                    val request = call.context(type, body.boolean("rePractice"))
+                    val ids = if ("catalogIds" in body) {
+                        val array = body["catalogIds"] as? JsonArray ?: error("WRITING_REQUEST_INVALID")
+                        require(array.size in 1..100) { "WRITING_REQUEST_INVALID" }
+                        array.map { value ->
+                            (value as? JsonPrimitive)?.takeIf { it.isString }?.content
+                                ?.takeIf { it.matches(Regex("[a-z0-9][a-z0-9-]{2,79}")) }
+                                ?: error("WRITING_REQUEST_INVALID")
+                        }.toSet().also { require(it.size == array.size) { "WRITING_REQUEST_INVALID" } }
+                    } else emptySet()
+                    val request = call.context(type, body.boolean("rePractice")).copy(candidateIds = ids)
                     if (preview) store.preview(request, target)
                     else store.start(request, target, body.boolean("allowPartial"))
                 }
@@ -89,6 +99,13 @@ internal fun Route.curatedWritingPlanRoutes(
                 val body = call.planBody()
                 require(body.keys == setOf("planRevision")) { "WRITING_REQUEST_INVALID" }
                 store.restore(call.context(), call.publicId("setId"), body.integer("planRevision"))
+            }
+        }
+        post("$PLAN_ROOT/{setId}/delete") {
+            call.planResult {
+                val body = call.planBody()
+                require(body.keys == setOf("planRevision")) { "WRITING_REQUEST_INVALID" }
+                store.delete(call.context(), call.publicId("setId"), body.integer("planRevision"))
             }
         }
         post("$PLAN_ROOT/items/{itemId}/answers") {
@@ -135,7 +152,8 @@ private suspend fun ApplicationCall.planResult(action: suspend () -> JsonObject)
             "WRITING_PLAN_STALE", "WRITING_SUPPLY_BUSY", "WRITING_SUPPLY_STALE", "WRITING_REVIEW_EXPIRED",
             "WRITING_ITEM_STALE", "WRITING_ANSWER_REQUIRED", "WRITING_ANSWER_NOT_ALLOWED", "LEVEL_TEST_REQUIRED",
             "WRITING_FEEDBACK_DISABLED", "WRITING_FEEDBACK_STALE", "WRITING_FEEDBACK_BUSY",
-            "WRITING_FEEDBACK_UNCERTAIN", "WRITING_FEEDBACK_RETRY_LIMIT" -> HttpStatusCode.Conflict
+            "WRITING_FEEDBACK_UNCERTAIN", "WRITING_FEEDBACK_RETRY_LIMIT",
+            "WRITING_ACTIVITY_POLICY_CONFLICT" -> HttpStatusCode.Conflict
             else -> throw failure
         }
         respond(status, InternalApiError(code, "Writing 계획 요청을 처리할 수 없습니다."))

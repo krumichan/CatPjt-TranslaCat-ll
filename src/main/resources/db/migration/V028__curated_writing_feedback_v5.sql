@@ -1,0 +1,6 @@
+-- 과거 정책과 결과를 보존하고 선택 개선의 의미 관계 계약을 별도 버전으로 허용한다.
+ALTER TABLE language_learning_curated_writing_feedback
+    DROP CHECK ck_ll_cwf_policy,
+    ADD CONSTRAINT ck_ll_cwf_policy CHECK (
+        policy_version IN ('curated-writing-feedback-v1', 'curated-writing-feedback-v2', 'curated-writing-feedback-v3', 'curated-writing-feedback-v4', 'curated-writing-feedback-v5')
+    );

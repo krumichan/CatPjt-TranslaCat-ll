@@ -3,6 +3,7 @@ package jp.co.translacat.languagelearning.features.writing.infrastructure.persis
 import jp.co.translacat.languagelearning.features.growth.application.GrowthProjector
 import jp.co.translacat.languagelearning.features.growth.domain.model.GrowthChange
 import jp.co.translacat.languagelearning.features.growth.domain.model.GrowthProfile
+import jp.co.translacat.languagelearning.features.growth.domain.repository.GrowthRepository
 import jp.co.translacat.languagelearning.features.growth.infrastructure.persistence.repository.ExposedGrowthRepository
 import jp.co.translacat.languagelearning.features.learner.infrastructure.persistence.repository.ExposedLearnerRepository
 import jp.co.translacat.languagelearning.features.writing.application.WritingSetTransaction
@@ -34,6 +35,15 @@ internal class ExposedWritingSetUnitOfWork(
 
         internal fun currentGrowthProfile(userId: Long): GrowthProfile? =
             ExposedGrowthRepository(requireCurrentTransaction).profile(userId)
+
+        /** 조회는 학습자를 만들거나 다시 활성화하지 않고, 기존 tombstone만 확인한다. */
+        internal fun requireCurrentOwnerActive(userId: Long) {
+            ExposedLearnerRepository(requireCurrentTransaction).find(userId)?.requireActive()
+        }
+
+        /** 교차 기능 구현은 UoW에서 조립하고 Writing 활동에는 도메인 계약만 전달한다. */
+        internal fun currentGrowthRecords(): GrowthRepository =
+            ExposedGrowthRepository(requireCurrentTransaction)
 
         internal fun markLearningPrepared(userId: Long, date: LocalDate, now: LocalDateTime) {
             GrowthProjector(ExposedGrowthRepository(requireCurrentTransaction))

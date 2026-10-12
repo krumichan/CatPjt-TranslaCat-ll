@@ -6,6 +6,9 @@ import io.ktor.server.routing.*
 import jp.co.translacat.languagelearning.features.settings.application.SettingsServiceOperations
 import jp.co.translacat.languagelearning.features.writing.api.curatedWritingRoutes
 import jp.co.translacat.languagelearning.features.writing.api.curatedWritingPlanRoutes
+import jp.co.translacat.languagelearning.features.writing.api.curatedWritingGenerationRoutes
+import jp.co.translacat.languagelearning.features.writing.application.CuratedWritingGenerationService
+import jp.co.translacat.languagelearning.features.writing.infrastructure.persistence.CuratedWritingGenerationStore
 import jp.co.translacat.languagelearning.features.writing.domain.policy.CuratedWritingPlanLimits
 import jp.co.translacat.languagelearning.features.writing.infrastructure.persistence.CuratedWritingPlanStore
 import jp.co.translacat.languagelearning.features.writing.domain.policy.CuratedWritingManifestCodec
@@ -53,8 +56,12 @@ internal suspend fun Application.configureCuratedWriting() {
     val feedback = if (feedbackEnabled) CuratedWritingFeedbackWorker(
         transactions, store, manifest.releaseId, dependencies.resolve<HttpModelExecution>(),
     ) else null
+    val generation = if (qaOnly) CuratedWritingGenerationService(
+        CuratedWritingGenerationStore(transactions, store, manifest.releaseId), dependencies.resolve<HttpModelExecution>(),
+    ) else null
     routing {
         curatedWritingRoutes(store, settings, qaOnly)
+        if (generation != null) curatedWritingGenerationRoutes(generation, settings)
         // 기존 flag만으로 가변 목표 경로를 노출하지 않는다. 명시적 opt-in 설정에서만 설치한다.
         if (setting("writing.curated.variableN.enabled")?.toBooleanStrictOrNull() == true) {
             val limits = CuratedWritingPlanLimits(

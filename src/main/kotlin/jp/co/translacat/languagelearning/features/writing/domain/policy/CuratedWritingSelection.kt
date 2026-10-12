@@ -30,6 +30,7 @@ internal data class CuratedWritingItem(
     val validAlternative: String,
     val clearError: String,
     val boundaryAnswer: String,
+    val visibleRequirements: List<String> = emptyList(),
 ) {
     init {
         require(id.matches(Regex("[a-z0-9][a-z0-9-]{2,79}")))

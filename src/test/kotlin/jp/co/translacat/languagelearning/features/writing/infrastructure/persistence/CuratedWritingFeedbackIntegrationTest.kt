@@ -4,6 +4,7 @@ import jp.co.translacat.languagelearning.features.growth.domain.model.GrowthProf
 import jp.co.translacat.languagelearning.features.growth.infrastructure.persistence.table.GrowthProfilesTable
 import jp.co.translacat.languagelearning.features.writing.domain.model.WritingType
 import jp.co.translacat.languagelearning.features.writing.domain.policy.CuratedWritingPlanFixtures
+import jp.co.translacat.languagelearning.features.writing.domain.policy.CuratedWritingManifestCodec
 import jp.co.translacat.languagelearning.features.writing.infrastructure.persistence.table.*
 import jp.co.translacat.languagelearning.shared.ai.*
 import jp.co.translacat.languagelearning.shared.identity.LearningPublicId
@@ -23,7 +24,150 @@ class CuratedWritingStoreIntegrationTestFeedback {
     private val date = LocalDate.parse("2026-10-04")
 
     @Test
-    fun `세 답안 중 실패한 두 답안만 재시도하고 성공 결과와 공식 평가를 보존한다`() = LocalScratchMysql.use { db ->
+    fun `지원하지 않는 v1 v2 실패는 원본을 보존하고 재시도를 표시하지 않는다`() {
+        listOf("curated-writing-feedback-v1", "curated-writing-feedback-v2").forEach(::assertLegacyFailurePreserved)
+    }
+
+    @Test
+    fun `지원하는 v3 실패는 저장된 정책의 모델 계약으로 명시적 재시도한다`() {
+        assertLegacyFailurePreserved("curated-writing-feedback-v3", supportedRetry = true)
+    }
+
+    @Test
+    fun `지원하는 v4 실패는 선택 관계 필드를 강제하지 않는 원래 계약으로 재시도한다`() {
+        assertLegacyFailurePreserved("curated-writing-feedback-v4", supportedRetry = true)
+    }
+
+    @Test
+    fun `지원하는 v5 실패는 기존 선택 관계 계약으로 재시도한다`() {
+        assertLegacyFailurePreserved("curated-writing-feedback-v5", supportedRetry = true)
+    }
+
+    @Test
+    fun `지원하는 v6 실패는 경계 공백을 복원하지 않는 당시 계약으로 재시도한다`() {
+        assertLegacyFailurePreserved("curated-writing-feedback-v6", supportedRetry = true)
+    }
+
+    private fun assertLegacyFailurePreserved(legacyPolicy: String) = assertLegacyFailurePreserved(legacyPolicy, false)
+
+    private fun assertLegacyFailurePreserved(legacyPolicy: String, supportedRetry: Boolean) = LocalScratchMysql.use { db ->
+        DatabaseFactory(db.settings()).use { factory -> runBlocking {
+            // 준비: 합성 실패 답안 한 건을 과거 v1 실패 행의 형태로 준비한다. 실제 성공 결과는 변경하지 않는다.
+            val runner = JdbcTransactionRunner(factory.database, 4)
+            val manifest = CuratedWritingPlanFixtures.manifest(3)
+            val snapshots = CuratedWritingStore(runner, manifest, clock)
+            snapshots.importManifest()
+            val user = 9111L
+            ExposedWritingSetUnitOfWork(runner, clock).write(user) {
+                val now = LocalDateTime.ofInstant(clock.instant(), ZoneOffset.UTC)
+                growth.saveProfile(GrowthProfile(userId = user, state = "ACTIVE", baseLevelScore = 60.0,
+                    createdAt = now, updatedAt = now))
+            }
+            var calls = 0
+            val model = ModelExecutionPort { command ->
+                calls++
+                val input = Json.parseToJsonElement(command.messages.single().content).jsonObject
+                if (calls == 1) {
+                    // 새 답안의 언어는 저장된 plan과 일치하며 첫 실패는 합성 schema 오류다.
+                    assertEquals("ko", input.getValue("task").jsonObject.getValue("originLanguage").jsonPrimitive.content)
+                    ModelExecutionResult(buildJsonObject {}, 1, 1, "openai", "gpt-5-mini")
+                } else {
+                    assertTrue(supportedRetry)
+                    val typed = legacyPolicy in setOf("curated-writing-feedback-v4", "curated-writing-feedback-v5", "curated-writing-feedback-v6")
+                    assertEquals(typed, "originLanguage" in input.getValue("task").jsonObject)
+                    val schema = checkNotNull(command.responseSchema).getValue("properties").jsonObject
+                        .getValue("observations").jsonObject.getValue("items").jsonObject.getValue("properties").jsonObject
+                    assertEquals(typed, "relationChecks" in schema)
+                    assertEquals(!typed, "originText" in schema)
+                    assertEquals(legacyPolicy == "curated-writing-feedback-v6", "requirementParts" in schema)
+                    val optionalSchema = checkNotNull(command.responseSchema).getValue("properties").jsonObject
+                        .getValue("optionalAlternatives").jsonObject.getValue("items").jsonObject.getValue("properties").jsonObject
+                    assertEquals(legacyPolicy in setOf("curated-writing-feedback-v5", "curated-writing-feedback-v6"), "relationChecks" in optionalSchema)
+                    ModelExecutionResult(buildJsonObject {
+                        put("observations", buildJsonArray {
+                            input.getValue("task").jsonObject.getValue("requirements").jsonArray.forEach { required ->
+                                if (legacyPolicy == "curated-writing-feedback-v6") {
+                                    add(CuratedWritingFeedbackTestPayload.observation(input, required.jsonObject))
+                                } else add(buildJsonObject {
+                                    put("requirementId", required.jsonObject.getValue("id"))
+                                    put("status", "MET"); put("evidenceKind", "LEARNER_TEXT")
+                                    put("segmentIds", buildJsonArray { add("S1") })
+                                    if (typed) put("relationChecks", buildJsonObject {
+                                        listOf("causality", "chronology", "specificity", "stance").forEach { put(it, "PRESERVED") }
+                                    }) else {
+                                        put("originText", "요구에 대응하는 답안을 확인했습니다.")
+                                        put("learningText", "要件に対応する回答を確認しました。")
+                                    }
+                                })
+                            }
+                        })
+                        put("necessaryCorrections", buildJsonArray {})
+                        put("optionalAlternatives", buildJsonArray {})
+                        put("uncertainties", buildJsonArray {})
+                    }, 1, 1, "openai", "gpt-5-mini")
+                }
+            }
+            val worker = CuratedWritingFeedbackWorker(runner, snapshots, manifest.releaseId, model, clock)
+            val plans = CuratedWritingPlanStore(runner, snapshots, manifest.releaseId, clock = clock, feedback = worker)
+            val request = CuratedWritingStore.Start(user, date, WritingType.TRANSLATION, "ko", "ja", false, true, 7)
+            val started = plans.start(request, 1, false)
+            val item = started.getValue("items").jsonArray.single().jsonObject
+            val saved = plans.submit(request, LearningPublicId.decode(item.getValue("itemId").jsonPrimitive.content),
+                "学習の回答です。", item.getValue("contentRevision").jsonPrimitive.content)
+            val attempt = saved.getValue("items").jsonArray.single().jsonObject.getValue("attempts").jsonArray.single().jsonObject
+            val answerId = LearningPublicId.decode(attempt.getValue("answerId").jsonPrimitive.content)
+            assertEquals("FAILED", attempt.getValue("feedback").jsonObject.getValue("status").jsonPrimitive.content)
+            assertTrue(attempt.getValue("feedback").jsonObject.getValue("canRetry").jsonPrimitive.boolean)
+            val preservedRequestHash = runner.write {
+                val row = CuratedWritingFeedbackTable.selectAll().where { CuratedWritingFeedbackTable.answerId eq answerId }.single()
+                val legacyHash = CuratedWritingManifestCodec.sha256(
+                    "$user|$answerId|${row[CuratedWritingFeedbackTable.answerHash]}|" +
+                        "${row[CuratedWritingFeedbackTable.sourceHash]}|$legacyPolicy",
+                )
+                CuratedWritingFeedbackTable.update({ CuratedWritingFeedbackTable.answerId eq answerId }) {
+                    it[policyVersion] = legacyPolicy
+                    it[requestHash] = legacyHash
+                }
+                legacyHash
+            }
+
+            // 실행: 조회와 거절된 명시적 재시도는 모델을 다시 호출하거나 옛 hash를 바꾸지 않는다.
+            val state = runner.read {
+                val row = CuratedWritingFeedbackTable.selectAll().where { CuratedWritingFeedbackTable.answerId eq answerId }.single()
+                worker.publicState(row)
+            }
+            if (supportedRetry) worker.retry(request, answerId)
+            else {
+                val denied = assertFailsWith<IllegalArgumentException> { worker.retry(request, answerId) }
+                assertEquals("WRITING_FEEDBACK_POLICY_CONFLICT", denied.message)
+            }
+
+            // 검증
+            assertEquals("FAILED", state.getValue("status").jsonPrimitive.content)
+            assertEquals(supportedRetry, state.getValue("canRetry").jsonPrimitive.boolean)
+            assertEquals(if (supportedRetry) 2 else 1, calls)
+            runner.read {
+                val row = CuratedWritingFeedbackTable.selectAll().where { CuratedWritingFeedbackTable.answerId eq answerId }.single()
+                assertEquals(legacyPolicy, row[CuratedWritingFeedbackTable.policyVersion])
+                assertEquals(if (supportedRetry) "SUCCEEDED" else "FAILED", row[CuratedWritingFeedbackTable.status])
+                assertEquals(preservedRequestHash, row[CuratedWritingFeedbackTable.requestHash])
+                if (supportedRetry) {
+                    val result = Json.parseToJsonElement(checkNotNull(row[CuratedWritingFeedbackTable.resultJson])).jsonObject
+                    assertEquals(legacyPolicy, result.getValue("policyVersion").jsonPrimitive.content)
+                    assertEquals(legacyPolicy in setOf("curated-writing-feedback-v4", "curated-writing-feedback-v5", "curated-writing-feedback-v6"),
+                        "relationChecks" in result.getValue("observations").jsonArray.first().jsonObject)
+                } else assertNull(row[CuratedWritingFeedbackTable.resultJson])
+            }
+        } }
+    }
+
+    @Test
+    fun `세 답안 중 실패한 두 답안만 재시도하고 과거 성공 결과와 공식 평가를 보존한다`() {
+        listOf("curated-writing-feedback-v1", "curated-writing-feedback-v2", "curated-writing-feedback-v3",
+            "curated-writing-feedback-v4", "curated-writing-feedback-v5", "curated-writing-feedback-v6").forEach(::assertSavedPolicyPreserved)
+    }
+
+    private fun assertSavedPolicyPreserved(legacyPolicy: String) = LocalScratchMysql.use { db ->
         DatabaseFactory(db.settings()).use { factory -> runBlocking {
             // 준비: 승인 없는 QA DRAFT 세 문항과 현재 owner. 첫 시도의 두 답안만 스키마 실패로 주입한다.
             val runner = JdbcTransactionRunner(factory.database, 4)
@@ -39,16 +183,12 @@ class CuratedWritingStoreIntegrationTestFeedback {
             val calls = mutableMapOf<String, Int>()
             val model = ModelExecutionPort { command ->
                 val input = Json.parseToJsonElement(command.messages.single().content).jsonObject
-                val answer = input.getValue("answer").jsonPrimitive.content
+                val answer = input.getValue("learnerAnswer").jsonObject.getValue("text").jsonPrimitive.content
                 calls[answer] = (calls[answer] ?: 0) + 1
                 val failure = answer.startsWith("失敗") && calls.getValue(answer) == 1
                 val observations = if (failure) buildJsonArray {} else buildJsonArray {
-                    input.getValue("requirements").jsonArray.forEach { requirement -> add(buildJsonObject {
-                        put("requirementId", requirement.jsonObject.getValue("id"))
-                        put("status", "MET")
-                        put("segmentIds", buildJsonArray { add("S1") })
-                        put("originText", "답안에서 요구 내용을 확인했습니다.")
-                        put("learningText", "回答から必要な内容を確認しました。")
+                    input.getValue("task").jsonObject.getValue("requirements").jsonArray.forEach { requirement -> add(buildJsonObject {
+                        CuratedWritingFeedbackTestPayload.observation(input, requirement.jsonObject).forEach { (key, value) -> put(key, value) }
                     }) }
                 }
                 ModelExecutionResult(buildJsonObject {
@@ -78,9 +218,40 @@ class CuratedWritingStoreIntegrationTestFeedback {
             val before = saved.getValue("items").jsonArray.map { it.jsonObject }
             val answerIds = before.map { item -> LearningPublicId.decode(item.getValue("attempts").jsonArray.single()
                 .jsonObject.getValue("answerId").jsonPrimitive.content) }
+            // 준비: scratch DB의 합성 성공 결과 하나를 과거 정책의 실제 형태로 만들어 업그레이드 경계를 시험한다.
+            runner.write {
+                val row = CuratedWritingFeedbackTable.selectAll().where {
+                    CuratedWritingFeedbackTable.answerId eq answerIds.first()
+                }.single()
+                val current = Json.parseToJsonElement(row[CuratedWritingFeedbackTable.resultJson]!!).jsonObject
+                val legacy = JsonObject(current + mapOf(
+                    "policyVersion" to JsonPrimitive(legacyPolicy),
+                    "observations" to JsonArray(current.getValue("observations").jsonArray.map {
+                        val old = if (legacyPolicy == "curated-writing-feedback-v6") it.jsonObject else it.jsonObject - "requirementParts"
+                        val oldFields = if (legacyPolicy in setOf("curated-writing-feedback-v4", "curated-writing-feedback-v5", "curated-writing-feedback-v6")) old else old - "relationChecks"
+                        JsonObject(if (legacyPolicy == "curated-writing-feedback-v1") oldFields - "evidenceKind" else oldFields)
+                    }),
+                ))
+                val hash = CuratedWritingManifestCodec.sha256(
+                    "$user|${answerIds.first()}|${row[CuratedWritingFeedbackTable.answerHash]}|" +
+                        "${row[CuratedWritingFeedbackTable.sourceHash]}|$legacyPolicy",
+                )
+                CuratedWritingFeedbackTable.update({ CuratedWritingFeedbackTable.answerId eq answerIds.first() }) {
+                    it[policyVersion] = legacyPolicy
+                    it[requestHash] = hash
+                    it[resultJson] = legacy.toString()
+                    it[resultHash] = CuratedWritingManifestCodec.sha256(legacy.toString())
+                }
+            }
             val successfulHash = runner.read { CuratedWritingFeedbackTable.selectAll().where {
                 CuratedWritingFeedbackTable.answerId eq answerIds.first()
             }.single()[CuratedWritingFeedbackTable.resultHash] }
+
+            // 실행·검증: 새 worker도 기존 v1/v2 성공 답안의 중복 제출을 재호출하거나 hash 갱신하지 않는다.
+            val first = items.first()
+            plans.submit(request, LearningPublicId.decode(first.getValue("itemId").jsonPrimitive.content),
+                answers.first(), first.getValue("contentRevision").jsonPrimitive.content)
+            assertEquals(1, calls[answers.first()])
 
             // 실행: 실패한 두 답안만 명시적으로 재시도한다.
             answerIds.drop(1).forEach { plans.retryFeedback(request, it) }
@@ -96,6 +267,9 @@ class CuratedWritingStoreIntegrationTestFeedback {
                 assertEquals(successfulHash, CuratedWritingFeedbackTable.selectAll().where {
                     CuratedWritingFeedbackTable.answerId eq answerIds.first()
                 }.single()[CuratedWritingFeedbackTable.resultHash])
+                assertEquals(legacyPolicy, CuratedWritingFeedbackTable.selectAll().where {
+                    CuratedWritingFeedbackTable.answerId eq answerIds.first()
+                }.single()[CuratedWritingFeedbackTable.policyVersion])
                 assertEquals(0L, WritingEvaluationsTable.selectAll().count())
                 assertEquals(0, GrowthProfilesTable.selectAll().single()[GrowthProfilesTable.evaluationCount])
             }

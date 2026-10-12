@@ -9,6 +9,18 @@ import org.jetbrains.exposed.v1.jdbc.upsert
 import java.time.LocalDateTime
 
 internal class ExposedLearnerRepository(private val requireTransaction: () -> Unit) : LearnerRepository {
+    /** 읽기 트랜잭션에서 기존 상태만 조회한다. 계정 생성이나 잠금 변경은 수행하지 않는다. */
+    fun find(userId: Long): Learner? {
+        requireTransaction()
+        return LearnersTable.selectAll().where { LearnersTable.userId eq userId }.singleOrNull()?.let { row ->
+            Learner(
+                userId = row[LearnersTable.userId], status = row[LearnersTable.status],
+                identityVersion = row[LearnersTable.identityVersion], createdAt = row[LearnersTable.createdAt],
+                updatedAt = row[LearnersTable.updatedAt],
+            )
+        }
+    }
+
     override fun ensureAndLock(userId: Long, nowUtc: LocalDateTime): Learner {
         requireTransaction()
         require(userId > 0)

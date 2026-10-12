@@ -316,7 +316,20 @@ internal class ExposedGrowthRepository(private val guard: () -> Unit) : GrowthRe
             .singleOrNull()?.get(GrowthActivityRevisionsTable.revision) ?: 0L
     }
 
+    override fun deleteUnscoredActivity(userId: Long, source: String, referenceId: String): Boolean {
+        guard()
+        val value = activity(userId, source, referenceId) ?: return false
+        check(value.overallScore == null && metrics(value.id).isEmpty()) { "ACTIVITY_HAS_OFFICIAL_EVALUATION" }
+        // 테이블 소유 기능 안에서 삭제한다. 삭제와 조회 revision 변경은 호출자의 트랜잭션에 함께 속한다.
+        check(GrowthActivitiesTable.deleteWhere {
+            (GrowthActivitiesTable.userId eq userId) and (GrowthActivitiesTable.id eq value.id)
+        } == 1)
+        advanceActivityRevision(userId)
+        return true
+    }
+
     private fun advanceActivityRevision(userId: Long) {
+        guard()
         // 시각 정밀도와 무관하게 변경을 구분한다. 활동/지표 저장 실패 시 이 증분도 롤백된다.
         GrowthActivityRevisionsTable.insertIgnore {
             it[GrowthActivityRevisionsTable.userId] = userId

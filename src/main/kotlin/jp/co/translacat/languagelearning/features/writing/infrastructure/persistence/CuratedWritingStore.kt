@@ -34,6 +34,7 @@ internal class CuratedWritingStore(
         val rePractice: Boolean,
         val qaOnly: Boolean,
         val reviewDays: Int,
+        val candidateIds: Set<String> = emptySet(),
     )
 
     /** 로컬 QA 및 승인된 배포 절차에서만 호출한다. 같은 ID·버전의 내용 변경은 전체 rollback한다. */
@@ -122,7 +123,7 @@ internal class CuratedWritingStore(
                 else -> 5
             }
         }
-        val eligible = eligible(request.originLanguage, request.learningLanguage, request.type)
+        val eligible = eligible(request.originLanguage, request.learningLanguage, request.type, request.userId)
         val recent = recentIds(request.userId)
         val selected = CuratedWritingSelection.select(
             eligible, manifest.releaseId, request.originLanguage, request.learningLanguage,
@@ -213,7 +214,9 @@ internal class CuratedWritingStore(
                 it[updatedAt] = now
             }
         }
-        renderSet(checkNotNull(findSetById(userId, set[CuratedSetsTable.id])), userId, today, reviewDays)
+        val saved = checkNotNull(findSetById(userId, set[CuratedSetsTable.id]))
+        CuratedWritingActivity.synchronize(saved, now, allowCreate = old == null)
+        renderSet(saved, userId, today, reviewDays)
     }
 
     suspend fun replace(userId: Long, setId: Long, today: LocalDate, reviewDays: Int,
@@ -239,7 +242,7 @@ internal class CuratedWritingStore(
                     WritingDifficulty.valueOf(it[CuratedItemsTable.difficulty]), it[CuratedItemsTable.targetBand])
             }
             val candidates = eligible(set[CuratedSetsTable.originLanguage], set[CuratedSetsTable.learningLanguage],
-                WritingType.valueOf(set[CuratedSetsTable.writingType]))
+                WritingType.valueOf(set[CuratedSetsTable.writingType]), userId)
             val selected = CuratedWritingSelection.select(
                 candidates, set[CuratedSetsTable.releaseId], set[CuratedSetsTable.originLanguage],
                 set[CuratedSetsTable.learningLanguage], WritingType.valueOf(set[CuratedSetsTable.writingType]),
@@ -280,17 +283,51 @@ internal class CuratedWritingStore(
             renderSet(checkNotNull(findSetById(userId, setId)), userId, today, reviewDays)
         }
 
-    internal fun eligible(origin: String, learning: String, type: WritingType): List<CuratedWritingItem> =
-        CuratedCatalogTable.selectAll().where {
+    internal fun eligible(origin: String, learning: String, type: WritingType, userId: Long? = null): List<CuratedWritingItem> {
+        // 생성 DRAFT는 준비 요청의 소유자에게만 보인다. 재시작 뒤에도 DB manifest로 복원한다.
+        val ownedGeneratedIds = if (userId == null) emptySet() else CuratedGenerationTable.selectAll().where {
+            (CuratedGenerationTable.userId eq userId) and (CuratedGenerationTable.status eq "SUCCEEDED")
+        }.map { it[CuratedGenerationTable.catalogId] }.toSet()
+        return CuratedCatalogTable.selectAll().where {
             (CuratedCatalogTable.releaseId eq manifest.releaseId) and
                 (CuratedCatalogTable.originLanguage eq origin) and
                 (CuratedCatalogTable.learningLanguage eq learning) and
                 (CuratedCatalogTable.writingType eq type.name)
         }.mapNotNull { row ->
-            val item = catalog[row[CuratedCatalogTable.id] to row[CuratedCatalogTable.version]] ?: return@mapNotNull null
+            val item = catalog[row[CuratedCatalogTable.id] to row[CuratedCatalogTable.version]] ?: run {
+                if (row[CuratedCatalogTable.id] !in ownedGeneratedIds) return@mapNotNull null
+                val stored = Json.parseToJsonElement(row[CuratedCatalogTable.contentJson]).jsonObject
+                val generated = stored["generatedManifest"] ?: return@mapNotNull null
+                CuratedWritingManifestCodec.parse(generated.toString()).items.single()
+            }
             check(item.contentHash == row[CuratedCatalogTable.contentHash]) { "WRITING_CONTENT_HASH_MISMATCH" }
             item.copy(status = CuratedReviewStatus.valueOf(row[CuratedCatalogTable.reviewStatus]))
         }
+    }
+
+    /** 생성 저장소의 소유 트랜잭션에서만 호출한다. 정적 승인 자료와 기존 문항은 갱신하지 않는다. */
+    internal fun persistGenerated(source: JsonObject) {
+        val generated = CuratedWritingManifestCodec.parse(source.toString())
+        require(generated.releaseId == manifest.releaseId && generated.items.size == 1) { "WRITING_RELEASE_CONFLICT" }
+        val candidate = generated.items.single()
+        require(candidate.status == CuratedReviewStatus.DRAFT && candidate.id.startsWith("gen-")) { "WRITING_GENERATION_SCHEMA_INVALID" }
+        val prior = CuratedCatalogTable.selectAll().where {
+            (CuratedCatalogTable.id eq candidate.id) and (CuratedCatalogTable.version eq candidate.version)
+        }.singleOrNull()
+        if (prior != null) {
+            require(prior[CuratedCatalogTable.contentHash] == candidate.contentHash) { "WRITING_CONTENT_VERSION_CONFLICT" }
+            return
+        }
+        CuratedCatalogTable.insert {
+            it[id] = candidate.id; it[version] = candidate.version; it[contentHash] = candidate.contentHash
+            it[releaseId] = candidate.releaseId; it[reviewStatus] = "DRAFT"
+            it[originLanguage] = candidate.originLanguage; it[learningLanguage] = candidate.learningLanguage
+            it[writingType] = candidate.writingType.name; it[targetBand] = candidate.band
+            it[semanticKey] = candidate.semanticKey; it[topicKey] = candidate.topicKey
+            it[contentJson] = JsonObject(content(candidate) + ("generatedManifest" to source)).toString()
+            it[createdAt] = nowUtc(); it[updatedAt] = nowUtc()
+        }
+    }
 
     private fun recentIds(userId: Long): Set<String> = CuratedItemsTable.selectAll()
         .where { CuratedItemsTable.userId eq userId }
@@ -424,6 +461,9 @@ internal class CuratedWritingStore(
         put("requiredIntents", JsonArray(item.requiredIntents.map(::JsonPrimitive)))
         put("responseConstraints", JsonArray(item.responseConstraints.map(::JsonPrimitive)))
         put("topicKey", item.topicKey)
+        if (item.visibleRequirements.isNotEmpty()) {
+            put("taskRequirements", JsonArray(item.visibleRequirements.map(::JsonPrimitive)))
+        }
     }
 
     private fun privateContent(item: CuratedWritingItem): JsonObject = buildJsonObject {

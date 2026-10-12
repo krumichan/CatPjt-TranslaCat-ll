@@ -1,0 +1,1223 @@
+[
+  {
+    "caseId": "reg-f03-actual-business-trip-is-valid-evidence",
+    "input": {
+      "task": {
+        "writingType": "FREE",
+        "publicPromptAndConditions": {
+          "topicKey": "schedule_adjustment",
+          "originText": "학교, 직장 또는 동아리의 담당자에게 일본어로 일정 조정이나 협조를 요청하세요. 원래 상황을 인정하면서도 자신의 사정을 완곡하게 설명하고, 가능한 대안이나 조건을 제시하세요. 상대와 상황에 맞는 정중한 어조를 선택하세요.",
+          "providedFacts": [],
+          "requiredIntents": [],
+          "responseConstraints": []
+        },
+        "requirements": [
+          {
+            "id": "C1",
+            "text": "상대의 사정이나 기존 계획을 먼저 인정했는가?"
+          },
+          {
+            "id": "C2",
+            "text": "자신의 사정을 설명하며 요청을 지나치게 단정하지 않고 완곡하게 표현했는가?"
+          },
+          {
+            "id": "C3",
+            "text": "가능한 대안이나 조건의 범위를 제시했는가?"
+          },
+          {
+            "id": "C4",
+            "text": "수신자에 맞는 정중한 어조를 사용했는가?"
+          }
+        ],
+        "originLanguage": "ko",
+        "learningLanguage": "ja",
+        "explicitTaskFacts": []
+      },
+      "learnerAnswer": {
+        "text": "すでに会場を予約されていることは承知しておりますが、出張と重なり、予定の時間には間に合わない見込みです。もし可能でしたら面談の時間を少し遅らせていただけないでしょうか。難しければ、別の日でも構いません。",
+        "segments": [
+          {
+            "id": "S1",
+            "text": "すでに会場を予約されていることは承知しておりますが、出張と重なり、予定の時間には間に合わない見込みです。"
+          },
+          {
+            "id": "S2",
+            "text": "もし可能でしたら面談の時間を少し遅らせていただけないでしょうか。"
+          },
+          {
+            "id": "S3",
+            "text": "難しければ、別の日でも構いません。"
+          }
+        ]
+      }
+    },
+    "outputText": {
+      "observations": [
+        {
+          "requirementId": "C1",
+          "requirementParts": [
+            {
+              "requirementQuote": "상대의 사정이나 기존 계획을 먼저 인정했는가?",
+              "status": "PRESENT",
+              "evidence": [
+                {
+                  "segmentId": "S1",
+                  "quote": "すでに会場を予約されていることは承知しておりますが、"
+                }
+              ],
+              "taskFactIds": []
+            }
+          ],
+          "relationChecks": {
+            "causality": "NOT_APPLICABLE",
+            "chronology": "NOT_APPLICABLE",
+            "specificity": "PRESERVED",
+            "stance": "PRESERVED"
+          }
+        },
+        {
+          "requirementId": "C2",
+          "requirementParts": [
+            {
+              "requirementQuote": "자신의 사정을 설명하며",
+              "status": "PRESENT",
+              "evidence": [
+                {
+                  "segmentId": "S1",
+                  "quote": "出張と重なり、予定の時間には間に合わない見込みです。"
+                }
+              ],
+              "taskFactIds": []
+            },
+            {
+              "requirementQuote": "요청을 지나치게 단정하지 않고 완곡하게 표현했는가?",
+              "status": "PRESENT",
+              "evidence": [
+                {
+                  "segmentId": "S2",
+                  "quote": "もし可能でしたら面談の時間を少し遅らせていただけないでしょうか。"
+                },
+                {
+                  "segmentId": "S3",
+                  "quote": "難しければ、別の日でも構いません。"
+                }
+              ],
+              "taskFactIds": []
+            }
+          ],
+          "relationChecks": {
+            "causality": "PRESERVED",
+            "chronology": "NOT_APPLICABLE",
+            "specificity": "PRESERVED",
+            "stance": "PRESERVED"
+          }
+        },
+        {
+          "requirementId": "C3",
+          "requirementParts": [
+            {
+              "requirementQuote": "가능한 대안이나 조건의 범위를 제시했는가?",
+              "status": "PRESENT",
+              "evidence": [
+                {
+                  "segmentId": "S2",
+                  "quote": "面談の時間を少し遅らせていただけないでしょうか。"
+                },
+                {
+                  "segmentId": "S3",
+                  "quote": "別の日でも構いません。"
+                }
+              ],
+              "taskFactIds": []
+            }
+          ],
+          "relationChecks": {
+            "causality": "PRESERVED",
+            "chronology": "NOT_APPLICABLE",
+            "specificity": "PRESERVED",
+            "stance": "PRESERVED"
+          }
+        },
+        {
+          "requirementId": "C4",
+          "requirementParts": [
+            {
+              "requirementQuote": "수신자에 맞는 정중한 어조를 사용했는가?",
+              "status": "PRESENT",
+              "evidence": [
+                {
+                  "segmentId": "S1",
+                  "quote": "承知しておりますが、"
+                },
+                {
+                  "segmentId": "S2",
+                  "quote": "いただけないでしょうか。"
+                },
+                {
+                  "segmentId": "S3",
+                  "quote": "構いません。"
+                }
+              ],
+              "taskFactIds": []
+            }
+          ],
+          "relationChecks": {
+            "causality": "NOT_APPLICABLE",
+            "chronology": "NOT_APPLICABLE",
+            "specificity": "PRESERVED",
+            "stance": "PRESERVED"
+          }
+        }
+      ],
+      "necessaryCorrections": [],
+      "optionalAlternatives": [
+        {
+          "requirementId": "C3",
+          "suggestionKind": "HYPOTHETICAL_EXAMPLE",
+          "segmentId": "S3",
+          "patch": {
+            "original": "別の日でも構いません。",
+            "replacement": "別の日でも構いません。例えば、翌週の火曜か水曜でしたら調整可能です。"
+          },
+          "relationChecks": {
+            "causality": "PRESERVED",
+            "chronology": "NOT_APPLICABLE",
+            "specificity": "PRESERVED",
+            "stance": "PRESERVED"
+          },
+          "learningText": "受け手が選びやすいように具体例を示す提案表現の例です。個人的事実を追加するのではなく、提案の仕方を示しています。"
+        }
+      ],
+      "uncertainties": []
+    },
+    "providerRequestPath": "C:\\workspace\\project-cat\\.codex-workspace\\verification\\shared\\2026-10-04-ll-finish-live-writing\\provider-attempts\\dc1d8e459406498f98894ec60ca6ffa8.request.json",
+    "providerResponsePath": "C:\\workspace\\project-cat\\.codex-workspace\\verification\\shared\\2026-10-04-ll-finish-live-writing\\provider-attempts\\dc1d8e459406498f98894ec60ca6ffa8.response.json",
+    "requestSha256": "dd0c71ed73cf1baf43a05134b660d8f25aaad16f2af1527be09bcfe6f4500bad",
+    "responseSha256": "0e513b9d4913e963b8b79f99f115361a636a1a0a83a5a555605bc40a691e2d7a",
+    "outputTextSha256": "198e2cd1f3cff98242d92e6168b6c893ea10329603646c99d2bacd78738e2de0"
+  },
+  {
+    "caseId": "reg-f03-normal-fueteimashita-no-overcorrection",
+    "input": {
+      "task": {
+        "writingType": "GUIDED",
+        "publicPromptAndConditions": {
+          "topicKey": "canteen_waste",
+          "originText": "급식 담당자에게 잔반 측정 결과를 해석해 보고하십시오. 소량 배식 주간에 잔반은 줄었지만 결석 학생도 늘었다는 사실을 포함하고, 배식 방식만으로 잔반 감소를 설명할 수 없다고 밝히십시오. 출석 인원당 잔반을 비교하고 추가 배식 횟수도 함께 기록하자고 제안하십시오. 계측 시간을 확보하지 못하면 총량 수치만으로 새 방식을 확정하지 않으며, 이 결과를 학생이 덜 먹어도 된다는 주장으로 바꾸지 않는다는 점도 나타내십시오. 일반적인 어휘와 정중체를 사용하십시오.",
+          "providedFacts": [
+            "급식 담당자에게 잔반 측정의 해석을 보고한다.",
+            "소량 배식 주간에 잔반은 줄었지만 결석 학생도 늘었다."
+          ],
+          "requiredIntents": [
+            "배식 방식만으로 잔반 감소를 설명할 수 없음을 밝힌다.",
+            "출석 인원당 잔반을 비교하고 추가 배식 횟수도 함께 기록하자고 제안한다.",
+            "계측 시간을 확보하지 못하면 총량 수치만으로 새 방식을 확정하지 않는다.",
+            "결과를 학생이 덜 먹어도 된다는 주장으로 바꾸지 않는다."
+          ],
+          "responseConstraints": [
+            "급식 담당자에게 보고하는 정중한 표현을 사용한다.",
+            "소량 배식 주간의 잔반 감소와 결석 학생 증가를 모두 포함한다.",
+            "제시된 조건과 해석의 제한을 유지한다."
+          ]
+        },
+        "requirements": [
+          {
+            "id": "C1",
+            "text": "급식 담당자에게 잔반 측정 결과를 보고하는가?"
+          },
+          {
+            "id": "C2",
+            "text": "소량 배식 주간에 잔반은 줄었지만 결석 학생도 늘었다는 사실을 포함하는가?"
+          },
+          {
+            "id": "C3",
+            "text": "배식 방식만으로 잔반 감소를 설명할 수 없다고 밝히는가?"
+          },
+          {
+            "id": "C4",
+            "text": "출석 인원당 잔반을 비교하고 추가 배식 횟수도 함께 기록하자고 제안하는가?"
+          },
+          {
+            "id": "C5",
+            "text": "계측 시간을 확보하지 못하면 총량 수치만으로 새 방식을 확정하지 않는가?"
+          },
+          {
+            "id": "C6",
+            "text": "결과를 학생이 덜 먹어도 된다는 주장으로 바꾸지 않는가?"
+          },
+          {
+            "id": "C7",
+            "text": "정중체와 일반적인 어휘를 사용하는가?"
+          }
+        ],
+        "originLanguage": "ko",
+        "learningLanguage": "ja",
+        "explicitTaskFacts": [
+          {
+            "id": "T1",
+            "text": "급식 담당자에게 잔반 측정의 해석을 보고한다."
+          },
+          {
+            "id": "T2",
+            "text": "소량 배식 주간에 잔반은 줄었지만 결석 학생도 늘었다."
+          }
+        ]
+      },
+      "learnerAnswer": {
+        "text": "給食担当者に、残食量の測定結果について報告いたします。少量配食週間は残食が減りましたが、欠席した生徒も増えていました。そのため、配食方法だけで残食の減少を説明することはできません。出席者一人当たりの残食量を比較し、追加配食の回数も一緒に記録することを提案します。測定の時間を確保できない場合は、総量の数値だけで新しい方法を決定しないようにします。また、この結果から、生徒の食べる量が今より少なくてもよいとは言えません。",
+        "segments": [
+          {
+            "id": "S1",
+            "text": "給食担当者に、残食量の測定結果について報告いたします。"
+          },
+          {
+            "id": "S2",
+            "text": "少量配食週間は残食が減りましたが、欠席した生徒も増えていました。"
+          },
+          {
+            "id": "S3",
+            "text": "そのため、配食方法だけで残食の減少を説明することはできません。"
+          },
+          {
+            "id": "S4",
+            "text": "出席者一人当たりの残食量を比較し、追加配食の回数も一緒に記録することを提案します。"
+          },
+          {
+            "id": "S5",
+            "text": "測定の時間を確保できない場合は、総量の数値だけで新しい方法を決定しないようにします。"
+          },
+          {
+            "id": "S6",
+            "text": "また、この結果から、生徒の食べる量が今より少なくてもよいとは言えません。"
+          }
+        ]
+      },
+      "referenceExamples": {
+        "role": "NON_AUTHORITATIVE_EXAMPLES_NOT_LEARNER_FACTS",
+        "answers": [
+          "給食担当者に、残食量の測定結果について報告いたします。少量配食週間は残食が減りましたが、欠席した生徒も増えていました。そのため、配食方法だけで残食の減少を説明することはできません。出席者一人当たりの残食量を比較し、追加配食の回数も一緒に記録することを提案します。測定の時間を確保できない場合は、総量の数値だけで新しい方法を決定しないようにします。また、この結果から、生徒の食べる量が今より少なくてもよいとは言えません。",
+          "給食担当者に残食測定の解釈をお伝えします。少量配食の週には残食は少なくなりましたが、欠席者数も増加しました。したがって、減少の原因を配食方法だけに求めることはできません。出席人数で割った残食量を比較するとともに、おかわりの回数も記録しましょう。測定時間を確保できなければ、全体量だけを根拠に新方式を確定しません。この結果から、生徒が少なく食べればよいという結論を導くこともしません。"
+        ],
+        "alternativeNote": "「追加配食」は「おかわり」、「出席者一人当たり」は「出席人数で割った」と表現してもよい。"
+      }
+    },
+    "outputText": {
+      "observations": [
+        {
+          "requirementId": "C1",
+          "requirementParts": [
+            {
+              "requirementQuote": "급식 담당자에게 잔반 측정 결과를 보고하는가?",
+              "status": "PRESENT",
+              "evidence": [
+                {
+                  "segmentId": "S1",
+                  "quote": "給食担当者に、残食量の測定結果について報告いたします。"
+                }
+              ],
+              "taskFactIds": [
+                "T1"
+              ]
+            }
+          ],
+          "relationChecks": {
+            "causality": "PRESERVED",
+            "chronology": "PRESERVED",
+            "specificity": "PRESERVED",
+            "stance": "PRESERVED"
+          }
+        },
+        {
+          "requirementId": "C2",
+          "requirementParts": [
+            {
+              "requirementQuote": "소량 배식 주간에 잔반은 줄었지만",
+              "status": "PRESENT",
+              "evidence": [
+                {
+                  "segmentId": "S2",
+                  "quote": "少量配食週間は残食が減りました"
+                }
+              ],
+              "taskFactIds": [
+                "T2"
+              ]
+            },
+            {
+              "requirementQuote": "결석 학생도 늘었다는 사실을 포함하는가?",
+              "status": "PRESENT",
+              "evidence": [
+                {
+                  "segmentId": "S2",
+                  "quote": "欠席した生徒も増えていました。"
+                }
+              ],
+              "taskFactIds": [
+                "T2"
+              ]
+            }
+          ],
+          "relationChecks": {
+            "causality": "PRESERVED",
+            "chronology": "PRESERVED",
+            "specificity": "PRESERVED",
+            "stance": "PRESERVED"
+          }
+        },
+        {
+          "requirementId": "C3",
+          "requirementParts": [
+            {
+              "requirementQuote": "배식 방식만으로 잔반 감소를 설명할 수 없다고 밝히는가?",
+              "status": "PRESENT",
+              "evidence": [
+                {
+                  "segmentId": "S3",
+                  "quote": "そのため、配食方法だけで残食の減少を説明することはできません。"
+                }
+              ],
+              "taskFactIds": []
+            }
+          ],
+          "relationChecks": {
+            "causality": "PRESERVED",
+            "chronology": "PRESERVED",
+            "specificity": "PRESERVED",
+            "stance": "PRESERVED"
+          }
+        },
+        {
+          "requirementId": "C4",
+          "requirementParts": [
+            {
+              "requirementQuote": "출석 인원당 잔반을 비교하고",
+              "status": "PRESENT",
+              "evidence": [
+                {
+                  "segmentId": "S4",
+                  "quote": "出席者一人当たりの残食量を比較し"
+                }
+              ],
+              "taskFactIds": []
+            },
+            {
+              "requirementQuote": "추가 배식 횟수도 함께 기록하자고 제안하는가?",
+              "status": "PRESENT",
+              "evidence": [
+                {
+                  "segmentId": "S4",
+                  "quote": "追加配食の回数も一緒に記録することを提案します。"
+                }
+              ],
+              "taskFactIds": []
+            }
+          ],
+          "relationChecks": {
+            "causality": "PRESERVED",
+            "chronology": "PRESERVED",
+            "specificity": "PRESERVED",
+            "stance": "PRESERVED"
+          }
+        },
+        {
+          "requirementId": "C5",
+          "requirementParts": [
+            {
+              "requirementQuote": "계측 시간을 확보하지 못하면 총량 수치만으로 새 방식을 확정하지 않는가?",
+              "status": "PRESENT",
+              "evidence": [
+                {
+                  "segmentId": "S5",
+                  "quote": "測定の時間を確保できない場合は、総量の数値だけで新しい方法を決定しないようにします。"
+                }
+              ],
+              "taskFactIds": []
+            }
+          ],
+          "relationChecks": {
+            "causality": "PRESERVED",
+            "chronology": "PRESERVED",
+            "specificity": "PRESERVED",
+            "stance": "PRESERVED"
+          }
+        },
+        {
+          "requirementId": "C6",
+          "requirementParts": [
+            {
+              "requirementQuote": "결과를 학생이 덜 먹어도 된다는 주장으로 바꾸지 않는가?",
+              "status": "PRESENT",
+              "evidence": [
+                {
+                  "segmentId": "S6",
+                  "quote": "また、この結果から、生徒の食べる量が今より少なくてもよいとは言えません。"
+                }
+              ],
+              "taskFactIds": []
+            }
+          ],
+          "relationChecks": {
+            "causality": "PRESERVED",
+            "chronology": "PRESERVED",
+            "specificity": "PRESERVED",
+            "stance": "PRESERVED"
+          }
+        },
+        {
+          "requirementId": "C7",
+          "requirementParts": [
+            {
+              "requirementQuote": "정중체와 일반적인 어휘를 사용하는가?",
+              "status": "PRESENT",
+              "evidence": [
+                {
+                  "segmentId": "S1",
+                  "quote": "報告いたします。"
+                },
+                {
+                  "segmentId": "S4",
+                  "quote": "提案します。"
+                }
+              ],
+              "taskFactIds": []
+            }
+          ],
+          "relationChecks": {
+            "causality": "NOT_APPLICABLE",
+            "chronology": "NOT_APPLICABLE",
+            "specificity": "NOT_APPLICABLE",
+            "stance": "PRESERVED"
+          }
+        }
+      ],
+      "necessaryCorrections": [],
+      "optionalAlternatives": [
+        {
+          "requirementId": "C4",
+          "suggestionKind": "EXPRESSION_ONLY",
+          "segmentId": "S4",
+          "patch": {
+            "original": "出席者一人当たりの残食量を比較し、追加配食の回数も一緒に記録することを提案します。",
+            "replacement": "出席人数で割った残食量を比較し、おかわりの回数も記録することを提案します。"
+          },
+          "relationChecks": {
+            "causality": "PRESERVED",
+            "chronology": "PRESERVED",
+            "specificity": "PRESERVED",
+            "stance": "PRESERVED"
+          },
+          "learningText": "「出席者一人当たり」を「出席人数で割った」とし、「追加配食」をより口語的な「おかわり」にして、読みやすさを上げます。"
+        }
+      ],
+      "uncertainties": []
+    },
+    "providerRequestPath": "C:\\workspace\\project-cat\\.codex-workspace\\verification\\shared\\2026-10-04-ll-finish-live-writing\\provider-attempts\\d380de88527b4147949525d5381119fe.request.json",
+    "providerResponsePath": "C:\\workspace\\project-cat\\.codex-workspace\\verification\\shared\\2026-10-04-ll-finish-live-writing\\provider-attempts\\d380de88527b4147949525d5381119fe.response.json",
+    "requestSha256": "0c19ca8f46878f75653f51b076a552554deab6d4a6a2b73701bf22afd6fd658a",
+    "responseSha256": "8fc5ccfecee7908e6704c921893ba43fab025a338bcfaff2758cea2d9d0d4022",
+    "outputTextSha256": "d006130d76e9be7738f1f1c9fdd3d3070d0883a98e82c9275b171eb8ea2cb373"
+  },
+  {
+    "caseId": "reg-f03-reference-only-pair-illness",
+    "input": {
+      "task": {
+        "writingType": "FREE",
+        "publicPromptAndConditions": {
+          "topicKey": "schedule_adjustment",
+          "originText": "학교, 직장 또는 동아리의 담당자에게 일본어로 일정 조정이나 협조를 요청하세요. 원래 상황을 인정하면서도 자신의 사정을 완곡하게 설명하고, 가능한 대안이나 조건을 제시하세요. 상대와 상황에 맞는 정중한 어조를 선택하세요.",
+          "providedFacts": [],
+          "requiredIntents": [],
+          "responseConstraints": []
+        },
+        "requirements": [
+          {
+            "id": "C1",
+            "text": "상대의 사정이나 기존 계획을 먼저 인정했는가?"
+          },
+          {
+            "id": "C2",
+            "text": "자신의 사정을 설명하며 요청을 지나치게 단정하지 않고 완곡하게 표현했는가?"
+          },
+          {
+            "id": "C3",
+            "text": "가능한 대안이나 조건의 범위를 제시했는가?"
+          },
+          {
+            "id": "C4",
+            "text": "수신자에 맞는 정중한 어조를 사용했는가?"
+          }
+        ],
+        "originLanguage": "ko",
+        "learningLanguage": "ja",
+        "explicitTaskFacts": []
+      },
+      "learnerAnswer": {
+        "text": "すでに会場を予約されていることは承知しておりますが、前の会議が延びる見込みですので、もし可能でしたら面談の時間を少し遅らせていただけないでしょうか。難しければ、別の日でも構いません。",
+        "segments": [
+          {
+            "id": "S1",
+            "text": "すでに会場を予約されていることは承知しておりますが、前の会議が延びる見込みですので、もし可能でしたら面談の時間を少し遅らせていただけないでしょうか。"
+          },
+          {
+            "id": "S2",
+            "text": "難しければ、別の日でも構いません。"
+          }
+        ]
+      }
+    },
+    "outputText": {
+      "observations": [
+        {
+          "requirementId": "C1",
+          "requirementParts": [
+            {
+              "requirementQuote": "상대의 사정이나 기존 계획을 먼저 인정했는가?",
+              "status": "PRESENT",
+              "evidence": [
+                {
+                  "segmentId": "S1",
+                  "quote": "すでに会場を予約されていることは承知しておりますが"
+                }
+              ],
+              "taskFactIds": []
+            }
+          ],
+          "relationChecks": {
+            "causality": "PRESERVED",
+            "chronology": "PRESERVED",
+            "specificity": "PRESERVED",
+            "stance": "PRESERVED"
+          }
+        },
+        {
+          "requirementId": "C2",
+          "requirementParts": [
+            {
+              "requirementQuote": "자신의 사정을 설명하며 요청을 지나치게 단정하지 않고 완곡하게 표현했는가?",
+              "status": "PRESENT",
+              "evidence": [
+                {
+                  "segmentId": "S1",
+                  "quote": "前の会議が延びる見込みですので、もし可能でしたら面談の時間を少し遅らせていただけないでしょうか。"
+                }
+              ],
+              "taskFactIds": []
+            }
+          ],
+          "relationChecks": {
+            "causality": "PRESERVED",
+            "chronology": "PRESERVED",
+            "specificity": "PRESERVED",
+            "stance": "PRESERVED"
+          }
+        },
+        {
+          "requirementId": "C3",
+          "requirementParts": [
+            {
+              "requirementQuote": "가능한 대안이나 조건의 범위를 제시했는가?",
+              "status": "PRESENT",
+              "evidence": [
+                {
+                  "segmentId": "S2",
+                  "quote": "難しければ、別の日でも構いません。"
+                }
+              ],
+              "taskFactIds": []
+            },
+            {
+              "requirementQuote": "가능한 대안의 구체적 범위(예: 얼마나 늦추고 싶은지 등)를 제시했는가?",
+              "status": "UNCERTAIN",
+              "evidence": [
+                {
+                  "segmentId": "S1",
+                  "quote": "少し遅らせていただけないでしょうか。"
+                }
+              ],
+              "taskFactIds": []
+            }
+          ],
+          "relationChecks": {
+            "causality": "PRESERVED",
+            "chronology": "PRESERVED",
+            "specificity": "UNCERTAIN",
+            "stance": "PRESERVED"
+          }
+        },
+        {
+          "requirementId": "C4",
+          "requirementParts": [
+            {
+              "requirementQuote": "수신자에 맞는 정중한 어조를 사용했는가?",
+              "status": "PRESENT",
+              "evidence": [
+                {
+                  "segmentId": "S1",
+                  "quote": "承知しておりますが"
+                },
+                {
+                  "segmentId": "S1",
+                  "quote": "いただけないでしょうか。"
+                },
+                {
+                  "segmentId": "S2",
+                  "quote": "別の日でも構いません。"
+                }
+              ],
+              "taskFactIds": []
+            }
+          ],
+          "relationChecks": {
+            "causality": "NOT_APPLICABLE",
+            "chronology": "NOT_APPLICABLE",
+            "specificity": "PRESERVED",
+            "stance": "PRESERVED"
+          }
+        }
+      ],
+      "necessaryCorrections": [],
+      "optionalAlternatives": [
+        {
+          "requirementId": "C2",
+          "suggestionKind": "EXPRESSION_ONLY",
+          "segmentId": "S1",
+          "patch": {
+            "original": "もし可能でしたら",
+            "replacement": "差し支えなければ"
+          },
+          "relationChecks": {
+            "causality": "PRESERVED",
+            "chronology": "PRESERVED",
+            "specificity": "PRESERVED",
+            "stance": "PRESERVED"
+          },
+          "learningText": "「もし可能でしたら」を「差し支えなければ」にすると、より自然かつ丁寧に相手の都合への配慮を示せます。"
+        }
+      ],
+      "uncertainties": [
+        {
+          "requirementId": "C3",
+          "learningText": "「少し」がどの程度を指すか明確でないため、相手が判断しにくい可能性があります（例：「10分ほど」「30分程」等の具体案を追加すると良い）。"
+        }
+      ]
+    },
+    "providerRequestPath": "C:\\workspace\\project-cat\\.codex-workspace\\verification\\shared\\2026-10-04-ll-finish-live-writing\\provider-attempts\\62e60e1b31244982a28abcf93710b91a.request.json",
+    "providerResponsePath": "C:\\workspace\\project-cat\\.codex-workspace\\verification\\shared\\2026-10-04-ll-finish-live-writing\\provider-attempts\\62e60e1b31244982a28abcf93710b91a.response.json",
+    "requestSha256": "fcbfbf64f5ad5170c61c27bf1991db5ec246d3952f9933fa40456009033b5314",
+    "responseSha256": "58e7c04663501777bc93041664671a6a5e47acfd97205c4b4bb74eef0de7895f",
+    "outputTextSha256": "3c27d417e40757e461bdda2e542de631c98b4f6a54e5a5547bcb3d44a32740e5"
+  },
+  {
+    "caseId": "reg-gen-g-g1",
+    "input": {
+      "task": {
+        "writingType": "GUIDED",
+        "publicPromptAndConditions": {
+          "topicKey": "community-event-change",
+          "originText": "지역 도서관 회원에게 보내는 안내문을 일본어로 작성하세요. 예정된 벼룩시장의 원래 일정과 장소, 변경된 일정과 장소, 변경 이유, 참가자의 접수 방법, 회원들에게 전할 요청을 연결된 문단으로 안내하세요.",
+          "providedFacts": [
+            "벼룩시장은 원래 토요일 오전 10시에 중앙도서관 앞 광장에서 열릴 예정이었다.",
+            "비가 올 가능성이 있어 장소를 체육관으로 변경한다.",
+            "시간은 토요일 오후 2시로 변경한다.",
+            "참가자는 입구에서 접수해야 한다.",
+            "회원들에게 변경 내용을 확인해 달라고 요청한다."
+          ],
+          "requiredIntents": [
+            "벼룩시장 장소와 시간이 변경되었음을 알린다.",
+            "변경 이유를 설명한다.",
+            "참가자가 입구에서 접수해야 한다고 안내한다.",
+            "회원들에게 변경 내용을 확인해 달라고 요청한다."
+          ],
+          "taskRequirements": [
+            "원래 벼룩시장은 토요일 오전 10시에 중앙도서관 앞 광장에서 열릴 예정이었다는 내용을 포함할 것.",
+            "비가 올 가능성 때문에 장소를 체육관으로, 시간은 토요일 오후 2시로 변경한다는 내용을 포함할 것.",
+            "참가자는 입구에서 접수해야 한다는 내용을 포함할 것.",
+            "회원들에게 변경 내용을 확인해 달라고 요청할 것."
+          ],
+          "responseConstraints": [
+            "지역 도서관 회원에게 보내는 안내문 형식으로 작성한다.",
+            "원래 장소와 시간, 변경된 장소와 시간을 모두 포함한다.",
+            "요구된 전달 내용을 담은 연결된 문단으로 작성한다."
+          ]
+        },
+        "requirements": [
+          {
+            "id": "C1",
+            "text": "원래 벼룩시장은 토요일 오전 10시에 중앙도서관 앞 광장에서 열릴 예정이었다는 내용을 포함할 것."
+          },
+          {
+            "id": "C2",
+            "text": "비가 올 가능성 때문에 장소를 체육관으로, 시간은 토요일 오후 2시로 변경한다는 내용을 포함할 것."
+          },
+          {
+            "id": "C3",
+            "text": "참가자는 입구에서 접수해야 한다는 내용을 포함할 것."
+          },
+          {
+            "id": "C4",
+            "text": "회원들에게 변경 내용을 확인해 달라고 요청할 것."
+          }
+        ],
+        "originLanguage": "ko",
+        "learningLanguage": "ja",
+        "explicitTaskFacts": [
+          {
+            "id": "T1",
+            "text": "벼룩시장은 원래 토요일 오전 10시에 중앙도서관 앞 광장에서 열릴 예정이었다."
+          },
+          {
+            "id": "T2",
+            "text": "비가 올 가능성이 있어 장소를 체육관으로 변경한다."
+          },
+          {
+            "id": "T3",
+            "text": "시간은 토요일 오후 2시로 변경한다."
+          },
+          {
+            "id": "T4",
+            "text": "참가자는 입구에서 접수해야 한다."
+          },
+          {
+            "id": "T5",
+            "text": "회원들에게 변경 내용을 확인해 달라고 요청한다."
+          }
+        ]
+      },
+      "learnerAnswer": {
+        "text": "図書館会員の皆さまへ。フリーマーケットは、もともと土曜日の午前10時に中央図書館前の広場で行う予定でした。しかし、雨が降る可能性があるため、会場を体育館に変更し、時間も土曜日の午後2時に変更します。参加する方は入口で受付をしてください。会員の皆さまは変更内容を確認してください。",
+        "segments": [
+          {
+            "id": "S1",
+            "text": "図書館会員の皆さまへ。"
+          },
+          {
+            "id": "S2",
+            "text": "フリーマーケットは、もともと土曜日の午前10時に中央図書館前の広場で行う予定でした。"
+          },
+          {
+            "id": "S3",
+            "text": "しかし、雨が降る可能性があるため、会場を体育館に変更し、時間も土曜日の午後2時に変更します。"
+          },
+          {
+            "id": "S4",
+            "text": "参加する方は入口で受付をしてください。"
+          },
+          {
+            "id": "S5",
+            "text": "会員の皆さまは変更内容を確認してください。"
+          }
+        ]
+      },
+      "referenceExamples": {
+        "role": "NON_AUTHORITATIVE_EXAMPLES_NOT_LEARNER_FACTS",
+        "answers": [
+          "図書館会員の皆さまへ。フリーマーケットは、もともと土曜日の午前10時に中央図書館前の広場で行う予定でした。しかし、雨が降る可能性があるため、会場を体育館に変更し、時間も土曜日の午後2時に変更します。参加する方は入口で受付をしてください。会員の皆さまは変更内容を確認してください。",
+          "図書館の会員の皆さまにお知らせします。予定していたフリーマーケットは、土曜日の午前10時から中央図書館前の広場で開催する予定でしたが、雨の可能性があるため、体育館で午後2時から行います。参加者は体育館の入口で受付をお願いします。変更された場所と時間をご確認ください。"
+        ],
+        "alternativeNote": "원래 일정과 장소, 변경된 일정과 장소, 변경 이유, 입구 접수 방법, 변경 내용 확인 요청을 모두 포함하면 표현과 문장 구성은 달라도 됩니다."
+      }
+    },
+    "outputText": {
+      "observations": [
+        {
+          "requirementId": "C1",
+          "requirementParts": [
+            {
+              "requirementQuote": "원래 벼룩시장은 토요일 오전 10시에",
+              "status": "PRESENT",
+              "evidence": [
+                {
+                  "segmentId": "S2",
+                  "quote": "土曜日の午前10時に"
+                }
+              ],
+              "taskFactIds": [
+                "T1"
+              ]
+            },
+            {
+              "requirementQuote": "중앙도서관 앞 광장에서",
+              "status": "PRESENT",
+              "evidence": [
+                {
+                  "segmentId": "S2",
+                  "quote": "中央図書館前の広場で"
+                }
+              ],
+              "taskFactIds": [
+                "T1"
+              ]
+            },
+            {
+              "requirementQuote": "열릴 예정이었다는 내용을 포함할 것.",
+              "status": "PRESENT",
+              "evidence": [
+                {
+                  "segmentId": "S2",
+                  "quote": "行う予定でした"
+                }
+              ],
+              "taskFactIds": [
+                "T1"
+              ]
+            }
+          ],
+          "relationChecks": {
+            "causality": "NOT_APPLICABLE",
+            "chronology": "PRESERVED",
+            "specificity": "PRESERVED",
+            "stance": "PRESERVED"
+          }
+        },
+        {
+          "requirementId": "C2",
+          "requirementParts": [
+            {
+              "requirementQuote": "비가 올 가능성 때문에",
+              "status": "PRESENT",
+              "evidence": [
+                {
+                  "segmentId": "S3",
+                  "quote": "雨が降る可能性があるため"
+                }
+              ],
+              "taskFactIds": [
+                "T2"
+              ]
+            },
+            {
+              "requirementQuote": "장소를 체육관으로 변경한다는 내용을 포함할 것.",
+              "status": "PRESENT",
+              "evidence": [
+                {
+                  "segmentId": "S3",
+                  "quote": "会場を体育館に変更し"
+                }
+              ],
+              "taskFactIds": [
+                "T2"
+              ]
+            },
+            {
+              "requirementQuote": "시간은 토요일 오후 2시로 변경한다는 내용을 포함할 것.",
+              "status": "PRESENT",
+              "evidence": [
+                {
+                  "segmentId": "S3",
+                  "quote": "時間も土曜日の午後2時に変更します"
+                }
+              ],
+              "taskFactIds": [
+                "T3"
+              ]
+            }
+          ],
+          "relationChecks": {
+            "causality": "PRESERVED",
+            "chronology": "PRESERVED",
+            "specificity": "PRESERVED",
+            "stance": "PRESERVED"
+          }
+        },
+        {
+          "requirementId": "C3",
+          "requirementParts": [
+            {
+              "requirementQuote": "참가자는",
+              "status": "PRESENT",
+              "evidence": [
+                {
+                  "segmentId": "S4",
+                  "quote": "参加する方は"
+                }
+              ],
+              "taskFactIds": [
+                "T4"
+              ]
+            },
+            {
+              "requirementQuote": "입구에서 접수해야 한다는 내용을 포함할 것.",
+              "status": "PRESENT",
+              "evidence": [
+                {
+                  "segmentId": "S4",
+                  "quote": "入口で受付をしてください"
+                }
+              ],
+              "taskFactIds": [
+                "T4"
+              ]
+            }
+          ],
+          "relationChecks": {
+            "causality": "NOT_APPLICABLE",
+            "chronology": "NOT_APPLICABLE",
+            "specificity": "PRESERVED",
+            "stance": "PRESERVED"
+          }
+        },
+        {
+          "requirementId": "C4",
+          "requirementParts": [
+            {
+              "requirementQuote": "회원들에게",
+              "status": "PRESENT",
+              "evidence": [
+                {
+                  "segmentId": "S5",
+                  "quote": "会員の皆さまは"
+                }
+              ],
+              "taskFactIds": [
+                "T5"
+              ]
+            },
+            {
+              "requirementQuote": "변경 내용을 확인해 달라고 요청할 것.",
+              "status": "PRESENT",
+              "evidence": [
+                {
+                  "segmentId": "S5",
+                  "quote": "変更内容を確認してください"
+                }
+              ],
+              "taskFactIds": [
+                "T5"
+              ]
+            }
+          ],
+          "relationChecks": {
+            "causality": "NOT_APPLICABLE",
+            "chronology": "NOT_APPLICABLE",
+            "specificity": "PRESERVED",
+            "stance": "PRESERVED"
+          }
+        }
+      ],
+      "necessaryCorrections": [],
+      "optionalAlternatives": [
+        {
+          "requirementId": "C4",
+          "suggestionKind": "EXPRESSION_ONLY",
+          "segmentId": "S5",
+          "patch": {
+            "original": "変更内容を確認してください。",
+            "replacement": "変更内容をご確認くださいますようお願いいたします。"
+          },
+          "relationChecks": {
+            "causality": "NOT_APPLICABLE",
+            "chronology": "NOT_APPLICABLE",
+            "specificity": "PRESERVED",
+            "stance": "PRESERVED"
+          },
+          "learningText": "より丁寧な依頼表現にすることで、公的な案内文にふさわしい語調になります。"
+        }
+      ],
+      "uncertainties": []
+    },
+    "providerRequestPath": "C:\\workspace\\project-cat\\.codex-workspace\\verification\\shared\\2026-10-04-ll-finish-live-writing\\provider-attempts\\742b6b4007a94e558fb6f521c72e3253.request.json",
+    "providerResponsePath": "C:\\workspace\\project-cat\\.codex-workspace\\verification\\shared\\2026-10-04-ll-finish-live-writing\\provider-attempts\\742b6b4007a94e558fb6f521c72e3253.response.json",
+    "requestSha256": "6803628e7579af7eca79d3e5bc409e3981d3c54fa87b9b84deddd26c35f5cd7e",
+    "responseSha256": "fd58e731176aa19400836251b17cd709e0c12c212041e27ca196837943abeb39",
+    "outputTextSha256": "a34230139a192f295f68d6eea6cee96ccfa9870d9d961114a9e853bda530e2c9"
+  },
+  {
+    "caseId": "reg-gen-g-f2",
+    "input": {
+      "task": {
+        "writingType": "FREE",
+        "publicPromptAndConditions": {
+          "topicKey": "information-source-choice",
+          "originText": "인터넷이나 책, 주변 사람 등에서 정보를 얻을 때 무엇을 가장 믿는지 자신의 의견을 쓰세요. 그 정보원을 선택하는 이유를 설명하고, 실제로 정보를 확인하거나 활용한 경험을 하나 포함하세요.",
+          "providedFacts": [],
+          "requiredIntents": [],
+          "taskRequirements": [
+            "가장 믿는 정보원을 하나 이상 분명히 밝힐 것",
+            "그 정보원을 믿는 이유를 설명할 것",
+            "그 정보원을 통해 정보를 확인하거나 활용한 실제 경험을 하나 포함할 것",
+            "자신의 의견과 경험이 연결된 하나의 자연스러운 단락을 만들 것"
+          ],
+          "responseConstraints": []
+        },
+        "requirements": [
+          {
+            "id": "C1",
+            "text": "가장 믿는 정보원을 하나 이상 분명히 밝힐 것"
+          },
+          {
+            "id": "C2",
+            "text": "그 정보원을 믿는 이유를 설명할 것"
+          },
+          {
+            "id": "C3",
+            "text": "그 정보원을 통해 정보를 확인하거나 활용한 실제 경험을 하나 포함할 것"
+          },
+          {
+            "id": "C4",
+            "text": "자신의 의견과 경험이 연결된 하나의 자연스러운 단락을 만들 것"
+          }
+        ],
+        "originLanguage": "ko",
+        "learningLanguage": "ja",
+        "explicitTaskFacts": []
+      },
+      "learnerAnswer": {
+        "text": "私はインターネットの情報を一番信頼しています。必要な情報をすぐに探すことができ、複数のサイトを比べて確認できるからです。先月、旅行のホテルを予約する前に口コミを調べ、料金とサービスを比較してから予約しました。実際に行ってみると、口コミの内容とほぼ同じで、とても便利でした。",
+        "segments": [
+          {
+            "id": "S1",
+            "text": "私はインターネットの情報を一番信頼しています。"
+          },
+          {
+            "id": "S2",
+            "text": "必要な情報をすぐに探すことができ、複数のサイトを比べて確認できるからです。"
+          },
+          {
+            "id": "S3",
+            "text": "先月、旅行のホテルを予約する前に口コミを調べ、料金とサービスを比較してから予約しました。"
+          },
+          {
+            "id": "S4",
+            "text": "実際に行ってみると、口コミの内容とほぼ同じで、とても便利でした。"
+          }
+        ]
+      }
+    },
+    "outputText": {
+      "observations": [
+        {
+          "requirementId": "C1",
+          "requirementParts": [
+            {
+              "requirementQuote": "가장 믿는 정보원을 하나 이상 분명히 밝힐 것",
+              "status": "PRESENT",
+              "evidence": [
+                {
+                  "segmentId": "S1",
+                  "quote": "私はインターネットの情報を一番信頼しています。"
+                }
+              ],
+              "taskFactIds": []
+            }
+          ],
+          "relationChecks": {
+            "causality": "NOT_APPLICABLE",
+            "chronology": "NOT_APPLICABLE",
+            "specificity": "PRESERVED",
+            "stance": "PRESERVED"
+          }
+        },
+        {
+          "requirementId": "C2",
+          "requirementParts": [
+            {
+              "requirementQuote": "그 정보원을 믿는 이유를 설명할 것",
+              "status": "PRESENT",
+              "evidence": [
+                {
+                  "segmentId": "S2",
+                  "quote": "必要な情報をすぐに探すことができ、複数のサイトを比べて確認できるからです。"
+                }
+              ],
+              "taskFactIds": []
+            }
+          ],
+          "relationChecks": {
+            "causality": "PRESERVED",
+            "chronology": "NOT_APPLICABLE",
+            "specificity": "PRESERVED",
+            "stance": "PRESERVED"
+          }
+        },
+        {
+          "requirementId": "C3",
+          "requirementParts": [
+            {
+              "requirementQuote": "그 정보원을 통해 정보를 확인하거나 활용한 실제 경험을 하나 포함할 것",
+              "status": "PRESENT",
+              "evidence": [
+                {
+                  "segmentId": "S3",
+                  "quote": "先月、旅行のホテルを予約する前に口コミを調べ、料金とサービスを比較してから予約しました。"
+                }
+              ],
+              "taskFactIds": []
+            },
+            {
+              "requirementQuote": "(experience outcome supporting detail)",
+              "status": "PRESENT",
+              "evidence": [
+                {
+                  "segmentId": "S4",
+                  "quote": "実際に行ってみると、口コミの内容とほぼ同じで、とても便利でした。"
+                }
+              ],
+              "taskFactIds": []
+            }
+          ],
+          "relationChecks": {
+            "causality": "PRESERVED",
+            "chronology": "PRESERVED",
+            "specificity": "PRESERVED",
+            "stance": "NOT_APPLICABLE"
+          }
+        },
+        {
+          "requirementId": "C4",
+          "requirementParts": [
+            {
+              "requirementQuote": "자신의 의견과 경험이 연결된 하나의 자연스러운 단락을 만들 것",
+              "status": "PRESENT",
+              "evidence": [
+                {
+                  "segmentId": "S1",
+                  "quote": "私はインターネットの情報を一番信頼しています。"
+                },
+                {
+                  "segmentId": "S3",
+                  "quote": "先月、旅行のホテルを予約する前に口コミを調べ、料金とサービスを比較してから予約しました。"
+                },
+                {
+                  "segmentId": "S4",
+                  "quote": "実際に行ってみると、口コミの内容とほぼ同じで、とても便利でした。"
+                }
+              ],
+              "taskFactIds": []
+            }
+          ],
+          "relationChecks": {
+            "causality": "PRESERVED",
+            "chronology": "PRESERVED",
+            "specificity": "PRESERVED",
+            "stance": "PRESERVED"
+          }
+        }
+      ],
+      "necessaryCorrections": [],
+      "optionalAlternatives": [
+        {
+          "requirementId": "C2",
+          "suggestionKind": "EXPRESSION_ONLY",
+          "segmentId": "S2",
+          "patch": {
+            "original": "必要な情報をすぐに探すことができ、複数のサイトを比べて確認できるからです。",
+            "replacement": "必要な情報をすぐに見つけられ、複数のサイトで比較検討できるからです。"
+          },
+          "relationChecks": {
+            "causality": "PRESERVED",
+            "chronology": "NOT_APPLICABLE",
+            "specificity": "PRESERVED",
+            "stance": "PRESERVED"
+          },
+          "learningText": "「探すことができ」より「見つけられ」の方が自然で簡潔です。「比べて確認」より「比較検討」の方が意味が明確になります。"
+        }
+      ],
+      "uncertainties": []
+    },
+    "providerRequestPath": "C:\\workspace\\project-cat\\.codex-workspace\\verification\\shared\\2026-10-04-ll-finish-live-writing\\provider-attempts\\a07493fde45c4206a3153c1406d54113.request.json",
+    "providerResponsePath": "C:\\workspace\\project-cat\\.codex-workspace\\verification\\shared\\2026-10-04-ll-finish-live-writing\\provider-attempts\\a07493fde45c4206a3153c1406d54113.response.json",
+    "requestSha256": "704d1b7baf2f24a170dfdf0a3cf0c149eb7dac5624b37439f2020d6fd549be4e",
+    "responseSha256": "e01360163350cdc0011737da5c48cb2bf80051292a075ab964cf80645466072b",
+    "outputTextSha256": "edbdf228c2904b759ea0436ce1749164448d63986c28018db0edf48eb8f7e85e"
+  }
+]

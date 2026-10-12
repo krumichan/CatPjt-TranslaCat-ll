@@ -1,0 +1,127 @@
+{
+  "input": {
+    "task": {
+      "writingType": "FREE",
+      "publicPromptAndConditions": {
+        "topicKey": "schedule_adjustment",
+        "originText": "학교, 직장 또는 동아리의 담당자에게 일본어로 일정 조정이나 협조를 요청하세요. 원래 상황을 인정하면서도 자신의 사정을 완곡하게 설명하고, 가능한 대안이나 조건을 제시하세요. 상대와 상황에 맞는 정중한 어조를 선택하세요.",
+        "providedFacts": [],
+        "requiredIntents": [],
+        "responseConstraints": []
+      },
+      "requirements": [
+        {
+          "id": "C1",
+          "text": "상대의 사정이나 기존 계획을 먼저 인정했는가?"
+        },
+        {
+          "id": "C2",
+          "text": "자신의 사정을 설명하며 요청을 지나치게 단정하지 않고 완곡하게 표현했는가?"
+        },
+        {
+          "id": "C3",
+          "text": "가능한 대안이나 조건의 범위를 제시했는가?"
+        },
+        {
+          "id": "C4",
+          "text": "수신자에 맞는 정중한 어조를 사용했는가?"
+        }
+      ],
+      "originLanguage": "ko",
+      "learningLanguage": "ja",
+      "explicitTaskFacts": []
+    },
+    "learnerAnswer": {
+      "text": "すでに会場を予約されていることは承知しておりますが、前の会議が延びる見込みですので、もし可能でしたら面談の時間を少し遅らせていただけないでしょうか。難しければ、別の日でも構いません。",
+      "segments": [
+        {
+          "id": "S1",
+          "text": "すでに会場を予約されていることは承知しておりますが、前の会議が延びる見込みですので、もし可能でしたら面談の時間を少し遅らせていただけないでしょうか。"
+        },
+        {
+          "id": "S2",
+          "text": "難しければ、別の日でも構いません。"
+        }
+      ]
+    }
+  },
+  "output": {
+    "observations": [
+      {
+        "requirementId": "C1",
+        "status": "MET",
+        "evidenceKind": "LEARNER_TEXT",
+        "segmentIds": [
+          "S1"
+        ],
+        "relationChecks": {
+          "causality": "PRESERVED",
+          "chronology": "PRESERVED",
+          "specificity": "PRESERVED",
+          "stance": "PRESERVED"
+        }
+      },
+      {
+        "requirementId": "C2",
+        "status": "MET",
+        "evidenceKind": "LEARNER_TEXT",
+        "segmentIds": [
+          "S1"
+        ],
+        "relationChecks": {
+          "causality": "PRESERVED",
+          "chronology": "NOT_APPLICABLE",
+          "specificity": "PRESERVED",
+          "stance": "PRESERVED"
+        }
+      },
+      {
+        "requirementId": "C3",
+        "status": "MET",
+        "evidenceKind": "LEARNER_TEXT",
+        "segmentIds": [
+          "S2"
+        ],
+        "relationChecks": {
+          "causality": "NOT_APPLICABLE",
+          "chronology": "NOT_APPLICABLE",
+          "specificity": "PRESERVED",
+          "stance": "PRESERVED"
+        }
+      },
+      {
+        "requirementId": "C4",
+        "status": "MET",
+        "evidenceKind": "LEARNER_TEXT",
+        "segmentIds": [
+          "S1",
+          "S2"
+        ],
+        "relationChecks": {
+          "causality": "NOT_APPLICABLE",
+          "chronology": "NOT_APPLICABLE",
+          "specificity": "NOT_APPLICABLE",
+          "stance": "PRESERVED"
+        }
+      }
+    ],
+    "necessaryCorrections": [],
+    "optionalAlternatives": [
+      {
+        "suggestionKind": "EXPRESSION_ONLY",
+        "segmentId": "S1",
+        "replacement": "すでに会場を予約されていることは承知しておりますが、前の会議が延びる可能性がありまして、差し支えなければ面談の開始時刻を10〜15分ほど遅らせていただけないでしょうか。",
+        "originText": "より 구체적 시간을 제안하면 상대가 판단하기 쉽습니다.",
+        "learningText": "すでに会場を予約されていることは承知しておりますが、前の会議が延びる可能性がありまして、差し支えなければ面談の開始時刻を10〜15分ほど遅らせていただけないでしょうか。"
+      },
+      {
+        "suggestionKind": "EXPRESSION_ONLY",
+        "segmentId": "S2",
+        "replacement": "もし難しいようでしたら、代替の日程をご提案いただけますと助かります。",
+        "originText": "대안 제시를 상대가 선택하기 좋게 묻는 표현을 추가하세요.",
+        "learningText": "もし難しいようでしたら、代替の日程をご提案いただけますと助かります。"
+      }
+    ],
+    "uncertainties": []
+  }
+}

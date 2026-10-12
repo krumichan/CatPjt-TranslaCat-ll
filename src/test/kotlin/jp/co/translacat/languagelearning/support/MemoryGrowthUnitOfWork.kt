@@ -97,6 +97,15 @@ internal class MemoryGrowthUnitOfWork : GrowthUnitOfWork {
 
         override fun activityRevision(userId: Long) = revisions[userId] ?: 0L
 
+        override fun deleteUnscoredActivity(userId: Long, source: String, referenceId: String): Boolean {
+            val key = Triple(userId, source, referenceId)
+            val value = activities[key] ?: return false
+            check(value.overallScore == null && metrics(value.id).isEmpty()) { "ACTIVITY_HAS_OFFICIAL_EVALUATION" }
+            activities.remove(key)
+            revisions[userId] = activityRevision(userId) + 1
+            return true
+        }
+
         override fun metrics(activityId: Long) = metricRows[activityId].orEmpty()
         override fun replaceMetrics(activityId: Long, metrics: List<GrowthMetric>) {
             require(metrics.map { it.metricType }.distinct().size == metrics.size); metricRows[activityId] =

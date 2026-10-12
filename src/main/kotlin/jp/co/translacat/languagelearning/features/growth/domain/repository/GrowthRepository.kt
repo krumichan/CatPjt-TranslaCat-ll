@@ -23,6 +23,8 @@ internal interface GrowthRepository {
     ): List<GrowthActivity>
 
     fun saveActivity(value: GrowthActivity): GrowthActivity
+    /** 공식 점수와 metric이 없는 owner 활동만 삭제하고 같은 트랜잭션에서 조회 revision을 갱신한다. */
+    fun deleteUnscoredActivity(userId: Long, source: String, referenceId: String): Boolean
     fun activityRevision(userId: Long): Long
     fun metrics(activityId: Long): List<GrowthMetric>
     fun replaceMetrics(activityId: Long, metrics: List<GrowthMetric>)
