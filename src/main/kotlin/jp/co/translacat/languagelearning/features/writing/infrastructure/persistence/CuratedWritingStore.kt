@@ -455,7 +455,7 @@ internal class CuratedWritingStore(
         put("boundaryAnswer", item.boundaryAnswer)
     }
 
-    private fun publicContent(item: CuratedWritingItem): JsonObject = buildJsonObject {
+    internal fun publicContent(item: CuratedWritingItem): JsonObject = buildJsonObject {
         put("originText", item.prompt)
         put("providedFacts", JsonArray(item.providedFacts.map(::JsonPrimitive)))
         put("requiredIntents", JsonArray(item.requiredIntents.map(::JsonPrimitive)))
@@ -466,7 +466,7 @@ internal class CuratedWritingStore(
         }
     }
 
-    private fun privateContent(item: CuratedWritingItem): JsonObject = buildJsonObject {
+    internal fun privateContent(item: CuratedWritingItem): JsonObject = buildJsonObject {
         put("checklist", JsonArray(item.checklist.map(::JsonPrimitive)))
         put("referenceAnswers", JsonArray(item.referenceAnswers.map(::JsonPrimitive)))
         put("alternativeNote", item.alternativeNote)

@@ -176,6 +176,40 @@ class CuratedWritingHttpDatabaseIntegrationTestGeneration {
                 assertTrue(newExhausted.bodyAsText().contains("WRITING_CONTENT_NOT_AVAILABLE"))
                 assertEquals(HttpStatusCode.BadRequest, prepare("unsupported", "unreviewed-topic").status)
                 assertEquals(4, calls)
+
+                // 실행: 같은 주제의 날짜 재고가 소진돼도 명시 대체는 다른 의미 골격을 선택한다.
+                val replacementRequest = buildJsonObject {
+                    put("requestKey", "meaning-replacement"); put("writingType", "TRANSLATION")
+                    put("targetBand", 2); put("topicKey", "home-task")
+                    put("repairOfRequestKey", "first"); put("repairNotes", "다른 상황으로 바꾸고 싶습니다.")
+                }
+                suspend fun replace(body: JsonObject = replacementRequest) = client.post("$base/preparations") {
+                    bearerAuth(token(71030)); contentType(ContentType.Application.Json); setBody(body.toString())
+                }
+                val replacementResponse = replace()
+                assertEquals(HttpStatusCode.OK, replacementResponse.status, replacementResponse.bodyAsText())
+                val replacementBody = replacementResponse.bodyAsText()
+                val replacement = Json.parseToJsonElement(replacementBody).jsonObject
+
+                // 검증: 원본 조회는 수정 가능 상태만 갱신하며 참고답안과 점수를 공개하지 않는다.
+                assertEquals("SUCCEEDED", replacement.getValue("status").jsonPrimitive.content)
+                assertEquals("CORE_REPLACEMENT", replacement.getValue("repairMode").jsonPrimitive.content)
+                assertNotEquals("home-task", replacement.getValue("candidate").jsonObject.getValue("topicKey").jsonPrimitive.content)
+                assertEquals(replacementBody, replace().bodyAsText())
+                assertEquals(replacementBody, client.get("$base/preparations/meaning-replacement") { bearerAuth(token(71030)) }.bodyAsText())
+                val originalAfter = Json.parseToJsonElement(client.get("$base/preparations/first") {
+                    bearerAuth(token(71030))
+                }.bodyAsText()).jsonObject
+                assertEquals(Json.parseToJsonElement(firstBody).jsonObject.getValue("candidate"), originalAfter.getValue("candidate"))
+                assertFalse(originalAfter.getValue("canRepair").jsonPrimitive.boolean)
+                assertEquals(HttpStatusCode.BadRequest, replace(JsonObject(replacementRequest +
+                    ("repairReasonCodes" to buildJsonArray { add("FORGED_APPROVAL") }))).status)
+                assertEquals(HttpStatusCode.Conflict, replace(JsonObject(replacementRequest +
+                    ("requestKey" to JsonPrimitive("second-replacement")))).status)
+                assertEquals(HttpStatusCode.NotFound, client.get("$base/preparations/meaning-replacement") {
+                    bearerAuth(token(71031))
+                }.status)
+                assertEquals(5, calls)
             }
         }
     }

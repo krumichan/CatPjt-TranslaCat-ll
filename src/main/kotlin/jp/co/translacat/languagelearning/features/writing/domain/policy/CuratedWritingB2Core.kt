@@ -65,6 +65,19 @@ internal object CuratedWritingB2Core {
 
     fun ids(topicKey: String): List<String> = variants.filterValues { it.topicKey == topicKey }.keys.toList()
 
+    fun topic(id: String): String = variants[id]?.topicKey ?: error("WRITING_B2_CORE_SELECTION_INVALID")
+
+    /** 의미 대체는 원본 주제의 날짜 변형 전체와 이미 사용한 코어를 제외한다. */
+    fun replacementOptions(originalTopic: String, recentCoreIds: Set<String>): JsonArray = JsonArray(
+        variants.filter { (id, variant) -> variant.topicKey != originalTopic && id !in recentCoreIds }
+            .map { (id, variant) -> buildJsonObject {
+                put("coreId", id)
+                put("topicKey", variant.topicKey)
+                put("prompt", variant.content.getValue("prompt"))
+                put("requirements", variant.content.getValue("requirements"))
+            } },
+    )
+
     private fun substitute(value: JsonElement, korean: String, japanese: String): JsonElement = when (value) {
         is JsonObject -> JsonObject(value.mapValues { (_, part) -> substitute(part, korean, japanese) })
         is JsonArray -> JsonArray(value.map { substitute(it, korean, japanese) })

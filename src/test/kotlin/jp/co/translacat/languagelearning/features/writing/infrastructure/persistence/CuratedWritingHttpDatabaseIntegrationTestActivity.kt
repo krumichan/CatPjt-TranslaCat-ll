@@ -63,14 +63,15 @@ class CuratedWritingHttpDatabaseIntegrationTestActivity {
             val runner = JdbcTransactionRunner(factory.database, 4)
             val manifest = CuratedWritingPlanFixtures.manifest(30)
             val snapshots = CuratedWritingStore(runner, manifest, clock)
-            val failOnce = mutableSetOf("学習回答7です。", "学習回答14です。")
+            val failedAnswers = setOf("学習回答7です。", "学習回答14です。")
             var calls = 0
             val model = ModelExecutionPort { command ->
                 calls++
                 val input = Json.parseToJsonElement(command.messages.single().content).jsonObject
-                val answer = input.getValue("learnerAnswer").jsonObject.getValue("text").jsonPrimitive.content
-                val failed = failOnce.remove(answer)
-                ModelExecutionResult(CuratedWritingFeedbackTestPayload.v8Response(input, invalid = failed),
+                val answer = CuratedWritingFeedbackTestPayload.answer(input)
+                val failed = answer in failedAnswers &&
+                    (command.traceId.endsWith("-1") || command.traceId.endsWith("-1-repair"))
+                ModelExecutionResult(CuratedWritingFeedbackTestPayload.v12Response(command, invalid = failed),
                     100, 50, "openai", "gpt-5-mini")
             }
             val worker = CuratedWritingFeedbackWorker(runner, snapshots, manifest.releaseId, model, clock)
@@ -137,7 +138,7 @@ class CuratedWritingHttpDatabaseIntegrationTestActivity {
                 failed.forEach { checkedPost("/answers/${it.getValue("answerId").jsonPrimitive.content}/feedback/retry", "{}") }
 
                 // 검증: retry/GET은 활동 ID·revision·18/30을 바꾸지 않으며 타인에게 노출하지 않는다.
-                assertEquals(20, calls)
+                assertEquals(38, calls)
                 assertEquals(before, getActivities())
                 assertTrue(getActivities(9602).getValue("activities").jsonArray.isEmpty())
                 assertEquals(HttpStatusCode.NotFound, post("/$setId/delete", """{"planRevision":2}""", 9602).status)
@@ -145,7 +146,7 @@ class CuratedWritingHttpDatabaseIntegrationTestActivity {
                 checkedPost("/$setId/delete", """{"planRevision":2}""")
                 assertTrue(getActivities().getValue("activities").jsonArray.isEmpty())
                 assertEquals(HttpStatusCode.NotFound, post("/answers/${failed.first().getValue("answerId").jsonPrimitive.content}/feedback/retry", "{}").status)
-                assertEquals(20, calls)
+                assertEquals(38, calls)
                 runner.read {
                     assertEquals(0L, CuratedAnswersTable.selectAll().count())
                     assertEquals(0L, CuratedWritingFeedbackTable.selectAll().count())

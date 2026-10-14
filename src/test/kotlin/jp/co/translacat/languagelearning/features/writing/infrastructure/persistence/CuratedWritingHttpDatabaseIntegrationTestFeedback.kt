@@ -65,7 +65,13 @@ class CuratedWritingHttpDatabaseIntegrationTestFeedback {
             val model = ModelExecutionPort { command ->
                 calls++
                 val input = Json.parseToJsonElement(command.messages.single().content).jsonObject
-                ModelExecutionResult(CuratedWritingFeedbackTestPayload.v8Response(input, invalid = calls == 1),
+                // 최초 생성·복구는 공개 의미 기준을 사용하고, 독립 검사는 원본 판정을 입력받지 않는다.
+                if (command.schemaName != "writing_independent_evidence") {
+                    assertEquals("public-meaning-v1", input.getValue("judgmentCriteria").jsonObject.getValue("version").jsonPrimitive.content)
+                    assertFalse("referenceExamples" in input)
+                }
+                val invalid = command.traceId.endsWith("-1") || command.traceId.endsWith("-1-repair")
+                ModelExecutionResult(CuratedWritingFeedbackTestPayload.v12Response(command, invalid),
                     100, 50, "openai", "gpt-5-mini")
             }
             val feedback = CuratedWritingFeedbackWorker(runner, snapshots, manifest.releaseId, model, clock)
@@ -117,9 +123,12 @@ class CuratedWritingHttpDatabaseIntegrationTestFeedback {
                 assertEquals(HttpStatusCode.OK, retried.status, retried.bodyAsText())
                 val after = Json.parseToJsonElement(retried.bodyAsText()).jsonObject
                 assertEquals(1, after.getValue("feedbackCompletedItemCount").jsonPrimitive.int)
-                assertEquals(2, calls)
+                val savedResult = after.getValue("items").jsonArray.single().jsonObject.getValue("attempts").jsonArray
+                    .single().jsonObject.getValue("feedback").jsonObject.getValue("result").jsonObject
+                assertEquals("curated-writing-feedback-v12", savedResult.getValue("policyVersion").jsonPrimitive.content)
+                assertEquals(3, calls)
                 assertEquals(after, Json.parseToJsonElement(get("/$setId").bodyAsText()))
-                assertEquals(2, calls)
+                assertEquals(3, calls)
             }
         }
     }
@@ -131,14 +140,14 @@ class CuratedWritingHttpDatabaseIntegrationTestFeedback {
             val manifest = CuratedWritingPlanFixtures.manifest(3)
             val snapshots = CuratedWritingStore(runner, manifest, clock)
             val failures = setOf("学習用回答7です。", "学習用回答14です。")
-            val failedOnce = mutableSetOf<String>()
             var calls = 0
             val model = ModelExecutionPort { command ->
                 calls++
                 val input = Json.parseToJsonElement(command.messages.single().content).jsonObject
-                val answer = input.getValue("learnerAnswer").jsonObject.getValue("text").jsonPrimitive.content
-                val inject = answer in failures && failedOnce.add(answer)
-                ModelExecutionResult(CuratedWritingFeedbackTestPayload.v8Response(input, invalid = inject),
+                val answer = CuratedWritingFeedbackTestPayload.answer(input)
+                val inject = answer in failures &&
+                    (command.traceId.endsWith("-1") || command.traceId.endsWith("-1-repair"))
+                ModelExecutionResult(CuratedWritingFeedbackTestPayload.v12Response(command, invalid = inject),
                     100, 50, "openai", "gpt-5-mini-2025-08-07")
             }
             val feedback = CuratedWritingFeedbackWorker(runner, snapshots, manifest.releaseId, model, clock)
@@ -190,12 +199,12 @@ class CuratedWritingHttpDatabaseIntegrationTestFeedback {
                         saved += entry
                     }
                 }
-                assertEquals(18, calls)
+                assertEquals(34, calls)
                 assertEquals(16, saved.size)
                 assertEquals(2, failed.size)
                 for ((user, setId, expected) in saved) assertEquals(expected,
                     Json.parseToJsonElement(get(user, "/$setId").bodyAsText()).jsonObject)
-                assertEquals(18, calls)
+                assertEquals(34, calls)
                 for ((user, setId, before) in failed) {
                     val old = before.getValue("items").jsonArray.single().jsonObject
                         .getValue("attempts").jsonArray.single().jsonObject
@@ -211,10 +220,10 @@ class CuratedWritingHttpDatabaseIntegrationTestFeedback {
                     assertEquals(1, after.getValue("feedbackCompletedItemCount").jsonPrimitive.int)
                     assertEquals(after, Json.parseToJsonElement(get(user, "/$setId").bodyAsText()).jsonObject)
                 }
-                assertEquals(20, calls)
+                assertEquals(38, calls)
                 for ((user, setId, expected) in saved) assertEquals(expected,
                     Json.parseToJsonElement(get(user, "/$setId").bodyAsText()).jsonObject)
-                assertEquals(20, calls)
+                assertEquals(38, calls)
             }
         }
     }

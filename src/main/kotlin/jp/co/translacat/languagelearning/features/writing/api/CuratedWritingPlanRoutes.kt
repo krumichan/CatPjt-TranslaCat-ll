@@ -115,6 +115,16 @@ internal fun Route.curatedWritingPlanRoutes(
                 store.submit(call.context(), call.publicId("itemId"), body.string("answer"), body.string("contentRevision"))
             }
         }
+        if (qaOnly) {
+            post("$PLAN_ROOT/items/{itemId}/replacement") {
+                call.planResult {
+                    val body = call.planBody()
+                    require(body.keys == setOf("requestKey", "contentRevision", "planRevision")) { "WRITING_REQUEST_INVALID" }
+                    store.replacePrepared(call.context(), call.publicId("itemId"), body.string("requestKey"),
+                        body.string("contentRevision"), body.integer("planRevision"))
+                }
+            }
+        }
         post("$PLAN_ROOT/answers/{answerId}/feedback/retry") {
             call.planResult {
                 require(call.planBody().isEmpty()) { "WRITING_REQUEST_INVALID" }
@@ -146,14 +156,15 @@ private suspend fun ApplicationCall.planResult(action: suspend () -> JsonObject)
         val code = failure.message.orEmpty()
         val status = when (code) {
             "WRITING_REQUEST_INVALID", "WRITING_TARGET_INVALID" -> HttpStatusCode.BadRequest
-            "WRITING_ITEM_NOT_FOUND", "WRITING_SET_NOT_FOUND", "WRITING_ANSWER_NOT_FOUND" -> HttpStatusCode.NotFound
+            "WRITING_ITEM_NOT_FOUND", "WRITING_SET_NOT_FOUND", "WRITING_ANSWER_NOT_FOUND",
+            "WRITING_PREPARATION_NOT_FOUND" -> HttpStatusCode.NotFound
             "WRITING_CONTENT_NOT_AVAILABLE", "WRITING_POLICY_CONFLICT", "WRITING_LANGUAGE_CONFLICT",
             "WRITING_RELEASE_CONFLICT", "WRITING_TARGET_CONFLICT", "WRITING_TARGET_SHRINK_NOT_ALLOWED",
             "WRITING_PLAN_STALE", "WRITING_SUPPLY_BUSY", "WRITING_SUPPLY_STALE", "WRITING_REVIEW_EXPIRED",
             "WRITING_ITEM_STALE", "WRITING_ANSWER_REQUIRED", "WRITING_ANSWER_NOT_ALLOWED", "LEVEL_TEST_REQUIRED",
             "WRITING_FEEDBACK_DISABLED", "WRITING_FEEDBACK_STALE", "WRITING_FEEDBACK_BUSY",
             "WRITING_FEEDBACK_UNCERTAIN", "WRITING_FEEDBACK_RETRY_LIMIT",
-            "WRITING_ACTIVITY_POLICY_CONFLICT" -> HttpStatusCode.Conflict
+            "WRITING_ACTIVITY_POLICY_CONFLICT", "WRITING_PREPARATION_CONFLICT" -> HttpStatusCode.Conflict
             else -> throw failure
         }
         respond(status, InternalApiError(code, "Writing 계획 요청을 처리할 수 없습니다."))

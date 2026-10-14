@@ -37,7 +37,19 @@ internal class CuratedWritingGenerationStore(
             return@write Claim(existing[CuratedGenerationTable.id], existing[CuratedGenerationTable.status], false,
                 Json.parseToJsonElement(existing[CuratedGenerationTable.requestJson]).jsonObject)
         }
+        // 결과를 아직 모르는 B2 요청이 있으면 다른 키로 같은 유한 코어를 중복 선택하지 않는다.
+        if (type == WritingType.TRANSLATION && band == 2) {
+            require(CuratedGenerationTable.selectAll().where {
+                (CuratedGenerationTable.userId eq user) and
+                    (CuratedGenerationTable.status inList listOf("RUNNING", "UNCERTAIN"))
+            }.none { pending ->
+                val pendingInput = Json.parseToJsonElement(pending[CuratedGenerationTable.requestJson]).jsonObject
+                pendingInput["writingType"]?.jsonPrimitive?.content == "TRANSLATION" &&
+                    pendingInput["targetBand"]?.jsonPrimitive?.int == 2
+            }) { "WRITING_PREPARATION_CONFLICT" }
+        }
         // 국소 수정은 같은 소유자의 저장 콘텐츠 한 건에서 한 번만 허용한다. 원본은 수정하지 않는다.
+        var repairReasonCodes = emptyList<String>()
         val repairContent = if (repairOf != null) {
             val original = find(user, repairOf) ?: error("WRITING_PREPARATION_NOT_FOUND")
             val originalInput = Json.parseToJsonElement(original[CuratedGenerationTable.requestJson]).jsonObject
@@ -50,6 +62,7 @@ internal class CuratedWritingGenerationStore(
                 CuratedGenerationTable.userId eq user
             }.none { candidate -> Json.parseToJsonElement(candidate[CuratedGenerationTable.requestJson]).jsonObject[
                 "repairOfRequestKey"]?.jsonPrimitive?.content == repairOf }) { "WRITING_PREPARATION_REPAIR_LIMIT" }
+            repairReasonCodes = reasonCodes(original, originalInput)
             original[CuratedGenerationTable.outputJson]?.let { Json.parseToJsonElement(it) as? JsonObject }
                 ?: error("WRITING_PREPARATION_CONFLICT")
         } else null
@@ -58,10 +71,14 @@ internal class CuratedWritingGenerationStore(
                 it[CuratedGenerationTable.outputJson]?.let { raw -> Json.parseToJsonElement(raw) as? JsonObject }
             }
         // 일반 생성의 최근 12개 문맥은 유지하되, 유한 B2 코어 선택은 오래된 결과까지 중복 사용하지 않는다.
-        val recentPrompts = storedOutputs.take(12).mapNotNull { it?.get("prompt")?.jsonPrimitive?.contentOrNull }
-        val recentCoreIds = storedOutputs.mapNotNull { it?.get("coreId")?.jsonPrimitive?.contentOrNull }.toSet()
+        val recentPrompts = storedOutputs.take(12).mapNotNull { (it?.get("prompt") as? JsonPrimitive)
+            ?.takeIf { value -> value.isString }?.content }
+        val recentCoreIds = storedOutputs.mapNotNull { (it?.get("coreId") as? JsonPrimitive)
+            ?.takeIf { value -> value.isString }?.content }.toSet()
         val contentInput = CuratedWritingGenerationPolicy.input(type, band, topic, recentPrompts,
-            repairContent, repairNotes, recentCoreIds)
+            repairContent, repairNotes, recentCoreIds,
+            replaceCore = repairOf != null && type == WritingType.TRANSLATION && band == 2,
+            repairReasonCodes = repairReasonCodes)
         val input = if (repairOf == null) contentInput else JsonObject(contentInput +
             ("repairOfRequestKey" to JsonPrimitive(repairOf)))
         val id = UUID.randomUUID().toString()
@@ -141,7 +158,34 @@ internal class CuratedWritingGenerationStore(
     private fun find(user: Long, key: String): ResultRow? = CuratedGenerationTable.selectAll().where {
         (CuratedGenerationTable.userId eq user) and (CuratedGenerationTable.requestKey eq key)
     }.singleOrNull()
-    private fun render(row: ResultRow): JsonObject = buildJsonObject {
+    private fun render(row: ResultRow): JsonObject {
+        val input = Json.parseToJsonElement(row[CuratedGenerationTable.requestJson]).jsonObject
+        val status = row[CuratedGenerationTable.status]
+        val core = input["writingType"]?.jsonPrimitive?.content == "TRANSLATION" &&
+            input["targetBand"]?.jsonPrimitive?.int == 2
+        val ownerRows = CuratedGenerationTable.selectAll().where {
+            CuratedGenerationTable.userId eq row[CuratedGenerationTable.userId]
+        }.toList()
+        // 가능 여부는 현재 원본의 저장 상태와 한도에서 계산한다. 읽기에서 생성·복구를 실행하지 않는다.
+        val blocked = when {
+            "repairOfRequestKey" in input || ownerRows.any {
+                Json.parseToJsonElement(it[CuratedGenerationTable.requestJson]).jsonObject[
+                    "repairOfRequestKey"]?.jsonPrimitive?.content == row[CuratedGenerationTable.requestKey]
+            } -> "REPAIR_LIMIT"
+            status !in setOf("SUCCEEDED", "FAILED") -> "NOT_FINISHED"
+            row[CuratedGenerationTable.outputJson]?.let { Json.parseToJsonElement(it) as? JsonObject } == null -> "NO_SAVED_CONTENT"
+            core && CuratedWritingB2Core.replacementOptions(input.getValue("topic").jsonPrimitive.content,
+                ownerRows.mapNotNull {
+                    it[CuratedGenerationTable.outputJson]?.let { raw ->
+                        ((Json.parseToJsonElement(raw) as? JsonObject)?.get("coreId") as? JsonPrimitive)
+                            ?.takeIf { value -> value.isString }?.content
+                    }
+                }.toSet()).isEmpty() -> "CONTENT_EXHAUSTED"
+            else -> null
+        }
+        val candidate = if (status == "SUCCEEDED") CuratedWritingManifestCodec.parse(
+            checkNotNull(row[CuratedGenerationTable.manifestJson])).items.single() else null
+        return buildJsonObject {
         put("requestKey", row[CuratedGenerationTable.requestKey]); put("preparationId", row[CuratedGenerationTable.id])
         put("status", row[CuratedGenerationTable.status]); put("policyVersion", row[CuratedGenerationTable.policyVersion])
         put("catalogId", row[CuratedGenerationTable.catalogId]); put("reviewStatus", "DRAFT"); put("qaOnly", true)
@@ -149,6 +193,47 @@ internal class CuratedWritingGenerationStore(
         put("provider", row[CuratedGenerationTable.provider]?.let(::JsonPrimitive) ?: JsonNull)
         put("model", row[CuratedGenerationTable.model]?.let(::JsonPrimitive) ?: JsonNull)
         put("requiresReconciliation", row[CuratedGenerationTable.status] in setOf("RUNNING", "UNCERTAIN"))
+        put("writingType", input.getValue("writingType"))
+        put("targetBand", input.getValue("targetBand"))
+        put("topicKey", input.getValue("topic"))
+        put("repairOfRequestKey", input["repairOfRequestKey"] ?: JsonNull)
+        put("repairNotes", input["repairNotes"] ?: JsonNull)
+        put("repairMode", if (core) "CORE_REPLACEMENT" else "CONTENT_REPAIR")
+        put("canRepair", blocked == null)
+        put("repairBlockedReason", blocked?.let(::JsonPrimitive) ?: JsonNull)
+        put("quality", buildJsonObject {
+            put("contractStatus", when (status) { "SUCCEEDED" -> "PASSED"; "FAILED" -> "FAILED"; else -> "PENDING" })
+            put("semanticStatus", "NOT_REVIEWED")
+            put("humanReview", "NOT_PERFORMED")
+            put("releaseStatus", "QA_ONLY")
+            put("reasonCodes", JsonArray(reasonCodes(row, input).map(::JsonPrimitive)))
+        })
+        // 첫 제출 전 응답에는 참고 답안·검사용 예시·실력 판정 근거를 포함하지 않는다.
+        put("candidate", candidate?.let { item -> buildJsonObject {
+            put("catalogId", item.id)
+            put("contentHash", item.contentHash)
+            put("writingType", item.writingType.name)
+            put("targetBand", item.band)
+            put("topicKey", item.topicKey)
+            put("prompt", item.prompt)
+            put("providedFacts", JsonArray(item.providedFacts.map(::JsonPrimitive)))
+            put("requiredIntents", JsonArray(item.requiredIntents.map(::JsonPrimitive)))
+            put("responseConstraints", JsonArray(item.responseConstraints.map(::JsonPrimitive)))
+            put("visibleRequirements", JsonArray(item.visibleRequirements.map(::JsonPrimitive)))
+        } } ?: JsonNull)
+        }
+    }
+
+    private fun reasonCodes(row: ResultRow, input: JsonObject): List<String> = buildList {
+        add("AUTOMATED_CHECK_ONLY")
+        if (input["writingType"]?.jsonPrimitive?.content == "TRANSLATION" &&
+            input["targetBand"]?.jsonPrimitive?.int == 2) add("CORE_CONTENT_FIXED")
+        when (row[CuratedGenerationTable.status]) {
+            "FAILED" -> add(if (row[CuratedGenerationTable.failureCode]?.let {
+                it.startsWith("WRITING_GENERATION_") || it.startsWith("WRITING_B2_CORE_")
+            } == true) "CONTENT_CHECK_FAILED" else "PROVIDER_FAILED")
+            "RUNNING", "UNCERTAIN" -> add("EXECUTION_UNCERTAIN")
+        }
     }
     private fun now(): LocalDateTime = LocalDateTime.ofInstant(clock.instant(), ZoneOffset.UTC).truncatedTo(ChronoUnit.MICROS)
 }

@@ -58,7 +58,12 @@ class CuratedWritingStoreIntegrationTestGeneration {
         // 검증: 소유자/문맥 불일치와 두 번째 수정은 호출 전 거절하고 원본 결과를 보존한다.
         assertEquals("SUCCEEDED", repaired["status"]?.jsonPrimitive?.content)
         assertNotEquals(original["catalogId"], repaired["catalogId"])
-        assertEquals(original, store.get(71006, "original"))
+        val afterRepair = store.get(71006, "original")
+        // 응답의 수정 가능 상태만 사용된 한도를 반영하며 원본 콘텐츠·식별자·관측은 보존한다.
+        assertEquals(JsonObject(original - setOf("canRepair", "repairBlockedReason")),
+            JsonObject(afterRepair - setOf("canRepair", "repairBlockedReason")))
+        assertFalse(afterRepair.getValue("canRepair").jsonPrimitive.boolean)
+        assertEquals("REPAIR_LIMIT", afterRepair.getValue("repairBlockedReason").jsonPrimitive.content)
         assertFailsWith<IllegalStateException> {
             service.prepare(71007, "foreign", WritingType.FREE, 3, "library-plan", "original", "한국어 설명만 바로잡으세요.")
         }
@@ -158,6 +163,11 @@ class CuratedWritingStoreIntegrationTestGeneration {
         // 실행 / 검증
         val failed = service.prepare(71004, "invalid", WritingType.FREE, 3, "library-plan")
         assertEquals("FAILED", failed.getValue("status").jsonPrimitive.content)
+        assertTrue(failed.getValue("canRepair").jsonPrimitive.boolean)
+        assertEquals(JsonNull, failed.getValue("candidate"))
+        assertEquals("FAILED", failed.getValue("quality").jsonObject.getValue("contractStatus").jsonPrimitive.content)
+        assertEquals(listOf("AUTOMATED_CHECK_ONLY", "CONTENT_CHECK_FAILED"),
+            failed.getValue("quality").jsonObject.getValue("reasonCodes").jsonArray.map { it.jsonPrimitive.content })
         assertEquals(failed, service.prepare(71004, "invalid", WritingType.FREE, 3, "library-plan"))
         assertEquals(1, calls)
         runner.read {
@@ -180,6 +190,10 @@ class CuratedWritingStoreIntegrationTestGeneration {
         // 실행 / 검증
         val uncertain = service.prepare(71005, "uncertain", WritingType.TRANSLATION, 3, "library-plan")
         assertEquals("UNCERTAIN", uncertain.getValue("status").jsonPrimitive.content)
+        assertFalse(uncertain.getValue("canRepair").jsonPrimitive.boolean)
+        assertEquals("NOT_FINISHED", uncertain.getValue("repairBlockedReason").jsonPrimitive.content)
+        assertEquals(listOf("AUTOMATED_CHECK_ONLY", "EXECUTION_UNCERTAIN"),
+            uncertain.getValue("quality").jsonObject.getValue("reasonCodes").jsonArray.map { it.jsonPrimitive.content })
         assertEquals(uncertain, service.prepare(71005, "uncertain", WritingType.TRANSLATION, 3, "library-plan"))
         store.prepare(71005, "process-lost", WritingType.FREE, 3, "library-plan")
         assertEquals("RUNNING", service.prepare(71005, "process-lost", WritingType.FREE, 3, "library-plan").getValue("status").jsonPrimitive.content)
@@ -222,6 +236,96 @@ class CuratedWritingStoreIntegrationTestGeneration {
             assertEquals(3L, CuratedCatalogTable.selectAll().count())
             assertEquals(3L, CuratedGenerationTable.selectAll().count())
         }
+    }
+
+    @Test
+    fun `미확정 B2 선택은 다른 키로 유한 코어를 동시에 소비하지 못한다`() = withDatabase { runner ->
+        // 준비: 실제 호출 결과가 없거나 불명확한 원본 요청을 같은 owner에 저장한다.
+        val snapshots = CuratedWritingStore(runner, manifest, clock)
+        val store = CuratedWritingGenerationStore(runner, snapshots, manifest.releaseId, clock)
+        store.prepare(71025, "pending-core", WritingType.TRANSLATION, 2, "home-task")
+        val service = CuratedWritingGenerationService(store,
+            ModelExecutionPort { error("중복 코어 선택 전에 거절해야 합니다") }, clock)
+
+        // 실행 / 검증: 같은 키는 조회하지만 새 키는 호출 전에 거절한다.
+        assertEquals("RUNNING", service.prepare(71025, "pending-core", WritingType.TRANSLATION, 2,
+            "home-task").getValue("status").jsonPrimitive.content)
+        assertFailsWith<IllegalArgumentException> {
+            service.prepare(71025, "other-key", WritingType.TRANSLATION, 2, "library-use")
+        }.also { assertEquals("WRITING_PREPARATION_CONFLICT", it.message) }
+        store.fail(71025, "pending-core", "MODEL_EXECUTION_TRANSPORT", uncertain = true)
+        assertFailsWith<IllegalArgumentException> {
+            service.prepare(71025, "ambiguous-retry", WritingType.TRANSLATION, 2, "library-use")
+        }.also { assertEquals("WRITING_PREPARATION_CONFLICT", it.message) }
+        runner.read { assertEquals(1L, CuratedGenerationTable.selectAll().count()) }
+    }
+
+    @Test
+    fun `B2 의미 대체는 서버 사유를 보존하고 다른 주제 후보만 한 번 생성한다`() = withDatabase { runner ->
+        // 준비: 원본 모델 응답과 manifest를 비교용으로 저장하고 합성 모델은 허용 옵션만 선택한다.
+        val snapshots = CuratedWritingStore(runner, manifest, clock)
+        val store = CuratedWritingGenerationStore(runner, snapshots, manifest.releaseId, clock)
+        var calls = 0
+        var repairInput: JsonObject? = null
+        val service = CuratedWritingGenerationService(store, ModelExecutionPort { command ->
+            calls++
+            val input = Json.parseToJsonElement(command.messages.single().content).jsonObject
+            if ("repairOfRequestKey" in input) repairInput = input
+            ModelExecutionResult(buildJsonObject {
+                put("coreId", input.getValue("allowedCoreIds").jsonArray.first())
+            }, 20, 10, "openai", "gpt-5.6-luna")
+        }, clock)
+        val original = service.prepare(71023, "meaning-original", WritingType.TRANSLATION, 2, "home-task")
+        val originalSaved = runner.read {
+            CuratedGenerationTable.selectAll().single().let { row ->
+                listOf(row[CuratedGenerationTable.requestJson], row[CuratedGenerationTable.outputJson],
+                    row[CuratedGenerationTable.manifestJson], row[CuratedGenerationTable.requestHash])
+            }
+        }
+        val notes = "원문 뜻이 모호해서 다른 상황의 문제를 보고 싶습니다."
+
+        // 실행: 명시적인 한 번 대체 뒤 재전송과 재시작 조회는 모델을 더 호출하지 않는다.
+        val replacement = service.prepare(71023, "meaning-replacement", WritingType.TRANSLATION, 2,
+            "home-task", "meaning-original", notes)
+        assertEquals(replacement, service.prepare(71023, "meaning-replacement", WritingType.TRANSLATION, 2,
+            "home-task", "meaning-original", notes))
+        val restarted = CuratedWritingGenerationService(
+            CuratedWritingGenerationStore(runner, snapshots, manifest.releaseId, clock),
+            ModelExecutionPort { error("저장된 의미 대체의 조회는 모델을 호출하면 안 됩니다") }, clock)
+        assertEquals(replacement, restarted.get(71023, "meaning-replacement"))
+
+        // 검증: 요청 주제와 실제 새 주제를 구분하고 사유·원본·사람 미검수를 진실하게 보존한다.
+        assertEquals(2, calls)
+        assertEquals("CORE_REPLACEMENT", replacement.getValue("repairMode").jsonPrimitive.content)
+        assertEquals("home-task", replacement.getValue("topicKey").jsonPrimitive.content)
+        assertNotEquals("home-task", replacement.getValue("candidate").jsonObject.getValue("topicKey").jsonPrimitive.content)
+        assertEquals(notes, replacement.getValue("repairNotes").jsonPrimitive.content)
+        assertEquals(original.getValue("quality").jsonObject.getValue("reasonCodes"),
+            checkNotNull(repairInput).getValue("repairReasonCodes"))
+        val quality = replacement.getValue("quality").jsonObject
+        assertEquals("PASSED", quality.getValue("contractStatus").jsonPrimitive.content)
+        assertEquals("NOT_REVIEWED", quality.getValue("semanticStatus").jsonPrimitive.content)
+        assertEquals("NOT_PERFORMED", quality.getValue("humanReview").jsonPrimitive.content)
+        assertEquals("QA_ONLY", quality.getValue("releaseStatus").jsonPrimitive.content)
+        assertTrue(replacement.getValue("candidate").jsonObject.keys.none {
+            it in setOf("referenceAnswers", "clearError", "boundaryAnswer", "validAlternative", "levelEvidence", "score")
+        })
+        assertEquals("REPAIR_LIMIT", restarted.get(71023, "meaning-original").getValue("repairBlockedReason").jsonPrimitive.content)
+        runner.read {
+            val row = CuratedGenerationTable.selectAll().where {
+                CuratedGenerationTable.requestKey eq "meaning-original"
+            }.single()
+            assertEquals(originalSaved, listOf(row[CuratedGenerationTable.requestJson], row[CuratedGenerationTable.outputJson],
+                row[CuratedGenerationTable.manifestJson], row[CuratedGenerationTable.requestHash]))
+            val newId = replacement.getValue("catalogId").jsonPrimitive.content
+            assertTrue(snapshots.eligible("ko", "ja", WritingType.TRANSLATION, 71023).any { it.id == newId })
+            assertFalse(snapshots.eligible("ko", "ja", WritingType.TRANSLATION, 71024).any { it.id == newId })
+        }
+        assertFailsWith<IllegalArgumentException> {
+            service.prepare(71023, "meaning-third", WritingType.TRANSLATION, 2,
+                "home-task", "meaning-original", notes)
+        }.also { assertEquals("WRITING_PREPARATION_REPAIR_LIMIT", it.message) }
+        assertEquals(2, calls)
     }
 
     @Test

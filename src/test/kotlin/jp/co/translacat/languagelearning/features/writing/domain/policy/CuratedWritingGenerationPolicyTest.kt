@@ -120,6 +120,79 @@ class CuratedWritingGenerationPolicyTest {
     }
 
     @Test
+    fun `새 생성과 국소 복구는 공개 의미 기준을 선언하고 출력 schema와 저장 결과는 보존한다`() {
+        // 준비: 고정 코어를 쓰지 않는 세 유형의 신규 요청과 복구 요청을 비교한다.
+        WritingType.entries.forEach { type ->
+            val ordinary = CuratedWritingGenerationPolicy.input(type, 3, "library-plan", emptyList())
+            val repair = CuratedWritingGenerationPolicy.input(type, 3, "library-plan", emptyList(),
+                content(type), "경계 답안의 근거를 공개 조건과 비교해 주세요.")
+            val legacy = JsonObject(ordinary - "semanticCriteriaVersion")
+
+            // 실행: 새 계약의 모델 지시는 공유 기준을 포함하되 기존 콘텐츠 스키마를 바꾸지 않는다.
+            val instructions = CuratedWritingGenerationPolicy.instructions(ordinary)
+            val currentManifest = CuratedWritingGenerationPolicy.assemble(content(type), "gen-criteria-fixture",
+                "qa-generation-v1", type, 3, "library-plan", ordinary)
+            val legacyManifest = CuratedWritingGenerationPolicy.assemble(content(type), "gen-criteria-fixture",
+                "qa-generation-v1", type, 3, "library-plan", legacy)
+
+            // 검증: 기준 선언은 모델 입력에만 있고 승인·점수·문항 내용에 추가되지 않는다.
+            assertEquals(JsonPrimitive(CuratedWritingSemanticCriteria.version), ordinary["semanticCriteriaVersion"])
+            assertEquals(ordinary["semanticCriteriaVersion"], repair["semanticCriteriaVersion"])
+            assertTrue(instructions.contains(CuratedWritingSemanticCriteria.instructions))
+            assertEquals(instructions, CuratedWritingGenerationPolicy.instructions(repair))
+            assertEquals(CuratedWritingGenerationPolicy.schema(legacy), CuratedWritingGenerationPolicy.schema(ordinary))
+            assertEquals(legacyManifest, currentManifest)
+        }
+    }
+
+    @Test
+    fun `기존 저장 일반 생성과 복구 및 B2 선택의 지시는 원본 hash를 유지한다`() {
+        // 준비: 변경 직전 저장 계약의 지시문 hash를 고정하여 과거 요청이 새 기준으로 바뀌지 않게 한다.
+        val legacy = buildJsonObject {
+            put("writingType", "GUIDED"); put("targetBand", 3)
+            put("originLanguage", "ko"); put("learningLanguage", "ja")
+            put("topic", "community-workshop"); put("recentPromptsToAvoid", buildJsonArray {})
+        }
+        val legacyRepair = JsonObject(legacy + mapOf(
+            "repairCandidateContent" to content(WritingType.GUIDED),
+            "repairNotes" to JsonPrimitive("예전 요청에 저장한 보고입니다."),
+        ))
+        val core = CuratedWritingGenerationPolicy.input(WritingType.TRANSLATION, 2, "clinic-appointment", emptyList())
+        val replacement = CuratedWritingGenerationPolicy.input(WritingType.TRANSLATION, 2, "clinic-appointment",
+            emptyList(), buildJsonObject { put("coreId", "clinic-appointment-mon") }, "다른 주제를 원합니다.",
+            replaceCore = true)
+
+        // 실행 / 검증: 일반 생성과 B2 두 경로의 기존 지시를 그대로 재현하고 입력도 변형하지 않는다.
+        listOf(legacy, legacyRepair).forEach { input ->
+            val before = input.toString()
+            assertEquals("d39dbb232d683b35dd4fbce728be21e4cbba1c48fe5f90f09ea3b507b7e76bf1",
+                CuratedWritingManifestCodec.sha256(CuratedWritingGenerationPolicy.instructions(input)))
+            assertEquals(before, input.toString())
+        }
+        assertFalse("semanticCriteriaVersion" in core)
+        assertFalse("semanticCriteriaVersion" in replacement)
+        assertEquals("2877abdcd957cbdfd393df46b4f29bc3bbf64b728b3f4a892092e36b9209d6fd",
+            CuratedWritingManifestCodec.sha256(CuratedWritingGenerationPolicy.instructions(core)))
+        assertEquals("9d30519477bc19a221ba232d3ad9931c257a79bf9dc3ead0105a1676b2dbb57c",
+            CuratedWritingManifestCodec.sha256(CuratedWritingGenerationPolicy.instructions(replacement)))
+    }
+
+    @Test
+    fun `알 수 없거나 손상된 의미 기준은 다른 지시로 폴백하지 않는다`() {
+        // 준비: 저장 버전을 알아볼 수 없는 경우 유료 실행 전에 중단해야 한다.
+        val input = CuratedWritingGenerationPolicy.input(WritingType.FREE, 3, "library-plan", emptyList())
+        val invalid = listOf(JsonPrimitive("public-meaning-unknown"), JsonPrimitive(1), JsonNull, buildJsonObject {})
+
+        // 실행 / 검증: 빈 값과 다른 타입도 이전 지시로 숨기지 않는다.
+        invalid.forEach { version ->
+            val failure = assertFailsWith<IllegalArgumentException> {
+                CuratedWritingGenerationPolicy.instructions(JsonObject(input + ("semanticCriteriaVersion" to version)))
+            }
+            assertEquals("WRITING_GENERATION_SEMANTIC_CRITERIA_INVALID", failure.message)
+        }
+    }
+
+    @Test
     fun `B2 고정 골격의 스무 변형은 날짜와 핵심 사실을 보존한 DRAFT로 조립된다`() {
         // 준비: 기존 다섯 골격과 이유·요청·조건·대조를 더한 다섯 골격을 각각 검사한다.
         val topics = listOf("home-task", "library-use", "public-transport", "community-meeting", "weekend-plan",
@@ -191,6 +264,10 @@ class CuratedWritingGenerationPolicyTest {
             buildJsonObject { put("coreId", ids.first()) }, "날짜 표현을 더 명확하게 선택하세요.")
         assertEquals(listOf(ids.last()), repair.getValue("allowedCoreIds").jsonArray.map { it.jsonPrimitive.content })
         assertEquals("날짜 표현을 더 명확하게 선택하세요.", repair.getValue("repairNotes").jsonPrimitive.content)
+        // 옛 저장 입력에는 새 의미 대체 버전이 없으므로 같은 주제 조립 계약을 그대로 적용한다.
+        val legacyRepair = CuratedWritingGenerationPolicy.assemble(buildJsonObject { put("coreId", ids.last()) },
+            "gen-legacy-repair", "qa-generation-v1", WritingType.TRANSLATION, 2, topic, repair)
+        assertEquals(topic, CuratedWritingManifestCodec.parse(legacyRepair.toString()).items.single().topicKey)
         val exhausted = assertFailsWith<IllegalArgumentException> {
             CuratedWritingGenerationPolicy.input(WritingType.TRANSLATION, 2, topic, emptyList(),
                 recentCoreIds = ids.toSet())
@@ -200,6 +277,79 @@ class CuratedWritingGenerationPolicyTest {
             CuratedWritingGenerationPolicy.input(WritingType.TRANSLATION, 2, "unknown-topic", emptyList())
         }
         assertEquals("WRITING_REQUEST_INVALID", unsupported.message)
+    }
+
+    @Test
+    fun `B2 의미 대체는 원본 주제와 사용 코어를 제외하고 선택한 실제 주제로 조립한다`() {
+        // 준비: 날짜 교체로 해결할 수 없는 사용자 보고와 서버 관측은 서로 구분해서 전달한다.
+        val topic = "library-use"
+        val originalId = CuratedWritingB2Core.ids(topic).first()
+        val usedId = CuratedWritingB2Core.ids("home-task").first()
+        val original = buildJsonObject { put("coreId", originalId) }
+        val rawInput = CuratedWritingGenerationPolicy.input(WritingType.TRANSLATION, 2, topic, emptyList(),
+            original, "참고 답안의 의미가 맞는지 걱정됩니다.", setOf(originalId, usedId),
+            replaceCore = true, repairReasonCodes = listOf("AUTOMATED_CHECK_ONLY", "CORE_CONTENT_FIXED"))
+        val input = JsonObject(rawInput + ("repairOfRequestKey" to JsonPrimitive("original")))
+
+        // 실행: 허용된 다른 의미 골격만 고르고 원본 콘텐츠는 그대로 남긴다.
+        val options = input.getValue("coreOptions").jsonArray.map { it.jsonObject }
+        val selected = options.first()
+        val manifest = CuratedWritingGenerationPolicy.assemble(buildJsonObject {
+            put("coreId", selected.getValue("coreId"))
+        }, "gen-replacement", "qa-generation-v1", WritingType.TRANSLATION, 2, topic, input)
+        val item = CuratedWritingManifestCodec.parse(manifest.toString()).items.single()
+
+        // 검증: 서버 문구·조건을 비교할 수 있고 사용자 보고를 확정 결함이나 승인으로 바꾸지 않는다.
+        assertEquals(17, options.size)
+        assertTrue(options.none { it.getValue("topicKey").jsonPrimitive.content == topic ||
+            it.getValue("coreId").jsonPrimitive.content == usedId })
+        assertTrue(options.all { it.getValue("prompt").jsonPrimitive.content.isNotBlank() &&
+            it.getValue("requirements").jsonArray.isNotEmpty() })
+        assertEquals(CuratedWritingB2Core.content(originalId, topic), input.getValue("repairCandidateContent"))
+        assertEquals(selected.getValue("topicKey").jsonPrimitive.content, item.topicKey)
+        assertNotEquals(topic, item.topicKey)
+        assertEquals(CuratedReviewStatus.DRAFT, item.status)
+        assertTrue(CuratedWritingGenerationPolicy.instructions(input).contains("unverified observations"))
+        assertFailsWith<IllegalArgumentException> {
+            CuratedWritingGenerationPolicy.assemble(original, "gen-forbidden", "qa-generation-v1",
+                WritingType.TRANSLATION, 2, topic, input)
+        }
+    }
+
+    @Test
+    fun `과거 자유 생성 B2 원본의 주제도 현재 코어로 의미 대체할 수 있다`() {
+        // 준비: 고정 코어 이전에 저장한 원본에는 coreId가 없고 주제도 현재 목록 밖일 수 있다.
+        val original = content(WritingType.TRANSLATION)
+        val input = JsonObject(CuratedWritingGenerationPolicy.input(WritingType.TRANSLATION, 2,
+            "legacy-library-plan", emptyList(), original, "다른 상황의 과제로 바꿔 주세요.",
+            replaceCore = true) + ("repairOfRequestKey" to JsonPrimitive("legacy-original")))
+
+        // 실행
+        val selected = input.getValue("allowedCoreIds").jsonArray.first()
+        val manifest = CuratedWritingGenerationPolicy.assemble(buildJsonObject { put("coreId", selected) },
+            "gen-legacy-replacement", "qa-generation-v1", WritingType.TRANSLATION, 2, "legacy-library-plan", input)
+
+        // 검증: 원본 자료는 그대로 제공하고 새 후보는 서버 코어의 실제 주제를 기록한다.
+        assertEquals(original, input.getValue("repairCandidateContent"))
+        assertEquals(20, input.getValue("allowedCoreIds").jsonArray.size)
+        assertEquals(CuratedWritingB2Core.topic(selected.jsonPrimitive.content),
+            CuratedWritingManifestCodec.parse(manifest.toString()).items.single().topicKey)
+    }
+
+    @Test
+    fun `B2 의미 대체 재고가 모두 소진되면 호출 입력을 만들지 않는다`() {
+        // 준비
+        val topic = "home-task"
+        val options = CuratedWritingB2Core.replacementOptions(topic, emptySet())
+        val used = options.map { it.jsonObject.getValue("coreId").jsonPrimitive.content }.toSet()
+
+        // 실행 / 검증
+        val failure = assertFailsWith<IllegalArgumentException> {
+            CuratedWritingGenerationPolicy.input(WritingType.TRANSLATION, 2, topic, emptyList(),
+                buildJsonObject { put("coreId", "home-task-sat") }, "다른 의미 과제를 원합니다.",
+                used, replaceCore = true)
+        }
+        assertEquals("WRITING_CONTENT_NOT_AVAILABLE", failure.message)
     }
 
     @Test

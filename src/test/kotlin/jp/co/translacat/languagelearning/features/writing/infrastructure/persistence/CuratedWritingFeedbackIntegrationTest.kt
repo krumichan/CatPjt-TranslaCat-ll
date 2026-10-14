@@ -24,6 +24,61 @@ class CuratedWritingStoreIntegrationTestFeedback {
     private val date = LocalDate.parse("2026-10-04")
 
     @Test
+    fun `v12는 비어 있지 않은 결함 초안만 한 번 복구하고 저장 후 조회에서는 재호출하지 않는다`() =
+        LocalScratchMysql.use { db -> DatabaseFactory(db.settings()).use { factory -> runBlocking {
+            val runner = JdbcTransactionRunner(factory.database, 4)
+            val manifest = CuratedWritingPlanFixtures.manifest(3)
+            val snapshots = CuratedWritingStore(runner, manifest, clock)
+            snapshots.importManifest()
+            val user = 9133L
+            ExposedWritingSetUnitOfWork(runner, clock).write(user) {
+                val now = LocalDateTime.ofInstant(clock.instant(), ZoneOffset.UTC)
+                growth.saveProfile(GrowthProfile(userId = user, state = "ACTIVE", baseLevelScore = 60.0,
+                    createdAt = now, updatedAt = now))
+            }
+            val traces = mutableListOf<String>()
+            val model = ModelExecutionPort { command ->
+                traces += command.traceId
+                val input = Json.parseToJsonElement(command.messages.single().content).jsonObject
+                val result = CuratedWritingFeedbackTestPayload.v12Response(command)
+                val payload = if (traces.size == 1) {
+                    val original = result.getValue("observations").jsonObject
+                    val first = original.keys.first()
+                    val broken = JsonObject(original.getValue(first).jsonObject +
+                        ("unitAssignments" to buildJsonObject {}))
+                    JsonObject(result + ("observations" to JsonObject(original + (first to broken))))
+                } else result
+                if (traces.size == 3) {
+                    assertTrue(command.traceId.endsWith("-repair"))
+                    assertTrue("repairDraftUntrusted" in input)
+                    assertTrue(input.getValue("repairIssues").jsonArray.isNotEmpty())
+                }
+                ModelExecutionResult(payload, 20, 10, "openai", "gpt-5-mini-2025-08-07")
+            }
+            val worker = CuratedWritingFeedbackWorker(runner, snapshots, manifest.releaseId, model, clock)
+            val plans = CuratedWritingPlanStore(runner, snapshots, manifest.releaseId, clock = clock, feedback = worker)
+            val request = CuratedWritingStore.Start(user, date, WritingType.TRANSLATION, "ko", "ja", false, true, 7)
+            val item = plans.start(request, 1, false).getValue("items").jsonArray.single().jsonObject
+            val saved = plans.submit(request, LearningPublicId.decode(item.getValue("itemId").jsonPrimitive.content),
+                "友達と参加しました。", item.getValue("contentRevision").jsonPrimitive.content)
+            val feedback = saved.getValue("items").jsonArray.single().jsonObject
+                .getValue("attempts").jsonArray.single().jsonObject.getValue("feedback").jsonObject
+            assertEquals(3, traces.size, feedback.toString())
+            assertEquals("SUCCEEDED", feedback.getValue("status").jsonPrimitive.content, feedback.toString())
+            assertEquals("curated-writing-feedback-v12", feedback.getValue("result").jsonObject
+                .getValue("policyVersion").jsonPrimitive.content)
+            assertEquals(3, traces.size)
+            assertTrue(traces[1].endsWith("-evidence"))
+            val setId = LearningPublicId.decode(saved.getValue("dailySetId").jsonPrimitive.content)
+            assertEquals(saved, plans.byId(user, setId, date, 7))
+            assertEquals(3, traces.size)
+            runner.read {
+                assertEquals(0L, WritingEvaluationsTable.selectAll().count())
+                assertEquals(0, GrowthProfilesTable.selectAll().single()[GrowthProfilesTable.evaluationCount])
+            }
+        } } }
+
+    @Test
     fun `지원하지 않는 v1 v2 실패는 원본을 보존하고 재시도를 표시하지 않는다`() {
         listOf("curated-writing-feedback-v1", "curated-writing-feedback-v2").forEach(::assertLegacyFailurePreserved)
     }
@@ -200,10 +255,11 @@ class CuratedWritingStoreIntegrationTestFeedback {
             val calls = mutableMapOf<String, Int>()
             val model = ModelExecutionPort { command ->
                 val input = Json.parseToJsonElement(command.messages.single().content).jsonObject
-                val answer = input.getValue("learnerAnswer").jsonObject.getValue("text").jsonPrimitive.content
+                val answer = CuratedWritingFeedbackTestPayload.answer(input)
                 calls[answer] = (calls[answer] ?: 0) + 1
-                val failure = answer.startsWith("失敗") && calls.getValue(answer) == 1
-                ModelExecutionResult(CuratedWritingFeedbackTestPayload.v8Response(input, failure),
+                val failure = answer.startsWith("失敗") &&
+                    (command.traceId.endsWith("-1") || command.traceId.endsWith("-1-repair"))
+                ModelExecutionResult(CuratedWritingFeedbackTestPayload.v12Response(command, failure),
                     200, 100, "openai", "gpt-5-mini-2025-08-07")
             }
             val worker = CuratedWritingFeedbackWorker(runner, snapshots, manifest.releaseId, model, clock)
@@ -222,7 +278,7 @@ class CuratedWritingStoreIntegrationTestFeedback {
             val setId = LearningPublicId.decode(started.getValue("dailySetId").jsonPrimitive.content)
             assertEquals(saved, plans.byId(user, setId, date, 7))
             assertEquals(1, saved.getValue("feedbackCompletedItemCount").jsonPrimitive.int)
-            assertEquals(listOf(1, 1, 1), answers.map { calls[it] })
+            assertEquals(listOf(2, 1, 1), answers.map { calls[it] })
             val before = saved.getValue("items").jsonArray.map { it.jsonObject }
             val answerIds = before.map { item -> LearningPublicId.decode(item.getValue("attempts").jsonArray.single()
                 .jsonObject.getValue("answerId").jsonPrimitive.content) }
@@ -262,7 +318,7 @@ class CuratedWritingStoreIntegrationTestFeedback {
             val first = items.first()
             plans.submit(request, LearningPublicId.decode(first.getValue("itemId").jsonPrimitive.content),
                 answers.first(), first.getValue("contentRevision").jsonPrimitive.content)
-            assertEquals(1, calls[answers.first()])
+            assertEquals(2, calls[answers.first()])
 
             // 실행: 실패한 두 답안만 명시적으로 재시도한다.
             answerIds.drop(1).forEach { plans.retryFeedback(request, it) }
@@ -270,7 +326,7 @@ class CuratedWritingStoreIntegrationTestFeedback {
 
             // 검증: 정상 답안/결과 hash와 세 답안, 공식 점수·평가 행을 보존한다.
             assertEquals(3, complete.getValue("feedbackCompletedItemCount").jsonPrimitive.int)
-            assertEquals(listOf(1, 2, 2), answers.map { calls[it] })
+            assertEquals(listOf(2, 3, 3), answers.map { calls[it] })
             assertEquals(before.map { it.getValue("originText") }, complete.getValue("items").jsonArray.map { it.jsonObject.getValue("originText") })
             runner.read {
                 assertEquals(3L, CuratedAnswersTable.selectAll().count())

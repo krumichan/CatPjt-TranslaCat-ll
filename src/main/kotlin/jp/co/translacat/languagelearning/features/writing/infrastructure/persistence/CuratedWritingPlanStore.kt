@@ -243,6 +243,82 @@ internal class CuratedWritingPlanStore(
     suspend fun restore(request: CuratedWritingStore.Start, id: Long, revision: Int): JsonObject =
         completeSupply(request, claimSupply(request, id, revision))
 
+    suspend fun replacePrepared(request: CuratedWritingStore.Start, itemId: Long, requestKey: String,
+                                contentRevision: String, planRevision: Int): JsonObject = transactions.write {
+        // 준비와 적용을 분리한다. 이 명령은 저장한 소유 후보만 사용하며 모델을 호출하지 않는다.
+        require(request.qaOnly) { "WRITING_POLICY_CONFLICT" }
+        require(requestKey.matches(Regex("[a-zA-Z0-9._-]{1,80}"))) { "WRITING_REQUEST_INVALID" }
+        val now = nowUtc()
+        ExposedWritingSetUnitOfWork.lockCurrentOwner(request.userId, now)
+        val item = snapshots.findItem(request.userId, itemId) ?: error("WRITING_ITEM_NOT_FOUND")
+        val set = owned(request, item[CuratedItemsTable.setId], planRevision, checkRevision = false)
+        val replay = CuratedWritingReplacementTable.selectAll().where {
+            (CuratedWritingReplacementTable.userId eq request.userId) and
+                (CuratedWritingReplacementTable.requestKey eq requestKey)
+        }.singleOrNull()
+        if (replay != null) {
+            require(replay[CuratedWritingReplacementTable.itemId] == itemId &&
+                replay[CuratedWritingReplacementTable.originalRevision] == contentRevision &&
+                replay[CuratedWritingReplacementTable.originalPlanRevision] == planRevision &&
+                replay[CuratedWritingReplacementTable.replacementRevision] == item[CuratedItemsTable.contentRevision]) {
+                "WRITING_ITEM_STALE"
+            }
+            return@write render(set, request.userId, request.date, request.reviewDays)
+        }
+        require(set[CuratedSetsTable.planRevision] == planRevision && planRevision < Int.MAX_VALUE) { "WRITING_PLAN_STALE" }
+        require(item[CuratedItemsTable.contentRevision] == contentRevision) { "WRITING_ITEM_STALE" }
+        require(set[CuratedSetsTable.supplyLeaseUntil]?.isAfter(now) != true) { "WRITING_SUPPLY_BUSY" }
+        require(snapshots.setAnswers(request.userId, listOf(itemId)).isEmpty()) { "WRITING_ANSWER_NOT_ALLOWED" }
+
+        // 원본과 새 후보의 소유권·연결·언어·band를 검증한다. 임의 후보나 다른 문항의 repair는 적용하지 않는다.
+        val prepared = CuratedGenerationTable.selectAll().where {
+            (CuratedGenerationTable.userId eq request.userId) and (CuratedGenerationTable.requestKey eq requestKey) and
+                (CuratedGenerationTable.status eq "SUCCEEDED")
+        }.singleOrNull() ?: error("WRITING_PREPARATION_NOT_FOUND")
+        val input = Json.parseToJsonElement(prepared[CuratedGenerationTable.requestJson]).jsonObject
+        val originalKey = input["repairOfRequestKey"]?.jsonPrimitive?.content ?: error("WRITING_PREPARATION_CONFLICT")
+        val original = CuratedGenerationTable.selectAll().where {
+            (CuratedGenerationTable.userId eq request.userId) and (CuratedGenerationTable.requestKey eq originalKey)
+        }.singleOrNull() ?: error("WRITING_PREPARATION_NOT_FOUND")
+        require(original[CuratedGenerationTable.catalogId] == item[CuratedItemsTable.catalogId]) { "WRITING_PREPARATION_CONFLICT" }
+        val candidate = snapshots.eligible(request.originLanguage, request.learningLanguage,
+            WritingType.valueOf(set[CuratedSetsTable.writingType]), request.userId)
+            .singleOrNull { it.id == prepared[CuratedGenerationTable.catalogId] } ?: error("WRITING_CONTENT_NOT_AVAILABLE")
+        require(candidate.releaseId == releaseId && candidate.band == item[CuratedItemsTable.targetBand]) { "WRITING_PREPARATION_CONFLICT" }
+        require(snapshots.setItems(request.userId, set[CuratedSetsTable.id]).none {
+            it[CuratedItemsTable.id] != itemId && it[CuratedItemsTable.semanticKey] == candidate.semanticKey
+        }) { "WRITING_CONTENT_NOT_AVAILABLE" }
+        val nextRevision = CuratedWritingManifestCodec.sha256("${candidate.contentHash}|$itemId|$requestKey")
+
+        // 기존 본문·정답·식별 정보를 먼저 보존하고 같은 트랜잭션에서 revision을 바꾼다.
+        val archive = buildJsonObject {
+            put("catalogId", item[CuratedItemsTable.catalogId]); put("catalogVersion", item[CuratedItemsTable.catalogVersion])
+            put("contentHash", item[CuratedItemsTable.contentHash]); put("semanticKey", item[CuratedItemsTable.semanticKey])
+            put("public", Json.parseToJsonElement(item[CuratedItemsTable.publicJson]))
+            put("private", Json.parseToJsonElement(item[CuratedItemsTable.privateJson]))
+            put("itemPolicyVersion", item[CuratedItemsTable.itemPolicyVersion]); put("createdAt", item[CuratedItemsTable.createdAt].toString())
+        }
+        CuratedWritingReplacementTable.insert {
+            it[userId] = request.userId; it[CuratedWritingReplacementTable.itemId] = itemId
+            it[CuratedWritingReplacementTable.requestKey] = requestKey; it[originalRevision] = contentRevision
+            it[replacementRevision] = nextRevision; it[originalPlanRevision] = planRevision
+            it[originalSnapshotJson] = archive.toString(); it[createdAt] = now
+        }
+        CuratedItemsTable.update({ (CuratedItemsTable.id eq itemId) and (CuratedItemsTable.userId eq request.userId) }) {
+            it[catalogId] = candidate.id; it[catalogVersion] = candidate.version; it[contentHash] = candidate.contentHash
+            it[semanticKey] = candidate.semanticKey; it[publicJson] = snapshots.publicContent(candidate).toString()
+            it[privateJson] = snapshots.privateContent(candidate).toString(); it[CuratedItemsTable.contentRevision] = nextRevision
+            it[updatedAt] = now
+        }
+        CuratedSetsTable.update({ CuratedSetsTable.id eq set[CuratedSetsTable.id] }) {
+            it[CuratedSetsTable.planRevision] = planRevision + 1
+            it[replacementCount] = set[CuratedSetsTable.replacementCount] + 1
+            it[completedSupplyToken] = null; it[updatedAt] = now
+        }
+        render(checkNotNull(snapshots.findSetById(request.userId, set[CuratedSetsTable.id])),
+            request.userId, request.date, request.reviewDays)
+    }
+
     suspend fun delete(request: CuratedWritingStore.Start, id: Long, revision: Int): JsonObject = transactions.write {
         ExposedWritingSetUnitOfWork.lockCurrentOwner(request.userId, nowUtc())
         val set = snapshots.findSetById(request.userId, id) ?: error("WRITING_SET_NOT_FOUND")
@@ -366,6 +442,10 @@ internal class CuratedWritingPlanStore(
             entry.jsonObject.getValue("attempts").jsonArray.lastOrNull()?.jsonObject
                 ?.get("feedback")?.jsonObject?.get("status")?.jsonPrimitive?.content == "SUCCEEDED"
         }
+        // 준비 요청은 소유자가 일치하는 저장 후보에만 연결한다. 복원 화면에서 추가 생성하지 않는다.
+        val preparationKeys = CuratedGenerationTable.selectAll().where {
+            (CuratedGenerationTable.userId eq userId) and (CuratedGenerationTable.status eq "SUCCEEDED")
+        }.associate { it[CuratedGenerationTable.catalogId] to it[CuratedGenerationTable.requestKey] }
         return JsonObject(original + measures(set[CuratedSetsTable.targetItemCount], decodeSlots(set), actual) + mapOf(
             "planRevision" to JsonPrimitive(set[CuratedSetsTable.planRevision]),
             "activity" to CuratedWritingActivity.publicState(userId, set[CuratedSetsTable.id]),
@@ -375,7 +455,9 @@ internal class CuratedWritingPlanStore(
             "supplyStopReason" to (set[CuratedSetsTable.supplyStopReason]?.let(::JsonPrimitive) ?: JsonNull),
             "items" to JsonArray(enriched.map { entry ->
                 val item = entry.jsonObject
-                JsonObject(item + ("workload" to buildJsonObject {
+                JsonObject(item + mapOf("preparationRequestKey" to
+                    (preparationKeys[item.getValue("catalogId").jsonPrimitive.content]?.let(::JsonPrimitive) ?: JsonNull),
+                    "workload" to buildJsonObject {
                     put("sourceCharacterCount", item.getValue("originText").jsonPrimitive.content.length)
                     put("estimatedAnswerCharacters", JsonNull)
                     put("estimateStatus", "NOT_SPECIFIED")

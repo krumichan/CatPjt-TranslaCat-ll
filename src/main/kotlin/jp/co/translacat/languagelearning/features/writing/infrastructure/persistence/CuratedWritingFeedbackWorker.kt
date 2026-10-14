@@ -7,6 +7,9 @@ import jp.co.translacat.languagelearning.features.writing.domain.policy.CuratedW
 import jp.co.translacat.languagelearning.features.writing.domain.policy.CuratedWritingFeedbackV6Policy
 import jp.co.translacat.languagelearning.features.writing.domain.policy.CuratedWritingFeedbackV7Policy
 import jp.co.translacat.languagelearning.features.writing.domain.policy.CuratedWritingFeedbackV9Policy
+import jp.co.translacat.languagelearning.features.writing.domain.policy.CuratedWritingFeedbackV10Policy
+import jp.co.translacat.languagelearning.features.writing.domain.policy.CuratedWritingFeedbackV11Policy
+import jp.co.translacat.languagelearning.features.writing.domain.policy.CuratedWritingFeedbackV12Policy
 import jp.co.translacat.languagelearning.features.writing.domain.policy.CuratedWritingManifestCodec
 import jp.co.translacat.languagelearning.features.writing.domain.model.WritingType
 import jp.co.translacat.languagelearning.features.learner.domain.exception.LearnerUnavailableException
@@ -134,6 +137,21 @@ internal class CuratedWritingFeedbackWorker(
                     CuratedWritingFeedbackV9Policy.instructions,
                     CuratedWritingFeedbackV9Policy.schema(context, claim.requirements, claim.segments),
                 )
+                CuratedWritingFeedbackV10Policy.version -> Triple(
+                    CuratedWritingFeedbackV10Policy.prompt(context, claim.reference, claim.answer, claim.requirements, claim.segments),
+                    CuratedWritingFeedbackV10Policy.instructions,
+                    CuratedWritingFeedbackV10Policy.schema(context, claim.requirements, claim.segments),
+                )
+                CuratedWritingFeedbackV11Policy.version -> Triple(
+                    CuratedWritingFeedbackV11Policy.prompt(context, claim.reference, claim.answer, claim.requirements, claim.segments),
+                    CuratedWritingFeedbackV11Policy.instructions,
+                    CuratedWritingFeedbackV11Policy.schema(context, claim.requirements, claim.segments),
+                )
+                CuratedWritingFeedbackV12Policy.version -> Triple(
+                    CuratedWritingFeedbackV11Policy.prompt(context, claim.reference, claim.answer, claim.requirements, claim.segments),
+                    CuratedWritingFeedbackV11Policy.instructions,
+                    CuratedWritingFeedbackV11Policy.schema(context, claim.requirements, claim.segments),
+                )
                 else -> error("WRITING_FEEDBACK_POLICY_UNSUPPORTED")
             }
             val output = model.execute(ModelExecutionCommand(
@@ -153,6 +171,7 @@ internal class CuratedWritingFeedbackWorker(
             require(output.provider == "openai" && output.model in setOf("gpt-5-mini", "gpt-5-mini-2025-08-07")) {
                 "WRITING_FEEDBACK_MODEL_CHANGED"
             }
+            val modelResults = mutableListOf(output)
             val feedback = when (claim.policyVersion) {
                 CuratedWritingFeedbackV3Policy.version -> CuratedWritingFeedbackV3Policy.validate(output.output, claim.requirements, claim.segments)
                 CuratedWritingFeedbackV4Policy.version -> CuratedWritingFeedbackV4Policy.validate(output.output, v4Context, claim.requirements, claim.segments)
@@ -161,10 +180,81 @@ internal class CuratedWritingFeedbackWorker(
                 CuratedWritingFeedbackV7Policy.version -> CuratedWritingFeedbackV7Policy.validate(output.output, v7Context, claim.requirements, claim.segments)
                 CuratedWritingFeedbackPolicy.version -> CuratedWritingFeedbackPolicy.validate(output.output, context, claim.requirements, claim.segments)
                 CuratedWritingFeedbackV9Policy.version -> CuratedWritingFeedbackV9Policy.validate(output.output, context, claim.requirements, claim.segments)
+                CuratedWritingFeedbackV10Policy.version -> CuratedWritingFeedbackV10Policy.validate(output.output, context, claim.requirements, claim.segments)
+                CuratedWritingFeedbackV11Policy.version -> CuratedWritingFeedbackV11Policy.validate(output.output, context, claim.requirements, claim.segments)
+                CuratedWritingFeedbackV12Policy.version -> {
+                    // 응답 전체가 비어 있으면 복구할 근거가 없다. 실패로 남겨 명시적 재시도 계약을 보존한다.
+                    require(output.output is JsonObject &&
+                        output.output.keys.containsAll(setOf("answerObservations", "observations",
+                            "necessaryCorrections", "optionalAlternatives", "uncertainties")) &&
+                        output.output["observations"] is JsonObject &&
+                        (output.output["observations"] as JsonObject).isNotEmpty() &&
+                        output.output["answerObservations"] is JsonArray &&
+                        (output.output["answerObservations"] as JsonArray).isNotEmpty()) {
+                        "WRITING_FEEDBACK_DRAFT_EMPTY"
+                    }
+
+                    // 원본 결과를 보지 않은 좁은 의미 검사를 별도로 실행해 거짓 충족 공개를 막는다.
+                    val evidence = model.execute(ModelExecutionCommand(
+                        traceId = "curated-feedback-$answerId-${claim.attempt}-evidence",
+                        instructions = CuratedWritingFeedbackV12Policy.independentInstructions,
+                        messages = listOf(ModelMessage("user", CuratedWritingFeedbackV12Policy.independentPrompt(
+                            context, claim.answer, claim.requirements,
+                        ))),
+                        tier = ModelTier.MINI,
+                        maxOutputTokens = 2200,
+                        deadlineUtc = clock.instant().plusSeconds(90),
+                        responseSchema = CuratedWritingFeedbackV12Policy.independentSchema(claim.requirements),
+                        schemaName = "writing_independent_evidence",
+                        strict = true,
+                        taskName = "LANGUAGE_LEARNING_CURATED_WRITING_FEEDBACK",
+                    ))
+                    require(evidence.provider == output.provider && evidence.model == output.model) {
+                        "WRITING_FEEDBACK_MODEL_CHANGED"
+                    }
+                    modelResults += evidence
+                    val independent = CuratedWritingFeedbackV12Policy.validateIndependent(
+                        evidence.output, claim.answer, claim.requirements,
+                    )
+                    val first = try {
+                        CuratedWritingFeedbackV12Policy.validateFinal(
+                            output.output, independent, context, claim.requirements, claim.segments,
+                        )
+                    } catch (_: IllegalArgumentException) {
+                        null
+                    }
+                    if (first != null) first else {
+                        // 최초 응답 실패의 구조 원인만 제시해 한 번 복구한다. 수정본도 같은 전체 검증기를 통과해야 한다.
+                        val issues = CuratedWritingFeedbackV12Policy.repairIssues(
+                            output.output, independent, context, claim.requirements,
+                        )
+                        val repair = model.execute(ModelExecutionCommand(
+                            traceId = "curated-feedback-$answerId-${claim.attempt}-repair",
+                            instructions = CuratedWritingFeedbackV12Policy.repairInstructions,
+                            messages = listOf(ModelMessage("user", CuratedWritingFeedbackV12Policy.repairPrompt(
+                                prompt, output.output, issues, independent,
+                            ))),
+                            tier = ModelTier.MINI,
+                            maxOutputTokens = 4096,
+                            deadlineUtc = clock.instant().plusSeconds(90),
+                            responseSchema = schema,
+                            schemaName = "curated_writing_feedback",
+                            strict = true,
+                            taskName = "LANGUAGE_LEARNING_CURATED_WRITING_FEEDBACK",
+                        ))
+                        require(repair.provider == output.provider && repair.model == output.model) {
+                            "WRITING_FEEDBACK_MODEL_CHANGED"
+                        }
+                        modelResults += repair
+                        CuratedWritingFeedbackV12Policy.validateFinal(
+                            repair.output, independent, context, claim.requirements, claim.segments,
+                        )
+                    }
+                }
                 else -> error("WRITING_FEEDBACK_POLICY_UNSUPPORTED")
             }
             Validated(claim.token, feedback, output.provider, output.model,
-                output.inputTokens, output.outputTokens)
+                modelResults.sumOf { it.inputTokens }, modelResults.sumOf { it.outputTokens })
         } catch (cancelled: CancellationException) {
             // 전송 결과가 불명인 취소를 자동 재전송하지 않는다.
             markFailure(request.userId, answerId, claim.token, "UNCERTAIN", "MODEL_CANCELLED")
@@ -211,7 +301,7 @@ internal class CuratedWritingFeedbackWorker(
                 "${item[CuratedItemsTable.contentRevision]}|${item[CuratedItemsTable.publicJson]}|${item[CuratedItemsTable.privateJson]}",
             )
             val requestHash = CuratedWritingManifestCodec.sha256(
-                "${request.userId}|$answerId|$answerHash|$sourceHash|${CuratedWritingFeedbackPolicy.version}",
+                "${request.userId}|$answerId|$answerHash|$sourceHash|${CuratedWritingFeedbackV12Policy.version}",
             )
             var row = CuratedWritingFeedbackTable.selectAll().where {
                 CuratedWritingFeedbackTable.answerId eq answerId
@@ -222,7 +312,8 @@ internal class CuratedWritingFeedbackWorker(
                     it[CuratedWritingFeedbackTable.itemId] = item[CuratedItemsTable.id]
                     it[setId] = set[CuratedSetsTable.id]
                     it[userId] = request.userId
-                    it[policyVersion] = CuratedWritingFeedbackPolicy.version
+                    // 새 답안만 새 의미 기준을 사용한다. 기존 성공·실패·재시도의 저장 정책은 아래에서 보존한다.
+                    it[policyVersion] = CuratedWritingFeedbackV12Policy.version
                     it[status] = "PENDING"
                     it[CuratedWritingFeedbackTable.answerHash] = answerHash
                     it[contentRevision] = item[CuratedItemsTable.contentRevision]
@@ -266,7 +357,7 @@ internal class CuratedWritingFeedbackWorker(
             CuratedWritingFeedbackTable.update({ CuratedWritingFeedbackTable.answerId eq answerId }) {
                 it[status] = "PROCESSING"
                 it[claimToken] = token
-                it[claimUntil] = now.plusSeconds(180)
+                it[claimUntil] = now.plusSeconds(if (storedPolicy == CuratedWritingFeedbackV12Policy.version) 330 else 180)
                 it[attemptCount] = attempt
                 it[failureCode] = null
                 it[updatedAt] = now
@@ -359,5 +450,7 @@ internal class CuratedWritingFeedbackWorker(
 
     private val supportedPolicies = setOf(CuratedWritingFeedbackV3Policy.version, CuratedWritingFeedbackV4Policy.version,
         CuratedWritingFeedbackV5Policy.version, CuratedWritingFeedbackV6Policy.version, CuratedWritingFeedbackV7Policy.version,
-        CuratedWritingFeedbackPolicy.version, CuratedWritingFeedbackV9Policy.version)
+        CuratedWritingFeedbackPolicy.version, CuratedWritingFeedbackV9Policy.version,
+        CuratedWritingFeedbackV10Policy.version, CuratedWritingFeedbackV11Policy.version,
+        CuratedWritingFeedbackV12Policy.version)
 }

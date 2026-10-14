@@ -192,9 +192,11 @@ class CuratedWritingStoreIntegrationTestActivity {
             val model = ModelExecutionPort { command ->
                 calls++
                 val input = Json.parseToJsonElement(command.messages.single().content).jsonObject
-                answerId = runner.read { CuratedAnswersTable.selectAll().single()[CuratedAnswersTable.id] }
-                plans.delete(req, setId, 1)
-                ModelExecutionResult(CuratedWritingFeedbackTestPayload.v8Response(input),
+                if (calls == 1) {
+                    answerId = runner.read { CuratedAnswersTable.selectAll().single()[CuratedAnswersTable.id] }
+                    plans.delete(req, setId, 1)
+                }
+                ModelExecutionResult(CuratedWritingFeedbackTestPayload.v12Response(command),
                     100, 50, "openai", "gpt-5-mini")
             }
             val worker = CuratedWritingFeedbackWorker(runner, snapshots, manifest.releaseId, model, clock)
@@ -206,8 +208,8 @@ class CuratedWritingStoreIntegrationTestActivity {
             assertFailsWith<IllegalStateException> { submit(plans, req, saved.items().single()) }
             assertFailsWith<IllegalStateException> { worker.retry(req, answerId) }
 
-            // 검증: 호출은 최초1회이고 답안·피드백·활동은 모두 삭제된 상태다.
-            assertEquals(1, calls)
+            // 검증: 이미 시작한 독립 검사 이후에도 삭제된 답안·활동을 복원하지 않는다.
+            assertEquals(2, calls)
             runner.read {
                 assertEquals(0L, CuratedSetsTable.selectAll().count())
                 assertEquals(0L, CuratedAnswersTable.selectAll().count())
