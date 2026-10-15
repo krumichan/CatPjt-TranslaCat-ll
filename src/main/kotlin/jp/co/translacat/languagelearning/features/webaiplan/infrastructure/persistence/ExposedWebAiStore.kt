@@ -1,4 +1,4 @@
-package jp.co.translacat.languagelearning.features.webaiplan.infrastructure
+package jp.co.translacat.languagelearning.features.webaiplan.infrastructure.persistence
 
 import jp.co.translacat.languagelearning.features.growth.application.GrowthProjector
 import jp.co.translacat.languagelearning.features.growth.domain.model.*
@@ -8,6 +8,7 @@ import jp.co.translacat.languagelearning.features.learner.infrastructure.persist
 import jp.co.translacat.languagelearning.features.settings.infrastructure.persistence.table.UserSettingsTable
 import jp.co.translacat.languagelearning.features.webaiplan.application.*
 import jp.co.translacat.languagelearning.features.webaiplan.domain.model.*
+import jp.co.translacat.languagelearning.features.webaiplan.infrastructure.persistence.table.*
 import jp.co.translacat.languagelearning.shared.persistence.transaction.JdbcTransactionRunner
 import kotlinx.serialization.json.*
 import org.jetbrains.exposed.v1.core.*

@@ -23,7 +23,7 @@ import jp.co.translacat.languagelearning.features.writing.application.WritingRea
 import jp.co.translacat.languagelearning.features.writing.application.WritingReportService
 import jp.co.translacat.languagelearning.features.writing.infrastructure.persistence.ExposedWritingReportQueries
 import jp.co.translacat.languagelearning.features.writing.infrastructure.persistence.ExposedWritingSetUnitOfWork
-import jp.co.translacat.languagelearning.features.webaiplan.infrastructure.ExposedWebAiStore
+import jp.co.translacat.languagelearning.features.webaiplan.infrastructure.persistence.ExposedWebAiStore
 import jp.co.translacat.languagelearning.shared.error.LearningBusinessException
 import jp.co.translacat.languagelearning.shared.persistence.transaction.JdbcTransactionRunner
 import kotlinx.serialization.json.Json

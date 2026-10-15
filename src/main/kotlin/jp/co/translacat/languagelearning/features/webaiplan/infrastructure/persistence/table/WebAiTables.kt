@@ -1,4 +1,4 @@
-package jp.co.translacat.languagelearning.features.webaiplan.infrastructure
+package jp.co.translacat.languagelearning.features.webaiplan.infrastructure.persistence.table
 
 import org.jetbrains.exposed.v1.core.Table
 import org.jetbrains.exposed.v1.javatime.datetime

@@ -8,7 +8,7 @@ import jp.co.translacat.languagelearning.features.keyword.application.KeywordOpe
 import jp.co.translacat.languagelearning.features.settings.application.SettingsServiceOperations
 import jp.co.translacat.languagelearning.features.webaiplan.api.webAiRoutes
 import jp.co.translacat.languagelearning.features.webaiplan.application.*
-import jp.co.translacat.languagelearning.features.webaiplan.infrastructure.ExposedWebAiStore
+import jp.co.translacat.languagelearning.features.webaiplan.infrastructure.persistence.ExposedWebAiStore
 import jp.co.translacat.languagelearning.features.webaiplan.domain.model.WebAiException
 import jp.co.translacat.languagelearning.shared.ai.*
 import jp.co.translacat.languagelearning.shared.persistence.transaction.JdbcTransactionRunner

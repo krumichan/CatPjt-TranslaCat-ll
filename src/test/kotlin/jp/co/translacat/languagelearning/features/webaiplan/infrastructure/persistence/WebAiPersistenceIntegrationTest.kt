@@ -1,4 +1,4 @@
-package jp.co.translacat.languagelearning.features.webaiplan.infrastructure
+package jp.co.translacat.languagelearning.features.webaiplan.infrastructure.persistence
 
 import jp.co.translacat.languagelearning.features.learner.domain.exception.LearnerUnavailableException
 import jp.co.translacat.languagelearning.features.settings.application.GetOrCreateUserSettings

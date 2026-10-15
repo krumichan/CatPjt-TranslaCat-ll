@@ -88,6 +88,11 @@ class SourceArchitectureTest {
             "$ROOT.features.writing.infrastructure.persistence.table.WritingSetsTable" to "$ROOT.features.learner.infrastructure.persistence.table.LearnersTable",
             "$ROOT.features.writing.infrastructure.persistence.ExposedWritingSetUnitOfWork" to "$ROOT.features.learner.infrastructure.persistence.repository.ExposedLearnerRepository",
             "$ROOT.features.writing.infrastructure.persistence.ExposedWritingSetUnitOfWork" to "$ROOT.features.growth.infrastructure.persistence.repository.ExposedGrowthRepository",
+            // Web AI도 같은 사용자 잠금 아래 언어를 재확인하고 결과·성장 점수를 한 트랜잭션에 반영한다.
+            "$ROOT.features.webaiplan.infrastructure.persistence.ExposedWebAiStore" to "$ROOT.features.learner.infrastructure.persistence.repository.ExposedLearnerRepository",
+            "$ROOT.features.webaiplan.infrastructure.persistence.ExposedWebAiStore" to "$ROOT.features.learner.infrastructure.persistence.table.LearnersTable",
+            "$ROOT.features.webaiplan.infrastructure.persistence.ExposedWebAiStore" to "$ROOT.features.settings.infrastructure.persistence.table.UserSettingsTable",
+            "$ROOT.features.webaiplan.infrastructure.persistence.ExposedWebAiStore" to "$ROOT.features.growth.infrastructure.persistence.repository.ExposedGrowthRepository",
             // 같은 LL 사용자 잠금과 트랜잭션에서 기존 Growth/설정 저장소를 조립하는 연결이다.
             "$ROOT.features.listening.infrastructure.persistence.ExposedListeningUnitOfWork" to "$ROOT.features.growth.infrastructure.persistence.repository.ExposedGrowthRepository",
             "$ROOT.features.listening.infrastructure.persistence.ExposedListeningUnitOfWork" to "$ROOT.features.learner.infrastructure.persistence.repository.ExposedLearnerRepository",
