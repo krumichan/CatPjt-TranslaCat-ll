@@ -90,11 +90,16 @@ class SettingsRoutesTest {
     }
 
     @Test
-    fun `조회 body는 기존 BE의 23개 필드와 null을 유지한다`() = app { _ ->
+    fun `조회 body는 기존 23개 필드와 설명 언어 두 필드 및 null을 유지한다`() = app { _ ->
+        // 실행
         val response = client.get(userPath) { bearerAuth(token()) }
+
+        // 검증
         assertEquals(HttpStatusCode.OK, response.status)
         val body = Json.parseToJsonElement(response.bodyAsText()).jsonObject
-        assertEquals(23, body.size); assertEquals(JsonNull, body["pendingEffectiveDate"])
+        assertEquals(25, body.size); assertEquals(JsonNull, body["pendingEffectiveDate"])
+        assertEquals(JsonNull, body["feedbackLanguage"])
+        assertEquals(JsonNull, body["pendingFeedbackLanguage"])
         assertEquals(JsonNull, body["originLanguage"]); assertEquals(
         false, body.getValue("configured").jsonPrimitive.boolean,
     )
@@ -106,10 +111,11 @@ class SettingsRoutesTest {
     fun `정상 PATCH는 검증된 주체와 요청 값을 전달한다`() = app { ops ->
         val response = client.patch(userPath) {
             bearerAuth(token(subject = "456")); contentType(ContentType.Application.Json)
-            setBody("""{"originLanguage":"ko","learningLanguage":"ja","dailySentenceCount":7}""")
+            setBody("""{"originLanguage":"ko","learningLanguage":"ja","feedbackLanguage":"en","dailySentenceCount":7}""")
         }
         assertEquals(HttpStatusCode.OK, response.status); assertEquals(listOf("update:456"), ops.calls)
         assertEquals(7, ops.lastChange?.dailySentenceCount)
+        assertEquals("en", ops.lastChange?.feedbackLanguage)
     }
 
     @Test
@@ -117,7 +123,7 @@ class SettingsRoutesTest {
         val response =
             client.patch(userPath) {
                 bearerAuth(token()); contentType(ContentType.Application.Json); setBody(
-                """{"dailySentenceCount":null}""",
+                """{"dailySentenceCount":null,"feedbackLanguage":null}""",
             )
             }
         assertEquals(HttpStatusCode.OK, response.status); assertEquals(UserSettingsChange(), ops.lastChange)

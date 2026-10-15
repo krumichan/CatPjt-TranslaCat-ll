@@ -12,12 +12,16 @@ import jp.co.translacat.languagelearning.shared.error.LearningBusinessException
 import jp.co.translacat.languagelearning.shared.http.InternalApiError
 import jp.co.translacat.languagelearning.shared.identity.InvalidLearningPublicId
 import jp.co.translacat.languagelearning.shared.security.InternalAuthorizationException
+import jp.co.translacat.languagelearning.features.webaiplan.domain.model.WebAiException
 import kotlinx.coroutines.CancellationException
 
 fun Application.configureStatusPages() {
     val logger = environment.log
 
     install(StatusPages) {
+        exception<WebAiException> { call, cause ->
+            call.respond(HttpStatusCode.fromValue(cause.status), InternalApiError(cause.code, cause.message))
+        }
         exception<InvalidLearningPublicId> { call, _ ->
             call.respond(
                 HttpStatusCode.BadRequest,

@@ -27,6 +27,8 @@ internal data class UserSettings(
     val createdAt: LocalDateTime,
     val updatedBy: String?,
     val updatedAt: LocalDateTime,
+    val feedbackLanguage: String? = null,
+    val pendingFeedbackLanguage: String? = null,
 ) {
     val configured: Boolean
         get() = originLanguage != null && learningLanguage != null

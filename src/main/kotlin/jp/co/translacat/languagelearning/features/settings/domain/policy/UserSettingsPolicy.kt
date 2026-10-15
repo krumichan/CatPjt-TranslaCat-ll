@@ -12,7 +12,7 @@ import java.time.ZoneId
 import java.time.ZoneOffset
 import java.util.*
 
-/** DB/HTTP와 무관한 기존 BE의 조회·변경 규칙이다. */
+/** DB/HTTP와 무관한 개인 학습 설정의 조회·변경 규칙이다. */
 internal object UserSettingsPolicy {
     const val INVALID = "LANGUAGE_LEARNING_SETTING_INVALID"
     const val NOT_CONFIGURED = "LANGUAGE_LEARNING_SETTING_NOT_CONFIGURED"
@@ -36,19 +36,25 @@ internal object UserSettingsPolicy {
     fun synchronize(setting: UserSettings, policy: InitialSettingsPolicy, nowUtc: LocalDateTime): UserSettings {
         // 적용일 판정은 pendingTimezone이 아닌 승격 전의 활성 timezone으로 한다.
         val date = today(setting.timezone, nowUtc)
+
+        // 새 필드가 없는 기존 행은 현재 원문 언어를 기본 설명 언어로 보존한다.
+        val currentFeedback = setting.feedbackLanguage ?: setting.originLanguage
         val promoted = if (setting.pendingEffectiveDate?.let { !it.isAfter(date) } == true) {
             setting.copy(
                 originLanguage = setting.pendingOriginLanguage ?: setting.originLanguage,
                 learningLanguage = setting.pendingLearningLanguage ?: setting.learningLanguage,
+                feedbackLanguage = setting.pendingFeedbackLanguage ?: currentFeedback,
                 timezone = setting.pendingTimezone ?: setting.timezone,
                 dailySentenceCount = setting.pendingDailySentenceCount ?: setting.dailySentenceCount,
                 dailySpeakingGoalMinutes = setting.pendingDailySpeakingGoalMinutes ?: setting.dailySpeakingGoalMinutes,
                 dailyListeningGoalCount = setting.pendingDailyListeningGoalCount ?: setting.dailyListeningGoalCount,
                 pendingOriginLanguage = null, pendingLearningLanguage = null, pendingTimezone = null,
+                pendingFeedbackLanguage = null,
                 pendingDailySentenceCount = null, pendingDailySpeakingGoalMinutes = null,
                 pendingDailyListeningGoalCount = null, pendingEffectiveDate = null,
             )
-        } else setting
+        } else setting.copy(feedbackLanguage = currentFeedback)
+
         // 조회도 변경 트랜잭션이다. 승격 후 활성값과 남아 있는 예약값을 모두 보정한다.
         return promoted.copy(
             dailySentenceCount = clamp(promoted.dailySentenceCount, policy.writing),
@@ -72,8 +78,10 @@ internal object UserSettingsPolicy {
     fun change(
         setting: UserSettings, request: UserSettingsChange, policy: InitialSettingsPolicy, nowUtc: LocalDateTime,
     ): UserSettings {
+        // 설명 언어는 학습 언어와 같아도 허용하되 다른 언어 필드와 같은 코드 형식을 검사한다.
         val origin = cleanLanguage(request.originLanguage)
         val learning = cleanLanguage(request.learningLanguage)
+        val feedback = cleanLanguage(request.feedbackLanguage)
         val timezone = cleanTimezone(request.timezone)
         val tasks = request.defaultListeningTaskTypes?.let(ListeningTaskSelectionPolicy::toCanonicalJson)
         val voice = cleanVoice(request.speakingVoiceId)
@@ -96,6 +104,7 @@ internal object UserSettingsPolicy {
             )
             return setting.copy(
                 originLanguage = nextOrigin, learningLanguage = nextLearning,
+                feedbackLanguage = feedback ?: nextOrigin,
                 timezone = timezone ?: setting.timezone,
                 dailySentenceCount = request.dailySentenceCount ?: setting.dailySentenceCount,
                 dailySpeakingGoalMinutes = request.dailySpeakingGoalMinutes ?: setting.dailySpeakingGoalMinutes,
@@ -105,14 +114,18 @@ internal object UserSettingsPolicy {
                 defaultListeningTaskTypesJson = tasks ?: setting.defaultListeningTaskTypesJson,
             )
         }
-        val schedules =
-            origin != null || learning != null || timezone != null || request.dailySentenceCount != null || request.dailySpeakingGoalMinutes != null || request.dailyListeningGoalCount != null
+
+        // 기존 설정의 설명 언어도 다른 언어·목표와 함께 다음 학습일에 적용한다.
+        val schedules = origin != null || learning != null || feedback != null || timezone != null ||
+            request.dailySentenceCount != null || request.dailySpeakingGoalMinutes != null ||
+            request.dailyListeningGoalCount != null
         return setting.copy(
             speakingVoiceId = voice ?: setting.speakingVoiceId,
             speakingPlaybackSpeed = speed ?: setting.speakingPlaybackSpeed,
             defaultListeningTaskTypesJson = tasks ?: setting.defaultListeningTaskTypesJson,
             pendingOriginLanguage = origin ?: setting.pendingOriginLanguage,
             pendingLearningLanguage = learning ?: setting.pendingLearningLanguage,
+            pendingFeedbackLanguage = feedback ?: setting.pendingFeedbackLanguage,
             pendingTimezone = timezone ?: setting.pendingTimezone,
             pendingDailySentenceCount = request.dailySentenceCount ?: setting.pendingDailySentenceCount,
             pendingDailySpeakingGoalMinutes = request.dailySpeakingGoalMinutes

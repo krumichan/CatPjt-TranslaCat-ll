@@ -23,4 +23,5 @@ internal data class OverviewFacts(
     val speakingGrowth: List<JsonObject>,
     val listening: JsonObject,
     val practice: JsonObject,
+    val webAi: List<JsonObject> = emptyList(),
 )

@@ -12,6 +12,45 @@ import jp.co.translacat.languagelearning.support.SettingsFixtures as F
 
 class UserSettingsLifecycleTest {
     @Test
+    fun `설명 언어 PATCH의 예약값은 저장되고 다음날 GET에서 활성값으로 승격된다`() = runBlocking {
+        // 준비
+        val work = MemorySettingsUnitOfWork()
+        work.rows[123] = F.configured()
+
+        // 실행
+        val scheduled = UpdateUserSettings(work).execute(123, UserSettingsChange(feedbackLanguage = "en"))
+        val sameDay = GetUserSettings(work).execute(123)
+        work.now = F.now.plusDays(1)
+        val nextDay = GetUserSettings(work).execute(123)
+
+        // 검증
+        assertEquals("ko", scheduled.settings.feedbackLanguage)
+        assertEquals("en", scheduled.settings.pendingFeedbackLanguage)
+        assertEquals(scheduled.settings, sameDay.settings)
+        assertEquals("en", nextDay.settings.feedbackLanguage)
+        assertNull(nextDay.settings.pendingFeedbackLanguage)
+        assertNull(nextDay.settings.pendingEffectiveDate)
+        assertEquals(nextDay.settings, work.rows[123])
+    }
+
+    @Test
+    fun `기존 미지정 설명 언어의 원문 언어 기본값을 GET이 저장한다`() = runBlocking {
+        // 준비
+        val work = MemorySettingsUnitOfWork()
+        work.rows[123] = F.configured().copy(feedbackLanguage = null)
+
+        // 실행
+        val result = GetUserSettings(work).execute(123)
+        val repeated = GetUserSettings(work).execute(123)
+
+        // 검증
+        assertEquals("ko", result.settings.feedbackLanguage)
+        assertEquals(result.settings, work.rows[123])
+        assertEquals(result.settings, repeated.settings)
+        assertEquals(1, work.saves)
+    }
+
+    @Test
     fun `처음 조회와 반복 조회는 같은 설정을 반환한다`() = runBlocking {
         val work = MemorySettingsUnitOfWork();
         val get = GetUserSettings(work)

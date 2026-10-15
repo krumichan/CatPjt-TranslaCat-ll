@@ -15,6 +15,7 @@ import kotlinx.serialization.json.Json
 internal fun UserSettingUpdateRequestDto.toChange() = UserSettingsChange(
     originLanguage = originLanguage,
     learningLanguage = learningLanguage,
+    feedbackLanguage = feedbackLanguage,
     timezone = timezone,
     dailySentenceCount = dailySentenceCount,
     dailySpeakingGoalMinutes = dailySpeakingGoalMinutes,
@@ -38,6 +39,7 @@ internal fun UserSettingsResult.toResponse(): UserSettingResponseDto {
     return UserSettingResponseDto(
         originLanguage = s.originLanguage,
         learningLanguage = s.learningLanguage,
+        feedbackLanguage = s.feedbackLanguage ?: s.originLanguage,
         timezone = s.timezone,
         dailySentenceCount = s.dailySentenceCount,
         dailySpeakingGoalMinutes = s.dailySpeakingGoalMinutes,
@@ -47,6 +49,7 @@ internal fun UserSettingsResult.toResponse(): UserSettingResponseDto {
         defaultListeningTaskTypes = tasks,
         pendingOriginLanguage = s.pendingOriginLanguage,
         pendingLearningLanguage = s.pendingLearningLanguage,
+        pendingFeedbackLanguage = s.pendingFeedbackLanguage,
         pendingTimezone = s.pendingTimezone,
         pendingDailySentenceCount = s.pendingDailySentenceCount,
         pendingDailySpeakingGoalMinutes = s.pendingDailySpeakingGoalMinutes,

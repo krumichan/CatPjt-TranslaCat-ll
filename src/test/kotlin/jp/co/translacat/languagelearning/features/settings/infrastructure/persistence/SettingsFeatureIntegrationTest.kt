@@ -59,19 +59,27 @@ class SettingsFeatureIntegrationTest {
             val first = ops.updateUser(
                 123, UserSettingsChange(originLanguage = "ko", learningLanguage = "ja", dailySentenceCount = 7),
             ).settings
+            assertEquals("ko", first.feedbackLanguage)
             assertTrue(first.configured); assertEquals(
             7, first.dailySentenceCount,
         ); assertNull(first.pendingEffectiveDate)
             val pending = ops.updateUser(
                 123,
-                UserSettingsChange(learningLanguage = "en", dailySentenceCount = 9, speakingPlaybackSpeed = "slow"),
+                UserSettingsChange(
+                    learningLanguage = "en", feedbackLanguage = "fr", dailySentenceCount = 9,
+                    speakingPlaybackSpeed = "slow",
+                ),
             ).settings
             assertEquals("ja", pending.learningLanguage); assertEquals("en", pending.pendingLearningLanguage)
+            assertEquals("ko", pending.feedbackLanguage)
+            assertEquals("fr", pending.pendingFeedbackLanguage)
             assertEquals("SLOW", pending.speakingPlaybackSpeed); assertEquals(
             LocalDate.of(2026, 9, 25), pending.pendingEffectiveDate,
         )
             assertEquals(pending, ops.getUser(123).settings)
             val after = operations(factory, Instant.parse("2026-09-24T15:00:00Z")).getUser(123).settings
+            assertEquals("fr", after.feedbackLanguage)
+            assertNull(after.pendingFeedbackLanguage)
             assertEquals("en", after.learningLanguage); assertEquals(
             9, after.dailySentenceCount,
         ); assertNull(after.pendingEffectiveDate)

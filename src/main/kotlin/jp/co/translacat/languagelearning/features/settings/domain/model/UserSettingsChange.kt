@@ -13,4 +13,5 @@ internal data class UserSettingsChange(
     val speakingPlaybackSpeed: String? = null,
     val dailyListeningGoalCount: Int? = null,
     val defaultListeningTaskTypes: List<ListeningTaskType?>? = null,
+    val feedbackLanguage: String? = null,
 )

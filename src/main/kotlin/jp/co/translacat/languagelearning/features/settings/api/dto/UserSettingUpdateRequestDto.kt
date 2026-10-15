@@ -6,6 +6,7 @@ import kotlinx.serialization.Serializable
 internal data class UserSettingUpdateRequestDto(
     val originLanguage: String? = null,
     val learningLanguage: String? = null,
+    val feedbackLanguage: String? = null,
     val timezone: String? = null,
     val dailySentenceCount: Int? = null,
     val dailySpeakingGoalMinutes: Int? = null,

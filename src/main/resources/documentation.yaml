@@ -219,6 +219,10 @@ components:
         learningLanguage:
           type: string
           nullable: true
+        feedbackLanguage:
+          type: string
+          nullable: true
+          description: 설명/피드백 언어. 기존 미지정 값은 originLanguage를 사용한다.
         timezone:
           type: string
         dailySentenceCount:
@@ -250,6 +254,10 @@ components:
         pendingLearningLanguage:
           type: string
           nullable: true
+        pendingFeedbackLanguage:
+          type: string
+          nullable: true
+          description: pendingEffectiveDate부터 적용할 설명/피드백 언어.
         pendingTimezone:
           type: string
           nullable: true
@@ -292,6 +300,7 @@ components:
       required:
       - originLanguage
       - learningLanguage
+      - feedbackLanguage
       - timezone
       - dailySentenceCount
       - dailySpeakingGoalMinutes
@@ -301,6 +310,7 @@ components:
       - defaultListeningTaskTypes
       - pendingOriginLanguage
       - pendingLearningLanguage
+      - pendingFeedbackLanguage
       - pendingTimezone
       - pendingDailySentenceCount
       - pendingDailySpeakingGoalMinutes
@@ -323,6 +333,12 @@ components:
         learningLanguage:
           type: string
           nullable: true
+        feedbackLanguage:
+          type: string
+          nullable: true
+          minLength: 2
+          maxLength: 20
+          description: null/누락은 미변경. 최초 설정에서 누락하면 originLanguage를 사용하며 이후 변경은 다음 학습일부터 적용한다.
         timezone:
           type: string
           nullable: true

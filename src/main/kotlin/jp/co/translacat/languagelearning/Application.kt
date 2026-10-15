@@ -24,5 +24,6 @@ suspend fun Application.module() {
     configurePractice()
     configureListening()
     configureSpeaking()
+    configureWebAi()
     configureOverview()
 }

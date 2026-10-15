@@ -6,6 +6,8 @@ import org.flywaydb.core.Flyway
 import java.sql.Connection
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertNull
+import kotlin.test.assertTrue
 
 class DatabaseMigrationIntegrationTestUpgrade {
     private val preservedTables = listOf(
@@ -13,6 +15,55 @@ class DatabaseMigrationIntegrationTestUpgrade {
         "language_learning_level_test_session", "language_learning_level_test_baseline",
         "language_learning_profile", "language_learning_result_stream", "language_learning_result_event",
     )
+
+    @Test
+    fun `V037은 기존 원문 언어를 설명 언어로 보존하고 다른 활성 및 예약값을 유지한다`() =
+        LocalScratchMysql.use { db ->
+            // 준비: V036의 합성 설정을 만들고 활성·예약 언어와 감사 시각을 기록한다.
+            val settings = db.settings()
+            Flyway.configure().dataSource(settings.jdbcUrl, settings.username, settings.password)
+                .locations("classpath:db/migration").defaultSchema(db.name).schemas(db.name)
+                .createSchemas(false).cleanDisabled(true).baselineOnMigrate(false).target("036").load().migrate()
+            db.connect().use { connection ->
+                connection.createStatement().use { statement ->
+                    statement.executeUpdate(
+                        """INSERT INTO language_learning_learner(user_id,created_at,updated_at)
+                            VALUES(782,'2026-09-20 01:00:00','2026-09-20 01:00:00')""",
+                    )
+                    statement.executeUpdate(
+                        """INSERT INTO language_learning_user_setting
+                            (user_id,origin_language,learning_language,timezone,daily_sentence_count,
+                            daily_speaking_goal_minutes,daily_listening_goal_count,default_listening_task_types,
+                            speaking_voice_id,speaking_playback_speed,pending_origin_language,pending_learning_language,
+                            pending_effective_date,created_at,updated_at)
+                            VALUES(782,'ko','ja','Asia/Tokyo',5,5,5,'["DICTATION"]','marin','NORMAL',
+                            'en','fr','2026-09-25','2026-09-20 01:00:00','2026-09-20 01:10:00')""",
+                    )
+                }
+            }
+
+            // 실행: 실제 DB의 추가 migration 한 개를 적용한다.
+            DatabaseFactory(settings).use { factory ->
+                assertEquals(1, factory.migrationReport.migrationsExecuted)
+            }
+
+            // 검증: 설명 언어만 기존 원문 언어로 초기화하고 기존 열과 예약값은 그대로 둔다.
+            db.connect().use { connection ->
+                connection.createStatement().use { statement ->
+                    statement.executeQuery("SELECT * FROM language_learning_user_setting WHERE user_id=782").use { row ->
+                        assertTrue(row.next())
+                        assertEquals("ko", row.getString("feedback_language"))
+                        assertNull(row.getString("pending_feedback_language"))
+                        assertEquals("ko", row.getString("origin_language"))
+                        assertEquals("ja", row.getString("learning_language"))
+                        assertEquals("en", row.getString("pending_origin_language"))
+                        assertEquals("fr", row.getString("pending_learning_language"))
+                        assertEquals("2026-09-25", row.getDate("pending_effective_date").toString())
+                        assertEquals("2026-09-20 01:10:00.0", row.getTimestamp("updated_at").toString())
+                    }
+                }
+            }
+        }
 
     @Test
     fun `기존 V008 설정 키워드 레벨 성장 원장을 최신 버전과 재시작에서 그대로 보존한다`() = LocalScratchMysql.use { db ->

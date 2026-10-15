@@ -17,6 +17,37 @@ internal fun Application.configureInternalAuthentication(
     check(settings.enabled)
     install(Authentication) {
         configureKeywordAuthentication(settings, clock)
+        jwt(WEB_AI_SERVICE_AUTH) {
+            realm = "translacat-ll-web-ai-service"
+            verifier(
+                JWT.require(Algorithm.HMAC256(settings.verificationKey()))
+                    .withIssuer(settings.issuer)
+                    .withAudience(settings.audience)
+                    .withSubject(settings.callerService)
+                    .withClaim("service", settings.callerService)
+                    .withClaim("tokenUse", "ll-web-ai-service")
+                    .acceptLeeway(settings.clockSkewSeconds)
+                    .build(),
+            )
+            validate { credential ->
+                try {
+                    val payload = credential.payload
+                    WebAiServiceClaimsPolicy.validate(
+                        InternalServiceClaims(
+                            payload.subject, payload.getClaim("scopes").asList(String::class.java),
+                            payload.getClaim("roles").asList(String::class.java),
+                            payload.issuedAt?.toInstant(), payload.expiresAt?.toInstant(),
+                        ), settings, clock.instant(),
+                    )
+                } catch (_: Exception) {
+                    null
+                }
+            }
+            challenge { _, _ ->
+                call.respond(HttpStatusCode.Unauthorized,
+                    InternalApiError("INTERNAL_SERVICE_AUTH_REQUIRED", "유효한 서비스 호출 인증이 필요합니다."))
+            }
+        }
         jwt(INTERNAL_AUTH) {
             realm = "translacat-ll-internal"
             verifier(

@@ -19,7 +19,22 @@ internal object SourceTrendProjection {
 
         // Writing과 Speaking은 원본의 서로 다른 학습일·평가 상태·신뢰도 규칙을 유지한다.
         if (source == null || source == "WRITING") {
-            val values = facts.writing.rows("evaluations").filter { it.date("learningDate") in from..to }
+            val native = facts.writing.rows("evaluations").filter { it.date("learningDate") in from..to }
+            val imported = facts.webAi.filter {
+                it.text("domain") == "WRITING" && it.date("learningDate") in from..to
+            }.map { item ->
+                buildJsonObject {
+                    put("learningDate", item.getValue("learningDate"))
+                    put("evaluatedAt", item.getValue("evaluatedAt"))
+                    item.rows("metrics").forEach { metric ->
+                        put("${checkNotNull(metric.text("type")).lowercase()}Score", metric.getValue("score"))
+                    }
+                }
+            }
+            // 같은 분야의 두 출처를 먼저 합친 뒤 동일한 최근성 가중치를 한 번 적용한다.
+            val values = if (imported.isEmpty()) native else (native + imported).sortedByDescending {
+                it.text("evaluatedAt") ?: it.text("learningDate")
+            }
             samples += values.size
             values.forEachIndexed { index, row ->
                 for (metric in listOf("meaning", "grammar", "vocabulary", "naturalness", "expression")) {
@@ -67,8 +82,25 @@ internal object SourceTrendProjection {
             null, "READING" -> "READING"; "VOCABULARY" -> "VOCABULARY"; else -> null
         }
         if (domain != null) {
-            val values =
-                facts.practice.rows("sets").filter { it.text("domain") == domain && it.text("status") == "COMPLETED" }
+            val native =
+                facts.practice.rows("sets").filter {
+                    it.text("domain") == domain && it.text("status") == "COMPLETED"
+                }
+            val imported = facts.webAi.filter { it.text("domain") == domain && it.date("learningDate") in from..to }.map { item ->
+                buildJsonObject {
+                    put("learningDate", item.getValue("learningDate"))
+                    put("metrics", JsonArray(item.rows("metrics").map { metric ->
+                        buildJsonObject {
+                            put("skillTag", metric.getValue("type"))
+                            put("score", metric.getValue("score"))
+                            put("sampleCount", 1)
+                        }
+                    }))
+                }
+            }
+            val values = if (imported.isEmpty()) native else (native + imported).sortedByDescending {
+                it.text("learningDate")
+            }
             samples += values.size
             values.forEachIndexed { index, row ->
                 row.rows("metrics").forEach { metric ->
@@ -76,6 +108,21 @@ internal object SourceTrendProjection {
                         checkNotNull(metric.text("skillTag")), row.date("learningDate"),
                         metric.number("score"),
                         recency(index, values.size) * metric.count("sampleCount").coerceAtLeast(1),
+                    )
+                }
+            }
+        }
+
+        // WEB_AI 필터는 표시 출처별 조회다. 공식 분야별 조회와 같은 지표만 포함한다.
+        if (source == "WEB_AI") {
+            val values = facts.webAi.filter { it.date("learningDate") in from..to }
+                .sortedByDescending { it.text("evaluatedAt") }
+            samples += values.size
+            values.forEachIndexed { index, row ->
+                row.rows("metrics").forEach { metric ->
+                    add(
+                        checkNotNull(metric.text("type")), row.date("learningDate"), metric.number("score"),
+                        recency(index, values.size),
                     )
                 }
             }

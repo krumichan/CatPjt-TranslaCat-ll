@@ -6,7 +6,7 @@ import java.time.Duration
 import java.time.LocalDate
 
 internal object HistoryProjection {
-    val sources = listOf("WRITING", "SPEAKING", "LISTENING", "READING", "VOCABULARY", "LEVEL_TEST")
+    val sources = listOf("WRITING", "SPEAKING", "LISTENING", "READING", "VOCABULARY", "LEVEL_TEST", "WEB_AI")
     fun days(raw: String?): Int = raw?.trim()?.lowercase()?.takeIf { it.endsWith("d") }
         ?.dropLast(1)?.toIntOrNull()?.coerceIn(1, 365) ?: 30
 

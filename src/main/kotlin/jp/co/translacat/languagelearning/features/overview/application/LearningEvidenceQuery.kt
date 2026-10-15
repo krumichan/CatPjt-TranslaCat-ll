@@ -2,6 +2,7 @@ package jp.co.translacat.languagelearning.features.overview.application
 
 import jp.co.translacat.languagelearning.features.growth.application.GrowthUnitOfWork
 import jp.co.translacat.languagelearning.features.growth.domain.model.*
+import jp.co.translacat.languagelearning.features.growth.domain.policy.GrowthPolicy
 import jp.co.translacat.languagelearning.shared.error.LearningBusinessException
 import jp.co.translacat.languagelearning.shared.identity.LearningPublicId
 import kotlinx.serialization.json.*
@@ -18,7 +19,7 @@ internal class LearningEvidenceQuery(private val work: GrowthUnitOfWork) {
     ): JsonObject {
         // 소유자·필터·기술적 상한을 먼저 확정한다. 알 수 없는 정책을 legacy로 바꾸지 않는다.
         val selectedSource = source?.takeUnless { it == "ALL" }
-        if (userId <= 0 || selectedSource != null && selectedSource !in HistoryProjection.sources ||
+        if (userId <= 0 || selectedSource != null && selectedSource !in GrowthPolicy.sources ||
             language != null && !Regex("[A-Za-z]{2,8}(-[A-Za-z0-9]{1,8})*").matches(language) ||
             language != null && language.length > 20 || limit !in 1..50 ||
             ChronoUnit.DAYS.between(from, to) !in 0..365 ||
@@ -76,7 +77,7 @@ internal class LearningEvidenceQuery(private val work: GrowthUnitOfWork) {
         if (raw.length > 256) invalid()
         return try {
             val parts = String(Base64.getUrlDecoder().decode(raw), Charsets.UTF_8).split('|')
-            if (parts.size != 4 || parts[3] != scope || parts[1] !in HistoryProjection.sources) invalid()
+            if (parts.size != 4 || parts[3] != scope || parts[1] !in GrowthPolicy.sources) invalid()
             val id = parts[2].toLong()
             if (id <= 0) invalid()
             LearningEvidenceCursor(LocalDate.parse(parts[0]), parts[1], id)

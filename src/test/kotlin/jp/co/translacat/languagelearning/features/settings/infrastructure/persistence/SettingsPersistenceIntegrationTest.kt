@@ -89,10 +89,10 @@ class SettingsPersistenceIntegrationTest {
                 db,
                 """
                 UPDATE language_learning_user_setting SET
-                    origin_language='ko', learning_language='ja', timezone='Europe/Paris',
+                    origin_language='ko', learning_language='ja', feedback_language='en', timezone='Europe/Paris',
                     daily_sentence_count=40, daily_speaking_goal_minutes=30, daily_listening_goal_count=35,
                     default_listening_task_types='["SUMMARY"]', speaking_voice_id='cedar', speaking_playback_speed='SLOW',
-                    pending_origin_language='ja', pending_learning_language='en', pending_timezone='UTC',
+                    pending_origin_language='ja', pending_learning_language='en', pending_feedback_language='fr', pending_timezone='UTC',
                     pending_daily_sentence_count=45, pending_daily_speaking_goal_minutes=40,
                     pending_daily_listening_goal_count=50, pending_effective_date='2000-01-01',
                     updated_by='LOCAL_ADMIN', updated_at='2026-09-25 01:02:03.123456'
@@ -103,6 +103,7 @@ class SettingsPersistenceIntegrationTest {
             assertTrue(value.configured)
             assertEquals("ko", value.originLanguage)
             assertEquals("ja", value.learningLanguage)
+            assertEquals("en", value.feedbackLanguage)
             assertEquals("Europe/Paris", value.timezone)
             assertEquals(40, value.dailySentenceCount)
             assertEquals(30, value.dailySpeakingGoalMinutes)
@@ -112,6 +113,7 @@ class SettingsPersistenceIntegrationTest {
             assertEquals("SLOW", value.speakingPlaybackSpeed)
             assertEquals("ja", value.pendingOriginLanguage)
             assertEquals("en", value.pendingLearningLanguage)
+            assertEquals("fr", value.pendingFeedbackLanguage)
             assertEquals("UTC", value.pendingTimezone)
             assertEquals(45, value.pendingDailySentenceCount)
             assertEquals(40, value.pendingDailySpeakingGoalMinutes)

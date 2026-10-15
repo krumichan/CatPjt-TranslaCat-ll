@@ -30,6 +30,7 @@ internal class ExposedUserSettingsRepository(private val requireTransaction: () 
             it[userId] = settings.userId
             it[originLanguage] = null
             it[learningLanguage] = null
+            it[feedbackLanguage] = null
             it[timezone] = settings.timezone
             it[dailySentenceCount] = settings.dailySentenceCount
             it[dailySpeakingGoalMinutes] = settings.dailySpeakingGoalMinutes
@@ -39,6 +40,7 @@ internal class ExposedUserSettingsRepository(private val requireTransaction: () 
             it[speakingPlaybackSpeed] = settings.speakingPlaybackSpeed
             it[pendingOriginLanguage] = null
             it[pendingLearningLanguage] = null
+            it[pendingFeedbackLanguage] = null
             it[pendingTimezone] = null
             it[pendingDailySentenceCount] = null
             it[pendingDailySpeakingGoalMinutes] = null
@@ -62,6 +64,7 @@ internal class ExposedUserSettingsRepository(private val requireTransaction: () 
         ) {
             it[originLanguage] = settings.originLanguage
             it[learningLanguage] = settings.learningLanguage
+            it[feedbackLanguage] = settings.feedbackLanguage
             it[timezone] = settings.timezone
             it[dailySentenceCount] = settings.dailySentenceCount
             it[dailySpeakingGoalMinutes] = settings.dailySpeakingGoalMinutes
@@ -70,6 +73,7 @@ internal class ExposedUserSettingsRepository(private val requireTransaction: () 
             it[speakingPlaybackSpeed] = settings.speakingPlaybackSpeed
             it[pendingOriginLanguage] = settings.pendingOriginLanguage
             it[pendingLearningLanguage] = settings.pendingLearningLanguage
+            it[pendingFeedbackLanguage] = settings.pendingFeedbackLanguage
             it[pendingTimezone] = settings.pendingTimezone
             it[pendingDailySentenceCount] = settings.pendingDailySentenceCount
             it[pendingDailySpeakingGoalMinutes] = settings.pendingDailySpeakingGoalMinutes
@@ -91,6 +95,7 @@ internal class ExposedUserSettingsRepository(private val requireTransaction: () 
         userId = row[UserSettingsTable.userId],
         originLanguage = row[UserSettingsTable.originLanguage],
         learningLanguage = row[UserSettingsTable.learningLanguage],
+        feedbackLanguage = row[UserSettingsTable.feedbackLanguage],
         timezone = row[UserSettingsTable.timezone],
         dailySentenceCount = row[UserSettingsTable.dailySentenceCount],
         dailySpeakingGoalMinutes = row[UserSettingsTable.dailySpeakingGoalMinutes],
@@ -100,6 +105,7 @@ internal class ExposedUserSettingsRepository(private val requireTransaction: () 
         speakingPlaybackSpeed = row[UserSettingsTable.speakingPlaybackSpeed],
         pendingOriginLanguage = row[UserSettingsTable.pendingOriginLanguage],
         pendingLearningLanguage = row[UserSettingsTable.pendingLearningLanguage],
+        pendingFeedbackLanguage = row[UserSettingsTable.pendingFeedbackLanguage],
         pendingTimezone = row[UserSettingsTable.pendingTimezone],
         pendingDailySentenceCount = row[UserSettingsTable.pendingDailySentenceCount],
         pendingDailySpeakingGoalMinutes = row[UserSettingsTable.pendingDailySpeakingGoalMinutes],

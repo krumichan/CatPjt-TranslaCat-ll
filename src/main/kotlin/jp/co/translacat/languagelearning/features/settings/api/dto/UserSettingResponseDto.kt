@@ -2,11 +2,12 @@ package jp.co.translacat.languagelearning.features.settings.api.dto
 
 import kotlinx.serialization.Serializable
 
-/** 필드 이름과 ISO 날짜 형식은 기존 BE 응답 body 계약을 유지한다. */
+/** 기존 BE 응답과 ISO 날짜 형식을 유지하며 설명 언어의 활성·예약값을 함께 반환한다. */
 @Serializable
 internal data class UserSettingResponseDto(
     val originLanguage: String?,
     val learningLanguage: String?,
+    val feedbackLanguage: String?,
     val timezone: String,
     val dailySentenceCount: Int,
     val dailySpeakingGoalMinutes: Int,
@@ -16,6 +17,7 @@ internal data class UserSettingResponseDto(
     val defaultListeningTaskTypes: List<String>,
     val pendingOriginLanguage: String?,
     val pendingLearningLanguage: String?,
+    val pendingFeedbackLanguage: String?,
     val pendingTimezone: String?,
     val pendingDailySentenceCount: Int?,
     val pendingDailySpeakingGoalMinutes: Int?,

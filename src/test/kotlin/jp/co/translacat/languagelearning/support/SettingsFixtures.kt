@@ -19,7 +19,9 @@ internal object SettingsFixtures {
         updatedBy = userId.toString(), updatedAt = now,
     )
 
-    fun configured(userId: Long = 123) = user(userId).copy(originLanguage = "ko", learningLanguage = "ja")
+    fun configured(userId: Long = 123) = user(userId).copy(
+        originLanguage = "ko", learningLanguage = "ja", feedbackLanguage = "ko",
+    )
     fun admin() = AdminSettings(
         defaultDailySentenceCount = 5,
         minDailySentenceCount = 1,

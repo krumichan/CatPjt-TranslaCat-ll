@@ -8,6 +8,8 @@ import jp.co.translacat.languagelearning.features.practice.application.PracticeR
 import jp.co.translacat.languagelearning.features.settings.application.SettingsServiceOperations
 import jp.co.translacat.languagelearning.features.speaking.application.SpeakingReportService
 import jp.co.translacat.languagelearning.features.writing.application.WritingReportService
+import jp.co.translacat.languagelearning.features.webaiplan.application.WebAiResultReader
+import jp.co.translacat.languagelearning.features.webaiplan.domain.model.WebAiResult
 import jp.co.translacat.languagelearning.shared.error.LearningBusinessException
 import kotlinx.serialization.json.*
 import java.time.Duration
@@ -24,6 +26,7 @@ internal class OverviewService(
     private val growth: GrowthUnitOfWork,
     private val level: LevelSessionService,
     private val levelDetail: suspend (Long, Long) -> JsonElement,
+    private val webAi: WebAiResultReader? = null,
     private val writingDetail: suspend (Long, Long) -> JsonElement,
 ) {
     val evidenceQuery = LearningEvidenceQuery(growth)
@@ -48,7 +51,8 @@ internal class OverviewService(
         val includeListening = source == null || source == "LISTENING"
 
         // 기능별 저장 사실과 Listening 프로필을 읽어 선택 기간의 추세·최근 근거를 계산한다.
-        val facts = facts(userId, today, start, end)
+        val webAiResults = compatibleResults(userId)
+        val facts = facts(userId, today, start, end, webAiResults)
         val trend = SourceTrendProjection.project(facts, source, start, end)
         val listeningDashboard = listening.dashboard(userId, start, end, task)
         val listeningProfiles = listeningDashboard.array("metrics")
@@ -70,11 +74,16 @@ internal class OverviewService(
             val speakingTrend = SourceTrendProjection.project(facts, "SPEAKING", start, end)
             val listeningTrend = SourceTrendProjection.project(facts, "LISTENING", start, end)
             val readingTrend = SourceTrendProjection.project(facts, "READING", start, end)
+            val importedWriting = WebAiOverviewProjection.completedItems(webAiResults, "WRITING", today).toDouble()
+            val importedReading = WebAiOverviewProjection.completedItems(webAiResults, "READING", today).toDouble()
+            val recentWritingScore = if (facts.webAi.any { it.text("domain") == "WRITING" }) null
+                else facts.writing.number("weeklyAverageScore")
             put(
                 "writing",
                 performance(
-                    facts.writing.number("weeklyAverageScore"), facts.writing.number("todayCompleted") ?: 0.0,
-                    facts.writing.number("todayTotal") ?: 0.0, "ITEM", writingTrend,
+                    recentWritingScore,
+                    (facts.writing.number("todayCompleted") ?: 0.0) + importedWriting,
+                    (facts.writing.number("todayTotal") ?: 0.0) + importedWriting, "ITEM", writingTrend,
                     writingTrend.objects("metrics").size, 5,
                 ),
             )
@@ -99,8 +108,9 @@ internal class OverviewService(
             put(
                 "reading",
                 performance(
-                    latestAverage(readingTrend), todayReading.sumOf { it.count("answeredCount") }.toDouble(),
-                    todayReading.sumOf { it.count("questionCount") }.toDouble(), "ITEM", readingTrend,
+                    latestAverage(readingTrend),
+                    todayReading.sumOf { it.count("answeredCount") }.toDouble() + importedReading,
+                    todayReading.sumOf { it.count("questionCount") }.toDouble() + importedReading, "ITEM", readingTrend,
                     readingTrend.objects("metrics").size, 10,
                 ),
             )
@@ -172,7 +182,8 @@ internal class OverviewService(
         val today = settings.learningDate(userId)
         val dates = (writing.report(userId, today, today.minusDays(29), today).array("completedDates") +
             speaking.report(userId, today.minusDays(3650), today).array("completedDates"))
-            .map { LocalDate.parse(it.jsonPrimitive.content) }.toSet()
+            .map { LocalDate.parse(it.jsonPrimitive.content) }.toSet() +
+            WebAiOverviewProjection.completedDates(webAi?.results(userId).orEmpty())
 
         return HistoryProjection.streak(dates, today)
     }
@@ -218,11 +229,30 @@ internal class OverviewService(
             }
         }
 
+        // 외부 학습은 출처 배지를 유지하며 선택한 분야를 포함하는 결과도 해당 분야 이력에 표시한다.
+        values += webAi?.results(userId).orEmpty()
+            .filter { LocalDate.parse(it.learningDate) in from..today }
+            .filter {
+                selectedSource == null || selectedSource == "WEB_AI" ||
+                    WebAiOverviewProjection.includesDomain(it, selectedSource)
+            }
+            .map(WebAiOverviewProjection::history)
+
         // 상태 필터와 동일 날짜 내 원본 출처 순서는 모든 결과를 모은 뒤 적용한다.
         return HistoryProjection.history(values, status)
     }
 
     suspend fun detail(userId: Long, activityId: String): JsonObject {
+        // UUID 결과는 기존 음수 숫자 ID로 해석하지 않고 저장소에서 소유권을 다시 확인한다.
+        if (activityId.startsWith("WEB_AI:")) {
+            val id = activityId.removePrefix("WEB_AI:")
+            val result = webAi?.result(userId, id) ?: HistoryProjection.notFound()
+            return buildJsonObject {
+                put("activityId", activityId)
+                put("source", "WEB_AI")
+                put("detail", webAiJson.encodeToJsonElement(result))
+            }
+        }
         val (source, id) = HistoryProjection.activity(activityId)
 
         // 기존 LevelTest의 공개 ID 계약과 이후 기능의 음수 ID 계약을 각각 보존한다.
@@ -244,7 +274,10 @@ internal class OverviewService(
         return buildJsonObject { put("activityId", activityId); put("source", source); put("detail", detail) }
     }
 
-    private suspend fun facts(userId: Long, today: LocalDate, from: LocalDate, to: LocalDate): OverviewFacts {
+    private suspend fun facts(
+        userId: Long, today: LocalDate, from: LocalDate, to: LocalDate,
+        webAiResults: List<WebAiResult>? = null,
+    ): OverviewFacts {
         // Growth 저장 사실은 커서로 끝까지 읽어 기존 전체 활동 집계의 의미를 보존한다.
         val activities = growth.read {
             val values = mutableListOf<JsonObject>()
@@ -281,7 +314,18 @@ internal class OverviewService(
         return OverviewFacts(
             writing.report(userId, today, from, to), speaking.report(userId, from, to), activities,
             listening.report(userId, from, to, null), practice.report(userId, from, to),
+            WebAiOverviewProjection.facts(webAiResults ?: compatibleResults(userId), from, to),
         )
+    }
+
+    private suspend fun compatibleResults(userId: Long): List<WebAiResult> {
+        val reader = webAi ?: return emptyList()
+        val current = settings.userSnapshot(userId).result.settings
+        // 이전 언어의 원문 이력은 상세로 보존하되 현재 언어 대시보드 점수와 섞지 않는다.
+        return reader.results(userId).filter {
+            it.originLanguage.equals(current.originLanguage, true) &&
+                it.learningLanguage.equals(current.learningLanguage, true)
+        }
     }
 
     private fun performance(
@@ -351,6 +395,7 @@ internal class OverviewService(
     }
 
     companion object {
+        private val webAiJson = Json { encodeDefaults = true; explicitNulls = true }
         fun parseSource(raw: String?): String? {
             if (raw.isNullOrBlank() || raw.equals("ALL", true)) return null
             val source = raw.trim().uppercase()
