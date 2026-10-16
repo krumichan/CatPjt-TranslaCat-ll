@@ -171,6 +171,52 @@ class ReleaseTests(unittest.TestCase):
         rendered=[' '.join(str(a) for a in call.args) for call in output.call_args_list]
         for line in safe: self.assertIn(line,rendered)
 
+    def test_connection_failure_is_not_reported_as_schema_or_ssh_failure(self):
+        # 준비: 실제 배포에서 보고된 기존 이미지 진단을 사용한다.
+        safe=['LL_MIGRATION_FAILED: PoolInitializationException',
+              'LL_MIGRATION_CAUSE_1: CommunicationsException',
+              'LL_MIGRATION_SQLSTATE_1: 08S01',
+              'LL_MIGRATION_SQLCODE_1: 0',
+              'LL_MIGRATION_CAUSE_2: CJCommunicationsException',
+              'LL_MIGRATION_CAUSE_3: SocketException']
+
+        # 실행: 실패한 migration 이후 기존 앱 상태까지 확인한다.
+        with patch.object(d,'migration_failure_diagnostics',return_value=safe),patch('builtins.print'):
+            backend,error=self.exercise(db_exit='1')
+
+        # 검증: 연결 실패로 분류하고 기존 앱은 실행 상태로 보존한다.
+        self.assertEqual(error,'MIGRATION_FAILED:DATABASE_CONNECTION_FAILED;NO_DATABASE_ROLLBACK')
+        self.assertTrue(backend.objects['translacat-ll']['State']['Running'])
+
+    def test_migration_failure_categories_are_fixed_codes(self):
+        # 준비 / 실행 / 검증: 상세 진단의 고정 분류를 원문 메시지 없이 전달한다.
+        for category,reason in [
+            ('TIMEOUT','DATABASE_CONNECTION_TIMEOUT'),
+            ('TLS','DATABASE_TLS_FAILED'),
+            ('AUTHENTICATION','DATABASE_AUTHENTICATION_FAILED'),
+            ('SCHEMA_OR_MIGRATION','CHECK_SCHEMA_OR_MIGRATION'),
+            ('UNKNOWN','CHECK_MIGRATION_DIAGNOSTICS'),
+        ]:
+            with self.subTest(category=category):
+                self.assertEqual(d.migration_failure_reason([
+                    'LL_MIGRATION_CATEGORY: '+category,
+                    'LL_MIGRATION_SQLSTATE_1: 08S01',
+                ]),reason)
+
+    def test_legacy_tls_and_authentication_diagnostics(self):
+        # 준비 / 실행 / 검증: 새 category가 없는 이미지에서도 TLS를 통신 오류보다 우선한다.
+        self.assertEqual(d.migration_failure_reason([
+            'LL_MIGRATION_SQLSTATE_1: 08S01',
+            'LL_MIGRATION_CAUSE_3: SSLHandshakeException',
+        ]),'DATABASE_TLS_FAILED')
+        self.assertEqual(d.migration_failure_reason([
+            'LL_MIGRATION_SQLSTATE_0: 28000',
+            'LL_MIGRATION_SQLCODE_0: 1045',
+        ]),'DATABASE_AUTHENTICATION_FAILED')
+        self.assertEqual(d.migration_failure_reason([
+            'LL_MIGRATION_CATEGORY: password=DO_NOT_PRINT',
+        ]),'CHECK_MIGRATION_DIAGNOSTICS')
+
 class SourceContracts(unittest.TestCase):
     def test_migration_diagnostic_does_not_forward_raw_logs(self):
         raw=('password=DO_NOT_PRINT\nLL_MIGRATION_FAILED: PoolInitializationException\n'
@@ -184,6 +230,29 @@ class SourceContracts(unittest.TestCase):
                 'LL_MIGRATION_CAUSE_1: SQLException',
                 'LL_MIGRATION_SQLSTATE_1: 28000',
                 'LL_MIGRATION_SQLCODE_1: 1045',
+            ])
+
+    def test_socket_reason_and_category_are_allowlisted_without_raw_messages(self):
+        # 준비: 올바른 고정 코드와 비밀값을 포함한 변형을 섞는다.
+        raw='\n'.join([
+            'LL_MIGRATION_CATEGORY: CONNECTION',
+            'LL_MIGRATION_SQLSTATE_0: 08S01',
+            'LL_MIGRATION_SQLCODE_0: 0',
+            'LL_MIGRATION_SOCKET_REASON_3: RESET',
+            'LL_MIGRATION_CATEGORY: SECRET_VALUE',
+            'LL_MIGRATION_SOCKET_REASON_3: RESET password=DO_NOT_PRINT',
+            'LL_MIGRATION_SOCKET_REASON_9: RESET',
+            'LL_MIGRATION_SOCKET_REASON_0: private-db.internal',
+        ])
+        result=subprocess.CompletedProcess(['docker','logs'],1,stdout=raw,stderr='')
+
+        # 실행 / 검증: 허용한 enum과 인덱스만 통과한다.
+        with patch.object(d.subprocess,'run',return_value=result):
+            self.assertEqual(d.migration_failure_diagnostics('migration'),[
+                'LL_MIGRATION_CATEGORY: CONNECTION',
+                'LL_MIGRATION_SQLSTATE_0: 08S01',
+                'LL_MIGRATION_SQLCODE_0: 0',
+                'LL_MIGRATION_SOCKET_REASON_3: RESET',
             ])
 
     def test_entrypoint_no_eval(self):

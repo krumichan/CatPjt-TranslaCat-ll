@@ -247,17 +247,49 @@ def migration_failure_diagnostics(name):
     patterns=(
         r'LL_MIGRATION_FAILED: [A-Za-z][A-Za-z0-9_.$]{0,127}',
         r'LL_MIGRATION_CAUSE_[1-8]: [A-Za-z][A-Za-z0-9_.$]{0,127}',
-        r'LL_MIGRATION_SQLSTATE_[1-8]: (?:[A-Za-z0-9]{5}|UNKNOWN)',
-        r'LL_MIGRATION_SQLCODE_[1-8]: -?[0-9]{1,10}',
+        r'LL_MIGRATION_SQLSTATE_[0-8]: (?:[A-Za-z0-9]{5}|UNKNOWN)',
+        r'LL_MIGRATION_SQLCODE_[0-8]: -?[0-9]{1,10}',
+        r'LL_MIGRATION_CATEGORY: (?:CONNECTION|TIMEOUT|TLS|AUTHENTICATION|SCHEMA_OR_MIGRATION|UNKNOWN)',
+        r'LL_MIGRATION_SOCKET_REASON_[0-8]: (?:RESET|ABORTED|BROKEN_PIPE|PERMISSION_DENIED|NETWORK_UNREACHABLE|HOST_UNREACHABLE|REFUSED|TIMED_OUT|UNKNOWN)',
     )
     diagnostics=[]
     for raw in combined.splitlines():
         line=raw.strip()
         if any(re.fullmatch(pattern,line) for pattern in patterns):
             diagnostics.append(line)
-            if len(diagnostics)>=25:
+            if len(diagnostics)>=40:
                 break
     return diagnostics
+
+def migration_failure_reason(diagnostics):
+    """고정된 진단 코드만 해석한다. DB 주소·드라이버 메시지는 출력하지 않는다."""
+    categories={
+        'CONNECTION':'DATABASE_CONNECTION_FAILED',
+        'TIMEOUT':'DATABASE_CONNECTION_TIMEOUT',
+        'TLS':'DATABASE_TLS_FAILED',
+        'AUTHENTICATION':'DATABASE_AUTHENTICATION_FAILED',
+        'SCHEMA_OR_MIGRATION':'CHECK_SCHEMA_OR_MIGRATION',
+        'UNKNOWN':'CHECK_MIGRATION_DIAGNOSTICS',
+    }
+    for line in diagnostics:
+        if line.startswith('LL_MIGRATION_CATEGORY: '):
+            category=line.removeprefix('LL_MIGRATION_CATEGORY: ')
+            if category in categories:
+                return categories[category]
+
+    # 이전 이미지의 예외 타입·SQLSTATE만으로도 연결 실패를 권한 오류로 표시하지 않는다.
+    if any(re.fullmatch(r'LL_MIGRATION_(?:FAILED|CAUSE_[1-8]): (?:SSLException|SSLHandshakeException|SSLPeerUnverifiedException)',line)
+           for line in diagnostics):
+        return categories['TLS']
+    if any(re.fullmatch(r'LL_MIGRATION_SQLSTATE_[0-8]: 08[A-Za-z0-9]{3}',line)
+           for line in diagnostics):
+        return categories['CONNECTION']
+    if any(re.fullmatch(r'LL_MIGRATION_SQLSTATE_[0-8]: 28[A-Za-z0-9]{3}',line) or
+           re.fullmatch(r'LL_MIGRATION_SQLCODE_[0-8]: (?:1044|1045)',line)
+           for line in diagnostics):
+        return categories['AUTHENTICATION']
+    return categories['UNKNOWN']
+
 
 def assert_vm_role(c):
     # IMDS read only; abort before migrations if Secrets select the wrong OCI VM.
@@ -318,10 +350,12 @@ def deploy(c, image, sha, release_id, token_path):
             except DeployError:
                 run(['docker','stop','-t','15',migration_name]); raise
             if code!='0':
+                diagnostics=[]
                 if c['service']=='ll':
-                    for diagnostic in migration_failure_diagnostics(migration_name):
+                    diagnostics=migration_failure_diagnostics(migration_name)
+                    for diagnostic in diagnostics:
                         print(diagnostic,file=sys.stderr)
-                raise DeployError('MIGRATION_FAILED:CHECK_PRIVILEGES_OR_SCHEMA;NO_DATABASE_ROLLBACK')
+                raise DeployError('MIGRATION_FAILED:'+migration_failure_reason(diagnostics)+';NO_DATABASE_ROLLBACK')
             migration_done=True
             run(['docker','rm',migration_name])
             shutil.rmtree(mig)

@@ -4,10 +4,23 @@ import argparse, ipaddress, json, os, re, shlex, shutil, subprocess, sys, tempfi
 from pathlib import Path
 from urllib.parse import urlparse
 
-def checked(argv, *, env=None, timeout=1800, input=None, show=False):
+class RemoteDeploymentFailed(RuntimeError):
+    """SSH 연결 이후 원격 배포 명령이 실패했다."""
+
+def checked(argv, *, env=None, timeout=1800, input=None, show=False, remote_deployment=False):
     p=subprocess.run(argv,env=env,input=input,text=True,capture_output=not show,timeout=timeout)
-    if p.returncode: raise RuntimeError('transport command failed: '+argv[0]+' exit='+str(p.returncode))
+    if p.returncode:
+        # SSH의 255와 로컬 실행 오류는 원격 배포 명령의 종료 코드와 구분한다.
+        if remote_deployment and 0 < p.returncode < 255:
+            raise RemoteDeploymentFailed('remote deployment exit='+str(p.returncode))
+        raise RuntimeError('transport command exit='+str(p.returncode))
     return '' if show else p.stdout
+
+def release_failure_diagnostic(error):
+    # 예외 메시지·명령 인자·출력에는 자격증명이 포함될 수 있어 출력하지 않는다.
+    if isinstance(error,RemoteDeploymentFailed):
+        return 'RELEASE_DEPLOYMENT_FAILED: remote deployment command failed; check deployment diagnostics above.'
+    return 'RELEASE_TRANSPORT_FAILED: '+type(error).__name__+'; check SSH path/key/known_hosts and deployment status.'
 
 def main():
     ap=argparse.ArgumentParser();ap.add_argument('--service',choices=['ll','chat'],required=True)
@@ -68,7 +81,7 @@ def main():
             command=['sudo','-n','python3',remote+'/deploy.py','--service',a.service,'--config',remote+'/runtime.json',
                 '--image',a.image,'--sha',sha,'--release-id',release,'--registry-token',remote+'/registry-token']
             # deploy.py only emits allowlisted diagnostics; no remote docker/SQL output is streamed.
-            checked(ssh+['target',shlex.join(command)],env=env,timeout=2400,show=True)
+            checked(ssh+['target',shlex.join(command)],env=env,timeout=2400,show=True,remote_deployment=True)
         finally:
             try: checked(['ssh','-F',str(tmp/'ssh_config'),'target','rm -f '+remote+'/runtime.json '+remote+'/registry-token'],env=env,timeout=30)
             except Exception: pass
@@ -79,6 +92,5 @@ def main():
 if __name__=='__main__':
     try: sys.exit(main())
     except Exception as e:
-        # An exception object can contain SSH arguments; report its class, not secret-bearing input.
-        print('RELEASE_TRANSPORT_FAILED: '+type(e).__name__+'; check SSH path/key/known_hosts and deployment status.',file=sys.stderr)
+        print(release_failure_diagnostic(e),file=sys.stderr)
         sys.exit(1)
