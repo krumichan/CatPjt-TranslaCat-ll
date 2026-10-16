@@ -14,6 +14,16 @@ internal data class WebAiContext(
     val evaluationEnabled: Boolean = true,
 )
 
+/** 계획을 만들거나 새로 실행할 때 현재 유효한 공통 학습 준비 상태를 확인한다. */
+internal fun WebAiContext.requirePlanPrerequisites() {
+    if (originLanguage.isBlank() || learningLanguage.isBlank()) {
+        throw WebAiException("WEB_AI_SETTINGS_REQUIRED", "언어 학습 설정을 먼저 저장해 주세요.", 409)
+    }
+    if (defaultKeywords.isEmpty()) {
+        throw WebAiException("WEB_AI_KEYWORDS_REQUIRED", "현재 학습에 사용할 키워드를 한 개 이상 먼저 설정해 주세요.", 409)
+    }
+}
+
 internal fun interface WebAiContextProvider {
     suspend fun current(userId: Long): WebAiContext
 }

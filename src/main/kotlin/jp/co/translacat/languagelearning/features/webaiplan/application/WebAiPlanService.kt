@@ -30,7 +30,10 @@ internal class WebAiPlanService(
     suspend fun save(user: Long, id: String?, change: WebAiPlanChange): WebAiPlan {
         WebAiPolicy.plan(change)
         val current = context.current(user)
+        // 계획별 키워드를 고르더라도 공통 언어·키워드 설정을 먼저 완료해야 한다.
+        current.requirePlanPrerequisites()
         val selected = if (change.keywordMode == "CUSTOM") resolveKeywords(change.keywords, current) else emptyList()
+        if (change.keywordMode == "CUSTOM") requirePlanKeywords(selected)
         val key = id?.let(WebAiPolicy::id) ?: change.id?.let(WebAiPolicy::id) ?: uuid()
         return store.write(user) {
             requireLanguages(current.originLanguage, current.learningLanguage)
@@ -64,9 +67,13 @@ internal class WebAiPlanService(
     }
 
     suspend fun connection(user: Long, id: String): String {
+        val current = context.current(user)
+        current.requirePlanPrerequisites()
         val token = "tcwa_" + Base64.getUrlEncoder().withoutPadding().encodeToString(ByteArray(32).also(random::nextBytes))
         store.write(user) {
-            plan(WebAiPolicy.id(id)) ?: WebAiPolicy.missing()
+            requireLanguages(current.originLanguage, current.learningLanguage)
+            val saved = plan(WebAiPolicy.id(id)) ?: WebAiPolicy.missing()
+            if (saved.keywordMode == "CUSTOM") requirePlanKeywords(resolveKeywords(saved.keywords, current))
             rotateToken(id, WebAiPolicy.sha256(token))
         }
         return token
@@ -81,6 +88,8 @@ internal class WebAiPlanService(
         WebAiPolicy.id(id)
         WebAiPolicy.executionKey(executionKey)
         val current = context.current(user)
+        // 설정 스냅샷의 준비 여부는 새 출제에만 적용하고 이전 답안·이력 처리는 보존한다.
+        current.requirePlanPrerequisites()
         return store.write(user) {
             if (tokenHash != null && !tokenMatches(id, tokenHash)) unauthorized()
             val plan = plan(id)?.inherit(current) ?: WebAiPolicy.missing()
@@ -92,6 +101,7 @@ internal class WebAiPlanService(
             val actualKey = occurrence?.let { "scheduled:v${plan.revision}:$pairKey:${it.toInstant()}" } ?: executionKey
             runByKey(id, actualKey)?.also { requirePair(it, current) } ?: run {
                 val resolved = if (plan.keywordMode == "DEFAULT") current.defaultKeywords else resolveKeywords(plan.keywords, current)
+                requirePlanKeywords(resolved)
                 val now = clock.instant()
                 val empty = WebAiRun(
                     uuid(), id, actualKey, current.originLanguage, current.learningLanguage, current.feedbackLanguage,
@@ -309,6 +319,12 @@ internal class WebAiPlanService(
         items.all { it.status == "REJECTED" } -> "REJECTED"
         items.all { it.status in setOf("FAILED", "PENDING") } -> "FAILED"
         else -> "PARTIAL"
+    }
+
+    private fun requirePlanKeywords(keywords: List<WebAiKeyword>) {
+        if (keywords.isEmpty()) {
+            throw WebAiException("WEB_AI_PLAN_KEYWORDS_REQUIRED", "이 계획에서 사용할 키워드를 한 개 이상 선택해 주세요.", 409)
+        }
     }
 
     private fun WebAiPlan.inherit(value: WebAiContext) = copy(

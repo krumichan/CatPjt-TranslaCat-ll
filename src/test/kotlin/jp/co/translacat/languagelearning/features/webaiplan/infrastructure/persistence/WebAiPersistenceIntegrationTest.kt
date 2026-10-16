@@ -24,7 +24,8 @@ import kotlin.test.*
 class WebAiPersistenceIntegrationTest {
     private val now = Instant.parse("2026-10-15T10:00:00Z")
     private val clock = Clock.fixed(now, ZoneOffset.UTC)
-    private val context = WebAiContextProvider { WebAiContext("ko", "ja", "ko", emptyList(), emptyList()) }
+    private val keywords = listOf(WebAiKeyword("SYSTEM:1", "요건정의", "requirements"))
+    private val context = WebAiContextProvider { WebAiContext("ko", "ja", "ko", keywords, keywords) }
 
     @Test
     fun `V037에서 V038로 이행하며 기존 설정과 네 개의 저장 테이블을 유지한다`() {
@@ -179,7 +180,7 @@ class WebAiPersistenceIntegrationTest {
         // 준비
         val learning = AtomicReference("ja")
         val calls = AtomicInteger()
-        val changingContext = WebAiContextProvider { WebAiContext("ko", learning.get(), "ko", emptyList(), emptyList()) }
+        val changingContext = WebAiContextProvider { WebAiContext("ko", learning.get(), "ko", keywords, keywords) }
         val service = WebAiPlanService(store(factory), changingContext, {
             calls.incrementAndGet()
             verified(it.item)

@@ -35,6 +35,79 @@ class WebAiRoutesTest {
     private val json = Json { encodeDefaults = true; explicitNulls = true }
 
     @Test
+    fun `설정 없는 사용자의 직접 계획 생성은 HTTP 409로 안내한다`() = app { fixture ->
+        // 준비: 화면 기본 언어가 있어도 저장된 언어가 없는 상태다.
+        fixture.store.originLanguage = ""
+
+        // 실행
+        val response = client.post("$base/plans") {
+            bearerAuth(userToken())
+            contentType(ContentType.Application.Json)
+            setBody(json.encodeToString(change()))
+        }
+
+        // 검증
+        assertEquals(HttpStatusCode.Conflict, response.status)
+        assertEquals("WEB_AI_SETTINGS_REQUIRED", response.objectBody().text("code"))
+        assertTrue(fixture.store.writes.isEmpty())
+        assertEquals(0, fixture.modelCalls)
+    }
+
+    @Test
+    fun `키워드 선행 조건은 직접 API에도 적용하고 기존 계획 관리는 보존한다`() = app { fixture ->
+        // 준비: 기존 계획은 두되 오늘 유효한 공통 키워드가 없는 상태다.
+        val plan = fixture.service.save(123, null, change())
+        val capability = fixture.service.connection(123, plan.id)
+        fixture.defaultKeywords = emptyList()
+
+        // 실행: UI를 거치지 않는 생성·키 발급·내부/외부 출제도 거부한다.
+        val create = client.post("$base/plans") {
+            bearerAuth(userToken()); contentType(ContentType.Application.Json)
+            setBody(json.encodeToString(change()))
+        }
+        val connection = client.post("$base/plans/${plan.id}/connection") { bearerAuth(userToken()) }
+        val manual = client.post("$base/plans/${plan.id}/runs") {
+            bearerAuth(userToken()); contentType(ContentType.Application.Json)
+            setBody("""{"executionKey":"manual"}""")
+        }
+        val external = client.post("$base/external/prompt") {
+            bearerAuth(serviceToken()); header("X-Web-Ai-Token", capability)
+            contentType(ContentType.Application.Json)
+            setBody("""{"executionKey":"scheduled"}""")
+        }
+        val list = client.get("$base/plans") { bearerAuth(userToken()) }
+        val revoke = client.delete("$base/plans/${plan.id}/connection") { bearerAuth(userToken()) }
+        val delete = client.delete("$base/plans/${plan.id}") { bearerAuth(userToken()) }
+
+        // 검증: 원인을 알려 주고 기존 계획의 정리·연동 해제는 허용한다.
+        listOf(create, connection, manual, external).forEach {
+            assertEquals(HttpStatusCode.Conflict, it.status)
+            assertEquals("WEB_AI_KEYWORDS_REQUIRED", it.objectBody().text("code"))
+        }
+        assertEquals(HttpStatusCode.OK, list.status)
+        assertEquals(HttpStatusCode.NoContent, revoke.status)
+        assertEquals(HttpStatusCode.NoContent, delete.status)
+        assertEquals(0, fixture.modelCalls)
+    }
+
+    @Test
+    fun `공통 키워드가 있어도 빈 계획별 선택은 별도 오류로 안내한다`() = app { fixture ->
+        // 준비
+        val input = change().copy(keywordMode = "CUSTOM", keywords = emptyList())
+
+        // 실행
+        val response = client.post("$base/plans") {
+            bearerAuth(userToken()); contentType(ContentType.Application.Json)
+            setBody(json.encodeToString(input))
+        }
+
+        // 검증
+        assertEquals(HttpStatusCode.Conflict, response.status)
+        assertEquals("WEB_AI_PLAN_KEYWORDS_REQUIRED", response.objectBody().text("code"))
+        assertTrue(fixture.store.writes.isEmpty())
+    }
+
+    @Test
     fun `사용자 JWT와 서비스 JWT는 서로 다른 경로에만 사용할 수 있다`() = app { fixture ->
         // 준비와 실행: 인증이 없거나 용도가 반대인 토큰은 업무 호출 전에 거부된다.
         val anonymous = client.get("$base/plans")
@@ -269,6 +342,7 @@ class WebAiRoutesTest {
 
     private inner class Fixture {
         val store = WebAiMemoryStore()
+        var defaultKeywords = listOf(WebAiKeyword("SYSTEM:1", "요건정의", "requirements"))
         var modelCalls = 0
         private val clock = Clock.fixed(Instant.parse("2026-10-15T09:00:00Z"), ZoneOffset.UTC)
         private val verifier = WebAiVerificationExecution(ModelExecutionPort {
@@ -276,7 +350,7 @@ class WebAiRoutesTest {
             ModelExecutionResult(writingOutput, 1, 1, "synthetic", "synthetic")
         }, clock)
         val service = WebAiPlanService(store, WebAiContextProvider {
-            WebAiContext(store.originLanguage, store.learningLanguage, "ko", emptyList(), emptyList())
+            WebAiContext(store.originLanguage, store.learningLanguage, "ko", defaultKeywords, defaultKeywords)
         }, verifier::verify, clock, asynchronous = true)
     }
 

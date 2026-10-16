@@ -13,6 +13,126 @@ import kotlin.test.*
 
 class WebAiPlanServiceTest {
     @Test
+    fun `언어 설정이 완료되지 않으면 계획을 생성하지 않는다`() = runBlocking {
+        // 준비: 폼의 기본값이 아닌 저장된 유효 언어가 필요하다.
+        val f = Fixture()
+        f.current = f.current.copy(originLanguage = "")
+
+        // 실행
+        val failure = assertFailsWith<WebAiException> { f.service.save(1, null, f.change()) }
+
+        // 검증
+        assertEquals("WEB_AI_SETTINGS_REQUIRED", failure.code)
+        assertEquals(409, failure.status)
+        assertTrue(f.store.writes.isEmpty())
+        assertEquals(0, f.calls)
+    }
+
+    @Test
+    fun `카탈로그나 계획별 키워드만으로 공통 학습 키워드 선행 조건을 우회하지 못한다`() = runBlocking {
+        // 준비: 카탈로그는 있어도 오늘 유효한 선택은 없는 사용자다.
+        for (mode in listOf("DEFAULT", "CUSTOM")) {
+            val f = Fixture()
+            f.current = f.current.copy(defaultKeywords = emptyList())
+            val change = f.change().copy(keywordMode = mode, keywords = listOf(f.current.catalog[1]))
+
+            // 실행
+            val failure = assertFailsWith<WebAiException> { f.service.save(1, null, change) }
+
+            // 검증: 별도 키워드를 보낸 요청도 저장이나 평가를 시작하지 않는다.
+            assertEquals("WEB_AI_KEYWORDS_REQUIRED", failure.code)
+            assertEquals(409, failure.status)
+            assertTrue(f.store.writes.isEmpty())
+            assertEquals(0, f.calls)
+        }
+    }
+
+    @Test
+    fun `유효 키워드가 없어지면 수정과 새 연결 및 출제를 막고 기존 토큰과 실행은 보존한다`() = runBlocking {
+        // 준비: 유효한 설정으로 만든 계획과 실행은 이미 존재한다.
+        val f = Fixture()
+        val plan = f.plan()
+        val token = f.service.connection(1, plan.id)
+        val run = f.service.run(1, plan.id, "existing")
+        f.current = f.current.copy(defaultKeywords = emptyList())
+        val previousWrites = f.store.writes.size
+
+        // 실행
+        val update = assertFailsWith<WebAiException> {
+            f.service.save(1, plan.id, f.change().copy(revision = plan.revision, name = "changed"))
+        }
+        val connection = assertFailsWith<WebAiException> { f.service.connection(1, plan.id) }
+        val manual = assertFailsWith<WebAiException> { f.service.run(1, plan.id, "new") }
+        val external = assertFailsWith<WebAiException> { f.service.externalRun(token, "scheduled") }
+
+        // 검증: 새 작업을 막아도 기존 학습 데이터나 연결 키를 삭제하지 않는다.
+        listOf(update, connection, manual, external).forEach {
+            assertEquals("WEB_AI_KEYWORDS_REQUIRED", it.code)
+            assertEquals(409, it.status)
+        }
+        assertEquals(previousWrites, f.store.writes.size)
+        assertEquals(plan, f.service.plans(1).single())
+        assertEquals(run, f.service.runById(1, run.id))
+        assertNotNull(f.store.capability(WebAiPolicy.sha256(token)))
+
+        // 실행 / 검증: 공통 설정이 준비되면 같은 계획으로 다시 출제할 수 있다.
+        f.current = f.current.copy(defaultKeywords = listOf(f.current.catalog[0]))
+        assertEquals(plan.id, f.service.externalRun(token, "restored").planId)
+    }
+
+    @Test
+    fun `계획별 선택 모드에는 키워드가 필요하고 과거의 빈 계획도 새 출제를 막는다`() = runBlocking {
+        // 준비: 공통 설정은 준비됐지만 계획별 선택이 비어 있다.
+        val f = Fixture()
+        val custom = f.change().copy(keywordMode = "CUSTOM", keywords = emptyList())
+
+        // 실행 / 검증: 공통 키워드 미설정과 계획 입력 누락을 구분한다.
+        val create = assertFailsWith<WebAiException> { f.service.save(1, null, custom) }
+        assertEquals("WEB_AI_PLAN_KEYWORDS_REQUIRED", create.code)
+        assertEquals(409, create.status)
+        assertTrue(f.store.writes.isEmpty())
+
+        // 준비: 이전 버전에서 저장할 수 있었던 빈 선택 계획을 재현한다.
+        val legacy = f.plan().copy(keywordMode = "CUSTOM", keywords = emptyList())
+        f.store.write(1) { savePlan(legacy) }
+
+        // 실행 / 검증: 기존 계획은 남기고 새 연결과 출제를 거부한다.
+        val connection = assertFailsWith<WebAiException> { f.service.connection(1, legacy.id) }
+        val run = assertFailsWith<WebAiException> { f.service.run(1, legacy.id, "legacy") }
+        assertEquals("WEB_AI_PLAN_KEYWORDS_REQUIRED", connection.code)
+        assertEquals("WEB_AI_PLAN_KEYWORDS_REQUIRED", run.code)
+        assertTrue(f.service.runs(1, 20).isEmpty())
+        assertEquals(legacy, f.service.plans(1).single())
+        assertEquals(0, f.calls)
+    }
+
+    @Test
+    fun `키워드가 없어져도 이전 답안 제출 검증 이력 조회 삭제와 연결 해제는 가능하다`() = runBlocking {
+        // 준비
+        for (asynchronous in listOf(false, true)) {
+            val f = Fixture(asynchronous)
+            val plan = f.plan()
+            val token = f.service.connection(1, plan.id)
+            val run = f.service.run(1, plan.id, "existing")
+            f.current = f.current.copy(defaultKeywords = emptyList())
+
+            // 실행: 이미 배정된 문제의 답안은 설정 변경 이후에도 제출·평가한다.
+            val accepted = f.service.submit(1, f.submission(run))
+            val result = if (asynchronous) f.service.processQueued(1, accepted.id) else accepted
+            f.service.revoke(1, plan.id)
+            f.service.delete(1, plan.id)
+
+            // 검증
+            assertEquals("VERIFIED", result.status)
+            assertEquals(result, f.service.result(1, result.id))
+            assertEquals(run, f.service.runById(1, run.id))
+            assertEquals(1, f.store.growthApplications.size)
+            assertTrue(f.service.plans(1).isEmpty())
+            assertNull(f.store.capability(WebAiPolicy.sha256(token)))
+        }
+    }
+
+    @Test
     fun `공통 언어를 상속하고 계획별 키워드는 서버 카탈로그로 다시 해석한다`() = runBlocking {
         // 준비
         val f = Fixture()
