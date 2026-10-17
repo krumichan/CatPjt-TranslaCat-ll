@@ -14,6 +14,7 @@ internal object WritingSetsTable : Table("language_learning_daily_set") {
         fkName = "fk_ll_w_set_learner",
     )
     val learningDate = date("learning_date")
+    val languageScope = varchar("language_scope", 100).default("")
     val writingType = varchar("writing_type", 30)
     val snapshotId = varchar("snapshot_id", 100)
     val sentenceCount = integer("sentence_count")

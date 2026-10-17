@@ -5,6 +5,7 @@ import jp.co.translacat.languagelearning.features.learner.infrastructure.persist
 import jp.co.translacat.languagelearning.features.practice.application.PracticeTransaction
 import jp.co.translacat.languagelearning.features.practice.application.PracticeUnitOfWork
 import jp.co.translacat.languagelearning.features.practice.infrastructure.persistence.repository.ExposedPracticeRepository
+import jp.co.translacat.languagelearning.features.settings.infrastructure.persistence.repository.ExposedUserSettingsRepository
 import jp.co.translacat.languagelearning.shared.persistence.transaction.JdbcTransactionRunner
 import org.jetbrains.exposed.v1.jdbc.transactions.TransactionManager
 import java.time.Clock
@@ -35,9 +36,10 @@ internal class ExposedPracticeUnitOfWork(
                 "Practice Repository는 소유 트랜잭션 안에서만 사용할 수 있습니다."
             }
         }
+        val settingsRepository = ExposedUserSettingsRepository(guard)
         val scope = object : PracticeTransaction {
-            override val records = ExposedPracticeRepository(guard)
-            override val growth = ExposedGrowthRepository(guard)
+            override val records = ExposedPracticeRepository(guard, settings = settingsRepository)
+            override val growth = ExposedGrowthRepository(guard, settings = settingsRepository)
             override val nowUtc =
                 LocalDateTime.ofInstant(clock.instant(), ZoneOffset.UTC).truncatedTo(ChronoUnit.MICROS)
         }

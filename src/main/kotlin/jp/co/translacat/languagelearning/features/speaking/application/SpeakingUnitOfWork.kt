@@ -26,6 +26,7 @@ internal interface SpeakingRepository {
     fun session(userId: Long, sessionId: Long): SpeakingSessionRecord?
     fun sessionByIdempotency(userId: Long, key: String): SpeakingSessionRecord?
     fun active(userId: Long): SpeakingSessionRecord?
+    fun active(userId: Long, originLanguage: String, learningLanguage: String): SpeakingSessionRecord?
     fun sessions(userId: Long, from: LocalDate, to: LocalDate): List<SpeakingSessionRecord>
     fun expirable(now: LocalDateTime, limit: Int): List<Pair<Long, Long>>
     fun saveSession(value: SpeakingSessionRecord): SpeakingSessionRecord

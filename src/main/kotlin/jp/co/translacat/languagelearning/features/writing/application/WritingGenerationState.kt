@@ -17,9 +17,15 @@ internal class WritingGenerationState(private val work: WritingSetUnitOfWork) {
 
     suspend fun getOrCreate(seed: NewWritingSet): WritingSet {
         // 기존 snapshot만 반환한다. 같은 날짜/유형의 재요청은 신규 입력으로 덮어쓰지 않는다.
-        Json.parseToJsonElement(seed.snapshotJson)
+        val snapshot = Json.parseToJsonElement(seed.snapshotJson) as? JsonObject
+        fun language(name: String) = (snapshot?.get(name) as? JsonPrimitive)?.takeIf { it.isString }
+            ?.content?.takeIf { it.trim().length in 2..20 }
+        val origin = language("originLanguage")
+        val learning = language("learningLanguage")
         return work.write(seed.userId) {
-            sets.find(seed.userId, seed.learningDate, seed.writingType) ?: sets.create(seed, nowUtc)
+            val sourceSets = if (origin != null && learning != null) sets.scoped(origin, learning)
+            else sets.scoped(null, null)
+            sourceSets.find(seed.userId, seed.learningDate, seed.writingType) ?: sourceSets.create(seed, nowUtc)
         }
     }
 

@@ -76,6 +76,11 @@ class SourceArchitectureTest {
             "$ROOT.features.growth.infrastructure.persistence.table.GrowthSignalsTable" to "$ROOT.features.learner.infrastructure.persistence.table.LearnersTable",
             "$ROOT.features.growth.infrastructure.persistence.table.KeywordMasteriesTable" to "$ROOT.features.learner.infrastructure.persistence.table.LearnersTable",
             "$ROOT.features.growth.infrastructure.persistence.ExposedGrowthUnitOfWork" to "$ROOT.features.learner.infrastructure.persistence.repository.ExposedLearnerRepository",
+            // 활성 언어쌍 조회는 UoW에서 설정 포트를 조립한다. 업무 repository는 다른 기능의 Table을 참조하지 않는다.
+            "$ROOT.features.growth.infrastructure.persistence.ExposedGrowthUnitOfWork" to "$ROOT.features.settings.infrastructure.persistence.repository.ExposedUserSettingsRepository",
+            "$ROOT.features.writing.infrastructure.persistence.ExposedWritingSetUnitOfWork" to "$ROOT.features.settings.infrastructure.persistence.repository.ExposedUserSettingsRepository",
+            "$ROOT.features.practice.infrastructure.ExposedPracticeUnitOfWork" to "$ROOT.features.settings.infrastructure.persistence.repository.ExposedUserSettingsRepository",
+            "$ROOT.features.speaking.infrastructure.ExposedSpeakingUnitOfWork" to "$ROOT.features.settings.infrastructure.persistence.repository.ExposedUserSettingsRepository",
             "$ROOT.features.leveltest.infrastructure.persistence.repository.ExposedLevelTestRepository" to "$ROOT.features.growth.infrastructure.persistence.repository.ExposedGrowthRepository",
             "$ROOT.features.leveltest.infrastructure.persistence.table.LevelSessionsTable" to "$ROOT.features.learner.infrastructure.persistence.table.LearnersTable",
             "$ROOT.features.leveltest.infrastructure.persistence.table.LevelBaselinesTable" to "$ROOT.features.learner.infrastructure.persistence.table.LearnersTable",

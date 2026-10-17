@@ -2,6 +2,7 @@ package jp.co.translacat.languagelearning.features.listening.application
 
 import jp.co.translacat.languagelearning.features.listening.domain.model.*
 import jp.co.translacat.languagelearning.features.settings.application.SettingsServiceOperations
+import jp.co.translacat.languagelearning.features.settings.domain.model.ConfiguredLanguagePair
 import jp.co.translacat.languagelearning.shared.error.LearningBusinessException
 import jp.co.translacat.languagelearning.shared.identity.LearningPublicId
 import kotlinx.serialization.json.*
@@ -301,6 +302,8 @@ internal class ListeningReadService(
                                 put("activityId", "LISTENING:${LearningPublicId.encode(session.id)}")
                                 put("source", "LISTENING")
                                 put("learningDate", sets.getValue(session.setId).learningDate)
+                                put("originLanguage", ConfiguredLanguagePair.knownLanguage(sets.getValue(session.setId).originLanguage))
+                                put("learningLanguage", ConfiguredLanguagePair.knownLanguage(sets.getValue(session.setId).learningLanguage))
                                 put("title", "Daily Listening")
                                 put("topic", JsonNull)
                                 put("durationSeconds", session.actualDurationMs / 1000)

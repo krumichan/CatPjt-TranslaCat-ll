@@ -8,8 +8,60 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 class SpeakingConversationExecutionTest {
+    @Test
+    fun `한국어와 일본어 사용자의 영어 대화 세 모드가 학습 언어와 영문 과제를 보존한다`() = runBlocking {
+        // 준비: 실제 실행·schema 검증을 사용하며 모델 출력만 합성한다.
+        val scenarios = listOf("ko" to "FREE", "ko" to "GUIDED", "ko" to "READ_ALOUD",
+            "ja" to "FREE", "ja" to "GUIDED", "ja" to "READ_ALOUD")
+        for ((origin, mode) in scenarios) {
+            val request = buildJsonObject {
+                put("requestId", "english-$origin-$mode")
+                put("idempotencyKey", "english-$origin-$mode")
+                put("sessionId", "english-session")
+                put("turnIndex", 0)
+                put("originLanguage", origin)
+                put("learningLanguage", "en")
+                put("topic", "Weekend plans")
+                put("conversationStartMode", "AI_FIRST")
+                put("practiceMode", mode)
+            }
+            val text = if (mode == "READ_ALOUD") "I will visit the park this weekend."
+                else "What would you like to do this weekend?"
+            val output = buildJsonObject {
+                put("assistantText", text)
+                put("intent", "PLAN")
+                put("difficulty", "A2")
+                if (mode == "READ_ALOUD") put("scriptText", text)
+                if (mode == "GUIDED") {
+                    put("providedFacts", JsonArray(listOf(JsonPrimitive("You are free on Saturday."))))
+                    put("requiredIntents", JsonArray(listOf(JsonPrimitive("Suggest a plan for Saturday."))))
+                    put("responseConstraints", JsonArray(listOf(JsonPrimitive("Speak politely."))))
+                }
+            }
+            val commands = mutableListOf<ModelExecutionCommand>()
+            val execution = SpeakingConversationExecution(ModelExecutionPort { command ->
+                commands += command
+                ModelExecutionResult(output, 10, 10, "synthetic", "english-contract")
+            })
+
+            // 실행
+            val result = execution.generate(request)
+
+            // 검증: Provider 입력과 사용자에게 반환하는 과제 모두 같은 영어 문맥에 속한다.
+            assertEquals(text, result.getValue("assistantText").jsonPrimitive.content)
+            assertEquals(1, commands.size)
+            val prompt = commands.single().messages.single().content
+            assertTrue(prompt.contains("\"originLanguage\":\"$origin\""))
+            assertTrue(prompt.contains("\"learningLanguage\":\"en\""))
+            val conversation = result.getValue("conversation").jsonObject
+            if (mode == "READ_ALOUD") assertEquals(JsonPrimitive(text), conversation["scriptText"])
+            if (mode == "GUIDED") assertEquals(output["providedFacts"], conversation["providedFacts"])
+        }
+    }
+
     @Test
     fun `원본 Python 대화 도움말 흐름의 prompt schema 결과 실패 호출수를 보존한다`() = runBlocking {
         // 준비: 기존 Python 서비스를 직접 실행한 결과를 읽는다. 모델 응답만 고정한다.

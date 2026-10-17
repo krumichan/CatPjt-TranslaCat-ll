@@ -6,6 +6,7 @@ import org.flywaydb.core.Flyway
 import java.sql.Connection
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
@@ -21,7 +22,7 @@ class DatabaseMigrationIntegrationTestUpgrade {
         LocalScratchMysql.use { db ->
             // 준비: V036의 합성 설정을 만들고 활성·예약 언어와 감사 시각을 기록한다.
             val settings = db.settings()
-            Flyway.configure().dataSource(settings.jdbcUrl, settings.username, settings.password)
+            val initial = Flyway.configure().dataSource(settings.jdbcUrl, settings.username, settings.password)
                 .locations("classpath:db/migration").defaultSchema(db.name).schemas(db.name)
                 .createSchemas(false).cleanDisabled(true).baselineOnMigrate(false).target("036").load().migrate()
             db.connect().use { connection ->
@@ -42,9 +43,10 @@ class DatabaseMigrationIntegrationTestUpgrade {
                 }
             }
 
-            // 실행: 실제 DB의 추가 migration 한 개를 적용한다.
+            // 실행: V036 뒤의 실제 추가 migration을 최신 버전까지 적용한다.
             DatabaseFactory(settings).use { factory ->
-                assertEquals(1, factory.migrationReport.migrationsExecuted)
+                assertEquals(CurrentSchema.VERSION, factory.migrationReport.schemaVersion.toInt())
+                assertEquals(CurrentSchema.MIGRATION_COUNT - initial.migrationsExecuted, factory.migrationReport.migrationsExecuted)
             }
 
             // 검증: 설명 언어만 기존 원문 언어로 초기화하고 기존 열과 예약값은 그대로 둔다.
@@ -87,7 +89,35 @@ class DatabaseMigrationIntegrationTestUpgrade {
 
         // 검증: 기존 행의 모든 컬럼·식별자·날짜·원문 JSON과 stream sequence가 동일하다.
         val after = db.connect().use { snapshot(it) }
-        assertEquals(before, after)
+        val profileTable = "language_learning_profile"
+        assertEquals(before.filterKeys { it != profileTable }, after.filterKeys { it != profileTable })
+        val originalProfile = before.getValue(profileTable)
+        val migratedProfile = after.getValue(profileTable)
+        assertEquals(originalProfile.columns + "language_scope", migratedProfile.columns)
+        val scopeIndex = migratedProfile.columns.indexOf("language_scope")
+        val preservedRows = migratedProfile.rows.filter { it[scopeIndex] == "" }.map { row ->
+            originalProfile.columns.map { column -> row[migratedProfile.columns.indexOf(column)] }
+        }
+        assertEquals(originalProfile.rows, preservedRows)
+        assertEquals(originalProfile.rows.size + 1, migratedProfile.rows.size)
+
+        // 새 언어 프로필은 완료 원본의 기준점만 이어받고 기존 누적 성장과 분리된다.
+        db.connect().use { connection ->
+            connection.createStatement().use { statement ->
+                statement.executeQuery("SELECT * FROM $profileTable WHERE user_id=781 AND language_scope<>''").use { row ->
+                    assertTrue(row.next())
+                    assertEquals("2:ko2:en", row.getString("language_scope"))
+                    assertEquals("CALIBRATING", row.getString("state"))
+                    assertEquals(60, row.getInt("base_level_score"))
+                    assertEquals(0, row.getInt("evaluation_count"))
+                    assertEquals(0.0, row.getDouble("confidence"))
+                    assertNull(row.getObject("grammar_score"))
+                    assertEquals("{}", row.getString("additional_signals_json"))
+                    assertEquals("00000000-0000-0000-0000-000000000781", row.getString("baseline_completion_id"))
+                    assertFalse(row.next())
+                }
+            }
+        }
     }
 
     private fun seed(connection: Connection) {
@@ -128,13 +158,17 @@ class DatabaseMigrationIntegrationTestUpgrade {
         connection.createStatement().use { statement -> statements.forEach { statement.executeUpdate(it) } }
     }
 
-    private fun snapshot(connection: Connection): Map<String, List<List<String?>>> =
+    private data class TableSnapshot(val columns: List<String>, val rows: List<List<String?>>)
+
+    private fun snapshot(connection: Connection): Map<String, TableSnapshot> =
         preservedTables.associateWith { table ->
             connection.createStatement().use { statement ->
                 statement.executeQuery("SELECT * FROM $table ORDER BY 1").use { rows ->
-                    buildList {
+                    val columns = (1..rows.metaData.columnCount).map { rows.metaData.getColumnName(it) }
+                    val values = buildList {
                         while (rows.next()) add((1..rows.metaData.columnCount).map { rows.getString(it) })
                     }
+                    TableSnapshot(columns, values)
                 }
             }
         }

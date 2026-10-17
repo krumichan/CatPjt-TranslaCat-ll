@@ -3,17 +3,62 @@ package jp.co.translacat.languagelearning.features.practice.infrastructure.persi
 import jp.co.translacat.languagelearning.features.practice.application.PracticeRepository
 import jp.co.translacat.languagelearning.features.practice.domain.*
 import jp.co.translacat.languagelearning.features.practice.infrastructure.persistence.table.*
+import jp.co.translacat.languagelearning.features.growth.domain.policy.GrowthLanguageScope
+import jp.co.translacat.languagelearning.features.settings.domain.model.ConfiguredLanguagePair
+import jp.co.translacat.languagelearning.features.settings.domain.repository.UserSettingsRepository
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonPrimitive
 import org.jetbrains.exposed.v1.core.*
 import org.jetbrains.exposed.v1.core.statements.UpdateBuilder
 import org.jetbrains.exposed.v1.jdbc.insert
 import org.jetbrains.exposed.v1.jdbc.selectAll
 import org.jetbrains.exposed.v1.jdbc.update
+import org.jetbrains.exposed.v1.jdbc.andWhere
 import java.time.LocalDate
 import java.time.LocalDateTime
 
-internal class ExposedPracticeRepository(private val guard: () -> Unit) : PracticeRepository {
+internal class ExposedPracticeRepository(
+    private val guard: () -> Unit,
+    private val explicitPair: ConfiguredLanguagePair? = null,
+    private val legacyOnly: Boolean = false,
+    private val settings: UserSettingsRepository? = null,
+) : PracticeRepository {
     private val json = Json { encodeDefaults = true }
+    private val activePairs = mutableMapOf<Long, ConfiguredLanguagePair?>()
+
+    override fun scoped(originLanguage: String?, learningLanguage: String?): PracticeRepository {
+        guard()
+        require((originLanguage == null) == (learningLanguage == null))
+        val pair = if (originLanguage != null && learningLanguage != null)
+            ConfiguredLanguagePair(originLanguage, learningLanguage) else null
+        return ExposedPracticeRepository(guard, pair, legacyOnly = pair == null, settings = settings)
+    }
+
+    private fun languagePair(userId: Long): ConfiguredLanguagePair? {
+        if (legacyOnly) return null
+        if (explicitPair != null) return explicitPair
+        return activePairs.getOrPut(userId) {
+            val setting = settings?.findForUser(userId)
+            val origin = setting?.originLanguage
+            val learning = setting?.learningLanguage
+            if (origin != null && learning != null) ConfiguredLanguagePair(origin, learning) else null
+        }
+    }
+
+    private fun languageScope(userId: Long): String = languagePair(userId)?.let {
+        GrowthLanguageScope.key(it.originLanguage, it.learningLanguage)
+    } ?: ""
+
+    private fun requestScope(requestJson: String): String {
+        // 새 저장도 migration과 같이 원본 snapshot만 신뢰한다. 미지·손상 자료는 legacy로 보존한다.
+        val snapshot = runCatching { Json.parseToJsonElement(requestJson) as? JsonObject }.getOrNull()
+        fun language(name: String) = (snapshot?.get(name) as? JsonPrimitive)?.takeIf { it.isString }
+            ?.content?.takeIf { it.trim().length in 2..20 }
+        val origin = language("originLanguage")
+        val learning = language("learningLanguage")
+        return if (origin != null && learning != null) GrowthLanguageScope.key(origin, learning) else ""
+    }
 
     override fun find(userId: Long, setId: Long): PracticeSet? {
         guard()
@@ -24,16 +69,19 @@ internal class ExposedPracticeRepository(private val guard: () -> Unit) : Practi
     override fun today(userId: Long, date: LocalDate, domain: PracticeDomain): List<PracticeSet> {
         guard()
         return PracticeSets.selectAll().where {
-            (PracticeSets.userId eq userId) and (PracticeSets.learningDate eq date) and (PracticeSets.domain eq domain.name)
+            (PracticeSets.userId eq userId) and (PracticeSets.languageScope eq languageScope(userId)) and
+                (PracticeSets.learningDate eq date) and (PracticeSets.domain eq domain.name)
         }.orderBy(PracticeSets.id).map(::set)
     }
 
     override fun recentScores(userId: Long, domain: PracticeDomain, mode: String): List<Double> {
         guard()
-        return PracticeSets.selectAll().where {
+        val query = PracticeSets.selectAll().where {
             (PracticeSets.userId eq userId) and (PracticeSets.domain eq domain.name) and
                 (PracticeSets.mode eq mode) and (PracticeSets.status eq PracticeStatus.COMPLETED.name)
-        }.orderBy(PracticeSets.learningDate to SortOrder.DESC, PracticeSets.id to SortOrder.DESC)
+        }
+        query.andWhere { PracticeSets.languageScope eq languageScope(userId) }
+        return query.orderBy(PracticeSets.learningDate to SortOrder.DESC, PracticeSets.id to SortOrder.DESC)
             .limit(5).mapNotNull { it[PracticeSets.officialScore] }
     }
 
@@ -61,12 +109,14 @@ internal class ExposedPracticeRepository(private val guard: () -> Unit) : Practi
 
     override fun recentMistakes(userId: Long, domain: PracticeDomain): List<PracticeQuestionContent> {
         guard()
-        return PracticeAttempts.join(
+        val query = PracticeAttempts.join(
             PracticeQuestions, JoinType.INNER, PracticeAttempts.questionId, PracticeQuestions.id,
         )
             .join(PracticeSets, JoinType.INNER, PracticeQuestions.setId, PracticeSets.id).selectAll().where {
                 (PracticeSets.userId eq userId) and (PracticeSets.domain eq domain.name) and (PracticeAttempts.correct eq false)
-            }.orderBy(PracticeAttempts.submittedAt to SortOrder.DESC, PracticeAttempts.id to SortOrder.DESC).limit(30)
+            }
+        query.andWhere { PracticeSets.languageScope eq languageScope(userId) }
+        return query.orderBy(PracticeAttempts.submittedAt to SortOrder.DESC, PracticeAttempts.id to SortOrder.DESC).limit(30)
             .map { json.decodeFromString<PracticeQuestionContent>(it[PracticeQuestions.contentJson]) }
     }
 
@@ -145,7 +195,9 @@ internal class ExposedPracticeRepository(private val guard: () -> Unit) : Practi
 
     override fun masteries(userId: Long): List<VocabularyMastery> {
         guard()
-        return VocabularyMasteries.selectAll().where { VocabularyMasteries.userId eq userId }
+        return VocabularyMasteries.selectAll().where {
+            (VocabularyMasteries.userId eq userId) and (VocabularyMasteries.languageScope eq languageScope(userId))
+        }
             .orderBy(VocabularyMasteries.score).map {
                 VocabularyMastery(
                     it[VocabularyMasteries.userId], it[VocabularyMasteries.canonicalKey],
@@ -160,7 +212,8 @@ internal class ExposedPracticeRepository(private val guard: () -> Unit) : Practi
         guard()
         val updated = VocabularyMasteries.update(
             {
-                (VocabularyMasteries.userId eq value.userId) and (VocabularyMasteries.canonicalKey eq value.canonicalKey)
+                (VocabularyMasteries.userId eq value.userId) and (VocabularyMasteries.canonicalKey eq value.canonicalKey) and
+                    (VocabularyMasteries.languageScope eq languageScope(value.userId))
             },
         ) { writeMastery(it, value) }
         if (updated == 0) VocabularyMasteries.insert { writeMastery(it, value) }
@@ -196,6 +249,7 @@ internal class ExposedPracticeRepository(private val guard: () -> Unit) : Practi
 
     private fun writeSet(statement: UpdateBuilder<*>, value: PracticeSet) = with(PracticeSets) {
         statement[userId] = value.userId
+        statement[PracticeSets.languageScope] = requestScope(value.requestJson)
         statement[learningDate] = value.learningDate
         statement[domain] = value.domain.name
         statement[mode] = value.mode
@@ -217,6 +271,7 @@ internal class ExposedPracticeRepository(private val guard: () -> Unit) : Practi
 
     private fun writeMastery(statement: UpdateBuilder<*>, value: VocabularyMastery) = with(VocabularyMasteries) {
         statement[userId] = value.userId
+        statement[VocabularyMasteries.languageScope] = this@ExposedPracticeRepository.languageScope(value.userId)
         statement[canonicalKey] = value.canonicalKey
         statement[displayExpression] = value.displayExpression
         statement[score] = value.score

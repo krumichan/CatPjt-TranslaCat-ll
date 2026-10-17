@@ -7,6 +7,9 @@ import jp.co.translacat.languagelearning.features.writing.domain.model.WritingSe
 import jp.co.translacat.languagelearning.features.writing.domain.policy.WritingEvaluationResult
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import java.time.Duration
 import java.time.LocalDate
@@ -61,13 +64,22 @@ internal class WritingEvaluationState(private val work: WritingSetUnitOfWork) {
         val item = items.find(claim.userId, answer.itemId) ?: return@write false
         val set = sets.findById(claim.userId, item.setId) ?: return@write false
         if (!evaluations.succeed(claim.userId, claim.answerId, claim.token, result, nowUtc)) return@write false
-        val profile = growth.profile(claim.userId)
+        // 생성 당시 언어를 사용해 지연된 일본어 평가가 새 영어 프로필에 반영되지 않게 한다.
+        val snapshot = Json.parseToJsonElement(set.snapshotJson).jsonObject
+        fun language(name: String) = (snapshot[name] as? JsonPrimitive)
+            ?.takeIf { it.isString }?.content?.takeIf { it.trim().length in 2..20 }
+        val origin = language("originLanguage")
+        val learning = language("learningLanguage")
+        // 언어가 없는 과거 snapshot은 기존 미귀속 집계에만 반영하며 현재 언어로 추정하지 않는다.
+        val sourceGrowth = if (origin != null && learning != null) growth.scoped(origin, learning)
+        else growth.scoped(null, null)
+        val profile = sourceGrowth.profile(claim.userId)
         require(profile != null && profile.state != "LEVEL_TEST_REQUIRED") { "LEVEL_TEST_REQUIRED" }
         val scores = result.scores
         val signals = result.payload.getValue("profileSignals") as JsonObject
         fun values(key: String): List<String> = ((signals[key] as? JsonArray) ?: JsonArray(emptyList()))
             .map { it.jsonPrimitive.content }.filter(String::isNotBlank)
-        GrowthProjector(growth).apply(
+        GrowthProjector(sourceGrowth).apply(
             claim.userId,
             GrowthChange.WritingScored(
                 learningDate = learningDate, difficulty = item.difficulty.name,

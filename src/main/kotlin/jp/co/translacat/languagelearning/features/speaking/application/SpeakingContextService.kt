@@ -1,9 +1,11 @@
 package jp.co.translacat.languagelearning.features.speaking.application
 
+import jp.co.translacat.languagelearning.features.growth.domain.repository.GrowthRepository
 import jp.co.translacat.languagelearning.features.keyword.application.KeywordLearningFacts
 import jp.co.translacat.languagelearning.features.keyword.application.KeywordOperations
 import jp.co.translacat.languagelearning.features.keyword.domain.policy.KeywordSelectionPolicy
 import jp.co.translacat.languagelearning.features.settings.application.SettingsServiceOperations
+import jp.co.translacat.languagelearning.features.settings.domain.model.ConfiguredLanguagePair
 import jp.co.translacat.languagelearning.features.settings.domain.policy.UserSettingsPolicy
 import jp.co.translacat.languagelearning.features.speaking.domain.*
 import jp.co.translacat.languagelearning.shared.identity.LearningPublicId
@@ -17,16 +19,20 @@ internal class SpeakingContextService(
     private val speakingRecommendedFocus: suspend (Long) -> List<String>,
 ) {
     suspend fun create(userId: Long, request: SpeakingCreateRequest): SpeakingSessionRecord {
-        // 기존 멱등 요청은 현재 설정·활성 세션·한도 검사를 다시 하지 않고 반환한다.
+        // 익일 예약 언어를 먼저 적용하고 같은 멱등 키가 다른 언어 세션을 돌려주지 않게 한다.
+        val current = settings.userSnapshot(userId)
+        val user = current.result.settings
+        UserSettingsPolicy.requireConfigured(user)
+        val pair = ConfiguredLanguagePair(checkNotNull(user.originLanguage), checkNotNull(user.learningLanguage))
         if (!request.idempotencyKey.isNullOrBlank()) {
-            work.read { records.sessionByIdempotency(userId, request.idempotencyKey) }?.let { return it }
+            work.read { records.sessionByIdempotency(userId, request.idempotencyKey) }?.let {
+                requireLanguage(it, pair)
+                return it
+            }
         }
 
         // 현재 설정과 추천 문맥을 준비한다. 실제 선택 결과는 아래 사용자 잠금 안에서 고정한다.
-        val current = settings.userSnapshot(userId)
-        val user = current.result.settings
         val admin = settings.adminPolicy()
-        UserSettingsPolicy.requireConfigured(user)
         SpeakingSessionPolicy.validateCreate(request, admin)
         val date = current.learningDate
         val candidates = if ((request.keywordBasedTopic || request.topicId != null) && admin.dailyKeywordMaxCount > 0)
@@ -34,12 +40,18 @@ internal class SpeakingContextService(
         val focus = speakingRecommendedFocus(userId)
 
         return work.write(userId) {
+            // 설정 승격이 겹쳐도 생성할 세션과 같은 언어쌍의 개인화 문맥만 사용한다.
+            val sourceGrowth = growth.scoped(user.originLanguage, user.learningLanguage)
+
             // 사용자 잠금 아래 활성 세션과 일일 한도를 재확인한 후 선택 기록과 세션을 함께 저장한다.
-            records.sessionByIdempotency(userId, checkNotNull(request.idempotencyKey))?.let { return@write it }
+            records.sessionByIdempotency(userId, checkNotNull(request.idempotencyKey))?.let {
+                requireLanguage(it, pair)
+                return@write it
+            }
             SpeakingSessionPolicy.requireRemainingLimit(
                 records.sessions(userId, date, date).map { it.totalDurationSeconds }, admin,
             )
-            records.active(userId)?.let {
+            records.active(userId, pair.originLanguage, pair.learningLanguage)?.let {
                 val active = it.expireIfNeeded(nowUtc)
                 if (active != it) records.saveSession(active)
                 if (active.active || active.openingLeaseAlive(nowUtc)) throw SpeakingFailure("SESSION_NOT_ACTIVE")
@@ -59,7 +71,7 @@ internal class SpeakingContextService(
             )
             SpeakingSessionPolicy.requireResolvedStart(mode, resolved)
             val selected = KeywordSelectionPolicy.select(userId, date, candidates, admin.dailyKeywordMaxCount) {
-                growth.mastery(userId, it)
+                sourceGrowth.mastery(userId, it)
             }
             if (request.keywordBasedTopic && selected.isEmpty()) throw SpeakingFailure(
                 "LANGUAGE_LEARNING_SETTING_INVALID",
@@ -94,7 +106,7 @@ internal class SpeakingContextService(
                     )
                 ) "marin" else requestedVoice,
                 request.playbackSpeed ?: user.speakingPlaybackSpeed, SpeakingSessionPolicySnapshot.from(admin),
-                profileSummary(userId, focus),
+                profileSummary(sourceGrowth, userId, focus),
                 if (free) SpeakingResultKind.SESSION_COACHING else SpeakingResultKind.SCORED_EVALUATION,
                 if (free) "free-session-coaching-v1" else "speaking-evaluation-policy-v2",
             )
@@ -113,9 +125,15 @@ internal class SpeakingContextService(
         }
     }
 
-    private fun SpeakingTransaction.profileSummary(userId: Long, speakingFocus: List<String>): JsonObject? {
-        val profile = growth.profile(userId) ?: return null
-        fun keys(type: String) = growth.signals(userId, type, 10).map { it.key }
+    private fun requireLanguage(session: SpeakingSessionRecord, pair: ConfiguredLanguagePair) {
+        if (!pair.matches(session.snapshot.originLanguage, session.snapshot.learningLanguage)) {
+            throw SpeakingFailure("SPEAKING_LANGUAGE_CHANGED", 409)
+        }
+    }
+
+    private fun profileSummary(sourceGrowth: GrowthRepository, userId: Long, speakingFocus: List<String>): JsonObject? {
+        val profile = sourceGrowth.profile(userId) ?: return null
+        fun keys(type: String) = sourceGrowth.signals(userId, type, 10).map { it.key }
         fun strings(values: List<String>) = JsonArray(values.map(::JsonPrimitive))
         fun number(value: Double?) = value?.let(::JsonPrimitive) ?: JsonNull
         val scores = listOf(
@@ -136,7 +154,7 @@ internal class SpeakingContextService(
             put(
                 "keywordMasteries",
                 JsonArray(
-                    growth.masteries(userId, null, 30).map { value ->
+                    sourceGrowth.masteries(userId, null, 30).map { value ->
                         buildJsonObject {
                             put("canonicalKey", value.canonicalKey)
                             put("score", value.score)

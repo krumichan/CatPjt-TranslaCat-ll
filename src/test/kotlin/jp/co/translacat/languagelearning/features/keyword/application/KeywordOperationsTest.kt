@@ -4,6 +4,7 @@ import jp.co.translacat.languagelearning.features.keyword.domain.model.KeywordCh
 import jp.co.translacat.languagelearning.features.keyword.domain.model.KeywordList
 import jp.co.translacat.languagelearning.features.keyword.domain.model.KeywordType
 import jp.co.translacat.languagelearning.features.keyword.domain.model.SystemKeywordLocale
+import jp.co.translacat.languagelearning.features.settings.domain.model.ConfiguredLanguagePair
 import jp.co.translacat.languagelearning.shared.error.LearningBusinessException
 import jp.co.translacat.languagelearning.support.MemoryKeywordUnitOfWork
 import kotlinx.coroutines.runBlocking
@@ -16,6 +17,34 @@ class KeywordOperationsTest {
     private var date = today
     private val service = DefaultKeywordOperations(db, KeywordLearningDate { date })
     private fun topic(text: String = "IT") = KeywordChange(text = text, type = KeywordType.TOPIC)
+
+    @Test
+    fun `learning 목록은 활성 사용자 언어쌍을 조회하고 UI 선택은 그대로 유지한다`() = runBlocking {
+        // 준비: 동일 사용자의 학습 언어가 바뀌어도 이전 호출의 일본어 표시를 캐시하지 않는다.
+        val keyword = service.createSystem(900, topic()).id
+        db.localeRows += listOf(SystemKeywordLocale(keyword, "ko-KR", "정보 기술"),
+            SystemKeywordLocale(keyword, "ja-JP", "情報技術"), SystemKeywordLocale(keyword, "en-US", "Technology"))
+        var language = "en"
+        var reads = 0
+        val localizedService = DefaultKeywordOperations(db, KeywordLearningDate { date }) { userId ->
+            assertEquals(123L, userId)
+            reads++
+            ConfiguredLanguagePair("ko", language)
+        }
+
+        // 실행
+        val english = localizedService.list(123, false, "learning").systemKeywords.single()
+        language = "ja"
+        val japanese = localizedService.list(123, false, "learning").systemKeywords.single()
+        val koreanUi = localizedService.list(123, false, "ko").systemKeywords.single()
+
+        // 검증: 설정 조회는 혼합 표시에서만 수행하고 새 예약값을 임의로 반영하지 않는다.
+        assertEquals("Technology", english.displayName)
+        assertEquals("정보 기술", english.secondaryDisplayName)
+        assertEquals("情報技術", japanese.displayName)
+        assertEquals("정보 기술", koreanUi.displayName)
+        assertEquals(2, reads)
+    }
 
     @Test
     fun `빈 카탈로그와 개인 목록을 안전하게 반환한다`() {

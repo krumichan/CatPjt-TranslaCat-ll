@@ -25,7 +25,7 @@ internal class SpeakingOpeningState(private val work: SpeakingUnitOfWork) {
         val session = records.session(userId, sessionId) ?: throw SpeakingFailure("SESSION_NOT_FOUND")
         if (session.openingReady) return@write null
         if (session.openingState == "RUNNING" && session.openingLeaseAlive(nowUtc)) return@write null
-        val other = records.active(userId)
+        val other = records.active(userId, session.snapshot.originLanguage, session.snapshot.learningLanguage)
         if (other != null && other.id != sessionId && (other.active || other.openingLeaseAlive(nowUtc))) {
             throw SpeakingFailure("SESSION_NOT_ACTIVE")
         }
@@ -59,7 +59,9 @@ internal class SpeakingOpeningState(private val work: SpeakingUnitOfWork) {
             }
             val usage = (response["usage"] as? JsonObject) ?: JsonObject(emptyMap())
             val keywords = snapshot.selectedKeywords.map { it.getValue("canonicalKey").jsonPrimitive.content }
-            if (keywords.isNotEmpty()) GrowthProjector(growth).apply(
+            if (keywords.isNotEmpty()) GrowthProjector(
+                growth.scoped(snapshot.originLanguage, snapshot.learningLanguage),
+            ).apply(
                 session.userId,
                 GrowthChange.KeywordsSelected(session.learningDate, keywords), nowUtc,
             )

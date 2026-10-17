@@ -4,6 +4,7 @@ import jp.co.translacat.languagelearning.features.growth.application.GrowthTrans
 import jp.co.translacat.languagelearning.features.growth.application.GrowthUnitOfWork
 import jp.co.translacat.languagelearning.features.growth.infrastructure.persistence.repository.ExposedGrowthRepository
 import jp.co.translacat.languagelearning.features.learner.infrastructure.persistence.repository.ExposedLearnerRepository
+import jp.co.translacat.languagelearning.features.settings.infrastructure.persistence.repository.ExposedUserSettingsRepository
 import jp.co.translacat.languagelearning.shared.persistence.transaction.JdbcTransactionRunner
 import org.jetbrains.exposed.v1.core.eq
 import org.jetbrains.exposed.v1.jdbc.selectAll
@@ -38,7 +39,7 @@ internal class ExposedGrowthUnitOfWork(
             }
         }
         val scope = object : GrowthTransaction {
-            override val records = ExposedGrowthRepository(guard)
+            override val records = ExposedGrowthRepository(guard, settings = ExposedUserSettingsRepository(guard))
             override fun requireActiveIfPresent(userId: Long) {
                 guard()
                 val table =

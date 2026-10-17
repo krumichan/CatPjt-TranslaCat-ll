@@ -43,7 +43,9 @@ class WritingSetStateIntegrationTestLanguage {
                 assertEquals(JsonPrimitive("ja"), payload["learningLanguage"])
                 work.read {
                     assertEquals(WritingEvaluationStatus.SUCCESS, answers.findById(730, answer.id)?.evaluationStatus)
-                    assertEquals(1, growth.profile(730)?.evaluationCount)
+                    assertEquals(1, growth.scoped("ko", "ja").profile(730)?.evaluationCount)
+                    assertNull(growth.scoped("en", "fr").profile(730))
+                    assertNull(growth.scoped(null, null).profile(730))
                 }
             }
         }
@@ -73,7 +75,8 @@ class WritingSetStateIntegrationTestLanguage {
                     val stored = assertNotNull(answers.findById(731, answer.id))
                     assertEquals("合成の回答です。", stored.text)
                     assertEquals(WritingEvaluationStatus.FAILED, stored.evaluationStatus)
-                    assertEquals(0, growth.profile(731)?.evaluationCount)
+                    assertEquals(0, growth.scoped(null, null).profile(731)?.evaluationCount)
+                    assertNull(growth.scoped("ko", "en").profile(731))
                 }
             }
         }
@@ -95,8 +98,13 @@ class WritingSetStateIntegrationTestLanguage {
         val claim = assertNotNull(generation.claimNext(userId, set.id))
         assertTrue(generation.publishItem(userId, set.id, claim,
             NewWritingItem(1, WritingDifficulty.NORMAL, "좋아하는 활동을 써 보세요.", emptyList(), listOf("MEANING"), "합성 검사"), "synthetic"))
+        // 평가 원본이 알려진 과제만 해당 언어의 기준점을 준비하고, 미상 원본은 legacy로 남긴다.
+        val snapshotLanguages = Json.parseToJsonElement(snapshot).jsonObject
         work.write(userId) {
-            growth.saveProfile(GrowthProfile(userId, state = "ACTIVE", createdAt = nowUtc, updatedAt = nowUtc))
+            growth.scoped(
+                snapshotLanguages["originLanguage"]?.jsonPrimitive?.contentOrNull,
+                snapshotLanguages["learningLanguage"]?.jsonPrimitive?.contentOrNull,
+            ).saveProfile(GrowthProfile(userId, state = "ACTIVE", createdAt = nowUtc, updatedAt = nowUtc))
         }
         val item = work.read { items.list(userId, set.id).single() }
         return WritingAnswerState(work).submit(userId, item.id, "合成の回答です。", null, date, 7, true)

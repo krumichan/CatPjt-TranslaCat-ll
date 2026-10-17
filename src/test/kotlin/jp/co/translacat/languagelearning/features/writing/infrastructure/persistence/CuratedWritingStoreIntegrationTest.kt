@@ -35,6 +35,36 @@ class CuratedWritingStoreIntegrationTest {
     )
 
     @Test
+    fun `다른 언어의 큐레이션 재전송은 거부하고 영어 일반 작문과 옛 이력은 보존한다`() = LocalScratchMysql.use { db ->
+        DatabaseFactory(db.settings()).use { factory ->
+            val runner = JdbcTransactionRunner(factory.database, 4)
+            val curated = CuratedWritingStore(runner, manifest, clock)
+            runBlocking {
+                // 준비
+                curated.importManifest()
+                seedProfile(runner, 303)
+                val request = CuratedWritingStore.Start(303, date, WritingType.TRANSLATION,
+                    "ko", "ja", false, true, 7)
+                val saved = curated.start(request)
+                val id = LearningPublicId.decode(saved.getValue("dailySetId").jsonPrimitive.content)
+
+                // 실행 / 검증: 새 영어 요청은 과거 일본어 문항을 반환하지 않는다.
+                val failure = assertFailsWith<IllegalArgumentException> {
+                    curated.start(request.copy(learningLanguage = "en"))
+                }
+                assertEquals("WRITING_LANGUAGE_CONFLICT", failure.message)
+                val english = WritingGenerationState(ExposedWritingSetUnitOfWork(runner, clock)).getOrCreate(
+                    NewWritingSet(303, date, WritingType.TRANSLATION, "curated-overlap-english", 1,
+                        """{"originLanguage":"ko","learningLanguage":"en"}"""),
+                )
+                assertEquals("en", Json.parseToJsonElement(english.snapshotJson).jsonObject["learningLanguage"]?.jsonPrimitive?.content)
+                assertEquals(saved, curated.byId(303, id, date, 7))
+                assertEquals(saved, curated.start(request))
+            }
+        }
+    }
+
+    @Test
     fun `후보 내용의 새 버전을 가져와도 이전 세트 snapshot과 catalog는 보존된다`() = LocalScratchMysql.use { db ->
         DatabaseFactory(db.settings()).use { factory ->
             val runner = JdbcTransactionRunner(factory.database, 4)

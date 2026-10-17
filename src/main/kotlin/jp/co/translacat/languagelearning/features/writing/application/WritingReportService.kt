@@ -1,15 +1,27 @@
 package jp.co.translacat.languagelearning.features.writing.application
 
 import jp.co.translacat.languagelearning.shared.identity.LearningPublicId
+import jp.co.translacat.languagelearning.features.settings.domain.model.ConfiguredLanguagePair
 import kotlinx.serialization.json.*
 import java.time.LocalDate
 import java.time.YearMonth
 
 /** 기존 Writing 대시보드 계산과 이력 상태 판정을 LL 데이터에 적용한다. */
 internal class WritingReportService(private val queries: WritingReportQueries) {
-    suspend fun report(userId: Long, today: LocalDate, from: LocalDate, to: LocalDate): JsonObject {
+    suspend fun report(
+        userId: Long, today: LocalDate, from: LocalDate, to: LocalDate,
+        languagePair: ConfiguredLanguagePair? = null,
+    ): JsonObject {
         require(!to.isBefore(from))
-        val data = queries.read(userId)
+        // 현재 언어 통계는 저장된 세트의 언어 근거로 먼저 제한한다. 기본 이력 조회는 전체를 보존한다.
+        val original = queries.read(userId)
+        val selected = original.sets.filter {
+            languagePair == null || languagePair.matches(it.originLanguage, it.learningLanguage)
+        }
+        val selectedIds = selected.map { it.id }.toSet()
+        val data = if (languagePair == null) original else WritingReportData(
+            selected, original.evaluations.filter { it.setId in selectedIds }, selected.sumOf { it.answered.toLong() },
+        )
         val daily = data.evaluations.filter { it.context == "DAILY" && it.status == "SUCCESS" }
         val month = YearMonth.from(today)
         val monthly = daily.filter { it.learningDate in month.atDay(1)..month.atEndOfMonth() }
@@ -95,6 +107,8 @@ internal class WritingReportService(private val queries: WritingReportQueries) {
                             put("activityId", "WRITING:${LearningPublicId.encode(set.id)}")
                             put("source", "WRITING")
                             put("learningDate", set.date.toString())
+                            put("originLanguage", ConfiguredLanguagePair.knownLanguage(set.originLanguage))
+                            put("learningLanguage", ConfiguredLanguagePair.knownLanguage(set.learningLanguage))
                             put("title", "Daily Writing · ${set.type}")
                             put("topic", set.type)
                             put("durationSeconds", 0)

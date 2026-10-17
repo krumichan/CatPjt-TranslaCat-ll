@@ -8,6 +8,7 @@ import org.jetbrains.exposed.v1.javatime.datetime
 internal object KeywordMasteriesTable : Table("language_learning_keyword_mastery") {
     val id = long("id").autoIncrement()
     val userId = long("user_id").references(LearnersTable.userId)
+    val languageScope = varchar("language_scope", 100).default("")
     val canonicalKey = varchar("canonical_key", 200)
     val score = double("score")
     val evaluationCount = integer("evaluation_count")
@@ -20,6 +21,6 @@ internal object KeywordMasteriesTable : Table("language_learning_keyword_mastery
     override val primaryKey = PrimaryKey(id)
 
     init {
-        uniqueIndex(userId, canonicalKey)
+        uniqueIndex(userId, languageScope, canonicalKey)
     }
 }

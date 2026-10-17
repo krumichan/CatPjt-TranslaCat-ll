@@ -5,6 +5,8 @@ import java.time.LocalDate
 
 /** 호출 트랜잭션 소유 repository. 구현 객체를 suspend/HTTP 경계 밖으로 내보내지 않는다. */
 internal interface GrowthRepository {
+    /** 늦게 완료된 작업은 현재 설정 대신 생성 당시의 언어쌍에 성장 결과를 반영한다. */
+    fun scoped(originLanguage: String?, learningLanguage: String?): GrowthRepository
     fun learningEvidence(filter: LearningEvidenceFilter): List<LearningEvidenceRecord>
     fun profile(userId: Long): GrowthProfile?
     fun saveProfile(value: GrowthProfile)

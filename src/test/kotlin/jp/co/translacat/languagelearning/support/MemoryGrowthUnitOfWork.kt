@@ -12,6 +12,9 @@ import java.time.LocalDate
 /** 저장소만 대체한다. projector와 트랜잭션 정책은 실제 코드를 실행한다. */
 internal class MemoryGrowthUnitOfWork : GrowthUnitOfWork {
     class State : GrowthRepository {
+        // 기존 업무 단위 fixture는 단일 언어다. 언어별 저장 격리는 실제 DB 통합 테스트에서 검증한다.
+        override fun scoped(originLanguage: String?, learningLanguage: String?): GrowthRepository = this
+
         val learningEvidenceRows = linkedMapOf<Long, List<LearningEvidenceRecord>>()
         override fun learningEvidence(filter: LearningEvidenceFilter): List<LearningEvidenceRecord> =
             learningEvidenceRows[filter.userId].orEmpty().filter { row ->

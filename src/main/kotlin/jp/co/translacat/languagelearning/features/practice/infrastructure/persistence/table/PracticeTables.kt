@@ -7,6 +7,7 @@ import org.jetbrains.exposed.v1.javatime.datetime
 internal object PracticeSets : Table("language_learning_practice_set") {
     val id = long("id").autoIncrement()
     val userId = long("user_id")
+    val languageScope = varchar("language_scope", 100).default("")
     val learningDate = date("learning_date")
     val domain = varchar("domain", 30)
     val mode = varchar("mode", 40)
@@ -55,11 +56,12 @@ internal object PracticeMetrics : Table("language_learning_practice_metric") {
 
 internal object VocabularyMasteries : Table("language_learning_vocabulary_mastery") {
     val userId = long("user_id")
+    val languageScope = varchar("language_scope", 100).default("")
     val canonicalKey = varchar("canonical_key", 200)
     val displayExpression = varchar("display_expression", 300)
     val score = double("score")
     val evaluationCount = integer("evaluation_count")
     val selectedCount = integer("selected_count")
     val lastSelectedDate = date("last_selected_date").nullable()
-    override val primaryKey = PrimaryKey(userId, canonicalKey)
+    override val primaryKey = PrimaryKey(userId, languageScope, canonicalKey)
 }

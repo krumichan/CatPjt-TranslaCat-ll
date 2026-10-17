@@ -4,6 +4,7 @@ import jp.co.translacat.languagelearning.features.listening.domain.model.*
 import jp.co.translacat.languagelearning.features.listening.domain.policy.ListeningAudioUploadPolicy
 import jp.co.translacat.languagelearning.features.listening.domain.policy.ListeningTaskSelectionPolicy
 import jp.co.translacat.languagelearning.features.settings.application.SettingsServiceOperations
+import jp.co.translacat.languagelearning.features.settings.domain.model.ConfiguredLanguagePair
 import jp.co.translacat.languagelearning.shared.error.LearningBusinessException
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
@@ -23,6 +24,7 @@ internal class ListeningSessionService(
         return work.write(userId) {
             // 요청 모드·payload를 먼저 고정하고 동일 key의 다른 payload를 거절한다.
             val set = set(userId, setId) ?: missing("LANGUAGE_LEARNING_DAILY_SET_NOT_FOUND")
+            val pair = ConfiguredLanguagePair(set.originLanguage, set.learningLanguage)
             val tasks = ListeningTaskSelectionPolicy.validateForMode(
                 set.learningMode,
                 selected?.takeIf { it.isNotEmpty() } ?: ListeningTaskSelectionPolicy.tasksForMode(set.learningMode),
@@ -38,6 +40,9 @@ internal class ListeningSessionService(
 
             // 진행 중 세션은 만료 여부를 확인하고 새 공식 시도가 기존 세트 이력을 중복하지 않게 한다.
             previous.filter { it.status == "IN_PROGRESS" }.forEach { active ->
+                // 다른 언어의 진행 상태는 보존하고 같은 언어쌍의 공식 세션만 새 시작과 충돌한다.
+                val source = set(userId, active.setId) ?: return@forEach
+                if (!pair.matches(source.originLanguage, source.learningLanguage)) return@forEach
                 if (expired(active, policy)) updateSession(
                     active.copy(status = "ABANDONED", lastActivityAt = nowUtc.toString()),
                 )
@@ -69,8 +74,17 @@ internal class ListeningSessionService(
 
     suspend fun active(userId: Long): ListeningSessionState? {
         val policy = settings.listeningPolicy()
+        val current = settings.userSnapshot(userId).result.settings
+        val origin = current.originLanguage ?: return null
+        val learning = current.learningLanguage ?: return null
+        val pair = ConfiguredLanguagePair(origin, learning)
         return work.write(userId) {
-            val active = sessions(userId).firstOrNull { it.status == "IN_PROGRESS" } ?: return@write null
+            // 자동 재개만 현재 설정에 제한한다. 명시 session ID의 조회·재개는 원래 언어로 계속 허용한다.
+            val active = sessions(userId).firstOrNull {
+                it.status == "IN_PROGRESS" && set(userId, it.setId)?.let { source ->
+                    pair.matches(source.originLanguage, source.learningLanguage)
+                } == true
+            } ?: return@write null
             synchronize(active, checkNotNull(set(userId, active.setId)), policy).takeIf { it.status == "IN_PROGRESS" }
         }
     }

@@ -64,6 +64,26 @@ internal class ExposedSpeakingRepository(private val guard: () -> Unit) : Speaki
         }.orderBy(SpeakingSessions.id to SortOrder.DESC).map(::sessionRow).firstOrNull { it.openingState != "FAILED" }
     }
 
+    override fun active(userId: Long, originLanguage: String, learningLanguage: String): SpeakingSessionRecord? {
+        guard()
+        // 다른 언어의 더 최신 세션이 현재 언어의 진행 중 세션을 가리지 않게 조회 조건에서 제한한다.
+        return SpeakingSessions.selectAll().where {
+            (SpeakingSessions.userId eq userId) and (SpeakingSessions.status eq SpeakingSessionStatus.IN_PROGRESS.name) and
+                (snapshotLanguage("originLanguage") eq originLanguage.trim().replace('_', '-').lowercase()) and
+                (snapshotLanguage("learningLanguage") eq learningLanguage.trim().replace('_', '-').lowercase())
+        }.orderBy(SpeakingSessions.id to SortOrder.DESC).map(::sessionRow).firstOrNull { it.openingState != "FAILED" }
+    }
+
+    private fun snapshotLanguage(field: String): ExpressionWithColumnType<String> {
+        val valid = CustomFunction<String>("IF", TextColumnType(),
+            CustomFunction<Boolean>("JSON_VALID", BooleanColumnType(), SpeakingSessions.snapshot),
+            SpeakingSessions.snapshot, stringLiteral("{}"))
+        val value = CustomFunction<String>("JSON_UNQUOTE", TextColumnType(),
+            CustomFunction<String>("JSON_EXTRACT", TextColumnType(), valid, stringLiteral("$.$field")))
+        return CustomFunction("LOWER", TextColumnType(), CustomFunction<String>("REPLACE", TextColumnType(),
+            CustomFunction<String>("TRIM", TextColumnType(), value), stringLiteral("_"), stringLiteral("-")))
+    }
+
     override fun sessions(userId: Long, from: LocalDate, to: LocalDate): List<SpeakingSessionRecord> {
         guard()
         require(!to.isBefore(from))

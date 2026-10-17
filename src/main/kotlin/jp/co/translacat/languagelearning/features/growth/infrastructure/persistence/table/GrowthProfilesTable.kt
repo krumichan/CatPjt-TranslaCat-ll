@@ -8,6 +8,7 @@ import org.jetbrains.exposed.v1.javatime.datetime
 internal object GrowthProfilesTable : Table("language_learning_profile") {
     val id = long("id").autoIncrement()
     val userId = long("user_id").references(LearnersTable.userId)
+    val languageScope = varchar("language_scope", 100).default("")
     val profileVersion = varchar("profile_version", 30)
     val state = varchar("state", 30)
     val baseLevelScore = double("base_level_score").nullable()
@@ -34,6 +35,6 @@ internal object GrowthProfilesTable : Table("language_learning_profile") {
     override val primaryKey = PrimaryKey(id)
 
     init {
-        uniqueIndex(userId)
+        uniqueIndex(userId, languageScope)
     }
 }

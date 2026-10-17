@@ -2,13 +2,41 @@ package jp.co.translacat.languagelearning.features.growth.infrastructure.persist
 
 import jp.co.translacat.languagelearning.features.growth.domain.model.*
 import jp.co.translacat.languagelearning.features.growth.domain.repository.GrowthRepository
+import jp.co.translacat.languagelearning.features.growth.domain.policy.GrowthLanguageScope
 import jp.co.translacat.languagelearning.features.growth.infrastructure.persistence.table.*
+import jp.co.translacat.languagelearning.features.settings.domain.repository.UserSettingsRepository
 import org.jetbrains.exposed.v1.core.*
 import org.jetbrains.exposed.v1.core.statements.UpdateBuilder
 import org.jetbrains.exposed.v1.jdbc.*
 import java.time.LocalDate
 
-internal class ExposedGrowthRepository(private val guard: () -> Unit) : GrowthRepository {
+internal class ExposedGrowthRepository(
+    private val guard: () -> Unit,
+    private val settings: UserSettingsRepository? = null,
+    private val explicitScope: String? = null,
+) : GrowthRepository {
+    private val scopes = mutableMapOf<Long, String>()
+
+    override fun scoped(originLanguage: String?, learningLanguage: String?): GrowthRepository {
+        guard()
+        val key = if (originLanguage == null && learningLanguage == null) ""
+        else GrowthLanguageScope.key(checkNotNull(originLanguage), checkNotNull(learningLanguage))
+        return ExposedGrowthRepository(guard, settings, key)
+    }
+
+    private fun languageScope(userId: Long): String = explicitScope ?: scopes.getOrPut(userId) {
+        // 현재 설정은 같은 트랜잭션에서 한 번만 읽는다. 예약 언어는 실제 적용 전까지 사용하지 않는다.
+        val setting = settings?.findForUser(userId)
+        val origin = setting?.originLanguage
+        val learning = setting?.learningLanguage
+        if (origin != null && learning != null) GrowthLanguageScope.key(origin, learning)
+        else {
+            // 설정 없는 기존 내부 자료는 유일한 프로필만 읽으며, 여러 언어 중 하나를 추측하지 않는다.
+            GrowthProfilesTable.select(GrowthProfilesTable.languageScope)
+                .where { GrowthProfilesTable.userId eq userId }.limit(2).toList()
+                .singleOrNull()?.get(GrowthProfilesTable.languageScope) ?: ""
+        }
+    }
 
     override fun learningEvidence(filter: LearningEvidenceFilter): List<LearningEvidenceRecord> {
         guard()
@@ -42,6 +70,7 @@ internal class ExposedGrowthRepository(private val guard: () -> Unit) : GrowthRe
 
     private fun writeGrowthProfile(statement: UpdateBuilder<*>, value: GrowthProfile, creating: Boolean = false) {
         statement[GrowthProfilesTable.userId] = value.userId
+        statement[GrowthProfilesTable.languageScope] = languageScope(value.userId)
         statement[GrowthProfilesTable.profileVersion] = value.profileVersion
         statement[GrowthProfilesTable.state] = value.state
         statement[GrowthProfilesTable.baseLevelScore] = value.baseLevelScore
@@ -70,7 +99,10 @@ internal class ExposedGrowthRepository(private val guard: () -> Unit) : GrowthRe
     override fun profile(userId: Long): GrowthProfile? {
         guard()
         return GrowthProfilesTable.selectAll()
-            .where { (GrowthProfilesTable.userId eq userId) }
+            .where {
+                (GrowthProfilesTable.userId eq userId) and
+                    (GrowthProfilesTable.languageScope eq languageScope(userId))
+            }
             .singleOrNull()
             ?.let(::toGrowthProfile)
     }
@@ -79,7 +111,10 @@ internal class ExposedGrowthRepository(private val guard: () -> Unit) : GrowthRe
         guard()
         if (profile(value.userId) == null) GrowthProfilesTable.insert { writeGrowthProfile(it, value, creating = true) }
         else check(
-            GrowthProfilesTable.update({ (GrowthProfilesTable.userId eq value.userId) }) {
+            GrowthProfilesTable.update({
+                (GrowthProfilesTable.userId eq value.userId) and
+                    (GrowthProfilesTable.languageScope eq languageScope(value.userId))
+            }) {
                 writeGrowthProfile(
                     it, value,
                 )
@@ -100,6 +135,7 @@ internal class ExposedGrowthRepository(private val guard: () -> Unit) : GrowthRe
 
     private fun writeKeywordMastery(statement: UpdateBuilder<*>, value: KeywordMastery, creating: Boolean = false) {
         statement[KeywordMasteriesTable.userId] = value.userId
+        statement[KeywordMasteriesTable.languageScope] = languageScope(value.userId)
         statement[KeywordMasteriesTable.canonicalKey] = value.canonicalKey
         statement[KeywordMasteriesTable.score] = value.score
         statement[KeywordMasteriesTable.evaluationCount] = value.evaluationCount
@@ -114,7 +150,10 @@ internal class ExposedGrowthRepository(private val guard: () -> Unit) : GrowthRe
     override fun mastery(userId: Long, key: String): KeywordMastery? {
         guard()
         return KeywordMasteriesTable.selectAll()
-            .where { (KeywordMasteriesTable.userId eq userId) and (KeywordMasteriesTable.canonicalKey eq key) }
+            .where {
+                (KeywordMasteriesTable.userId eq userId) and (KeywordMasteriesTable.canonicalKey eq key) and
+                    (KeywordMasteriesTable.languageScope eq languageScope(userId))
+            }
             .singleOrNull()
             ?.let(::toKeywordMastery)
     }
@@ -128,7 +167,11 @@ internal class ExposedGrowthRepository(private val guard: () -> Unit) : GrowthRe
         }
         else check(
             KeywordMasteriesTable.update(
-                { (KeywordMasteriesTable.userId eq value.userId) and (KeywordMasteriesTable.canonicalKey eq value.canonicalKey) },
+                {
+                    (KeywordMasteriesTable.userId eq value.userId) and
+                        (KeywordMasteriesTable.canonicalKey eq value.canonicalKey) and
+                        (KeywordMasteriesTable.languageScope eq languageScope(value.userId))
+                },
             ) {
                 writeKeywordMastery(
                     it, value,
@@ -149,6 +192,7 @@ internal class ExposedGrowthRepository(private val guard: () -> Unit) : GrowthRe
 
     private fun writeGrowthSignal(statement: UpdateBuilder<*>, value: GrowthSignal, creating: Boolean = false) {
         statement[GrowthSignalsTable.userId] = value.userId
+        statement[GrowthSignalsTable.languageScope] = languageScope(value.userId)
         statement[GrowthSignalsTable.type] = value.type
         statement[GrowthSignalsTable.key] = value.key
         statement[GrowthSignalsTable.occurrenceCount] = value.occurrenceCount
@@ -162,7 +206,10 @@ internal class ExposedGrowthRepository(private val guard: () -> Unit) : GrowthRe
     override fun signal(userId: Long, type: String, key: String): GrowthSignal? {
         guard()
         return GrowthSignalsTable.selectAll()
-            .where { (GrowthSignalsTable.userId eq userId) and (GrowthSignalsTable.type eq type) and (GrowthSignalsTable.key eq key) }
+            .where {
+                (GrowthSignalsTable.userId eq userId) and (GrowthSignalsTable.type eq type) and
+                    (GrowthSignalsTable.key eq key) and (GrowthSignalsTable.languageScope eq languageScope(userId))
+            }
             .singleOrNull()
             ?.let(::toGrowthSignal)
     }
@@ -176,7 +223,11 @@ internal class ExposedGrowthRepository(private val guard: () -> Unit) : GrowthRe
         }
         else check(
             GrowthSignalsTable.update(
-                { (GrowthSignalsTable.userId eq value.userId) and (GrowthSignalsTable.type eq value.type) and (GrowthSignalsTable.key eq value.key) },
+                {
+                    (GrowthSignalsTable.userId eq value.userId) and (GrowthSignalsTable.type eq value.type) and
+                        (GrowthSignalsTable.key eq value.key) and
+                        (GrowthSignalsTable.languageScope eq languageScope(value.userId))
+                },
             ) {
                 writeGrowthSignal(
                     it, value,
@@ -202,6 +253,7 @@ internal class ExposedGrowthRepository(private val guard: () -> Unit) : GrowthRe
 
     private fun writeGrowthEvidence(statement: UpdateBuilder<*>, value: GrowthEvidence, creating: Boolean = false) {
         statement[GrowthEvidenceTable.userId] = value.userId
+        statement[GrowthEvidenceTable.languageScope] = languageScope(value.userId)
         statement[GrowthEvidenceTable.evidenceSource] = value.source
         statement[GrowthEvidenceTable.metricType] = value.metricType
         statement[GrowthEvidenceTable.patternKey] = value.patternKey
@@ -220,7 +272,11 @@ internal class ExposedGrowthRepository(private val guard: () -> Unit) : GrowthRe
     override fun evidence(userId: Long, source: String, pattern: String, direction: String): GrowthEvidence? {
         guard()
         return GrowthEvidenceTable.selectAll()
-            .where { (GrowthEvidenceTable.userId eq userId) and (GrowthEvidenceTable.evidenceSource eq source) and (GrowthEvidenceTable.patternKey eq pattern) and (GrowthEvidenceTable.direction eq direction) }
+            .where {
+                (GrowthEvidenceTable.userId eq userId) and (GrowthEvidenceTable.evidenceSource eq source) and
+                    (GrowthEvidenceTable.patternKey eq pattern) and (GrowthEvidenceTable.direction eq direction) and
+                    (GrowthEvidenceTable.languageScope eq languageScope(userId))
+            }
             .singleOrNull()
             ?.let(::toGrowthEvidence)
     }
@@ -233,7 +289,12 @@ internal class ExposedGrowthRepository(private val guard: () -> Unit) : GrowthRe
         ) GrowthEvidenceTable.insert { writeGrowthEvidence(it, value, creating = true) }
         else check(
             GrowthEvidenceTable.update(
-                { (GrowthEvidenceTable.userId eq value.userId) and (GrowthEvidenceTable.evidenceSource eq value.source) and (GrowthEvidenceTable.patternKey eq value.patternKey) and (GrowthEvidenceTable.direction eq value.direction) },
+                {
+                    (GrowthEvidenceTable.userId eq value.userId) and (GrowthEvidenceTable.evidenceSource eq value.source) and
+                        (GrowthEvidenceTable.patternKey eq value.patternKey) and
+                        (GrowthEvidenceTable.direction eq value.direction) and
+                        (GrowthEvidenceTable.languageScope eq languageScope(value.userId))
+                },
             ) {
                 writeGrowthEvidence(
                     it, value,
@@ -352,7 +413,9 @@ internal class ExposedGrowthRepository(private val guard: () -> Unit) : GrowthRe
 
     override fun masteries(userId: Long, keys: List<String>?, limit: Int): List<KeywordMastery> {
         guard()
-        val query = KeywordMasteriesTable.selectAll().where { KeywordMasteriesTable.userId eq userId }
+        val query = KeywordMasteriesTable.selectAll().where {
+            (KeywordMasteriesTable.userId eq userId) and (KeywordMasteriesTable.languageScope eq languageScope(userId))
+        }
         if (keys != null) query.andWhere { KeywordMasteriesTable.canonicalKey inList keys }
         return query.orderBy(KeywordMasteriesTable.score to SortOrder.ASC, KeywordMasteriesTable.id to SortOrder.ASC)
             .limit(limit).map(::toKeywordMastery)
@@ -361,7 +424,10 @@ internal class ExposedGrowthRepository(private val guard: () -> Unit) : GrowthRe
     override fun signals(userId: Long, type: String, limit: Int): List<GrowthSignal> {
         guard()
         return GrowthSignalsTable.selectAll()
-            .where { (GrowthSignalsTable.userId eq userId) and (GrowthSignalsTable.type eq type) }
+            .where {
+                (GrowthSignalsTable.userId eq userId) and (GrowthSignalsTable.type eq type) and
+                    (GrowthSignalsTable.languageScope eq languageScope(userId))
+            }
             .orderBy(GrowthSignalsTable.occurrenceCount to SortOrder.DESC, GrowthSignalsTable.id to SortOrder.ASC)
             .limit(limit)
             .map(::toGrowthSignal)
@@ -369,7 +435,9 @@ internal class ExposedGrowthRepository(private val guard: () -> Unit) : GrowthRe
 
     override fun evidenceList(userId: Long, source: String?, limit: Int): List<GrowthEvidence> {
         guard()
-        val query = GrowthEvidenceTable.selectAll().where { GrowthEvidenceTable.userId eq userId }
+        val query = GrowthEvidenceTable.selectAll().where {
+            (GrowthEvidenceTable.userId eq userId) and (GrowthEvidenceTable.languageScope eq languageScope(userId))
+        }
         if (source != null) query.andWhere { GrowthEvidenceTable.evidenceSource eq source }
         return query.orderBy(GrowthEvidenceTable.lastSeenAt to SortOrder.DESC, GrowthEvidenceTable.id to SortOrder.ASC)
             .limit(limit).map(::toGrowthEvidence)

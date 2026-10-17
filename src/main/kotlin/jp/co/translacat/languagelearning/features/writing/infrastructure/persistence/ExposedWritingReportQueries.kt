@@ -5,6 +5,10 @@ import jp.co.translacat.languagelearning.features.writing.application.WritingRep
 import jp.co.translacat.languagelearning.features.writing.application.WritingReportQueries
 import jp.co.translacat.languagelearning.features.writing.application.WritingReportSet
 import jp.co.translacat.languagelearning.shared.persistence.transaction.JdbcTransactionRunner
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.contentOrNull
 import org.jetbrains.exposed.v1.core.SortOrder
 import org.jetbrains.exposed.v1.core.eq
 import org.jetbrains.exposed.v1.jdbc.select
@@ -50,9 +54,13 @@ internal class ExposedWritingReportQueries(private val transactions: JdbcTransac
             }
         WritingReportData(
             sets.map {
+                // 과거 snapshot에 없는 언어는 현재 설정으로 메우지 않고 미상으로 남긴다.
+                val snapshot = runCatching { Json.parseToJsonElement(it[Sets.snapshotJson]) as? JsonObject }.getOrNull()
                 WritingReportSet(
                     it[Sets.id], it[Sets.learningDate], it[Sets.writingType],
                     it[Sets.sentenceCount], it[Sets.status], answeredBySet[it[Sets.id]] ?: 0,
+                    (snapshot?.get("originLanguage") as? JsonPrimitive)?.contentOrNull,
+                    (snapshot?.get("learningLanguage") as? JsonPrimitive)?.contentOrNull,
                 )
             },
             evaluations,

@@ -124,7 +124,8 @@ internal class SpeakingResultApplication(private val work: SpeakingUnitOfWork) {
                     signal.text("recommendedFocus")?.takeIf(String::isNotBlank),
                 )
             }
-        GrowthProjector(growth).apply(
+        // 평가 완료 시점의 설정이 바뀌어도 발화 세션의 원래 언어에만 근거를 누적한다.
+        GrowthProjector(growth.scoped(session.snapshot.originLanguage, session.snapshot.learningLanguage)).apply(
             session.userId,
             GrowthChange.SpeakingScored(
                 resultActivity(session, stored, status), metrics, formal, weight, evidence,

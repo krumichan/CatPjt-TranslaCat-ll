@@ -33,6 +33,8 @@ internal object HistoryProjection {
         ).seconds.coerceAtLeast(0)
 
         return buildJsonObject {
+            put("originLanguage", set["originLanguage"] ?: JsonNull)
+            put("learningLanguage", set["learningLanguage"] ?: JsonNull)
             put("activityId", "$source:${set.text("setId")}"); put("source", source); put(
             "learningDate", set.getValue("learningDate"),
         )

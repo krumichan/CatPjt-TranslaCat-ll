@@ -19,6 +19,29 @@ class SpeakingSpeechExecutionTest {
         SpeakingSessionPolicySnapshot.from(SettingsFixtures.admin()).copy(automaticRetryLimitPerStage = 2)
 
     @Test
+    fun `영어 인식과 합성은 원문을 보존하고 Provider에 영어 코드를 전달한다`() = runBlocking {
+        // 준비: 음성 기술 실행 경계만 합성하며 LL 전사·합성 로직을 실제로 통과한다.
+        val text = "I will visit the park this weekend."
+        val source = RecordingTranscription(listOf(text), true)
+        val synthesis = mutableListOf<SpeechSynthesisCommand>()
+        val execution = execution(source, SpeechExecutionPort { command ->
+            synthesis += command
+            SpeechSynthesisResult(wav(), "audio/wav", "synthetic", "english-contract", .01)
+        })
+
+        // 실행
+        val transcript = execution.transcribe(audio, "english-stt", "english-stt-key", "en", emptyList(), policy)
+        val spoken = execution.synthesize(text, "english-tts", "en", "marin", "NORMAL", policy)
+
+        // 검증: 다른 언어로 바꾼 transcript나 합성 문자열을 만들지 않는다.
+        assertEquals("en", source.calls.single().language)
+        assertEquals(text, transcript.getValue("transcript").jsonObject.getValue("text").jsonPrimitive.content)
+        assertEquals("en", synthesis.single().language)
+        assertEquals(text, synthesis.single().text)
+        assertEquals(.01, spoken.durationSeconds)
+    }
+
+    @Test
     fun `정규화 판정은 반올림 전 값으로 하고 사용량은 원본 정밀도를 따른다`() = runBlocking {
         // 준비: 무음 경계 바로 아래 값은 반올림하면 통과할 수 있으므로 원본 순서를 검사한다.
         var normalized = audio.copy(durationSeconds = 3.1234567, rms = .0029999)

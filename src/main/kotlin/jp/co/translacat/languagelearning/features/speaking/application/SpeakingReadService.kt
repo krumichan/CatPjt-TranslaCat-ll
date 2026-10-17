@@ -1,6 +1,7 @@
 package jp.co.translacat.languagelearning.features.speaking.application
 
 import jp.co.translacat.languagelearning.features.settings.application.SettingsServiceOperations
+import jp.co.translacat.languagelearning.features.settings.domain.model.ConfiguredLanguagePair
 import jp.co.translacat.languagelearning.features.settings.domain.policy.UserSettingsPolicy
 import jp.co.translacat.languagelearning.features.speaking.domain.*
 import jp.co.translacat.languagelearning.shared.identity.LearningPublicId
@@ -60,8 +61,11 @@ internal class SpeakingReadService(
     }
 
     suspend fun active(userId: Long): JsonObject? {
+        val current = settings.userSnapshot(userId).result.settings
+        if (!current.configured) return null
         val session = work.write(userId) {
-            val stored = records.active(userId) ?: return@write null
+            val stored = records.active(userId, checkNotNull(current.originLanguage), checkNotNull(current.learningLanguage))
+                ?: return@write null
             val value = stored.expireIfNeeded(nowUtc)
             if (stored != value) records.saveSession(value)
             value.takeIf { it.active }
@@ -72,8 +76,11 @@ internal class SpeakingReadService(
     suspend fun today(userId: Long): JsonArray {
         val current = settings.userSnapshot(userId)
         UserSettingsPolicy.requireConfigured(current.result.settings)
+        val pair = ConfiguredLanguagePair(checkNotNull(current.result.settings.originLanguage),
+            checkNotNull(current.result.settings.learningLanguage))
         return work.read {
             val sessions = records.sessions(userId, current.learningDate, current.learningDate)
+                .filter { pair.matches(it.snapshot.originLanguage, it.snapshot.learningLanguage) }
             JsonArray(
                 SpeakingPracticeMode.entries.map { mode ->
                     val value = sessions.firstOrNull { it.snapshot.practiceMode == mode }

@@ -1,5 +1,9 @@
 package jp.co.translacat.languagelearning.features.webaiplan.infrastructure.persistence
 
+import jp.co.translacat.languagelearning.features.growth.application.GrowthProjector
+import jp.co.translacat.languagelearning.features.growth.domain.model.GrowthChange
+import jp.co.translacat.languagelearning.features.growth.domain.policy.GrowthLanguageScope
+import jp.co.translacat.languagelearning.features.growth.infrastructure.persistence.ExposedGrowthUnitOfWork
 import jp.co.translacat.languagelearning.features.learner.domain.exception.LearnerUnavailableException
 import jp.co.translacat.languagelearning.features.settings.application.GetOrCreateUserSettings
 import jp.co.translacat.languagelearning.features.settings.infrastructure.persistence.ExposedSettingsUnitOfWork
@@ -14,6 +18,8 @@ import kotlinx.serialization.json.put
 import org.flywaydb.core.Flyway
 import java.time.Clock
 import java.time.Instant
+import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.util.UUID
 import java.util.concurrent.atomic.AtomicInteger
@@ -37,14 +43,16 @@ class WebAiPersistenceIntegrationTest {
                 .createSchemas(false).cleanDisabled(true).baselineOnMigrate(false).target("037").load().migrate()
             execute(db, "UPDATE language_learning_admin_setting SET default_daily_sentence_count=17 WHERE id='DEFAULT'")
 
-            // 실행
-            DatabaseFactory(settings).use { factory ->
-                // 검증: 기존 기록을 수정하지 않고 신규 migration만 한 번 적용한다.
-                assertEquals(1, factory.migrationReport.migrationsExecuted)
-                assertEquals(38, factory.migrationReport.schemaVersion.toInt())
-                assertEquals(17L, scalar(db, "SELECT default_daily_sentence_count FROM language_learning_admin_setting WHERE id='DEFAULT'"))
-                assertEquals(4L, scalar(db, "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema=DATABASE() AND table_name IN ('ll_web_ai_plans','ll_web_ai_runs','ll_web_ai_results','ll_web_ai_items')"))
-            }
+            // 실행: 이 과거 이행 fixture는 이후 migration을 포함하지 않고 V038까지만 검증한다.
+            val migrated = Flyway.configure().dataSource(settings.jdbcUrl, settings.username, settings.password)
+                .locations("classpath:db/migration").schemas(db.name).defaultSchema(db.name)
+                .createSchemas(false).cleanDisabled(true).baselineOnMigrate(false).target("038").load().migrate()
+
+            // 검증: 기존 기록을 수정하지 않고 V038을 한 번만 적용한다.
+            assertEquals(1, migrated.migrationsExecuted)
+            assertEquals(38, migrated.targetSchemaVersion.toInt())
+            assertEquals(17L, scalar(db, "SELECT default_daily_sentence_count FROM language_learning_admin_setting WHERE id='DEFAULT'"))
+            assertEquals(4L, scalar(db, "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema=DATABASE() AND table_name IN ('ll_web_ai_plans','ll_web_ai_runs','ll_web_ai_results','ll_web_ai_items')"))
         }
     }
 
@@ -92,7 +100,7 @@ class WebAiPersistenceIntegrationTest {
             assertEquals(1L, scalar(db, "SELECT COUNT(*) FROM ll_web_ai_results"))
             assertEquals(1L, scalar(db, "SELECT COUNT(*) FROM ll_web_ai_items"))
             assertEquals(1L, scalar(db, "SELECT COUNT(*) FROM language_learning_activity"))
-            assertEquals(1L, scalar(db, "SELECT evaluation_count FROM language_learning_profile WHERE user_id=123"))
+            assertEquals(1L, scalar(db, "SELECT evaluation_count FROM language_learning_profile WHERE user_id=123 AND language_scope='${GrowthLanguageScope.key("ko", "ja")}'"))
             assertEquals(5L, scalar(db, "SELECT COUNT(*) FROM language_learning_metric_history"))
             assertEquals("WEB_AI_CONFLICT", assertFailsWith<WebAiException> {
                 first.submit(123, submission.copy(originalFeedbackMarkdown = "changed"))
@@ -131,7 +139,7 @@ class WebAiPersistenceIntegrationTest {
         assertEquals(0L, scalar(db, "SELECT COUNT(*) FROM language_learning_activity"))
         assertEquals(0L, scalar(db, "SELECT COUNT(*) FROM language_learning_profile"))
         assertEquals("VERIFIED", service.submit(123, submission(run)).status)
-        assertEquals(1L, scalar(db, "SELECT evaluation_count FROM language_learning_profile WHERE user_id=123"))
+        assertEquals(1L, scalar(db, "SELECT evaluation_count FROM language_learning_profile WHERE user_id=123 AND language_scope='${GrowthLanguageScope.key("ko", "ja")}'"))
     }
 
     @Test
@@ -205,6 +213,50 @@ class WebAiPersistenceIntegrationTest {
     }
 
     @Test
+    fun `늦은 WebAI 결과 저장은 현재 영어 프로필 대신 실행 당시 일본어 프로필에만 반영한다`() = withDatabase { db, factory ->
+        // 준비: 일본어로 만든 실행을 보존한 채 활성 설정과 별도의 성장 자료를 영어로 전환한다.
+        val service = service(factory)
+        val plan = service.save(123, null, change())
+        val run = service.run(123, plan.id, "before-language-switch")
+        execute(db, "UPDATE language_learning_user_setting SET learning_language='en' WHERE user_id=123")
+        val work = ExposedGrowthUnitOfWork(JdbcTransactionRunner(factory.database, 4), clock)
+        val timestamp = LocalDateTime.ofInstant(now, ZoneOffset.UTC)
+        work.write(123) {
+            GrowthProjector(records.scoped("ko", "en")).apply(
+                123, GrowthChange.WritingScored(LocalDate.parse(run.learningDate), "NORMAL", List(5) { 40.0 },
+                    emptyMap(), emptyList()), timestamp,
+            )
+        }
+        val item = verified(submission(run).items.single())
+        val resultId = UUID.randomUUID().toString()
+        val savedResult = WebAiResult(resultId, run.id, 123, "VERIFIED", "합성 원문", listOf(item),
+            now.toString(), now.toString(), run.originLanguage, run.learningLanguage, run.feedbackLanguage,
+            run.learningDate, run.planName)
+
+        // 실행: 서비스의 설정 확인 직후 언어가 바뀐 경계를 실제 저장 트랜잭션으로 재현한다.
+        store(factory).write(123) {
+            saveResult(WebAiStoredResult(savedResult, "late-submission", "b".repeat(64), null, null))
+            reserveItems(run.id, resultId, listOf(item.item.itemId))
+            applyGrowth(run, resultId, item, now)
+        }
+
+        // 검증: 현재 영어와 과거 일본어의 점수·횟수를 각각 보존하고 결과 원본은 조회할 수 있다.
+        work.read {
+            assertEquals(40.0, records.profile(123)!!.meaningScore)
+            assertEquals(1, records.profile(123)!!.evaluationCount)
+            val japanese = records.scoped("ko", "ja").profile(123)!!
+            assertEquals(80.0, japanese.meaningScore)
+            assertEquals(1, japanese.evaluationCount)
+        }
+        assertEquals(2L, scalar(db, "SELECT COUNT(*) FROM language_learning_profile WHERE user_id=123"))
+        assertEquals(1L, scalar(db, "SELECT evaluation_count FROM language_learning_profile WHERE user_id=123 AND language_scope='${GrowthLanguageScope.key("ko", "en")}'"))
+        assertEquals(1L, scalar(db, "SELECT evaluation_count FROM language_learning_profile WHERE user_id=123 AND language_scope='${GrowthLanguageScope.key("ko", "ja")}'"))
+        assertEquals(1L, scalar(db, "SELECT COUNT(*) FROM language_learning_activity"))
+        assertEquals(5L, scalar(db, "SELECT COUNT(*) FROM language_learning_metric_history"))
+        assertEquals("ja", service.result(123, resultId).learningLanguage)
+    }
+
+    @Test
     fun `비활성 학습자는 저장된 원문과 피드백도 조회할 수 없다`() = withDatabase { db, factory ->
         // 준비
         val service = service(factory)
@@ -257,7 +309,7 @@ class WebAiPersistenceIntegrationTest {
             assertEquals(completed, repeated)
             assertEquals(1, calls.get())
             assertEquals(submission(run).originalFeedbackMarkdown, repeated.originalFeedbackMarkdown)
-            assertEquals(1L, scalar(db, "SELECT evaluation_count FROM language_learning_profile WHERE user_id=123"))
+            assertEquals(1L, scalar(db, "SELECT evaluation_count FROM language_learning_profile WHERE user_id=123 AND language_scope='${GrowthLanguageScope.key("ko", "ja")}'"))
             assertEquals(1L, scalar(db, "SELECT COUNT(*) FROM language_learning_activity"))
             assertEquals(1, recoveredStore.pendingCandidates(now, 100).size)
         }

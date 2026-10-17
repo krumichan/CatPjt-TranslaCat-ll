@@ -1,6 +1,7 @@
 package jp.co.translacat.languagelearning.features.practice.application
 
 import jp.co.translacat.languagelearning.features.practice.domain.*
+import jp.co.translacat.languagelearning.features.settings.domain.model.ConfiguredLanguagePair
 import jp.co.translacat.languagelearning.shared.identity.LearningPublicId
 import kotlinx.serialization.json.*
 import java.time.LocalDate
@@ -110,16 +111,25 @@ internal class PracticeReadService(private val work: PracticeUnitOfWork) {
         }
     }
 
-    suspend fun report(userId: Long, from: LocalDate, to: LocalDate): JsonObject = work.read {
+    suspend fun report(
+        userId: Long, from: LocalDate, to: LocalDate, languagePair: ConfiguredLanguagePair? = null,
+    ): JsonObject = work.read {
         // 기존 홈·이력·추세 계산이 필요한 저장 사실만 전달하며 문항·사용자 답변은 포함하지 않는다.
         buildJsonObject {
             put(
                 "sets",
                 JsonArray(
-                    records.range(userId, from, to).map { set ->
+                    records.range(userId, from, to).mapNotNull { set ->
+                        // 손상되거나 언어가 없는 옛 요청은 현재 언어 점수로 추측하지 않는다.
+                        val request = runCatching { Json.parseToJsonElement(set.requestJson) as? JsonObject }.getOrNull()
+                        val origin = ConfiguredLanguagePair.knownLanguage((request?.get("originLanguage") as? JsonPrimitive)?.contentOrNull)
+                        val learning = ConfiguredLanguagePair.knownLanguage((request?.get("learningLanguage") as? JsonPrimitive)?.contentOrNull)
+                        if (languagePair != null && !languagePair.matches(origin, learning)) return@mapNotNull null
                         buildJsonObject {
                             put("setId", LearningPublicId.encode(set.id))
                             put("learningDate", set.learningDate.toString())
+                            put("originLanguage", origin)
+                            put("learningLanguage", learning)
                             put("domain", set.domain.name)
                             put("mode", set.mode)
                             put("status", set.status.name)

@@ -18,6 +18,8 @@ internal interface PracticeTransaction {
 
 /** 쓰기는 learner 잠금 안에서 실행해 생성·제출·완료를 사용자 단위로 직렬화한다. */
 internal interface PracticeRepository {
+    /** 저장 과제의 언어를 고정한다. 둘 다 null이면 귀속 불명인 기존 자료만 다룬다. */
+    fun scoped(originLanguage: String?, learningLanguage: String?): PracticeRepository
     fun find(userId: Long, setId: Long): PracticeSet?
     fun today(userId: Long, date: LocalDate, domain: PracticeDomain): List<PracticeSet>
     fun range(userId: Long, from: LocalDate, to: LocalDate): List<PracticeSet>

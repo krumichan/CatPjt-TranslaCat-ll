@@ -3,6 +3,10 @@ package jp.co.translacat.languagelearning.features.writing.infrastructure.persis
 import jp.co.translacat.languagelearning.features.writing.domain.model.*
 import jp.co.translacat.languagelearning.features.writing.domain.repository.WritingSetRepository
 import jp.co.translacat.languagelearning.features.writing.infrastructure.persistence.table.CuratedSetsTable
+import jp.co.translacat.languagelearning.features.growth.domain.policy.GrowthLanguageScope
+import jp.co.translacat.languagelearning.features.settings.domain.model.ConfiguredLanguagePair
+import jp.co.translacat.languagelearning.features.settings.domain.repository.UserSettingsRepository
+import kotlinx.serialization.json.*
 import org.jetbrains.exposed.v1.core.*
 import org.jetbrains.exposed.v1.jdbc.insert
 import org.jetbrains.exposed.v1.jdbc.selectAll
@@ -11,7 +15,25 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import jp.co.translacat.languagelearning.features.writing.infrastructure.persistence.table.WritingSetsTable as Sets
 
-internal class ExposedWritingSetRepository(private val requireTransaction: () -> Unit) : WritingSetRepository {
+internal class ExposedWritingSetRepository(
+    private val requireTransaction: () -> Unit,
+    private val settings: UserSettingsRepository? = null,
+    private val explicitScope: String? = null,
+) : WritingSetRepository {
+    override fun scoped(originLanguage: String?, learningLanguage: String?): WritingSetRepository {
+        requireTransaction()
+        val key = if (originLanguage == null && learningLanguage == null) ""
+        else GrowthLanguageScope.key(checkNotNull(originLanguage), checkNotNull(learningLanguage))
+        return ExposedWritingSetRepository(requireTransaction, settings, key)
+    }
+
+    private fun activeScope(userId: Long): String {
+        explicitScope?.let { return it }
+        val setting = settings?.findForUser(userId)
+        val origin = setting?.originLanguage
+        val learning = setting?.learningLanguage
+        return if (origin != null && learning != null) GrowthLanguageScope.key(origin, learning) else ""
+    }
     override fun existsForUser(userId: Long): Boolean {
         requireTransaction()
         return !Sets.selectAll().where { Sets.userId eq userId }.limit(1).empty()
@@ -29,7 +51,8 @@ internal class ExposedWritingSetRepository(private val requireTransaction: () ->
     override fun find(userId: Long, date: LocalDate, type: WritingType): WritingSet? {
         requireTransaction()
         return Sets.selectAll().where {
-            (Sets.userId eq userId) and (Sets.learningDate eq date) and (Sets.writingType eq type.name)
+            (Sets.userId eq userId) and (Sets.learningDate eq date) and (Sets.writingType eq type.name) and
+                (Sets.languageScope eq activeScope(userId))
         }.singleOrNull()?.let(::toModel)
     }
 
@@ -40,16 +63,26 @@ internal class ExposedWritingSetRepository(private val requireTransaction: () ->
 
     override fun create(value: NewWritingSet, nowUtc: LocalDateTime): WritingSet {
         requireTransaction()
+        val snapshot = Json.parseToJsonElement(value.snapshotJson) as? JsonObject
+        fun language(name: String) = (snapshot?.get(name) as? JsonPrimitive)?.takeIf { it.isString }
+            ?.content?.takeIf { it.trim().length in 2..20 }
+        val origin = language("originLanguage")
+        val learning = language("learningLanguage")
+        val pair = if (origin != null && learning != null) ConfiguredLanguagePair(origin, learning) else null
+
         // 두 Writing 경로가 같은 owner 잠금을 공유한다. 새 경로의 날짜·유형이 이미 있으면 중복 생성하지 않는다.
         require(CuratedSetsTable.selectAll().where {
             (CuratedSetsTable.userId eq value.userId) and
                 (CuratedSetsTable.learningDate eq value.learningDate) and
                 (CuratedSetsTable.writingType eq value.writingType.name)
-        }.empty()) { "WRITING_POLICY_CONFLICT" }
+        }.none { row -> pair == null || pair.matches(row[CuratedSetsTable.originLanguage], row[CuratedSetsTable.learningLanguage]) }) {
+            "WRITING_POLICY_CONFLICT"
+        }
 
         val id = Sets.insert {
             it[userId] = value.userId
             it[learningDate] = value.learningDate
+            it[languageScope] = pair?.let { GrowthLanguageScope.key(it.originLanguage, it.learningLanguage) } ?: ""
             it[writingType] = value.writingType.name
             it[snapshotId] = value.snapshotId
             it[sentenceCount] = value.sentenceCount

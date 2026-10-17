@@ -56,7 +56,8 @@ private class ListeningJdbcScope(
     private val writeOwner: Long?,
 ) : ListeningTransaction {
     private val json = Json { encodeDefaults = true }
-    override val growth = ExposedGrowthRepository(guard)
+    private val settingsRepository = ExposedUserSettingsRepository(guard)
+    override val growth = ExposedGrowthRepository(guard, settings = settingsRepository)
     override val fingerprints = ExposedGenerationFingerprintRepository(guard, "LISTENING")
     private fun write(userId: Long) {
         guard(); check(writeOwner == userId)

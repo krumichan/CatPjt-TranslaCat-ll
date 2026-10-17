@@ -270,7 +270,8 @@ internal class ExposedWebAiStore(private val transactions: JdbcTransactionRunner
         override fun applyGrowth(run: WebAiRun, resultId: String, item: WebAiVerifiedItem, now: Instant) {
             guard()
             if (item.status != "VERIFIED" || item.officialScore == null) return
-            val records = ExposedGrowthRepository(guard)
+            // 현재 설정 조회와 저장 사이에 언어가 바뀌어도 결과는 실행 snapshot의 언어에만 반영한다.
+            val records = ExposedGrowthRepository(guard).scoped(run.originLanguage, run.learningLanguage)
             val projector = GrowthProjector(records)
             val source = item.item.areaCode.substringBefore('_')
             val reference = "web-ai:$resultId:${item.item.itemId}"

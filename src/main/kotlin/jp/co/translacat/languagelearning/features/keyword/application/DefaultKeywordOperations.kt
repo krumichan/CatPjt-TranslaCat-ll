@@ -3,20 +3,26 @@ package jp.co.translacat.languagelearning.features.keyword.application
 import jp.co.translacat.languagelearning.features.keyword.domain.model.*
 import jp.co.translacat.languagelearning.features.keyword.domain.policy.KeywordDisplayPolicy
 import jp.co.translacat.languagelearning.features.keyword.domain.policy.KeywordPolicy
+import jp.co.translacat.languagelearning.features.settings.domain.model.ConfiguredLanguagePair
 import java.time.LocalDate
 
 /** 카탈로그/예약 상태의 유일한 쓰기 경로다. 숙련도 점수와 선택 횟수는 여기서 변경하지 않는다. */
 internal class DefaultKeywordOperations(
     private val work: KeywordUnitOfWork,
     private val dates: KeywordLearningDate,
+    private val languagePair: suspend (Long) -> ConfiguredLanguagePair? = { null },
 ) : KeywordOperations {
     override suspend fun list(userId: Long, started: Boolean, locale: String?): KeywordList {
         requireUser(userId)
         val today = dates.today(userId)
+        // learning 표시는 UI 로케일이 아니라 활성 학습 설정의 언어쌍으로 결정한다.
+        val languages = if (locale?.trim()?.equals("learning", ignoreCase = true) == true) languagePair(userId) else null
         return work.execute(userId) {
             val catalog = system.findAll()
             val selectionsById = promoteSelections(userId, today, !started).associateBy { it.systemKeywordId }
-            val display = KeywordDisplayPolicy.resolve(locales.findAll(), locale)
+            val display = KeywordDisplayPolicy.resolve(
+                locales.findAll(), locale, languages?.originLanguage, languages?.learningLanguage, catalog,
+            )
             val customRows = promoteCustom(userId, today, !started)
             KeywordList(
                 catalog.filter { it.active }.map { keyword ->

@@ -6,11 +6,14 @@ import jp.co.translacat.languagelearning.features.listening.application.Listenin
 import jp.co.translacat.languagelearning.features.listening.domain.model.ListeningTaskType
 import jp.co.translacat.languagelearning.features.practice.application.PracticeReadService
 import jp.co.translacat.languagelearning.features.settings.application.SettingsServiceOperations
+import jp.co.translacat.languagelearning.features.settings.domain.model.ConfiguredLanguagePair
+import jp.co.translacat.languagelearning.features.settings.domain.model.UserSettings
 import jp.co.translacat.languagelearning.features.speaking.application.SpeakingReportService
 import jp.co.translacat.languagelearning.features.writing.application.WritingReportService
 import jp.co.translacat.languagelearning.features.webaiplan.application.WebAiResultReader
 import jp.co.translacat.languagelearning.features.webaiplan.domain.model.WebAiResult
 import jp.co.translacat.languagelearning.shared.error.LearningBusinessException
+import jp.co.translacat.languagelearning.shared.identity.LearningPublicId
 import kotlinx.serialization.json.*
 import java.time.Duration
 import java.time.LocalDate
@@ -36,10 +39,8 @@ internal class OverviewService(
     ): JsonObject {
         // 사용자 시간대와 기존 source/task 조합을 확인하고 화면의 조회 범위를 고정한다.
         val snapshot = settings.userSnapshot(userId)
-        val language = snapshot.result.settings.learningLanguage
-        if (language.isNullOrBlank() || snapshot.result.settings.originLanguage.isNullOrBlank()) {
-            throw LearningBusinessException("LANGUAGE_LEARNING_SETTING_NOT_CONFIGURED", "모국어와 학습 언어를 먼저 설정해 주세요.")
-        }
+        val languagePair = activePair(snapshot.result.settings)
+        val language = languagePair.learningLanguage
         val today = snapshot.learningDate
         val end = to ?: today
         val start = from ?: end.minusDays(29)
@@ -51,8 +52,8 @@ internal class OverviewService(
         val includeListening = source == null || source == "LISTENING"
 
         // 기능별 저장 사실과 Listening 프로필을 읽어 선택 기간의 추세·최근 근거를 계산한다.
-        val webAiResults = compatibleResults(userId)
-        val facts = facts(userId, today, start, end, webAiResults)
+        val webAiResults = compatibleResults(userId, languagePair)
+        val facts = facts(userId, today, start, end, languagePair, webAiResults)
         val trend = SourceTrendProjection.project(facts, source, start, end)
         val listeningDashboard = listening.dashboard(userId, start, end, task)
         val listeningProfiles = listeningDashboard.array("metrics")
@@ -65,10 +66,10 @@ internal class OverviewService(
 
         // 기존 base 화면은 선택 기간의 길이를 오늘까지 적용하므로 과거 종료일 조회에서도 같은 의미를 유지한다.
         val days = (ChronoUnit.DAYS.between(start, end) + 1).coerceIn(1, 365)
-        val baseSpeaking = speaking.report(userId, today.minusDays(days - 1), today)
+        val baseSpeaking = speaking.report(userId, today.minusDays(days - 1), today, languagePair)
         val todayListening =
             listening.report(userId, today, today, null).rows("sets").filter { it.text("learningLanguage") == language }
-        val todayReading = practice.report(userId, today, today).rows("sets").filter { it.text("domain") == "READING" }
+        val todayReading = practice.report(userId, today, today, languagePair).rows("sets").filter { it.text("domain") == "READING" }
         val performance = buildJsonObject {
             val writingTrend = SourceTrendProjection.project(facts, "WRITING", start, end)
             val speakingTrend = SourceTrendProjection.project(facts, "SPEAKING", start, end)
@@ -160,21 +161,21 @@ internal class OverviewService(
 
     suspend fun insights(userId: Long, source: String?, limit: Int): JsonArray {
         // 최근 활동과 현재 Listening 프로필은 원본에서 사용하던 서로 다른 조회 창을 유지한다.
-        val today = settings.learningDate(userId)
-        val writingFacts = writing.report(userId, today, today.minusDays(29), today)
-        val speakingFacts = speaking.report(userId, null, null)
-        val language = settings.userSnapshot(userId).result.settings.learningLanguage
-        val metrics =
-            if (language.isNullOrBlank()) JsonArray(emptyList()) else listening.dashboard(userId, null, null, null)
-                .array("metrics")
+        val snapshot = settings.userSnapshot(userId)
+        val today = snapshot.learningDate
+        val languagePair = activePair(snapshot.result.settings)
+        val writingFacts = writing.report(userId, today, today.minusDays(29), today, languagePair)
+        val speakingFacts = speaking.report(userId, null, null, languagePair)
+        val metrics = listening.dashboard(userId, null, null, null).array("metrics")
 
         // 근거 선별·가중치·최소 표본 판정은 공통 정책에서 한 번 적용한다.
         return RecentInsightProjection.project(writingFacts, speakingFacts, metrics, parseSource(source), limit)
     }
 
     suspend fun trend(userId: Long, source: String?, from: LocalDate, to: LocalDate): JsonObject {
-        val today = settings.learningDate(userId)
-        return SourceTrendProjection.project(facts(userId, today, from, to), parseSource(source), from, to)
+        val snapshot = settings.userSnapshot(userId)
+        val languagePair = activePair(snapshot.result.settings)
+        return SourceTrendProjection.project(facts(userId, snapshot.learningDate, from, to, languagePair), parseSource(source), from, to)
     }
 
     suspend fun streak(userId: Long): JsonObject {
@@ -218,6 +219,8 @@ internal class OverviewService(
                 buildJsonObject {
                     put("activityId", "LEVEL_TEST:${session.id}"); put("source", "LEVEL_TEST")
                     put("learningDate", checkNotNull(session.completedDate).toString())
+                    put("originLanguage", ConfiguredLanguagePair.knownLanguage(session.originLanguage))
+                    put("learningLanguage", ConfiguredLanguagePair.knownLanguage(session.learningLanguage))
                     put("title", "Language Level Test"); put("topic", session.sessionType.name)
                     put(
                         "durationSeconds",
@@ -276,8 +279,15 @@ internal class OverviewService(
 
     private suspend fun facts(
         userId: Long, today: LocalDate, from: LocalDate, to: LocalDate,
+        languagePair: ConfiguredLanguagePair,
         webAiResults: List<WebAiResult>? = null,
     ): OverviewFacts {
+        // Growth 활동은 역사 조회를 보존하므로 원본 세션의 언어가 확인된 reference만 현재 통계에 합친다.
+        val speakingFacts = speaking.report(userId, from, to, languagePair)
+        val speakingReferences = speakingFacts.rows("evaluations").mapNotNull { row ->
+            runCatching { "ll-speaking-${LearningPublicId.decode(row.text("sessionId"))}" }.getOrNull()
+        }.toSet()
+
         // Growth 저장 사실은 커서로 끝까지 읽어 기존 전체 활동 집계의 의미를 보존한다.
         val activities = growth.read {
             val values = mutableListOf<JsonObject>()
@@ -285,7 +295,7 @@ internal class OverviewService(
             while (true) {
                 val page = records.activities(userId, "SPEAKING", from, to, cursor, 500)
                 if (page.isEmpty()) break
-                values += page.map { activity ->
+                values += page.filter { it.referenceId in speakingReferences }.map { activity ->
                     buildJsonObject {
                         put("id", activity.id); put("status", activity.status); put(
                         "learningDate", activity.learningDate.toString(),
@@ -312,20 +322,28 @@ internal class OverviewService(
 
         // 조회한 Growth 근거와 기능별 읽기 결과를 함께 정책에 전달한다.
         return OverviewFacts(
-            writing.report(userId, today, from, to), speaking.report(userId, from, to), activities,
-            listening.report(userId, from, to, null), practice.report(userId, from, to),
-            WebAiOverviewProjection.facts(webAiResults ?: compatibleResults(userId), from, to),
+            writing.report(userId, today, from, to, languagePair), speakingFacts, activities,
+            listening.report(userId, from, to, null), practice.report(userId, from, to, languagePair),
+            WebAiOverviewProjection.facts(webAiResults ?: compatibleResults(userId, languagePair), from, to),
         )
     }
 
-    private suspend fun compatibleResults(userId: Long): List<WebAiResult> {
+    private suspend fun compatibleResults(userId: Long, languagePair: ConfiguredLanguagePair): List<WebAiResult> {
         val reader = webAi ?: return emptyList()
-        val current = settings.userSnapshot(userId).result.settings
         // 이전 언어의 원문 이력은 상세로 보존하되 현재 언어 대시보드 점수와 섞지 않는다.
         return reader.results(userId).filter {
-            it.originLanguage.equals(current.originLanguage, true) &&
-                it.learningLanguage.equals(current.learningLanguage, true)
+            languagePair.matches(it.originLanguage, it.learningLanguage)
         }
+    }
+
+    private fun activePair(settings: UserSettings): ConfiguredLanguagePair {
+        // 언어 미설정 상태를 전체 언어 통계 조회로 해석하지 않는다.
+        val origin = settings.originLanguage?.takeIf { it.isNotBlank() }
+        val learning = settings.learningLanguage?.takeIf { it.isNotBlank() }
+        if (origin == null || learning == null) {
+            throw LearningBusinessException("LANGUAGE_LEARNING_SETTING_NOT_CONFIGURED", "모국어와 학습 언어를 먼저 설정해 주세요.")
+        }
+        return ConfiguredLanguagePair(origin, learning)
     }
 
     private fun performance(

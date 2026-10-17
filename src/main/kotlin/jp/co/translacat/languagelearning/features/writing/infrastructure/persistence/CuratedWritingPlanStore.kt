@@ -1,6 +1,7 @@
 package jp.co.translacat.languagelearning.features.writing.infrastructure.persistence
 
 import jp.co.translacat.languagelearning.features.writing.domain.model.WritingDifficulty
+import jp.co.translacat.languagelearning.features.growth.domain.policy.GrowthLanguageScope
 import jp.co.translacat.languagelearning.features.writing.domain.model.WritingType
 import jp.co.translacat.languagelearning.features.writing.domain.policy.*
 import jp.co.translacat.languagelearning.features.writing.infrastructure.persistence.table.*
@@ -75,7 +76,9 @@ internal class CuratedWritingPlanStore(
             }
             require(WritingSetsTable.selectAll().where {
                 (WritingSetsTable.userId eq request.userId) and (WritingSetsTable.learningDate eq request.date) and
-                    (WritingSetsTable.writingType eq request.type.name)
+                    (WritingSetsTable.writingType eq request.type.name) and
+                    ((WritingSetsTable.languageScope eq GrowthLanguageScope.key(request.originLanguage, request.learningLanguage)) or
+                        (WritingSetsTable.languageScope eq ""))
             }.empty()) { "WRITING_POLICY_CONFLICT" }
             val band = baseBand(request.userId)
             val slots = CuratedWritingPlanPolicy.slots(target, band)

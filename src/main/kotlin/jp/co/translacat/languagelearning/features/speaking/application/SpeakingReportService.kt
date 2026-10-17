@@ -1,6 +1,7 @@
 package jp.co.translacat.languagelearning.features.speaking.application
 
 import jp.co.translacat.languagelearning.features.settings.application.SettingsServiceOperations
+import jp.co.translacat.languagelearning.features.settings.domain.model.ConfiguredLanguagePair
 import jp.co.translacat.languagelearning.features.speaking.domain.SpeakingResultKind
 import jp.co.translacat.languagelearning.features.speaking.domain.SpeakingResultRecord
 import jp.co.translacat.languagelearning.features.speaking.domain.SpeakingSessionRecord
@@ -19,7 +20,9 @@ internal class SpeakingReportService(
     private val evaluationView: suspend (Long, Long) -> JsonElement,
     private val writing: WritingReportQueries,
 ) {
-    suspend fun report(userId: Long, from: LocalDate?, to: LocalDate?): JsonObject {
+    suspend fun report(
+        userId: Long, from: LocalDate?, to: LocalDate?, languagePair: ConfiguredLanguagePair? = null,
+    ): JsonObject {
         val current = settings.userSnapshot(userId)
         val today = current.learningDate
         val start = from ?: today.minusDays(29)
@@ -28,7 +31,10 @@ internal class SpeakingReportService(
 
         // MySQL DATE 범위 전체에서 원본 평가를 읽는다. 기간은 화면 통계에만 적용한다.
         return work.read {
-            val all = records.sessions(userId, firstDate, lastDate)
+            // 현재 언어 통계와 전체 이력을 분리하며 snapshot의 언어만 근거로 사용한다.
+            val all = records.sessions(userId, firstDate, lastDate).filter {
+                languagePair == null || languagePair.matches(it.snapshot.originLanguage, it.snapshot.learningLanguage)
+            }
             val selected = all.filter { it.learningDate in start..end }
             val todayCompleted = all.filter { it.learningDate == today && completed(it) }
             val facts = all.mapNotNull { session -> evaluationFact(session) }
@@ -100,6 +106,8 @@ internal class SpeakingReportService(
                                 put("activityId", "SPEAKING:${LearningPublicId.encode(session.id)}")
                                 put("source", "SPEAKING")
                                 put("learningDate", session.learningDate.toString())
+                                put("originLanguage", ConfiguredLanguagePair.knownLanguage(session.snapshot.originLanguage))
+                                put("learningLanguage", ConfiguredLanguagePair.knownLanguage(session.snapshot.learningLanguage))
                                 put("title", session.snapshot.topicTitle)
                                 put("topic", session.snapshot.topicCategory)
                                 put("durationSeconds", session.totalDurationSeconds)
@@ -156,11 +164,23 @@ internal class SpeakingReportService(
     }
 
     suspend fun recommendedFocus(userId: Long, limit: Int = 10): List<String> {
+        // 새 대화의 추천은 현재 언어쌍의 실제 원본만 사용한다. 미설정·과거 언어를 추측하지 않는다.
+        val current = settings.userSnapshot(userId).result.settings
+        val origin = current.originLanguage?.takeIf { it.isNotBlank() } ?: return emptyList()
+        val learning = current.learningLanguage?.takeIf { it.isNotBlank() } ?: return emptyList()
+        val pair = ConfiguredLanguagePair(origin, learning)
+        val writingData = writing.read(userId)
+        val matchingSetIds = writingData.sets.filter { pair.matches(it.originLanguage, it.learningLanguage) }
+            .map { it.id }.toSet()
+
         // 원본은 Writing과 Speaking을 합쳐 최신 30개를 고른 뒤 Speaking만 집계한다.
-        val writingTimes = writing.read(userId).evaluations
-            .filter { it.context == "DAILY" && it.status == "SUCCESS" }.map { checkNotNull(it.evaluatedAt) }
+        val writingTimes = writingData.evaluations
+            .filter { it.setId in matchingSetIds && it.context == "DAILY" && it.status == "SUCCESS" }
+            .map { checkNotNull(it.evaluatedAt) }
         val speaking = work.read {
-            records.sessions(userId, firstDate, lastDate).mapNotNull { session -> evaluationFact(session) }
+            records.sessions(userId, firstDate, lastDate)
+                .filter { pair.matches(it.snapshot.originLanguage, it.snapshot.learningLanguage) }
+                .mapNotNull { session -> evaluationFact(session) }
                 .filter {
                     it.result.status.equals("EVALUATED", true) && it.result.response.number(
                         "overallScore",

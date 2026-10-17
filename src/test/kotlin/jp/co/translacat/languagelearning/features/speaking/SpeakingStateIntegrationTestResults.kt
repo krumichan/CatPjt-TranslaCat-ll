@@ -47,9 +47,13 @@ class SpeakingStateIntegrationTestResults {
                     val activity = assertNotNull(growth.activity(721, "SPEAKING", "ll-speaking-${session.id}"))
                     assertEquals(80.0, activity.overallScore)
                     assertEquals(8, growth.metrics(activity.id).size)
-                    val evidence = growth.evidenceList(721, "SPEAKING", 10).single()
+                    // 공식 근거는 현재 설정 유무와 관계없이 생성 당시 세션 언어에 귀속된다.
+                    val evidence = growth.scoped(session.snapshot.originLanguage, session.snapshot.learningLanguage)
+                        .evidenceList(721, "SPEAKING", 10).single()
                     assertEquals(1, evidence.evidenceCount)
                     assertEquals(.432, evidence.weightedEvidence, .000001)
+                    assertTrue(growth.scoped(null, null).evidenceList(721, "SPEAKING", 10).isEmpty())
+                    assertTrue(growth.scoped("ko", "ja").evidenceList(721, "SPEAKING", 10).isEmpty())
                 }
                 val view = assertNotNull(application.evaluation(721, session.id))
                 assertEquals(JsonPrimitive(-session.id), view["sessionId"])
@@ -82,7 +86,9 @@ class SpeakingStateIntegrationTestResults {
                     val activity = assertNotNull(growth.activity(723, "SPEAKING", "ll-speaking-${session.id}"))
                     assertEquals("INSUFFICIENT_EVIDENCE", activity.status)
                     assertTrue(growth.metrics(activity.id).isEmpty())
-                    assertTrue(growth.evidenceList(723, "SPEAKING", 10).isEmpty())
+                    assertTrue(growth.scoped(session.snapshot.originLanguage, session.snapshot.learningLanguage)
+                        .evidenceList(723, "SPEAKING", 10).isEmpty())
+                    assertTrue(growth.scoped(null, null).evidenceList(723, "SPEAKING", 10).isEmpty())
                     assertEquals(SpeakingSessionStatus.EVALUATED, records.session(723, session.id)?.status)
                 }
             }
@@ -133,7 +139,9 @@ class SpeakingStateIntegrationTestResults {
                     assertNull(activity.overallScore)
                     assertNull(activity.evaluationConfidence)
                     assertTrue(growth.metrics(activity.id).isEmpty())
-                    assertTrue(growth.evidenceList(724, "SPEAKING", 10).isEmpty())
+                    assertTrue(growth.scoped(session.snapshot.originLanguage, session.snapshot.learningLanguage)
+                        .evidenceList(724, "SPEAKING", 10).isEmpty())
+                    assertTrue(growth.scoped(null, null).evidenceList(724, "SPEAKING", 10).isEmpty())
                 }
                 assertNull(application.evaluation(724, session.id))
             }

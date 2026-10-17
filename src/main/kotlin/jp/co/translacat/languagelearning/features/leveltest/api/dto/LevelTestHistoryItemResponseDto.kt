@@ -11,4 +11,6 @@ internal data class LevelTestHistoryItemResponseDto(
     val proficiencyBand: String? = null,
     val domainScores: LevelTestDomainScoresResponseDto? = null,
     val completedAt: String? = null,
+    val originLanguage: String? = null,
+    val learningLanguage: String? = null,
 )

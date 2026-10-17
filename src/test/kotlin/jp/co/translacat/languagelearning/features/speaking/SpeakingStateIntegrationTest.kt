@@ -172,7 +172,9 @@ class SpeakingStateIntegrationTest {
                 assertTrue(state.fail(failed, "CONVERSATION_GENERATION_FAILED"))
                 work.read {
                     assertTrue(records.sessions(706, session.learningDate, session.learningDate).isEmpty())
-                    assertNull(growth.mastery(706, "synthetic"))
+                    assertNull(growth.scoped(session.snapshot.originLanguage, session.snapshot.learningLanguage)
+                        .mastery(706, "synthetic"))
+                    assertNull(growth.scoped(null, null).mastery(706, "synthetic"))
                 }
                 val current = assertNotNull(state.claim(706, session.id))
                 val response = buildJsonObject {
@@ -189,7 +191,11 @@ class SpeakingStateIntegrationTest {
                         listOf(session.id),
                         records.sessions(706, session.learningDate, session.learningDate).map { it.id },
                     )
-                    assertEquals(1, growth.mastery(706, "synthetic")?.selectedCount)
+                    // 설정 행이 없는 fixture도 저장된 세션 언어쌍에서 선택 횟수를 확인한다.
+                    assertEquals(1, growth.scoped(session.snapshot.originLanguage, session.snapshot.learningLanguage)
+                        .mastery(706, "synthetic")?.selectedCount)
+                    assertNull(growth.scoped(null, null).mastery(706, "synthetic"))
+                    assertNull(growth.scoped("ko", "ja").mastery(706, "synthetic"))
                     assertNull(records.session(707, session.id))
                 }
             }

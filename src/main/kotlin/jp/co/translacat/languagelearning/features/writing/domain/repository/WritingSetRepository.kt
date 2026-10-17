@@ -8,6 +8,7 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 
 internal interface WritingSetRepository {
+    fun scoped(originLanguage: String?, learningLanguage: String?): WritingSetRepository = this
     fun existsForUser(userId: Long): Boolean
     fun recoverable(nowUtc: LocalDateTime, limit: Int): List<WritingGenerationJob>
     fun find(userId: Long, date: LocalDate, type: WritingType): WritingSet?

@@ -2,6 +2,7 @@ package jp.co.translacat.languagelearning.features.speaking.infrastructure
 
 import jp.co.translacat.languagelearning.features.growth.infrastructure.persistence.repository.ExposedGrowthRepository
 import jp.co.translacat.languagelearning.features.learner.infrastructure.persistence.repository.ExposedLearnerRepository
+import jp.co.translacat.languagelearning.features.settings.infrastructure.persistence.repository.ExposedUserSettingsRepository
 import jp.co.translacat.languagelearning.features.speaking.application.SpeakingTransaction
 import jp.co.translacat.languagelearning.features.speaking.application.SpeakingUnitOfWork
 import jp.co.translacat.languagelearning.features.speaking.infrastructure.persistence.repository.ExposedSpeakingRepository
@@ -37,7 +38,7 @@ internal class ExposedSpeakingUnitOfWork(
         }
         val scope = object : SpeakingTransaction {
             override val records = ExposedSpeakingRepository(guard)
-            override val growth = ExposedGrowthRepository(guard)
+            override val growth = ExposedGrowthRepository(guard, settings = ExposedUserSettingsRepository(guard))
             override val nowUtc =
                 LocalDateTime.ofInstant(clock.instant(), ZoneOffset.UTC).truncatedTo(ChronoUnit.MICROS)
         }

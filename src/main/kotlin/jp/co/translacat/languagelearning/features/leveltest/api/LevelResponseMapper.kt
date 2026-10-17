@@ -74,7 +74,7 @@ internal object LevelResponseMapper {
 
     fun summary(value: LevelSession) = LevelTestHistoryItemResponseDto(
         value.id, value.sessionType, value.baseLevelScore, value.proficiencyBand, scores(value.domainScores),
-        value.completedAt?.toString(),
+        value.completedAt?.toString(), value.originLanguage, value.learningLanguage,
     )
 
     suspend fun detail(value: LevelHistoryDetail, reads: LevelReadService): LevelTestHistoryDetailResponseDto =

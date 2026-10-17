@@ -1,6 +1,8 @@
 package jp.co.translacat.languagelearning.features.writing.infrastructure.persistence
 
 import jp.co.translacat.languagelearning.features.writing.domain.model.WritingDifficulty
+import jp.co.translacat.languagelearning.features.growth.domain.policy.GrowthLanguageScope
+import jp.co.translacat.languagelearning.features.settings.domain.model.ConfiguredLanguagePair
 import jp.co.translacat.languagelearning.features.writing.domain.model.WritingType
 import jp.co.translacat.languagelearning.features.writing.domain.policy.*
 import jp.co.translacat.languagelearning.features.writing.infrastructure.persistence.table.*
@@ -99,6 +101,10 @@ internal class CuratedWritingStore(
         // 같은 날짜·유형의 재전송은 저장된 정책과 세트를 그대로 반환한다.
         val existing = findSet(request.userId, request.date, request.type)
         if (existing != null) {
+            // 열린 옛 화면에서 재요청해도 현재 영어 학습에 일본어 세트를 반환하지 않는다.
+            require(ConfiguredLanguagePair(request.originLanguage, request.learningLanguage).matches(
+                existing[CuratedSetsTable.originLanguage], existing[CuratedSetsTable.learningLanguage],
+            )) { "WRITING_LANGUAGE_CONFLICT" }
             require(existing[CuratedSetsTable.policyVersion] == CuratedWritingSelection.policyVersion) {
                 "WRITING_POLICY_CONFLICT"
             }
@@ -107,7 +113,9 @@ internal class CuratedWritingStore(
         require(WritingSetsTable.selectAll().where {
             (WritingSetsTable.userId eq request.userId) and
                 (WritingSetsTable.learningDate eq request.date) and
-                (WritingSetsTable.writingType eq request.type.name)
+                (WritingSetsTable.writingType eq request.type.name) and
+                ((WritingSetsTable.languageScope eq GrowthLanguageScope.key(request.originLanguage, request.learningLanguage)) or
+                    (WritingSetsTable.languageScope eq ""))
         }.empty()) { "WRITING_POLICY_CONFLICT" }
 
         // 현재 레벨 테스트 결과만 단계 기준으로 읽는다. 신규 피드백은 이 값을 갱신하지 않는다.

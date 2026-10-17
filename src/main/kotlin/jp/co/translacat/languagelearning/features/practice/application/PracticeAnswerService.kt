@@ -4,6 +4,11 @@ import jp.co.translacat.languagelearning.features.growth.application.GrowthProje
 import jp.co.translacat.languagelearning.features.growth.domain.model.GrowthActivity
 import jp.co.translacat.languagelearning.features.growth.domain.model.GrowthChange
 import jp.co.translacat.languagelearning.features.practice.domain.*
+import jp.co.translacat.languagelearning.features.settings.domain.model.ConfiguredLanguagePair
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.contentOrNull
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
 import java.time.Duration
@@ -37,15 +42,24 @@ internal class PracticeAnswerService(private val work: PracticeUnitOfWork) {
                     normalized, normalized == question.content.correctAnswer, nowUtc,
                 ),
             )
-            val projector = GrowthProjector(growth)
+
+            // 답안의 출처는 현재 설정이 아니라 저장된 과제다. 언어가 없는 옛 자료는 legacy 집계만 갱신한다.
+            val snapshot = runCatching { Json.parseToJsonElement(set.requestJson) as? JsonObject }.getOrNull()
+            fun language(name: String) = (snapshot?.get(name) as? JsonPrimitive)?.takeIf { it.isString }
+                ?.contentOrNull?.takeIf { it.trim().length in 2..20 }
+            val origin = language("originLanguage")
+            val learning = language("learningLanguage")
+            val source = if (origin != null && learning != null) ConfiguredLanguagePair(origin, learning) else null
+            val sourceRecords = records.scoped(source?.originLanguage, source?.learningLanguage)
+            val projector = GrowthProjector(growth.scoped(source?.originLanguage, source?.learningLanguage))
 
             // 전용 Vocabulary mastery와 Reading 표현 후보는 첫 시도만 반영한다.
             if (attempt.official && set.domain == PracticeDomain.VOCABULARY) {
                 val canonicalKey = question.content.canonicalKey
                 if (!canonicalKey.isNullOrBlank()) {
-                    val old = records.masteries(userId).firstOrNull { it.canonicalKey == canonicalKey }
+                    val old = sourceRecords.masteries(userId).firstOrNull { it.canonicalKey == canonicalKey }
                         ?: VocabularyMastery(userId, canonicalKey, question.content.targetExpression.orEmpty())
-                    records.saveMastery(old.evaluated(attempt.correct))
+                    sourceRecords.saveMastery(old.evaluated(attempt.correct))
                 }
             } else if (attempt.official && !attempt.correct) {
                 projector.apply(
@@ -75,8 +89,10 @@ internal class PracticeAnswerService(private val work: PracticeUnitOfWork) {
                     put("mode", set.mode)
                     put("questionCount", set.questionCount)
                     put("complexityBand", set.complexityBand)
+                    put("originLanguage", source?.originLanguage)
+                    put("learningLanguage", source?.learningLanguage)
                 }
-                projector.apply(
+                GrowthProjector(growth).apply(
                     userId,
                     GrowthChange.ActivityRecorded(
                         GrowthActivity(

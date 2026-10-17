@@ -3,6 +3,7 @@ package jp.co.translacat.languagelearning.features.writing.application
 import jp.co.translacat.languagelearning.features.growth.application.GrowthProjector
 import jp.co.translacat.languagelearning.features.growth.domain.model.GrowthChange
 import jp.co.translacat.languagelearning.features.growth.domain.model.GrowthProfile
+import jp.co.translacat.languagelearning.features.growth.domain.repository.GrowthRepository
 import jp.co.translacat.languagelearning.features.keyword.application.KeywordLearningFacts
 import jp.co.translacat.languagelearning.features.keyword.application.KeywordOperations
 import jp.co.translacat.languagelearning.features.keyword.domain.policy.KeywordSelectionPolicy
@@ -36,8 +37,8 @@ internal class WritingContextService(
         )
         val date = context.learningDate
         val existing = work.write(userId) {
-            prepareProfile(userId, date)
-            sets.find(userId, date, type)
+            prepareProfile(userId, date, growth.scoped(user.originLanguage, user.learningLanguage))
+            sets.scoped(user.originLanguage, user.learningLanguage).find(userId, date, type)
         }
         if (existing != null) return existing
 
@@ -49,17 +50,20 @@ internal class WritingContextService(
         val count = user.dailySentenceCount.coerceIn(admin.minDailySentenceCount, admin.maxDailySentenceCount)
         return work.write(userId) {
             // 사용자 행 잠금 아래 재확인하여 중복 요청이 선택 횟수나 snapshot을 두 번 만들지 않게 한다.
-            sets.find(userId, date, type)?.let { return@write it }
-            val profile = prepareProfile(userId, date)
+            val currentSets = sets.scoped(user.originLanguage, user.learningLanguage)
+            currentSets.find(userId, date, type)?.let { return@write it }
+            // 설정 승격이 다른 요청에서 일어나도 캡처한 문항 언어와 성장 문맥은 함께 유지한다.
+            val currentGrowth = growth.scoped(user.originLanguage, user.learningLanguage)
+            val profile = prepareProfile(userId, date, currentGrowth)
             val selected = KeywordSelectionPolicy.select(userId, date, candidates, admin.dailyKeywordMaxCount) {
-                growth.mastery(userId, it)
+                currentGrowth.mastery(userId, it)
             }
-            if (selected.isNotEmpty()) GrowthProjector(growth).apply(
+            if (selected.isNotEmpty()) GrowthProjector(currentGrowth).apply(
                 userId,
                 GrowthChange.KeywordsSelected(date, selected.map { it.canonicalKey }), nowUtc,
             )
             val id = snapshotId()
-            val summary = profileSummary(userId, profile)
+            val summary = profileSummary(userId, profile, currentGrowth)
             val request = buildJsonObject {
                 put("requestId", "daily-generate-$id")
                 put("originLanguage", checkNotNull(user.originLanguage))
@@ -102,36 +106,40 @@ internal class WritingContextService(
                 put("diversityContext", fingerprints.context(userId, checkNotNull(user.learningLanguage), nowUtc))
                 put("contentDiversityPolicyVersion", "language-learning-diversity")
             }
-            sets.create(NewWritingSet(userId, date, type, id, count, request.toString()), nowUtc)
+            currentSets.create(NewWritingSet(userId, date, type, id, count, request.toString()), nowUtc)
         }
     }
 
-    private fun WritingSetTransaction.prepareProfile(userId: Long, date: java.time.LocalDate): GrowthProfile {
-        val profile = growth.profile(userId)
+    private fun WritingSetTransaction.prepareProfile(
+        userId: Long, date: java.time.LocalDate, records: GrowthRepository,
+    ): GrowthProfile {
+        val profile = records.profile(userId)
         if (profile == null || profile.state == "LEVEL_TEST_REQUIRED") throw LearningBusinessException(
             "LEVEL_TEST_REQUIRED", "최초 Level Test가 필요합니다.",
         )
-        GrowthProjector(growth).apply(userId, GrowthChange.LearningPrepared(date), nowUtc)
-        return checkNotNull(growth.profile(userId))
+        GrowthProjector(records).apply(userId, GrowthChange.LearningPrepared(date), nowUtc)
+        return checkNotNull(records.profile(userId))
     }
 
-    private fun WritingSetTransaction.profileSummary(userId: Long, profile: GrowthProfile): JsonObject {
+    private fun WritingSetTransaction.profileSummary(
+        userId: Long, profile: GrowthProfile, records: GrowthRepository,
+    ): JsonObject {
         val scores = listOf(
             profile.meaningScore, profile.grammarScore, profile.vocabularyScore,
             profile.naturalnessScore, profile.expressionScore,
         )
         return buildJsonObject {
-            // 현재 user 단위 성장 snapshot은 언어 귀속이 없어 생성기에서 성취 근거로 쓰지 않는다.
+            // 누적 태그를 실제 학습 표현의 근거로 승격하지 않는 기존 생성 정책은 보존한다.
             put("languageScope", "UNKNOWN")
             put("learningLanguage", JsonNull)
             put("profileVersion", profile.profileVersion)
             put("baseLevelScore", profile.baseLevelScore.asJson())
             put("skillScores", if (scores.all { it == null }) JsonNull else skills(scores))
-            put("grammarWeaknesses", signalKeys(userId, "GRAMMAR_WEAKNESS"))
+            put("grammarWeaknesses", signalKeys(userId, "GRAMMAR_WEAKNESS", records))
             put(
                 "keywordMasteries",
                 JsonArray(
-                    growth.masteries(userId, null, 30).map { mastery ->
+                    records.masteries(userId, null, 30).map { mastery ->
                         buildJsonObject {
                             put("canonicalKey", mastery.canonicalKey)
                             put("score", mastery.score)
@@ -147,12 +155,12 @@ internal class WritingContextService(
                     put("challenge", profile.challengePerformance.asJson())
                 },
             )
-            put("errorPatterns", signalKeys(userId, "ERROR_PATTERN"))
+            put("errorPatterns", signalKeys(userId, "ERROR_PATTERN", records))
             put("trend", profile.trend)
             put("confidence", profile.confidence)
-            put("strengths", signalKeys(userId, "STRENGTH"))
-            put("weaknesses", signalKeys(userId, "WEAKNESS"))
-            put("recommendedFocus", signalKeys(userId, "RECOMMENDED_FOCUS"))
+            put("strengths", signalKeys(userId, "STRENGTH", records))
+            put("weaknesses", signalKeys(userId, "WEAKNESS", records))
+            put("recommendedFocus", signalKeys(userId, "RECOMMENDED_FOCUS", records))
             put("additionalSignals", Json.parseToJsonElement(profile.additionalSignalsJson).jsonObject)
         }
     }
@@ -186,8 +194,8 @@ internal class WritingContextService(
         }
     }
 
-    private fun WritingSetTransaction.signalKeys(userId: Long, type: String): JsonArray =
-        JsonArray(growth.signals(userId, type, 10).map { JsonPrimitive(it.key) })
+    private fun signalKeys(userId: Long, type: String, records: GrowthRepository): JsonArray =
+        JsonArray(records.signals(userId, type, 10).map { JsonPrimitive(it.key) })
 
     private fun skills(values: List<Double?>): JsonObject = buildJsonObject {
         listOf("meaning", "grammar", "vocabulary", "naturalness", "expression").zip(values).forEach { (key, value) ->

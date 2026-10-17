@@ -7,6 +7,7 @@ import org.jetbrains.exposed.v1.javatime.datetime
 internal object GrowthEvidenceTable : Table("language_learning_profile_evidence") {
     val id = long("id").autoIncrement()
     val userId = long("user_id").references(LearnersTable.userId)
+    val languageScope = varchar("language_scope", 100).default("")
     val evidenceSource = varchar("source", 30)
     val metricType = varchar("metric_type", 40).nullable()
     val patternKey = varchar("pattern_key", 300)
@@ -23,6 +24,6 @@ internal object GrowthEvidenceTable : Table("language_learning_profile_evidence"
     override val primaryKey = PrimaryKey(id)
 
     init {
-        uniqueIndex(userId, evidenceSource, patternKey, direction)
+        uniqueIndex(userId, languageScope, evidenceSource, patternKey, direction)
     }
 }

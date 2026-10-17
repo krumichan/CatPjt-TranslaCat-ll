@@ -300,9 +300,11 @@ internal class ExposedLevelTestRepository(private val requireTransaction: () -> 
     override fun saveBaseline(value: LevelBaseline) {
         requireTransaction()
         LevelBaselinesTable.upsert { writeBaseline(it, value) }
+        val source = checkNotNull(session(value.sessionId))
+        check(source.userId == value.userId)
         // V008 이후에는 완료 기준점·Profile·완료 Activity를 동일 LL 트랜잭션으로 확정한다.
         ApplyLevelBaseline(
-            ExposedGrowthRepository(requireTransaction),
+            ExposedGrowthRepository(requireTransaction).scoped(source.originLanguage, source.learningLanguage),
         ).execute(
             value.userId, value.completionId, value.score.toDouble(), value.completedDate, value.startedAt,
             value.completedAt,

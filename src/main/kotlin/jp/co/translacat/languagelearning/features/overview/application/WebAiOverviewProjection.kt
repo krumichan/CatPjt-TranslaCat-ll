@@ -2,6 +2,7 @@ package jp.co.translacat.languagelearning.features.overview.application
 
 import jp.co.translacat.languagelearning.features.webaiplan.domain.model.WebAiResult
 import jp.co.translacat.languagelearning.features.webaiplan.domain.model.WebAiVerifiedItem
+import jp.co.translacat.languagelearning.features.settings.domain.model.ConfiguredLanguagePair
 import kotlinx.serialization.json.*
 import java.time.LocalDate
 
@@ -34,6 +35,8 @@ internal object WebAiOverviewProjection {
             put("activityId", "WEB_AI:${result.id}")
             put("source", "WEB_AI")
             put("learningDate", result.learningDate)
+            put("originLanguage", ConfiguredLanguagePair.knownLanguage(result.originLanguage))
+            put("learningLanguage", ConfiguredLanguagePair.knownLanguage(result.learningLanguage))
             put("title", result.planName)
             put("topic", domains.joinToString(" · "))
             // 외부 환경에서 소요한 시간은 검증하지 못하므로 활동 시간을 추정하지 않는다.

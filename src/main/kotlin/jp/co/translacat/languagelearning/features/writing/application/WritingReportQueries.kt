@@ -6,6 +6,7 @@ import java.time.LocalDateTime
 internal data class WritingReportSet(
     val id: Long, val date: LocalDate, val type: String, val count: Int,
     val status: String, val answered: Int,
+    val originLanguage: String? = null, val learningLanguage: String? = null,
 )
 
 internal data class WritingReportEvaluation(

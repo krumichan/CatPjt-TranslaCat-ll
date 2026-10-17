@@ -30,6 +30,7 @@ internal class ListeningContextService(
         ListeningTaskSelectionPolicy.tasksForMode(learningMode)
         require(difficulty in setOf("EASY", "MY_LEVEL", "CHALLENGE"))
         val language = checkNotNull(user.learningLanguage)
+        val origin = checkNotNull(user.originLanguage)
         val date = context.learningDate
         work.read {
             sets(
@@ -54,14 +55,16 @@ internal class ListeningContextService(
         return work.write(userId) {
             sets(userId, date).firstOrNull { it.learningLanguage == language && it.learningMode == learningMode }
                 ?.let { return@write it }
+            // 현재 설정이 승격되어도 이 요청의 생성 언어와 기준점·선택 기록은 같은 snapshot을 따른다.
+            val sourceGrowth = growth.scoped(origin, language)
             val selected = KeywordSelectionPolicy.select(userId, date, candidates, admin.dailyKeywordMaxCount) {
-                growth.mastery(userId, it)
+                sourceGrowth.mastery(userId, it)
             }
-            if (selected.isNotEmpty()) GrowthProjector(growth).apply(
+            if (selected.isNotEmpty()) GrowthProjector(sourceGrowth).apply(
                 userId,
                 GrowthChange.KeywordsSelected(date, selected.map { it.canonicalKey }), nowUtc,
             )
-            val profile = growth.profile(userId)
+            val profile = sourceGrowth.profile(userId)
             val base = profile?.baseLevelScore
             val baseBand = when {
                 base == null -> 2; base < 40 -> 1; base < 55 -> 2; base < 70 -> 3; base < 85 -> 4; else -> 5
@@ -74,13 +77,13 @@ internal class ListeningContextService(
                 put(
                     "userContext",
                     buildJsonObject {
-                        put("originLanguage", checkNotNull(user.originLanguage))
+                        put("originLanguage", origin)
                         put("learningLanguage", language)
                         put("level", difficulty)
                         put(
                             "profileFocus",
                             JsonArray(
-                                growth.signals(userId, "RECOMMENDED_FOCUS", 10).map { it.key }
+                                sourceGrowth.signals(userId, "RECOMMENDED_FOCUS", 10).map { it.key }
                                     .filter(String::isNotBlank).distinct().take(30).map(::JsonPrimitive),
                             ),
                         )
