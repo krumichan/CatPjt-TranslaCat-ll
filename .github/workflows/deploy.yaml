@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 45
     services:
-      # 일반 이미지 테스트에서 분리한 큐레이션 검증은 격리 MySQL로 계속 실행한다.
+      # 큐레이션과 통합 이력의 정렬 규칙 회귀는 격리 MySQL에서 검증한다.
       mysql:
         image: mysql:8.4
         env:
@@ -38,7 +38,7 @@ jobs:
           distribution: temurin
           java-version: '21'
           cache: gradle
-      - name: Curated Writing isolated MySQL tests
+      - name: Curated Writing and history isolated MySQL tests
         env:
           JAVA_TOOL_OPTIONS: -Duser.timezone=UTC
           LL_TEST_MYSQL_URL: jdbc:mysql://127.0.0.1:3306/?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
@@ -50,6 +50,7 @@ jobs:
           chmod +x gradlew
           ./gradlew --no-daemon --max-workers=1 \
             databaseIntegrationTest --tests '*CuratedWritingStoreIntegrationTest*' \
+              --tests '*GrowthPersistenceIntegrationTestEvidenceCollation*' \
             writingHttpDatabaseIntegrationTest --tests '*CuratedWritingHttpDatabaseIntegrationTest*'
       - name: Compile, isolated application tests, and build runtime
         run: docker build --platform linux/amd64 --target runtime -f deploy/oci/Dockerfile -t local/verified:${GITHUB_SHA} .

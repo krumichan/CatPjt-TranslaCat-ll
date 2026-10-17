@@ -20,10 +20,11 @@ internal object ExposedLearningEvidenceQuery {
             arguments += TextColumnType() to filter.from.toString()
             arguments += TextColumnType() to filter.to.toString()
             """
-                SELECT s.id, '${definition.source}' AS source, ${definition.date} AS learning_date,
-                    ${definition.language} AS learning_language, ${definition.origin} AS origin_language,
-                    ${definition.title} AS title, ${definition.kind} AS result_kind,
-                    ${definition.policy} AS policy_version, s.status, ${definition.resultStatus} AS result_status
+                SELECT s.id, ${text("'${definition.source}'")} AS source, ${definition.date} AS learning_date,
+                    ${text(definition.language)} AS learning_language, ${text(definition.origin)} AS origin_language,
+                    ${text(definition.title)} AS title, ${text(definition.kind)} AS result_kind,
+                    ${text(definition.policy)} AS policy_version, ${text("s.status")} AS status,
+                    ${text(definition.resultStatus)} AS result_status
                 FROM ${definition.table} s ${definition.join}
                 WHERE s.user_id = ? AND ${definition.date} BETWEEN ? AND ? ${definition.condition} ${definition.groupBy}
             """.trimIndent()
@@ -77,6 +78,10 @@ internal object ExposedLearningEvidenceQuery {
         val resultStatus: String = "NULL", val join: String = "", val condition: String = "",
         val groupBy: String = "",
     )
+
+    // 원본 테이블의 collation이 달라도 UNION의 문자열 타입을 맞춘다.
+    // 코드·정책 필터를 대소문자 구분 기준에 맞추고 NULL과 저장된 표시 문자열은 그대로 읽는다.
+    private fun text(expression: String) = "CONVERT(($expression) USING utf8mb4) COLLATE utf8mb4_bin"
 
     // 손상/누락된 과거 JSON은 현재 설정이나 현재 정책으로 채우지 않는다.
     private fun field(column: String, key: String) =
