@@ -26,6 +26,7 @@ class FakeDocker:
         self.fail_validate = False
         self.fail_candidate = False
         self.copied_env_bytes = []
+        self.readiness_results = [(0, "1\n")]
         self.wrong_check_error = False
         self.fail_remove = False
 
@@ -70,7 +71,11 @@ class FakeDocker:
         elif args[0] == "cp":
             self.copied_env_bytes.append((Path(args[1]) / "runtime.env").read_bytes())
         elif args[0] == "exec" and data:
-            if "unapproved-recovery-policy" in data:
+            if "--protocol=TCP" in data and "-e 'SELECT 1'" in data:
+                code, output = self.readiness_results[0]
+                if len(self.readiness_results) > 1:
+                    self.readiness_results.pop(0)
+            elif "unapproved-recovery-policy" in data:
                 code, error = 1, "ERROR 3819 (HY000)" if not self.wrong_check_error else "ERROR 1064 (42000)"
             elif "recovery_ddl_must_not_exist" in data:
                 code, error = 1, "ERROR 1142 (42000)"
@@ -361,6 +366,45 @@ class RecoveryTests(unittest.TestCase):
         self.assertEqual(code, 1)
         self.assertEqual(receipt["status"], "FAILED_CLEANUP_INCOMPLETE")
         self.assertEqual(receipt["before"], receipt["after"])
+
+    def test_tcp_readiness_waits_before_candidate_when_bootstrap_socket_is_ready(self):
+        # 준비: bootstrap socket ping은 성공해도 첫 TCP 연결은 거부되는 시점이다.
+        docker = FakeDocker(self.doc)
+        docker.readiness_results = [(1, ""), (0, "1\n")]
+        engine = v.IsolatedProof(docker, self.doc, self.root)
+
+        # 실행: 준비 대기 뒤에만 후보 migration과 복구 validate를 수행한다.
+        with patch.object(v.time, "sleep") as sleep:
+            result = engine.execute()
+
+        # 검증: 인증된 TCP catalog SELECT가 재시도되고 기존 엄격 검증은 통과한다.
+        probes = [(args, data) for args, data in docker.commands if data and "-e 'SELECT 1'" in data]
+        self.assertEqual(len(probes), 2)
+        self.assertEqual(sleep.call_count, 1)
+        for args, data in probes:
+            self.assertEqual(args[:2], ["exec", "-i"])
+            self.assertIn("--protocol=TCP -h127.0.0.1 --port=3306", data)
+            self.assertIn("-uroot translacat_ll", data)
+            self.assertNotIn(engine.password, " ".join(args))
+        self.assertEqual(result["status"], "SCHEMA_VALIDATED_READER_NOT_RUN")
+        self.assertTrue(all(row["removed"] for row in engine.cleanup_receipt))
+
+    def test_tcp_readiness_failure_or_unexpected_result_never_starts_candidate(self):
+        # 준비: TCP 거부와 exit0이지만 잘못된 결과를 모두 준비 실패로 취급한다.
+        for readiness in [(1, ""), (0, "unexpected\n")]:
+            with self.subTest(readiness=readiness):
+                docker = FakeDocker(self.doc)
+                docker.readiness_results = [readiness]
+                engine = v.IsolatedProof(docker, self.doc, self.root)
+
+                # 실행: 정해진 대기 횟수 이후 실패를 보존한다.
+                with patch.object(v.time, "sleep"), self.assertRaisesRegex(v.RecoveryError, "ISOLATED_MYSQL_NOT_READY"):
+                    engine.execute()
+
+                # 검증: JVM DB 명령은 시작하지 않고 생성한 DB와 network만 정리한다.
+                self.assertFalse(any(args[:2] == ["start", "--attach"] for args, _ in docker.commands))
+                self.assertEqual(docker.n, 1)
+                self.assertTrue(all(row["removed"] for row in engine.cleanup_receipt))
 
     def test_environment_files_force_lf_even_under_windows_translation_mock(self):
         # 준비: newline 미지정 write_text에 Windows와 같은 변환을 적용한다.

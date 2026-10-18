@@ -395,10 +395,17 @@ class IsolatedProof:
                 "--tmpfs", "/var/lib/mysql:rw,nosuid,nodev,size=768m", "--tmpfs", "/var/run/mysqld:rw,nosuid,nodev,size=16m",
                 "--memory", "1g", "--cpus", "1", self.doc["mysql"]["expectedImageId"]])
             self.docker.run(["start", self.mysql])
+            # 임시 bootstrap 서버의 socket ping은 TCP 접속 준비를 보장하지 않는다.
+            # 후보 JVM과 같은 TCP 경계에서 인증·대상 catalog 쿼리가 성공해야 진행한다.
             ready = False
+            readiness_script = (
+                f"export MYSQL_PWD='{self.password}'\n"
+                "exec mysql --protocol=TCP -h127.0.0.1 --port=3306 --connect-timeout=2 "
+                "--batch --skip-column-names -uroot translacat_ll -e 'SELECT 1'\n"
+            )
             for _ in range(60):
-                result = self.docker.run(["exec", self.mysql, "mysqladmin", "--protocol=socket", "ping", "--silent"], check=False)
-                if result.returncode == 0:
+                result = self.docker.run(["exec", "-i", self.mysql, "sh"], data=readiness_script, check=False)
+                if result.returncode == 0 and result.stdout.strip() == "1":
                     ready = True
                     break
                 time.sleep(1)
