@@ -76,9 +76,13 @@ internal object CuratedWritingFeedbackV10Policy {
         context: CuratedWritingFeedbackPolicy.Context,
         requirements: List<Pair<String, String>>,
         segments: List<Segment>,
-    ): JsonObject {
+    ): JsonObject = validateWithRepairRanges(output, context, requirements, segments, emptyList())
+
+    fun validateWithRepairRanges(output: JsonElement, context: CuratedWritingFeedbackPolicy.Context,
+                                requirements: List<Pair<String, String>>, segments: List<Segment>,
+                                repairRanges: List<CuratedWritingRepairRangeProof>): JsonObject {
         // 원문 coverage·실제 인용·교정 권한·선택 조언 검사를 먼저 적용한다. 잘못된 판정을 사후 삭제하지 않는다.
-        val checked = CuratedWritingFeedbackPolicy.validate(output, context, requirements, segments)
+        val checked = CuratedWritingFeedbackPolicy.validateWithRepairRanges(output, context, requirements, segments, repairRanges)
         try {
             val uncertainIds = checked.getValue("observations").jsonArray.map { it.jsonObject }
                 .filter { row -> row.getValue("requirementParts").jsonArray.any {

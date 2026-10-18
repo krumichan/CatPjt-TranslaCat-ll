@@ -1,0 +1,81 @@
+{
+  "fixtureVersion": "v13-actual-synthetic-authority-regression-v1",
+  "description": "Actual OpenAI evidence/composition/repair output_text on one synthetic public task. Invalid dual T/P authority remains unchanged. No credentials, encrypted reasoning or personal answer.",
+  "casesSha256": "9c52dc7f2b18b9b2bd068e039edc6f2c4b183a88c8cde5e405b5ded51eb84f04",
+  "mappingSha256": "2be753cbd58522255a33bf44f556a2747456c0d4b861892d8803cbd03fb5634c",
+  "case": {
+    "id": "G05",
+    "writingType": "GUIDED",
+    "originLanguage": "ko",
+    "learningLanguage": "ja",
+    "public": {
+      "originText": "지역 도서관의 주말 공예 워크숍에 참가한 경험을 일본어로 한 문단으로 쓰세요. 아래의 사실과 목적을 빠짐없이 연결해 표현하세요.",
+      "providedFacts": [
+        "워크숍은 지난 토요일 오후에 지역 도서관에서 열렸다.",
+        "참가자들은 재활용 재료로 작은 화분을 만들었다.",
+        "진행자는 재료를 준비하는 방법과 만드는 순서를 설명했다.",
+        "나는 친구와 함께 참가했고, 완성한 화분을 집에 가져갔다."
+      ],
+      "requiredIntents": [
+        "워크숍에서 무엇을 했는지 설명하기",
+        "친구와 참가했다는 사실과 화분을 집에 가져갔다는 사실을 포함하기",
+        "워크숍에 참가한 소감이나 앞으로의 의향을 덧붙이기"
+      ],
+      "responseConstraints": [
+        "사실과 생각이 자연스럽게 이어지는 한 문단으로 쓰기",
+        "과거 경험을 나타내는 표현을 사용하기"
+      ],
+      "taskRequirements": [
+        "지난 토요일 오후에 지역 도서관에서 열린 워크숍이라는 시간과 장소를 포함할 것",
+        "재활용 재료로 작은 화분을 만들었다는 내용을 포함할 것",
+        "진행자가 준비 방법과 만드는 순서를 설명했다는 내용을 포함할 것",
+        "친구와 참가했고 완성한 화분을 집에 가져갔다는 내용을 포함할 것",
+        "참가 소감이나 앞으로의 의향을 하나 이상 덧붙일 것"
+      ]
+    },
+    "checklist": [
+      "지난 토요일 오후에 지역 도서관에서 열린 워크숍이라는 시간과 장소를 포함할 것",
+      "재활용 재료로 작은 화분을 만들었다는 내용을 포함할 것",
+      "진행자가 준비 방법과 만드는 순서를 설명했다는 내용을 포함할 것",
+      "친구와 참가했고 완성한 화분을 집에 가져갔다는 내용을 포함할 것",
+      "참가 소감이나 앞으로의 의향을 하나 이상 덧붙일 것"
+    ],
+    "answer": "先週の土曜日の午後、地域の図書館で開かれた工芸ワークショップに友達と参加しました。リサイクル材料を使って小さな植木鉢を作り、講師は材料の準備方法と作る順番を説明してくれました。完成した植木鉢は図書館に置いたままです。楽しかったので、また参加したいです。",
+    "answerSha256": "967fec2b8ed249eb5a2f9d0398f963a2e193b4843427ca9a954de29ae97ff69e",
+    "stages": {
+      "evidence": {
+        "provenance": {
+          "ledgerAttemptId": "88c551da308443cf8e1015aa946334e8",
+          "model": "gpt-5-mini-2025-08-07",
+          "responseSha256": "3b9a93afa4ce0cc660b5c8c5e098411ee9d5630489748fe26de030de3311931b",
+          "requestSha256": "c0d5210954b65c37b6a8ac5b56a9873fbdd2251b19d8dd2cee5802b66610022f",
+          "serviceCommandSha256": "eb9696728c4536fef571f9201c4d0f9651918eef3262fc24a1e7d2fea0d07185",
+          "outputTextSha256": "faa3e917c6b07312d374c103d7f57087bf089ba515b97adc7ab4faaf53ea3dcd"
+        },
+        "outputText": "{\"atoms\":{\"C1.A1\":{\"state\":\"SUPPORT\",\"sourceIds\":[\"S1.Q1\",\"S1.Q2\"],\"actorMatches\":true,\"actionMatches\":true,\"targetMatches\":true,\"conditionMatches\":true,\"recipient\":\"NONE\",\"kind\":\"EVENT\",\"modality\":\"AFFIRMED\",\"semanticReading\":\"Learner participated in a craft workshop held at the local library last Saturday afternoon.\"},\"C2.A1\":{\"state\":\"SUPPORT\",\"sourceIds\":[\"S2.Q1\"],\"actorMatches\":true,\"actionMatches\":true,\"targetMatches\":true,\"conditionMatches\":true,\"recipient\":\"NONE\",\"kind\":\"EVENT\",\"modality\":\"AFFIRMED\",\"semanticReading\":\"Learner made a small plant pot using recycled materials.\"},\"C3.A1\":{\"state\":\"SUPPORT\",\"sourceIds\":[\"S2.Q2\"],\"actorMatches\":true,\"actionMatches\":true,\"targetMatches\":true,\"conditionMatches\":true,\"recipient\":\"NONE\",\"kind\":\"EVENT\",\"modality\":\"AFFIRMED\",\"semanticReading\":\"The instructor explained how to prepare materials and the step-by-step making sequence.\"},\"C4.A1\":{\"state\":\"SUPPORT\",\"sourceIds\":[\"S1.Q2\"],\"actorMatches\":true,\"actionMatches\":true,\"targetMatches\":true,\"conditionMatches\":true,\"recipient\":\"NONE\",\"kind\":\"EVENT\",\"modality\":\"AFFIRMED\",\"semanticReading\":\"Learner participated in the workshop together with a friend.\"},\"C4.A2\":{\"state\":\"CONFLICT\",\"sourceIds\":[\"S3.Q1\"],\"actorMatches\":true,\"actionMatches\":true,\"targetMatches\":true,\"conditionMatches\":true,\"recipient\":\"NONE\",\"kind\":\"EVENT\",\"modality\":\"AFFIRMED\",\"semanticReading\":\"Learner did not take the completed pot home; it remained at the library (contradicts 'took home').\"},\"C5.A1\":{\"alternatives\":{\"V1\":{\"state\":\"SUPPORT\",\"sourceIds\":[\"S4.Q1\"],\"actorMatches\":true,\"actionMatches\":true,\"targetMatches\":true,\"conditionMatches\":true,\"recipient\":\"NONE\",\"kind\":\"OPINION\",\"modality\":\"AFFIRMED\",\"semanticReading\":\"Learner reacted that the workshop was fun.\"},\"V2\":{\"state\":\"SUPPORT\",\"sourceIds\":[\"S4.Q2\"],\"actorMatches\":true,\"actionMatches\":true,\"targetMatches\":true,\"conditionMatches\":true,\"recipient\":\"NONE\",\"kind\":\"INTENTION\",\"modality\":\"DESIRED\",\"semanticReading\":\"Learner expresses intention/wish to participate again in the future.\"}}}},\"facts\":{},\"languageFormErrors\":[]}"
+      },
+      "compose": {
+        "provenance": {
+          "ledgerAttemptId": "8a71cbb8a42949189625e281d066dd17",
+          "model": "gpt-5-mini-2025-08-07",
+          "responseSha256": "eaafd0bca97dd73643af8e156af25c268d02e0c3274033d04212e9c2a868d374",
+          "requestSha256": "b4b0608525095892877f525dcde0bf3cf76d484b5e0ed28b89d281cfb23d39da",
+          "serviceCommandSha256": "7a9d3cdafdc3947ac95d07c9d3e5723e9f49871c28eaaa95f8f3bb44a8fe1147",
+          "outputTextSha256": "1aab0794ca5c7ee02bc7beee5077e601113f562676ec5e80f71f0c1768c0a53e"
+        },
+        "outputText": "{\n  \"necessaryCorrections\": [\n    {\n      \"requirementId\": \"C4\",\n      \"segmentId\": \"S3\",\n      \"patch\": {\n        \"original\": \"完成した植木鉢は図書館に置いたままです。\",\n        \"replacement\": \"完成した植木鉢は家に持ち帰りました。\"\n      },\n      \"issueType\": \"TASK_FACT_CONFLICT\",\n      \"sourceFactId\": \"T4\",\n      \"sourceAuthorityId\": \"P2\",\n      \"formReason\": \"NONE\",\n      \"learningText\": \"「図書館に置いたままです」は「持ち帰った」という要件（T4）と矛盾します。完成した植木鉢を家に持ち帰ったことを明示するために「家に持ち帰りました」に直しました。\"\n    }\n  ],\n  \"optionalAlternatives\": [],\n  \"uncertainties\": []\n}"
+      },
+      "repair": {
+        "provenance": {
+          "ledgerAttemptId": "d07110a52ece48b6975e09a0a4ca3362",
+          "model": "gpt-5-mini-2025-08-07",
+          "responseSha256": "83801884f82e5748b797d502ce8c98e0f69e439efa2d416ed651236c2bdd56f9",
+          "requestSha256": "08bc265de4b747239307039faa29626610af0ffa4755a518b34014d7535f6a5f",
+          "serviceCommandSha256": "4604ec8f5a1d719a4d52aa29ff763666b0f954564affbeb9c061d12f6303ce98",
+          "outputTextSha256": "a42bb583cc281f95364ea2f724804f99a006233fa2a58239db75c7593da522f3"
+        },
+        "outputText": "{\n  \"additionalNecessaryCorrections\": [\n    {\n      \"requirementId\": \"C4\",\n      \"segmentId\": \"S3\",\n      \"patch\": {\n        \"original\": \"完成した植木鉢は図書館に置いたままです。\",\n        \"replacement\": \"完成した植木鉢は家に持ち帰りました。\"\n      },\n      \"issueType\": \"TASK_FACT_CONFLICT\",\n      \"sourceFactId\": \"T4\",\n      \"sourceAuthorityId\": \"P2\",\n      \"formReason\": \"NONE\",\n      \"learningText\": \"「完成した植木鉢は図書館に置いたままです。」は、要件T4（完成した植木鉢を家に持ち帰ったこと）と矛盾します。要件を満たすために「家に持ち帰りました」と訂正しました。\"\n    }\n  ],\n  \"additionalOptionalAlternatives\": [],\n  \"additionalUncertainties\": []\n}"
+      }
+    }
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "fixtureVersion": "v13-actual-synthetic-missing-authority-regression-v1",
+  "description": "Actual synthetic G04 evidence and invalid compose/repair outputs that invent a missing home-taking event. No original payload changes, credentials or encrypted reasoning.",
+  "casesSha256": "9c52dc7f2b18b9b2bd068e039edc6f2c4b183a88c8cde5e405b5ded51eb84f04",
+  "mappingSha256": "6b418a1153000c74a5edb6510703125eac8b67461f70a2064e9f9d682bbe6e44",
+  "case": {
+    "id": "G04",
+    "writingType": "GUIDED",
+    "originLanguage": "ko",
+    "learningLanguage": "ja",
+    "public": {
+      "originText": "지역 도서관의 주말 공예 워크숍에 참가한 경험을 일본어로 한 문단으로 쓰세요. 아래의 사실과 목적을 빠짐없이 연결해 표현하세요.",
+      "providedFacts": [
+        "워크숍은 지난 토요일 오후에 지역 도서관에서 열렸다.",
+        "참가자들은 재활용 재료로 작은 화분을 만들었다.",
+        "진행자는 재료를 준비하는 방법과 만드는 순서를 설명했다.",
+        "나는 친구와 함께 참가했고, 완성한 화분을 집에 가져갔다."
+      ],
+      "requiredIntents": [
+        "워크숍에서 무엇을 했는지 설명하기",
+        "친구와 참가했다는 사실과 화분을 집에 가져갔다는 사실을 포함하기",
+        "워크숍에 참가한 소감이나 앞으로의 의향을 덧붙이기"
+      ],
+      "responseConstraints": [
+        "사실과 생각이 자연스럽게 이어지는 한 문단으로 쓰기",
+        "과거 경험을 나타내는 표현을 사용하기"
+      ],
+      "taskRequirements": [
+        "지난 토요일 오후에 지역 도서관에서 열린 워크숍이라는 시간과 장소를 포함할 것",
+        "재활용 재료로 작은 화분을 만들었다는 내용을 포함할 것",
+        "진행자가 준비 방법과 만드는 순서를 설명했다는 내용을 포함할 것",
+        "친구와 참가했고 완성한 화분을 집에 가져갔다는 내용을 포함할 것",
+        "참가 소감이나 앞으로의 의향을 하나 이상 덧붙일 것"
+      ]
+    },
+    "checklist": [
+      "지난 토요일 오후에 지역 도서관에서 열린 워크숍이라는 시간과 장소를 포함할 것",
+      "재활용 재료로 작은 화분을 만들었다는 내용을 포함할 것",
+      "진행자가 준비 방법과 만드는 순서를 설명했다는 내용을 포함할 것",
+      "친구와 참가했고 완성한 화분을 집에 가져갔다는 내용을 포함할 것",
+      "참가 소감이나 앞으로의 의향을 하나 이상 덧붙일 것"
+    ],
+    "answer": "先週の土曜日の午後、地域の図書館で開かれた工芸ワークショップに友達と参加しました。リサイクル材料を使って小さな植木鉢を作り、講師は材料の準備方法と作る順番を説明してくれました。楽しかったので、また参加したいです。",
+    "answerSha256": "212a1b374ecfc9a9105f6ceee18836220f0f2f362e59ed27e3eb2ee36f142693",
+    "stages": {
+      "evidence": {
+        "provenance": {
+          "ledgerAttemptId": "2bdfef18dd5242d2aee9636f7e46409a",
+          "model": "gpt-5-mini-2025-08-07",
+          "responseSha256": "eecc40f10d643115a51abe13f1530fb65a034cd8cf1b194049d7ce21524cef82",
+          "requestSha256": "63541c23ebe29a823b0c236ca05692035e41ed29c2acf66599a6123143f21e3e",
+          "serviceCommandSha256": "f0013cbc6575988e5fb25631a4a71226387b756eb67f2f94ecfc7aa991a9c9d1",
+          "outputTextSha256": "cff7f9ede3c1531f029f0e01f440a77de21adebc56b9935e3defa390a7507ea6"
+        },
+        "outputText": "{\n  \"atoms\": {\n    \"C1.A1\": {\n      \"state\": \"SUPPORT\",\n      \"sourceIds\": [\n        \"S1.Q1\",\n        \"S1.Q2\"\n      ],\n      \"actorMatches\": true,\n      \"actionMatches\": true,\n      \"targetMatches\": true,\n      \"conditionMatches\": true,\n      \"recipient\": \"TASK_PARTICIPANT\",\n      \"kind\": \"EVENT\",\n      \"modality\": \"AFFIRMED\",\n      \"semanticReading\": \"Workshop occurred last Saturday afternoon at the local library and the learner attended.\"\n    },\n    \"C2.A1\": {\n      \"state\": \"SUPPORT\",\n      \"sourceIds\": [\n        \"S2.Q1\"\n      ],\n      \"actorMatches\": true,\n      \"actionMatches\": true,\n      \"targetMatches\": true,\n      \"conditionMatches\": true,\n      \"recipient\": \"SELF\",\n      \"kind\": \"EVENT\",\n      \"modality\": \"AFFIRMED\",\n      \"semanticReading\": \"Learner made a small plant pot using recycled materials.\"\n    },\n    \"C3.A1\": {\n      \"state\": \"SUPPORT\",\n      \"sourceIds\": [\n        \"S2.Q2\"\n      ],\n      \"actorMatches\": true,\n      \"actionMatches\": true,\n      \"targetMatches\": true,\n      \"conditionMatches\": true,\n      \"recipient\": \"TASK_PARTICIPANT\",\n      \"kind\": \"EVENT\",\n      \"modality\": \"AFFIRMED\",\n      \"semanticReading\": \"Instructor explained material preparation and the sequence of making.\"\n    },\n    \"C4.A1\": {\n      \"state\": \"SUPPORT\",\n      \"sourceIds\": [\n        \"S1.Q2\"\n      ],\n      \"actorMatches\": true,\n      \"actionMatches\": true,\n      \"targetMatches\": true,\n      \"conditionMatches\": true,\n      \"recipient\": \"TASK_PARTICIPANT\",\n      \"kind\": \"EVENT\",\n      \"modality\": \"AFFIRMED\",\n      \"semanticReading\": \"Learner participated in the workshop accompanied by a friend.\"\n    },\n    \"C4.A2\": {\n      \"state\": \"ABSENT\",\n      \"sourceIds\": [],\n      \"actorMatches\": false,\n      \"actionMatches\": false,\n      \"targetMatches\": false,\n      \"conditionMatches\": false,\n      \"recipient\": \"NONE\",\n      \"kind\": \"EVENT\",\n      \"modality\": \"AFFIRMED\",\n      \"semanticReading\": \"No mention of taking the completed plant pot home.\"\n    },\n    \"C5.A1\": {\n      \"alternatives\": {\n        \"V1\": {\n          \"state\": \"SUPPORT\",\n          \"sourceIds\": [\n            \"S3.Q1\"\n          ],\n          \"actorMatches\": true,\n          \"actionMatches\": true,\n          \"targetMatches\": true,\n          \"conditionMatches\": true,\n          \"recipient\": \"NONE\",\n          \"kind\": \"OPINION\",\n          \"modality\": \"AFFIRMED\",\n          \"semanticReading\": \"Learner expresses enjoyment of the workshop.\"\n        },\n        \"V2\": {\n          \"state\": \"SUPPORT\",\n          \"sourceIds\": [\n            \"S3.Q2\"\n          ],\n          \"actorMatches\": true,\n          \"actionMatches\": true,\n          \"targetMatches\": true,\n          \"conditionMatches\": true,\n          \"recipient\": \"NONE\",\n          \"kind\": \"INTENTION\",\n          \"modality\": \"AFFIRMED\",\n          \"semanticReading\": \"Learner expresses intention/wish to participate again.\"\n        }\n      }\n    }\n  },\n  \"facts\": {},\n  \"languageFormErrors\": []\n}"
+      },
+      "compose": {
+        "provenance": {
+          "ledgerAttemptId": "2a2e4ad1833c41398c8502246f045558",
+          "model": "gpt-5-mini-2025-08-07",
+          "responseSha256": "7065d8cd3da382b8cd8e98b19453c4013575e7beb0fbec4d19d4dbac1a82d834",
+          "requestSha256": "35c6c323ab069829a5b55297b5fc3406f23b6db3baab14cfdce27ff6835ab1dc",
+          "serviceCommandSha256": "a0c0bf47ff086512e5e2f944b01c1f7019c7a7a308563e0f559be2dedb8e372c",
+          "outputTextSha256": "e52067ac2784d9ae119747ed071c0396af3ab07fedb9d983b6911257d251c057"
+        },
+        "outputText": "{\n  \"necessaryCorrections\": [\n    {\n      \"requirementId\": \"C4\",\n      \"segmentId\": \"S2\",\n      \"patch\": {\n        \"original\": \"作り、\",\n        \"replacement\": \"作り、完成した植木鉢を家に持ち帰りました。\"\n      },\n      \"issueType\": \"TASK_CONDITION_CONFLICT\",\n      \"sourceFactId\": \"\",\n      \"sourceAuthorityId\": \"P2\",\n      \"formReason\": \"NONE\",\n      \"learningText\": \"「完成した植木鉢を家に持ち帰った」ことを明確に加えてください。\"\n    }\n  ],\n  \"optionalAlternatives\": [],\n  \"uncertainties\": []\n}"
+      },
+      "repair": {
+        "provenance": {
+          "ledgerAttemptId": "abf447e262874f6ba691b391e6903dab",
+          "model": "gpt-5-mini-2025-08-07",
+          "responseSha256": "0711634a145fa8762fd6aeb8581e79522f57b2eb6088c82ed5ffab25b724747d",
+          "requestSha256": "2dabbf4d3a1f1a3cff883b65f8c6dcb086e54395fed7c419df91955c83acdf7f",
+          "serviceCommandSha256": "4bdbd0daf3fa7602d4c78b4a80f073f1ea1ded945933e3a289cf2020bde85128",
+          "outputTextSha256": "617fbf55fe4eed671c86ae6c477371675d6e906331e3c4a62787d9c38d3200b7"
+        },
+        "outputText": "{\"additionalNecessaryCorrections\":[{\"requirementId\":\"C4\",\"segmentId\":\"S2\",\"patch\":{\"original\":\"作り、\",\"replacement\":\"作り、完成した植木鉢を家に持ち帰り、\"},\"issueType\":\"TASK_CONDITION_CONFLICT\",\"sourceFactId\":\"\",\"sourceAuthorityId\":\"P2\",\"formReason\":\"NONE\",\"learningText\":\"「完成した植木鉢を家に持ち帰った」ことを明確に加えてください。\"}],\"additionalOptionalAlternatives\":[],\"additionalUncertainties\":[]}"
+      }
+    }
+  }
+}

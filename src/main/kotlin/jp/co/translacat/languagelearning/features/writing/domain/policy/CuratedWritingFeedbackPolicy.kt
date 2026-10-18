@@ -139,8 +139,14 @@ internal object CuratedWritingFeedbackPolicy {
         ))
     }
 
-    fun validate(output: JsonElement, context: Context, requirements: List<Pair<String, String>>, segments: List<Segment>): JsonObject {
+    fun validate(output: JsonElement, context: Context, requirements: List<Pair<String, String>>, segments: List<Segment>): JsonObject =
+        validateWithRepairRanges(output, context, requirements, segments, emptyList())
+
+    fun validateWithRepairRanges(output: JsonElement, context: Context, requirements: List<Pair<String, String>>,
+                                segments: List<Segment>, repairRanges: List<CuratedWritingRepairRangeProof>): JsonObject {
         try {
+            // V14 서버가 발급한 원문 범위만 추가로 증명한다. 기존 호출에는 proof가 없어 기존 검사가 그대로다.
+            repairRanges.forEach { it.requireContext(context, requirements, segments) }
             val root = output.jsonObject
             require(root.keys == setOf("observations", "necessaryCorrections", "optionalAlternatives", "uncertainties"))
             val known = segments.associateBy(Segment::id)
@@ -227,7 +233,9 @@ internal object CuratedWritingFeedbackPolicy {
                     raw.jsonObject.getValue("evidence").jsonArray.any {
                         val span = it.jsonObject
                         span.string("segmentId") == segment.id && span.string("quote").contains(patch.string("original"))
-                    }
+                    } || repairRanges.any { it.permits(id, segment.id, patch, raw.jsonObject,
+                        row.string("issueType"), if (row.string("issueType") == "TASK_FACT_CONFLICT")
+                            row.string("sourceFactId") else row.string("sourceAuthorityId")) }
                 })
                 when (row.string("issueType")) {
                     "LANGUAGE_FORM" -> {
@@ -240,10 +248,10 @@ internal object CuratedWritingFeedbackPolicy {
                         require(partsById.getValue(id).any { raw ->
                             val part = raw.jsonObject
                             part.string("status") == "CONFLICT" && part.getValue("taskFactIds").jsonArray.any { it.jsonPrimitive.content == fact } &&
-                                part.getValue("evidence").jsonArray.any {
+                                (part.getValue("evidence").jsonArray.any {
                                     it.jsonObject.string("segmentId") == segment.id &&
                                         it.jsonObject.string("quote").contains(patch.string("original"))
-                                }
+                                } || repairRanges.any { it.permits(id, segment.id, patch, part, "TASK_FACT_CONFLICT", fact) })
                         })
                     }
                     "TASK_CONDITION_CONFLICT" -> {
@@ -254,10 +262,10 @@ internal object CuratedWritingFeedbackPolicy {
                             val part = raw.jsonObject
                             part.string("status") == "CONFLICT" &&
                                 part.getValue("taskConditionIds").jsonArray.any { it.jsonPrimitive.content == condition } &&
-                                part.getValue("evidence").jsonArray.any {
+                                (part.getValue("evidence").jsonArray.any {
                                     it.jsonObject.string("segmentId") == segment.id &&
                                         it.jsonObject.string("quote").contains(patch.string("original"))
-                                }
+                                } || repairRanges.any { it.permits(id, segment.id, patch, part, "TASK_CONDITION_CONFLICT", condition) })
                         })
                     }
                     else -> error("WRITING_FEEDBACK_ISSUE_INVALID")

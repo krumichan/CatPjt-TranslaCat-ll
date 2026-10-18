@@ -12,6 +12,7 @@ internal object CuratedWritingFeedbackTestPayload {
 
     fun v12Response(command: ModelExecutionCommand, invalid: Boolean = false): JsonObject {
         val input = Json.parseToJsonElement(command.messages.single().content).jsonObject
+        if (command.schemaName == "curated_writing_feedback_repair") return repairResponse(input, invalid)
         if (command.schemaName != "writing_independent_evidence") return v11Response(input, invalid)
 
         // 실제 모델의 의미 판단을 흉내 내지 않고 테스트 답안의 정확한 원문을 구조 근거로 제공한다.
@@ -22,7 +23,43 @@ internal object CuratedWritingFeedbackTestPayload {
             put("evidence", buildJsonObject {
                 requirements.forEach { put(it, buildJsonArray { add(answer) }) }
             })
+            if (command.responseSchema?.get("properties")?.jsonObject?.containsKey("languageFormErrors") == true) {
+                put("languageFormErrors", buildJsonArray {})
+            }
         }
+    }
+
+    fun repairResponse(input: JsonObject, invalid: Boolean = false): JsonObject {
+        // 서버 조립 경로를 시험하는 합성 출력이다. 문장 의미를 판단하는 모델을 대신하지 않는다.
+        val base = v11Response(input, invalid)
+        val task = input.getValue("task").jsonObject
+        val requirements = task.getValue("requirements").jsonArray.map { it.jsonObject }
+        val firstUnit = requirements.first().getValue("sourceUnits").jsonArray.first().jsonObject.getValue("id")
+        val authorityIds = (task.getValue("explicitTaskFacts").jsonArray +
+            task.getValue("prescribedConditions").jsonArray).map { it.jsonObject.getValue("id").jsonPrimitive.content }
+        return JsonObject(base + mapOf(
+            "observations" to buildJsonObject {
+                if (!invalid) requirements.forEach { requirement ->
+                    val id = requirement.getValue("id").jsonPrimitive.content
+                    val old = base.getValue("observations").jsonObject.getValue(id).jsonObject
+                    val part = old.getValue("parts").jsonArray.single().jsonObject
+                    val units = requirement.getValue("sourceUnits").jsonArray
+                    put(id, buildJsonObject {
+                        put("unitEnds", buildJsonObject {
+                            units.forEachIndexed { index, unit ->
+                                put(unit.jsonObject.getValue("id").jsonPrimitive.content,
+                                    if (index == units.lastIndex) JsonObject(part - setOf("id", "taskFactIds", "taskConditionIds"))
+                                    else JsonNull)
+                            }
+                        })
+                        put("relationChecks", old.getValue("relationChecks"))
+                    })
+                }
+            },
+            "authorityLinks" to buildJsonObject {
+                authorityIds.forEach { put(it, buildJsonArray { add(firstUnit) }) }
+            },
+        ))
     }
 
     fun v11Response(input: JsonObject, invalid: Boolean = false): JsonObject {

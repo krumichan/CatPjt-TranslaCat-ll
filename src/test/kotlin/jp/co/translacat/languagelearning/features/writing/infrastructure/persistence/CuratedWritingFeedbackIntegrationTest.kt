@@ -5,6 +5,7 @@ import jp.co.translacat.languagelearning.features.growth.infrastructure.persiste
 import jp.co.translacat.languagelearning.features.writing.domain.model.WritingType
 import jp.co.translacat.languagelearning.features.writing.domain.policy.CuratedWritingPlanFixtures
 import jp.co.translacat.languagelearning.features.writing.domain.policy.CuratedWritingManifestCodec
+import jp.co.translacat.languagelearning.features.writing.domain.policy.CuratedWritingFeedbackV12Policy
 import jp.co.translacat.languagelearning.features.writing.infrastructure.persistence.table.*
 import jp.co.translacat.languagelearning.shared.ai.*
 import jp.co.translacat.languagelearning.shared.identity.LearningPublicId
@@ -42,14 +43,23 @@ class CuratedWritingStoreIntegrationTestFeedback {
                 val input = Json.parseToJsonElement(command.messages.single().content).jsonObject
                 val result = CuratedWritingFeedbackTestPayload.v12Response(command)
                 val payload = if (traces.size == 1) {
+                    assertEquals(CuratedWritingFeedbackV12Policy.initialInstructions, command.instructions)
                     val original = result.getValue("observations").jsonObject
                     val first = original.keys.first()
                     val broken = JsonObject(original.getValue(first).jsonObject +
                         ("unitAssignments" to buildJsonObject {}))
                     JsonObject(result + ("observations" to JsonObject(original + (first to broken))))
                 } else result
+                if (traces.size == 2) {
+                    assertEquals(CuratedWritingFeedbackV12Policy.currentIndependentInstructions, command.instructions)
+                    assertTrue(command.responseSchema!!.getValue("properties").jsonObject.containsKey("languageFormErrors"))
+                    assertTrue("learnerSegments" in input)
+                    assertFalse("repairDraftUntrusted" in input)
+                }
                 if (traces.size == 3) {
                     assertTrue(command.traceId.endsWith("-repair"))
+                    assertEquals(CuratedWritingFeedbackV12Policy.repairInstructions, command.instructions)
+                    assertEquals("curated_writing_feedback_repair", command.schemaName)
                     assertTrue("repairDraftUntrusted" in input)
                     assertTrue(input.getValue("repairIssues").jsonArray.isNotEmpty())
                 }

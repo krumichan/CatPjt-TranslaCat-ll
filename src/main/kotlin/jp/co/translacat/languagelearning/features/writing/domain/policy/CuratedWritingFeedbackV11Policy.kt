@@ -119,7 +119,11 @@ internal object CuratedWritingFeedbackV11Policy {
         context: CuratedWritingFeedbackPolicy.Context,
         requirements: List<Pair<String, String>>,
         segments: List<Segment>,
-    ): JsonObject {
+    ): JsonObject = validateWithRepairRanges(output, context, requirements, segments, emptyList())
+
+    fun validateWithRepairRanges(output: JsonElement, context: CuratedWritingFeedbackPolicy.Context,
+                                requirements: List<Pair<String, String>>, segments: List<Segment>,
+                                repairRanges: List<CuratedWritingRepairRangeProof>): JsonObject {
         try {
             val root = output.jsonObject
             require(root.keys == setOf("answerObservations", "observations", "necessaryCorrections",
@@ -198,7 +202,7 @@ internal object CuratedWritingFeedbackV11Policy {
                 put("optionalAlternatives", root.getValue("optionalAlternatives"))
                 put("uncertainties", root.getValue("uncertainties"))
             }
-            val checked = CuratedWritingFeedbackV10Policy.validate(prior, context, requirements, segments)
+            val checked = CuratedWritingFeedbackV10Policy.validateWithRepairRanges(prior, context, requirements, segments, repairRanges)
             return JsonObject(checked + ("policyVersion" to JsonPrimitive(version)))
         } catch (_: Exception) {
             throw IllegalArgumentException("WRITING_FEEDBACK_SCHEMA_INVALID")
