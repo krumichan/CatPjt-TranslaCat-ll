@@ -24,6 +24,8 @@ class FakeDocker:
         self.snapshot_count = 0
         self.bad_capability = False
         self.fail_validate = False
+        self.fail_candidate = False
+        self.copied_env_bytes = []
         self.wrong_check_error = False
         self.fail_remove = False
 
@@ -49,16 +51,24 @@ class FakeDocker:
         elif args[0] == "create":
             self.n += 1
             identifier = str(self.n) * 64
+            if "--env-file" in args:
+                self.copied_env_bytes.append(Path(args[args.index("--env-file") + 1]).read_bytes())
             self.resources[identifier] = {"Id": identifier, "Config": {"Labels": self.labels(args)},
                                            "HostConfig": {"PortBindings": {}}}
             output = identifier
         elif args[:2] == ["start", "--attach"]:
             if self.n == 2:
                 output = "LL_MIGRATION_COMPLETE\n"
+                if self.fail_candidate:
+                    code = 1
+                    output = ""
+                    error = "LL_MIGRATION_FAILED: IllegalStateException\nLL_MIGRATION_CATEGORY: UNKNOWN\nsensitive fixture ignored\n"
             else:
                 output = "LL_DATABASE_VALIDATION_COMPLETE\nLL_DATABASE_SCHEMA_VERSION: 041\nLL_DATABASE_MIGRATIONS_EXECUTED: 0\n"
                 if self.fail_validate:
                     code, error = 1, "sanitized"
+        elif args[0] == "cp":
+            self.copied_env_bytes.append((Path(args[1]) / "runtime.env").read_bytes())
         elif args[0] == "exec" and data:
             if "unapproved-recovery-policy" in data:
                 code, error = 1, "ERROR 3819 (HY000)" if not self.wrong_check_error else "ERROR 1064 (42000)"
@@ -352,6 +362,121 @@ class RecoveryTests(unittest.TestCase):
         self.assertEqual(receipt["status"], "FAILED_CLEANUP_INCOMPLETE")
         self.assertEqual(receipt["before"], receipt["after"])
 
+    def test_environment_files_force_lf_even_under_windows_translation_mock(self):
+        # 준비: newline 미지정 write_text에 Windows와 같은 변환을 적용한다.
+        original_write = Path.write_text
+        observed = []
+
+        def windows_write(path, data, *args, **kwargs):
+            if path.name in {"runtime.env", "mysql.env"}:
+                observed.append((path.name, kwargs.get("newline")))
+            if kwargs.get("newline") is None:
+                data = data.replace("\n", "\r\n")
+            return original_write(path, data, *args, **kwargs)
+
+        docker = FakeDocker(self.doc)
+        engine = v.IsolatedProof(docker, self.doc, self.root)
+        with patch.object(Path, "write_text", new=windows_write):
+            engine.execute()
+
+        # 검증: 실제 읽은 원본 bytes에는 CR이 없고 모든 env 쓰기에 LF가 명시된다.
+        self.assertEqual(len(observed), 3)
+        self.assertTrue(all(newline == "\n" for _, newline in observed))
+        self.assertEqual(len(docker.copied_env_bytes), 3)
+        self.assertTrue(all(b"\r" not in data and data.endswith(b"\n") for data in docker.copied_env_bytes))
+
+    def test_docker_binary_stdin_and_raw_output_hashes_preserve_exact_bytes(self):
+        # 준비: UTF-8 본문과 CRLF 출력 모두 text 모드 변환 없이 보존해야 한다.
+        payload = "一行\n二行\n"
+        stdout = b"one\r\ntwo\r\n"
+        stderr = b""
+        raw = subprocess.CompletedProcess(["docker", "exec"], 0, stdout, stderr)
+        with patch.object(v.subprocess, "run", return_value=raw) as execute:
+            result = v.Docker().run(["exec", "-i", "synthetic", "sh"], data=payload)
+
+        # 검증: Windows stdin 변환 경계는 bytes와 text=False로 닫힌다.
+        self.assertEqual(execute.call_args.kwargs["input"], payload.encode("utf-8"))
+        self.assertIs(execute.call_args.kwargs["text"], False)
+        self.assertEqual(result.stdout, "one\r\ntwo\r\n")
+        self.assertEqual(v.output_hashes(result), {"stdoutSha256": v.sha(stdout), "stderrSha256": v.sha(stderr)})
+
+    def test_docker_failure_keeps_only_byte_digests_and_fixed_code(self):
+        raw = subprocess.CompletedProcess(["docker", "start"], 1, b"private synthetic stdout", b"private synthetic stderr")
+        with patch.object(v.subprocess, "run", return_value=raw):
+            with self.assertRaises(v.RecoveryError) as caught:
+                v.Docker().run(["start", "--attach", "synthetic"])
+        self.assertEqual(str(caught.exception), "DOCKER_COMMAND_FAILED:start:1")
+        self.assertEqual(caught.exception.evidence["stdoutSha256"], v.sha(raw.stdout))
+        self.assertEqual(caught.exception.evidence["stderrSha256"], v.sha(raw.stderr))
+        self.assertNotIn("private synthetic", json.dumps(caught.exception.evidence))
+
+    def test_non_utf8_snapshot_output_fails_closed_with_original_byte_hash(self):
+        raw = subprocess.CompletedProcess(["docker", "exec"], 0, b"\xff\r\n", b"")
+        with patch.object(v.subprocess, "run", return_value=raw):
+            with self.assertRaisesRegex(v.RecoveryError, "DOCKER_STDOUT_NOT_UTF8") as caught:
+                v.Docker().run(["exec", "-i", "synthetic", "sh"])
+        self.assertEqual(caught.exception.evidence["stdoutSha256"], v.sha(b"\xff\r\n"))
+
+    def test_non_utf8_failure_preserves_exit_and_safe_stderr_in_final_receipt(self):
+        # 준비: stdout은 비 UTF-8이고 stderr에는 Main 진단과 임의 원문이 섞여 있다.
+        raw = subprocess.CompletedProcess(
+            ["docker", "start"], 1, b"\xff\r\n",
+            b"LL_MIGRATION_FAILED: IllegalStateException\nLL_MIGRATION_CATEGORY: UNKNOWN\nprivate fixture must not be saved\n",
+        )
+        with patch.object(v.subprocess, "run", return_value=raw):
+            with self.assertRaises(v.RecoveryError) as caught:
+                v.Docker().run(["start", "--attach", "synthetic"], check=False)
+
+        # 실행: 같은 guard 실패를 실제 main의 failureEvidence 저장 경계에 전달한다.
+        output = self.root / "non-utf8-failure.json"
+        with patch.object(v, "ARTIFACT_ROOT", self.root), patch.object(v.IsolatedProof, "execute", side_effect=caught.exception):
+            code = v.main(["--manifest", str(self.manifest), "--output", str(output), "--execute-isolated"])
+
+        # 검증: 실패는 유지하고 byte hash/exit/유한 타입·범주만 남긴다.
+        receipt = json.loads(output.read_text())
+        proof = receipt["failureEvidence"]
+        self.assertEqual(code, 1)
+        self.assertEqual(receipt["errorCode"], "DOCKER_STDOUT_NOT_UTF8")
+        self.assertEqual(proof["command"], "start")
+        self.assertEqual(proof["exitCode"], 1)
+        self.assertIs(proof["stdoutDecodeFailed"], True)
+        self.assertEqual(proof["diagnostics"], {"classes": ["IllegalStateException"], "categories": ["UNKNOWN"],
+                                               "sqlStates": [], "sqlCodes": []})
+        self.assertEqual(proof["stdoutSha256"], v.sha(raw.stdout))
+        self.assertEqual(proof["stderrSha256"], v.sha(raw.stderr))
+        self.assertNotIn("private fixture", output.read_text())
+    def test_database_diagnostics_accept_only_finite_types_and_safe_sql_metadata(self):
+        stderr = (
+            "LL_MIGRATION_FAILED: IllegalStateException\n"
+            "LL_MIGRATION_CAUSE_1: CustomSensitiveName\n"
+            "LL_MIGRATION_CATEGORY: CONNECTION\n"
+            "LL_MIGRATION_SQLSTATE_1: 08001\n"
+            "LL_MIGRATION_SQLCODE_1: 1045\n"
+            "LL_MIGRATION_CATEGORY: SENSITIVE_UNREVIEWED_CATEGORY\n"
+            "unstructured jdbc/password/answer fixture\n"
+        )
+        proof = v.safe_database_diagnostics("", stderr)
+        self.assertEqual(proof, {"classes": ["IllegalStateException", "OTHER"], "categories": ["CONNECTION"],
+                                 "sqlStates": ["08001"], "sqlCodes": [1045]})
+        self.assertNotIn("Sensitive", json.dumps(proof))
+        self.assertNotIn("password", json.dumps(proof))
+
+    def test_failed_database_start_is_checkpointed_before_cleanup(self):
+        docker = FakeDocker(self.doc)
+        docker.fail_candidate = True
+        engine = v.IsolatedProof(docker, self.doc, self.root)
+        with self.assertRaisesRegex(v.RecoveryError, "DOCKER_COMMAND_FAILED:start:1") as caught:
+            engine.execute()
+        job = caught.exception.evidence
+        self.assertEqual(job["role"], "candidate")
+        self.assertEqual(job["imageId"], self.doc["candidate"]["expectedImageId"])
+        self.assertEqual(job["exitCode"], 1)
+        self.assertEqual(job["diagnostics"]["classes"], ["IllegalStateException"])
+        self.assertEqual(job["diagnostics"]["categories"], ["UNKNOWN"])
+        self.assertTrue(v.SHA256.fullmatch(job["stdoutSha256"]))
+        self.assertNotIn("sensitive fixture", json.dumps(job))
+        self.assertIn("DATABASE_JOB_FINISHED_CANDIDATE", (self.root / (engine.name + "-journal.jsonl")).read_text())
+        self.assertTrue(all(row["removed"] for row in engine.cleanup_receipt))
     def test_existing_receipt_not_overwritten(self):
         output = self.root / "existing.json"
         output.write_text("preserved")

@@ -30,7 +30,9 @@ PIN = re.compile(r"(?:sha256:[0-9a-f]{64}|[a-z0-9][a-z0-9./:_-]*@sha256:[0-9a-f]
 
 
 class RecoveryError(Exception):
-    pass
+    def __init__(self, code, evidence=None):
+        super().__init__(code)
+        self.evidence = evidence or {}
 
 
 def need(condition, code):
@@ -135,16 +137,74 @@ def admission(manifest_path, artifact_root):
     return doc, {"manifestSha256": file_sha(manifest_path), "source": source, "testCaSha256": ca["sha256"]}
 
 
+def output_hashes(result):
+    pinned = getattr(result, "output_byte_hashes", None)
+    if pinned is not None:
+        return dict(pinned)
+    return {"stdoutSha256": sha(result.stdout.encode("utf-8")),
+            "stderrSha256": sha(result.stderr.encode("utf-8"))}
+
+
+def safe_database_diagnostics(stdout, stderr):
+    # 원문 문장 대신 기존 Main의 고정 타입·분류·SQL 메타데이터만 수집한다.
+    classes = {
+        "IllegalStateException", "IllegalArgumentException", "RuntimeException",
+        "FlywayException", "FlywayValidateException", "FlywayMigrateException", "FlywaySqlException",
+        "PoolInitializationException", "SQLException", "SQLInvalidAuthorizationSpecException",
+        "SQLNonTransientConnectionException", "SQLTransientConnectionException", "SQLTimeoutException",
+        "CommunicationsException", "CJCommunicationsException", "SocketException",
+        "SocketTimeoutException", "UnknownHostException", "SSLException", "SSLHandshakeException",
+    }
+    categories = {"TLS", "AUTHENTICATION", "TIMEOUT", "CONNECTION", "SCHEMA_OR_MIGRATION", "UNKNOWN"}
+    diagnostics = {"classes": [], "categories": [], "sqlStates": [], "sqlCodes": []}
+    for line in (stdout + "\n" + stderr).splitlines():
+        match = re.fullmatch(r"LL_MIGRATION_(?:FAILED|CAUSE_[0-8]): ([A-Za-z][A-Za-z0-9_$]{0,99})", line)
+        if match:
+            value = match[1] if match[1] in classes else "OTHER"
+            if value not in diagnostics["classes"]:
+                diagnostics["classes"].append(value)
+            continue
+        match = re.fullmatch(r"LL_MIGRATION_CATEGORY: ([A-Z_]+)", line)
+        if match and match[1] in categories:
+            diagnostics["categories"].append(match[1])
+            continue
+        match = re.fullmatch(r"LL_MIGRATION_SQLSTATE_[0-8]: ([A-Za-z0-9]{5})", line)
+        if match:
+            diagnostics["sqlStates"].append(match[1])
+            continue
+        match = re.fullmatch(r"LL_MIGRATION_SQLCODE_[0-8]: (-?[0-9]{1,10})", line)
+        if match and -(2 ** 31) <= int(match[1]) < 2 ** 31:
+            diagnostics["sqlCodes"].append(int(match[1]))
+    return diagnostics
+
+
 class Docker:
     def run(self, args, *, data=None, timeout=120, check=True):
+        # Windows text-mode stdin의 LF→CRLF 변환을 막는다. 출력 SHA도 변환 전 bytes에 고정한다.
+        wire_data = data.encode("utf-8") if isinstance(data, str) else data
+        need(wire_data is None or isinstance(wire_data, bytes), "DOCKER_INPUT_MUST_BE_UTF8_BYTES")
         try:
-            result = subprocess.run(["docker", *args], input=data, stdout=subprocess.PIPE,
-                                    stderr=subprocess.PIPE, text=True, timeout=timeout)
+            raw = subprocess.run(["docker", *args], input=wire_data, stdout=subprocess.PIPE,
+                                 stderr=subprocess.PIPE, text=False, timeout=timeout)
         except (OSError, subprocess.TimeoutExpired):
             raise RecoveryError("DOCKER_UNAVAILABLE_OR_TIMEOUT") from None
+        hashes = {"stdoutSha256": sha(raw.stdout), "stderrSha256": sha(raw.stderr)}
+        try:
+            # DB snapshot stdout에는 개행/대체 문자 정규화를 하지 않는다.
+            stdout = raw.stdout.decode("utf-8", errors="strict")
+        except UnicodeDecodeError:
+            raise RecoveryError("DOCKER_STDOUT_NOT_UTF8", {
+                "command": args[0], "exitCode": raw.returncode, "stdoutDecodeFailed": True,
+                "diagnostics": safe_database_diagnostics("", raw.stderr.decode("utf-8", errors="replace")),
+                **hashes,
+            }) from None
+        stderr = raw.stderr.decode("utf-8", errors="replace")
+        result = subprocess.CompletedProcess(raw.args, raw.returncode, stdout, stderr)
+        result.output_byte_hashes = hashes
         if check and result.returncode != 0:
-            # argv/stdout/stderr에는 합성 암호나 SQL이 있을 수 있으므로 고정 코드만 반환한다.
-            raise RecoveryError("DOCKER_COMMAND_FAILED:" + args[0] + ":" + str(result.returncode))
+            # argv·SQL·드라이버 원문은 노출하지 않고 bytes SHA와 종료 코드만 보존한다.
+            raise RecoveryError("DOCKER_COMMAND_FAILED:" + args[0] + ":" + str(result.returncode),
+                                {"command": args[0], "exitCode": result.returncode, **hashes})
         return result
 
     def inspect(self, kind, target):
@@ -152,7 +212,6 @@ class Docker:
         rows = json.loads(result.stdout)
         need(isinstance(rows, list) and len(rows) == 1, "INVALID_DOCKER_INSPECT")
         return rows[0]
-
 
 def verify_image(docker, spec, name):
     info = docker.inspect("image", spec["image"])
@@ -285,7 +344,7 @@ class IsolatedProof:
         }
         if migrate:
             values["LL_ALLOW_MIGRATIONS"] = "true"
-        (destination / "runtime.env").write_text("".join(f"{name}={value}\n" for name, value in values.items()), encoding="utf-8")
+        (destination / "runtime.env").write_text("".join(f"{name}={value}\n" for name, value in values.items()), encoding="utf-8", newline="\n")
         for path in destination.iterdir():
             os.chmod(path, 0o644)
         # 실행 image는 사전 검사한 불변 ID이며 DB 단독 명령만 전달한다.
@@ -296,7 +355,26 @@ class IsolatedProof:
             image, "--migrate-database" if migrate else "--validate-database"])
         # Docker Desktop의 D bind 경로에 의존하지 않는다. 시작 전 합성 설정만 복사한다.
         self.docker.run(["cp", str(destination), identifier + ":/run/config"])
-        return self.docker.run(["start", "--attach", identifier], timeout=360).stdout
+        result = self.docker.run(["start", "--attach", identifier], timeout=360, check=False)
+        state = {}
+        try:
+            state = self.assert_owned("container", identifier).get("State") or {}
+        except RecoveryError:
+            pass
+        job = {
+            "role": key, "image": self.doc[key]["image"], "imageId": image,
+            "containerId": identifier, "exitCode": result.returncode,
+            "oomKilled": state.get("OOMKilled") if isinstance(state.get("OOMKilled"), bool) else None,
+            "containerExitCode": state.get("ExitCode") if isinstance(state.get("ExitCode"), int) else None,
+            **output_hashes(result),
+            "diagnostics": safe_database_diagnostics(result.stdout, result.stderr),
+        }
+        self.evidence.setdefault("databaseJobs", []).append(job)
+        # 실패 원인과 출력 해시는 컨테이너 정리 전에 journal에 고정한다.
+        self.checkpoint("DATABASE_JOB_FINISHED_" + key.upper())
+        if result.returncode != 0:
+            raise RecoveryError("DOCKER_COMMAND_FAILED:start:" + str(result.returncode), job)
+        return result.stdout
 
     def execute(self):
         images = {key: verify_image(self.docker, self.doc[key], key) for key in ("candidate", "recovery", "mysql")}
@@ -310,7 +388,7 @@ class IsolatedProof:
             need(re.fullmatch(r"[0-9a-f]{64}", self.network) is not None, "NETWORK_ID_INVALID")
             self.assert_owned("network", self.network)
             mysql_env = self.private / "mysql.env"
-            mysql_env.write_text("MYSQL_ROOT_PASSWORD=" + self.password + "\nMYSQL_DATABASE=translacat_ll\nMYSQL_ROOT_HOST=%\n", encoding="utf-8")
+            mysql_env.write_text("MYSQL_ROOT_PASSWORD=" + self.password + "\nMYSQL_DATABASE=translacat_ll\nMYSQL_ROOT_HOST=%\n", encoding="utf-8", newline="\n")
             os.chmod(mysql_env, 0o600 if os.name != "nt" else 0o644)
             self.mysql = self.create_container(["--name", self.name + "-mysql", "--network", self.network,
                 "--network-alias", self.name + "-mysql", "--env-file", str(mysql_env),
@@ -406,6 +484,8 @@ def main(argv=None):
         # 원문 파일·Docker 출력 대신 고정 오류 코드만 보고한다.
         error = sys.exc_info()[1]
         receipt["errorCode"] = str(error) if isinstance(error, RecoveryError) else "INVALID_INPUT_OR_IO"
+        if isinstance(error, RecoveryError) and error.evidence:
+            receipt["failureEvidence"] = error.evidence
     if engine is not None:
         receipt.update(engine.evidence)
         receipt["cleanup"] = engine.cleanup_receipt
