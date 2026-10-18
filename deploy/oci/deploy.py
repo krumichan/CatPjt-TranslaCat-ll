@@ -208,14 +208,19 @@ def ensure_redis(c, base):
         except DeployError: time.sleep(1)
     raise DeployError('REDIS_PING_FAILED_EXISTING_REDIS_PRESERVED')
 
-def base_args(c, cfg, name, image, *, migration=False):
+def base_args(c, cfg, name, image, *, migration=False, validation=False):
+    need(not (migration and validation),'CONFLICTING_DATABASE_MODES')
+    need(not validation or c['service']=='ll','VALIDATION_ONLY_SUPPORTED_FOR_LL')
     s=c['service']; net='translacat-'+s+'-egress'
     args=['docker','create','--name',name,'--label',f'tc.owner={OWNER}','--label',f'tc.service={s}',
         '--init','--user','10001:10001','--read-only','--cap-drop','ALL','--security-opt','no-new-privileges:true',
         '--pids-limit','192','--memory','640m' if s=='ll' else '512m','--cpus','1',
         '--tmpfs','/tmp:rw,nosuid,size=96m,mode=1777','--network',net,
         '--mount',f'type=bind,src={cfg},dst=/run/config,readonly']
-    if migration:
+    if validation:
+        # 런타임 계정으로 DB만 검증한다. 포트·앱 데이터·restart·작업자를 붙이지 않는다.
+        args += [image,'--validate-database']
+    elif migration:
         if s=='chat': args+=['-e','CHAT_ALLOW_MIGRATIONS=true','-e','CHAT_MIGRATION_CONNECTION_FILE=/run/config/db_connection']
         args+=[image,'--migrate-database']
     else:
@@ -310,106 +315,233 @@ def external_preflight(c, cfg):
                 with ca.wrap_socket(sock,server_hostname=u.hostname): pass
         except Exception: raise DeployError('REMOTE_HTTPS_PREFLIGHT_FAILED:'+key) from None
 
-def deploy(c, image, sha, release_id, token_path):
+def recovery_selection(service, image, sha, recovery_image, recovery_sha):
+    # 명시한 다른 소스/불변 이미지만 선택한다. legacy bool은 LL 호환성 증거가 아니다.
+    need(bool(recovery_image)==bool(recovery_sha),'RECOVERY_IMAGE_AND_SHA_REQUIRED_TOGETHER')
+    if not recovery_image:
+        return
+    need(service=='ll','RECOVERY_IMAGE_ONLY_SUPPORTED_FOR_LL')
+    need(re.fullmatch(r'ghcr\.io/[a-z0-9_.-]+/[a-z0-9_.-]+@sha256:[0-9a-f]{64}',recovery_image) is not None,
+         'IMMUTABLE_RECOVERY_IMAGE_REQUIRED')
+    need(re.fullmatch('[0-9a-f]{40}',recovery_sha) is not None,'INVALID_RECOVERY_SHA')
+    need(recovery_image.split('@')[1]!=image.split('@')[1] and recovery_sha!=sha,
+         'RECOVERY_MUST_DIFFER_FROM_CANDIDATE')
+
+
+def public_ready(c, cfg):
+    u=c['public_url'].rstrip('/')+('/health/ready' if c['service']=='ll' else '/api/ready')
+    # 사용자 curl 설정·proxy·redirect에 기대지 않고 같은 hostname의 로컬 TLS edge를 검사한다.
+    try:
+        response=run(['curl','--disable','--fail','--silent','--show-error','--noproxy','*',
+                      '--connect-timeout','5','--max-time','15','--cacert',str(cfg/'service-ca.pem'),
+                      '--resolve',f'{urlparse(u).hostname}:8443:127.0.0.1','--write-out','\n%{http_code}',u])
+    except DeployError:
+        raise DeployError('PUBLIC_HTTPS_READINESS_TRANSPORT_FAILED') from None
+
+    # 본문이 READY여도 3xx 등은 실패다. 비밀값·HTML·서버 오류 원문은 진단에 넣지 않는다.
+    body,separator,status=response.rpartition('\n')
+    need(separator and status=='200','PUBLIC_HTTPS_READINESS_HTTP_STATUS_NOT_200')
+    try:
+        payload=json.loads(body)
+    except (ValueError,RecursionError):
+        raise DeployError('PUBLIC_HTTPS_READINESS_INVALID_JSON') from None
+    need(isinstance(payload,dict) and payload.get('status')=='READY','PUBLIC_HTTPS_READINESS_NOT_READY')
+
+
+def validation_schema(name):
+    # 원문 로그는 출력하지 않고 새 validate-only 진입점의 세 고정 증거만 확인한다.
+    try:
+        p=subprocess.run(['docker','logs',name],capture_output=True,text=True,timeout=15)
+    except (subprocess.TimeoutExpired,OSError):
+        raise DeployError('RECOVERY_VALIDATION_DIAGNOSTICS_UNAVAILABLE') from None
+    need(p.returncode==0,'RECOVERY_VALIDATION_DIAGNOSTICS_UNAVAILABLE')
+    lines=(p.stdout or '').splitlines()
+    versions=[re.fullmatch(r'LL_DATABASE_SCHEMA_VERSION: ([0-9]{1,9})',line) for line in lines]
+    versions=[m.group(1) for m in versions if m]
+    need(lines.count('LL_DATABASE_VALIDATION_COMPLETE')==1 and
+         lines.count('LL_DATABASE_MIGRATIONS_EXECUTED: 0')==1 and len(versions)==1 and int(versions[0])>0,
+         'RECOVERY_STRICT_VALIDATION_PROOF_MISSING')
+    return str(int(versions[0]))
+
+
+def recover_application(c, cfg, current, image, validation_name, suffix):
+    # 실제 현재 스키마에서 읽기 전용 검증이 성공하기 전에는 복구 API를 시작하지 않는다.
+    created=False;validation_id=None
+    try:
+        need(not inspect('container',validation_name),'RECOVERY_VALIDATION_CONTAINER_NAME_OCCUPIED')
+        validation_id=run(base_args(c,cfg,validation_name,image,validation=True)).strip()
+        need(validation_id,'RECOVERY_VALIDATION_CONTAINER_ID_MISSING')
+        run(['docker','start',validation_id])
+        need(run(['docker','wait',validation_id],timeout=180).strip()=='0','RECOVERY_DATABASE_VALIDATION_FAILED')
+        schema=validation_schema(validation_id)
+        run(['docker','rm',validation_id])
+        run(base_args(c,cfg,current,image));created=True
+        run(['docker','start',current])
+        need(wait_ready(c['service'],seconds=120),'RECOVERY_APPLICATION_NOT_READY')
+        public_ready(c,cfg)
+        return schema
+    except Exception:
+        if created:
+            try:
+                run(['docker','stop','-t','30',current])
+                run(['docker','rename',current,current+'-recovery-failed-'+suffix])
+            except DeployError:
+                pass
+        raise
+    finally:
+        # 이름 충돌이나 create 결과가 불명확하면 기존 자원을 삭제하지 않는다.
+        owned=inspect('container',validation_id) if validation_id else None
+        if owned and owned.get('Id')==validation_id and owned['Config'].get('Labels',{}).get('tc.owner')==OWNER:
+            try:
+                run(['docker','stop','-t','15',validation_id]);run(['docker','rm',validation_id])
+            except DeployError:
+                pass
+
+
+def deploy(c, image, sha, release_id, token_path, *, recovery_image=None, recovery_sha=None):
     need(os.geteuid()==0,'RUN_WITH_SUDO_REQUIRED')
     need(re.fullmatch('[0-9a-f]{40}',sha) is not None,'INVALID_SHA')
     need(re.fullmatch(r'ghcr\.io/[a-z0-9_.-]+/[a-z0-9_.-]+@sha256:[0-9a-f]{64}',image) is not None,'IMMUTABLE_IMAGE_REQUIRED')
     need(re.fullmatch('[0-9a-f]{40}-[0-9]+-[0-9]+',release_id) is not None,'INVALID_RELEASE_ID')
-    base=ROOT/c['service']; base.mkdir(parents=True,exist_ok=True,mode=0o700)
+    recovery_selection(c['service'],image,sha,recovery_image,recovery_sha)
+    base=ROOT/c['service'];base.mkdir(parents=True,exist_ok=True,mode=0o700)
     with open(base/'deploy.lock','a') as lock:
         try: fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
         except BlockingIOError: raise DeployError('ANOTHER_DEPLOYMENT_IS_RUNNING') from None
         os.chmod(base,0o700)
         release=base/'releases'/release_id
         need(not release.exists(),'RELEASE_ID_ALREADY_EXISTS');release.mkdir(parents=True,mode=0o700)
-        cfg=release/'runtime'; mig=release/'migration'; docker_config=release/'registry'
+        cfg=release/'runtime';mig=release/'migration';docker_config=release/'registry'
         env=dict(os.environ,DOCKER_CONFIG=str(docker_config))
-        migration_done=False; previous=None; current='translacat-'+c['service']; backup=current+'-previous-'+release_id[-25:]
-        migration_name=current+'-migration-'+release_id[-25:]
-        created_new=False
+        migration_done=False;migration_attempted=False;previous=None
+        current='translacat-'+c['service'];suffix=release_id[-25:]
+        backup=current+'-previous-'+suffix;migration_name=current+'-migration-'+suffix
+        validation_name=current+'-recovery-validation-'+suffix
+        created_new=False;migration_id=None
+        result={'status':'DEPLOYMENT_FAILED','sha':sha,'image':image,'service':c['service'],
+                'business_e2e':'NOT_RUN','database_rollback':'NEVER_AUTOMATIC',
+                'recovery_image':recovery_image,'recovery_sha':recovery_sha,
+                'recovery_status':'SELECTED_NOT_ACTIVATED' if recovery_image else 'NOT_SELECTED'}
         try:
-            materialize(c,release); materialize(c,release,True)
+            materialize(c,release);materialize(c,release,True)
             docker_config.mkdir(mode=0o700)
-            assert_vm_role(c)
-            external_preflight(c,cfg)
-            token=token_path.read_text(); need(token.strip(),'REGISTRY_TOKEN_MISSING')
+            assert_vm_role(c);external_preflight(c,cfg)
+            token=token_path.read_text();need(token.strip(),'REGISTRY_TOKEN_MISSING')
             run(['docker','login','ghcr.io','-u',c['registry_user'],'--password-stdin'],data=token,env=env)
             token=''
             run(['docker','pull',image],timeout=600,env=env)
             actual=inspect('image',image)
             need(actual and actual['Config'].get('Labels',{}).get('org.opencontainers.image.revision')==sha,'IMAGE_SHA_LABEL_MISMATCH')
+            if recovery_image:
+                # 구 entrypoint가 validate 인자를 Ktor 인자로 오인하지 못하게 능력 라벨도 요구한다.
+                run(['docker','pull',recovery_image],timeout=600,env=env)
+                recovered=inspect('image',recovery_image)
+                labels=recovered['Config'].get('Labels',{}) if recovered else {}
+                need(labels.get('org.opencontainers.image.revision')==recovery_sha,'RECOVERY_IMAGE_SHA_LABEL_MISMATCH')
+                need(labels.get('io.translacat.ll.database-validation')=='strict-v1','RECOVERY_VALIDATION_ENTRYPOINT_REQUIRED')
+                need(actual.get('Id') and recovered.get('Id') and actual['Id']!=recovered['Id'],'RECOVERY_IMAGE_CONTENT_MUST_DIFFER')
             network('translacat-'+c['service']+'-egress')
             if c['service']=='chat': ensure_redis(c,base)
             else: volume('translacat-ll-data',image)
             previous=inspect('container',current)
             if previous: need(previous['Config'].get('Labels',{}).get('tc.owner')==OWNER,'EXISTING_APPLICATION_REQUIRES_EXPLICIT_ADOPTION')
-            # A separate container receives only DDL credentials. Existing app remains up during migration.
-            run(base_args(c,mig,migration_name,image,migration=True))
-            run(['docker','start',migration_name])
-            try: code=run(['docker','wait',migration_name],timeout=960).strip()
+            result['previous_container']=backup if previous else None
+            need(not inspect('container',migration_name),'MIGRATION_CONTAINER_NAME_OCCUPIED')
+            migration_id=run(base_args(c,mig,migration_name,image,migration=True)).strip()
+            need(migration_id,'MIGRATION_CONTAINER_ID_MISSING')
+            # MySQL DDL은 실패/취소 시에도 일부 반영될 수 있다. start 직전부터 미변경으로 간주하지 않는다.
+            migration_attempted=True
+            run(['docker','start',migration_id])
+            try: code=run(['docker','wait',migration_id],timeout=960).strip()
             except DeployError:
-                run(['docker','stop','-t','15',migration_name]); raise
+                run(['docker','stop','-t','15',migration_id]);raise
             if code!='0':
                 diagnostics=[]
                 if c['service']=='ll':
-                    diagnostics=migration_failure_diagnostics(migration_name)
-                    for diagnostic in diagnostics:
-                        print(diagnostic,file=sys.stderr)
+                    diagnostics=migration_failure_diagnostics(migration_id)
+                    for diagnostic in diagnostics: print(diagnostic,file=sys.stderr)
                 raise DeployError('MIGRATION_FAILED:'+migration_failure_reason(diagnostics)+';NO_DATABASE_ROLLBACK')
             migration_done=True
-            run(['docker','rm',migration_name])
-            shutil.rmtree(mig)
+            run(['docker','rm',migration_id]);shutil.rmtree(mig)
             if previous:
                 run(['docker','stop','-t','30',current]);run(['docker','rename',current,backup])
             run(base_args(c,cfg,current,image));created_new=True
-            if c['service']=='chat':
-                # Attach before starting the process, so Redis resolves at application initialization.
-                run(['docker','network','connect',c['redis']['network'],current])
+            if c['service']=='chat': run(['docker','network','connect',c['redis']['network'],current])
             run(['docker','start',current])
             need(wait_ready(c['service']),'APPLICATION_READINESS_FAILED')
-            # Check TLS edge/proxy end to end, not just the localhost app.
-            u=c['public_url'].rstrip('/')+('/health/ready' if c['service']=='ll' else '/api/ready')
-            run(['curl','--fail','--silent','--show-error','--connect-timeout','5','--max-time','15',
-                '--cacert',str(cfg/'service-ca.pem'),'--resolve',f'{urlparse(u).hostname}:8443:127.0.0.1',u])
-            (release/'result.json').write_text(json.dumps({'status':'DEPLOYED_READY','sha':sha,'image':image,
-                'service':c['service'],'previous_container':backup if previous else None,
-                'business_e2e':'NOT_RUN','database_rollback':'NEVER_AUTOMATIC'},indent=2))
+            public_ready(c,cfg)
+            result['status']='DEPLOYED_READY'
             print('DEPLOYED_READY: '+c['service']+' '+sha+'; BUSINESS_E2E_NOT_RUN')
-        except Exception:
+        except Exception as failure:
+            result['failure_code']=str(failure) if isinstance(failure,DeployError) else type(failure).__name__
             if created_new:
-                try: run(['docker','stop','-t','30',current]);run(['docker','rename',current,current+'-failed-'+release_id[-25:]])
-                except DeployError: pass
-            if previous and not inspect('container',backup) and not created_new:
-                # stop succeeded but rename failed: never strand the original container silently.
-                original=inspect('container',current)
-                if original and original.get('Id')==previous.get('Id') and previous['State']['Running']:
-                    if not migration_done or c['allow_app_rollback_after_migration']:
-                        run(['docker','start',current])
-                    else: print('ORIGINAL_CONTAINER_PRESERVED; REVIEW_MIGRATION_BEFORE_RESTART',file=sys.stderr)
-            if previous and inspect('container',backup):
-                if not migration_done or c['allow_app_rollback_after_migration']:
+                try:
+                    run(['docker','stop','-t','30',current]);run(['docker','rename',current,current+'-failed-'+suffix])
+                except DeployError:
+                    pass
+            # 원래 앱이 아직 실행 중이면 그대로 보존한다. 실패한 migration을 성공/무변경으로 표시하지 않는다.
+            original=inspect('container',current)
+            original_stopped=bool(previous and original and original.get('Id')==previous.get('Id') and not original['State']['Running'])
+            legacy_restart_allowed=not migration_attempted or (c['service']!='ll' and c['allow_app_rollback_after_migration'])
+            recovery_needed=created_new or bool(previous and inspect('container',backup)) or original_stopped
+            if migration_attempted and recovery_image and recovery_needed:
+                try:
+                    if original_stopped:
+                        run(['docker','rename',current,backup])
+                    need(not inspect('container',current),'RECOVERY_APPLICATION_NAME_OCCUPIED')
+                    result['recovery_schema_version']=recover_application(c,cfg,current,recovery_image,validation_name,suffix)
+                    result['recovery_status']='RECOVERY_READY'
+                    print('COMPATIBLE_RECOVERY_READY; ORIGINAL_RELEASE_FAILED; DATABASE_NOT_ROLLED_BACK',file=sys.stderr)
+                except Exception as recovery_failure:
+                    result['recovery_status']='FAILED_MANUAL_RECOVERY_REQUIRED'
+                    result['recovery_failure_code']=str(recovery_failure) if isinstance(recovery_failure,DeployError) else type(recovery_failure).__name__
+                    print('COMPATIBLE_RECOVERY_FAILED; MANUAL_RECOVERY_REQUIRED; DATABASE_NOT_ROLLED_BACK',file=sys.stderr)
+            elif previous and inspect('container',backup):
+                if legacy_restart_allowed:
                     run(['docker','rename',backup,current])
                     if previous['State']['Running']:
                         run(['docker','start',current])
-                        if not wait_ready(c['service'],seconds=60):
-                            print('PREVIOUS_CONTAINER_RESTORED_BUT_NOT_READY; MANUAL_RECOVERY_REQUIRED',file=sys.stderr)
-                        else: print('PREVIOUS_CONTAINER_RESTORED_AND_READY; DATABASE_NOT_ROLLED_BACK',file=sys.stderr)
-                    else: print('PREVIOUS_CONTAINER_RESTORED_STOPPED_AS_BEFORE',file=sys.stderr)
-                else: print('PREVIOUS_CONTAINER_PRESERVED_STOPPED; MIGRATION_COMPATIBILITY_REVIEW_REQUIRED',file=sys.stderr)
+                        result['recovery_status']='PREVIOUS_READY' if wait_ready(c['service'],seconds=60) else 'PREVIOUS_NOT_READY'
+                    else: result['recovery_status']='PREVIOUS_RESTORED_STOPPED'
+                else:
+                    result['recovery_status']='PREVIOUS_STOPPED_MANUAL_RECOVERY_REQUIRED'
+                    print('PREVIOUS_CONTAINER_PRESERVED_STOPPED; MIGRATION_COMPATIBILITY_REVIEW_REQUIRED',file=sys.stderr)
+            elif original_stopped and previous['State']['Running']:
+                if legacy_restart_allowed:
+                    run(['docker','start',current]);result['recovery_status']='ORIGINAL_RESTARTED'
+                else:
+                    result['recovery_status']='ORIGINAL_STOPPED_MANUAL_RECOVERY_REQUIRED'
+                    print('ORIGINAL_CONTAINER_PRESERVED; REVIEW_MIGRATION_BEFORE_RESTART',file=sys.stderr)
+            elif migration_attempted:
+                result['recovery_status']='EXISTING_STATE_PRESERVED_SCHEMA_REVIEW_REQUIRED'
+                print('EXISTING_APPLICATION_STATE_PRESERVED; SCHEMA_STATE_REQUIRES_REVIEW',file=sys.stderr)
             raise
         finally:
-            shutil.rmtree(docker_config,ignore_errors=True)
-            # A failed migration must not keep DDL credentials indefinitely.
-            if inspect('container',migration_name):
-                try: run(['docker','stop','-t','15',migration_name]);run(['docker','rm',migration_name])
-                except DeployError: pass
-            shutil.rmtree(mig,ignore_errors=True)
-            if token_path.exists(): token_path.unlink()
+            result['migration_state']='COMPLETED' if migration_done else ('ATTEMPTED_UNKNOWN' if migration_attempted else 'NOT_STARTED')
+            # 결과 저장 실패가 비밀 파일 정리를 건너뛰거나 원래 배포 실패를 덮지 않게 한다.
+            try:
+                (release/'result.json').write_text(json.dumps(result,indent=2))
+            except OSError:
+                print('RELEASE_RESULT_WRITE_FAILED; CHECK_DEPLOYMENT_STATE',file=sys.stderr)
+                if result['status']=='DEPLOYED_READY':
+                    raise DeployError('RELEASE_RESULT_WRITE_FAILED') from None
+            finally:
+                shutil.rmtree(docker_config,ignore_errors=True)
+                try:
+                    owned=inspect('container',migration_id) if migration_id else None
+                    if owned and owned.get('Id')==migration_id and owned['Config'].get('Labels',{}).get('tc.owner')==OWNER:
+                        try: run(['docker','stop','-t','15',migration_id]);run(['docker','rm',migration_id])
+                        except DeployError: pass
+                finally:
+                    shutil.rmtree(mig,ignore_errors=True)
+                    if token_path.exists(): token_path.unlink()
+
 
 def main():
     p=argparse.ArgumentParser();p.add_argument('--service',choices=['ll','chat'],required=True)
     p.add_argument('--config',type=Path,required=True);p.add_argument('--image',required=True)
     p.add_argument('--sha',required=True);p.add_argument('--release-id',required=True);p.add_argument('--registry-token',type=Path,required=True)
+    p.add_argument('--recovery-image');p.add_argument('--recovery-sha')
     a=p.parse_args()
     def interrupted(signum, frame):
         raise DeployError('DEPLOYMENT_INTERRUPTED')
@@ -417,7 +549,7 @@ def main():
     try:
         c=validate(json.loads(a.config.read_text()),a.service)
         origin(c['public_url'],'public_url');need(urlparse(c['public_url']).port==8443,'PUBLIC_HTTPS_PORT_MUST_BE_8443');one_line(c['registry_user'],'registry_user')
-        deploy(c,a.image,a.sha,a.release_id,a.registry_token)
+        deploy(c,a.image,a.sha,a.release_id,a.registry_token,recovery_image=a.recovery_image,recovery_sha=a.recovery_sha)
     except (DeployError,KeyError,ValueError,TypeError,OSError) as error:
         print('DEPLOYMENT_FAILED: '+(str(error) if isinstance(error,DeployError) else type(error).__name__),file=sys.stderr)
         return 1
