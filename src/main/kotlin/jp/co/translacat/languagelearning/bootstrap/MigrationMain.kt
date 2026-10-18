@@ -1,6 +1,7 @@
 package jp.co.translacat.languagelearning.bootstrap
 
 import jp.co.translacat.languagelearning.shared.persistence.DatabaseFactory
+import jp.co.translacat.languagelearning.shared.persistence.DatabaseMigrationReport
 import jp.co.translacat.languagelearning.shared.persistence.DatabaseSettings
 import jp.co.translacat.languagelearning.shared.persistence.MigrationMode
 import org.flywaydb.core.api.FlywayException
@@ -80,22 +81,64 @@ private fun socketFailureReason(failure: SocketException): String = when (failur
     else -> "UNKNOWN"
 }
 
-/** 승인된 배포 작업 전용. API와 AI 작업자를 시작하지 않는다. */
-fun main() {
+/** 명시적 읽기 전용 인자는 DDL 승인을 요구하지 않는다. 다른 인자는 연결 전에 거절한다. */
+internal fun databaseCommandSettings(args: Array<String>, environment: (String) -> String?): DatabaseSettings {
+    // 빈 인자의 기존 이행 경로와 단일 validate 명령만 허용한다. 환경변수로 모드를 바꾸지 않는다.
+    val mode = when {
+        args.isEmpty() -> MigrationMode.MIGRATE
+        args.contentEquals(arrayOf("--validate-database")) -> MigrationMode.VALIDATE
+        else -> throw IllegalArgumentException("Unsupported database command arguments.")
+    }
+    if (mode == MigrationMode.MIGRATE) {
+        check(environment("LL_ALLOW_MIGRATIONS") == "true") { "Migration approval is required." }
+    }
+
+    // validate에는 배포 도구가 런타임 DB 계정을 전달한다. URL과 catalog의 기존 검사는 유지한다.
+    fun required(name: String) = checkNotNull(environment(name)?.takeIf(String::isNotBlank)) { name }
+    return DatabaseSettings(
+        enabled = true,
+        jdbcUrl = required("DB_JDBC_URL"),
+        username = required("DB_USERNAME"),
+        password = required("DB_PASSWORD"),
+        expectedCatalog = "translacat_ll",
+        maximumPoolSize = 2,
+        minimumIdle = 0,
+        migrationMode = mode,
+    ).also(DatabaseSettings::validateForConnection)
+}
+
+/** 동일한 strict DB 초기화만 실행하고 pool을 닫는다. 애플리케이션 DI와 작업자는 시작하지 않는다. */
+internal fun runDatabaseCommand(
+    args: Array<String>,
+    environment: (String) -> String? = System::getenv,
+    connect: (DatabaseSettings) -> DatabaseMigrationReport = { settings ->
+        DatabaseFactory(settings).use { it.migrationReport }
+    },
+    output: (String) -> Unit = ::println,
+) {
+    // 인자·승인·접속 대상 검사가 끝나기 전에는 연결 함수를 호출하지 않는다.
+    val settings = databaseCommandSettings(args, environment)
+    val report = connect(settings)
+    check(report.mode == settings.migrationMode) { "Database command mode mismatch." }
+
+    // 복구 호환성은 실제 strict 검증의 결과만 고정 코드로 보고한다. 주소·SQL·자격증명은 출력하지 않는다.
+    if (settings.migrationMode == MigrationMode.VALIDATE) {
+        check(report.migrationsExecuted == 0) { "Validation must not apply migrations." }
+        check(report.schemaVersion.matches(Regex("[0-9]{1,9}")) && report.schemaVersion.toInt() > 0) {
+            "Invalid database schema version."
+        }
+        output("LL_DATABASE_VALIDATION_COMPLETE")
+        output("LL_DATABASE_SCHEMA_VERSION: ${report.schemaVersion}")
+        output("LL_DATABASE_MIGRATIONS_EXECUTED: 0")
+    } else {
+        output("LL_MIGRATION_COMPLETE")
+    }
+}
+
+/** 승인된 배포 또는 명시적 호환성 검증 전용. API와 AI 작업자를 시작하지 않는다. */
+fun main(args: Array<String>) {
     try {
-        check(System.getenv("LL_ALLOW_MIGRATIONS") == "true") { "Migration approval is required." }
-        fun required(name: String) = checkNotNull(System.getenv(name)?.takeIf(String::isNotBlank)) { name }
-        val settings = DatabaseSettings(
-            enabled = true,
-            jdbcUrl = required("DB_JDBC_URL"),
-            username = required("DB_USERNAME"),
-            password = required("DB_PASSWORD"),
-            expectedCatalog = "translacat_ll",
-            maximumPoolSize = 2,
-            minimumIdle = 0,
-            migrationMode = MigrationMode.MIGRATE,
-        )
-        DatabaseFactory(settings).use { println("LL_MIGRATION_COMPLETE") }
+        runDatabaseCommand(args)
     } catch (failure: Exception) {
         migrationFailureDiagnosticLines(failure).forEach(System.err::println)
         exitProcess(1)
