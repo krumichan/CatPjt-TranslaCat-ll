@@ -6,6 +6,7 @@ COPY gradle/ gradle/
 COPY src/ src/
 RUN chmod +x gradlew && ./gradlew --no-daemon test installDist
 FROM eclipse-temurin:21-jre-noble AS runtime
+LABEL io.translacat.ll.database-validation="strict-v1"
 RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates curl \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /app

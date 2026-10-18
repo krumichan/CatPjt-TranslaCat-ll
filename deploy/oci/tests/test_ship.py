@@ -94,7 +94,7 @@ class CommandClassificationTests(unittest.TestCase):
 
 
 class MainCleanupTests(unittest.TestCase):
-    def test_remote_failure_preserves_secret_cleanup_and_agent_shutdown(self):
+    def exercise(self, recovery=False):
         # 준비: 실제 프로세스 대신 성공한 연결과 실패한 배포를 재현한다.
         environment = {
             'GITHUB_SHA': 'a' * 40,
@@ -118,8 +118,11 @@ class MainCleanupTests(unittest.TestCase):
                 raise ship.RemoteDeploymentFailed(SECRET)
             return ''
 
+        argv=['ship.py','--service','ll','--image','ghcr.io/owner/ll@sha256:'+'b'*64]
+        if recovery:
+            argv += ['--recovery-image','ghcr.io/owner/ll@sha256:'+'d'*64,'--recovery-sha','c'*40]
         with patch.dict(os.environ, environment, clear=True), \
-                patch.object(ship.sys, 'argv', ['ship.py', '--service', 'll', '--image', 'ghcr.io/owner/ll@sha256:' + 'b' * 64]), \
+                patch.object(ship.sys, 'argv', argv), \
                 patch.object(ship, 'checked', side_effect=checked), \
                 patch.object(ship.os, 'kill') as kill:
             # 실행
@@ -138,6 +141,30 @@ class MainCleanupTests(unittest.TestCase):
         self.assertFalse(cleanup[1].get('remote_deployment', False))
         kill.assert_called_once_with(123, 15)
         self.assertNotIn(SECRET, ship.release_failure_diagnostic(caught.exception))
+        return deployment[0][-1]
+
+    def test_remote_failure_preserves_secret_cleanup_and_agent_shutdown(self):
+        command=self.exercise()
+        self.assertNotIn('--recovery-image',command)
+
+    def test_explicit_recovery_pair_forwarded_without_changing_cleanup(self):
+        command=self.exercise(recovery=True)
+        self.assertIn('--recovery-image ghcr.io/owner/ll@sha256:'+'d'*64,command)
+        self.assertIn('--recovery-sha '+'c'*40,command)
+
+    def test_invalid_recovery_pair_never_starts_ssh_or_reads_secrets(self):
+        env={'GITHUB_SHA':'a'*40,'GITHUB_RUN_ID':'123','GITHUB_RUN_ATTEMPT':'1'}
+        for pair in [
+            ['--recovery-image','image:latest','--recovery-sha','c'*40],
+            ['--recovery-image','ghcr.io/owner/ll@sha256:'+'d'*64],
+            ['--recovery-sha','c'*40],
+            ['--recovery-image','ghcr.io/owner/ll@sha256:'+'b'*64,'--recovery-sha','c'*40],
+            ['--recovery-image','ghcr.io/owner/ll@sha256:'+'d'*64,'--recovery-sha','a'*40],
+        ]:
+            argv=['ship.py','--service','ll','--image','ghcr.io/owner/ll@sha256:'+'b'*64]+pair
+            with self.subTest(pair=pair),patch.dict(os.environ,env,clear=True),patch.object(ship.sys,'argv',argv),patch.object(ship,'checked') as checked:
+                with self.assertRaises(RuntimeError): ship.main()
+                checked.assert_not_called()
 
 
 if __name__ == '__main__':

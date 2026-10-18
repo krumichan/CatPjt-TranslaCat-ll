@@ -1,5 +1,8 @@
 package jp.co.translacat.languagelearning.bootstrap
 
+import jp.co.translacat.languagelearning.shared.persistence.DatabaseMigrationReport
+import jp.co.translacat.languagelearning.shared.persistence.DatabaseSettings
+import jp.co.translacat.languagelearning.shared.persistence.MigrationMode
 import java.net.SocketException
 import java.net.SocketTimeoutException
 import java.sql.SQLException
@@ -186,5 +189,183 @@ class MigrationMainTest {
         assertEquals(8, lines.count { it.startsWith("LL_MIGRATION_CAUSE_") })
         assertTrue(lines.contains("LL_MIGRATION_CATEGORY: UNKNOWN"))
         assertFalse(lines.any { it.contains("SOCKET_REASON") || it.contains("DO_NOT_LEAK") })
+    }
+
+    @Test
+    fun `empty command preserves approved migration behavior and completion marker`() {
+        // 준비: 기존 명령은 이행 계정과 명시 승인을 그대로 사용한다.
+        val environment = mapOf(
+            "LL_ALLOW_MIGRATIONS" to "true",
+            "DB_JDBC_URL" to "jdbc:mysql://127.0.0.1:3306/translacat_ll?useSSL=false",
+            "DB_USERNAME" to "synthetic_migrator",
+            "DB_PASSWORD" to "DO_NOT_LEAK",
+        )
+        val settings = mutableListOf<DatabaseSettings>()
+        val output = mutableListOf<String>()
+
+        // 실행
+        runDatabaseCommand(emptyArray(), environment::get, { current ->
+            settings += current
+            DatabaseMigrationReport(MigrationMode.MIGRATE, "041", 2)
+        }, output::add)
+
+        // 검증: 기존 migrate marker는 바꾸지 않고 읽기 전용 성공으로 표시하지 않는다.
+        assertEquals(1, settings.size)
+        assertEquals(MigrationMode.MIGRATE, settings.single().migrationMode)
+        assertEquals("synthetic_migrator", settings.single().username)
+        assertEquals(listOf("LL_MIGRATION_COMPLETE"), output)
+        assertFalse(output.joinToString().contains("DO_NOT_LEAK"))
+    }
+
+    @Test
+    fun `explicit validation uses runtime settings without migration approval or mode environment override`() {
+        // 준비: 환경의 migrate 값과 승인 true도 명시적 validate 명령을 DDL 경로로 바꿀 수 없다.
+        val environment = mapOf(
+            "LL_ALLOW_MIGRATIONS" to "true",
+            "DB_MIGRATION_MODE" to "migrate",
+            "DB_JDBC_URL" to "jdbc:mysql://127.0.0.1:3306/translacat_ll?useSSL=false",
+            "DB_USERNAME" to "synthetic_runtime",
+            "DB_PASSWORD" to "DO_NOT_LEAK",
+        )
+        val settings = mutableListOf<DatabaseSettings>()
+        val output = mutableListOf<String>()
+
+        // 실행: validate는 DDL 승인이 없어도 같은 엄격 검증 모드다.
+        listOf(environment, environment - "LL_ALLOW_MIGRATIONS").forEach { currentEnvironment ->
+            runDatabaseCommand(arrayOf("--validate-database"), currentEnvironment::get, { current ->
+                settings += current
+                DatabaseMigrationReport(MigrationMode.VALIDATE, "041", 0)
+            }, output::add)
+        }
+
+        // 검증: 실제 연결 함수가 받은 모드·계정과 출력은 모두 읽기 전용 계약이다.
+        assertEquals(2, settings.size)
+        settings.forEach { current ->
+            assertEquals(MigrationMode.VALIDATE, current.migrationMode)
+            assertEquals("synthetic_runtime", current.username)
+            assertEquals("translacat_ll", current.expectedCatalog)
+            assertEquals(2, current.maximumPoolSize)
+            assertEquals(0, current.minimumIdle)
+        }
+        assertEquals(List(2) { listOf("LL_DATABASE_VALIDATION_COMPLETE",
+            "LL_DATABASE_SCHEMA_VERSION: 041", "LL_DATABASE_MIGRATIONS_EXECUTED: 0") }.flatten(), output)
+        assertFalse(output.joinToString().contains("DO_NOT_LEAK"))
+    }
+
+    @Test
+    fun `migration without exact approval fails before connection settings are read`() {
+        // 준비
+        listOf<String?>(null, "", "false", "TRUE").forEach { approval ->
+            val environmentReads = mutableListOf<String>()
+            var connections = 0
+
+            // 실행 및 검증: 승인 실패는 DB 연결과 접속 설정 조회보다 앞선다.
+            assertFailsWith<IllegalStateException> {
+                runDatabaseCommand(emptyArray(), { name ->
+                    environmentReads += name
+                    approval
+                }, {
+                    connections++
+                    error("Must not connect")
+                })
+            }
+            assertEquals(listOf("LL_ALLOW_MIGRATIONS"), environmentReads)
+            assertEquals(0, connections)
+        }
+    }
+
+    @Test
+    fun `unknown duplicate or additional command arguments fail before any environment read or connection`() {
+        // 준비: 명령·승인·환경변수의 혼합으로 알 수 없는 인자를 허용하지 않는다.
+        val invalid = listOf(
+            arrayOf("--validate"), arrayOf("--validate-databas"), arrayOf("--migrate-database"),
+            arrayOf("--validate-database=true"), arrayOf("--validate-database", "--validate-database"),
+            arrayOf("--validate-database", "--migrate-database"), arrayOf("--migrate-database", "--validate-database"),
+            arrayOf("--validate-database", "--extra"),
+            arrayOf("--extra", "--validate-database"), arrayOf(""),
+        )
+
+        // 실행 및 검증
+        invalid.forEach { arguments ->
+            var environmentReads = 0
+            var connections = 0
+            assertFailsWith<IllegalArgumentException> {
+                runDatabaseCommand(arguments, {
+                    environmentReads++
+                    "true"
+                }, {
+                    connections++
+                    error("Must not connect")
+                })
+            }
+            assertEquals(0, environmentReads)
+            assertEquals(0, connections)
+        }
+    }
+
+    @Test
+    fun `validation rejects missing credentials and other catalog before connection`() {
+        // 준비: 읽기 전용 명령도 기존 대상·필수 접속 설정 검사를 우회하지 않는다.
+        val base = mapOf(
+            "DB_JDBC_URL" to "jdbc:mysql://127.0.0.1:3306/translacat_ll?useSSL=false",
+            "DB_USERNAME" to "synthetic_runtime", "DB_PASSWORD" to "DO_NOT_LEAK",
+        )
+        val invalid = listOf(base - "DB_PASSWORD", base + ("DB_JDBC_URL" to "jdbc:mysql://127.0.0.1:3306/translacat"))
+
+        // 실행 및 검증
+        invalid.forEach { environment ->
+            var connections = 0
+            assertFails {
+                runDatabaseCommand(arrayOf("--validate-database"), environment::get, {
+                    connections++
+                    error("Must not connect")
+                })
+            }
+            assertEquals(0, connections)
+        }
+    }
+
+    @Test
+    fun `validation never publishes success for an applied migration wrong mode or unsafe report`() {
+        // 준비: 완료 marker는 실제 validate 모드·적용 0건·안전한 버전 메타데이터에만 허용한다.
+        val environment = mapOf(
+            "DB_JDBC_URL" to "jdbc:mysql://127.0.0.1:3306/translacat_ll?useSSL=false",
+            "DB_USERNAME" to "synthetic_runtime", "DB_PASSWORD" to "DO_NOT_LEAK",
+        )
+        val reports = listOf(
+            DatabaseMigrationReport(MigrationMode.MIGRATE, "041", 0),
+            DatabaseMigrationReport(MigrationMode.VALIDATE, "041", 1),
+            DatabaseMigrationReport(MigrationMode.VALIDATE, "DO_NOT_LEAK", 0),
+            DatabaseMigrationReport(MigrationMode.VALIDATE, "0", 0),
+        )
+
+        // 실행 및 검증
+        reports.forEach { report ->
+            val output = mutableListOf<String>()
+            assertFailsWith<IllegalStateException> {
+                runDatabaseCommand(arrayOf("--validate-database"), environment::get, { report }, output::add)
+            }
+            assertTrue(output.isEmpty())
+        }
+    }
+
+    @Test
+    fun `strict validation failure propagates without any success output`() {
+        // 준비
+        val environment = mapOf(
+            "DB_JDBC_URL" to "jdbc:mysql://127.0.0.1:3306/translacat_ll?useSSL=false",
+            "DB_USERNAME" to "synthetic_runtime", "DB_PASSWORD" to "DO_NOT_LEAK",
+        )
+        val failure = IllegalStateException("Synthetic future migration rejection")
+        val output = mutableListOf<String>()
+
+        // 실행
+        val caught = assertFailsWith<IllegalStateException> {
+            runDatabaseCommand(arrayOf("--validate-database"), environment::get, { throw failure }, output::add)
+        }
+
+        // 검증: 검증 오류를 정상 완료나 자동 migration으로 바꾸지 않는다.
+        assertSame(failure, caught)
+        assertTrue(output.isEmpty())
     }
 }

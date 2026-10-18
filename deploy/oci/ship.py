@@ -24,10 +24,18 @@ def release_failure_diagnostic(error):
 
 def main():
     ap=argparse.ArgumentParser();ap.add_argument('--service',choices=['ll','chat'],required=True)
-    ap.add_argument('--image',required=True);a=ap.parse_args()
+    ap.add_argument('--image',required=True)
+    ap.add_argument('--recovery-image');ap.add_argument('--recovery-sha');a=ap.parse_args()
     sha=os.environ['GITHUB_SHA'];runid=os.environ['GITHUB_RUN_ID'];attempt=os.environ['GITHUB_RUN_ATTEMPT']
     if not re.fullmatch('[0-9a-f]{40}',sha) or not runid.isdigit() or not attempt.isdigit(): raise RuntimeError('invalid release identity')
     if not re.fullmatch(r'ghcr\.io/[a-z0-9_.-]+/[a-z0-9_.-]+@sha256:[0-9a-f]{64}',a.image): raise RuntimeError('immutable image required')
+    # 복구 선택은 SSH/비밀 파일을 만들기 전에 동일한 불변 계약으로 검증한다.
+    if bool(a.recovery_image)!=bool(a.recovery_sha): raise RuntimeError('recovery image and SHA required together')
+    if a.recovery_image:
+        if a.service!='ll': raise RuntimeError('recovery image only supported for LL')
+        if not re.fullmatch(r'ghcr\.io/[a-z0-9_.-]+/[a-z0-9_.-]+@sha256:[0-9a-f]{64}',a.recovery_image): raise RuntimeError('immutable recovery image required')
+        if not re.fullmatch('[0-9a-f]{40}',a.recovery_sha): raise RuntimeError('invalid recovery SHA')
+        if a.recovery_image.split('@')[1]==a.image.split('@')[1] or a.recovery_sha==sha: raise RuntimeError('recovery must differ from candidate')
     host=str(ipaddress.IPv4Address(os.environ['OCI_HOST'])); user=os.environ.get('OCI_USERNAME','ubuntu')
     if user!='ubuntu': raise RuntimeError('this package requires reviewed ubuntu sudo access')
     release=f'{sha}-{runid}-{attempt}';remote=f'/home/ubuntu/.local/translacat-incoming/{release}'
@@ -80,6 +88,8 @@ def main():
             checked(['scp','-q','-F',str(tmp/'ssh_config'),str(runtime),str(token),'deploy/oci/deploy.py','target:'+remote+'/'],env=env,timeout=60)
             command=['sudo','-n','python3',remote+'/deploy.py','--service',a.service,'--config',remote+'/runtime.json',
                 '--image',a.image,'--sha',sha,'--release-id',release,'--registry-token',remote+'/registry-token']
+            if a.recovery_image:
+                command += ['--recovery-image',a.recovery_image,'--recovery-sha',a.recovery_sha]
             # deploy.py only emits allowlisted diagnostics; no remote docker/SQL output is streamed.
             checked(ssh+['target',shlex.join(command)],env=env,timeout=2400,show=True,remote_deployment=True)
         finally:

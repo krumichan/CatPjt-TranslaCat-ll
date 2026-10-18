@@ -6,6 +6,28 @@ on:
   pull_request:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      action:
+        description: Build a verified image only, or deploy the verified main image
+        type: choice
+        required: true
+        default: build-only
+        options: [build-only, deploy]
+      candidate_image:
+        description: Required for deploy; previously verified candidate image immutable GHCR digest
+        type: string
+        required: false
+        default: ''
+      recovery_image:
+        description: Required for deploy; reviewed compatible recovery image immutable GHCR digest
+        type: string
+        required: false
+        default: ''
+      recovery_sha:
+        description: Required for deploy; full Git SHA of the recovery image
+        type: string
+        required: false
+        default: ''
 
 permissions:
   contents: read
@@ -30,7 +52,40 @@ jobs:
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
+          ref: ${{ github.sha }}
           persist-credentials: false
+      - name: Validate manual action and immutable deployment identities
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          REQUESTED_REF: ${{ github.ref }}
+          REQUESTED_ACTION: ${{ inputs.action }}
+          CANDIDATE_IMAGE: ${{ inputs.candidate_image }}
+          RECOVERY_IMAGE: ${{ inputs.recovery_image }}
+          RECOVERY_SHA: ${{ inputs.recovery_sha }}
+        run: |
+          python3 - <<'PY'
+          import os, re
+          def immutable(value):
+              return re.fullmatch(r'ghcr\.io/[a-z0-9_.-]+/[a-z0-9_.-]+@sha256:[0-9a-f]{64}', value)
+          if os.environ['EVENT_NAME'] == 'workflow_dispatch':
+              action = os.environ['REQUESTED_ACTION']
+              if action not in ('build-only', 'deploy'):
+                  raise SystemExit('Unknown manual action')
+              candidate = os.environ['CANDIDATE_IMAGE']
+              image, sha = os.environ['RECOVERY_IMAGE'], os.environ['RECOVERY_SHA']
+              if action == 'build-only':
+                  if candidate or image or sha:
+                      raise SystemExit('Build-only cannot use deployment image inputs')
+              else:
+                  if os.environ['REQUESTED_REF'] != 'refs/heads/main':
+                      raise SystemExit('Deploy requires main')
+                  if not candidate or not image or not sha:
+                      raise SystemExit('Deploy requires an existing candidate digest and a recovery image/SHA pair')
+                  if not immutable(candidate) or not immutable(image):
+                      raise SystemExit('Candidate and recovery must be immutable GHCR digests')
+                  if not re.fullmatch(r'[0-9a-f]{40}', sha):
+                      raise SystemExit('Recovery SHA must be a full Git SHA')
+          PY
       - name: Deployment contract tests (offline fixtures)
         run: python3 -m unittest discover -s deploy/oci/tests -v
       - uses: actions/setup-java@v4
@@ -54,12 +109,73 @@ jobs:
             writingHttpDatabaseIntegrationTest --tests '*CuratedWritingHttpDatabaseIntegrationTest*'
       - name: Compile, isolated application tests, and build runtime
         run: docker build --platform linux/amd64 --target runtime -f deploy/oci/Dockerfile -t local/verified:${GITHUB_SHA} .
+  build_image:
+    needs: verify
+    # 수동 build-only는 선택된 non-main ref도 허용하며 PR에는 registry 쓰기 권한을 주지 않는다.
+    if: >-
+      (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
+      (github.event_name == 'workflow_dispatch' && inputs.action == 'build-only')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    permissions:
+      contents: read
+      packages: write
+    outputs:
+      image: ${{ steps.image.outputs.ref }}
+      sha: ${{ steps.image.outputs.sha }}
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - name: Build exact release SHA and push GHCR image
+        id: image
+        env:
+          GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REQUESTED_ACTION: ${{ inputs.action || 'build-only' }}
+        run: |
+          set -euo pipefail
+          export DOCKER_CONFIG="$(mktemp -d)"
+          trap 'rm -rf "$DOCKER_CONFIG"' EXIT
+          repository="ghcr.io/${GITHUB_REPOSITORY,,}"
+          [[ "$(git rev-parse HEAD)" == "$GITHUB_SHA" && "$GITHUB_SHA" =~ ^[0-9a-f]{40}$ ]]
+          printf '%s' "$GHCR_TOKEN" | docker login ghcr.io -u "$GITHUB_ACTOR" --password-stdin
+          docker build --platform linux/amd64 --target runtime -f deploy/oci/Dockerfile \
+            --label "org.opencontainers.image.source=https://github.com/$GITHUB_REPOSITORY" \
+            --label "org.opencontainers.image.revision=$GITHUB_SHA" \
+            -t "$repository:$GITHUB_SHA" .
+          docker push "$repository:$GITHUB_SHA"
+          docker pull "$repository:$GITHUB_SHA"
+          immutable="$(docker inspect --format '{{index .RepoDigests 0}}' "$repository:$GITHUB_SHA")"
+          digest="${immutable#"$repository@sha256:"}"
+          [[ "$immutable" == "$repository@sha256:$digest" && "$digest" =~ ^[0-9a-f]{64}$ ]]
+          printf 'ref=%s\nsha=%s\n' "$immutable" "$GITHUB_SHA" >> "$GITHUB_OUTPUT"
+          IMAGE_REF="$immutable" VERIFIED_SHA="$GITHUB_SHA" python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          metadata = {
+              'schema_version': 1, 'service': 'll', 'image': os.environ['IMAGE_REF'],
+              'git_sha': os.environ['VERIFIED_SHA'], 'source_ref': os.environ['GITHUB_REF'],
+              'action': os.environ['REQUESTED_ACTION'], 'run_id': os.environ['GITHUB_RUN_ID'],
+              'run_attempt': os.environ['GITHUB_RUN_ATTEMPT'],
+          }
+          Path('release-image.json').write_text(json.dumps(metadata, sort_keys=True, indent=2) + '\n', encoding='utf-8')
+          PY
+      - name: Preserve immutable image identity
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: ll-verified-image-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: release-image.json
+          if-no-files-found: error
+          retention-days: 30
+
   release:
     needs: verify
-    # main의 검증 성공 SHA만 같은 workflow run에서 운영에 반영한다.
+    # 운영은 명시 deploy+main+기존 candidate/recovery만 허용한다. 검증한 digest를 다시 빌드하지 않는다.
     if: >-
-      github.ref == 'refs/heads/main' &&
-      (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+      github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' &&
+      inputs.action == 'deploy' && inputs.candidate_image != '' &&
+      inputs.recovery_image != '' && inputs.recovery_sha != ''
     concurrency:
       group: translacat-ll-production
       cancel-in-progress: false
@@ -68,28 +184,13 @@ jobs:
     timeout-minutes: 90
     permissions:
       contents: read
-      packages: write
+      packages: read
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
+          ref: ${{ github.sha }}
           persist-credentials: false
-      - name: Build exact release SHA and push GHCR image
-        id: image
-        env:
-          GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          set -euo pipefail
-          export DOCKER_CONFIG="$(mktemp -d)"
-          trap 'rm -rf "$DOCKER_CONFIG"' EXIT
-          repository="ghcr.io/${GITHUB_REPOSITORY,,}"
-          printf '%s' "$GHCR_TOKEN" | docker login ghcr.io -u "$GITHUB_ACTOR" --password-stdin
-          docker build --platform linux/amd64 --target runtime -f deploy/oci/Dockerfile             --label "org.opencontainers.image.source=https://github.com/$GITHUB_REPOSITORY"             --label "org.opencontainers.image.revision=$GITHUB_SHA"             -t "$repository:$GITHUB_SHA" .
-          docker push "$repository:$GITHUB_SHA"
-          docker pull "$repository:$GITHUB_SHA"
-          immutable="$(docker inspect --format '{{index .RepoDigests 0}}' "$repository:$GITHUB_SHA")"
-          [[ "$immutable" == "$repository@sha256:"* ]]
-          printf 'ref=%s\n' "$immutable" >> "$GITHUB_OUTPUT"
-      - name: Deploy using verified SSH host keys
+      - name: Deploy existing verified candidate using SSH host keys
         env:
           OCI_HOST: ${{ secrets.OCI_HOST }}
           OCI_USERNAME: ${{ secrets.OCI_USERNAME }}
@@ -101,5 +202,22 @@ jobs:
           BE_JUMP_PASSPHRASE: ${{ secrets.BE_JUMP_PASSPHRASE }}
           RUNTIME_CONFIG_JSON: ${{ secrets.RUNTIME_CONFIG_JSON }}
           GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          RELEASE_IMAGE: ${{ steps.image.outputs.ref }}
-        run: python3 deploy/oci/ship.py --service ll --image "$RELEASE_IMAGE"
+          CANDIDATE_IMAGE: ${{ inputs.candidate_image }}
+          RECOVERY_IMAGE: ${{ inputs.recovery_image }}
+          RECOVERY_SHA: ${{ inputs.recovery_sha }}
+        run: |
+          python3 - <<'PY'
+          import os, re, subprocess
+          def immutable(value):
+              return re.fullmatch(r'ghcr\.io/[a-z0-9_.-]+/[a-z0-9_.-]+@sha256:[0-9a-f]{64}', value)
+          candidate = os.environ['CANDIDATE_IMAGE']
+          image, sha = os.environ['RECOVERY_IMAGE'], os.environ['RECOVERY_SHA']
+          if not immutable(candidate) or not immutable(image):
+              raise SystemExit('Deploy requires existing immutable candidate and recovery digests')
+          if not re.fullmatch(r'[0-9a-f]{40}', sha) or not re.fullmatch(r'[0-9a-f]{40}', os.environ['GITHUB_SHA']):
+              raise SystemExit('Full workflow/recovery Git SHA required')
+          # ship.py는 candidate OCI revision label을 이 workflow의 GITHUB_SHA와 실제로 대조한다.
+          argv = ['python3', 'deploy/oci/ship.py', '--service', 'll', '--image', candidate,
+                  '--recovery-image', image, '--recovery-sha', sha]
+          subprocess.run(argv, check=True)
+          PY
