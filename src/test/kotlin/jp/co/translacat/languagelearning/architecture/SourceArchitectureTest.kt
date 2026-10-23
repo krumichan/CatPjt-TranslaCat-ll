@@ -66,6 +66,36 @@ class SourceArchitectureTest {
 
     @Test
     fun `다른 기능의 영속성 구현 참조는 의도한 연결만 허용한다`() {
+        val violations = crossFeaturePersistenceViolations(productionSources())
+        assertTrue(violations.isEmpty(), violations.joinToString("\n"))
+    }
+
+    @Test
+    fun `계정 삭제 연결의 허용은 정확한 저장 어댑터와 학습자 잠금 구현에만 적용한다`() {
+        // 준비: 실제 프로젝트의 유효한 package/path를 유지하고 검사할 import만 바꾼다.
+        val sources = productionSources()
+        val approvedSource = sources.single {
+            it.primaryName == "$ROOT.features.accountdeletion.infrastructure.ExposedAccountDeletionStore"
+        }
+        val otherSource = sources.single {
+            it.primaryName == "$ROOT.features.accountdeletion.infrastructure.AccountLearningDataPurge"
+        }
+        val approvedTarget = "$ROOT.features.learner.infrastructure.persistence.repository.ExposedLearnerRepository"
+        val otherTarget = "$ROOT.features.learner.infrastructure.persistence.table.LearnersTable"
+
+        // 실행 / 검증: 같은 실제 정책으로 승인된 한 쌍만 허용하고 양쪽 범위의 확대를 거절한다.
+        assertTrue(crossFeaturePersistenceViolations(listOf(approvedSource.copy(imports = listOf(approvedTarget)))).isEmpty())
+        assertEquals(
+            listOf("${approvedSource.primaryName} -> $otherTarget"),
+            crossFeaturePersistenceViolations(listOf(approvedSource.copy(imports = listOf(otherTarget)))),
+        )
+        assertEquals(
+            listOf("${otherSource.primaryName} -> $approvedTarget"),
+            crossFeaturePersistenceViolations(listOf(otherSource.copy(imports = listOf(approvedTarget)))),
+        )
+    }
+
+    private fun crossFeaturePersistenceViolations(sources: List<SourceFile>): List<String> {
         // 같은 LL DB 안의 learner FK와 UnitOfWork 조립만 명시적으로 허용한다.
         val allowed = setOf(
             // 현재 활동 조회 버전은 동일 LL 학습자 FK에 속한다.
@@ -113,7 +143,7 @@ class SourceArchitectureTest {
             "$ROOT.features.keyword.infrastructure.persistence.ExposedKeywordLearningFacts" to "$ROOT.features.writing.infrastructure.persistence.table.WritingSetsTable",
         )
         val violations = mutableListOf<String>()
-        for (source in productionSources()) {
+        for (source in sources) {
             val owner = featureOf(source.packageName) ?: continue
             for (target in source.imports) {
                 val other = featureOf(target) ?: continue
@@ -122,7 +152,7 @@ class SourceArchitectureTest {
                 }
             }
         }
-        assertTrue(violations.isEmpty(), violations.joinToString("\n"))
+        return violations
     }
 
     @Test
