@@ -101,8 +101,10 @@ jobs:
           LL_TEST_MYSQL_PASSWORD: synthetic-ci-only
           # 선택된 HTTP 테스트는 내부 fixture만 사용하며 Provider를 호출하지 않는다.
           LL_TEST_AI_URL: http://127.0.0.1:9
+          LL_DELETION_TEST_OUTPUT_DIR: ${{ runner.temp }}/ll-account-deletion-${{ github.run_id }}-${{ github.run_attempt }}
         run: |
           chmod +x gradlew
+          mkdir -p -- "$LL_DELETION_TEST_OUTPUT_DIR"
           ./gradlew --no-daemon --max-workers=1 \
             databaseIntegrationTest --tests '*CuratedWritingStoreIntegrationTest*' \
               --tests '*GrowthPersistenceIntegrationTestEvidenceCollation*' \
