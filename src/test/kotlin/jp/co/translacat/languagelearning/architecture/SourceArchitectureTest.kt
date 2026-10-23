@@ -98,6 +98,8 @@ class SourceArchitectureTest {
             "$ROOT.features.webaiplan.infrastructure.persistence.ExposedWebAiStore" to "$ROOT.features.learner.infrastructure.persistence.table.LearnersTable",
             "$ROOT.features.webaiplan.infrastructure.persistence.ExposedWebAiStore" to "$ROOT.features.settings.infrastructure.persistence.table.UserSettingsTable",
             "$ROOT.features.webaiplan.infrastructure.persistence.ExposedWebAiStore" to "$ROOT.features.growth.infrastructure.persistence.repository.ExposedGrowthRepository",
+            // 계정 삭제도 동일 learner 행 잠금 아래 개인 기록 정리를 한 트랜잭션으로 직렬화한다.
+            "$ROOT.features.accountdeletion.infrastructure.ExposedAccountDeletionStore" to "$ROOT.features.learner.infrastructure.persistence.repository.ExposedLearnerRepository",
             // 같은 LL 사용자 잠금과 트랜잭션에서 기존 Growth/설정 저장소를 조립하는 연결이다.
             "$ROOT.features.listening.infrastructure.persistence.ExposedListeningUnitOfWork" to "$ROOT.features.growth.infrastructure.persistence.repository.ExposedGrowthRepository",
             "$ROOT.features.listening.infrastructure.persistence.ExposedListeningUnitOfWork" to "$ROOT.features.learner.infrastructure.persistence.repository.ExposedLearnerRepository",
