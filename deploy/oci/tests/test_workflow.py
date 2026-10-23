@@ -4,6 +4,7 @@ import json
 import os
 from pathlib import Path
 import re
+import shlex
 import textwrap
 import unittest
 from unittest.mock import patch
@@ -120,6 +121,29 @@ class WorkflowProposalV2Tests(unittest.TestCase):
         for name in ('verify', 'build_image', 'release'):
             self.assertIn('ref: ${{ github.sha }}', job(name))
             self.assertIn('persist-credentials: false', job(name))
+
+    def test_deletion_mysql_audio_fixture_parent_uses_the_isolated_job_temp_directory(self):
+        # 준비: 실제 MySQL step의 env만 읽어 다른 job 설정과 혼동하지 않는다.
+        marker = '      - name: Curated Writing and history isolated MySQL tests\n'
+        body = re.split(r'(?m)^      - ', job('verify').split(marker, 1)[1], maxsplit=1)[0]
+        env = body.split('        run: |\n', 1)[0]
+
+        # 검증: 파일 fixture의 필수 parent는 비밀 설정 없이 run/attempt별 runner 임시 폴더다.
+        self.assertEqual(re.findall(r'(?m)^          LL_DELETION_TEST_OUTPUT_DIR: (.+)$', env), [
+            '${{ runner.temp }}/ll-account-deletion-${{ github.run_id }}-${{ github.run_attempt }}',
+        ])
+
+    def test_deletion_mysql_audio_fixture_directory_is_created_before_the_existing_gradle_checks(self):
+        # 준비: 실제 실행 문자열에서 폴더 생성과 기존 Gradle 호출 순서를 확인한다.
+        program = step_script('verify', 'Curated Writing and history isolated MySQL tests')
+        mkdir = 'mkdir -p -- "$LL_DELETION_TEST_OUTPUT_DIR"'
+
+        # 검증: 공백이 있는 경로도 한 인자로 전달하고 원래 DB 테스트를 그대로 실행한다.
+        self.assertEqual(program.count(mkdir), 1)
+        self.assertLess(program.index(mkdir), program.index('./gradlew '))
+        self.assertEqual(shlex.split(mkdir), ['mkdir', '-p', '--', '$LL_DELETION_TEST_OUTPUT_DIR'])
+        self.assertIn("--tests '*AccountDeletionPersistenceIntegrationTest*'", program)
+        self.assertNotIn('continue-on-error', job('verify'))
 
     def test_production_environment_and_secrets_remain_release_only(self):
         # 준비 / 실행 / 검증: verify는 secret 0, image job은 GITHUB_TOKEN만 받고 운영 secret은 release에 둔다.
