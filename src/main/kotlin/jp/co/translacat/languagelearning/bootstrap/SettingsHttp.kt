@@ -8,6 +8,7 @@ import jp.co.translacat.languagelearning.features.settings.api.settingsServiceRo
 import jp.co.translacat.languagelearning.features.settings.application.SettingsOperations
 import jp.co.translacat.languagelearning.features.settings.application.SettingsServiceOperations
 import jp.co.translacat.languagelearning.shared.persistence.DatabaseSettings
+import jp.co.translacat.languagelearning.features.accountdeletion.application.AccountDeletionStore
 
 internal suspend fun Application.configureSettingsHttp() {
     val internalApi = loadInternalApiSettings()
@@ -19,7 +20,8 @@ internal suspend fun Application.configureSettingsHttp() {
         "내부 Settings API를 켜려면 DB를 활성화해야 합니다."
     }
     val operations = dependencies.resolve<SettingsOperations>()
-    configureInternalAuthentication(internalApi)
+    val deletion = dependencies.resolve<AccountDeletionStore>()
+    configureInternalAuthentication(internalApi, userActive = deletion::isUserAvailable)
     val serviceOperations = dependencies.resolve<SettingsServiceOperations>()
     routing {
         settingsRoutes(operations)

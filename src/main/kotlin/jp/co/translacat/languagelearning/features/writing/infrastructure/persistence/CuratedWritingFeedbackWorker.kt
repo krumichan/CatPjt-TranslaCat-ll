@@ -48,6 +48,11 @@ internal class CuratedWritingFeedbackWorker(
 ) {
     private val pendingValidated = ConcurrentHashMap<Long, Validated>()
 
+    /** 삭제 접수 노드의 DB 복구용 개인 응답도 즉시 해제한다. 늦은 결과는 saveValidated의 owner fence가 버린다. */
+    internal fun discardUser(userId: Long) {
+        pendingValidated.entries.removeIf { it.value.userId == userId }
+    }
+
     private data class Claim(
         val answerId: Long,
         val token: String,

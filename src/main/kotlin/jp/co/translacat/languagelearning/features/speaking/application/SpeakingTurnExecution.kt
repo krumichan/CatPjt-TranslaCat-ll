@@ -1,5 +1,7 @@
 package jp.co.translacat.languagelearning.features.speaking.application
 
+import jp.co.translacat.languagelearning.features.accountdeletion.application.AccountAudioWrites
+
 import jp.co.translacat.languagelearning.features.speaking.domain.*
 import jp.co.translacat.languagelearning.features.speaking.execution.SpeakingConversationExecution
 import jp.co.translacat.languagelearning.features.speaking.execution.SpeakingSpeechExecution
@@ -29,6 +31,7 @@ internal class SpeakingTurnExecution(
     private val conversation: SpeakingConversationExecution,
     private val speech: SpeakingSpeechExecution,
     private val audioStore: SpeakingAudioStore,
+    private val accountWrites: AccountAudioWrites? = null,
 ) {
     suspend fun process(
         userId: Long, sessionId: Long, turnId: Long, request: SpeakingProcessRequest,
@@ -50,7 +53,7 @@ internal class SpeakingTurnExecution(
         ) ?: return
         val audio = userAudio(claim, bytes, checkNotNull(contentType), fileName)
         try {
-            audioStore.put(audio.objectKey, bytes, audio.contentType)
+            audioStore.putOwned(userId, audio.objectKey, bytes, audio.contentType, accountWrites)
             if (!claim.rerecord && !state.saveUpload(claim, audio, duration, assistance)) return
             execute(claim, bytes, duration, assistance, if (claim.rerecord) listOf(audio) else emptyList(), false)
         } catch (cancelled: CancellationException) {
@@ -159,7 +162,7 @@ internal class SpeakingTurnExecution(
             )
             content = content.copy(usage = mergeSpeakingUsage(content.usage, audio.usage))
             val record = assistantAudio(claim, audio.bytes)
-            audioStore.put(record.objectKey, audio.bytes, record.contentType)
+            audioStore.putOwned(claim.userId, record.objectKey, audio.bytes, record.contentType, accountWrites)
             val applied = state.publish(
                 claim, content, (content.conversation["sessionSummary"] as? JsonPrimitive)?.contentOrNull,
                 userAudio + record,

@@ -11,7 +11,9 @@ import jp.co.translacat.languagelearning.shared.security.*
 import java.time.Clock
 
 /** 기존 Settings 토큰의 권한을 넓히지 않고 키워드 전용 용도를 추가한다. */
-internal fun AuthenticationConfig.configureKeywordAuthentication(settings: InternalApiSettings, clock: Clock) {
+internal fun AuthenticationConfig.configureKeywordAuthentication(
+    settings: InternalApiSettings, clock: Clock, userActive: suspend (Long) -> Boolean = { true },
+) {
     jwt(KEYWORD_AUTH) {
         realm = "translacat-ll-keywords"
         verifier(
@@ -35,7 +37,7 @@ internal fun AuthenticationConfig.configureKeywordAuthentication(settings: Inter
                     ),
                     settings, clock.instant(),
                 )
-                if (user == null) null else KeywordPrincipal(user)
+                if (user == null || !userActive(user.userId)) null else KeywordPrincipal(user)
             } catch (_: Exception) {
                 null
             }

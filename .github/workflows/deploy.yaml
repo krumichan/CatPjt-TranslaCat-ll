@@ -106,6 +106,7 @@ jobs:
           ./gradlew --no-daemon --max-workers=1 \
             databaseIntegrationTest --tests '*CuratedWritingStoreIntegrationTest*' \
               --tests '*GrowthPersistenceIntegrationTestEvidenceCollation*' \
+              --tests '*AccountDeletionPersistenceIntegrationTest*' \
             writingHttpDatabaseIntegrationTest --tests '*CuratedWritingHttpDatabaseIntegrationTest*'
       - name: Compile, isolated application tests, and build runtime
         run: docker build --platform linux/amd64 --target runtime -f deploy/oci/Dockerfile -t local/verified:${GITHUB_SHA} .

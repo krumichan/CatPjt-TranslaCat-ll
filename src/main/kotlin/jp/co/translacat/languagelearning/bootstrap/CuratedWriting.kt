@@ -56,6 +56,7 @@ internal suspend fun Application.configureCuratedWriting() {
     val feedback = if (feedbackEnabled) CuratedWritingFeedbackWorker(
         transactions, store, manifest.releaseId, dependencies.resolve<HttpModelExecution>(),
     ) else null
+    if (feedback != null) dependencies { provide<CuratedWritingFeedbackWorker> { feedback } }
     val generation = if (qaOnly) CuratedWritingGenerationService(
         CuratedWritingGenerationStore(transactions, store, manifest.releaseId), dependencies.resolve<HttpModelExecution>(),
     ) else null

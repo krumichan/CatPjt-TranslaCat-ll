@@ -11,6 +11,7 @@ import jp.co.translacat.languagelearning.features.leveltest.infrastructure.persi
 import jp.co.translacat.languagelearning.features.leveltest.infrastructure.storage.LocalLevelTestAudioStore
 import jp.co.translacat.languagelearning.features.settings.application.SettingsServiceOperations
 import jp.co.translacat.languagelearning.shared.persistence.transaction.JdbcTransactionRunner
+import jp.co.translacat.languagelearning.features.accountdeletion.application.AccountAudioWrites
 import kotlinx.coroutines.*
 import java.net.URI
 import java.nio.file.Path
@@ -37,7 +38,8 @@ internal suspend fun Application.configureLevelTest() {
     val context = SettingsLevelTestContext(dependencies.resolve<SettingsServiceOperations>())
     val work = ExposedLevelTestUnitOfWork(transactions)
     val store = LocalLevelTestAudioStore(Path.of(value("levelTest.audioRoot") ?: "data/level-test-audio"))
-    val audio = LevelAudioService(work, store, callback)
+    dependencies { provide<LevelTestAudioStore> { store } }
+    val audio = LevelAudioService(work, store, callback, dependencies.resolve<AccountAudioWrites>())
     dependencies {
         provide<HttpLevelTestAi> {
             HttpLevelTestAi(

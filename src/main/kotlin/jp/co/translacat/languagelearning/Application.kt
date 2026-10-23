@@ -26,4 +26,5 @@ suspend fun Application.module() {
     configureSpeaking()
     configureWebAi()
     configureOverview()
+    configureAccountDeletion()
 }

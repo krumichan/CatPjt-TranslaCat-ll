@@ -18,6 +18,8 @@ import jp.co.translacat.languagelearning.shared.ai.HttpSpeechExecution
 import jp.co.translacat.languagelearning.shared.ai.HttpSpeechTranscription
 import jp.co.translacat.languagelearning.shared.persistence.DatabaseSettings
 import jp.co.translacat.languagelearning.shared.persistence.transaction.JdbcTransactionRunner
+import jp.co.translacat.languagelearning.features.accountdeletion.application.AccountAudioWrites
+import jp.co.translacat.languagelearning.features.accountdeletion.application.AccountDeletionStore
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.sync.Semaphore
@@ -47,6 +49,9 @@ internal suspend fun Application.configureSpeaking() {
         else -> error("Unsupported Speaking audio storage")
     }
     val synthesis = HttpSpeechExecution(required("aiServer.url"), required("aiServer.apiKey"))
+    dependencies { provide<SpeakingAudioStore> { audioStore } }
+    val accountWrites = dependencies.resolve<AccountAudioWrites>()
+    val sessionOwnerCheck = dependencies.resolve<AccountDeletionStore>()::isSessionActive
     val transcription = HttpSpeechTranscription(required("aiServer.url"), required("aiServer.apiKey"))
     monitor.subscribe(ApplicationStopped) {
         synthesis.close()
@@ -70,7 +75,7 @@ internal suspend fun Application.configureSpeaking() {
         dependencies.resolve<KeywordLearningFacts>(), { reports.recommendedFocus(it) },
     )
     val speech = SpeakingSpeechExecution(transcription, synthesis, required("speaking.ttsModel"))
-    val conversation = SpeakingConversationExecution(model)
+    val conversation = SpeakingConversationExecution(model, sessionOwnerCheck = sessionOwnerCheck)
     val sessions = SpeakingSessionState(work)
     val turns = SpeakingTurnState(work)
     val evaluation = SpeakingEvaluationState(work)
@@ -79,8 +84,8 @@ internal suspend fun Application.configureSpeaking() {
 
     // 업무 실행과 API를 조립한다. 작업자의 로그에는 원문 대신 단계·실패 종류·코드만 남긴다.
     val worker = SpeakingEvaluationWorker(
-        work, evaluation, results, SpeakingEvaluationExecution(model),
-        SpeakingCoachingExecution(model),
+        work, evaluation, results, SpeakingEvaluationExecution(model, sessionOwnerCheck = sessionOwnerCheck),
+        SpeakingCoachingExecution(model, sessionOwnerCheck = sessionOwnerCheck),
     ) { diagnostic ->
         environment.log.warn(
             "Speaking worker failed. stage={} failureClass={} code={}",
@@ -93,10 +98,12 @@ internal suspend fun Application.configureSpeaking() {
     val wake = Channel<Unit>(Channel.CONFLATED)
     routing {
         speakingRoutes(
-            context, SpeakingOpeningExecution(work, SpeakingOpeningState(work), conversation, speech, audioStore),
-            reads, sessions, turns, SpeakingTurnExecution(work, turns, sessions, conversation, speech, audioStore),
+            context, SpeakingOpeningExecution(work, SpeakingOpeningState(work), conversation, speech, audioStore,
+                accountWrites = accountWrites),
+            reads, sessions, turns, SpeakingTurnExecution(work, turns, sessions, conversation, speech, audioStore,
+                accountWrites = accountWrites),
             topics,
-            SpeakingAssistanceService(work, SpeakingAssistanceExecution(model)), SpeakingSttReportService(work),
+            SpeakingAssistanceService(work, SpeakingAssistanceExecution(model, sessionOwnerCheck = sessionOwnerCheck)), SpeakingSttReportService(work),
             SpeakingAudioService(work, audioStore), evaluation,
             { user, session -> results.evaluation(user, session) ?: JsonNull },
             reports,

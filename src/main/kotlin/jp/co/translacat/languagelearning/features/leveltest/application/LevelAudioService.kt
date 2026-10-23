@@ -8,6 +8,7 @@ import jp.co.translacat.languagelearning.features.leveltest.domain.model.LevelAu
 import jp.co.translacat.languagelearning.features.leveltest.domain.model.LevelReferenceAudio
 import jp.co.translacat.languagelearning.features.leveltest.domain.policy.LevelAudioPolicy
 import jp.co.translacat.languagelearning.features.leveltest.domain.policy.LevelTestRules
+import jp.co.translacat.languagelearning.features.accountdeletion.application.AccountAudioWrites
 import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.withContext
 import java.net.URI
@@ -20,6 +21,7 @@ internal class LevelAudioService(
     private val work: LevelTestUnitOfWork,
     private val storage: LevelTestAudioStore,
     private val callbackOrigin: String,
+    private val accountWrites: AccountAudioWrites? = null,
 ) {
     suspend fun publishReference(upload: LevelAudioUpload, bytes: ByteArray, mime: String) {
         // LL이 발급한 예약 capability를 기존 업로드 검증에 전달한다. 외부 URL로 다시 HTTP 호출하지 않는다.
@@ -74,18 +76,24 @@ internal class LevelAudioService(
         )
         val checksum = LevelTestRules.sha256(bytes)
         // 파일 키는 무작위 예약별로 불변이다. 같은 토큰의 동시 업로드도 다른 바이트로 바꿀 수 없다.
-        storage.store(key, bytes)
-        work.write(expected.ownerUserId) {
-            val current = records.audio(key) ?: levelNotFound()
-            if (current.status == "DELETED" || current.uploadUntil == null || current.uploadUntil <= nowUtc) throw LevelTestException(
-                "LEVEL_TEST_UPLOAD_FORBIDDEN", 403, "업로드 권한이 만료되었습니다.",
-            )
-            if (current.status == "STORED" && current.checksum != checksum) levelInvalid("이미 저장된 참고 음성을 변경할 수 없습니다.")
-            records.saveAudio(
-                current.copy(
-                    status = "STORED", checksum = checksum, sizeBytes = bytes.size.toLong(), contentType = "audio/wav",
-                ),
-            )
+        storeOwned(expected.ownerUserId, key, bytes)
+        try {
+            work.write(expected.ownerUserId) {
+                val current = records.audio(key) ?: levelNotFound()
+                if (current.status == "DELETED" || current.uploadUntil == null || current.uploadUntil <= nowUtc) throw LevelTestException(
+                    "LEVEL_TEST_UPLOAD_FORBIDDEN", 403, "업로드 권한이 만료되었습니다.",
+                )
+                if (current.status == "STORED" && current.checksum != checksum) levelInvalid("이미 저장된 참고 음성을 변경할 수 없습니다.")
+                records.saveAudio(
+                    current.copy(
+                        status = "STORED", checksum = checksum, sizeBytes = bytes.size.toLong(), contentType = "audio/wav",
+                    ),
+                )
+            }
+        } catch (failure: Throwable) {
+            // 삭제와 경합한 참고 음성도 답변 음성과 같은 보상으로 정리한다. 실패 키는 ledger에 남는다.
+            withContext(NonCancellable) { runCatching { storage.delete(key) } }
+            throw failure
         }
     }
 
@@ -115,7 +123,7 @@ internal class LevelAudioService(
     suspend fun storeAnswer(userId: Long, bytes: ByteArray, mime: String): LevelAudio {
         val type = LevelAudioPolicy.validate(bytes, mime)
         val key = UUID.randomUUID().toString() + ".audio"
-        storage.store(key, bytes)
+        storeOwned(userId, key, bytes)
         return try {
             work.write(userId) {
                 LevelAudio(
@@ -132,7 +140,7 @@ internal class LevelAudioService(
     suspend fun storeModel(userId: Long, audio: LevelAudioBytes): LevelAudio {
         val type = LevelAudioPolicy.validate(audio.bytes, audio.contentType)
         val key = UUID.randomUUID().toString() + ".audio"
-        storage.store(key, audio.bytes)
+        storeOwned(userId, key, audio.bytes)
         return try {
             work.write(userId) {
                 LevelAudio(
@@ -176,4 +184,10 @@ internal class LevelAudioService(
 
     private fun invalidReference(): Nothing =
         throw LevelTestException("AI_TTS_FAILED", 502, "AI 참고 음성 업로드와 체크섬 검증에 실패했습니다.")
+
+    private suspend fun storeOwned(userId: Long?, key: String, bytes: ByteArray) {
+        val writes = accountWrites
+        if (writes == null) storage.store(key, bytes)
+        else writes.write(userId, "LEVEL_TEST", key) { storage.store(key, bytes) }
+    }
 }

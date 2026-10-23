@@ -10,6 +10,7 @@ import jp.co.translacat.languagelearning.features.speaking.execution.SpeakingCon
 import jp.co.translacat.languagelearning.features.speaking.execution.SpeakingSpeechExecution
 import jp.co.translacat.languagelearning.features.speaking.execution.SpeakingStageFailure
 import jp.co.translacat.languagelearning.shared.ai.ModelExecutionFailure
+import jp.co.translacat.languagelearning.features.accountdeletion.application.AccountAudioWrites
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.delay
@@ -100,6 +101,7 @@ internal class SpeakingOpeningExecution(
     private val speech: SpeakingSpeechExecution,
     private val audioStore: SpeakingAudioStore,
     private val clock: Clock = Clock.systemUTC(),
+    private val accountWrites: AccountAudioWrites? = null,
 ) {
     suspend fun start(session: SpeakingSessionRecord): SpeakingSessionRecord {
         val deadline = clock.instant().plusSeconds(180)
@@ -137,7 +139,7 @@ internal class SpeakingOpeningExecution(
                             claim.session, null, 0, "OPENING", synthesized.bytes, "audio/wav", null,
                         )
                     }
-                    audioStore.put(audio.objectKey, synthesized.bytes, audio.contentType)
+                    audioStore.putOwned(claim.session.userId, audio.objectKey, synthesized.bytes, audio.contentType, accountWrites)
                 } catch (_: SpeakingStageFailure) {
                     // 원본은 opening TTS 실패에서도 검증된 시작 문장을 제공한다.
                 }

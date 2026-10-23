@@ -10,8 +10,9 @@ internal class SpeakingConversationExecution(
     model: ModelExecutionPort,
     clock: Clock = Clock.systemUTC(),
     nanoTime: () -> Long = System::nanoTime,
+    sessionOwnerCheck: suspend (String) -> Boolean = { true },
 ) {
-    private val execution = SpeakingConversationModelExecution("conversation", model, clock, nanoTime)
+    private val execution = SpeakingConversationModelExecution("conversation", model, clock, nanoTime, sessionOwnerCheck)
     suspend fun generate(request: JsonObject, deadlineUtc: Instant? = null): JsonObject =
         execution.generate(request, deadlineUtc)
 }
@@ -20,8 +21,9 @@ internal class SpeakingAssistanceExecution(
     model: ModelExecutionPort,
     clock: Clock = Clock.systemUTC(),
     nanoTime: () -> Long = System::nanoTime,
+    sessionOwnerCheck: suspend (String) -> Boolean = { true },
 ) {
-    private val execution = SpeakingConversationModelExecution("assistance", model, clock, nanoTime)
+    private val execution = SpeakingConversationModelExecution("assistance", model, clock, nanoTime, sessionOwnerCheck)
     suspend fun generate(request: JsonObject, deadlineUtc: Instant? = null): JsonObject =
         execution.generate(request, deadlineUtc)
 }
@@ -31,8 +33,9 @@ private class SpeakingConversationModelExecution(
     private val model: ModelExecutionPort,
     private val clock: Clock,
     private val nanoTime: () -> Long,
+    sessionOwnerCheck: suspend (String) -> Boolean,
 ) {
-    private val cache = SpeakingExecutionCache(nanoTime)
+    private val cache = SpeakingExecutionCache(nanoTime, sessionOwnerCheck = sessionOwnerCheck)
     private val task = "LANGUAGE_LEARNING_SPEAKING_${kind.uppercase()}"
 
     suspend fun generate(raw: JsonObject, deadlineUtc: Instant?): JsonObject {
@@ -45,7 +48,7 @@ private class SpeakingConversationModelExecution(
             minOf(2, request.getValue("sessionPolicySnapshot").jsonObject.integer("automaticRetryLimitPerStage"))
         else 2
         val deadline = minOf(deadlineUtc ?: Instant.MAX, clock.instant().plusSeconds((retries + 1) * 30L))
-        val (result, replay) = cache.execute(request.string("idempotencyKey")) {
+        val (result, replay) = cache.execute(request.string("idempotencyKey"), request.string("sessionId")) {
             generateOnce(request, retries, deadline)
         }
         return if (kind == "assistance") JsonObject(result + ("idempotentReplay" to JsonPrimitive(replay))) else result

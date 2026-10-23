@@ -4,6 +4,10 @@ import io.ktor.server.application.*
 import io.ktor.server.plugins.di.*
 import jp.co.translacat.languagelearning.shared.persistence.DatabaseFactory
 import jp.co.translacat.languagelearning.shared.persistence.DatabaseSettings
+import jp.co.translacat.languagelearning.features.accountdeletion.application.AccountAudioWrites
+import jp.co.translacat.languagelearning.features.accountdeletion.application.AccountDeletionStore
+import jp.co.translacat.languagelearning.features.accountdeletion.infrastructure.ExposedAccountDeletionStore
+import jp.co.translacat.languagelearning.shared.persistence.transaction.JdbcTransactionRunner
 
 suspend fun Application.configurePersistence() {
     val settings = dependencies.resolve<DatabaseSettings>()
@@ -23,6 +27,11 @@ suspend fun Application.configurePersistence() {
 
     configureSettingsPersistence(factory, settings)
     configureKeywordPersistence()
+    val deletionStore = ExposedAccountDeletionStore(dependencies.resolve<JdbcTransactionRunner>())
+    dependencies {
+        provide<AccountDeletionStore> { deletionStore }
+        provide<AccountAudioWrites> { AccountAudioWrites(deletionStore) }
+    }
 
     environment.log.info(
         "Database persistence initialized. catalog={} mode={} schemaVersion={} migrationsExecuted={}",

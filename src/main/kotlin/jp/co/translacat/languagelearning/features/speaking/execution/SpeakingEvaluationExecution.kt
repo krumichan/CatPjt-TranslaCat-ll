@@ -15,8 +15,9 @@ internal class SpeakingEvaluationExecution(
     model: ModelExecutionPort,
     clock: Clock = Clock.systemUTC(),
     nanoTime: () -> Long = System::nanoTime,
+    sessionOwnerCheck: suspend (String) -> Boolean = { true },
 ) {
-    private val execution = SpeakingResultModelExecution("evaluation", model, clock, nanoTime)
+    private val execution = SpeakingResultModelExecution("evaluation", model, clock, nanoTime, sessionOwnerCheck)
     suspend fun evaluate(request: JsonObject, deadlineUtc: Instant? = null): JsonObject =
         execution.execute(request, deadlineUtc)
 }
@@ -25,8 +26,9 @@ internal class SpeakingCoachingExecution(
     model: ModelExecutionPort,
     clock: Clock = Clock.systemUTC(),
     nanoTime: () -> Long = System::nanoTime,
+    sessionOwnerCheck: suspend (String) -> Boolean = { true },
 ) {
-    private val execution = SpeakingResultModelExecution("coaching", model, clock, nanoTime)
+    private val execution = SpeakingResultModelExecution("coaching", model, clock, nanoTime, sessionOwnerCheck)
     suspend fun coach(request: JsonObject, deadlineUtc: Instant? = null): JsonObject =
         execution.execute(request, deadlineUtc)
 }
@@ -36,8 +38,9 @@ private class SpeakingResultModelExecution(
     private val model: ModelExecutionPort,
     private val clock: Clock,
     private val nanoTime: () -> Long,
+    sessionOwnerCheck: suspend (String) -> Boolean,
 ) {
-    private val cache = SpeakingExecutionCache(nanoTime)
+    private val cache = SpeakingExecutionCache(nanoTime, sessionOwnerCheck = sessionOwnerCheck)
     private val responseJson = Json { encodeDefaults = true }
     private val task = if (kind == "evaluation") "LANGUAGE_LEARNING_SPEAKING_EVALUATION"
     else "LANGUAGE_LEARNING_SPEAKING_SESSION_COACHING"
@@ -57,7 +60,7 @@ private class SpeakingResultModelExecution(
         val key = if (kind == "evaluation") listOf("sessionId", "evaluationScope", "evaluationPolicyVersion")
         else listOf("sessionId", "resultPolicyVersion", "sourceSnapshotHash")
         val deadline = minOf(deadlineUtc ?: Instant.MAX, clock.instant().plusSeconds(180))
-        val (response, _) = cache.execute(key.joinToString(":") { request.string(it) }) {
+        val (response, _) = cache.execute(key.joinToString(":") { request.string(it) }, request.string("sessionId")) {
             once(request, deadline)
         }
         return JsonObject(response + ("requestId" to request.getValue("requestId")))

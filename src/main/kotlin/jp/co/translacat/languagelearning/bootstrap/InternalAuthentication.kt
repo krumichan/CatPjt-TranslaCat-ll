@@ -13,10 +13,37 @@ import java.time.Clock
 
 internal fun Application.configureInternalAuthentication(
     settings: InternalApiSettings, clock: Clock = Clock.systemUTC(),
+    userActive: suspend (Long) -> Boolean = { true },
 ) {
     check(settings.enabled)
     install(Authentication) {
-        configureKeywordAuthentication(settings, clock)
+        configureKeywordAuthentication(settings, clock, userActive)
+        // 계정 삭제 토큰은 기존 USER/ADMIN/설정 조회 토큰과 용도를 공유하지 않는다.
+        jwt(ACCOUNT_DELETION_AUTH) {
+            realm = "translacat-ll-account-deletion"
+            verifier(
+                JWT.require(Algorithm.HMAC256(settings.verificationKey()))
+                    .withIssuer(settings.issuer).withAudience(settings.audience)
+                    .withClaim("service", settings.callerService)
+                    .withClaim("tokenUse", "ll-account-deletion")
+                    .acceptLeeway(settings.clockSkewSeconds).build(),
+            )
+            validate { credential ->
+                runCatching {
+                    val payload = credential.payload
+                    AccountDeletionClaimsPolicy.validate(
+                        payload.subject, payload.getClaim("scopes").asList(String::class.java),
+                        payload.getClaim("roles").asList(String::class.java),
+                        payload.issuedAt?.toInstant(), payload.expiresAt?.toInstant(), settings, clock.instant(),
+                    )
+                }.getOrNull()
+            }
+            challenge { _, _ ->
+                call.response.headers.append(HttpHeaders.CacheControl, "no-store")
+                call.respond(HttpStatusCode.Unauthorized,
+                    InternalApiError("ACCOUNT_DELETION_AUTH_REQUIRED", "계정 삭제 전용 인증이 필요합니다."))
+            }
+        }
         jwt(WEB_AI_SERVICE_AUTH) {
             realm = "translacat-ll-web-ai-service"
             verifier(
@@ -63,7 +90,7 @@ internal fun Application.configureInternalAuthentication(
                 // 클레임의 타입 오류도 인증 실패다. userId/role 헤더를 신뢰하는 우회 경로는 없다.
                 try {
                     val payload = credential.payload
-                    InternalClaimsPolicy.validate(
+                    val user = InternalClaimsPolicy.validate(
                         InternalClaims(
                             payload.subject,
                             payload.getClaim("roles").asList(String::class.java),
@@ -71,7 +98,8 @@ internal fun Application.configureInternalAuthentication(
                             payload.expiresAt?.toInstant(),
                         ),
                         settings, clock.instant(),
-                    )?.let(::InternalUserPrincipal)
+                    )
+                    if (user != null && userActive(user.userId)) InternalUserPrincipal(user) else null
                 } catch (_: Exception) {
                     null
                 }
