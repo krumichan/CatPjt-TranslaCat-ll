@@ -42,6 +42,13 @@ growth:
   enabled: true
 writing:
   enabled: true
+  curated:
+    enabled: true
+    qaOnly: false
+    variableN:
+      enabled: false
+    feedback:
+      enabled: false
 practice:
   enabled: true
   generationTier: SOL
