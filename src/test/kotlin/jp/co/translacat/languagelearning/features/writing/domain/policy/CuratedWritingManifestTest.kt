@@ -69,8 +69,10 @@ internal class CuratedWritingManifestTest {
     @Test
     fun `별도 소유자 승인 기록은 정확한 문항 버전과 내용 hash에만 적용된다`() {
         val manifest = CuratedWritingManifestCodec.parse(source)
-        val empty = checkNotNull(javaClass.classLoader.getResourceAsStream("writing/curated-approvals.json"))
-            .bufferedReader(Charsets.UTF_8).use { it.readText() }
+        val empty = buildJsonObject {
+            put("releaseId", manifest.releaseId)
+            putJsonArray("approvals") {}
+        }.toString()
         assertEquals(emptyMap(), CuratedWritingApprovalCodec.parse(empty, manifest))
 
         val item = manifest.items.first()

@@ -1,4 +1,365 @@
 {
   "releaseId": "ko-ja-curated-candidates-20261004-v1",
-  "approvals": []
+  "approvals": [
+    {
+      "id": "ko-ja-translation-b1-03",
+      "version": 1,
+      "contentHash": "018e8064633fa08c9e0d31a094383ba5cf93c1e72fa8a63a27c98bade95a8123",
+      "releaseId": "ko-ja-curated-candidates-20261004-v1",
+      "approver": "트랜슬라켓 주인",
+      "approvedAt": "2026-11-08T12:24:10.283Z"
+    },
+    {
+      "id": "ko-ja-translation-b1-04",
+      "version": 2,
+      "contentHash": "fcb0041ce4997d85f33475fe36f9aaea1a0cc88ca71ac57e9a238b802c6b62f2",
+      "releaseId": "ko-ja-curated-candidates-20261004-v1",
+      "approver": "트랜슬라켓 주인",
+      "approvedAt": "2026-11-08T12:24:25.230Z"
+    },
+    {
+      "id": "ko-ja-translation-b1-09",
+      "version": 3,
+      "contentHash": "c157393741233a9c9fe70d4ef1dcb9720b23d29206d58e35824e7e488157d68e",
+      "releaseId": "ko-ja-curated-candidates-20261004-v1",
+      "approver": "트랜슬라켓 주인",
+      "approvedAt": "2026-11-08T12:25:32.052Z"
+    },
+    {
+      "id": "ko-ja-translation-b1-10",
+      "version": 2,
+      "contentHash": "82461379233774f1cab4aa6cc086430297300dadeaa15e1f7188b602bbaf45de",
+      "releaseId": "ko-ja-curated-candidates-20261004-v1",
+      "approver": "트랜슬라켓 주인",
+      "approvedAt": "2026-11-08T12:25:56.969Z"
+    },
+    {
+      "id": "ko-ja-translation-b2-06",
+      "version": 4,
+      "contentHash": "9a69035d9b1531fe83a677b5c61f806a36219909a4d83f77f38f0f61404d0f12",
+      "releaseId": "ko-ja-curated-candidates-20261004-v1",
+      "approver": "트랜슬라켓 주인",
+      "approvedAt": "2026-11-08T12:26:43.227Z"
+    },
+    {
+      "id": "ko-ja-translation-b2-08",
+      "version": 5,
+      "contentHash": "be2c3904eaebd840c1a2bb0846566b3b72047c2a8030fd4c8c7cc31556ece307",
+      "releaseId": "ko-ja-curated-candidates-20261004-v1",
+      "approver": "트랜슬라켓 주인",
+      "approvedAt": "2026-11-08T12:32:12.648Z"
+    },
+    {
+      "id": "ko-ja-translation-b3-01",
+      "version": 3,
+      "contentHash": "11eed0a63ae3a1bc4afed9f263e6991f29b5a341002bc32ca7d608d19cd1a695",
+      "releaseId": "ko-ja-curated-candidates-20261004-v1",
+      "approver": "트랜슬라켓 주인",
+      "approvedAt": "2026-11-08T12:32:39.085Z"
+    },
+    {
+      "id": "ko-ja-translation-b3-02",
+      "version": 2,
+      "contentHash": "b5807c9bbc51047377c3a704b2264e7269ae09e13c5802aaeb8bf3b8782ea24a",
+      "releaseId": "ko-ja-curated-candidates-20261004-v1",
+      "approver": "트랜슬라켓 주인",
+      "approvedAt": "2026-11-08T12:33:09.508Z"
+    },
+    {
+      "id": "ko-ja-translation-b3-03",
+      "version": 2,
+      "contentHash": "0d0cb07fdd1e316f6c65f49fdc28d9f3a19dd801b70571137d9e8d47e722ff75",
+      "releaseId": "ko-ja-curated-candidates-20261004-v1",
+      "approver": "트랜슬라켓 주인",
+      "approvedAt": "2026-11-08T12:33:38.624Z"
+    },
+    {
+      "id": "ko-ja-translation-b4-01",
+      "version": 4,
+      "contentHash": "1a91848fff364a02ab1ba218f9c5d628df15afcc66a02e83a826a8fc788ab7e1",
+      "releaseId": "ko-ja-curated-candidates-20261004-v1",
+      "approver": "트랜슬라켓 주인",
+      "approvedAt": "2026-11-08T13:22:46.000Z"
+    },
+    {
+      "id": "ko-ja-translation-b4-02",
+      "version": 4,
+      "contentHash": "3dd9ac67eaf0117818de86c9d795ef4ec341475aecf3676e3d4a265de3c9d621",
+      "releaseId": "ko-ja-curated-candidates-20261004-v1",
+      "approver": "트랜슬라켓 주인",
+      "approvedAt": "2026-11-08T13:22:46.000Z"
+    },
+    {
+      "id": "ko-ja-translation-b4-03",
+      "version": 3,
+      "contentHash": "8f4eb399d520766fee97a470ee6b6b9312b6a575e5a02302199f6d2903acee5c",
+      "releaseId": "ko-ja-curated-candidates-20261004-v1",
+      "approver": "트랜슬라켓 주인",
+      "approvedAt": "2026-11-08T13:22:46.000Z"
+    },
+    {
+      "id": "ko-ja-translation-b5-01",
+      "version": 2,
+      "contentHash": "3141daae46bdeb2b31fe25ab869fb2f40345166b2d8bca693d727de4b7ab4a45",
+      "releaseId": "ko-ja-curated-candidates-20261004-v1",
+      "approver": "트랜슬라켓 주인",
+      "approvedAt": "2026-11-08T13:22:46.000Z"
+    },
+    {
+      "id": "ko-ja-guided-b1-02",
+      "version": 1,
+      "contentHash": "154cd0d542d13bae1d6ef4b0b76fec89b5253cdc3403e17a4941ba001f2cfd6f",
+      "releaseId": "ko-ja-curated-candidates-20261004-v1",
+      "approver": "트랜슬라켓 주인",
+      "approvedAt": "2026-11-08T13:25:29.419Z"
+    },
+    {
+      "id": "ko-ja-guided-b1-03",
+      "version": 2,
+      "contentHash": "1fe0ff98170f1d8875ba4aa957c2eab5af7d29a7b9f8bf03874b0a07168d7e7d",
+      "releaseId": "ko-ja-curated-candidates-20261004-v1",
+      "approver": "트랜슬라켓 주인",
+      "approvedAt": "2026-11-08T13:25:50.674Z"
+    },
+    {
+      "id": "ko-ja-guided-b1-04",
+      "version": 2,
+      "contentHash": "292389f755b21673aec6304f819a306c8570e1740e9476601e48b726809c4bd2",
+      "releaseId": "ko-ja-curated-candidates-20261004-v1",
+      "approver": "트랜슬라켓 주인",
+      "approvedAt": "2026-11-08T13:25:56.062Z"
+    },
+    {
+      "id": "ko-ja-guided-b1-05",
+      "version": 2,
+      "contentHash": "36eea3817b14609bfc753a2b74e27385df671ab20e5e3d8d9231f021c6f09d42",
+      "releaseId": "ko-ja-curated-candidates-20261004-v1",
+      "approver": "트랜슬라켓 주인",
+      "approvedAt": "2026-11-08T13:26:00.486Z"
+    },
+    {
+      "id": "ko-ja-guided-b2-03",
+      "version": 3,
+      "contentHash": "8c56d9e487c4b3861e233d4a1524e0dd4852c08b1e9b59c68bd1925bafbbd062",
+      "releaseId": "ko-ja-curated-candidates-20261004-v1",
+      "approver": "트랜슬라켓 주인",
+      "approvedAt": "2026-11-08T13:26:15.504Z"
+    },
+    {
+      "id": "ko-ja-guided-b2-01",
+      "version": 1,
+      "contentHash": "14eb567eec4d516d937c13e867c400258ad633a37f8669f0ce6606abe04a05ac",
+      "releaseId": "ko-ja-curated-candidates-20261004-v1",
+      "approver": "트랜슬라켓 주인",
+      "approvedAt": "2026-11-08T13:28:31.616Z"
+    },
+    {
+      "id": "ko-ja-guided-b2-02",
+      "version": 2,
+      "contentHash": "1bebd4b70c4e0ee9a0cf34ccbcfdf16c60ffcedb5925d400bdf75f2c00bc841b",
+      "releaseId": "ko-ja-curated-candidates-20261004-v1",
+      "approver": "트랜슬라켓 주인",
+      "approvedAt": "2026-11-08T13:28:45.279Z"
+    },
+    {
+      "id": "ko-ja-guided-b3-01",
+      "version": 1,
+      "contentHash": "de7f6604b2c61837454ce680d6606c91a19d8e71035cd48742ca7e1bdd77646a",
+      "releaseId": "ko-ja-curated-candidates-20261004-v1",
+      "approver": "트랜슬라켓 주인",
+      "approvedAt": "2026-11-08T13:29:03.280Z"
+    },
+    {
+      "id": "ko-ja-guided-b3-02",
+      "version": 2,
+      "contentHash": "5969aa886b8b4209a5697dc2ada9e48c7f99c5e0b8966e6ff03a2f1564e76639",
+      "releaseId": "ko-ja-curated-candidates-20261004-v1",
+      "approver": "트랜슬라켓 주인",
+      "approvedAt": "2026-11-08T13:29:18.153Z"
+    },
+    {
+      "id": "ko-ja-guided-b3-09",
+      "version": 2,
+      "contentHash": "e5cc62f017c0d3264985703299a7eabcf0d1a9fe736c2e1c0da33290cab21fc4",
+      "releaseId": "ko-ja-curated-candidates-20261004-v1",
+      "approver": "트랜슬라켓 주인",
+      "approvedAt": "2026-11-08T13:33:42.077Z"
+    },
+    {
+      "id": "ko-ja-guided-b4-01",
+      "version": 5,
+      "contentHash": "944b6145d00ada882ab1d4460f37a92dc02db827ad7a01cfb537344b0c93e19d",
+      "releaseId": "ko-ja-curated-candidates-20261004-v1",
+      "approver": "트랜슬라켓 주인",
+      "approvedAt": "2026-11-08T13:41:53.033Z"
+    },
+    {
+      "id": "ko-ja-guided-b5-01",
+      "version": 4,
+      "contentHash": "73a0742fd4f75a4cf32b12835076f1fa7fcb9fbc697eb1e994697dc20bbd258b",
+      "releaseId": "ko-ja-curated-candidates-20261004-v1",
+      "approver": "트랜슬라켓 주인",
+      "approvedAt": "2026-11-08T13:43:46.073Z"
+    },
+    {
+      "id": "ko-ja-guided-b5-02",
+      "version": 5,
+      "contentHash": "096226ccab0d0b9d71bbb74a56c2fc0e0c738f5857a50c2211141f54f16d4b32",
+      "releaseId": "ko-ja-curated-candidates-20261004-v1",
+      "approver": "트랜슬라켓 주인",
+      "approvedAt": "2026-11-08T13:44:08.912Z"
+    },
+    {
+      "id": "ko-ja-guided-b5-03",
+      "version": 3,
+      "contentHash": "c0b9cba36a69b4cc10054857b4b202ef1855c5be96c86810108d915d12454a19",
+      "releaseId": "ko-ja-curated-candidates-20261004-v1",
+      "approver": "트랜슬라켓 주인",
+      "approvedAt": "2026-11-08T13:44:26.617Z"
+    },
+    {
+      "id": "ko-ja-guided-b5-04",
+      "version": 4,
+      "contentHash": "486aaf3d4673b73f8f21eb2ce0933399aa0cfef21704c8eba91bd1d81719775c",
+      "releaseId": "ko-ja-curated-candidates-20261004-v1",
+      "approver": "트랜슬라켓 주인",
+      "approvedAt": "2026-11-08T13:44:37.766Z"
+    },
+    {
+      "id": "ko-ja-guided-b5-05",
+      "version": 4,
+      "contentHash": "3b178fa734a0879ee7adf0d8b7bf40e38a45154c4f380e28b860444d4559e45c",
+      "releaseId": "ko-ja-curated-candidates-20261004-v1",
+      "approver": "트랜슬라켓 주인",
+      "approvedAt": "2026-11-08T13:51:20.899Z"
+    },
+    {
+      "id": "ko-ja-guided-b5-06",
+      "version": 4,
+      "contentHash": "cdfe5983cbedb66efc0dc4f7889469e1cf364689c9522fd0c9e66670c5228f01",
+      "releaseId": "ko-ja-curated-candidates-20261004-v1",
+      "approver": "트랜슬라켓 주인",
+      "approvedAt": "2026-11-08T13:51:29.995Z"
+    },
+    {
+      "id": "ko-ja-free-b1-02",
+      "version": 1,
+      "contentHash": "4b992874860de8f24b3a47204c2b4639ff48fab6cda41e232e92056582769f7c",
+      "releaseId": "ko-ja-curated-candidates-20261004-v1",
+      "approver": "트랜슬라켓 주인",
+      "approvedAt": "2026-11-08T13:52:24.159Z"
+    },
+    {
+      "id": "ko-ja-free-b1-03",
+      "version": 2,
+      "contentHash": "1dfc0f610468bb291550f638dd9dd5eb05455c667bb693be9f8982837187e412",
+      "releaseId": "ko-ja-curated-candidates-20261004-v1",
+      "approver": "트랜슬라켓 주인",
+      "approvedAt": "2026-11-08T13:52:28.484Z"
+    },
+    {
+      "id": "ko-ja-free-b1-04",
+      "version": 1,
+      "contentHash": "12f21a5fdae2501a24acfe118fc1baa9d38e0612e36879971ec606550b236ba9",
+      "releaseId": "ko-ja-curated-candidates-20261004-v1",
+      "approver": "트랜슬라켓 주인",
+      "approvedAt": "2026-11-08T13:52:42.174Z"
+    },
+    {
+      "id": "ko-ja-free-b1-05",
+      "version": 1,
+      "contentHash": "a24400309285afdc9f78950b855d3444651bec69e7cbe852b1911a529c4b4198",
+      "releaseId": "ko-ja-curated-candidates-20261004-v1",
+      "approver": "트랜슬라켓 주인",
+      "approvedAt": "2026-11-08T13:52:47.346Z"
+    },
+    {
+      "id": "ko-ja-free-b2-01",
+      "version": 3,
+      "contentHash": "0856856f2d8a68f628739947619013716764f8fa844ddfe9a4893cd5af2d9b39",
+      "releaseId": "ko-ja-curated-candidates-20261004-v1",
+      "approver": "트랜슬라켓 주인",
+      "approvedAt": "2026-11-08T13:52:59.168Z"
+    },
+    {
+      "id": "ko-ja-free-b2-02",
+      "version": 2,
+      "contentHash": "5fd143cd6c677342e215d2663c00cf41e4d4ec8301c7eca98603bb1542da5899",
+      "releaseId": "ko-ja-curated-candidates-20261004-v1",
+      "approver": "트랜슬라켓 주인",
+      "approvedAt": "2026-11-08T13:56:34.000Z"
+    },
+    {
+      "id": "ko-ja-free-b2-03",
+      "version": 3,
+      "contentHash": "c7a549e84c8407344b5848c4f43dc64986bacb7260681dc3b9b98410c0b42baf",
+      "releaseId": "ko-ja-curated-candidates-20261004-v1",
+      "approver": "트랜슬라켓 주인",
+      "approvedAt": "2026-11-08T13:56:34.000Z"
+    },
+    {
+      "id": "ko-ja-free-b3-01",
+      "version": 2,
+      "contentHash": "9e8354cc8bbefb69cf98e53f9daa7d356eba75229b45b91e848bef3460e8d181",
+      "releaseId": "ko-ja-curated-candidates-20261004-v1",
+      "approver": "트랜슬라켓 주인",
+      "approvedAt": "2026-11-08T13:56:34.000Z"
+    },
+    {
+      "id": "ko-ja-free-b3-02",
+      "version": 2,
+      "contentHash": "b3c5dd05b8de38549d8a4621f10925203f340c68626d3c54e7967f3b901a66f6",
+      "releaseId": "ko-ja-curated-candidates-20261004-v1",
+      "approver": "트랜슬라켓 주인",
+      "approvedAt": "2026-11-08T13:56:34.000Z"
+    },
+    {
+      "id": "ko-ja-free-b3-03",
+      "version": 2,
+      "contentHash": "d96771aac8e7100d77371859ce0287f2b4eaff75cdb1bf14ef277e4003c1f6b6",
+      "releaseId": "ko-ja-curated-candidates-20261004-v1",
+      "approver": "트랜슬라켓 주인",
+      "approvedAt": "2026-11-08T13:56:34.000Z"
+    },
+    {
+      "id": "ko-ja-free-b4-01",
+      "version": 3,
+      "contentHash": "efdf54888acc127a1f5db38d0ebcd604b787ad2c5d6d1a6ce8cfb6d4b88d3aa7",
+      "releaseId": "ko-ja-curated-candidates-20261004-v1",
+      "approver": "트랜슬라켓 주인",
+      "approvedAt": "2026-11-08T14:02:32.993Z"
+    },
+    {
+      "id": "ko-ja-free-b4-02",
+      "version": 3,
+      "contentHash": "9f6693b18e7feb81ad3ef43ff6f69a140909a732d1401b6e39ec7e2af37067de",
+      "releaseId": "ko-ja-curated-candidates-20261004-v1",
+      "approver": "트랜슬라켓 주인",
+      "approvedAt": "2026-11-08T14:02:47.812Z"
+    },
+    {
+      "id": "ko-ja-free-b4-03",
+      "version": 4,
+      "contentHash": "24861a6017f42716750eb976d14b27c251e78d2cbd8c47e6fe9faa96b9eb6824",
+      "releaseId": "ko-ja-curated-candidates-20261004-v1",
+      "approver": "트랜슬라켓 주인",
+      "approvedAt": "2026-11-08T14:02:59.656Z"
+    },
+    {
+      "id": "ko-ja-free-b5-01",
+      "version": 2,
+      "contentHash": "61801b0684379968fdb35d7e52755c01a382c85b9c75043c56d671a242aa7811",
+      "releaseId": "ko-ja-curated-candidates-20261004-v1",
+      "approver": "트랜슬라켓 주인",
+      "approvedAt": "2026-11-08T14:03:14.956Z"
+    },
+    {
+      "id": "ko-ja-free-b5-03",
+      "version": 4,
+      "contentHash": "d30f05ba9998a138cdbb926b0e6c43f256fb0f87f023ef196e21fb6adef866e3",
+      "releaseId": "ko-ja-curated-candidates-20261004-v1",
+      "approver": "트랜슬라켓 주인",
+      "approvedAt": "2026-11-08T14:04:57.038Z"
+    }
+  ]
 }
