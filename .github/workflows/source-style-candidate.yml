@@ -1,0 +1,87 @@
+name: Source style LL candidate verification
+on:
+  push:
+    branches: [ci/source-style-20261115]
+permissions:
+  contents: read
+jobs:
+  verify:
+    # push/PR/수동 실행 모두 선택된 SHA를 먼저 검증한다.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    services:
+      # 큐레이션과 통합 이력의 정렬 규칙 회귀는 격리 MySQL에서 검증한다.
+      mysql:
+        image: mysql:8.4
+        env:
+          MYSQL_ROOT_PASSWORD: synthetic-ci-only
+          MYSQL_ROOT_HOST: '%'
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 --silent"
+          --health-interval=10s --health-timeout=5s --health-retries=12
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: 5fdf7daa3784b009afe37d2f3d38654dc9888431
+          persist-credentials: false
+      - run: test "$(git rev-parse HEAD)" = "5fdf7daa3784b009afe37d2f3d38654dc9888431"
+      - name: Validate manual action and immutable deployment identities
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          REQUESTED_REF: ${{ github.ref }}
+          REQUESTED_ACTION: ${{ inputs.action }}
+          CANDIDATE_IMAGE: ${{ inputs.candidate_image }}
+          RECOVERY_IMAGE: ${{ inputs.recovery_image }}
+          RECOVERY_SHA: ${{ inputs.recovery_sha }}
+        run: |
+          python3 - <<'PY'
+          import os, re
+          def immutable(value):
+              return re.fullmatch(r'ghcr\.io/[a-z0-9_.-]+/[a-z0-9_.-]+@sha256:[0-9a-f]{64}', value)
+          if os.environ['EVENT_NAME'] == 'workflow_dispatch':
+              action = os.environ['REQUESTED_ACTION']
+              if action not in ('build-only', 'deploy'):
+                  raise SystemExit('Unknown manual action')
+              candidate = os.environ['CANDIDATE_IMAGE']
+              image, sha = os.environ['RECOVERY_IMAGE'], os.environ['RECOVERY_SHA']
+              if action == 'build-only':
+                  if candidate or image or sha:
+                      raise SystemExit('Build-only cannot use deployment image inputs')
+              else:
+                  if os.environ['REQUESTED_REF'] != 'refs/heads/main':
+                      raise SystemExit('Deploy requires main')
+                  if not candidate or not image or not sha:
+                      raise SystemExit('Deploy requires an existing candidate digest and a recovery image/SHA pair')
+                  if not immutable(candidate) or not immutable(image):
+                      raise SystemExit('Candidate and recovery must be immutable GHCR digests')
+                  if not re.fullmatch(r'[0-9a-f]{40}', sha):
+                      raise SystemExit('Recovery SHA must be a full Git SHA')
+          PY
+      - name: Deployment contract tests (offline fixtures)
+        run: python3 -m unittest discover -s deploy/oci/tests -v
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: gradle
+      - name: Curated Writing and history isolated MySQL tests
+        env:
+          JAVA_TOOL_OPTIONS: -Duser.timezone=UTC
+          LL_TEST_MYSQL_URL: jdbc:mysql://127.0.0.1:3306/?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
+          LL_TEST_MYSQL_USERNAME: root
+          LL_TEST_MYSQL_PASSWORD: synthetic-ci-only
+          # 선택된 HTTP 테스트는 내부 fixture만 사용하며 Provider를 호출하지 않는다.
+          LL_TEST_AI_URL: http://127.0.0.1:9
+          LL_DELETION_TEST_OUTPUT_DIR: ${{ runner.temp }}/ll-account-deletion-${{ github.run_id }}-${{ github.run_attempt }}
+        run: |
+          chmod +x gradlew
+          mkdir -p -- "$LL_DELETION_TEST_OUTPUT_DIR"
+          ./gradlew --no-daemon --max-workers=1 \
+            databaseIntegrationTest --tests '*CuratedWritingStoreIntegrationTest*' \
+              --tests '*GrowthPersistenceIntegrationTestEvidenceCollation*' \
+              --tests '*AccountDeletionPersistenceIntegrationTest*' \
+            writingHttpDatabaseIntegrationTest --tests '*CuratedWritingHttpDatabaseIntegrationTest*'
+      - name: Compile, isolated application tests, and build runtime
+        run: docker build --platform linux/amd64 --target runtime -f deploy/oci/Dockerfile -t local/verified:${GITHUB_SHA} .
