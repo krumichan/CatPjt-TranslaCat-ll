@@ -7,11 +7,15 @@ import kotlin.collections.ArrayDeque
 
 /** 데드락/잠금 대기 실패만 재시도한다. 통신 실패와 불명확한 commit 결과는 재시도하지 않는다. */
 internal object MySqlLockRetry {
+    /** 예외 체인 전체를 조사해 다시 실행해도 되는 MySQL 잠금 실패인지 판정한다. */
     fun isRetryable(failure: Throwable): Boolean {
+        // cause와 nextException에 순환 참조가 있어도 같은 예외를 두 번 방문하지 않는다.
         val visited = Collections.newSetFromMap(IdentityHashMap<Throwable, Boolean>())
         val remaining = ArrayDeque<Throwable>()
         remaining.add(failure)
         var lockFailure = false
+
+        // 잠금 오류를 발견해도 통신 오류가 함께 있는지 체인 끝까지 확인한다.
         while (remaining.isNotEmpty()) {
             val current = remaining.removeFirst()
             if (!visited.add(current)) continue
@@ -24,6 +28,7 @@ internal object MySqlLockRetry {
             }
             current.cause?.let { remaining.add(it) }
         }
+
         return lockFailure
     }
 }
