@@ -302,12 +302,13 @@ internal class ExposedLevelTestRepository(private val requireTransaction: () -> 
         LevelBaselinesTable.upsert { writeBaseline(it, value) }
         val source = checkNotNull(session(value.sessionId))
         check(source.userId == value.userId)
-        // V008 이후에는 완료 기준점·Profile·완료 Activity를 동일 LL 트랜잭션으로 확정한다.
+        // 기준점과 Profile을 동일 트랜잭션으로 확정하며 직접 선택에는 실측 Activity를 추가하지 않는다.
         ApplyLevelBaseline(
             ExposedGrowthRepository(requireTransaction).scoped(source.originLanguage, source.learningLanguage),
         ).execute(
             value.userId, value.completionId, value.score.toDouble(), value.completedDate, value.startedAt,
             value.completedAt,
+            initializeScores = source.sessionType == LevelTestSessionType.SELF_SELECTED,
         )
     }
 

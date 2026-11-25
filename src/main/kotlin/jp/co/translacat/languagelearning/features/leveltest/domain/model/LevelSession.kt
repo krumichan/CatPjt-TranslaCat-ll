@@ -26,7 +26,7 @@ internal data class LevelSession(
     val operationKind: String? = null,
     val leaseUntil: LocalDateTime? = null,
 ) {
-    val totalQuestions: Int get() = 20
+    val totalQuestions: Int get() = if (sessionType == LevelTestSessionType.SELF_SELECTED) 0 else 20
 }
 
 /** 완료 사실의 원본은 LL이다. 전체 Profile 집계와는 별도인 레벨 기준점이다. */
