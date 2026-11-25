@@ -27,6 +27,60 @@ import kotlin.test.*
 
 /** 일반 test에서 제외된다. 별도의 무작위 로컬 MySQL DB에서만 실행한다. */
 class LevelTestPersistenceIntegrationTest {
+    /** 직접 선택의 모든 초기 점수와 0회 평가를 실제 DB에서 확인하고 새 연결로 복원한다. */
+    @Test
+    fun `B1 B2 B3 직접 선택은 모든 점수를 초기화하며 실측 활동을 만들지 않는다`() {
+        LocalScratchMysql.use { db ->
+            // 준비 및 실행: 서로 다른 소유자에게 세 구간을 저장한다.
+            DatabaseFactory(db.settings()).use { factory ->
+                runBlocking {
+                    val service = LevelSessionService(work(factory), TestLevelContext())
+                    listOf("B1" to 20, "B2" to 47, "B3" to 62).forEachIndexed { index, (band, score) ->
+                        val owner = index + 101L
+                        val session = service.selfSelect(owner, band, "choice-$owner")
+                        assertEquals(session.id, service.selfSelect(owner, band, "choice-$owner").id)
+                        assertEquals(score, service.status(owner).baseline?.score)
+                        assertEquals(0, service.detail(owner, session.id).items.size)
+
+                        // 검증: 실제 평가가 없으므로 점수만 채우고 횟수·신뢰도는 늘리지 않는다.
+                        db.connect().use { connection ->
+                            connection.prepareStatement("SELECT * FROM language_learning_profile WHERE user_id=?").use { query ->
+                                query.setLong(1, owner)
+                                query.executeQuery().use { result ->
+                                    assertTrue(result.next())
+                                    listOf("base_level_score", "meaning_score", "grammar_score", "vocabulary_score",
+                                        "naturalness_score", "expression_score", "review_performance",
+                                        "normal_performance", "challenge_performance").forEach { column ->
+                                        assertEquals(score.toDouble(), result.getDouble(column), column)
+                                        assertFalse(result.wasNull(), column)
+                                    }
+                                    assertEquals(0, result.getInt("evaluation_count"))
+                                    assertEquals(0.0, result.getDouble("confidence"))
+                                    assertEquals(session.uid, result.getString("baseline_completion_id"))
+                                    assertFalse(result.next())
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            // 검증: 재시작 후에도 기준점이 남고 가짜 학습 활동이나 평가가 생기지 않는다.
+            DatabaseFactory(db.settings()).use { reopened ->
+                runBlocking {
+                    val service = LevelSessionService(work(reopened), TestLevelContext())
+                    assertEquals(47, service.status(102).baseline?.score)
+                    assertTrue(service.status(102).initialCompleted)
+                    assertEquals(1, service.history(102).size)
+                }
+            }
+            assertEquals(3L, scalar(db, "SELECT COUNT(*) FROM language_learning_level_test_session"))
+            assertEquals(3L, scalar(db, "SELECT COUNT(*) FROM language_learning_profile"))
+            assertEquals(0L, scalar(db, "SELECT COUNT(*) FROM language_learning_level_test_evaluation"))
+            assertEquals(0L, scalar(db, "SELECT COUNT(*) FROM language_learning_activity"))
+        }
+    }
+
     private val clock = Clock.fixed(Instant.parse("2026-09-25T01:00:00Z"), ZoneOffset.UTC)
     private fun work(f: DatabaseFactory) = ExposedLevelTestUnitOfWork(JdbcTransactionRunner(f.database, 4), clock)
 

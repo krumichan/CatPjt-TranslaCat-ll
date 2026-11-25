@@ -5,6 +5,7 @@ import jp.co.translacat.languagelearning.features.leveltest.domain.exception.lev
 import jp.co.translacat.languagelearning.features.leveltest.domain.exception.levelNotFound
 import jp.co.translacat.languagelearning.features.leveltest.domain.model.*
 import jp.co.translacat.languagelearning.features.leveltest.domain.policy.LevelTestRules
+import jp.co.translacat.languagelearning.features.leveltest.domain.policy.LevelSelfSelectionPolicy
 import jp.co.translacat.languagelearning.features.leveltest.domain.repository.LevelTestRepository
 import jp.co.translacat.languagelearning.features.settings.domain.model.ConfiguredLanguagePair
 import java.time.Duration
@@ -25,7 +26,9 @@ internal data class LevelHistoryDetail(val session: LevelSession, val items: Lis
 internal class LevelSessionService(
     private val work: LevelTestUnitOfWork, private val context: LevelTestContextProvider,
 ) {
+    /** 실측 테스트만 시작하며 직접 선택은 전용 초기화 요청으로 분리한다. */
     suspend fun start(userId: Long, type: LevelTestSessionType?, idempotencyKey: String?): LevelSession {
+        if (type == LevelTestSessionType.SELF_SELECTED) levelInvalid("직접 선택 전용 요청을 사용해 주세요.")
         val policy = context.current(userId)
         if (!policy.aiEvaluationEnabled) throw LevelTestException(
             "LANGUAGE_LEARNING_SETTING_INVALID", 400, "AI 평가가 비활성화되어 있습니다.",
@@ -38,6 +41,9 @@ internal class LevelSessionService(
             // 다른 언어의 과거 요청이나 진행 중 테스트를 현재 언어의 시작 결과로 반환하지 않는다.
             records.sessionByKey(userId, key)?.let {
                 if (!it.matches(policy)) levelInvalid("현재 언어쌍에는 새로운 idempotencyKey가 필요합니다.")
+                if (it.sessionType == LevelTestSessionType.SELF_SELECTED) {
+                    levelInvalid("실측 테스트에는 새로운 idempotencyKey가 필요합니다.")
+                }
                 return@write it
             }
             val allSessions = records.sessions(userId)
@@ -45,11 +51,15 @@ internal class LevelSessionService(
             sessions.firstOrNull { it.status in activeStatuses }?.let { return@write recover(records, it, nowUtc) }
             val requested = type ?: LevelTestSessionType.INITIAL
             val initialDone =
-                sessions.any { it.sessionType == LevelTestSessionType.INITIAL && it.status == LevelTestSessionStatus.COMPLETED }
+                sessions.any { it.isInitialPlacement() }
             if (requested == LevelTestSessionType.INITIAL && initialDone) levelInvalid("최초 레벨 테스트가 이미 완료되었습니다.")
             if (requested == LevelTestSessionType.RECHECK && !initialDone) levelInvalid("최초 레벨 테스트 완료 후 재측정할 수 있습니다.")
             val range = LevelTestRules.dayRange(nowUtc, policy.timezone)
-            if (allSessions.any { it.status == LevelTestSessionStatus.COMPLETED && it.completedAt != null && it.completedAt >= range.first && it.completedAt < range.second }) {
+            if (allSessions.any {
+                it.sessionType != LevelTestSessionType.SELF_SELECTED &&
+                    it.status == LevelTestSessionStatus.COMPLETED && it.completedAt != null &&
+                    it.completedAt >= range.first && it.completedAt < range.second
+            }) {
                 throw LevelTestException("LEVEL_TEST_DAILY_LIMIT_REACHED", 409, "오늘의 공식 레벨 테스트가 이미 완료되었습니다.")
             }
             records.saveSession(
@@ -66,6 +76,57 @@ internal class LevelSessionService(
         }
     }
 
+    /** 현재 언어쌍의 최초 기준점만 초기화한다. AI·문항·평가 없이 선택 이력과 기준점을 함께 확정한다. */
+    suspend fun selfSelect(userId: Long, band: String?, idempotencyKey: String?): LevelSession {
+        val selected = LevelSelfSelectionPolicy.selection(band)
+        val key = LevelSelfSelectionPolicy.requireKey(idempotencyKey)
+        val policy = context.current(userId)
+        if (policy.originLanguage.isNullOrBlank() || policy.learningLanguage.isNullOrBlank()) {
+            throw LevelTestException(
+                "LANGUAGE_LEARNING_SETTING_NOT_CONFIGURED", 400, "모국어와 학습 언어를 먼저 설정해 주세요.",
+            )
+        }
+
+        return work.write(userId) {
+            // 같은 요청의 재전송은 원본을 반환한다. 다른 구간·언어·실측의 키는 재사용하지 않는다.
+            records.sessionByKey(userId, key)?.let { existing ->
+                if (!existing.matches(policy) || existing.sessionType != LevelTestSessionType.SELF_SELECTED ||
+                    existing.baseLevelScore != selected.score
+                ) levelInvalid("다른 초기 설정에는 새로운 idempotencyKey가 필요합니다.")
+                return@write existing
+            }
+            val sessions = records.sessions(userId).filter { it.matches(policy) }
+            if (sessions.any { it.status == LevelTestSessionStatus.COMPLETED }) {
+                throw LevelTestException("LEVEL_TEST_ALREADY_INITIALIZED", 409, "이미 설정된 레벨은 재측정으로 변경해 주세요.")
+            }
+            if (sessions.any { it.status in activeStatuses }) {
+                throw LevelTestException("LEVEL_TEST_IN_PROGRESS", 409, "진행 중인 레벨 테스트를 먼저 완료해 주세요.")
+            }
+
+            // 실측 20문항을 만들지 않는다. 직접 선택은 0문항·모든 영역 동일 점수로 저장한다.
+            val now = nowUtc
+            val date = LevelTestRules.today(now, policy.timezone)
+            val session = records.saveSession(
+                LevelSession(
+                    uid = UUID.randomUUID().toString(), userId = userId,
+                    sessionType = LevelTestSessionType.SELF_SELECTED, status = LevelTestSessionStatus.COMPLETED,
+                    originLanguage = policy.originLanguage, learningLanguage = policy.learningLanguage,
+                    timezone = policy.timezone, currentQuestionNumber = 0, currentComplexityBand = selected.band,
+                    baseLevelScore = selected.score, proficiencyBand = LevelTestRules.band(selected.score),
+                    domainScores = LevelTestDomain.entries.associateWith { selected.score },
+                    startedAt = now, lastActivityAt = now, completedAt = now, completedDate = date,
+                    idempotencyKey = key,
+                ),
+            )
+            records.saveBaseline(
+                LevelBaseline(userId, session.id, session.uid, session.sessionType, selected.score,
+                    checkNotNull(session.proficiencyBand), date, now, now),
+            )
+            session
+        }
+    }
+
+    /** 현재 언어의 실측 또는 직접 선택 기준점과 진행 상태를 반환한다. */
     suspend fun status(userId: Long): LevelStatus {
         val policy = context.current(userId)
         return work.write(userId) {
@@ -74,7 +135,7 @@ internal class LevelSessionService(
             val baseline = latestBaseline(all)
             LevelStatus(
                 baseline,
-                all.any { it.sessionType == LevelTestSessionType.INITIAL && it.status == LevelTestSessionStatus.COMPLETED },
+                all.any { it.isInitialPlacement() },
                 baseline != null && Duration.between(baseline.completedAt, nowUtc).toDays() >= 30,
                 all.firstOrNull { it.status in activeStatuses }?.let { recover(records, it, nowUtc) },
             )
@@ -107,6 +168,10 @@ internal class LevelSessionService(
 
     companion object {
         val activeStatuses = setOf(LevelTestSessionStatus.IN_PROGRESS, LevelTestSessionStatus.EVALUATING)
+
+        // 직접 선택도 학습 시작 기준점이지만 실측 응시 이력과는 유형으로 구분한다.
+        private fun LevelSession.isInitialPlacement(): Boolean = status == LevelTestSessionStatus.COMPLETED &&
+            sessionType in setOf(LevelTestSessionType.INITIAL, LevelTestSessionType.SELF_SELECTED)
 
         private fun LevelSession.matches(policy: LevelTestContext): Boolean =
             ConfiguredLanguagePair(originLanguage, learningLanguage).matches(policy.originLanguage, policy.learningLanguage)

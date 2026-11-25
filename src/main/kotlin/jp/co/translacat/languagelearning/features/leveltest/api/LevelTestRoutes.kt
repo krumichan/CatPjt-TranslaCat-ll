@@ -9,6 +9,7 @@ import io.ktor.server.routing.*
 import io.ktor.utils.io.*
 import jp.co.translacat.languagelearning.features.leveltest.api.dto.LevelAnswerRequestDto
 import jp.co.translacat.languagelearning.features.leveltest.api.dto.LevelTestStartRequestDto
+import jp.co.translacat.languagelearning.features.leveltest.api.dto.LevelSelfSelectRequestDto
 import jp.co.translacat.languagelearning.features.leveltest.application.*
 import jp.co.translacat.languagelearning.features.leveltest.domain.exception.LevelTestException
 import jp.co.translacat.languagelearning.features.leveltest.domain.exception.levelNotFound
@@ -39,6 +40,10 @@ internal fun Route.levelTestRoutes(
     }
     authenticate(INTERNAL_AUTH) {
         get("$ROOT/status") { call.respond(LevelResponseMapper.status(sessions.status(call.userId()))) }
+        post("$ROOT/self-selection") {
+            val request = call.jsonBody<LevelSelfSelectRequestDto>()
+            call.respond(LevelResponseMapper.session(sessions.selfSelect(call.userId(), request.band, request.idempotencyKey)))
+        }
         post("$ROOT/sessions") {
             val request = call.jsonBody<LevelTestStartRequestDto>()
             call.respond(

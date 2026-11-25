@@ -13,7 +13,7 @@ import kotlinx.serialization.json.contentOrNull
 
 internal object LevelResponseMapper {
     fun session(value: LevelSession) = LevelSessionResponseDto(
-        value.id, value.sessionType, value.status, 20, value.currentQuestionNumber,
+        value.id, value.sessionType, value.status, value.totalQuestions, value.currentQuestionNumber,
         value.currentComplexityBand, value.baseLevelScore?.toDouble(), value.proficiencyBand,
         value.startedAt.toString(), value.completedAt?.toString(),
     )
