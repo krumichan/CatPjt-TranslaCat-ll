@@ -1,0 +1,43 @@
+name: LL release metadata read only tool build
+on:
+  push:
+    branches: [ci/ll-release-metadata-20261126]
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Compile fixed reader and reject input before any connection
+        run: |
+          mkdir -p classes evidence
+          javac --release 21 -encoding UTF-8 -d classes .codex-ci/LLReleaseMetadata.java
+          jar --create --file evidence/ll-release-metadata.jar -C classes .
+          python3 - <<'PY'
+          import hashlib,json,pathlib,subprocess
+          source=pathlib.Path('.codex-ci/LLReleaseMetadata.java').read_bytes()
+          assert hashlib.sha256(source).hexdigest()=='e423fda668c49dade3ba84ea01f3b6a80aa2688b799afd3ec65f0b0ee0dc396b'
+          args=['java','-cp','evidence/ll-release-metadata.jar','LLReleaseMetadata']
+          for extra,body in ((['invalid'],b''),([],b'')):
+              result=subprocess.run(args+extra,input=body,capture_output=True,timeout=10)
+              assert result.returncode==64 and not result.stderr
+              assert json.loads(result.stdout)=={'ok':False,'error':'LL_METADATA_INVALID_INPUT'}
+          jar=pathlib.Path('evidence/ll-release-metadata.jar').read_bytes()
+          report={'sourceSha256':hashlib.sha256(source).hexdigest(),'jarSha256':hashlib.sha256(jar).hexdigest(),
+                  'jdkRelease':21,'invalidInputRejectedBeforeConnection':True,'productionConnectionMade':False}
+          pathlib.Path('evidence/compiler-evidence.json').write_text(json.dumps(report,indent=2))
+          print(json.dumps(report))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ll-release-metadata-tool
+          path: evidence/
+          if-no-files-found: error
