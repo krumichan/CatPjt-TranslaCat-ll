@@ -11,4 +11,5 @@ internal data class LevelStatusResponseDto(
     val currentQuestionNumber: Int? = null,
     val baseLevelScore: Double? = null,
     val proficiencyBand: String? = null,
+    val selfSelectionAvailable: Boolean,
 )

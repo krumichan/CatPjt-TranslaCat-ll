@@ -21,7 +21,7 @@ internal object LevelResponseMapper {
     fun status(value: LevelStatus) = LevelStatusResponseDto(
         if (value.baseline == null) "LEVEL_TEST_REQUIRED" else "CALIBRATING", value.initialCompleted,
         value.recheckRecommended, value.active?.id, value.active?.currentQuestionNumber,
-        value.baseline?.score?.toDouble(), value.baseline?.proficiencyBand,
+        value.baseline?.score?.toDouble(), value.baseline?.proficiencyBand, value.selfSelectionAvailable,
     )
 
     fun question(

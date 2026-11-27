@@ -17,6 +17,7 @@ import jp.co.translacat.languagelearning.shared.security.InternalApiSettings
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
+import kotlinx.serialization.json.boolean
 import kotlinx.serialization.json.long
 import java.time.Instant
 import java.util.*
@@ -142,6 +143,40 @@ class LevelTestRoutesTest {
             assertEquals(HttpStatusCode.NotFound, client.get("$root/baseline") { bearerAuth(token()) }.status)
             assertEquals(HttpStatusCode.NotFound, client.get("$root/completions") { bearerAuth(token()) }.status)
             assertTrue(work.repo.sessions.isEmpty())
+        }
+    }
+
+    /** 첫 문항을 열었다가 돌아온 사용자가 상태를 조회한 뒤 직접 선택을 확정할 수 있다. */
+    @Test
+    fun `미응답 최초 테스트를 직접 선택으로 전환할 수 있다`() {
+        app { work ->
+            // 준비: 사용자가 첫 테스트의 문항만 열었다.
+            val active = LevelSessionService(work, TestLevelContext()).start(123, null, "opened")
+            assertEquals(HttpStatusCode.OK, client.get("$root/sessions/${active.id}/current-item") {
+                bearerAuth(token())
+            }.status)
+            val status = client.get("$root/status") { bearerAuth(token()) }
+            assertEquals(HttpStatusCode.OK, status.status)
+            val body = Json.parseToJsonElement(status.bodyAsText()).jsonObject
+            assertEquals(active.id, body.getValue("activeSessionId").jsonPrimitive.long)
+            assertTrue(body.getValue("selfSelectionAvailable").jsonPrimitive.boolean)
+
+            // 실행: B3를 선택한다.
+            val result = client.post("$root/self-selection") {
+                bearerAuth(token())
+                contentType(ContentType.Application.Json)
+                setBody("""{"band":"B3","idempotencyKey":"opened-skip"}""")
+            }
+
+            // 검증: 선택은 성공하고 이전 시험에는 더 이상 진입할 수 없다.
+            assertEquals(HttpStatusCode.OK, result.status)
+            val prior = client.get("$root/sessions/${active.id}") { bearerAuth(token()) }
+            assertEquals(HttpStatusCode.OK, prior.status)
+            assertEquals("ABANDONED", Json.parseToJsonElement(prior.bodyAsText()).jsonObject
+                .getValue("status").jsonPrimitive.content)
+            assertEquals(HttpStatusCode.Conflict, client.get("$root/sessions/${active.id}/current-item") {
+                bearerAuth(token())
+            }.status)
         }
     }
 

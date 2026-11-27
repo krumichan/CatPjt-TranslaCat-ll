@@ -37,10 +37,20 @@ class LevelTestPersistenceIntegrationTest {
                     val service = LevelSessionService(work(factory), TestLevelContext())
                     listOf("B1" to 20, "B2" to 47, "B3" to 62).forEachIndexed { index, (band, score) ->
                         val owner = index + 101L
+                        val opened = if (band == "B3") {
+                            service.start(owner, null, "started-$owner").also { previous ->
+                                work(factory).write(owner) { records.saveItem(LevelFixtures.item(previous, 1)) }
+                                assertTrue(service.status(owner).selfSelectionAvailable)
+                            }
+                        } else null
                         val session = service.selfSelect(owner, band, "choice-$owner")
                         assertEquals(session.id, service.selfSelect(owner, band, "choice-$owner").id)
                         assertEquals(score, service.status(owner).baseline?.score)
                         assertEquals(0, service.detail(owner, session.id).items.size)
+                        if (opened != null) {
+                            assertEquals(LevelTestSessionStatus.ABANDONED, service.session(owner, opened.id).status)
+                            assertNull(service.status(owner).active)
+                        }
 
                         // 검증: 실제 평가가 없으므로 점수만 채우고 횟수·신뢰도는 늘리지 않는다.
                         db.connect().use { connection ->
@@ -72,9 +82,12 @@ class LevelTestPersistenceIntegrationTest {
                     assertEquals(47, service.status(102).baseline?.score)
                     assertTrue(service.status(102).initialCompleted)
                     assertEquals(1, service.history(102).size)
+                    assertEquals(62, service.status(103).baseline?.score)
+                    assertFalse(service.status(103).selfSelectionAvailable)
                 }
             }
-            assertEquals(3L, scalar(db, "SELECT COUNT(*) FROM language_learning_level_test_session"))
+            assertEquals(4L, scalar(db, "SELECT COUNT(*) FROM language_learning_level_test_session"))
+            assertEquals(1L, scalar(db, "SELECT COUNT(*) FROM language_learning_level_test_item"))
             assertEquals(3L, scalar(db, "SELECT COUNT(*) FROM language_learning_profile"))
             assertEquals(0L, scalar(db, "SELECT COUNT(*) FROM language_learning_level_test_evaluation"))
             assertEquals(0L, scalar(db, "SELECT COUNT(*) FROM language_learning_activity"))

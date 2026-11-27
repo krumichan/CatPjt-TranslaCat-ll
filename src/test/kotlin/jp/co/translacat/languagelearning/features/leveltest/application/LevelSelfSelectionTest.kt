@@ -4,7 +4,9 @@ import jp.co.translacat.languagelearning.features.leveltest.domain.exception.Lev
 import jp.co.translacat.languagelearning.features.leveltest.domain.model.*
 import jp.co.translacat.languagelearning.features.leveltest.domain.policy.LevelSelfSelectionPolicy
 import jp.co.translacat.languagelearning.features.leveltest.domain.policy.LevelTestRules
+import jp.co.translacat.languagelearning.features.leveltest.support.LevelFixtures
 import jp.co.translacat.languagelearning.features.leveltest.support.MemoryLevelTest
+import jp.co.translacat.languagelearning.features.leveltest.support.TestLevelContext
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.runBlocking
@@ -130,28 +132,64 @@ class LevelSelfSelectionTest {
     }
 
     @Test
-    fun activeTestsAndDirectSessionTypeBypassAreRejected() = runBlocking {
-        // 準備: 既存の試験中セッションを作る。
+    fun anOpenedFirstQuestionCanBeAbandonedWithoutLosingItsRecord() = runBlocking {
+        // 準備: 最初の問題まで表示したが、解答は送っていない。
         val work = MemoryLevelTest()
         val service = LevelSessionService(work, Context())
         val active = service.start(1, LevelTestSessionType.INITIAL, "test")
+        val item = work.write(1) { records.saveItem(LevelFixtures.item(active, 1)) }
+        assertTrue(service.status(1).selfSelectionAvailable)
 
-        // 実行・検証: 試験を暗黙に破棄せず、専用endpointを迂回した初期化も許さない。
-        assertFailsWith<LevelTestException> { service.selfSelect(1, "B1", "skip") }
+        // 実行: ユーザーがB3を確定する。
+        val selected = service.selfSelect(1, "B3", "skip")
+
+        // 検証: 未回答の試験を完了扱いにせず、新しい初期点だけを履歴に残す。
+        assertEquals(62, selected.baseLevelScore)
+        assertEquals(0, selected.totalQuestions)
+        assertEquals(LevelTestSessionStatus.ABANDONED, service.session(1, active.id).status)
+        assertEquals(item, work.repo.item(item.id))
+        assertNull(service.status(1).active)
+        assertFalse(service.status(1).selfSelectionAvailable)
+        assertEquals(listOf(selected), service.history(1))
+        assertEquals(selected, service.selfSelect(1, "B3", "skip"))
+    }
+
+    /** 첫 문항에 머물러 있어도 이미 저장한 답변이 있으면 직접 선택을 막는다. */
+    @Test
+    fun aSubmittedFirstAnswerIsProtectedEvenWhenEvaluationFailed() = runBlocking {
+        // 준비: 첫 답변은 저장됐지만 평가에 실패해 다음 문항으로 이동하지 않았다.
+        val work = MemoryLevelTest()
+        val service = LevelSessionService(work, TestLevelContext())
+        val active = service.start(1, LevelTestSessionType.INITIAL, "test")
+        val item = work.write(1) {
+            val failed = records.saveItem(LevelFixtures.item(active, 1).copy(status = LevelTestItemStatus.EVALUATION_FAILED))
+            records.saveSubmission(
+                LevelSubmission(itemId = failed.id, idempotencyKey = "answer", fingerprint = "answer",
+                    selectedOptionKey = "A", submittedAt = nowUtc),
+            )
+            failed
+        }
+
+        // 실행 및 검증: API를 직접 호출해도 답변과 기존 세션을 보존한다.
+        assertFalse(service.status(1).selfSelectionAvailable)
+        val conflict = assertFailsWith<LevelTestException> { service.selfSelect(1, "B1", "skip") }
+        assertEquals("LEVEL_TEST_IN_PROGRESS", conflict.code)
+        assertNotNull(work.repo.submission(item.id))
         assertFailsWith<LevelTestException> { service.start(2, LevelTestSessionType.SELF_SELECTED, "bypass") }
         assertEquals(active, service.session(1, active.id))
     }
 
     @Test
     fun baselineFailureRollsBackTheNewSession() = runBlocking {
-        // 準備・実行: 基準点保存に失敗すると履歴だけを確定しない。
+        // 準備・実行: 基準点保存に失敗したら、試験中断と自己選択を両方取り消す。
         val work = MemoryLevelTest()
-        work.repo.failBaseline = true
         val service = LevelSessionService(work, Context())
+        val active = service.start(1, LevelTestSessionType.INITIAL, "test")
+        work.repo.failBaseline = true
         assertFailsWith<IllegalStateException> { service.selfSelect(1, "B2", "failed") }
 
         // 検証: 次回の正常な再送が利用できる。
-        assertTrue(work.repo.sessions.isEmpty())
+        assertEquals(listOf(active), work.repo.sessions(1))
         assertTrue(work.repo.baselines.isEmpty())
         work.repo.failBaseline = false
         assertEquals(47, service.selfSelect(1, "B2", "failed").baseLevelScore)

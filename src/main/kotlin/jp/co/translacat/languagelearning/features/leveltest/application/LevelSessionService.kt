@@ -14,7 +14,7 @@ import java.util.*
 
 internal data class LevelStatus(
     val baseline: LevelBaseline?, val initialCompleted: Boolean, val recheckRecommended: Boolean,
-    val active: LevelSession?,
+    val active: LevelSession?, val selfSelectionAvailable: Boolean,
 )
 
 internal data class LevelItemHistory(
@@ -76,7 +76,7 @@ internal class LevelSessionService(
         }
     }
 
-    /** 현재 언어쌍의 최초 기준점만 초기화한다. AI·문항·평가 없이 선택 이력과 기준점을 함께 확정한다. */
+    /** 현재 언어쌍의 최초 기준점을 초기화하고, 답변이 없는 최초 테스트는 같은 트랜잭션에서 종료한다. */
     suspend fun selfSelect(userId: Long, band: String?, idempotencyKey: String?): LevelSession {
         val selected = LevelSelfSelectionPolicy.selection(band)
         val key = LevelSelfSelectionPolicy.requireKey(idempotencyKey)
@@ -99,12 +99,23 @@ internal class LevelSessionService(
             if (sessions.any { it.status == LevelTestSessionStatus.COMPLETED }) {
                 throw LevelTestException("LEVEL_TEST_ALREADY_INITIALIZED", 409, "이미 설정된 레벨은 재측정으로 변경해 주세요.")
             }
-            if (sessions.any { it.status in activeStatuses }) {
+            val active = sessions.filter { it.status in activeStatuses }
+            if (active.any { !it.canBeAbandonedForSelection(records) }) {
                 throw LevelTestException("LEVEL_TEST_IN_PROGRESS", 409, "진행 중인 레벨 테스트를 먼저 완료해 주세요.")
             }
 
-            // 실측 20문항을 만들지 않는다. 직접 선택은 0문항·모든 영역 동일 점수로 저장한다.
+            // 문항과 이전 요청 키는 보존하고 활성 상태만 종료한다. 답변 저장도 같은 사용자 잠금을 사용한다.
             val now = nowUtc
+            active.forEach { pending ->
+                records.saveSession(
+                    pending.copy(
+                        status = LevelTestSessionStatus.ABANDONED, lastActivityAt = now,
+                        operationToken = null, operationKind = null, leaseUntil = null,
+                    ),
+                )
+            }
+
+            // 실측 20문항을 만들지 않는다. 직접 선택은 0문항·모든 영역 동일 점수로 저장한다.
             val date = LevelTestRules.today(now, policy.timezone)
             val session = records.saveSession(
                 LevelSession(
@@ -126,18 +137,24 @@ internal class LevelSessionService(
         }
     }
 
-    /** 현재 언어의 실측 또는 직접 선택 기준점과 진행 상태를 반환한다. */
+    /** 현재 언어의 기준점, 진행 상태와 답변 저장 여부에 따른 직접 선택 가능 상태를 반환한다. */
     suspend fun status(userId: Long): LevelStatus {
         val policy = context.current(userId)
         return work.write(userId) {
             // 사용자 단일 baseline 행이 다른 언어로 갱신되어도 세션 원본으로 현재 언어의 기준을 복원한다.
             val all = records.sessions(userId).filter { it.matches(policy) }
             val baseline = latestBaseline(all)
+            val active = all.filter { it.status in activeStatuses }
+                .map { recover(records, it, nowUtc) }
             LevelStatus(
                 baseline,
                 all.any { it.isInitialPlacement() },
                 baseline != null && Duration.between(baseline.completedAt, nowUtc).toDays() >= 30,
-                all.firstOrNull { it.status in activeStatuses }?.let { recover(records, it, nowUtc) },
+                active.firstOrNull(),
+                selfSelectionAvailable = !policy.originLanguage.isNullOrBlank() &&
+                    !policy.learningLanguage.isNullOrBlank() &&
+                    all.none { it.status == LevelTestSessionStatus.COMPLETED } &&
+                    active.all { it.canBeAbandonedForSelection(records) },
             )
         }
     }
@@ -168,6 +185,13 @@ internal class LevelSessionService(
 
     companion object {
         val activeStatuses = setOf(LevelTestSessionStatus.IN_PROGRESS, LevelTestSessionStatus.EVALUATING)
+
+        // 문항 생성은 답변이 아니다. 평가 실패로 첫 문항에 남은 답변도 제출로 판단한다.
+        private fun LevelSession.canBeAbandonedForSelection(records: LevelTestRepository): Boolean =
+            sessionType == LevelTestSessionType.INITIAL &&
+                status == LevelTestSessionStatus.IN_PROGRESS &&
+                currentQuestionNumber == 1 &&
+                records.itemAt(id, currentQuestionNumber)?.let { records.submission(it.id) == null } != false
 
         // 직접 선택도 학습 시작 기준점이지만 실측 응시 이력과는 유형으로 구분한다.
         private fun LevelSession.isInitialPlacement(): Boolean = status == LevelTestSessionStatus.COMPLETED &&
