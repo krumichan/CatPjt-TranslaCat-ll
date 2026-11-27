@@ -1,0 +1,83 @@
+name: Unanswered level test candidate verification
+
+on:
+  push:
+    branches: [ci/level-unanswered-selection-20261127]
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    services:
+      mysql:
+        image: mysql:8.4
+        env:
+          MYSQL_ROOT_PASSWORD: synthetic-ci-only
+          MYSQL_ROOT_HOST: '%'
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 --silent"
+          --health-interval=10s --health-timeout=5s --health-retries=12
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: bb092d76324ff87a2b8eb15a34d40c4ec49cf577
+          persist-credentials: false
+      - name: Verify exact source and deployment contracts
+        run: |
+          test "$(git rev-parse HEAD)" = "bb092d76324ff87a2b8eb15a34d40c4ec49cf577"
+          python3 -m unittest discover -s deploy/oci/tests -v
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: gradle
+      - name: Verify the level selection database contracts first
+        env:
+          JAVA_TOOL_OPTIONS: -Duser.timezone=UTC
+          LL_TEST_MYSQL_URL: jdbc:mysql://127.0.0.1:3306/?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
+          LL_TEST_MYSQL_USERNAME: root
+          LL_TEST_MYSQL_PASSWORD: synthetic-ci-only
+        run: |
+          chmod +x gradlew
+          ./gradlew --no-daemon --max-workers=1 databaseIntegrationTest --tests '*LevelTestPersistenceIntegrationTest*'
+          mkdir -p test-results
+          cp -r build/test-results/databaseIntegrationTest test-results/level-database
+      - name: Run the existing mandatory persistence regressions
+        env:
+          JAVA_TOOL_OPTIONS: -Duser.timezone=UTC
+          LL_TEST_MYSQL_URL: jdbc:mysql://127.0.0.1:3306/?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
+          LL_TEST_MYSQL_USERNAME: root
+          LL_TEST_MYSQL_PASSWORD: synthetic-ci-only
+          LL_TEST_AI_URL: http://127.0.0.1:9
+          LL_DELETION_TEST_OUTPUT_DIR: ${{ runner.temp }}/ll-deletion-${{ github.run_id }}-${{ github.run_attempt }}
+        run: |
+          mkdir -p -- "$LL_DELETION_TEST_OUTPUT_DIR"
+          ./gradlew --no-daemon --max-workers=1 \
+            databaseIntegrationTest --tests '*CuratedWritingStoreIntegrationTest*' \
+              --tests '*GrowthPersistenceIntegrationTestEvidenceCollation*' \
+              --tests '*AccountDeletionPersistenceIntegrationTest*' \
+            writingHttpDatabaseIntegrationTest --tests '*CuratedWritingHttpDatabaseIntegrationTest*'
+          cp -r build/test-results/databaseIntegrationTest test-results/persistence
+          cp -r build/test-results/writingHttpDatabaseIntegrationTest test-results/http-database
+      - name: Compile, run all unit tests, and build the actual runtime image
+        run: |
+          docker build --platform linux/amd64 --target tested -f deploy/oci/Dockerfile -t local/level-tested:bb092d76324ff87a2b8eb15a34d40c4ec49cf577 .
+          container="level-unit-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          trap 'docker rm -f "$container" >/dev/null 2>&1 || true' EXIT
+          docker create --name "$container" local/level-tested:bb092d76324ff87a2b8eb15a34d40c4ec49cf577
+          docker cp "$container:/source/build/test-results/test" test-results/unit
+          docker rm "$container"
+          trap - EXIT
+          docker build --platform linux/amd64 --target runtime -f deploy/oci/Dockerfile -t local/level-runtime:bb092d76324ff87a2b8eb15a34d40c4ec49cf577 .
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ll-level-test-results
+          path: |
+            test-results/
+            build/test-results/
