@@ -44,7 +44,7 @@ internal class WritingReadService(
         // 날짜 제한과 활성 재생성 lease는 동일한 조회 시점의 세트에 적용한다.
         val set = detail.set
         val reviewAvailable = !today.isBefore(set.learningDate) &&
-            !today.isAfter(set.learningDate.plusDays(reviewDays - 1L))
+            !today.isAfter(set.lastReviewDate(reviewDays))
         val regenerating = set.status in setOf(WritingSetStatus.READY, WritingSetStatus.COMPLETED) &&
             set.generationToken != null && set.generationLeaseUntil?.isAfter(LocalDateTime.now(clock)) == true
 

@@ -1,5 +1,8 @@
 package jp.co.translacat.languagelearning.features.writing.application
 
+import jp.co.translacat.languagelearning.features.autopractice.application.AutoPracticeAccess
+import jp.co.translacat.languagelearning.features.autopractice.domain.AutoPracticeArea
+import jp.co.translacat.languagelearning.features.autopractice.domain.AutoPracticeJob
 import jp.co.translacat.languagelearning.features.growth.application.GrowthProjector
 import jp.co.translacat.languagelearning.features.growth.domain.model.GrowthChange
 import jp.co.translacat.languagelearning.features.growth.domain.model.GrowthProfile
@@ -9,6 +12,7 @@ import jp.co.translacat.languagelearning.features.keyword.application.KeywordOpe
 import jp.co.translacat.languagelearning.features.keyword.domain.policy.KeywordSelectionPolicy
 import jp.co.translacat.languagelearning.features.settings.application.SettingsServiceOperations
 import jp.co.translacat.languagelearning.features.settings.domain.policy.UserSettingsPolicy
+import jp.co.translacat.languagelearning.features.settings.domain.model.ConfiguredLanguagePair
 import jp.co.translacat.languagelearning.features.writing.domain.model.NewWritingSet
 import jp.co.translacat.languagelearning.features.writing.domain.model.WritingRecentScore
 import jp.co.translacat.languagelearning.features.writing.domain.model.WritingSet
@@ -16,6 +20,7 @@ import jp.co.translacat.languagelearning.features.writing.domain.model.WritingTy
 import jp.co.translacat.languagelearning.features.writing.domain.policy.WritingScoring
 import jp.co.translacat.languagelearning.shared.error.LearningBusinessException
 import kotlinx.serialization.json.*
+import java.time.LocalDate
 import java.util.*
 
 /** 인증된 사용자 ID와 모드만 받아 LL 설정·키워드·성장·평가 이력으로 최초 snapshot을 만든다. */
@@ -25,8 +30,10 @@ internal class WritingContextService(
     private val work: WritingSetUnitOfWork,
     private val learningFacts: KeywordLearningFacts,
     private val snapshotId: () -> String = { UUID.randomUUID().toString() },
+    private val autoPractice: AutoPracticeAccess? = null,
 ) {
-    suspend fun getOrCreate(userId: Long, type: WritingType): WritingSet {
+    /** 수동 요청은 오늘의 설정을, 자동 요청은 확정한 학습일과 난이도별 수량을 사용한다. */
+    suspend fun getOrCreate(userId: Long, type: WritingType, scheduled: AutoPracticeJob? = null): WritingSet {
         // 현재 설정의 시간대로 학습일을 정하고 기존과 같은 설정·레벨 테스트 진입 조건을 검사한다.
         val context = settings.userSnapshot(userId)
         val user = context.result.settings
@@ -35,9 +42,26 @@ internal class WritingContextService(
         if (!admin.adaptiveWritingEnabled) throw LearningBusinessException(
             UserSettingsPolicy.INVALID, "Adaptive Writing이 비활성화되어 있습니다.",
         )
-        val date = context.learningDate
+        if (scheduled != null && !ConfiguredLanguagePair(scheduled.originLanguage, scheduled.learningLanguage)
+                .matches(user.originLanguage, user.learningLanguage)
+        ) throw LearningBusinessException(UserSettingsPolicy.INVALID, "학습 언어가 변경되었습니다.")
+        val date = scheduled?.let { LocalDate.parse(it.learningDate) } ?: context.learningDate
+        if (scheduled == null) {
+            val assignment = autoPractice?.assigned(
+                userId, checkNotNull(user.originLanguage), checkNotNull(user.learningLanguage),
+                AutoPracticeArea.valueOf("WRITING_${type.name}"), date,
+            )
+            if (assignment != null) return work.read {
+                assignment.resourceIds.firstNotNullOfOrNull { sets.findById(userId, it) }
+            } ?: throw LearningBusinessException("AUTO_PRACTICE_PREPARING", "자동 학습 문제가 아직 준비되지 않았습니다.")
+        }
+        val count = scheduled?.quantity?.total?.toInt()
+            ?: user.dailySentenceCount.coerceIn(admin.minDailySentenceCount, admin.maxDailySentenceCount)
+        if (count !in 1..admin.maxDailySentenceCount) {
+            throw LearningBusinessException(UserSettingsPolicy.INVALID, "일일 최대 작문 문항 수를 확인해 주세요.")
+        }
         val existing = work.write(userId) {
-            prepareProfile(userId, date, growth.scoped(user.originLanguage, user.learningLanguage))
+            prepareProfile(userId, date, growth.scoped(user.originLanguage, user.learningLanguage), scheduled == null)
             sets.scoped(user.originLanguage, user.learningLanguage).find(userId, date, type)
         }
         if (existing != null) return existing
@@ -47,14 +71,13 @@ internal class WritingContextService(
         val started = learningFacts.hasStartedLearning(userId)
         val candidates = if (admin.dailyKeywordMaxCount > 0) keywords.candidates(userId, started, date)
         else emptyList()
-        val count = user.dailySentenceCount.coerceIn(admin.minDailySentenceCount, admin.maxDailySentenceCount)
         return work.write(userId) {
             // 사용자 행 잠금 아래 재확인하여 중복 요청이 선택 횟수나 snapshot을 두 번 만들지 않게 한다.
             val currentSets = sets.scoped(user.originLanguage, user.learningLanguage)
             currentSets.find(userId, date, type)?.let { return@write it }
             // 설정 승격이 다른 요청에서 일어나도 캡처한 문항 언어와 성장 문맥은 함께 유지한다.
             val currentGrowth = growth.scoped(user.originLanguage, user.learningLanguage)
-            val profile = prepareProfile(userId, date, currentGrowth)
+            val profile = prepareProfile(userId, date, currentGrowth, scheduled == null)
             val selected = KeywordSelectionPolicy.select(userId, date, candidates, admin.dailyKeywordMaxCount) {
                 currentGrowth.mastery(userId, it)
             }
@@ -70,7 +93,14 @@ internal class WritingContextService(
                 put("learningLanguage", checkNotNull(user.learningLanguage))
                 put("writingType", type.name)
                 put("sentenceCount", count)
-                put("difficultyDistribution", distribution(count))
+                put("difficultyDistribution", scheduled?.let {
+                    buildJsonObject {
+                        put("review", it.quantity.easy)
+                        put("normal", it.quantity.standard)
+                        put("challenge", it.quantity.hard)
+                    }
+                } ?: distribution(count))
+                scheduled?.let { put("autoPracticeJobId", it.id) }
                 put(
                     "selectedKeywords",
                     JsonArray(
@@ -110,15 +140,19 @@ internal class WritingContextService(
         }
     }
 
+    /** 반환하는 상태는 사용자 소유 세트에서만 읽으며 생성 상태를 변경하지 않는다. */
+    suspend fun preparedStatus(userId: Long, setId: Long): String =
+        work.read { sets.findById(userId, setId)?.status?.name ?: "UNAVAILABLE" }
+
     private fun WritingSetTransaction.prepareProfile(
-        userId: Long, date: java.time.LocalDate, records: GrowthRepository,
+        userId: Long, date: java.time.LocalDate, records: GrowthRepository, recordPreparation: Boolean,
     ): GrowthProfile {
         val profile = records.profile(userId)
         if (profile == null || profile.state == "LEVEL_TEST_REQUIRED") throw LearningBusinessException(
             "LEVEL_TEST_REQUIRED", "최초 Level Test가 필요합니다.",
         )
-        GrowthProjector(records).apply(userId, GrowthChange.LearningPrepared(date), nowUtc)
-        return checkNotNull(records.profile(userId))
+        if (recordPreparation) GrowthProjector(records).apply(userId, GrowthChange.LearningPrepared(date), nowUtc)
+        return if (recordPreparation) checkNotNull(records.profile(userId)) else profile
     }
 
     private fun WritingSetTransaction.profileSummary(

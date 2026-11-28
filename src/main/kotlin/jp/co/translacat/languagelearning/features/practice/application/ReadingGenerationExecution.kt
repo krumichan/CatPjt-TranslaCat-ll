@@ -23,7 +23,7 @@ internal class ReadingGenerationExecution(
 
     override suspend fun generate(claim: PracticeGenerationClaim): ReadingGeneratedBundle {
         val request = Json.decodeFromString<ReadingRequest>(claim.set.requestJson)
-        PracticePolicy.requireNewLearning(claim.set.domain, request.mode, request.complexityBand)
+        PracticePolicy.requireNewLearning(claim.set.domain, request.mode, request.complexityBand, request.scheduledDifficulties)
         val run = Run(request, claim, clock.instant().plusSeconds(1800))
 
         // 지문·문항·semantic 검증·모국어 해설은 같은 실행 deadline을 공유한다.

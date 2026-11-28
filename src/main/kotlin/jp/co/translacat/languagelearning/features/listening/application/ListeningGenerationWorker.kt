@@ -56,6 +56,7 @@ internal class ListeningGenerationWorker(
     private suspend fun generate(claim: ListeningJob, policy: ListeningPolicy, deadline: java.time.Instant) {
         val request = work.read {
             val set = checkNotNull(set(claim.userId, claim.aggregateId))
+            val itemRequest = scheduledItemRequest(set.request, checkNotNull(claim.payload.int("logicalItemIndex")))
             val replacementId = claim.payload.long("replacementForItemId")
             val previous = replacementId?.let { id -> set.items.single { it.id == id } }
             val correction = claim.payload["durationCorrection"] as? JsonObject
@@ -91,14 +92,14 @@ internal class ListeningGenerationWorker(
             )
             val demand = ListeningDuration.demand(
                 JsonObject(
-                    set.request + ("constraints" to buildJsonObject {
+                    itemRequest + ("constraints" to buildJsonObject {
                         put("audioSecondsMin", 1.0)
                         put("audioSecondsMax", policy.referenceAudioMaxSeconds.toDouble())
                     }),
                 ),
             )
             JsonObject(
-                set.request + buildJsonObject {
+                itemRequest + buildJsonObject {
                     put("requestId", "ll-listening-generation-${claim.id}")
                     put("idempotencyKey", claim.key)
                     put("manualRetryAttempt", claim.payload.int("manualRetryAttempt") ?: 0)
@@ -154,6 +155,27 @@ internal class ListeningGenerationWorker(
             enqueue(claim.userId, set.id, "TTS", "listening:item:$id:tts:0", buildJsonObject { put("itemId", id) })
             if (replacement == null) nextMissing(updated)
         }
+    }
+
+    // 배치 세트는 기존 음원 파이프라인을 쓰되 논리 문항마다 플랜과 같은 난이도로 요청한다.
+    private fun scheduledItemRequest(saved: JsonObject, index: Int): JsonObject {
+        val difficulties = saved["scheduledDifficulties"] as? JsonArray ?: return saved
+        val difficulty = difficulties[index - 1].jsonPrimitive.content
+        val complexity = saved.getValue("languageComplexity").jsonObject
+        val base = complexity.getValue("baseComplexityBand").jsonPrimitive.int
+        val delta = when (difficulty) {
+            "EASY" -> -1
+            "CHALLENGE" -> 1
+            else -> 0
+        }
+        val context = saved.getValue("setContext").jsonObject
+        val user = saved.getValue("userContext").jsonObject
+        return JsonObject((saved - "scheduledDifficulties" - "autoPracticeJobId") + mapOf(
+            "setContext" to JsonObject(context + ("difficulty" to JsonPrimitive(difficulty))),
+            "userContext" to JsonObject(user + ("level" to JsonPrimitive(difficulty))),
+            "languageComplexity" to JsonObject(complexity +
+                ("targetComplexityBand" to JsonPrimitive((base + delta).coerceIn(1, 5)))),
+        ))
     }
 
     private suspend fun synthesize(claim: ListeningJob, policy: ListeningPolicy, deadline: java.time.Instant) {

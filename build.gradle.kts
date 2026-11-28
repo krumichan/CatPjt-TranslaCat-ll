@@ -61,6 +61,7 @@ tasks.withType<Test>().configureEach {
 
 tasks.test {
     exclude("**/AccountDeletionPersistenceIntegrationTest*")
+    exclude("**/AutoPracticePersistenceIntegrationTest*")
     exclude("**/WebAiPersistenceIntegrationTest*")
     // 큐레이션의 실제 MySQL 검증도 전용 task에서 실행한다. 이미지의 일반 test에는 DB를 주입하지 않는다.
     exclude("**/CuratedWritingStoreIntegrationTest*", "**/CuratedWritingHttpDatabaseIntegrationTest*")
@@ -123,6 +124,7 @@ tasks.register<Test>("databaseIntegrationTest") {
     testClassesDirs = sourceSets["test"].output.classesDirs
     classpath = sourceSets["test"].runtimeClasspath
     include("**/AccountDeletionPersistenceIntegrationTest*")
+    include("**/AutoPracticePersistenceIntegrationTest*")
     include("**/CuratedWritingStoreIntegrationTest*")
     include("**/WebAiPersistenceIntegrationTest*")
     include("**/DatabaseMigrationIntegrationTest*", "**/SettingsPersistenceIntegrationTest*", "**/SettingsFeatureIntegrationTest*", "**/SettingsCutoverIntegrationTest*", "**/KeywordCatalogIntegrationTest*", "**/LevelTestPersistenceIntegrationTest*", "**/GrowthPersistenceIntegrationTest*", "**/WritingSchemaIntegrationTest*", "**/WritingSetStateIntegrationTest*", "**/PracticeStateIntegrationTest*", "**/SpeakingStateIntegrationTest*", "**/ListeningStateIntegrationTest*")

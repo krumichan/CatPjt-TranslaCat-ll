@@ -14,6 +14,8 @@ internal data class ReadingRequest(
     val weakSignals: List<String>,
     val recentMistakes: List<String>,
     val generationDate: String,
+    val scheduledDifficulties: List<PracticeDifficulty>? = null,
+    val autoPracticeJobId: Long? = null,
 )
 
 internal data class ReadingPassage(val id: String, val text: String, val plans: List<JsonObject>)
@@ -113,7 +115,7 @@ internal object ReadingPrompts {
                                     "samePassageTaskPosition",
                                     if (slot.globalOrder <= 3) slot.globalOrder else slot.globalOrder - 3,
                                 )
-                                put("samePassageTaskCount", if (slot.globalOrder <= 3) 3 else 2)
+                                put("samePassageTaskCount", slots(request, if (slot.globalOrder <= 3) 1 else 4).size)
                             }
                             feedback[slot.globalOrder]?.let { put("retryFeedback", it.take(600)) }
                         }
@@ -155,7 +157,7 @@ internal object ReadingPrompts {
                             if (request.mode == "STRUCTURE") {
                                 val global = firstOrder + question.order - 1
                                 put("samePassageTaskPosition", if (global <= 3) global else global - 3)
-                                put("samePassageTaskCount", if (global <= 3) 3 else 2)
+                                put("samePassageTaskCount", slots(request, if (global <= 3) 1 else 4).size)
                             }
                         }
                     },
@@ -233,7 +235,9 @@ internal object ReadingPrompts {
         },
     )
 
-    fun slots(request: ReadingRequest, firstOrder: Int) = PracticePolicy.slots(request.mode, request.complexityBand)
+    /** 1번과 4번 지문에 해당하는 기존 슬롯에서 확정한 난이도만 꺼낸다. */
+    fun slots(request: ReadingRequest, firstOrder: Int) =
+        PracticePolicy.slots(request.mode, request.complexityBand, request.scheduledDifficulties)
         .filter { it.globalOrder in if (firstOrder == 1) 1..3 else 4..5 }
 
     private fun prior(question: PracticeQuestionContent, withTarget: Boolean) = buildJsonObject {

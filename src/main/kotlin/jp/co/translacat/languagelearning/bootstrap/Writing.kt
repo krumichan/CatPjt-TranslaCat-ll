@@ -3,6 +3,7 @@ package jp.co.translacat.languagelearning.bootstrap
 import io.ktor.server.application.*
 import io.ktor.server.plugins.di.*
 import io.ktor.server.routing.*
+import jp.co.translacat.languagelearning.features.autopractice.application.AutoPracticeAccess
 import jp.co.translacat.languagelearning.features.keyword.application.KeywordLearningFacts
 import jp.co.translacat.languagelearning.features.keyword.application.KeywordOperations
 import jp.co.translacat.languagelearning.features.settings.application.SettingsServiceOperations
@@ -40,6 +41,7 @@ internal suspend fun Application.configureWriting() {
     val context = WritingContextService(
         settings, dependencies.resolve<KeywordOperations>(), work,
         dependencies.resolve<KeywordLearningFacts>(),
+        autoPractice = dependencies.resolve<AutoPracticeAccess>(),
     )
     val read = WritingReadService(work)
     val reports = WritingReportService(ExposedWritingReportQueries(dependencies.resolve<JdbcTransactionRunner>()))
@@ -63,7 +65,7 @@ internal suspend fun Application.configureWriting() {
                 )
             },
             regenerationAllowed = { settings.adminPolicy().adaptiveWritingEnabled },
-            createSet = context::getOrCreate,
+            createSet = { owner, type -> context.getOrCreate(owner, type) },
         )
     }
     val evaluationRecovery = WritingEvaluationRecovery(evaluationState, evaluationWorker) { userId ->

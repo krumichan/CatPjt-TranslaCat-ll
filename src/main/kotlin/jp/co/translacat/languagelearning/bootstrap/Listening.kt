@@ -3,6 +3,7 @@ package jp.co.translacat.languagelearning.bootstrap
 import io.ktor.server.application.*
 import io.ktor.server.plugins.di.*
 import io.ktor.server.routing.*
+import jp.co.translacat.languagelearning.features.autopractice.application.AutoPracticeAccess
 import jp.co.translacat.languagelearning.features.keyword.application.KeywordLearningFacts
 import jp.co.translacat.languagelearning.features.keyword.application.KeywordOperations
 import jp.co.translacat.languagelearning.features.listening.api.listeningRoutes
@@ -34,6 +35,7 @@ internal suspend fun Application.configureListening() {
     val context = ListeningContextService(
         settings, dependencies.resolve<KeywordOperations>(), work,
         dependencies.resolve<KeywordLearningFacts>(),
+        dependencies.resolve<AutoPracticeAccess>(),
     )
     val reads = ListeningReadService(work, settings)
     val sessions = ListeningSessionService(work, settings)

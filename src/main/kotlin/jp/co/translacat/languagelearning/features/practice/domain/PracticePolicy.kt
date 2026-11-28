@@ -9,10 +9,13 @@ internal object PracticePolicy {
     const val VOCABULARY_RETIRED = "DAILY_VOCABULARY_RETIRED"
     const val B5_STRUCTURE_DEFERRED = "READING_B5_STRUCTURE_DEFERRED"
 
-    fun requireNewLearning(domain: PracticeDomain, mode: String, band: Int) {
+    /** 예약 구성도 기존 B5 구조 문제의 출제 제한을 우회할 수 없다. */
+    fun requireNewLearning(
+        domain: PracticeDomain, mode: String, band: Int, scheduled: List<PracticeDifficulty>? = null,
+    ) {
         if (domain == PracticeDomain.VOCABULARY) throw PracticeFailure(VOCABULARY_RETIRED, 400)
         if (mode !in readingModes || band !in 1..5) throw PracticeFailure("LANGUAGE_LEARNING_SETTING_INVALID", 400)
-        if (mode == "STRUCTURE" && slots(mode, band).any { it.complexityBand == 5 }) {
+        if (mode == "STRUCTURE" && slots(mode, band, scheduled).any { it.complexityBand == 5 }) {
             throw PracticeFailure(B5_STRUCTURE_DEFERRED, 400)
         }
     }
@@ -34,14 +37,16 @@ internal object PracticePolicy {
         }).coerceIn(1, 5)
     }
 
-    fun slots(mode: String, band: Int): List<ReadingSlot> {
+    /** 기존 두 지문당 다섯 위치 내에서 직접 설정한 난이도 순서를 보존한다. */
+    fun slots(mode: String, band: Int, scheduled: List<PracticeDifficulty>? = null): List<ReadingSlot> {
         require(mode in readingModes && band in 1..5)
+        require(scheduled == null || scheduled.size in 1..5)
         val skills = when (mode) {
             "COMPREHENSION" -> listOf("CONTENT", "DETAIL", "INFERENCE", "DETAIL", "INFERENCE")
             "STRUCTURE" -> listOf("GIST", "STRUCTURE", "STRUCTURE", "GIST", "STRUCTURE")
             else -> listOf("CONTEXT_INFERENCE", "INFERENCE", "CONTEXT_INFERENCE", "INFERENCE", "CONTEXT_INFERENCE")
         }
-        val mix = listOf(
+        val mix = scheduled ?: listOf(
             PracticeDifficulty.CURRENT, PracticeDifficulty.EASIER,
             PracticeDifficulty.CURRENT, PracticeDifficulty.CHALLENGE, PracticeDifficulty.CURRENT,
         )

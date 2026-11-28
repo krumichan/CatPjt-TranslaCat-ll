@@ -3,6 +3,7 @@ package jp.co.translacat.languagelearning.features.practice.application
 import jp.co.translacat.languagelearning.features.practice.domain.*
 import java.time.Duration
 import java.util.*
+import kotlinx.serialization.json.Json
 
 internal data class PracticeGenerationClaim(
     val set: PracticeSet, val token: String, val firstOrder: Int, val previous: List<PracticeQuestionContent>,
@@ -91,7 +92,8 @@ internal class PracticeGenerationState(private val work: PracticeUnitOfWork) {
 
     suspend fun retry(userId: Long, setId: Long): PracticeSet = work.write(userId) {
         val set = records.find(userId, setId) ?: throw PracticeFailure("LANGUAGE_LEARNING_DAILY_SET_NOT_FOUND", 400)
-        PracticePolicy.requireNewLearning(set.domain, set.mode, set.complexityBand)
+        val request = Json.decodeFromString<ReadingRequest>(set.requestJson)
+        PracticePolicy.requireNewLearning(set.domain, set.mode, set.complexityBand, request.scheduledDifficulties)
         if (set.generationStatus !in setOf(
                 PracticeGenerationStatus.PARTIAL, PracticeGenerationStatus.FAILED,
             )
@@ -108,17 +110,17 @@ internal class PracticeGenerationState(private val work: PracticeUnitOfWork) {
         if (records.questions(setId).isEmpty()) PracticeGenerationStatus.FAILED else PracticeGenerationStatus.PARTIAL
 
     private fun validateBundle(set: PracticeSet, firstOrder: Int, bundle: ReadingGeneratedBundle) {
-        val count = when (firstOrder) {
-            1 -> 3; 4 -> 2; else -> throw PracticeFailure("AI_SCHEMA_INVALID", 422)
-        }
+        val request = Json.decodeFromString<ReadingRequest>(set.requestJson)
+        if (firstOrder !in listOf(1, 4)) throw PracticeFailure("AI_SCHEMA_INVALID", 422)
+        val slots = ReadingPrompts.slots(request, firstOrder)
+        val count = slots.size
         val passageId = if (firstOrder == 1) "p1" else "p2"
-        val slots = PracticePolicy.slots(set.mode, set.complexityBand)
-        if (bundle.promptVersion.isBlank() || bundle.questions.size != count || bundle.questions.map { it.passageText }
+        if (count == 0 || bundle.promptVersion.isBlank() || bundle.questions.size != count || bundle.questions.map { it.passageText }
                 .distinct().size != 1) {
             throw PracticeFailure("AI_SCHEMA_INVALID", 422)
         }
         bundle.questions.forEachIndexed { index, question ->
-            val slot = slots[firstOrder + index - 1]
+            val slot = slots[index]
             if (question.order != slot.globalOrder || question.difficulty != slot.difficulty || question.complexityBand != slot.complexityBand ||
                 question.skillTag != slot.skillTag || question.passageId != passageId || question.passageText.isNullOrBlank() ||
                 question.prompt.isBlank() || question.explanationOrigin.isBlank() || question.explanationLearning.isBlank() ||

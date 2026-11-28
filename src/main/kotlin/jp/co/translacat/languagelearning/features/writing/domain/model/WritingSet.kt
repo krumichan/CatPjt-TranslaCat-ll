@@ -1,5 +1,7 @@
 package jp.co.translacat.languagelearning.features.writing.domain.model
 
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonObject
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -21,7 +23,15 @@ internal data class WritingSet(
     val generationToken: String?,
     val generationLeaseUntil: LocalDateTime?,
     val failureMessage: String?,
-)
+) {
+    /** 예약 분량에는 이월과 이틀 미학습 정지 당일까지의 풀이 기회를 보존한다. */
+    fun lastReviewDate(configuredDays: Int): LocalDate {
+        val snapshot = runCatching { Json.parseToJsonElement(snapshotJson) as? JsonObject }.getOrNull()
+        val days = if (snapshot?.containsKey("autoPracticeJobId") == true) configuredDays.coerceAtLeast(3)
+        else configuredDays
+        return learningDate.plusDays(days - 1L)
+    }
+}
 
 internal data class NewWritingSet(
     val userId: Long,

@@ -20,6 +20,7 @@ suspend fun Application.module() {
     configureKeywordHttp()
     configureGrowth()
     configureLevelTest()
+    configureAutoPractice()
     configureWriting()
     configurePractice()
     configureListening()

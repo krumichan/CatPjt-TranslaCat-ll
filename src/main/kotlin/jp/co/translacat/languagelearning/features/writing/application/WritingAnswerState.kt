@@ -42,9 +42,7 @@ internal class WritingAnswerState(private val work: WritingSetUnitOfWork) {
             if (!contentRevision.isNullOrBlank())
                 require(contentRevision == WritingItemRevision.of(item)) { "WRITING_ITEM_STALE" }
             require(
-                !today.isBefore(set.learningDate) && !today.isAfter(
-                    set.learningDate.plusDays(reviewAvailableDays - 1L)
-                ),
+                !today.isBefore(set.learningDate) && !today.isAfter(set.lastReviewDate(reviewAvailableDays)),
             ) {
                 "WRITING_REVIEW_EXPIRED"
             }
