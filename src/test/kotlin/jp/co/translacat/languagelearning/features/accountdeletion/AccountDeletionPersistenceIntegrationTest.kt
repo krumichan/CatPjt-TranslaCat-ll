@@ -176,7 +176,9 @@ private class LearningDeletionFixture(private val initial: Connection) {
     private val original = mutableMapOf<Pair<String, Long>, List<List<String?>>>()
 
     fun seed(user: Long) {
-        assertEquals(56, owned.size, "FK graph coverage changed; update the deletion contract and fixture deliberately")
+        assertEquals(58, owned.size, "FK graph coverage changed; update the deletion contract and fixture deliberately")
+        assertTrue("language_learning_auto_practice_plan" in owned)
+        assertTrue("language_learning_auto_practice_job" in owned)
         insert("language_learning_learner", user)
         owned.sorted().forEach { insert(it, user) }
         owned.forEach { table -> original[table to user] = select(initial, table, rows.getValue(table to user)) }

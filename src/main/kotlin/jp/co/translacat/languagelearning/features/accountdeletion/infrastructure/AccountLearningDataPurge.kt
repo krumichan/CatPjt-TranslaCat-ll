@@ -50,6 +50,7 @@ internal fun purgeAccountLearningData(user: Long) {
         "language_learning_result_event", "language_learning_result_stream", "language_learning_custom_keyword",
         "language_learning_user_system_keyword", "language_learning_settings_selection_delivery", "language_learning_user_setting",
         "ll_web_ai_results", "ll_web_ai_runs", "ll_web_ai_plans",
+        "language_learning_auto_practice_job", "language_learning_auto_practice_plan",
     )
     owned.forEach { table -> sql.update("DELETE FROM $table WHERE user_id=?", user) }
     for (catalog in generated) {
