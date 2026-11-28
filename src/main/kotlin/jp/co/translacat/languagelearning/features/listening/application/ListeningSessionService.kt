@@ -1,5 +1,7 @@
 package jp.co.translacat.languagelearning.features.listening.application
 
+import jp.co.translacat.languagelearning.features.autopractice.application.AutoPracticePublication
+import jp.co.translacat.languagelearning.features.autopractice.application.autoPracticeReference
 import jp.co.translacat.languagelearning.features.listening.domain.model.*
 import jp.co.translacat.languagelearning.features.listening.domain.policy.ListeningAudioUploadPolicy
 import jp.co.translacat.languagelearning.features.listening.domain.policy.ListeningTaskSelectionPolicy
@@ -9,11 +11,13 @@ import jp.co.translacat.languagelearning.shared.error.LearningBusinessException
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
 import java.time.LocalDateTime
+import java.time.ZoneOffset
 import java.util.*
 
 /** 세션 선택·점진적 문항 연결과 답변 저장의 상태/사용자 경계를 소유한다. */
 internal class ListeningSessionService(
     private val work: ListeningUnitOfWork, private val settings: SettingsServiceOperations,
+    private val publication: AutoPracticePublication? = null,
 ) {
     suspend fun create(
         userId: Long, setId: Long, selected: List<ListeningTaskType>?, idempotencyKey: String?,
@@ -24,6 +28,7 @@ internal class ListeningSessionService(
         return work.write(userId) {
             // 요청 모드·payload를 먼저 고정하고 동일 key의 다른 payload를 거절한다.
             val set = set(userId, setId) ?: missing("LANGUAGE_LEARNING_DAILY_SET_NOT_FOUND")
+            set.request.autoPracticeReference()?.let { publication?.openedDate(userId, it, nowUtc.toInstant(ZoneOffset.UTC)) }
             val pair = ConfiguredLanguagePair(set.originLanguage, set.learningLanguage)
             val tasks = ListeningTaskSelectionPolicy.validateForMode(
                 set.learningMode,

@@ -1,17 +1,25 @@
 package jp.co.translacat.languagelearning.features.practice.application
 
+import jp.co.translacat.languagelearning.features.autopractice.application.AutoPracticePublication
+import jp.co.translacat.languagelearning.features.autopractice.application.autoPracticeReference
 import jp.co.translacat.languagelearning.features.practice.domain.*
 import jp.co.translacat.languagelearning.features.settings.domain.model.ConfiguredLanguagePair
 import jp.co.translacat.languagelearning.shared.identity.LearningPublicId
 import kotlinx.serialization.json.*
 import java.time.LocalDate
+import java.time.ZoneOffset
 
-internal class PracticeReadService(private val work: PracticeUnitOfWork) {
+internal class PracticeReadService(
+    private val work: PracticeUnitOfWork,
+    private val publication: AutoPracticePublication? = null,
+) {
     private val json = Json { encodeDefaults = true }
 
     suspend fun get(userId: Long, setId: Long): JsonObject = work.read {
         // 사용자 소유 세트와 실제 답변을 함께 읽어 공개 가능한 지문 범위를 계산한다.
         val set = records.find(userId, setId) ?: throw PracticeFailure("LANGUAGE_LEARNING_DAILY_SET_NOT_FOUND", 400)
+        val publicDate = set.requestJson.autoPracticeReference()
+            ?.let { publication?.openedDate(userId, it, nowUtc.toInstant(ZoneOffset.UTC)) } ?: set.learningDate
         val questions = records.questions(setId)
         val attempts = records.attempts(setId)
         val completed = PracticePolicy.completedPassages(questions, attempts.map { it.questionId }.toSet())
@@ -19,7 +27,7 @@ internal class PracticeReadService(private val work: PracticeUnitOfWork) {
         // 외부 DTO 이름과 첫 시도 집계를 유지하고, 문항별 정답 공개는 별도 매핑에서 제한한다.
         buildJsonObject {
             put("practiceSetId", LearningPublicId.encode(setId))
-            put("learningDate", set.learningDate.toString())
+            put("learningDate", publicDate.toString())
             put("domain", set.domain.name)
             put("mode", set.mode)
             put("status", set.status.name)
@@ -62,6 +70,10 @@ internal class PracticeReadService(private val work: PracticeUnitOfWork) {
         JsonArray(
             records.today(userId, date, domain)
                 .filter { domain != PracticeDomain.VOCABULARY || it.mode == "CONTEXTUAL_CHOICE" }
+                .filter { set ->
+                    val job = set.requestJson.autoPracticeReference()
+                    job == null || publication == null || publication.visibleDate(userId, job, nowUtc.toInstant(ZoneOffset.UTC)) == date
+                }
                 .map { set ->
                     buildJsonObject {
                         put("mode", set.mode)

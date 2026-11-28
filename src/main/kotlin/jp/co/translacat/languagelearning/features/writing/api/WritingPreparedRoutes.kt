@@ -157,6 +157,7 @@ internal fun Route.writingPreparedRoutes(
 
             // 기존 BE와 같이 재생성은 검증된 모든 교체 문항의 원자 게시가 끝날 때까지 기다린다.
             val result = try {
+                state.requireOpen(userId, setId)
                 worker.regenerateFromSnapshot(userId, setId)
             } catch (failure: RuntimeException) {
                 if (call.respondWritingStateFailure(failure)) return@post

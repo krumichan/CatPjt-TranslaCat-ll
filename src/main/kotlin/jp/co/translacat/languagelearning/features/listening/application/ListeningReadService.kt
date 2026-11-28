@@ -1,5 +1,7 @@
 package jp.co.translacat.languagelearning.features.listening.application
 
+import jp.co.translacat.languagelearning.features.autopractice.application.AutoPracticePublication
+import jp.co.translacat.languagelearning.features.autopractice.application.autoPracticeReference
 import jp.co.translacat.languagelearning.features.listening.domain.model.*
 import jp.co.translacat.languagelearning.features.settings.application.SettingsServiceOperations
 import jp.co.translacat.languagelearning.features.settings.domain.model.ConfiguredLanguagePair
@@ -8,17 +10,19 @@ import jp.co.translacat.languagelearning.shared.identity.LearningPublicId
 import kotlinx.serialization.json.*
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.ZoneOffset
 
 /** 외부 DTO의 상태·필드와 정답 공개 시점을 유지한다. 내부 저장 JSON을 그대로 노출하지 않는다. */
 internal class ListeningReadService(
     private val work: ListeningUnitOfWork, private val settings: SettingsServiceOperations,
+    private val publication: AutoPracticePublication? = null,
 ) {
     private val json = Json { encodeDefaults = true }
     private val terminal = setOf("EVALUATED", "NOT_EVALUABLE", "SKIPPED")
 
     suspend fun set(userId: Long, id: Long): JsonObject {
         val policy = settings.listeningPolicy()
-        return work.read { setView(set(userId, id) ?: missing("LANGUAGE_LEARNING_DAILY_SET_NOT_FOUND"), policy) }
+        return work.read { setView(opened(set(userId, id) ?: missing("LANGUAGE_LEARNING_DAILY_SET_NOT_FOUND")), policy) }
     }
 
     suspend fun session(userId: Long, id: Long): JsonObject = work.read {
@@ -107,7 +111,11 @@ internal class ListeningReadService(
         val setting = settings.userSnapshot(userId)
         val language = setting.result.settings.learningLanguage ?: missing("LISTENING_SETTING_REQUIRED")
         return work.read {
-            val sets = sets(userId, setting.learningDate).filter { it.learningLanguage == language }
+            val sets = sets(userId, setting.learningDate).filter { set ->
+                val job = set.request.autoPracticeReference()
+                set.learningLanguage == language && (job == null || publication == null ||
+                    publication.visibleDate(userId, job, nowUtc.toInstant(ZoneOffset.UTC)) == setting.learningDate)
+            }
             val sessions = sessions(userId)
             JsonArray(
                 listOf("DICTATION", "COMPREHENSION", "SUMMARY").map { mode ->
@@ -159,9 +167,17 @@ internal class ListeningReadService(
         val set = sets(userId).firstOrNull { it.items.any { item -> item.id == itemId } } ?: missing(
             "LANGUAGE_LEARNING_DAILY_ITEM_NOT_FOUND",
         )
+        opened(set)
         val item = set.items.single { it.id == itemId }
         if (!playable(userId, item)) expired()
         checkNotNull(audio(userId, checkNotNull(item.audioId)))
+    }
+
+    /** セット本文と直接指定された参照音声に同じ公開条件を適用する。 */
+    private fun ListeningTransaction.opened(set: ListeningSetState): ListeningSetState {
+        val job = set.request.autoPracticeReference() ?: return set
+        val date = publication?.openedDate(set.userId, job, nowUtc.toInstant(ZoneOffset.UTC)) ?: return set
+        return set.copy(learningDate = date.toString())
     }
 
     suspend fun responseAudio(userId: Long, responseId: Long): ListeningAudioState = work.read {

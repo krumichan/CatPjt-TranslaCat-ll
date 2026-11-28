@@ -5,8 +5,11 @@ import io.ktor.server.plugins.di.*
 import io.ktor.server.routing.*
 import jp.co.translacat.languagelearning.features.autopractice.api.autoPracticeRoutes
 import jp.co.translacat.languagelearning.features.autopractice.application.AutoPracticeAccess
+import jp.co.translacat.languagelearning.features.autopractice.application.AutoPracticePublication
 import jp.co.translacat.languagelearning.features.autopractice.application.AutoPracticePublisher
+import jp.co.translacat.languagelearning.features.autopractice.application.AutoPracticeResource
 import jp.co.translacat.languagelearning.features.autopractice.application.AutoPracticeService
+import jp.co.translacat.languagelearning.features.autopractice.application.autoPracticeReference
 import jp.co.translacat.languagelearning.features.autopractice.domain.AutoPracticeArea
 import jp.co.translacat.languagelearning.features.autopractice.domain.AutoPracticeJob
 import jp.co.translacat.languagelearning.features.autopractice.infrastructure.JdbcAutoPracticeStore
@@ -43,7 +46,10 @@ internal suspend fun Application.configureAutoPractice() {
             AutoPracticeArea.entries.filter { it.isWriting }.forEach { area ->
                 val type = WritingType.valueOf(area.name.removePrefix("WRITING_"))
                 put(area, NativeAutoPracticePublisher(
-                    { owner, job -> context.getOrCreate(owner, type, job).id }, context::preparedStatus,
+                    { owner, job ->
+                        val set = context.getOrCreate(owner, type, job)
+                        resource(set.id, set.snapshotJson.autoPracticeReference(), job)
+                    }, context::preparedStatus,
                 ))
             }
         }
@@ -52,7 +58,10 @@ internal suspend fun Application.configureAutoPractice() {
             AutoPracticeArea.entries.filter { it.name.startsWith("READING_") }.forEach { area ->
                 val mode = area.name.removePrefix("READING_")
                 put(area, NativeAutoPracticePublisher(
-                    { owner, job -> context.today(owner, PracticeDomain.READING, mode, job).id }, context::preparedStatus,
+                    { owner, job ->
+                        val set = context.today(owner, PracticeDomain.READING, mode, job)
+                        resource(set.id, set.requestJson.autoPracticeReference(), job)
+                    }, context::preparedStatus,
                 ))
             }
         }
@@ -62,7 +71,8 @@ internal suspend fun Application.configureAutoPractice() {
                 val mode = area.name.removePrefix("LISTENING_")
                 put(area, NativeAutoPracticePublisher(
                     { owner, job ->
-                        context.getOrCreate(owner, mode, itemCount = job.quantity.total.toInt(), scheduled = job).id
+                        val set = context.getOrCreate(owner, mode, itemCount = job.quantity.total.toInt(), scheduled = job)
+                        resource(set.id, set.request.autoPracticeReference(), job)
                     },
                     context::preparedStatus,
                 ))
@@ -72,7 +82,10 @@ internal suspend fun Application.configureAutoPractice() {
     val store = JdbcAutoPracticeStore(runner) { user, now ->
         ExposedLearnerRepository {}.ensureAndLock(user, now).requireActive()
     }
-    dependencies { provide<AutoPracticeAccess> { AutoPracticeAccess(store) } }
+    dependencies {
+        provide<AutoPracticeAccess> { AutoPracticeAccess(store) }
+        provide<AutoPracticePublication> { store }
+    }
     val service = AutoPracticeService(store, settings, publishers)
     routing { autoPracticeRoutes(service) }
 
@@ -92,13 +105,16 @@ internal suspend fun Application.configureAutoPractice() {
     }
 }
 
+/** 自動プランを有効にする前の既存セットを新しい手動回として繰り越さない。 */
+private fun resource(id: Long, storedJobId: Long?, job: AutoPracticeJob): AutoPracticeResource =
+    AutoPracticeResource(LearningPublicId.encode(id).toString(), storedJobId != job.id)
+
 /** 기존 클라이언트 REST와 동일한 공개 식별자를 반환한다. */
 private class NativeAutoPracticePublisher(
-    private val create: suspend (Long, AutoPracticeJob) -> Long,
+    private val create: suspend (Long, AutoPracticeJob) -> AutoPracticeResource,
     private val readStatus: suspend (Long, Long) -> String,
 ) : AutoPracticePublisher {
-    override suspend fun enqueue(owner: Long, job: AutoPracticeJob): String =
-        LearningPublicId.encode(create(owner, job)).toString()
+    override suspend fun enqueue(owner: Long, job: AutoPracticeJob): AutoPracticeResource = create(owner, job)
 
     override suspend fun state(owner: Long, job: AutoPracticeJob): String =
         readStatus(owner, LearningPublicId.decode(checkNotNull(job.resourceId)))

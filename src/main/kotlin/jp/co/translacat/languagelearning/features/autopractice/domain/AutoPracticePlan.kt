@@ -55,7 +55,13 @@ internal data class AutoPracticeJob(
     val state: String,
     val resourceId: String? = null,
     val reason: String? = null,
+    val requestedDate: String? = null,
+    val rolloverAt: String? = null,
+    val availableAt: String? = null,
 )
+
+@Serializable
+internal data class AutoPracticeManualOption(val learningDate: String, val rolloverAt: String?)
 
 @Serializable
 internal data class AutoPracticeWorkspace(
@@ -65,4 +71,5 @@ internal data class AutoPracticeWorkspace(
     val writingLimit: Int,
     val availableAreas: Set<AutoPracticeArea>,
     val jobs: List<AutoPracticeJob>,
+    val manual: AutoPracticeManualOption? = null,
 )

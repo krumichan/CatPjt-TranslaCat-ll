@@ -24,6 +24,9 @@ internal fun Route.autoPracticeRoutes(service: AutoPracticeService) {
             get {
                 call.respond(service.workspace(call.owner().user.userId))
             }
+            post("/manual") {
+                call.respond(service.prepareManually(call.owner().user.userId))
+            }
             post("/plans") {
                 call.respond(service.save(call.owner().user.userId, null, call.receive<AutoPracticePlanInput>()))
             }

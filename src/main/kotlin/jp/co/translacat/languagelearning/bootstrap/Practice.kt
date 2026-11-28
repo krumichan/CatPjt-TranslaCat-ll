@@ -4,6 +4,7 @@ import io.ktor.server.application.*
 import io.ktor.server.plugins.di.*
 import io.ktor.server.routing.*
 import jp.co.translacat.languagelearning.features.autopractice.application.AutoPracticeAccess
+import jp.co.translacat.languagelearning.features.autopractice.application.AutoPracticePublication
 import jp.co.translacat.languagelearning.features.keyword.application.KeywordLearningFacts
 import jp.co.translacat.languagelearning.features.keyword.application.KeywordOperations
 import jp.co.translacat.languagelearning.features.practice.api.practiceRoutes
@@ -31,7 +32,8 @@ internal suspend fun Application.configurePractice() {
         dependencies.resolve<KeywordLearningFacts>(),
         dependencies.resolve<AutoPracticeAccess>(),
     )
-    val state = PracticeGenerationState(work)
+    val publication = dependencies.resolve<AutoPracticePublication>()
+    val state = PracticeGenerationState(work, publication)
     val worker = PracticeGenerationWorker(
         state,
         ReadingGenerationExecution(
@@ -40,7 +42,10 @@ internal suspend fun Application.configurePractice() {
         ),
     )
     routing {
-        practiceRoutes(context, PracticeReadService(work), PracticeAnswerService(work), state, settings::learningDate)
+        practiceRoutes(
+            context, PracticeReadService(work, publication), PracticeAnswerService(work, publication),
+            state, settings::learningDate,
+        )
     }
 
     // 영속 PENDING/만료 lease를 기존 1초 주기로 조회하므로 재기동 후에도 같은 작업을 이어간다.

@@ -18,11 +18,13 @@ import java.util.UUID
 /** 기존 학습 경로가 가진 저장·실행·판정 규칙을 유지하는 자동 생성 입구다. */
 internal interface AutoPracticePublisher {
     /** 네이티브 세트를 준비하며 같은 작업은 항상 같은 저장 원본을 반환한다. */
-    suspend fun enqueue(owner: Long, job: AutoPracticeJob): String
+    suspend fun enqueue(owner: Long, job: AutoPracticeJob): AutoPracticeResource
 
     /** 화면 조회는 저장된 준비 상태만 읽는다. */
     suspend fun state(owner: Long, job: AutoPracticeJob): String
 }
+
+internal data class AutoPracticeResource(val id: String, val usedExistingSet: Boolean = false)
 
 /** 설정 저장과 스케줄러는 같은 활성 플랜 및 관리자 한도를 사용한다. */
 internal class AutoPracticeService(
@@ -36,22 +38,71 @@ internal class AutoPracticeService(
         val user = settings.userSnapshot(owner).result.settings
         val admin = settings.adminPolicy()
         val listeningCap = listeningCap()
-        val today = clock.instant().atZone(ZoneId.of(user.timezone)).toLocalDate()
+        val now = clock.instant()
+        val zone = ZoneId.of(user.timezone)
+        val today = now.atZone(zone).toLocalDate()
         val view = store.read {
             val assignments = if (user.configured) assignments(
                 owner, checkNotNull(user.originLanguage), checkNotNull(user.learningLanguage),
-                today.minusDays((admin.reviewAvailableDays - 1).coerceAtLeast(2).toLong()), today,
+                today.minusDays((admin.reviewAvailableDays - 1).coerceAtLeast(2).toLong()), today.plusDays(1),
             ) else emptyList()
+            val manual = active(owner)?.plan?.takeIf { pair(it).matches(user.originLanguage, user.learningLanguage) }
+                ?.let { manualOption(owner, it, today, now, zone) }
             AutoPracticeWorkspace(
                 user.timezone, plans(owner), effectiveLimits(limits(), listeningCap),
-                admin.maxDailySentenceCount, publishers.keys, assignments,
+                admin.maxDailySentenceCount, publishers.keys, assignments, manual,
             )
         }
         val jobs = view.jobs.map { job ->
             val publisher = publishers[job.area]
-            if (job.resourceId == null || publisher == null) job else job.copy(state = publisher.state(owner, job))
+            val state = if (job.resourceId == null || publisher == null) job.state else publisher.state(owner, job)
+            val readAt = clock.instant()
+            val date = LocalDate.parse(job.learningDate)
+            val startOfDay = date.atStartOfDay(zone).toInstant()
+            val visible = readAt >= startOfDay && AutoPracticePolicy.isVisible(job, readAt)
+            if (visible) job.copy(state = state) else job.copy(
+                state = if (state in playableStates) "LOCKED" else state, resourceId = null,
+                availableAt = job.availableAt ?: startOfDay.takeIf { it > readAt }?.toString(),
+            )
         }
         return view.copy(jobs = jobs)
+    }
+
+    /** 手動と自動の両方が同じ日次予約と owner ロックを使う。 */
+    suspend fun prepareManually(owner: Long): AutoPracticeWorkspace {
+        val user = settings.userSnapshot(owner).result.settings
+        val zone = ZoneId.of(user.timezone)
+        val writingCap = settings.adminPolicy().maxDailySentenceCount
+        val listeningCap = listeningCap()
+        val now = clock.instant()
+        val today = now.atZone(zone).toLocalDate()
+        val utcNow = utc(now)
+        store.writeOwner(owner, utcNow) {
+            val current = active(owner)?.takeIf { pair(it.plan).matches(user.originLanguage, user.learningLanguage) }
+                ?: invalid("현재 학습 언어의 활성 플랜이 필요합니다.")
+            val plan = current.plan
+            if (manualOption(owner, plan, today, now, zone) == null) return@writeOwner
+            if (!AutoPracticePolicy.withinLimits(plan.areas, effectiveLimits(limits(), listeningCap), writingCap) ||
+                plan.areas.keys.any { it !in publishers }
+            ) invalid("활성 플랜의 문항 수와 유형을 확인해 주세요.")
+
+            // 夜間に翌日の条件を満たす場合も、同じ手動要求として一度だけ予約する。
+            val cutoff = AutoPracticePolicy.rolloverAt(today, LocalTime.parse(plan.studyTime), zone)
+            val tomorrow = today.plusDays(1)
+            val first = localPlacement(owner, plan, zone)
+            val activated = checkNotNull(current.activatedAt).toInstant(ZoneOffset.UTC).atZone(zone).toLocalDate()
+            if (AutoPracticePolicy.shouldPause(today, activated, first, answeredDates(owner, plan, today, zone, now))) {
+                keepManualRounds(owner)
+                writePlan(owner, paused(plan, "INACTIVITY"), null, null, true)
+                return@writeOwner
+            }
+            val offerTomorrow = cutoff != null && now >= cutoff && !changesLanguages(user, tomorrow) &&
+                eligible(owner, plan, tomorrow, zone, now)
+            reserve(owner, plan, today, utcNow, manual = true, rolloverAt = cutoff?.takeIf { it > now || offerTomorrow }?.let(::utc))
+            if (offerTomorrow) settleManual(owner, plan, today, utc(tomorrow.atStartOfDay(zone).toInstant()))
+            defer(owner, plan.id, utcNow)
+        }
+        return workspace(owner)
     }
 
     /** 활성화는 사용자 잠금 안에서 기존 활성 플랜과 교체한다. */
@@ -81,6 +132,7 @@ internal class AutoPracticeService(
             )
 
             // 새 활성 플랜을 쓰기 전에 현재 활성 슬롯을 비우고 기존 준비 분량은 그대로 둔다.
+            if (value.enabled || previous?.plan?.enabled == true) keepManualRounds(owner)
             if (value.enabled) {
                 active(owner)?.takeUnless { it.plan.id == value.id }?.let { current ->
                     writePlan(owner, paused(current.plan, "REPLACED"), null, null, update = true)
@@ -95,6 +147,7 @@ internal class AutoPracticeService(
     /** 플랜이 삭제돼도 저장된 학습 원본과 일일 배정 식별자가 남는다. */
     suspend fun delete(owner: Long, id: String) {
         store.writeOwner(owner, utc(clock.instant())) {
+            if (active(owner)?.plan?.id == id) keepManualRounds(owner)
             if (!removePlan(owner, id)) invalid("학습 플랜을 찾을 수 없습니다.")
         }
     }
@@ -149,27 +202,45 @@ internal class AutoPracticeService(
             } ?: return@writeOwner
             val plan = current.plan
             if (!pair(plan).matches(user.originLanguage, user.learningLanguage)) {
+                keepManualRounds(owner)
                 writePlan(owner, paused(plan, "LANGUAGE_CHANGED"), null, null, true)
                 return@writeOwner
             }
 
-            val first = placement(owner, plan.originLanguage, plan.learningLanguage)?.atOffset(ZoneOffset.UTC)
-                ?.atZoneSameInstant(zone)?.toLocalDate()
-            val answered = submissions(
-                owner, plan.originLanguage, plan.learningLanguage,
-                utc(today.minusDays(2).atStartOfDay(zone).toInstant()), utcNow.plusNanos(1_000),
-            ).mapTo(mutableSetOf()) { it.atOffset(ZoneOffset.UTC).atZoneSameInstant(zone).toLocalDate() }
+            val first = localPlacement(owner, plan, zone)
+            val answered = answeredDates(owner, plan, today, zone, now)
             val activated = checkNotNull(current.activatedAt).atOffset(ZoneOffset.UTC).atZoneSameInstant(zone).toLocalDate()
 
             // 이월분은 native 원본에 둔다. 이틀 동안 답안이 없을 때 현재 플랜만 끈다.
             if (AutoPracticePolicy.shouldPause(today, activated, first, answered)) {
+                keepManualRounds(owner)
                 writePlan(owner, paused(plan, "INACTIVITY"), null, null, true)
                 return@writeOwner
             }
             val time = LocalTime.parse(plan.studyTime)
-            if (AutoPracticePolicy.withinLimits(plan.areas, effectiveLimits(limits(), listeningCap), writingCap)) {
+            val allowed = AutoPracticePolicy.withinLimits(plan.areas, effectiveLimits(limits(), listeningCap), writingCap)
+            keepManualRounds(owner, today.minusDays(1))
+
+            // Due の自動予約より先に手動回を移す。再起動直後は昨日分の判定も回収する。
+            listOf(today.minusDays(1), today).forEach { date ->
+                val round = manualRound(owner, plan, date)
+                val cutoff = round.firstNotNullOfOrNull { it.rolloverAt }?.let(Instant::parse)
+                if (cutoff != null && now >= cutoff) {
+                    val target = date.plusDays(1)
+                    val move = allowed && !changesLanguages(user, target) &&
+                        round.all { it.planId == plan.id && it.planRevision == plan.revision } &&
+                        round.any { it.state !in setOf("FAILED", "BLOCKED") } &&
+                        dailyRound(owner, plan, target).isEmpty() && eligible(owner, plan, target, zone, cutoff)
+                    settleManual(owner, plan, date, target.atStartOfDay(zone).toInstant().takeIf { move }?.let(::utc))
+                }
+            }
+            if (allowed) {
                 AutoPracticePolicy.dueDates(now, zone, time, first, answered).filter { !changesLanguages(user, it) }
-                    .forEach { date -> reserve(owner, plan, date, utcNow) }
+                    .forEach { date ->
+                        if (manualRound(owner, plan, date).isEmpty() &&
+                            dailyRound(owner, plan, date).none { it.requestedDate != null }
+                        ) reserve(owner, plan, date, utcNow, availableAt = utc(date.atStartOfDay(zone).toInstant()))
+                    }
             }
 
             val midnight = today.plusDays(1).atStartOfDay(zone).toInstant()
@@ -183,36 +254,46 @@ internal class AutoPracticeService(
 
     /** 작업 예약 뒤 플랜·날짜·관리자 한도를 다시 확인하고, 모델 호출이 있는 영역 작업과 잠금을 분리한다. */
     private suspend fun dispatch(queued: AutoPracticeQueuedJob, writingCap: Int, listeningCap: Int) {
-        val job = queued.job
         val owner = queued.userId
         val now = utc(clock.instant())
         val user = settings.userSnapshot(owner).result.settings
-        val date = LocalDate.parse(job.learningDate)
         val lease = UUID.randomUUID().toString()
-        val allowed = store.writeOwner(owner, now) {
+        val job = store.writeOwner(owner, now) {
             val selected = active(owner)?.plan
-            if (!claim(queued, now, lease)) return@writeOwner false
+            if (!claim(queued, now, lease)) return@writeOwner null
+            val fresh = checkNotNull(this.job(owner, queued.job.id))
+            val date = LocalDate.parse(fresh.learningDate)
             val reason = when {
-                selected == null || selected.id != job.planId || selected.revision != job.planRevision -> "PLAN_CHANGED"
+                selected == null || selected.id != fresh.planId || selected.revision != fresh.planRevision -> "PLAN_CHANGED"
                 !pair(selected).matches(user.originLanguage, user.learningLanguage) -> "LANGUAGE_CHANGED"
                 changesLanguages(user, date) -> "LANGUAGE_CHANGED"
                 date.isBefore(now.atOffset(ZoneOffset.UTC).atZoneSameInstant(ZoneId.of(user.timezone)).toLocalDate()) -> "DAY_EXPIRED"
                 queued.attempts >= 3 -> "RETRY_LIMIT"
                 !AutoPracticePolicy.withinLimits(selected.areas, effectiveLimits(limits(), listeningCap), writingCap) ->
                     "LIMIT_CHANGED"
-                job.area !in publishers -> "AREA_UNAVAILABLE"
+                fresh.area !in publishers -> "AREA_UNAVAILABLE"
                 else -> null
             }
-            if (reason == null) true else {
+            if (reason == null) fresh else {
                 finish(queued, lease, "BLOCKED", now, null, reason)
-                false
+                null
             }
-        }
-        if (!allowed) return
+        } ?: return
 
         try {
-            val resource = publishers.getValue(job.area).enqueue(owner, job)
-            store.write { finish(queued, lease, "QUEUED", now, resource, null) }
+            // 一度開始したネイティブ生成は同じ日付と ID で再試行し、公開日だけ予約側で変更する。
+            val source = job.copy(learningDate = job.requestedDate ?: job.learningDate)
+            val resource = publishers.getValue(job.area).enqueue(owner, source)
+            store.writeOwner(owner, utc(clock.instant())) {
+                if (resource.usedExistingSet && job.requestedDate != null) {
+                    this.job(owner, job.id)?.takeIf { it.rolloverAt != null }?.let {
+                        active(owner)?.plan?.takeIf { plan -> plan.id == job.planId }?.let { plan ->
+                            settleManual(owner, plan, LocalDate.parse(job.requestedDate))
+                        }
+                    }
+                }
+                finish(queued, lease, "QUEUED", now, resource.id, null)
+            }
         } catch (cancelled: CancellationException) {
             throw cancelled
         } catch (failure: Exception) {
@@ -221,6 +302,47 @@ internal class AutoPracticeService(
             store.write { finish(queued, lease, state, now.plusMinutes(2), null, code) }
         }
     }
+
+    /** 画面表示と POST が同じ条件で手動出題の入口を開く。 */
+    private fun AutoPracticeTransaction.manualOption(
+        owner: Long, plan: AutoPracticePlan, today: LocalDate, now: Instant, zone: ZoneId,
+    ): AutoPracticeManualOption? {
+        if (dailyRound(owner, plan, today).isNotEmpty() || manualRound(owner, plan, today).isNotEmpty() ||
+            placement(owner, plan.originLanguage, plan.learningLanguage) == null
+        ) return null
+        val cutoff = AutoPracticePolicy.rolloverAt(today, LocalTime.parse(plan.studyTime), zone)
+        if (cutoff != null && now >= cutoff && dailyRound(owner, plan, today.plusDays(1)).isNotEmpty()) return null
+        return AutoPracticeManualOption(today.toString(), cutoff?.takeIf { it > now }?.toString())
+    }
+
+    /** 日付衝突は現在の計画 ID に関係なく同じ言語対の回を優先する。 */
+    private fun AutoPracticeTransaction.dailyRound(owner: Long, plan: AutoPracticePlan, date: LocalDate) =
+        assignments(owner, plan.originLanguage, plan.learningLanguage, date, date)
+
+    /** カットオフ後に届いた回答が、すでに作った当日回を遡って動かさないようにする。 */
+    private fun AutoPracticeTransaction.eligible(
+        owner: Long, plan: AutoPracticePlan, date: LocalDate, zone: ZoneId, latest: Instant,
+    ): Boolean {
+        val first = localPlacement(owner, plan, zone) ?: return false
+        val preceding = date.minusDays(1)
+        return date == first.plusDays(1) || date.isAfter(first) && submissions(
+            owner, plan.originLanguage, plan.learningLanguage,
+            utc(preceding.atStartOfDay(zone).toInstant()), utc(latest.plusNanos(1_000)),
+        ).isNotEmpty()
+    }
+
+    /** レベル確定の暦日は学習者の時間帯で比較する。 */
+    private fun AutoPracticeTransaction.localPlacement(owner: Long, plan: AutoPracticePlan, zone: ZoneId): LocalDate? =
+        placement(owner, plan.originLanguage, plan.learningLanguage)
+            ?.toInstant(ZoneOffset.UTC)?.atZone(zone)?.toLocalDate()
+
+    /** 確定した回答時刻から当日と直前二日間の活動を集計する。 */
+    private fun AutoPracticeTransaction.answeredDates(
+        owner: Long, plan: AutoPracticePlan, today: LocalDate, zone: ZoneId, now: Instant,
+    ): Set<LocalDate> = submissions(
+        owner, plan.originLanguage, plan.learningLanguage,
+        utc(today.minusDays(2).atStartOfDay(zone).toInstant()), utc(now.plusNanos(1_000)),
+    ).mapTo(mutableSetOf()) { it.toInstant(ZoneOffset.UTC).atZone(zone).toLocalDate() }
 
     // Listening 세트의 기존 운영 상한도 함께 확인한다. 준비하지 않는 환경에는 조회가 필요 없다.
     private suspend fun listeningCap(): Int {
@@ -247,4 +369,8 @@ internal class AutoPracticeService(
 
     private fun invalid(message: String): Nothing =
         throw LearningBusinessException("LANGUAGE_LEARNING_SETTING_INVALID", message)
+
+    private companion object {
+        val playableStates = setOf("READY", "PARTIAL", "COMPLETED")
+    }
 }

@@ -54,6 +54,15 @@ internal object AutoPracticePolicy {
     fun preparationStartsOn(learningDate: LocalDate, time: LocalTime, zone: ZoneId): Instant =
         learningDate.atTime(time).atZone(zone).toInstant().minus(preparationLead)
 
+    /** 深夜の翌日準備と同じ日付に始める手動回だけを翌日へ繰り越せる。 */
+    fun rolloverAt(today: LocalDate, time: LocalTime, zone: ZoneId): Instant? =
+        preparationStartsOn(today.plusDays(1), time, zone).takeIf { it.atZone(zone).toLocalDate() == today }
+
+    /** 生成を開始できることと、すでに生成された問題を公開できることを分ける。 */
+    fun isVisible(job: AutoPracticeJob, now: Instant): Boolean =
+        job.availableAt?.let { now >= Instant.parse(it) } != false &&
+            job.rolloverAt?.let { now < Instant.parse(it) } != false
+
     /** 전날 분량은 그대로 두고, 오늘 또는 준비 시간이 열린 내일 분량만 배정한다. */
     fun dueDates(
         now: Instant,

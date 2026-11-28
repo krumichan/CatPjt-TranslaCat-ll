@@ -1,12 +1,18 @@
 package jp.co.translacat.languagelearning.features.writing.application
 
+import jp.co.translacat.languagelearning.features.autopractice.application.AutoPracticePublication
+import jp.co.translacat.languagelearning.features.autopractice.application.autoPracticeReference
 import jp.co.translacat.languagelearning.features.writing.domain.model.WritingAnswer
 import jp.co.translacat.languagelearning.features.writing.domain.model.WritingEvaluationStatus
 import jp.co.translacat.languagelearning.features.writing.domain.policy.WritingItemRevision
 import java.time.LocalDate
+import java.time.ZoneOffset
 
 /** 설정 조회와 평가 dispatch는 상위 계층; 이 트랜잭션은 재생성·제출 경합을 직렬화한다. */
-internal class WritingAnswerState(private val work: WritingSetUnitOfWork) {
+internal class WritingAnswerState(
+    private val work: WritingSetUnitOfWork,
+    private val publication: AutoPracticePublication? = null,
+) {
     suspend fun pendingToday(userId: Long, itemId: Long, today: LocalDate): Long? = work.read {
         checkNotNull(items.find(userId, itemId)) { "WRITING_ITEM_NOT_FOUND" }
         val answer = checkNotNull(answers.find(userId, itemId, today)) { "WRITING_ANSWER_NOT_FOUND" }
@@ -28,7 +34,10 @@ internal class WritingAnswerState(private val work: WritingSetUnitOfWork) {
         require(answer.isNotBlank()) { "WRITING_ANSWER_REQUIRED" }
         return work.write(userId) {
             val item = items.find(userId, itemId) ?: error("WRITING_ITEM_NOT_FOUND")
-            val set = sets.findById(userId, item.setId) ?: error("WRITING_SET_NOT_FOUND")
+            val source = sets.findById(userId, item.setId) ?: error("WRITING_SET_NOT_FOUND")
+            val publicDate = source.snapshotJson.autoPracticeReference()
+                ?.let { publication?.openedDate(userId, it, nowUtc.toInstant(ZoneOffset.UTC)) }
+            val set = source.copy(learningDate = publicDate ?: source.learningDate)
             require(
                 set.generationToken == null || set.generationLeaseUntil == null ||
                     !set.generationLeaseUntil.isAfter(nowUtc) ||

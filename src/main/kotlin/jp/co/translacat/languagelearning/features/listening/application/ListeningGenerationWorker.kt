@@ -1,5 +1,7 @@
 package jp.co.translacat.languagelearning.features.listening.application
 
+import jp.co.translacat.languagelearning.features.autopractice.application.AutoPracticePublication
+import jp.co.translacat.languagelearning.features.autopractice.application.autoPracticeReference
 import jp.co.translacat.languagelearning.features.listening.domain.model.*
 import jp.co.translacat.languagelearning.features.listening.domain.policy.ListeningDuration
 import jp.co.translacat.languagelearning.features.listening.domain.policy.ListeningDurationDemand
@@ -25,6 +27,7 @@ internal class ListeningGenerationWorker(
     private val speech: SpeechExecutionPort,
     private val clock: Clock = Clock.systemUTC(),
     private val budget: ListeningExecutionBudget = ListeningExecutionBudget(clock),
+    private val publication: AutoPracticePublication? = null,
 ) {
     suspend fun process(pending: ListeningJob) {
         require(pending.type in setOf("GENERATE", "TTS"))
@@ -270,6 +273,7 @@ internal class ListeningGenerationWorker(
                 status = "READY", audioId = audioId, audioDurationMs = (seconds * 1000).roundToInt(), errorCode = null,
             )
             updateSet(refresh(current.copy(items = current.items.map { if (it.id == latest.id) ready else it })))
+            current.request.autoPracticeReference()?.let { publication?.markPlayable(current.userId, it) }
         }
     }
 

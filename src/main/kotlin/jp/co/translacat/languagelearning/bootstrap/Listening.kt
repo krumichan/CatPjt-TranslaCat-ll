@@ -4,6 +4,7 @@ import io.ktor.server.application.*
 import io.ktor.server.plugins.di.*
 import io.ktor.server.routing.*
 import jp.co.translacat.languagelearning.features.autopractice.application.AutoPracticeAccess
+import jp.co.translacat.languagelearning.features.autopractice.application.AutoPracticePublication
 import jp.co.translacat.languagelearning.features.keyword.application.KeywordLearningFacts
 import jp.co.translacat.languagelearning.features.keyword.application.KeywordOperations
 import jp.co.translacat.languagelearning.features.listening.api.listeningRoutes
@@ -37,16 +38,17 @@ internal suspend fun Application.configureListening() {
         dependencies.resolve<KeywordLearningFacts>(),
         dependencies.resolve<AutoPracticeAccess>(),
     )
-    val reads = ListeningReadService(work, settings)
-    val sessions = ListeningSessionService(work, settings)
-    val generation = ListeningGenerationWorker(work, settings, ListeningGenerationExecution(model), speech)
+    val publication = dependencies.resolve<AutoPracticePublication>()
+    val reads = ListeningReadService(work, settings, publication)
+    val sessions = ListeningSessionService(work, settings, publication)
+    val generation = ListeningGenerationWorker(work, settings, ListeningGenerationExecution(model), speech, publication = publication)
     val evaluation = ListeningEvaluationWorker(
         work, settings, ListeningEvaluationExecution(model), ListeningRepeatExecution(transcription),
     )
     val profile = ListeningProfileWorker(work)
     val explanation = ListeningExplanationWorker(work, settings, model)
     routing {
-        listeningRoutes(context, reads, sessions, ListeningGenerationService(work, settings))
+        listeningRoutes(context, reads, sessions, ListeningGenerationService(work, settings, publication))
     }
 
     // 기존 기능별 동시 작업 수(생성 2·오디오 3·평가 2)를 유지하며 DB가 대기열을 소유한다.

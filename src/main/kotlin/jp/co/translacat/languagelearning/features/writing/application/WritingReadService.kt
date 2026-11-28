@@ -1,5 +1,7 @@
 package jp.co.translacat.languagelearning.features.writing.application
 
+import jp.co.translacat.languagelearning.features.autopractice.application.AutoPracticePublication
+import jp.co.translacat.languagelearning.features.autopractice.application.autoPracticeReference
 import jp.co.translacat.languagelearning.features.writing.domain.model.*
 import jp.co.translacat.languagelearning.features.writing.domain.policy.WritingItemRevision
 import jp.co.translacat.languagelearning.shared.identity.LearningPublicId
@@ -12,13 +14,16 @@ import java.time.LocalDateTime
 internal class WritingReadService(
     private val work: WritingSetUnitOfWork,
     private val clock: Clock = Clock.systemUTC(),
+    private val publication: AutoPracticePublication? = null,
+    private val assignedSet: suspend (Long, LocalDate, WritingType) -> Long? = { _, _, _ -> null },
 ) {
     private data class ItemDetail(val item: WritingItem, val attempts: List<WritingAttemptView>)
     private data class Detail(val set: WritingSet, val items: List<ItemDetail>)
 
     suspend fun byId(userId: Long, setId: Long, today: LocalDate, reviewDays: Int): JsonObject? {
         val detail = work.read {
-            val set = sets.findById(userId, setId) ?: return@read null
+            val original = sets.findById(userId, setId) ?: return@read null
+            val set = opened(original)
             Detail(set, items.list(userId, set.id).map { ItemDetail(it, answers.history(userId, it.id)) })
         } ?: return null
         return response(detail, today, reviewDays)
@@ -28,8 +33,12 @@ internal class WritingReadService(
         userId: Long, date: LocalDate, type: WritingType,
         today: LocalDate, reviewDays: Int,
     ): JsonObject? {
+        val assigned = assignedSet(userId, date, type)
         val detail = work.read {
-            val set = sets.find(userId, date, type) ?: return@read null
+            val original = assigned?.let { sets.findById(userId, it) } ?: sets.find(userId, date, type)
+                ?: return@read null
+            val set = opened(original)
+            if (set.learningDate != date) return@read null
             Detail(set, items.list(userId, set.id).map { ItemDetail(it, answers.history(userId, it.id)) })
         } ?: return null
         return response(detail, today, reviewDays)
@@ -38,6 +47,13 @@ internal class WritingReadService(
     suspend fun answer(userId: Long, answerId: Long): JsonObject? = work.read {
         val saved = answers.findById(userId, answerId) ?: return@read null
         answers.history(userId, saved.itemId).firstOrNull { it.answer.id == answerId }?.result()
+    }
+
+    /** 閲覧・復習ルールは元の生成日ではなく公開された学習日を使う。 */
+    private fun opened(set: WritingSet): WritingSet {
+        val job = set.snapshotJson.autoPracticeReference() ?: return set
+        val date = publication?.openedDate(set.userId, job, clock.instant()) ?: return set
+        return set.copy(learningDate = date)
     }
 
     private fun response(detail: Detail, today: LocalDate, reviewDays: Int): JsonObject {

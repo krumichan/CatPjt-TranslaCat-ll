@@ -1,18 +1,23 @@
 package jp.co.translacat.languagelearning.features.listening.application
 
+import jp.co.translacat.languagelearning.features.autopractice.application.AutoPracticePublication
+import jp.co.translacat.languagelearning.features.autopractice.application.autoPracticeReference
 import jp.co.translacat.languagelearning.features.listening.domain.model.ListeningSetState
 import jp.co.translacat.languagelearning.features.settings.application.SettingsServiceOperations
 import jp.co.translacat.languagelearning.shared.error.LearningBusinessException
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
+import java.time.ZoneOffset
 
 internal class ListeningGenerationService(
     private val work: ListeningUnitOfWork, private val settings: SettingsServiceOperations,
+    private val publication: AutoPracticePublication? = null,
 ) {
     suspend fun retryGeneration(userId: Long, setId: Long): ListeningSetState {
         val policy = settings.listeningPolicy()
         return work.write(userId) {
             val set = set(userId, setId) ?: missing()
+            requireOpen(set)
             if (hasActiveJob(userId, setId, "GENERATE")) return@write set
             if (set.status !in setOf("FAILED", "PARTIAL") || set.generationFailure == null) invalid()
             val missing =
@@ -46,6 +51,7 @@ internal class ListeningGenerationService(
         return work.write(userId) {
             val set = sets(userId).firstOrNull { it.items.any { item -> item.id == itemId } }
                 ?: throw LearningBusinessException("LANGUAGE_LEARNING_DAILY_ITEM_NOT_FOUND", "Listening 문항을 찾을 수 없습니다.")
+            requireOpen(set)
             val item = set.items.single { it.id == itemId }
             if (item.status != "NOT_EVALUABLE" || item.ttsRetries >= policy.manualRetryLimit || item.errorCode in setOf(
                     "AUDIO_TOO_SHORT", "AUDIO_TOO_LONG",
@@ -65,6 +71,11 @@ internal class ListeningGenerationService(
                 ),
             )
         }
+    }
+
+    /** 公開されていない出題の再生成・音声再試行を開始しない。 */
+    private fun ListeningTransaction.requireOpen(set: ListeningSetState) {
+        set.request.autoPracticeReference()?.let { publication?.openedDate(set.userId, it, nowUtc.toInstant(ZoneOffset.UTC)) }
     }
 
     private fun invalid(): Nothing =

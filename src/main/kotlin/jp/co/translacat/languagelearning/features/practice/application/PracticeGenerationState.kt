@@ -1,7 +1,10 @@
 package jp.co.translacat.languagelearning.features.practice.application
 
+import jp.co.translacat.languagelearning.features.autopractice.application.AutoPracticePublication
+import jp.co.translacat.languagelearning.features.autopractice.application.autoPracticeReference
 import jp.co.translacat.languagelearning.features.practice.domain.*
 import java.time.Duration
+import java.time.ZoneOffset
 import java.util.*
 import kotlinx.serialization.json.Json
 
@@ -11,7 +14,10 @@ internal data class PracticeGenerationClaim(
 
 internal data class ReadingGeneratedBundle(val promptVersion: String, val questions: List<PracticeQuestionContent>)
 
-internal class PracticeGenerationState(private val work: PracticeUnitOfWork) {
+internal class PracticeGenerationState(
+    private val work: PracticeUnitOfWork,
+    private val publication: AutoPracticePublication? = null,
+) {
     suspend fun recoverable() = work.read { records.recoverable(nowUtc, 20) }
 
     suspend fun claim(userId: Long, setId: Long): PracticeGenerationClaim? = work.write(userId) {
@@ -55,6 +61,7 @@ internal class PracticeGenerationState(private val work: PracticeUnitOfWork) {
             if (PracticePolicy.firstMissing(existing, set.questionCount) != claim.firstOrder) return@write false
             validateBundle(set, claim.firstOrder, bundle)
             bundle.questions.forEach { records.addQuestion(set.id, it) }
+            set.requestJson.autoPracticeReference()?.let { publication?.markPlayable(set.userId, it) }
             val complete = claim.firstOrder + bundle.questions.size > set.questionCount
             records.save(
                 set.copy(
@@ -92,6 +99,7 @@ internal class PracticeGenerationState(private val work: PracticeUnitOfWork) {
 
     suspend fun retry(userId: Long, setId: Long): PracticeSet = work.write(userId) {
         val set = records.find(userId, setId) ?: throw PracticeFailure("LANGUAGE_LEARNING_DAILY_SET_NOT_FOUND", 400)
+        set.requestJson.autoPracticeReference()?.let { publication?.openedDate(userId, it, nowUtc.toInstant(ZoneOffset.UTC)) }
         val request = Json.decodeFromString<ReadingRequest>(set.requestJson)
         PracticePolicy.requireNewLearning(set.domain, set.mode, set.complexityBand, request.scheduledDifficulties)
         if (set.generationStatus !in setOf(

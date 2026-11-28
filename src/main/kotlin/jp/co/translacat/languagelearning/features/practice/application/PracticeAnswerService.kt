@@ -1,5 +1,7 @@
 package jp.co.translacat.languagelearning.features.practice.application
 
+import jp.co.translacat.languagelearning.features.autopractice.application.AutoPracticePublication
+import jp.co.translacat.languagelearning.features.autopractice.application.autoPracticeReference
 import jp.co.translacat.languagelearning.features.growth.application.GrowthProjector
 import jp.co.translacat.languagelearning.features.growth.domain.model.GrowthActivity
 import jp.co.translacat.languagelearning.features.growth.domain.model.GrowthChange
@@ -12,6 +14,7 @@ import kotlinx.serialization.json.contentOrNull
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
 import java.time.Duration
+import java.time.ZoneOffset
 
 internal data class PracticeAnswerResult(
     val questionId: Long,
@@ -23,7 +26,10 @@ internal data class PracticeAnswerResult(
     val content: PracticeQuestionContent,
 )
 
-internal class PracticeAnswerService(private val work: PracticeUnitOfWork) {
+internal class PracticeAnswerService(
+    private val work: PracticeUnitOfWork,
+    private val publication: AutoPracticePublication? = null,
+) {
     suspend fun submit(userId: Long, questionId: Long, answer: List<String>): PracticeAnswerResult =
         work.write(userId) {
             // 문항 소유권과 답변 횟수를 잠금 안에서 확인해 중복 제출이 공식 시도를 두 번 만들지 않게 한다.
@@ -33,6 +39,9 @@ internal class PracticeAnswerService(private val work: PracticeUnitOfWork) {
             val set = records.find(userId, question.setId) ?: throw PracticeFailure(
                 "LANGUAGE_LEARNING_DAILY_SET_NOT_FOUND", 400,
             )
+            val learningDate = set.requestJson.autoPracticeReference()?.let {
+                publication?.openedDate(userId, it, nowUtc.toInstant(ZoneOffset.UTC))
+            } ?: set.learningDate
             val attempts = records.attempts(set.id)
             val previous = attempts.filter { it.questionId == questionId }
             val normalized = PracticePolicy.validateAnswer(question.content, answer, previous)
@@ -97,7 +106,7 @@ internal class PracticeAnswerService(private val work: PracticeUnitOfWork) {
                     GrowthChange.ActivityRecorded(
                         GrowthActivity(
                             userId = userId, source = set.domain.name, referenceId = "ll-practice-${set.id}",
-                            learningDate = set.learningDate,
+                            learningDate = learningDate,
                             title = (if (set.domain == PracticeDomain.READING) "Reading · " else "Vocabulary · ") + set.mode,
                             durationSeconds = Duration.between(set.startedAt, nowUtc).seconds.coerceAtLeast(0),
                             status = "EVALUATED", overallScore = score, evaluationConfidence = 1.0,

@@ -1,12 +1,18 @@
 package jp.co.translacat.languagelearning.features.writing.application
 
+import jp.co.translacat.languagelearning.features.autopractice.application.AutoPracticePublication
+import jp.co.translacat.languagelearning.features.autopractice.application.autoPracticeReference
 import jp.co.translacat.languagelearning.features.writing.domain.model.*
 import kotlinx.serialization.json.*
 import java.time.Duration
+import java.time.ZoneOffset
 import java.util.*
 
 /** AI HTTP 호출은 이 유스케이스의 짧은 DB 트랜잭션 밖에서 수행한다. */
-internal class WritingGenerationState(private val work: WritingSetUnitOfWork) {
+internal class WritingGenerationState(
+    private val work: WritingSetUnitOfWork,
+    private val publication: AutoPracticePublication? = null,
+) {
     private val generationLease = Duration.ofMinutes(20) // 기존 BE generation lease
 
     internal data class GenerationClaim(val order: Int, val token: String)
@@ -62,6 +68,7 @@ internal class WritingGenerationState(private val work: WritingSetUnitOfWork) {
             ) return@write false
             item.validateFor(set.writingType)
             val itemId = items.insert(userId, setId, item, nowUtc)
+            set.snapshotJson.autoPracticeReference()?.let { publication?.markPlayable(userId, it) }
             val metadata = item.diversityMetadataJson?.let { Json.parseToJsonElement(it).jsonObject }
             if (metadata?.get("contentHash") != null) {
                 val snapshot = Json.parseToJsonElement(set.snapshotJson) as? JsonObject
@@ -78,6 +85,9 @@ internal class WritingGenerationState(private val work: WritingSetUnitOfWork) {
 
     suspend fun retry(userId: Long, setId: Long): WritingSet? = work.write(userId) {
         val existing = sets.findById(userId, setId) ?: return@write null
+        existing.snapshotJson.autoPracticeReference()?.let {
+            publication?.openedDate(userId, it, nowUtc.toInstant(ZoneOffset.UTC))
+        }
         if (existing.status == WritingSetStatus.PARTIAL || existing.status == WritingSetStatus.FAILED) {
             if (items.firstMissingOrder(userId, setId, existing.sentenceCount) > existing.sentenceCount)
                 sets.markReady(userId, setId, null, nowUtc)
@@ -97,4 +107,13 @@ internal class WritingGenerationState(private val work: WritingSetUnitOfWork) {
     }
 
     suspend fun find(userId: Long, setId: Long): WritingSet? = work.read { sets.findById(userId, setId) }
+
+    /** 利用者が未公開セットの再生成を直接起動することを防ぐ。 */
+    suspend fun requireOpen(userId: Long, setId: Long) {
+        work.read {
+            sets.findById(userId, setId)?.snapshotJson?.autoPracticeReference()?.let {
+                publication?.openedDate(userId, it, nowUtc.toInstant(ZoneOffset.UTC))
+            }
+        }
+    }
 }

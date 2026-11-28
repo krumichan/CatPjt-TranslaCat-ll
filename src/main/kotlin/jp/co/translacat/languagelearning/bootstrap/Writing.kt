@@ -4,6 +4,8 @@ import io.ktor.server.application.*
 import io.ktor.server.plugins.di.*
 import io.ktor.server.routing.*
 import jp.co.translacat.languagelearning.features.autopractice.application.AutoPracticeAccess
+import jp.co.translacat.languagelearning.features.autopractice.application.AutoPracticePublication
+import jp.co.translacat.languagelearning.features.autopractice.domain.AutoPracticeArea
 import jp.co.translacat.languagelearning.features.keyword.application.KeywordLearningFacts
 import jp.co.translacat.languagelearning.features.keyword.application.KeywordOperations
 import jp.co.translacat.languagelearning.features.settings.application.SettingsServiceOperations
@@ -28,7 +30,8 @@ internal suspend fun Application.configureWriting() {
     // 모델 호출 전후의 저장은 공유 트랜잭션 runner를 쓰며 HTTP client의 수명은 Ktor가 소유한다.
     val model = dependencies.resolve<HttpModelExecution>()
     val work = ExposedWritingSetUnitOfWork(dependencies.resolve<JdbcTransactionRunner>())
-    val generationState = WritingGenerationState(work)
+    val publication = dependencies.resolve<AutoPracticePublication>()
+    val generationState = WritingGenerationState(work, publication)
     val evaluationState = WritingEvaluationState(work)
     val generationWorker = WritingGenerationWorker(
         generationState, work, WritingGenerationExecution(model),
@@ -38,12 +41,19 @@ internal suspend fun Application.configureWriting() {
     val evaluationWorker = WritingEvaluationWorker(evaluationState, WritingEvaluationExecution(model))
     val generationRecovery = WritingGenerationRecovery(generationState, generationWorker)
     val settings = dependencies.resolve<SettingsServiceOperations>()
+    val autoPractice = dependencies.resolve<AutoPracticeAccess>()
     val context = WritingContextService(
         settings, dependencies.resolve<KeywordOperations>(), work,
         dependencies.resolve<KeywordLearningFacts>(),
-        autoPractice = dependencies.resolve<AutoPracticeAccess>(),
+        autoPractice = autoPractice,
     )
-    val read = WritingReadService(work)
+    val read = WritingReadService(work, publication = publication) { owner, date, type ->
+        val user = settings.userSnapshot(owner).result.settings
+        val origin = user.originLanguage
+        val learning = user.learningLanguage
+        if (origin == null || learning == null) null
+        else autoPractice.assignedOn(owner, origin, learning, AutoPracticeArea.valueOf("WRITING_${type.name}"), date)
+    }
     val reports = WritingReportService(ExposedWritingReportQueries(dependencies.resolve<JdbcTransactionRunner>()))
     routing {
         writingReportRoutes(reports, settings::learningDate)
@@ -52,7 +62,7 @@ internal suspend fun Application.configureWriting() {
             readContext = { userId ->
                 settings.learningDate(userId) to settings.adminPolicy().reviewAvailableDays
             },
-            answers = WritingAnswerState(work), evaluation = evaluationWorker,
+            answers = WritingAnswerState(work, publication), evaluation = evaluationWorker,
             answerContext = { userId ->
                 val snapshot = settings.userSnapshot(userId)
                 val user = snapshot.result.settings
